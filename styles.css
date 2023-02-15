@@ -1,0 +1,252 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: papyrus, fantasy;
+}
+body{
+    background-color: #0D0A03;
+    
+}
+h5{
+    font-size: 20px;
+}
+h6{
+    font-size: 18px;
+}
+p{
+    font-size: 16px;
+}
+
+
+.app-row{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content:space-between;
+}
+.app-column{
+    margin: 0;
+    padding: 0;
+    padding: 10px;
+}
+.direction-button-container{
+    display: inline;
+    margin: 0px auto;
+}
+.direction-button{
+    border-radius: 100%;
+    width: 92px;
+    height: 64px;
+    font-family: papyrus, fantasy;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+.direction-button-disabled{
+    filter: brightness(0.85);
+}
+.direction-button:hover{
+    border: 1px solid white;
+    cursor: pointer;
+}
+.direction-button-disabled:hover{
+    cursor: alias;
+}
+.tab{
+    background-color: #D7B75F;
+    padding: 10px 10px 10px 10px;
+}
+.tab:hover{
+    color: white;
+    cursor: pointer;
+}
+.vital-bar-container{
+    display:flex;
+    justify-content: space-around;
+    align-items: baseline;
+}
+.vital-bar{
+    border-radius: 10px;
+    height: 12px;
+    width: 50%;
+    margin: auto;
+    background-color: white;
+}
+.vital-bar-progress{
+    border-radius: 10px;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+.vital-label{
+    width:30%;
+    margin: 5px;
+}
+.current-vital-label{
+    width:20%;
+    margin: 5px;
+}
+
+
+
+
+#app-column-1{
+    background-color:#D7B75F;
+    width: 288px;
+    flex-shrink: 0;
+}
+#app-column-2{
+    background-color: #EADAAD;
+    width: 100%;
+    height: calc(100vh - 20px);
+    min-width: 288px;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+}
+#app-column-3{
+    background-color:#D7B75F;
+    width: 288px;
+    flex-shrink: 0;
+}
+#player-stats-container{
+    background-color: #EADAAD;
+}
+#game-console{
+    background-color: #D7B75F;
+    height: 100%;
+    overflow-y: auto;
+    text-align: bottom;
+    padding:20px;
+}
+#enemy-stats-container{
+    background-color: #EADAAD;
+    display: none;
+}
+
+#controls-row-1{
+    width: 100%;
+    margin: 10px auto 0 auto;
+    display: flex;
+}
+#direction-controls-container{
+    background-color: #D7B75F;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    row-gap: 6px;
+    column-gap: 6px;
+    width: 288px;
+}
+#up-arrow-container{
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 1;
+}
+#right-arrow-container{
+    grid-column: 3 / span 1;
+    grid-row: 2 / span 1;
+}
+#down-arrow-container{
+    grid-column: 2 / span 1;
+    grid-row: 3 / span 1;
+}
+#left-arrow-container{
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+}
+#interact-button-container{
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 1;
+}
+#mini-map-container{
+    background-color:#EADAAD;
+    margin: 0px auto 10px auto;
+    width: 288px;
+    height: 288px;
+    display: none;
+}
+#mini-map-canvas{
+   background-color:#0D0A03;
+ 
+}
+#player-image-container{
+    background-color:#EADAAD;
+    margin: 0px auto 10px auto;
+    width: 288px;
+    height: 288px;
+    display: none;
+}
+#player-image{
+    width: 288px;
+    height: 288px;
+    object-fit: cover;
+}
+#location-image-container{
+    background-color:#EADAAD;
+    margin: 0px auto 10px auto;
+    width: 288px;
+    height: 288px;
+}
+#location-image{
+    width: 288px;
+    height: 288px;
+    object-fit: cover;
+}
+#enemy-image-container{
+    background-color:#EADAAD;
+    margin: 0px auto 10px auto;
+    width: 288px;
+    height: 288px;
+    display: none;
+}
+#enemy-image{
+    width: 288px;
+    height: 288px;
+    object-fit: cover;
+    display: none;
+}
+#inventory-controls{
+    margin-left: 10px;
+    width: 100%;
+}
+#tabs-container{
+   display:flex;
+   height: 22%;
+}
+#equip{
+    background-color: #D7B75F;
+    height: calc(100% - 1.333*18);
+    height: 78%;
+ 
+}
+#items{
+    background-color: #D7B75F;
+    height: calc(100% - 1.333*18);
+    height: 78%;
+    display: none;
+}
+#health-bar-player-progress{
+    background-color: darkred;
+    margin-left: auto;
+}
+#stamina-bar-player-progress{
+    background-color: darkgreen;
+    margin-left: auto;
+}
+#magic-bar-player-progress{
+    background-color: darkblue;
+    margin-left: auto;
+}
+#health-bar-enemy-progress{
+    background-color: darkred;
+    margin-left: auto;
+}
+#stamina-bar-enemy-progress{
+    background-color: darkgreen;
+    margin-left: auto;
+}
+#magic-bar-enemy-progress{
+    background-color: darkblue;
+    margin-left: auto;
+}
+
+
