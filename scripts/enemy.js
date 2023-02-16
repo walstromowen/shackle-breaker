@@ -3,7 +3,7 @@ import {controller as theController} from "./main.js";
 export default class Enemy{
     constructor(){
         this.name = "skeleton"
-        this.currentHP = 10;
+        this.currentHP = 2;
         this.maxHP = 10;
         this.currentStamina = 5;
         this.maxStamina = 12

@@ -93,8 +93,8 @@ export default class Controller {
                 alert("Game Over Please refresh!");
              }, 2000);
         }else{
-            console.log('battle ended');
-            thePlayer.moveNextRoom();
+            console.log('Enemy Defeated');
+            thePlayer.defeatEnemy();
             this.toggleMap();
         }
     }
