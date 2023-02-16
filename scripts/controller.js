@@ -50,19 +50,23 @@ export default class Controller {
         theMiniMap.draw();
     }
     toggleBattle(){
-        $("#mini-map-container").hide();
-        $("#player-image-container").show();
-        $("#location-image-container").hide();
-        $("#enemy-image-container").show();
-        $("#enemy-stats-container").show();
         this.disablePlayerMapControls();
-        this.enablePlayerBattleControls();
-        this.upArrow.innerText = "Attack";
-        this.downArrow.innerText = "Retreat";
-        this.audioPlayer.src = "./audio/battle-of-the-dragons-8037.mp3";
-        this.audioPlayer.play();
         this.gameConsole.innerHTML += "<p>You encounter a skeleton!</p>";
         this.scrollToBottom("game-console");
+        $('.direction-button').addClass('direction-button-disabled');
+        $('.direction-button').addClass('direction-button-disabled:hover');
+        setTimeout(()=>{
+            $("#mini-map-container").hide();
+            $("#player-image-container").show();
+            $("#location-image-container").hide();
+            $("#enemy-image-container").show();
+            $("#enemy-stats-container").show();
+            this.upArrow.innerText = "Attack";
+            this.downArrow.innerText = "Retreat";
+            this.enablePlayerBattleControls();
+            this.audioPlayer.src = "./audio/battle-of-the-dragons-8037.mp3";
+            this.audioPlayer.play();
+         }, 2000);
     }
     scrollToBottom(elementId){
         document.getElementById(elementId).scrollTop = document.getElementById(elementId).scrollHeight;

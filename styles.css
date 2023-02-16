@@ -70,7 +70,7 @@ p{
     cursor: pointer;
 }
 .direction-button-disabled:hover{
-    cursor: alias;
+    cursor: not-allowed;
 }
 .tab{
     background-color: #D7B75F;
