@@ -44,8 +44,8 @@ export default class Controller {
         this.downArrow.innerText = "Down";
         //Audio - TODO - needs to have an event listerner tell when to start playing
             this.audioPlayer.pause();
-            // this.audioPlayer.src = "./audio/deep-in-the-dell-126916.mp3";
-            //this.audioPlayer.play();
+            this.audioPlayer.src = "./audio/deep-in-the-dell-126916.mp3";
+            this.audioPlayer.play();
         theMiniMap.resizeCanvas();
         theMiniMap.draw();
     }
