@@ -17,7 +17,7 @@ export default class Player{
         this.currentMagic = this.maxMagic;
         this.maxMagic = 10
         this.armorLevel = 1;
-        this.baseAttack = 4;
+        this.baseAttack = 3;
 
     }
     moveNorth(){

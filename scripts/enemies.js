@@ -40,7 +40,7 @@ export class Bat extends Enemy{
         super();
         this.name = "bat";
         this.imageSrc = "media/bat.jpg"
-        this.maxHP = 3; 
+        this.maxHP = 4; 
         this.currentHP = this.maxHP;
         this.maxStamina = 10;
         this.currentStamina = this.maxStamina;
@@ -71,17 +71,17 @@ export class Wolf extends Enemy{
         super();
         this.name = "wolf";
         this.imageSrc = "media/wolf.jpg"
-        this.maxHP = 16;
+        this.maxHP = 8;
         this.currentHP = this.maxHP;
         this.maxStamina = 12;
         this.currentStamina = this.maxStamina;
         this.maxMagic = 0;
         this.currentMagic = this.maxMagic;
         this.armorLevel = 0;
-        this.baseAttack = 2;
+        this.baseAttack = 3;
     }
     chooseAttack(target){
-        if(Math.floor(Math.random()*6) < 2){
+        if(Math.floor(Math.random()*3) < 2){
             this.bite(target);
         }else{
             this.pounceOn(target);
