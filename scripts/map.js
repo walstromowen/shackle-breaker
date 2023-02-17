@@ -1,11 +1,12 @@
 import Room from "./room.js";
 import MapLayout from "./mapLayout.js";
-import Enemy from "./enemy.js";
+import MapEnviorment from "./mapEnviorment.js";
 
 export default class Map{
     constructor(){
         this.roomArray = []; //Room array is 1 Dimensional
         this.mapLayout = new MapLayout();
+        this.mapEnviorment = new MapEnviorment();
         this.mapWidth = this.mapLayout.width; //in tiles  
         this.mapHeight = this.mapLayout.height; //in tiles
         this.playerSpawnIndex = "";
@@ -26,7 +27,7 @@ export default class Map{
             switch(this.mapLayout.tileArray[i]){
                 case 0:
                     if(Math.floor(Math.random()*7) === 0){
-                        this.roomArray[i].enemy = new Enemy();
+                        this.roomArray[i].enemy = this.mapEnviorment.generateEnemy();
                     }
                     break;
                 case 2:

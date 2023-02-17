@@ -9,6 +9,7 @@ export default class Controller {
         this.downArrow = document.getElementById('down-arrow');
         this.leftArrow = document.getElementById('left-arrow');
         this.audioPlayer = document.getElementById('audio-player');
+        this.enemyImage = document.getElementById('enemy-image');
         this.healthBarPlayerProgress = document.getElementById('health-bar-player-progress');
         this.staminaBarPlayerProgress = document.getElementById('stamina-bar-player-progress');
         this.magicBarPlayerProgress = document.getElementById('magic-bar-player-progress');
@@ -33,11 +34,13 @@ export default class Controller {
         this.toggleMap();
     }
     toggleMap(){
+        $("#location-name-container").show();
+        $("#enemy-name-container").hide();
         $("#player-image-container").hide();
         $("#mini-map-container").show();
         $("#enemy-image-container").hide();
         $("#location-image-container").show();
-        $("#enemy-stats-container").hide();
+        $("#enemy-main-stats-container").hide();
         this.disablePlayerBattleControls();
         this.enablePlayerMapControls();
         this.upArrow.innerText = "Up";
@@ -55,6 +58,9 @@ export default class Controller {
         $('.direction-button').addClass('direction-button-disabled');
         $('.direction-button').addClass('direction-button-disabled:hover');
         setTimeout(()=>{
+            this.enemyImage.src = thePlayer.currentEnemy.imageSrc;
+            $("#location-name-container").hide();
+            $("#enemy-name-container").show();
             $("#mini-map-container").hide();
             $("#player-image-container").show();
             $("#location-image-container").hide();

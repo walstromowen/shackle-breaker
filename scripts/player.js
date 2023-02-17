@@ -9,11 +9,12 @@ export default class Player{
         this.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
         this.nextRoom = this.currentRoom;
         this.level = 1;
-        this.currentHP = 10;
-        this.maxHP = 10
-        this.currentStamina = 10;
-        this.maxStamina = 10;
-        this.currentMagic = 1;
+        this.maxHP = 10;
+        this.currentHP = this.maxHP;
+        this.maxStamina = 12
+        this.currentStamina = this.maxStamina;
+        this.maxMagic = 6;
+        this.currentMagic = this.maxMagic;
         this.maxMagic = 10
         this.armorLevel = 1;
         this.baseAttack = 2;
@@ -79,7 +80,7 @@ export default class Player{
                 theController.endBattle();
             }else{
                 console.log("enemey HP: " + this.currentEnemy.currentHP);
-                this.currentEnemy.attackPlayer(this);
+                this.currentEnemy.chooseAttack(this);
             }
         }, 2000);
     }

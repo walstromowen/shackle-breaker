@@ -207,6 +207,19 @@ p{
     height: 288px;
     object-fit: cover;
 }
+#location-name-container{
+    background-color:#EADAAD;
+}
+#location-name{
+    margin: 5px;
+}
+#enemy-name-container{
+    background-color: #EADAAD;
+    display: none;
+}
+#enemy-name{
+    margin: 5px;
+}
 #location-image-container{
     background-color:#EADAAD;
     margin: 0px auto 10px auto;
@@ -229,7 +242,7 @@ p{
     width: 288px;
     height: 288px;
     object-fit: cover;
-    display: none;
+    
 }
 #inventory-controls{
     margin-left: 10px;
