@@ -46,7 +46,6 @@ p{
 }
 .app-column{
     margin: 0;
-    padding: 0;
     padding: 10px;
 }
 .direction-button-container{
@@ -131,7 +130,13 @@ p{
     width: 288px;
     flex-shrink: 0;
 }
-#player-stats-container{
+#player-name-container{
+    background-color: #EADAAD;
+}
+#player-name{
+   margin: 5px;
+}
+#player-main-stats-container{
     background-color: #EADAAD;
 }
 #game-console{
@@ -141,7 +146,7 @@ p{
     text-align: bottom;
     padding:20px;
 }
-#enemy-stats-container{
+#enemy-main-stats-container{
     background-color: #EADAAD;
     display: none;
 }

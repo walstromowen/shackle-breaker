@@ -15,6 +15,7 @@ export default class Player{
         this.maxStamina = 10;
         this.currentMagic = 1;
         this.maxMagic = 10
+        this.armorLevel = 1;
         this.baseAttack = 2;
 
     }
@@ -64,7 +65,9 @@ export default class Player{
         theController.scrollToBottom("game-console");
     }
     attackEnemy(){
-        this.currentEnemy.currentHP = this.currentEnemy.currentHP - this.baseAttack;
+        if(this.baseAttack - this.currentEnemy.armorLevel > 0){
+            this.currentEnemy.currentHP = this.currentEnemy.currentHP - this.baseAttack + this.currentEnemy.armorLevel;
+        }
         this.currentStamina = this.currentStamina - 2;
         theController.gameConsole.innerHTML += "<p> You attack the skeleton for 2 damage!</p>";
         theController.disablePlayerBattleControls();

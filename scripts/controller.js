@@ -51,7 +51,7 @@ export default class Controller {
     }
     toggleBattle(){
         this.disablePlayerMapControls();
-        this.gameConsole.innerHTML += "<p>You encounter a skeleton!</p>";
+        this.gameConsole.innerHTML += "<p>Something approaches...</p>";
         this.scrollToBottom("game-console");
         $('.direction-button').addClass('direction-button-disabled');
         $('.direction-button').addClass('direction-button-disabled:hover');
@@ -60,9 +60,11 @@ export default class Controller {
             $("#player-image-container").show();
             $("#location-image-container").hide();
             $("#enemy-image-container").show();
-            $("#enemy-stats-container").show();
+            $("#enemy-main-stats-container").show();
             this.upArrow.innerText = "Attack";
             this.downArrow.innerText = "Retreat";
+            this.gameConsole.innerHTML += `<p>You encounter a ${thePlayer.currentEnemy.name}!</p>`;
+            this.scrollToBottom("game-console");
             this.enablePlayerBattleControls();
             this.audioPlayer.src = "./audio/battle-of-the-dragons-8037.mp3";
             this.audioPlayer.play();

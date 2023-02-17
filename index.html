@@ -18,13 +18,16 @@
         <div id='app'>
             <div class='app-row'>
                 <div class='app-column' id='app-column-1'>
+                    <div id='player-name-container'>
+                        <h5 id='player-name'>The Schacklebreaker</h5>
+                    </div>
                     <div id='mini-map-container'>   <!--Toggle during encounters-->
                         <canvas id='mini-map-canvas'></canvas>
                     </div>
                     <div id='player-image-container'> <!--Toggle during encounters-->
                         <image id='player-image' src='./media/hero.png'></image>
                     </div>
-                    <div id='player-stats-container'>
+                    <div id='player-main-stats-container'>
                         <div class='vital-bar-container'>
                             <h5 class = 'vital-label'>Health</h5>
                             <div class='vital-bar' id='health-bar-player'>
@@ -92,7 +95,7 @@
                         <image id='location-image' src='media/skeleton.jpg'></image>
                         <audio src="" id="audio-player"></audio>
                     </div>
-                    <div id='enemy-stats-container'>
+                    <div id='enemy-main-stats-container'>
                         <div class='vital-bar-container'>
                             <h5 class = 'vital-label'>Health</h5>
                             <div class='vital-bar' id='health-bar-enemy'>
