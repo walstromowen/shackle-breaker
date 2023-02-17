@@ -67,9 +67,9 @@ export default class Player{
     attackEnemy(){
         if(this.baseAttack - this.currentEnemy.armorLevel > 0){
             this.currentEnemy.currentHP = this.currentEnemy.currentHP - this.baseAttack + this.currentEnemy.armorLevel;
+            theController.gameConsole.innerHTML += `<p> You attack the ${this.currentEnemy.name} for ${this.baseAttack - this.currentEnemy.armorLevel} damage!</p>`;
         }
         this.currentStamina = this.currentStamina - 2;
-        theController.gameConsole.innerHTML += "<p> You attack the skeleton for 2 damage!</p>";
         theController.disablePlayerBattleControls();
         theController.updateEnemyStats();
         theController.updatePlayerStats();

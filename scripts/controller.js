@@ -42,10 +42,9 @@ export default class Controller {
         this.enablePlayerMapControls();
         this.upArrow.innerText = "Up";
         this.downArrow.innerText = "Down";
-        //Audio - TODO - needs to have an event listerner tell when to start playing
-            this.audioPlayer.pause();
-            this.audioPlayer.src = "./audio/deep-in-the-dell-126916.mp3";
-            this.audioPlayer.play();
+        this.audioPlayer.pause();
+        this.audioPlayer.src = "./audio/deep-in-the-dell-126916.mp3";
+        this.audioPlayer.play();
         theMiniMap.resizeCanvas();
         theMiniMap.draw();
     }
@@ -91,7 +90,6 @@ export default class Controller {
         this.magicBarEnemyProgress.style.width = Math.floor(thePlayer.currentEnemy.currentMagic/thePlayer.currentEnemy.maxMagic*100) + "%";
         this.scrollToBottom("game-console");
     }
-
     endBattle(){
         if(thePlayer.currentHP <= 0){
             this.disablePlayerBattleControls();
