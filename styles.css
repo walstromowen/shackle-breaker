@@ -1,5 +1,5 @@
 *{
-    margin: 0px;
+    margin: 0;
     padding: 0px;
     font-family: papyrus, fantasy;
 }
@@ -40,13 +40,17 @@ p{
 /*App*/
 .app-row{
     margin: 0;
-    padding: 0;
+    padding: 0px;
     display: flex;
     justify-content:space-between;
+    height: 100vh;
+    
 }
 .app-column{
     margin: 0;
     padding: 10px;
+    
+    
 }
 .direction-button-container{
     display: inline;
@@ -78,7 +82,13 @@ p{
     color: white;
     cursor: pointer;
 }
-
+.tab{
+    overflow-y: auto;
+    height: 100%;
+    width: 100%;
+    background-color:#EADAAD;
+    
+}
 .vital-bar-container{
     display:flex;
     justify-content: space-around;
@@ -99,7 +109,7 @@ p{
 }
 .vital-label{
     width:30%;
-    margin: 5px;
+    margin: 0 5px;
 }
 .current-vital-label{
     width:20%;
@@ -115,11 +125,14 @@ p{
     background-color:#D7B75F;
     width: 288px;
     flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    
+    
 }
 #app-column-2{
     background-color: #EADAAD;
     width: 100%;
-    height: calc(100vh - 20px);
     min-width: 288px;
     display: flex;
     flex-direction: column;
@@ -132,13 +145,15 @@ p{
 }
 #player-name-container{
     background-color: #EADAAD;
+    margin-bottom: 5px;
 }
 #player-name{
-   margin: 5px;
+   margin: 0px 5px;
 }
 #player-main-stats-container{
     background-color: #EADAAD;
     margin: 10px auto;
+    width: 100%;
 }
 #game-console{
     background-color: #D7B75F;
@@ -187,7 +202,6 @@ p{
 }
 #mini-map-container{
     background-color:#EADAAD;
-    margin: 0px auto 10px auto;
     width: 288px;
     height: 288px;
     display: none;
@@ -198,7 +212,6 @@ p{
 }
 #player-image-container{
     background-color:#EADAAD;
-    margin: 0px auto 10px auto;
     width: 288px;
     height: 288px;
     display: none;
@@ -209,21 +222,22 @@ p{
     object-fit: cover;
 }
 #location-name-container{
+    margin-bottom: 5px;
     background-color:#EADAAD;
 }
 #location-name{
-    margin: 5px;
+    margin: 0 5px;
 }
 #enemy-name-container{
+    margin: 0 5px;
     background-color: #EADAAD;
     display: none;
 }
 #enemy-name{
-    margin: 5px;
+    margin: 0 5px;
 }
 #location-image-container{
     background-color:#EADAAD;
-    margin: 0px auto 10px auto;
     width: 288px;
     height: 288px;
 }
@@ -245,23 +259,12 @@ p{
     object-fit: cover;
     
 }
-#inventory-controls-container{
-    width: 100%;
-    background-color:#EADAAD;
-}
 #tabs-label-container{
    display:flex;
+   background-color:#EADAAD;
    
 }
-#equip{
-    background-color:#EADAAD;
-    margin: 5px;
- 
-}
 #items{
-    background-color: #D7B75F;
-    height: calc(100% - 1.333*18);
-    height: 78%;
     display: none;
 }
 #health-bar-player-progress{
