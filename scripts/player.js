@@ -5,10 +5,12 @@ import {miniMap as theMiniMap} from "./main.js";
 export default class Player{
     constructor(){
         this.map = new Map();
+        this.name = "The Schackle Breaker";
         this.currentEnemy = ""; 
         this.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
         this.nextRoom = this.currentRoom;
         this.level = 1;
+        this.currentXp = 0;
         this.maxHP = 10;
         this.currentHP = this.maxHP;
         this.maxStamina = 12
@@ -89,6 +91,7 @@ export default class Player{
         this.currentEnemy = ""; 
         this.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
         this.nextRoom = this.currentRoom;
+        theController.locationImage.src = this.map.mapEnviorment.imageSrc;//occurs twice
         theMiniMap.draw();
     }
 }

@@ -10,6 +10,7 @@ export default class Controller {
         this.leftArrow = document.getElementById('left-arrow');
         this.audioPlayer = document.getElementById('audio-player');
         this.enemyImage = document.getElementById('enemy-image');
+        this.locationImage = document.getElementById('location-image');
         this.healthBarPlayerProgress = document.getElementById('health-bar-player-progress');
         this.staminaBarPlayerProgress = document.getElementById('stamina-bar-player-progress');
         this.magicBarPlayerProgress = document.getElementById('magic-bar-player-progress');

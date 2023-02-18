@@ -3,18 +3,22 @@ import {Skeleton, Bat, Wolf} from "./enemies.js";
 export default class MapEnviorment{
     constructor(){
         this.biome = "";
+        this.imageSrc = "";
         this.generateBiome();
     }
     generateBiome(){
         switch(Math.floor(Math.random()*3)){ 
             case 0: 
                 this.biome = "cave";
+                this.imageSrc = "media/cave.jpg"
                 break;
             case 1:
                 this.biome = "forest";
+                this.imageSrc = "media/forest.jpg"
                 break;
             case 2:
                 this.biome = "plains";
+                this.imageSrc = "media/plains.jpg"
                 break;
             default:
                 break;
