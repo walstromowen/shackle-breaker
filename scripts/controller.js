@@ -4,6 +4,11 @@ import {miniMap as theMiniMap} from "./main.js";
 export default class Controller {
     constructor(){
         this.gameConsole = document.getElementById("game-console");
+        this.playerName = document.getElementById('player-name');
+        this.playerName.innerText = thePlayer.name;
+        this.enemyName = document.getElementById('enemy-name');
+        this.locationName = document.getElementById('location-name');
+        this.locationName.innerText = thePlayer.map.mapEnviorment.biome; //occurs twice
         this.upArrow = document.getElementById('up-arrow');
         this.rightArrow = document.getElementById('right-arrow');
         this.downArrow = document.getElementById('down-arrow');
@@ -11,6 +16,7 @@ export default class Controller {
         this.audioPlayer = document.getElementById('audio-player');
         this.enemyImage = document.getElementById('enemy-image');
         this.locationImage = document.getElementById('location-image');
+        this.locationImage.src = thePlayer.map.mapEnviorment.imageSrc; //occurs twice
         this.healthBarPlayerProgress = document.getElementById('health-bar-player-progress');
         this.staminaBarPlayerProgress = document.getElementById('stamina-bar-player-progress');
         this.magicBarPlayerProgress = document.getElementById('magic-bar-player-progress');
@@ -59,6 +65,7 @@ export default class Controller {
         $('.direction-button').addClass('direction-button-disabled');
         $('.direction-button').addClass('direction-button-disabled:hover');
         setTimeout(()=>{
+            this.enemyName.innerText = thePlayer.currentEnemy.name;
             this.enemyImage.src = thePlayer.currentEnemy.imageSrc;
             $("#location-name-container").hide();
             $("#enemy-name-container").show();

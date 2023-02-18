@@ -91,7 +91,8 @@ export default class Player{
         this.currentEnemy = ""; 
         this.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
         this.nextRoom = this.currentRoom;
-        theController.locationImage.src = this.map.mapEnviorment.imageSrc;//occurs twice
+        theController.locationImage.src = this.map.mapEnviorment.imageSrc;
+        theController.locationName.innerText = this.map.mapEnviorment.biome;
         theMiniMap.draw();
     }
 }

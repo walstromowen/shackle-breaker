@@ -12,5 +12,4 @@ document.getElementById('title-start-button').addEventListener("click", ()=>{
     controller = new Controller();
     $("#title-screen").hide();
     $("#app").show();
-    controller.locationImage.src = player.map.mapEnviorment.imageSrc; //occurs twice
 });
