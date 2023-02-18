@@ -71,14 +71,14 @@ p{
 .direction-button-disabled:hover{
     cursor: not-allowed;
 }
-.tab{
-    background-color: #D7B75F;
-    padding: 10px 10px 10px 10px;
+.tab-label{
+   margin: 5px;
 }
-.tab:hover{
+.tab-label:hover{
     color: white;
     cursor: pointer;
 }
+
 .vital-bar-container{
     display:flex;
     justify-content: space-around;
@@ -138,6 +138,7 @@ p{
 }
 #player-main-stats-container{
     background-color: #EADAAD;
+    margin: 10px auto;
 }
 #game-console{
     background-color: #D7B75F;
@@ -244,18 +245,17 @@ p{
     object-fit: cover;
     
 }
-#inventory-controls{
-    margin-left: 10px;
+#inventory-controls-container{
     width: 100%;
+    background-color:#EADAAD;
 }
-#tabs-container{
+#tabs-label-container{
    display:flex;
-   height: 22%;
+   
 }
 #equip{
-    background-color: #D7B75F;
-    height: calc(100% - 1.333*18);
-    height: 78%;
+    background-color:#EADAAD;
+    margin: 5px;
  
 }
 #items{
