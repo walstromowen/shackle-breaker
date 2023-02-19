@@ -16,6 +16,9 @@ h6{
 p{
     font-size: 16px;
 }
+table{
+    margin: 0 5px;
+}
 /*Title Screen*/
 .title-screen-button{
     height: 60px;
@@ -115,6 +118,10 @@ p{
     width:20%;
     margin: 5px;
 }
+.equip-slot{
+    padding: 0 10px;
+    
+}
 
 
 
@@ -145,7 +152,7 @@ p{
 }
 #player-name-container{
     background-color: #EADAAD;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 #player-name{
    margin: 0px 5px;
@@ -229,7 +236,7 @@ p{
     margin: 0 5px;
 }
 #enemy-name-container{
-    margin: 0 5px;
+    margin-bottom: 10px;
     background-color: #EADAAD;
     display: none;
 }

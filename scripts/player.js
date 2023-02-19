@@ -1,4 +1,5 @@
 import Map from "./map.js";
+import {Dagger} from "./item.js";
 import {controller as theController} from "./main.js";
 import {miniMap as theMiniMap} from "./main.js";
 
@@ -9,6 +10,7 @@ export default class Player{
         this.currentEnemy = ""; 
         this.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
         this.nextRoom = this.currentRoom;
+        this.equippedArray = [new Dagger()];
         this.level = 1;
         this.currentXp = 0;
         this.maxHP = 10;
@@ -19,7 +21,7 @@ export default class Player{
         this.currentMagic = this.maxMagic;
         this.maxMagic = 10
         this.armorLevel = 1;
-        this.baseAttack = 3;
+        this.baseAttack = 1;
 
     }
     moveNorth(){
@@ -67,10 +69,18 @@ export default class Player{
         theController.gameConsole.innerHTML += "<p>" + this.currentRoom.description + "</p>";//
         theController.scrollToBottom("game-console");
     }
-    attackEnemy(){
-        if(this.baseAttack - this.currentEnemy.armorLevel > 0){
-            this.currentEnemy.currentHP = this.currentEnemy.currentHP - this.baseAttack + this.currentEnemy.armorLevel;
-            theController.gameConsole.innerHTML += `<p> You attack the ${this.currentEnemy.name} for ${this.baseAttack - this.currentEnemy.armorLevel} damage!</p>`;
+    attackEnemy(){- this.currentEnemy.armorLevel
+        let damageOutput = this.baseAttack;
+        if(this.equippedArray[0] != undefined){
+            damageOutput = damageOutput + Math.floor(Math.random() * (this.equippedArray[0].damage[1] - this.equippedArray[0].damage[0] + 1)) + this.equippedArray[0].damage[0];
+        }
+        if(this.equippedArray[1] != undefined){
+            damageOutput = damageOutput + Math.floor(Math.random() * (this.equippedArray[1].damage[1] - this.equippedArray[1].damage[0] + 1)) + this.equippedArray[1].damage[0];
+        }
+        damageOutput - this.currentEnemy.armorLevel;
+        if(damageOutput > 0){
+            this.currentEnemy.currentHP = this.currentEnemy.currentHP - damageOutput;
+            theController.gameConsole.innerHTML += `<p> You attack the ${this.currentEnemy.name} for ${damageOutput} damage!</p>`;
         }
         this.currentStamina = this.currentStamina - 2;
         theController.disablePlayerBattleControls();

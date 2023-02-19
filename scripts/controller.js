@@ -53,8 +53,8 @@ export default class Controller {
         this.upArrow.innerText = "Up";
         this.downArrow.innerText = "Down";
         this.audioPlayer.pause();
-        //this.audioPlayer.src = "./audio/deep-in-the-dell-126916.mp3";
-        //this.audioPlayer.play();
+        this.audioPlayer.src = "./audio/deep-in-the-dell-126916.mp3";
+        this.audioPlayer.play();
         theMiniMap.resizeCanvas();
         theMiniMap.draw();
     }
