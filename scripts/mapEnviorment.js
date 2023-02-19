@@ -1,4 +1,4 @@
-import {Skeleton, Bat, Wolf} from "./enemies.js";
+import {Skeleton, Bat, Wolf, Royalmage} from "./enemies.js";
 
 export default class MapEnviorment{
     constructor(){
@@ -45,11 +45,13 @@ export default class MapEnviorment{
                         return;
                 }
             case "plains":
-                switch(Math.floor(Math.random()*2)){ 
+                switch(Math.floor(Math.random()*3)){ 
                     case 0:
                         return new Skeleton();
                     case 1:
                         return new Wolf();
+                    case 2:
+                        return new Royalmage();
                     default:
                         return;
                 }

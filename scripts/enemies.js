@@ -45,7 +45,7 @@ export class Skeleton extends Enemy{
     }
     block(){
         this.armorLevel = this.armorLevel + 5 ;
-        theController.gameConsole.innerHTML += `<p> The ${this.name} raises its sheild! ${this.armorLevel}`;
+        theController.gameConsole.innerHTML += `<p> The ${this.name} raises its sheild!`;
     }
 }
 
@@ -131,5 +131,58 @@ export class Wolf extends Enemy{
             theController.gameConsole.innerHTML += `<p> The ${this.name} pounces on you for ${ damageOutput} damage!</p>`;
         }
         this.currentStamina = this.currentStamina - Math.floor(this.maxStamina*0.4);
+    }
+}
+
+export class Royalmage extends Enemy{
+    constructor(){
+        super();
+        this.name = "royal mage";
+        this.imageSrc = "media/royal-mage.jpg"
+        this.maxHP = 20;
+        this.currentHP = this.maxHP;
+        this.maxStamina = 20;
+        this.currentStamina = this.maxStamina;
+        this.maxMagic = 20;
+        this.currentMagic = this.maxMagic;
+        this.armorLevel = 1;
+        this.baseAttack = 1;
+        this.currentAttack = this.baseAttack;
+    }
+    chooseAttack(target){
+        if(Math.floor(Math.random()*2) < 1){
+            this.arcaneDart(target);
+        }else{
+            this.arcaneBlast(target);
+        } 
+        this.endTurn();
+    }
+    arcaneDart(target){
+        let damageOutput = this.currentAttack;
+        damageOutput = damageOutput - target.armorLevel;
+        theController.gameConsole.innerHTML += `<p>The ${this.name} fires an arcane dart at you for ${damageOutput} damage!</p>`;
+        if(damageOutput > 0){
+            target.currentHP = target.currentHP - damageOutput;
+        }else{
+            theController.gameConsole.innerHTML += `<p>You evade the ${this.name}'s attack!</p>`; 
+        }
+        this.currentMagic = this.currentMagic - Math.floor(this.maxMagic*0.2);
+
+    }
+    arcaneBlast(target){
+        if(Math.random()*3 < 2){
+            this.currentAttack = this.currentAttack + 2;
+            this.currentMagic = this.currentMagic + Math.floor(this.maxMagic*0.2);
+            theController.gameConsole.innerHTML += `<p>The ${this.name} channels something in the air!</p>`;
+        }else{
+            let damageOutput = this.currentAttack * 2;
+            damageOutput = damageOutput - target.armorLevel;
+            if(damageOutput > 0){
+                target.currentHP = target.currentHP - damageOutput;
+                theController.gameConsole.innerHTML += `<p>The ${this.name} blasts you with a beam of arcane energy for ${damageOutput} damage!</p>`;
+                this.currentMagic = this.currentMagic - Math.floor(this.maxMagic*0.5);
+                this.currentAttack = this.baseAttack;
+            }
+        }
     }
 }

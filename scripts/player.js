@@ -51,6 +51,10 @@ export default class Player{
             if(this.currentRoom.isExit == true){
                 this.level += 1;
                 theController.gameConsole.innerHTML += `<p>You find an exit! Curent level: ${this.level}</p>`;
+                this.currentHP = this.maxHP;
+                this.currentStamina = this.maxStamina;
+                this.currentMagic = this.maxMagic;
+                theController.updatePlayerStats();
                 this.generateNewMap();
             }else{
                 theController.gameConsole.innerHTML += "<p>" + this.currentRoom.description + "</p>";
