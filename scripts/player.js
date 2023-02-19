@@ -54,7 +54,6 @@ export default class Player{
                 this.currentHP = this.maxHP;
                 this.currentStamina = this.maxStamina;
                 this.currentMagic = this.maxMagic;
-                theController.updatePlayerStats();
                 this.generateNewMap();
             }else{
                 theController.gameConsole.innerHTML += "<p>" + this.currentRoom.description + "</p>";
