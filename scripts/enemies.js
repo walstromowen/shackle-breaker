@@ -1,7 +1,15 @@
 import {controller as theController} from "./main.js";
 
 class Enemy{
-   
+    endTurn(){
+        theController.updatePlayerStats();
+        theController.updateEnemyStats();
+        theController.enablePlayerBattleControls();
+        theController.scrollToBottom("game-console");
+        if(theController.battleOverCheck() === true){
+                theController.endBattle();
+        }
+    }
 }
 
 export class Skeleton extends Enemy{
@@ -15,23 +23,29 @@ export class Skeleton extends Enemy{
         this.currentStamina = this.maxStamina;
         this.maxMagic = 2;
         this.currentMagic = this.maxMagic;
-        this.armorLevel = 1;
+        this.baseArmor = 1
+        this.armorLevel = this.baseArmor;
         this.baseAttack = 3;
     }
     chooseAttack(target){
+        this.armorLevel = this.baseArmor;
+        if(Math.floor(Math.random()*2) < 1){
+            this.slash(target);
+        }else{
+            this.block();
+        }
+        this.endTurn();
+    }
+    slash(target){
         if(this.baseAttack - target.armorLevel > 0){
             target.currentHP = target.currentHP - this.baseAttack + target.armorLevel;
-            theController.gameConsole.innerHTML += `<p> The ${this.name} attacks for ${this.baseAttack - target.armorLevel} damage!</p>`;
+            theController.gameConsole.innerHTML += `<p> The ${this.name} slashes you for ${this.baseAttack - target.armorLevel} damage!</p>`;
         }
-        console.log("Player HP: " + target.currentHP);
         this.currentStamina = this.currentStamina - Math.floor(this.maxStamina*0.2);
-        theController.updatePlayerStats();
-        theController.updateEnemyStats();
-        theController.enablePlayerBattleControls();
-        theController.scrollToBottom("game-console");
-        if(theController.battleOverCheck() === true){
-            theController.endBattle();
-        }
+    }
+    block(){
+        this.armorLevel = this.armorLevel + 5 ;
+        theController.gameConsole.innerHTML += `<p> The ${this.name} raises its sheild! ${this.armorLevel}`;
     }
 }
 
@@ -47,22 +61,34 @@ export class Bat extends Enemy{
         this.maxMagic = 0;
         this.currentMagic = this.maxMagic;
         this.armorLevel = 0;
-        this.baseAttack = 2;
+        this.baseAttack = 4;
     }
     chooseAttack(target){
-        if(this.baseAttack - target.armorLevel > 0){
-            target.currentHP = target.currentHP - this.baseAttack + target.armorLevel;
-            theController.gameConsole.innerHTML += `<p> The ${this.name} attacks for ${this.baseAttack - target.armorLevel} damage!</p>`;
+        if(Math.floor(Math.random()*3) < 2){
+            this.bite(target);
+        }else{
+            this.fly();
         }
-        console.log("Player HP: " + target.currentHP);
+        this.endTurn();
+    }
+    bite(target){
+        let damageOutput = this.baseAttack;
+        damageOutput = damageOutput - target.armorLevel;
+        if(damageOutput > 0){
+            target.currentHP = target.currentHP - damageOutput;
+            theController.gameConsole.innerHTML += `<p> The ${this.name} bites you for ${damageOutput} damage!</p>`;
+            if(Math.floor(Math.random()*2 < 1)){
+                this.currentHP = this.currentHP + damageOutput;
+                if(this.currentHP > this.maxHP){
+                    this.currenHP = this.maxHP;
+                }
+            }
+        }
         this.currentStamina = this.currentStamina - Math.floor(this.maxStamina*0.2);
-        theController.updatePlayerStats();
-        theController.updateEnemyStats();
-        theController.enablePlayerBattleControls();
-        theController.scrollToBottom("game-console");
-        if(theController.battleOverCheck() === true){
-            theController.endBattle();
-        }
+    }
+    fly(){
+        theController.gameConsole.innerHTML += `<p> The ${this.name} flies around</p>`;
+        this.currentStamina = this.maxStamina;
     }
 }
 
@@ -86,35 +112,24 @@ export class Wolf extends Enemy{
         }else{
             this.pounceOn(target);
         } 
+        this.endTurn();
     }
     bite(target){
-        if(this.baseAttack - target.armorLevel > 0){
-            target.currentHP = target.currentHP - this.baseAttack + target.armorLevel;
-            theController.gameConsole.innerHTML += `<p> The ${this.name} bites for ${this.baseAttack - target.armorLevel} damage!</p>`;
+        let damageOutput = this.baseAttack;
+        damageOutput = damageOutput - target.armorLevel;
+        if(damageOutput > 0){
+            target.currentHP = target.currentHP - damageOutput;
+            theController.gameConsole.innerHTML += `<p> The ${this.name} bites you for ${damageOutput} damage!</p>`;
         }
-        console.log("Player HP: " + target.currentHP);
         this.currentStamina = this.currentStamina - Math.floor(this.maxStamina*0.2);
-        theController.updatePlayerStats();
-        theController.updateEnemyStats();
-        theController.enablePlayerBattleControls();
-        theController.scrollToBottom("game-console");
-        if(theController.battleOverCheck() === true){
-            theController.endBattle();
-        }
     }
     pounceOn(target){
-        if(this.baseAttack + 2 - target.armorLevel > 0){
-            target.currentHP = target.currentHP - (this.baseAttack + 2) + target.armorLevel;
-            theController.gameConsole.innerHTML += `<p> The ${this.name} pounces for ${this.baseAttack + 2 - target.armorLevel} damage!</p>`;
+        let damageOutput = this.baseAttack + 2;
+        damageOutput = damageOutput - target.armorLevel;
+        if( damageOutput > 0){
+            target.currentHP = target.currentHP - damageOutput;
+            theController.gameConsole.innerHTML += `<p> The ${this.name} pounces on you for ${ damageOutput} damage!</p>`;
         }
-        console.log("Player HP: " + target.currentHP);
         this.currentStamina = this.currentStamina - Math.floor(this.maxStamina*0.4);
-        theController.updatePlayerStats();
-        theController.updateEnemyStats();
-        theController.enablePlayerBattleControls();
-        theController.scrollToBottom("game-console");
-        if(theController.battleOverCheck() === true){
-            theController.endBattle();
-        }
     }
 }

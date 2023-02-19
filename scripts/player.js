@@ -69,7 +69,7 @@ export default class Player{
         theController.gameConsole.innerHTML += "<p>" + this.currentRoom.description + "</p>";//
         theController.scrollToBottom("game-console");
     }
-    attackEnemy(){- this.currentEnemy.armorLevel
+    attackEnemy(){
         let damageOutput = this.baseAttack;
         if(this.equippedArray[0] != undefined){
             damageOutput = damageOutput + Math.floor(Math.random() * (this.equippedArray[0].damage[1] - this.equippedArray[0].damage[0] + 1)) + this.equippedArray[0].damage[0];
@@ -77,10 +77,13 @@ export default class Player{
         if(this.equippedArray[1] != undefined){
             damageOutput = damageOutput + Math.floor(Math.random() * (this.equippedArray[1].damage[1] - this.equippedArray[1].damage[0] + 1)) + this.equippedArray[1].damage[0];
         }
-        damageOutput - this.currentEnemy.armorLevel;
+        damageOutput = damageOutput - this.currentEnemy.armorLevel;
         if(damageOutput > 0){
             this.currentEnemy.currentHP = this.currentEnemy.currentHP - damageOutput;
             theController.gameConsole.innerHTML += `<p> You attack the ${this.currentEnemy.name} for ${damageOutput} damage!</p>`;
+        }
+        else{
+            theController.gameConsole.innerHTML += `<p>The ${this.currentEnemy.name} evades your attatck!</p>`;
         }
         this.currentStamina = this.currentStamina - 2;
         theController.disablePlayerBattleControls();
@@ -88,10 +91,8 @@ export default class Player{
         theController.updatePlayerStats();
         setTimeout(()=>{
             if(theController.battleOverCheck() === true){
-                console.log('attack enemy from player battle overCheck returned true');
                 theController.endBattle();
             }else{
-                console.log("enemey HP: " + this.currentEnemy.currentHP);
                 this.currentEnemy.chooseAttack(this);
             }
         }, 2000);

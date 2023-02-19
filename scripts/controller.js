@@ -111,14 +111,12 @@ export default class Controller {
                 alert("Game Over Please refresh!");
              }, 2000);
         }else{
-            console.log('Enemy Defeated');
             thePlayer.defeatEnemy();
             this.toggleMap();
         }
     }
     battleOverCheck(){
         if(thePlayer.currentEnemy.currentHP <= 0 || thePlayer.currentHP <= 0){
-            console.log('battle Over Check Sucessful, Enemy HP:' + thePlayer.currentEnemy.currentHP + ' Player HP:' + thePlayer.currentHP);
             return true;     
         }
     }
