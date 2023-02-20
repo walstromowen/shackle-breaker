@@ -298,5 +298,6 @@ table{
     background-color: darkblue;
     margin-left: auto;
 }
-
-
+#inventory-tab{
+    display: none;
+}

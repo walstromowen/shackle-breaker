@@ -1,5 +1,5 @@
 import Map from "./map.js";
-import {Dagger} from "./item.js";
+import {Dagger , Spear} from "./item.js";
 import {controller as theController} from "./main.js";
 import {miniMap as theMiniMap} from "./main.js";
 
@@ -10,10 +10,11 @@ export default class Player{
         this.currentEnemy = ""; 
         this.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
         this.nextRoom = this.currentRoom;
-        this.equippedArray = [new Dagger()];
+        this.equippedArray = [new Spear()];
+        this.inventory = [];
         this.level = 1;
         this.currentXp = 0;
-        this.maxHP = 10;
+        this.maxHP = 100;
         this.currentHP = this.maxHP;
         this.maxStamina = 12
         this.currentStamina = this.maxStamina;
@@ -21,7 +22,7 @@ export default class Player{
         this.currentMagic = this.maxMagic;
         this.maxMagic = 10
         this.armorLevel = 1;
-        this.baseAttack = 1;
+        this.baseAttack = 10;
 
     }
     moveNorth(){
@@ -67,28 +68,26 @@ export default class Player{
     defeatEnemy(){
         this.currentRoom.visited = true;//
         this.currentRoom = this.nextRoom;//
+        this.loot();
         this.currentRoom.enemy = "";
         theMiniMap.draw();//
         theController.gameConsole.innerHTML += "<p>" + this.currentRoom.description + "</p>";//
         theController.scrollToBottom("game-console");
     }
-    attackEnemy(){
-        let damageOutput = this.baseAttack;
+    primaryAttack(){
         if(this.equippedArray[0] != undefined){
-            damageOutput = damageOutput + Math.floor(Math.random() * (this.equippedArray[0].damage[1] - this.equippedArray[0].damage[0] + 1)) + this.equippedArray[0].damage[0];
+            let player = this;
+            this.equippedArray[0].primaryAttack(player);
+        }else{//no weapon equipped
+            let damageOutput = this.baseAttack - this.currentEnemy.armorLevel;
+            if(damageOutput > 0){
+                this.currentStamina = this.currentStamina - 2;
+                this.currentEnemy.currentHP = this.currentEnemy.currentHP - damageOutput;
+                theController.gameConsole.innerHTML += `<p> You punch the ${this.currentEnemy.name} for ${damageOutput} damage!</p>`;
+            }else{
+                theController.gameConsole.innerHTML += `<p>The ${this.currentEnemy.name} evades your attatck!</p>`;
+            }
         }
-        if(this.equippedArray[1] != undefined){
-            damageOutput = damageOutput + Math.floor(Math.random() * (this.equippedArray[1].damage[1] - this.equippedArray[1].damage[0] + 1)) + this.equippedArray[1].damage[0];
-        }
-        damageOutput = damageOutput - this.currentEnemy.armorLevel;
-        if(damageOutput > 0){
-            this.currentEnemy.currentHP = this.currentEnemy.currentHP - damageOutput;
-            theController.gameConsole.innerHTML += `<p> You attack the ${this.currentEnemy.name} for ${damageOutput} damage!</p>`;
-        }
-        else{
-            theController.gameConsole.innerHTML += `<p>The ${this.currentEnemy.name} evades your attatck!</p>`;
-        }
-        this.currentStamina = this.currentStamina - 2;
         theController.disablePlayerBattleControls();
         theController.updateEnemyStats();
         theController.updatePlayerStats();
@@ -108,6 +107,13 @@ export default class Player{
         theController.locationImage.src = this.map.mapEnviorment.imageSrc;
         theController.locationName.innerText = this.map.mapEnviorment.biome;
         theMiniMap.draw();
+    }
+    loot(){
+        let loot = this.currentEnemy.dropLoot();
+        if(loot != ""){
+            this.inventory.push(loot);
+            theController.updatePlayerInventoryTab(this.inventory);
+        }
     }
 }
 

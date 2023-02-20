@@ -29,15 +29,18 @@ export default class Controller {
         this.currentHealthEnemy = document.getElementById('current-health-enemy');
         this.currentStaminaEnemy = document.getElementById('current-stamina-enemy');
         this.currentMagicEnemy = document.getElementById('current-magic-enemy');
+        this.equipedButton = document.getElementById('equiped-button');
+        this.inventoryButton = document.getElementById('inventory-button');
         this.toggleBattleCallback = this.toggleBattle.bind(this);
         this.toggleMapCallback = this.toggleMap.bind(this);
         this.moveNorthCallback = thePlayer.moveNorth.bind(thePlayer);
         this.moveEastCallback = thePlayer.moveEast.bind(thePlayer);
         this.moveSouthCallback = thePlayer.moveSouth.bind(thePlayer);
         this.moveWestCallback = thePlayer.moveWest.bind(thePlayer);
-        this.playerAttackCallback = thePlayer.attackEnemy.bind(thePlayer);
+        this.playerPrimaryAttackCallback = thePlayer.primaryAttack.bind(thePlayer);
         this.updatePlayerStats();
         this.updateEnemyStats();
+        this.enableInventoryControls();
         this.toggleMap();
     }
     toggleMap(){
@@ -74,7 +77,12 @@ export default class Controller {
             $("#location-image-container").hide();
             $("#enemy-image-container").show();
             $("#enemy-main-stats-container").show();
-            this.upArrow.innerText = "Attack";
+            if(thePlayer.equippedArray[0]){
+                this.upArrow.innerText = thePlayer.equippedArray[0].primaryAttackName;
+            } else{
+                this.upArrow.innerText = "Attack";
+            }
+            
             this.downArrow.innerText = "Retreat";
             this.gameConsole.innerHTML += `<p>You encounter a ${thePlayer.currentEnemy.name}!</p>`;
             this.scrollToBottom("game-console");
@@ -135,15 +143,30 @@ export default class Controller {
         this.leftArrow.removeEventListener('click', this.moveWestCallback);
     }
     enablePlayerBattleControls(){
-        this.upArrow.addEventListener('click', this.playerAttackCallback); 
+        this.upArrow.addEventListener('click', this.playerPrimaryAttackCallback); 
         this.downArrow.addEventListener('click', this.toggleMapCallback);
         $('.direction-button').removeClass('direction-button-disabled');
         $('.direction-button').removeClass('direction-button-disabled:hover');
     }
     disablePlayerBattleControls(){
         this.downArrow.removeEventListener('click', this.toggleMapCallback);
-        this.upArrow.removeEventListener('click', this.playerAttackCallback); 
+        this.upArrow.removeEventListener('click', this.playerPrimaryAttackCallback); 
         $('.direction-button').addClass('direction-button-disabled');
         $('.direction-button').addClass('direction-button-disabled:hover');
+    }
+    enableInventoryControls(){
+        this.equipedButton.addEventListener('click',()=>{
+            $('#inventory-tab').hide();
+            $('#equiped-tab').show();
+        });
+        this.inventoryButton.addEventListener('click',()=>{
+            $('#equiped-tab').hide();
+            $('#inventory-tab').show();
+        });
+    }
+    updatePlayerInventoryTab(inventory){
+        for(var i = 0; i < inventory.length; i++){
+           console.log(inventory[i].name);
+        }
     }
 }

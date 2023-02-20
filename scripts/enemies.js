@@ -1,4 +1,5 @@
 import {controller as theController} from "./main.js";
+import {Dagger, Spear} from "./item.js";
 
 class Enemy{
     endTurn(){
@@ -47,6 +48,16 @@ export class Skeleton extends Enemy{
         this.armorLevel = this.armorLevel + 5 ;
         theController.gameConsole.innerHTML += `<p> The ${this.name} raises its sheild!`;
     }
+    dropLoot(){
+        switch(Math.floor(Math.random()*2)){
+            case 0: 
+                return new Dagger();
+            case 1:
+                return new Spear();
+            default:
+                return "";
+        }
+    }
 }
 
 export class Bat extends Enemy{
@@ -90,6 +101,16 @@ export class Bat extends Enemy{
         theController.gameConsole.innerHTML += `<p> The ${this.name} flies around</p>`;
         this.currentStamina = this.maxStamina;
     }
+    dropLoot(){
+        switch(Math.floor(Math.random()*2)){
+            case 0: 
+                return new Dagger();
+            case 1:
+                return new Spear();
+            default:
+                return "";
+        }
+    }
 }
 
 export class Wolf extends Enemy{
@@ -132,6 +153,16 @@ export class Wolf extends Enemy{
         }
         this.currentStamina = this.currentStamina - Math.floor(this.maxStamina*0.4);
     }
+    dropLoot(){
+        switch(Math.floor(Math.random()*2)){
+            case 0: 
+                return new Dagger();
+            case 1:
+                return new Spear();
+            default:
+                return "";
+        }
+    }
 }
 
 export class Royalmage extends Enemy{
@@ -150,7 +181,7 @@ export class Royalmage extends Enemy{
         this.currentAttack = this.baseAttack;
     }
     chooseAttack(target){
-        if(Math.floor(Math.random()*2) < 1){
+        if(Math.floor(Math.random()*2) < 2){
             this.arcaneDart(target);
         }else{
             this.arcaneBlast(target);
@@ -183,6 +214,16 @@ export class Royalmage extends Enemy{
                 this.currentMagic = this.currentMagic - Math.floor(this.maxMagic*0.5);
                 this.currentAttack = this.baseAttack;
             }
+        }
+    }
+    dropLoot(){
+        switch(Math.floor(Math.random()*2)){
+            case 0: 
+                return new Dagger();
+            case 1:
+                return new Spear();
+            default:
+                return "";
         }
     }
 }
