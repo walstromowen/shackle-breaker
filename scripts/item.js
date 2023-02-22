@@ -2,6 +2,7 @@ import {controller as theController} from "./main.js";
 
 export class Dagger{
     constructor(){
+        this.type = "weapon";
         this.level = 0;
         this.name = "Dagger";
         this.primaryAttackName = "Slash";
@@ -24,6 +25,7 @@ export class Dagger{
 }
 export class Spear{
     constructor(){
+        this.type = "weapon";
         this.level = 0;
         this.name = "Spear";
         this.primaryAttackName = "Stab";
@@ -42,5 +44,14 @@ export class Spear{
             theController.gameConsole.innerHTML += `<p>The ${target.name} evades your attatck!</p>`;
         }
         weilder.currentStamina = weilder.currentStamina - 2;
+    }
+}
+
+export class IronHelmet{
+    constructor(){
+        this.type = "head";
+        this.level = 0;
+        this.name = "Iron Helmet";
+        this.armor = 3;
     }
 }

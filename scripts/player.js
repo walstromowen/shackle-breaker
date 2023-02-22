@@ -1,5 +1,5 @@
 import Map from "./map.js";
-import {Dagger , Spear} from "./item.js";
+import {Dagger , Spear, IronHelmet} from "./item.js";
 import {controller as theController} from "./main.js";
 import {miniMap as theMiniMap} from "./main.js";
 
@@ -10,20 +10,21 @@ export default class Player{
         this.currentEnemy = ""; 
         this.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
         this.nextRoom = this.currentRoom;
-        this.equippedArray = [new Spear()];
-        this.inventory = [];
+        this.equippedArray = ["Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"];
+        this.inventory = [new Spear(), new Dagger(), new IronHelmet()];
         this.level = 1;
         this.currentXp = 0;
-        this.maxHP = 100;
+        this.maxHP = 10;
         this.currentHP = this.maxHP;
-        this.maxStamina = 12
+        this.maxStamina = 10
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 6;
+        this.maxMagic = 10;
         this.currentMagic = this.maxMagic;
-        this.maxMagic = 10
-        this.armorLevel = 1;
-        this.baseAttack = 10;
-
+        this.maxMagic = 10;
+        this.baseArmor = 1;
+        this.armorLevel = this.baseArmor;
+        this.baseAttack = 1;
+        this.isInBattle = false;
     }
     moveNorth(){
         this.moveRoom(this.currentRoom.roomNorth);
@@ -57,7 +58,7 @@ export default class Player{
                 this.currentMagic = this.maxMagic;
                 this.generateNewMap();
             }else{
-                theController.gameConsole.innerHTML += "<p>" + this.currentRoom.description + "</p>";
+                //theController.gameConsole.innerHTML += "<p>" + this.currentRoom.description + "</p>";
             }
         }
         else{
@@ -71,11 +72,11 @@ export default class Player{
         this.loot();
         this.currentRoom.enemy = "";
         theMiniMap.draw();//
-        theController.gameConsole.innerHTML += "<p>" + this.currentRoom.description + "</p>";//
+        //theController.gameConsole.innerHTML += "<p>" + this.currentRoom.description + "</p>";//
         theController.scrollToBottom("game-console");
     }
     primaryAttack(){
-        if(this.equippedArray[0] != undefined){
+        if(this.equippedArray[0] != "Empty"){
             let player = this;
             this.equippedArray[0].primaryAttack(player);
         }else{//no weapon equipped
@@ -85,7 +86,7 @@ export default class Player{
                 this.currentEnemy.currentHP = this.currentEnemy.currentHP - damageOutput;
                 theController.gameConsole.innerHTML += `<p> You punch the ${this.currentEnemy.name} for ${damageOutput} damage!</p>`;
             }else{
-                theController.gameConsole.innerHTML += `<p>The ${this.currentEnemy.name} evades your attatck!</p>`;
+                theController.gameConsole.innerHTML += `<p>The ${this.currentEnemy.name} deflects your attatck!</p>`;
             }
         }
         theController.disablePlayerBattleControls();
@@ -114,6 +115,46 @@ export default class Player{
             this.inventory.push(loot);
             theController.updatePlayerInventoryTab(this.inventory);
         }
+    }
+    equip(inventoryIndex){
+        if(this.isInBattle == false){
+            switch(this.inventory[inventoryIndex].type){
+                case "weapon":
+                    if(this.equippedArray[0] === "Empty"){
+                        this.equippedArray[0] = this.inventory[inventoryIndex];
+                        this.inventory.splice(inventoryIndex, 1);
+                    }else{
+                        this.inventory.push(this.equippedArray[0]);
+                        this.equippedArray[0] = this.inventory[inventoryIndex];
+                        this.inventory.splice(inventoryIndex, 1);
+                    }
+                    theController.updatePlayerInventoryTab(this.inventory);
+                    theController.updatePlayerEquipedTab(this.equippedArray[0], 0);
+                    theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[0].name}</p>`;
+                    break;
+                case "head":
+                    if(this.equippedArray[2] === "Empty"){
+                        this.equippedArray[2] = this.inventory[inventoryIndex];
+                        this.armorLevel = this.baseArmor + this.equippedArray[2].armor;
+                        this.inventory.splice(inventoryIndex, 1);
+                    }else{
+                        this.inventory.push(this.equippedArray[2]);
+                        this.equippedArray[2] = this.inventory[inventoryIndex];
+                        this.armorLevel = this.baseArmor + this.equippedArray[2].armor;
+                        this.inventory.splice(inventoryIndex, 1);
+                        
+                    }
+                    theController.updatePlayerInventoryTab(this.inventory);
+                    theController.updatePlayerEquipedTab(this.equippedArray[2], 2);
+                    theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[2].name}</p>`;
+                    break;
+                default:
+                    break;
+            }
+        }else{
+            theController.gameConsole.innerHTML += `<p>Cannot equip during combat!</p>`;
+        }
+        theController.scrollToBottom("game-console");
     }
 }
 

@@ -2,6 +2,9 @@
     margin: 0;
     padding: 0px;
     font-family: papyrus, fantasy;
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 body{
     background-color: #0D0A03;
@@ -121,6 +124,23 @@ table{
 .equip-slot{
     padding: 0 10px;
     
+}
+.inventory-slot{
+    margin: 0 5px;
+    display: flex;
+    justify-content: space-between;
+}
+.inventory-slot:hover .inventory-slot-menu {
+    display: block;
+}
+.inventory-slot-menu{
+    display:none;
+    background-color:#D7B75F;
+    width: 50%;
+    position: relative;
+}
+.slot-menu-equip-btn{
+
 }
 
 

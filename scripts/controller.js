@@ -31,6 +31,7 @@ export default class Controller {
         this.currentMagicEnemy = document.getElementById('current-magic-enemy');
         this.equipedButton = document.getElementById('equiped-button');
         this.inventoryButton = document.getElementById('inventory-button');
+        this.inventoryTab = document.getElementById('inventory-tab');
         this.toggleBattleCallback = this.toggleBattle.bind(this);
         this.toggleMapCallback = this.toggleMap.bind(this);
         this.moveNorthCallback = thePlayer.moveNorth.bind(thePlayer);
@@ -41,9 +42,11 @@ export default class Controller {
         this.updatePlayerStats();
         this.updateEnemyStats();
         this.enableInventoryControls();
+        this.updatePlayerInventoryTab(thePlayer.inventory)
         this.toggleMap();
     }
     toggleMap(){
+        thePlayer.isInBattle = false;
         $("#location-name-container").show();
         $("#enemy-name-container").hide();
         $("#player-image-container").hide();
@@ -68,6 +71,7 @@ export default class Controller {
         $('.direction-button').addClass('direction-button-disabled');
         $('.direction-button').addClass('direction-button-disabled:hover');
         setTimeout(()=>{
+            thePlayer.isInBattle = true;
             this.enemyName.innerText = thePlayer.currentEnemy.name;
             this.enemyImage.src = thePlayer.currentEnemy.imageSrc;
             $("#location-name-container").hide();
@@ -77,7 +81,7 @@ export default class Controller {
             $("#location-image-container").hide();
             $("#enemy-image-container").show();
             $("#enemy-main-stats-container").show();
-            if(thePlayer.equippedArray[0]){
+            if(thePlayer.equippedArray[0] !== "Empty"){
                 this.upArrow.innerText = thePlayer.equippedArray[0].primaryAttackName;
             } else{
                 this.upArrow.innerText = "Attack";
@@ -165,8 +169,34 @@ export default class Controller {
         });
     }
     updatePlayerInventoryTab(inventory){
-        for(var i = 0; i < inventory.length; i++){
-           console.log(inventory[i].name);
+        for(var i = -1; i < inventory.length; i++){
+            let oldSlot = this.inventoryTab.querySelector('div')
+            if(oldSlot !== null){
+                oldSlot.remove();
+            } 
         }
+        for(let i = 0; i < inventory.length; i++){
+            let inventorySlot = document.createElement('div');
+            let inventorySlotMenu = document.createElement('div');
+            let slotMenuEquipBtn = document.createElement('div');
+
+            inventorySlot.classList.add('inventory-slot');
+            inventorySlotMenu.classList.add('inventory-slot-menu');
+            slotMenuEquipBtn.classList.add('slot-menu-equip-btn');
+
+            inventorySlot.innerText = inventory[i].name;
+            slotMenuEquipBtn.innerText = "Equip";
+            inventorySlot.appendChild(inventorySlotMenu);
+            inventorySlotMenu.appendChild(slotMenuEquipBtn);
+            this.inventoryTab.appendChild(inventorySlot);
+            slotMenuEquipBtn.addEventListener('click', ()=>{
+                thePlayer.equip(i);
+            });
+            
+        }
+    }
+    updatePlayerEquipedTab(item, equippedArrayIndex){
+        let id = 'equip-slot-' + equippedArrayIndex;
+        document.getElementById(id).innerText = item.name;
     }
 }
