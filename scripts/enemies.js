@@ -24,7 +24,7 @@ export class Skeleton extends Enemy{
         this.currentStamina = this.maxStamina;
         this.maxMagic = 2;
         this.currentMagic = this.maxMagic;
-        this.baseArmor = 1
+        this.baseArmor = 1;
         this.armorLevel = this.baseArmor;
         this.baseAttack = 3;
     }
