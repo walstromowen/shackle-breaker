@@ -6,6 +6,9 @@ export let player;
 export let miniMap;
 export let controller;
 
+document.getElementById('audio-player').src = "./audio/a-sinister-power-rising-epic-dark-gothic-soundtrack-15021.mp3";
+document.getElementById('audio-player').play();
+
 document.getElementById('title-start-button').addEventListener("click", ()=>{
     player = new Player();
     miniMap = new MiniMap();

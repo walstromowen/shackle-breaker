@@ -18,6 +18,11 @@ h6{
 p{
     font-size: 16px;
 }
+h1{
+    text-align: center;
+    color: lightgrey;
+    font-size: 120px;
+}
 
 /*Title Screen*/
 .title-screen-button{
@@ -31,17 +36,28 @@ p{
     border: 6px solid darkgrey;
 
 }
+.title-screen-button:hover{
+    height: 60px;
+    width: 300px;
+    margin: 2px 0;
+    font-size: 36px;
+    background-color: white;
+    color: black;
+    text-align:center;
+    border: 6px solid lightgrey;
+
+}
 #title-screen{
     background-image: url("./media/titleScreen.jpg");
     background-size:cover;
+    height: 100vh;
 }
 #title-screen-button-container{
     display:flex;
     justify-content: center;
     flex-direction: column;	
-    margin: auto;
+    margin: 10%auto;
     width: 300px;
-    height: 100vh;
 }
 
 
@@ -355,16 +371,6 @@ p{
 
 
 /*Level Up Screen*/
-.increase-player-stat-btn{
-    height: 60px;
-    width: 300px;
-    margin: 2px 0;
-    font-size: 36px;
-    background-color: lightgrey;
-    color: black;
-    text-align:center;
-    border: 6px solid darkgrey;
-}
 #level-up-screen{
     display: none;
     background-image: url("./media/titleScreen.jpg");
@@ -375,11 +381,6 @@ p{
     display:flex;
     justify-content: space-between;
     margin: 10% 5%;
-}
-#level-up-screen-title{
-    text-align: center;
-    color: gold;
-    font-size: 120px;
 }
 #submit-level-btn{
     margin:auto;

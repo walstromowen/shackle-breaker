@@ -1,5 +1,5 @@
 import {controller as theController} from "./main.js";
-import {Dagger, Spear} from "./item.js";
+import {Dagger, Spear, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots} from "./item.js";
 
 class Enemy{
     endTurn(){
@@ -53,9 +53,9 @@ export class Skeleton extends Enemy{
     dropLoot(){
         switch(Math.floor(Math.random()*2)){
             case 0: 
-                return new Dagger();
+                return "";
             case 1:
-                return new Spear();
+                return ""; 
             default:
                 return "";
         }
@@ -108,9 +108,9 @@ export class Bat extends Enemy{
     dropLoot(){
         switch(Math.floor(Math.random()*2)){
             case 0: 
-                return new Dagger();
+                return "";
             case 1:
-                return new Spear();
+                return "";
             default:
                 return "";
         }
@@ -164,9 +164,9 @@ export class Wolf extends Enemy{
     dropLoot(){
         switch(Math.floor(Math.random()*2)){
             case 0: 
-                return new Dagger();
+                return "";
             case 1:
-                return new Spear();
+                return "";
             default:
                 return "";
         }
@@ -227,11 +227,17 @@ export class Royalmage extends Enemy{
         }
     }
     dropLoot(){
-        switch(Math.floor(Math.random()*2)){
+        switch(Math.floor(Math.random()*5)){
             case 0: 
-                return new Dagger();
+                return new IronHelmet;
             case 1:
-                return new Spear();
+                return new IronChainmail;
+            case 2:
+                return new IronGuantlets;
+            case 3:
+                return new IronGreaves;
+            case 4:
+                return new IronBoots;
             default:
                 return "";
         }
