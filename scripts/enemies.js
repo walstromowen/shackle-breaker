@@ -14,19 +14,19 @@ class Enemy{
 }
 
 export class Skeleton extends Enemy{
-    constructor(){
+    constructor(playerLevel){
         super();
         this.name = "skeleton";
         this.imageSrc = "media/skeleton.jpg"
-        this.maxHP = 10; 
+        this.maxHP = 10 + playerLevel*2; 
         this.currentHP = this.maxHP;
-        this.maxStamina = 12;
+        this.maxStamina = 10 + playerLevel*2;
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 2;
+        this.maxMagic = 10 + playerLevel*2;
         this.currentMagic = this.maxMagic;
         this.baseArmor = 1;
         this.armorLevel = this.baseArmor;
-        this.baseAttack = 3;
+        this.baseAttack = 3 + playerLevel;
     }
     chooseAttack(target){
         this.armorLevel = this.baseArmor;
@@ -63,18 +63,18 @@ export class Skeleton extends Enemy{
 }
 
 export class Bat extends Enemy{
-    constructor(){
+    constructor(playerLevel){
         super();
         this.name = "bat";
         this.imageSrc = "media/bat.jpg"
-        this.maxHP = 4; 
+        this.maxHP = 4 + playerLevel*2 ; 
         this.currentHP = this.maxHP;
-        this.maxStamina = 10;
+        this.maxStamina = 10 + playerLevel*2;
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 0;
+        this.maxMagic = 0 + playerLevel*2;
         this.currentMagic = this.maxMagic;
         this.armorLevel = 0;
-        this.baseAttack = 4;
+        this.baseAttack = 4 + playerLevel;
     }
     chooseAttack(target){
         if(Math.floor(Math.random()*3) < 2){
@@ -118,18 +118,18 @@ export class Bat extends Enemy{
 }
 
 export class Wolf extends Enemy{
-    constructor(){
+    constructor(playerLevel){
         super();
         this.name = "wolf";
         this.imageSrc = "media/wolf.jpg"
-        this.maxHP = 8;
+        this.maxHP = 8 + playerLevel*2;
         this.currentHP = this.maxHP;
-        this.maxStamina = 12;
+        this.maxStamina = 12 + playerLevel*2;
         this.currentStamina = this.maxStamina;
         this.maxMagic = 0;
         this.currentMagic = this.maxMagic;
         this.armorLevel = 0;
-        this.baseAttack = 3;
+        this.baseAttack = 3 + playerLevel*2;
     }
     chooseAttack(target){
         if(Math.floor(Math.random()*3) < 2){
@@ -174,18 +174,19 @@ export class Wolf extends Enemy{
 }
 
 export class Royalmage extends Enemy{
-    constructor(){
+    constructor(playerLevel){
         super();
+        console.log("enemy" + playerLevel);
         this.name = "royal mage";
         this.imageSrc = "media/royal-mage.jpg"
-        this.maxHP = 20;
+        this.maxHP = 20 + playerLevel*4;
         this.currentHP = this.maxHP;
-        this.maxStamina = 20;
+        this.maxStamina = 20 + playerLevel*2;
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 20;
+        this.maxMagic = 20 + playerLevel*2;
         this.currentMagic = this.maxMagic;
         this.armorLevel = 1;
-        this.baseAttack = 1;
+        this.baseAttack = 1 + playerLevel;
         this.currentAttack = this.baseAttack;
     }
     chooseAttack(target){

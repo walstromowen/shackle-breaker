@@ -24,34 +24,35 @@ export default class MapEnviorment{
                 break;
         }
     }
-    generateEnemy(){
+    generateEnemy(playerLevel){
+        console.log("Eviorment" + playerLevel);
         switch(this.biome){ 
             case "cave": 
                 switch(Math.floor(Math.random()*2)){ 
                     case 0:
-                        return new Skeleton();
+                        return new Skeleton(playerLevel);
                     case 1:
-                        return new Bat();
+                        return new Bat(playerLevel);
                     default:
                         return;
                 }
             case "forest":
                 switch(Math.floor(Math.random()*2)){ 
                     case 0:
-                        return new Bat();
+                        return new Bat(playerLevel);
                     case 1:
-                        return new Wolf();
+                        return new Wolf(playerLevel);
                     default:
                         return;
                 }
             case "plains":
                 switch(Math.floor(Math.random()*3)){ 
                     case 0:
-                        return new Royalmage();
+                        return new Royalmage(playerLevel);
                     case 1:
-                        return new Royalmage();
+                        return new Royalmage(playerLevel);
                     case 2:
-                        return new Royalmage();
+                        return new Royalmage(playerLevel);
                     default:
                         return;
                 }

@@ -8,7 +8,6 @@
 }
 body{
     background-color: #0D0A03;
-    
 }
 h5{
     font-size: 20px;
@@ -18,9 +17,6 @@ h6{
 }
 p{
     font-size: 16px;
-}
-table{
-    width: 100%;
 }
 
 /*Title Screen*/
@@ -124,6 +120,7 @@ table{
 }
 .inventory-slot{
     margin: 0 5px;
+    width: calc(100%-10px);
     display: flex;
     justify-content: space-between;
 }
@@ -132,10 +129,38 @@ table{
 }
 .inventory-slot-menu{
     display:none;
-    background-color:#D7B75F;
-    width: 50%;
+    width: 30%;
     position: relative;
 }
+.slot-menu-equip-btn{
+    border-radius: 20px;
+    background-color:#D7B75F;
+    text-align: center;
+}
+
+.equip-slots-row{
+    display: flex;
+}
+.equip-slot-label{
+    width: 30%;
+}
+.equip-slot{
+    width: 40%;
+}
+.unequip-btn{
+    display:none;
+    background-color:#D7B75F;
+    text-align: center;
+    border-radius: 20px;
+    width: 30%;
+}
+.unequip-btn:hover{
+    color: white;
+}
+.equip-slots-row:hover .unequip-btn {
+    display: block;
+}
+
 
 
 
@@ -316,4 +341,7 @@ table{
 }
 #inventory-tab{
     display: none;
+}
+#equip-slots-container{
+    margin: 0 5px;
 }

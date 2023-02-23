@@ -5,14 +5,9 @@ import {miniMap as theMiniMap} from "./main.js";
 
 export default class Player{
     constructor(){
-        this.map = new Map();
-        this.name = "The Schackle Breaker";
-        this.currentEnemy = ""; 
-        this.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
-        this.nextRoom = this.currentRoom;
         this.equippedArray = ["Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"];
-        this.inventory = [new Spear(), new Dagger(), new IronHelmet()];
-        this.level = 1;
+        this.inventory = [new Dagger(), new IronHelmet];
+        this.level = 0;
         this.currentXp = 0;
         this.maxHP = 10;
         this.currentHP = this.maxHP;
@@ -25,6 +20,11 @@ export default class Player{
         this.armorLevel = this.baseArmor;
         this.baseAttack = 1;
         this.isInBattle = false;
+        this.map = new Map(this.level);
+        this.name = "The Schackle Breaker";
+        this.currentEnemy = ""; 
+        this.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
+        this.nextRoom = this.currentRoom;
     }
     moveNorth(){
         this.moveRoom(this.currentRoom.roomNorth);
@@ -101,7 +101,7 @@ export default class Player{
         }, 2000);
     }
     generateNewMap(){
-        this.map = new Map();
+        this.map = new Map(this.level);
         this.currentEnemy = ""; 
         this.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
         this.nextRoom = this.currentRoom;
@@ -161,6 +161,7 @@ export default class Player{
         }else{
             theController.gameConsole.innerHTML += `<p>Cannot unequip during combat!</p>`;
         }
+        theController.scrollToBottom("game-console");
     }
 }
 

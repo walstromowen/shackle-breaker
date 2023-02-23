@@ -3,16 +3,16 @@ import MapLayout from "./mapLayout.js";
 import MapEnviorment from "./mapEnviorment.js";
 
 export default class Map{
-    constructor(){
+    constructor(playerLevel){
         this.roomArray = []; //Room array is 1 Dimensional
         this.mapLayout = new MapLayout();
         this.mapEnviorment = new MapEnviorment();
         this.mapWidth = this.mapLayout.width; //in tiles  
         this.mapHeight = this.mapLayout.height; //in tiles
         this.playerSpawnIndex = "";
-        this.generateMap();  
+        this.generateMap(playerLevel);  
     }
-    generateMap(){
+    generateMap(playerLevel){
         for(var y = 0; y < this.mapHeight; y++){
             for(var x = 0; x < this.mapWidth; x++){
                 let newRoom = new Room();
@@ -27,7 +27,8 @@ export default class Map{
             switch(this.mapLayout.tileArray[i]){
                 case 0:
                     if(Math.floor(Math.random()*7) === 0){
-                        this.roomArray[i].enemy = this.mapEnviorment.generateEnemy();
+                        this.roomArray[i].enemy = this.mapEnviorment.generateEnemy(playerLevel);
+                        console.log("map" + playerLevel);
                     }
                     break;
                 case 2:
