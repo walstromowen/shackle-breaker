@@ -120,41 +120,47 @@ export default class Player{
         if(this.isInBattle == false){
             switch(this.inventory[inventoryIndex].type){
                 case "weapon":
-                    if(this.equippedArray[0] === "Empty"){
-                        this.equippedArray[0] = this.inventory[inventoryIndex];
-                        this.inventory.splice(inventoryIndex, 1);
-                    }else{
+                    if(this.equippedArray[0] !== "Empty"){
                         this.inventory.push(this.equippedArray[0]);
-                        this.equippedArray[0] = this.inventory[inventoryIndex];
-                        this.inventory.splice(inventoryIndex, 1);
                     }
-                    theController.updatePlayerInventoryTab(this.inventory);
-                    theController.updatePlayerEquipedTab(this.equippedArray[0], 0);
+                    this.equippedArray[0] = this.inventory[inventoryIndex];
+                    this.inventory.splice(inventoryIndex, 1);
                     theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[0].name}</p>`;
+                    theController.updatePlayerEquippedTab(0);
                     break;
                 case "head":
-                    if(this.equippedArray[2] === "Empty"){
-                        this.equippedArray[2] = this.inventory[inventoryIndex];
-                        this.armorLevel = this.baseArmor + this.equippedArray[2].armor;
-                        this.inventory.splice(inventoryIndex, 1);
-                    }else{
+                    if(this.equippedArray[2] !== "Empty"){
                         this.inventory.push(this.equippedArray[2]);
-                        this.equippedArray[2] = this.inventory[inventoryIndex];
-                        this.armorLevel = this.baseArmor + this.equippedArray[2].armor;
-                        this.inventory.splice(inventoryIndex, 1);
-                        
-                    }
-                    theController.updatePlayerInventoryTab(this.inventory);
-                    theController.updatePlayerEquipedTab(this.equippedArray[2], 2);
+                    } 
+                    this.equippedArray[2] = this.inventory[inventoryIndex];
+                    this.armorLevel = this.baseArmor + this.equippedArray[2].armor;
+                    this.inventory.splice(inventoryIndex, 1); 
                     theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[2].name}</p>`;
+                    theController.updatePlayerEquippedTab(2);
                     break;
                 default:
                     break;
             }
+            theController.updatePlayerInventoryTab(this.inventory);
         }else{
             theController.gameConsole.innerHTML += `<p>Cannot equip during combat!</p>`;
         }
         theController.scrollToBottom("game-console");
+    }
+    unequip(equippedArrayIndex){
+        if(this.isInBattle == false){
+            if(this.equippedArray[equippedArrayIndex] != "Empty"){
+                theController.gameConsole.innerHTML += `<p>You unequip ${this.equippedArray[equippedArrayIndex].name}</p>`;
+                this.inventory.push(this.equippedArray[equippedArrayIndex]);
+                this.equippedArray[equippedArrayIndex] = "Empty";
+                theController.updatePlayerInventoryTab(this.inventory);
+                theController.updatePlayerEquippedTab(equippedArrayIndex);
+            }else{
+                theController.gameConsole.innerHTML += `<p>Nothing equipped!</p>`;
+            }
+        }else{
+            theController.gameConsole.innerHTML += `<p>Cannot unequip during combat!</p>`;
+        }
     }
 }
 

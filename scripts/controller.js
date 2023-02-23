@@ -29,7 +29,7 @@ export default class Controller {
         this.currentHealthEnemy = document.getElementById('current-health-enemy');
         this.currentStaminaEnemy = document.getElementById('current-stamina-enemy');
         this.currentMagicEnemy = document.getElementById('current-magic-enemy');
-        this.equipedButton = document.getElementById('equiped-button');
+        this.equippedButton = document.getElementById('equipped-button');
         this.inventoryButton = document.getElementById('inventory-button');
         this.inventoryTab = document.getElementById('inventory-tab');
         this.toggleBattleCallback = this.toggleBattle.bind(this);
@@ -159,14 +159,19 @@ export default class Controller {
         $('.direction-button').addClass('direction-button-disabled:hover');
     }
     enableInventoryControls(){
-        this.equipedButton.addEventListener('click',()=>{
+        this.equippedButton.addEventListener('click',()=>{
             $('#inventory-tab').hide();
-            $('#equiped-tab').show();
+            $('#equipped-tab').show();
         });
         this.inventoryButton.addEventListener('click',()=>{
-            $('#equiped-tab').hide();
+            $('#equipped-tab').hide();
             $('#inventory-tab').show();
         });
+        for(let i = 0; i < thePlayer.equippedArray.length; i++){
+            document.getElementById('unequip-btn-' + i).addEventListener('click', ()=>{
+                thePlayer.unequip(i);
+            });
+        }
     }
     updatePlayerInventoryTab(inventory){
         for(var i = -1; i < inventory.length; i++){
@@ -192,11 +197,14 @@ export default class Controller {
             slotMenuEquipBtn.addEventListener('click', ()=>{
                 thePlayer.equip(i);
             });
-            
         }
     }
-    updatePlayerEquipedTab(item, equippedArrayIndex){
-        let id = 'equip-slot-' + equippedArrayIndex;
-        document.getElementById(id).innerText = item.name;
+    updatePlayerEquippedTab(equippedArrayIndex){
+        console.log(thePlayer.equippedArray[equippedArrayIndex]);
+        if(thePlayer.equippedArray[equippedArrayIndex] =="Empty"){
+            document.getElementById('equip-slot-' + equippedArrayIndex).innerText = "Empty";
+        }else{
+            document.getElementById('equip-slot-' + equippedArrayIndex).innerText = thePlayer.equippedArray[equippedArrayIndex].name;
+        } 
     }
 }

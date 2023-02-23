@@ -20,8 +20,9 @@ p{
     font-size: 16px;
 }
 table{
-    margin: 0 5px;
+    width: 100%;
 }
+
 /*Title Screen*/
 .title-screen-button{
     height: 60px;
@@ -121,10 +122,6 @@ table{
     width:20%;
     margin: 5px;
 }
-.equip-slot{
-    padding: 0 10px;
-    
-}
 .inventory-slot{
     margin: 0 5px;
     display: flex;
@@ -139,9 +136,8 @@ table{
     width: 50%;
     position: relative;
 }
-.slot-menu-equip-btn{
 
-}
+
 
 
 
