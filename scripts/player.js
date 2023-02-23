@@ -52,10 +52,7 @@ export default class Player{
             theMiniMap.draw();
             if(this.currentRoom.isExit == true){
                 this.levelUp();
-                theController.gameConsole.innerHTML += `<p>You find an exit! Curent level: ${this.level}</p>`;
-                this.currentHP = this.maxHP;
-                this.currentStamina = this.maxStamina;
-                this.currentMagic = this.maxMagic;
+                theController.gameConsole.innerHTML += `<p>You find an exit!</p>`;
                 this.generateNewMap();
             }else{
                 //theController.gameConsole.innerHTML += "<p>" + this.currentRoom.description + "</p>";
@@ -172,7 +169,8 @@ export default class Player{
     }
     levelUp(){
         this.level = this.level + 1;
-        //theController.updatePlayer.Level();
+        theController.gameConsole.innerHTML += `<p>Level up! New level: ${this.level}</p>`;
+        theController.displayLevelUpScreen();
     }
 }
 

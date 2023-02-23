@@ -10,6 +10,6 @@ document.getElementById('title-start-button').addEventListener("click", ()=>{
     player = new Player();
     miniMap = new MiniMap();
     controller = new Controller();
-    $("#title-screen").hide();
-    $("#app").show();
+    document.getElementById("title-screen").style.display = "none";
+    document.getElementById("app").style.display = "block";
 });

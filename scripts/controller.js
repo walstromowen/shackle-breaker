@@ -42,18 +42,19 @@ export default class Controller {
         this.updatePlayerStats();
         this.updateEnemyStats();
         this.enableInventoryControls();
+        this.enableLevelUpControls();
         this.updatePlayerInventoryTab(thePlayer.inventory)
         this.toggleMap();
     }
     toggleMap(){
         thePlayer.isInBattle = false;
-        $("#location-name-container").show();
-        $("#enemy-name-container").hide();
-        $("#player-image-container").hide();
-        $("#mini-map-container").show();
-        $("#enemy-image-container").hide();
-        $("#location-image-container").show();
-        $("#enemy-main-stats-container").hide();
+        document.getElementById("location-name-container").style.display = "block";
+        document.getElementById("enemy-name-container").style.display = "none";
+        document.getElementById("player-image-container").style.display = "none";
+        document.getElementById("mini-map-container").style.display = "block";
+        document.getElementById("enemy-image-container").style.display = "none";
+        document.getElementById("location-image-container").style.display = "block";
+        document.getElementById("enemy-main-stats-container").style.display = "none";
         this.disablePlayerBattleControls();
         this.enablePlayerMapControls();
         this.upArrow.innerText = "Up";
@@ -68,19 +69,21 @@ export default class Controller {
         this.disablePlayerMapControls();
         this.gameConsole.innerHTML += "<p>Something approaches...</p>";
         this.scrollToBottom("game-console");
-        $('.direction-button').addClass('direction-button-disabled');
-        $('.direction-button').addClass('direction-button-disabled:hover');
+        document.querySelectorAll('.direction-button').forEach((btn)=>{
+            btn.classList.add('direction-button-disabled');
+            btn.classList.add('direction-button-disabled:hover');
+        });
         setTimeout(()=>{
             thePlayer.isInBattle = true;
             this.enemyName.innerText = thePlayer.currentEnemy.name;
             this.enemyImage.src = thePlayer.currentEnemy.imageSrc;
-            $("#location-name-container").hide();
-            $("#enemy-name-container").show();
-            $("#mini-map-container").hide();
-            $("#player-image-container").show();
-            $("#location-image-container").hide();
-            $("#enemy-image-container").show();
-            $("#enemy-main-stats-container").show();
+            document.getElementById("location-name-container").style.display = "none";
+            document.getElementById("enemy-name-container").style.display = "block";
+            document.getElementById("mini-map-container").style.display = "none";
+            document.getElementById("player-image-container").style.display = "block";
+            document.getElementById("location-image-container").style.display = "none";
+            document.getElementById("enemy-image-container").style.display = "block";
+            document.getElementById("enemy-main-stats-container").style.display = "block";
             if(thePlayer.equippedArray[0] !== "Empty"){
                 this.upArrow.innerText = thePlayer.equippedArray[0].primaryAttackName;
             } else{
@@ -105,6 +108,7 @@ export default class Controller {
         this.healthBarPlayerProgress.style.width = Math.floor(thePlayer.currentHP/thePlayer.maxHP*100) + "%";
         this.staminaBarPlayerProgress.style.width = Math.floor(thePlayer.currentStamina/thePlayer.maxStamina*100) + "%";
         this.magicBarPlayerProgress.style.width = Math.floor(thePlayer.currentMagic/thePlayer.maxMagic*100) + "%";
+        document.getElementById('player-level-label').innerText = "★ " + thePlayer.level;
         this.scrollToBottom("game-console");
     }
     updateEnemyStats(){
@@ -137,8 +141,10 @@ export default class Controller {
         this.rightArrow.addEventListener('click', this.moveEastCallback);
         this.downArrow.addEventListener('click', this.moveSouthCallback);
         this.leftArrow.addEventListener('click', this.moveWestCallback);
-        $('.direction-button').removeClass('direction-button-disabled');
-        $('.direction-button').removeClass('direction-button-disabled:hover');
+        document.querySelectorAll('.direction-button').forEach((btn)=>{
+            btn.classList.remove('direction-button-disabled');
+            btn=>btn.classList.remove('direction-button-disabled:hover');
+        });
     }
     disablePlayerMapControls(){
         this.upArrow.removeEventListener('click', this.moveNorthCallback);
@@ -149,23 +155,27 @@ export default class Controller {
     enablePlayerBattleControls(){
         this.upArrow.addEventListener('click', this.playerPrimaryAttackCallback); 
         this.downArrow.addEventListener('click', this.toggleMapCallback);
-        $('.direction-button').removeClass('direction-button-disabled');
-        $('.direction-button').removeClass('direction-button-disabled:hover');
+        document.querySelectorAll('.direction-button').forEach((btn)=>{
+            btn.classList.remove('direction-button-disabled');
+            btn.classList.remove('direction-button-disabled:hover');
+        });
     }
     disablePlayerBattleControls(){
         this.downArrow.removeEventListener('click', this.toggleMapCallback);
         this.upArrow.removeEventListener('click', this.playerPrimaryAttackCallback); 
-        $('.direction-button').addClass('direction-button-disabled');
-        $('.direction-button').addClass('direction-button-disabled:hover');
+        document.querySelectorAll('.direction-button').forEach((btn)=>{
+            btn.classList.add('direction-button-disabled');
+            btn.classList.add('direction-button-disabled:hover');
+        });
     }
     enableInventoryControls(){
         this.equippedButton.addEventListener('click',()=>{
-            $('#inventory-tab').hide();
-            $('#equipped-tab').show();
+            document.getElementById('inventory-tab').style.display = "none";
+            document.getElementById('equipped-tab').style.display = "block";
         });
         this.inventoryButton.addEventListener('click',()=>{
-            $('#equipped-tab').hide();
-            $('#inventory-tab').show();
+            document.getElementById('equipped-tab').style.display = "none";
+            document.getElementById('inventory-tab').style.display = "block";
         });
         for(let i = 0; i < thePlayer.equippedArray.length; i++){
             document.getElementById('unequip-btn-' + i).addEventListener('click', ()=>{
@@ -184,11 +194,9 @@ export default class Controller {
             let inventorySlot = document.createElement('div');
             let inventorySlotMenu = document.createElement('div');
             let slotMenuEquipBtn = document.createElement('div');
-
             inventorySlot.classList.add('inventory-slot');
             inventorySlotMenu.classList.add('inventory-slot-menu');
             slotMenuEquipBtn.classList.add('slot-menu-equip-btn');
-
             inventorySlot.innerText = inventory[i].name;
             slotMenuEquipBtn.innerText = "Equip";
             inventorySlot.appendChild(inventorySlotMenu);
@@ -206,5 +214,38 @@ export default class Controller {
         }else{
             document.getElementById('equip-slot-' + equippedArrayIndex).innerText = thePlayer.equippedArray[equippedArrayIndex].name;
         } 
+    }
+    displayLevelUpScreen(){
+        this.audioPlayer.pause();
+        document.getElementById('level-up-screen').style.display = "block";
+        document.getElementById("app").style.display = "none";
+    }
+    enableLevelUpControls(){
+        let fullHeal = () =>{
+            thePlayer.currentHP =  thePlayer.maxHP;
+            thePlayer.currentStamina =  thePlayer.maxStamina;
+            thePlayer.currentMagic =  thePlayer.maxMagic;
+        }
+        document.getElementById('increase-hp-btn').addEventListener('click', ()=>{
+            fullHeal();
+            thePlayer.currentHP = thePlayer.maxHP + 2;
+        });
+        document.getElementById('increase-stamina-btn').addEventListener('click', ()=>{
+            fullHeal();
+            thePlayer.currentStamina = thePlayer.maxStamina + 2;
+        });
+        document.getElementById('increase-magic-btn').addEventListener('click', ()=>{
+            fullHeal();
+            thePlayer.currentMagic = thePlayer.maxMagic + 2;
+        });
+        document.getElementById('submit-level-btn').addEventListener('click', ()=>{
+            thePlayer.maxHP =  thePlayer.currentHP;
+            thePlayer.maxStamina =  thePlayer.currentStamina;
+            thePlayer.maxMagic =  thePlayer.currentMagic;
+            document.getElementById("app").style.display = "block";
+            document.getElementById('level-up-screen').style.display = "none";
+            this.audioPlayer.play();
+            this.updatePlayerStats();
+        });
     }
 }

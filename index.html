@@ -5,13 +5,12 @@
         <meta name='viewport' content='width=device-width, initial-scale=1'> 
         <title>Schacklebreaker</title>
         <link href='styles.css' rel='stylesheet' type='text/css'>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     </head>
     <body>
         <div id='title-screen'>
             <div id='title-screen-button-container'>
-                <button class='title-screen-button' id='title-start-button'>Start</button>
-                <button class='title-screen-button' id='title-exit-button'>Exit</button>
+                <div class='title-screen-button' id='title-start-button'>Start</div>
+                <div class='title-screen-button' id='title-exit-button'>Exit</div>
             </div>
         </div>
 
@@ -98,8 +97,6 @@
 
                     </div> 
                 </div>
-                
-
                 <div class='app-column' id='app-column-2'>
                     <div id='game-console'>
                         <p>Your adventure begins...</p>
@@ -136,7 +133,6 @@
                     </div>
                     <div id='enemy-image-container'>    <!--Toggle during encounters-->
                         <image id='enemy-image' src=''></image>
-                        <audio src="" id="audio-player"></audio>
                     </div>
                     <div id='enemy-main-stats-container'>
                         <div class='vital-bar-container'>
@@ -164,6 +160,18 @@
                 </div>
             </div>
         </div>
+        
+        <div id='level-up-screen'>
+            <h2 id='level-up-screen-title'>Level Up!</h2>
+            <div id='level-up-screen-btn-container'>
+                <div class='increase-player-stat-btn' id='increase-hp-btn'>Health</div>
+                <div class='increase-player-stat-btn' id='increase-stamina-btn'>Stamina</div>
+                <div class='increase-player-stat-btn' id='increase-magic-btn'>Magic</div>
+            </div>
+            <div class='increase-player-stat-btn' id='submit-level-btn'></div>
+        </div>
+
+        <audio src="" id="audio-player"></audio>
         <script type='module' src='scripts/main.js'></script>
     </body>
 </html>

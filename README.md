@@ -5,7 +5,7 @@ Text adventure game based on the ShacklerBreaker story
 * Rework inventory UI
 * Traps / encounters
 * Game over screen
-* Secondary abilitis
+* Secondary abilities
 * Rework user controls (arrow Buttons);
 * Character creation screen
 * Level up screen
@@ -16,7 +16,7 @@ Text adventure game based on the ShacklerBreaker story
 * CSS for unequip buttons
 * Alphabetize CSS rules
 * Retreat Penalties
-* Staminina/ Magic constraints
+* Staminina recovery
 * Capitalize and center location/ enemy names
 * Enviorment specific music
 * Sound effects
