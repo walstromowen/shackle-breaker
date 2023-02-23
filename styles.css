@@ -194,8 +194,10 @@ p{
 #player-name-container{
     background-color: #EADAAD;
     margin-bottom: 10px;
+    display:flex;
+    justify-content:space-between;
 }
-#player-name{
+#player-name, #player-level-label{
    margin: 0px 5px;
 }
 #player-main-stats-container{
@@ -344,4 +346,7 @@ p{
 }
 #equip-slots-container{
     margin: 0 5px;
+}
+#player-level-label{
+
 }

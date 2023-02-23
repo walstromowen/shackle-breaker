@@ -6,11 +6,16 @@ export class Dagger{
         this.level = 0;
         this.name = "Dagger";
         this.primaryAttackName = "Slash";
+        this.staminaCost = 2;
         this.damageRange = [1 + this.level, 3 + this.level];
     }
     primaryAttack(weilder){
         let target = weilder.currentEnemy;
         let damageOutput = weilder.baseAttack;
+        if(weilder.currentStamina - 2 < 0){
+            theController.gameConsole.innerHTML += `<p>Not Enough Stamina!</p>`;
+            return;
+        }
         damageOutput = damageOutput + Math.floor(Math.random() * (this.damageRange[1] - this.damageRange[0] + 1)) + this.damageRange[0];
         damageOutput = damageOutput - target.armorLevel;
         if(damageOutput > 0){
@@ -29,6 +34,7 @@ export class Spear{
         this.level = 0;
         this.name = "Spear";
         this.primaryAttackName = "Stab";
+        this.staminaCost = 3;
         this.damageRange = [2 + this.level, 5 + this.level]; //multiplied by level?
     }
     primaryAttack(weilder){

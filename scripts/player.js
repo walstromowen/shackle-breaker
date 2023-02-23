@@ -51,7 +51,7 @@ export default class Player{
             this.currentRoom = nextRoom;
             theMiniMap.draw();
             if(this.currentRoom.isExit == true){
-                this.level += 1;
+                this.levelUp();
                 theController.gameConsole.innerHTML += `<p>You find an exit! Curent level: ${this.level}</p>`;
                 this.currentHP = this.maxHP;
                 this.currentStamina = this.maxStamina;
@@ -77,16 +77,23 @@ export default class Player{
     }
     primaryAttack(){
         if(this.equippedArray[0] != "Empty"){
-            let player = this;
-            this.equippedArray[0].primaryAttack(player);
+            if(this.currentStamina - this.equippedArray[0].staminaCost < 0){
+                theController.gameConsole.innerHTML += `<p>Not Enough Stamina!</p>`;
+                return;
+            }
+            this.equippedArray[0].primaryAttack(this);
         }else{//no weapon equipped
             let damageOutput = this.baseAttack - this.currentEnemy.armorLevel;
-            if(damageOutput > 0){
+            if(this.currentStamina - 2 < 0){
+                theController.gameConsole.innerHTML += `<p>Not Enough Stamina!</p>`;
+                return;
+            }else{
+                if(damageOutput < 0){
+                    damageOutput = 0;
+                }
                 this.currentStamina = this.currentStamina - 2;
                 this.currentEnemy.currentHP = this.currentEnemy.currentHP - damageOutput;
                 theController.gameConsole.innerHTML += `<p> You punch the ${this.currentEnemy.name} for ${damageOutput} damage!</p>`;
-            }else{
-                theController.gameConsole.innerHTML += `<p>The ${this.currentEnemy.name} deflects your attatck!</p>`;
             }
         }
         theController.disablePlayerBattleControls();
@@ -162,6 +169,10 @@ export default class Player{
             theController.gameConsole.innerHTML += `<p>Cannot unequip during combat!</p>`;
         }
         theController.scrollToBottom("game-console");
+    }
+    levelUp(){
+        this.level = this.level + 1;
+        //theController.updatePlayer.Level();
     }
 }
 

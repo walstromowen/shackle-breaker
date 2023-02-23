@@ -48,9 +48,9 @@ export default class MapEnviorment{
             case "plains":
                 switch(Math.floor(Math.random()*3)){ 
                     case 0:
-                        return new Royalmage(playerLevel);
+                        return new Skeleton(playerLevel);
                     case 1:
-                        return new Royalmage(playerLevel);
+                        return new Wolf(playerLevel);
                     case 2:
                         return new Royalmage(playerLevel);
                     default:
