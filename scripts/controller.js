@@ -208,7 +208,6 @@ export default class Controller {
         }
     }
     updatePlayerEquippedTab(equippedArrayIndex){
-        console.log(thePlayer.equippedArray[equippedArrayIndex]);
         if(thePlayer.equippedArray[equippedArrayIndex] =="Empty"){
             document.getElementById('equip-slot-' + equippedArrayIndex).innerText = "Empty";
         }else{

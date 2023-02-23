@@ -28,7 +28,6 @@ export default class Map{
                 case 0:
                     if(Math.floor(Math.random()*7) === 0){
                         this.roomArray[i].enemy = this.mapEnviorment.generateEnemy(playerLevel);
-                        console.log("map" + playerLevel);
                     }
                     break;
                 case 2:

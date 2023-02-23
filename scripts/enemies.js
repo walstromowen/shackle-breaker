@@ -176,7 +176,6 @@ export class Wolf extends Enemy{
 export class Royalmage extends Enemy{
     constructor(playerLevel){
         super();
-        console.log("enemy" + playerLevel);
         this.name = "royal mage";
         this.imageSrc = "media/royal-mage.jpg"
         this.maxHP = 20 + playerLevel*4;

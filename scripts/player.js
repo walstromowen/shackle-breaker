@@ -1,12 +1,12 @@
 import Map from "./map.js";
-import {Dagger , Spear, IronHelmet} from "./item.js";
+import {Dagger, Spear, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots} from "./item.js";
 import {controller as theController} from "./main.js";
 import {miniMap as theMiniMap} from "./main.js";
 
 export default class Player{
     constructor(){
         this.equippedArray = ["Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"];
-        this.inventory = [new Dagger(), new IronHelmet];
+        this.inventory = [new Spear(), new IronHelmet, new IronChainmail, new IronGuantlets, new IronGreaves, new IronBoots];
         this.level = 0;
         this.currentXp = 0;
         this.maxHP = 10;
@@ -76,6 +76,7 @@ export default class Player{
         if(this.equippedArray[0] != "Empty"){
             if(this.currentStamina - this.equippedArray[0].staminaCost < 0){
                 theController.gameConsole.innerHTML += `<p>Not Enough Stamina!</p>`;
+                theController.scrollToBottom("game-console");
                 return;
             }
             this.equippedArray[0].primaryAttack(this);
@@ -132,18 +133,68 @@ export default class Player{
                     theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[0].name}</p>`;
                     theController.updatePlayerEquippedTab(0);
                     break;
+                case "offhand":
+                    if(this.equippedArray[1] !== "Empty"){
+                        this.inventory.push(this.equippedArray[1]);
+                    }
+                    this.equippedArray[1] = this.inventory[inventoryIndex];
+                    this.inventory.splice(inventoryIndex, 1);
+                    theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[1].name}</p>`;
+                    theController.updatePlayerEquippedTab(1);
+                    break;
                 case "head":
                     if(this.equippedArray[2] !== "Empty"){
                         this.inventory.push(this.equippedArray[2]);
                     } 
                     this.equippedArray[2] = this.inventory[inventoryIndex];
-                    this.armorLevel = this.baseArmor + this.equippedArray[2].armor;
                     this.inventory.splice(inventoryIndex, 1); 
                     theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[2].name}</p>`;
                     theController.updatePlayerEquippedTab(2);
                     break;
+                case "torso":
+                    if(this.equippedArray[3] !== "Empty"){
+                        this.inventory.push(this.equippedArray[2]);
+                    } 
+                    this.equippedArray[3] = this.inventory[inventoryIndex];
+                    this.inventory.splice(inventoryIndex, 1); 
+                    theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[3].name}</p>`;
+                    theController.updatePlayerEquippedTab(3);
+                    break;
+                case "arms":
+                    if(this.equippedArray[4] !== "Empty"){
+                        this.inventory.push(this.equippedArray[4]);
+                    } 
+                    this.equippedArray[4] = this.inventory[inventoryIndex];
+                    this.inventory.splice(inventoryIndex, 1); 
+                    theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[4].name}</p>`;
+                    theController.updatePlayerEquippedTab(4);
+                    break;
+                case "legs":
+                    if(this.equippedArray[5] !== "Empty"){
+                        this.inventory.push(this.equippedArray[5]);
+                    } 
+                    this.equippedArray[5] = this.inventory[inventoryIndex];
+                    this.inventory.splice(inventoryIndex, 1); 
+                    theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[5].name}</p>`;
+                    theController.updatePlayerEquippedTab(5);
+                    break;
+                case "feet":
+                    if(this.equippedArray[6] !== "Empty"){
+                        this.inventory.push(this.equippedArray[6]);
+                    } 
+                    this.equippedArray[6] = this.inventory[inventoryIndex];
+                    this.inventory.splice(inventoryIndex, 1); 
+                    theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[6].name}</p>`;
+                    theController.updatePlayerEquippedTab(6);
+                    break;
                 default:
                     break;
+            }
+            this.armorLevel = this.baseArmor;
+            for(var i = 0; i < this.equippedArray.length; i++){
+                if(this.equippedArray[i] != "Empty"){
+                    this.armorLevel = this.armorLevel + this.equippedArray[i].armor;
+                }
             }
             theController.updatePlayerInventoryTab(this.inventory);
         }else{

@@ -25,7 +25,6 @@ export default class MapEnviorment{
         }
     }
     generateEnemy(playerLevel){
-        console.log("Eviorment" + playerLevel);
         switch(this.biome){ 
             case "cave": 
                 switch(Math.floor(Math.random()*2)){ 
