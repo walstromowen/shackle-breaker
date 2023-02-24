@@ -36,16 +36,9 @@ h1{
     border: 6px solid darkgrey;
 
 }
-.title-screen-button:hover{
-    height: 60px;
-    width: 300px;
-    margin: 2px 0;
-    font-size: 36px;
+.title-screen-button:hover, .title-screen-button-selected{
     background-color: white;
-    color: black;
-    text-align:center;
     border: 6px solid lightgrey;
-
 }
 #title-screen{
     background-image: url("./media/titleScreen.jpg");

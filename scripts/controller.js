@@ -215,11 +215,11 @@ export default class Controller {
         } 
     }
     displayLevelUpScreen(){
-        this.audioPlayer.pause();
         document.getElementById('level-up-screen').style.display = "block";
         document.getElementById("app").style.display = "none";
     }
     enableLevelUpControls(){
+        let levelCheck = false;
         let fullHeal = () =>{
             thePlayer.currentHP =  thePlayer.maxHP;
             thePlayer.currentStamina =  thePlayer.maxStamina;
@@ -228,23 +228,37 @@ export default class Controller {
         document.getElementById('increase-hp-btn').addEventListener('click', ()=>{
             fullHeal();
             thePlayer.currentHP = thePlayer.maxHP + 2;
+            levelCheck = true;
+            document.getElementById('increase-hp-btn').classList.add("title-screen-button-selected");
+            document.getElementById('increase-stamina-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-magic-btn').classList.remove("title-screen-button-selected");
         });
         document.getElementById('increase-stamina-btn').addEventListener('click', ()=>{
             fullHeal();
             thePlayer.currentStamina = thePlayer.maxStamina + 2;
+            levelCheck = true;
+            document.getElementById('increase-hp-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-stamina-btn').classList.add("title-screen-button-selected");
+            document.getElementById('increase-magic-btn').classList.remove("title-screen-button-selected");
         });
         document.getElementById('increase-magic-btn').addEventListener('click', ()=>{
             fullHeal();
             thePlayer.currentMagic = thePlayer.maxMagic + 2;
+            levelCheck = true;
+            document.getElementById('increase-hp-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-stamina-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-magic-btn').classList.add("title-screen-button-selected");
         });
         document.getElementById('submit-level-btn').addEventListener('click', ()=>{
-            thePlayer.maxHP =  thePlayer.currentHP;
-            thePlayer.maxStamina =  thePlayer.currentStamina;
-            thePlayer.maxMagic =  thePlayer.currentMagic;
-            document.getElementById("app").style.display = "block";
-            document.getElementById('level-up-screen').style.display = "none";
-            this.audioPlayer.play();
-            this.updatePlayerStats();
+            if(levelCheck == true){
+                thePlayer.maxHP =  thePlayer.currentHP;
+                thePlayer.maxStamina =  thePlayer.currentStamina;
+                thePlayer.maxMagic =  thePlayer.currentMagic;
+                document.getElementById("app").style.display = "block";
+                document.getElementById('level-up-screen').style.display = "none";
+                this.audioPlayer.play();
+                this.updatePlayerStats();
+            }
         });
     }
 }
