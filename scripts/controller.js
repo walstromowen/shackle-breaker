@@ -3,16 +3,14 @@ import {miniMap as theMiniMap} from "./main.js";
 
 export default class Controller {
     constructor(){
+        this.battleBtnArray = [];
+        this.mapBtnArray = [];
         this.gameConsole = document.getElementById("game-console");
         this.playerName = document.getElementById('player-name');
         this.playerName.innerText = thePlayer.name;
         this.enemyName = document.getElementById('enemy-name');
         this.locationName = document.getElementById('location-name');
         this.locationName.innerText = thePlayer.map.mapEnviorment.biome; //occurs twice
-        this.upArrow = document.getElementById('up-arrow');
-        this.rightArrow = document.getElementById('right-arrow');
-        this.downArrow = document.getElementById('down-arrow');
-        this.leftArrow = document.getElementById('left-arrow');
         this.audioPlayer = document.getElementById('audio-player');
         this.enemyImage = document.getElementById('enemy-image');
         this.locationImage = document.getElementById('location-image');
@@ -29,25 +27,25 @@ export default class Controller {
         this.currentHealthEnemy = document.getElementById('current-health-enemy');
         this.currentStaminaEnemy = document.getElementById('current-stamina-enemy');
         this.currentMagicEnemy = document.getElementById('current-magic-enemy');
-        this.equippedButton = document.getElementById('equipped-button');
-        this.inventoryButton = document.getElementById('inventory-button');
+        this.equippedTabButton = document.getElementById('equipped-tab-button');
+        this.inventoryTabButton = document.getElementById('inventory-tab-button');
         this.inventoryTab = document.getElementById('inventory-tab');
         this.toggleBattleCallback = this.toggleBattle.bind(this);
         this.toggleMapCallback = this.toggleMap.bind(this);
-        this.moveNorthCallback = thePlayer.moveNorth.bind(thePlayer);
-        this.moveEastCallback = thePlayer.moveEast.bind(thePlayer);
-        this.moveSouthCallback = thePlayer.moveSouth.bind(thePlayer);
-        this.moveWestCallback = thePlayer.moveWest.bind(thePlayer);
         this.playerPrimaryAttackCallback = thePlayer.primaryAttack.bind(thePlayer);
+        this.playerRecoverCallback = thePlayer.recover.bind(thePlayer);
         this.updatePlayerStats();
         this.updateEnemyStats();
+        this.enableKeyControls();
+        this.enablePlayerMapControls();
         this.enableInventoryControls();
         this.enableLevelUpControls();
         this.updatePlayerInventoryTab(thePlayer.inventory)
         this.toggleMap();
     }
     toggleMap(){
-        thePlayer.isInBattle = false;
+        document.getElementById('battle-button-container').style.display = "none";
+        document.getElementById('map-button-container').style.display = "block";
         document.getElementById("location-name-container").style.display = "block";
         document.getElementById("enemy-name-container").style.display = "none";
         document.getElementById("player-image-container").style.display = "none";
@@ -55,26 +53,18 @@ export default class Controller {
         document.getElementById("enemy-image-container").style.display = "none";
         document.getElementById("location-image-container").style.display = "block";
         document.getElementById("enemy-main-stats-container").style.display = "none";
-        this.disablePlayerBattleControls();
-        this.enablePlayerMapControls();
-        this.upArrow.innerText = "Up";
-        this.downArrow.innerText = "Down";
         this.audioPlayer.pause();
         this.audioPlayer.src = "./audio/deep-in-the-dell-126916.mp3";
         this.audioPlayer.play();
         theMiniMap.resizeCanvas();
         theMiniMap.draw();
+        thePlayer.isInBattle = false;
     }
     toggleBattle(){
-        this.disablePlayerMapControls();
+        thePlayer.isInBattle = true;
         this.gameConsole.innerHTML += "<p>Something approaches...</p>";
         this.scrollToBottom("game-console");
-        document.querySelectorAll('.direction-button').forEach((btn)=>{
-            btn.classList.add('direction-button-disabled');
-            btn.classList.add('direction-button-disabled:hover');
-        });
         setTimeout(()=>{
-            thePlayer.isInBattle = true;
             this.enemyName.innerText = thePlayer.currentEnemy.name;
             this.enemyImage.src = thePlayer.currentEnemy.imageSrc;
             document.getElementById("location-name-container").style.display = "none";
@@ -84,16 +74,9 @@ export default class Controller {
             document.getElementById("location-image-container").style.display = "none";
             document.getElementById("enemy-image-container").style.display = "block";
             document.getElementById("enemy-main-stats-container").style.display = "block";
-            if(thePlayer.equippedArray[0] !== "Empty"){
-                this.upArrow.innerText = thePlayer.equippedArray[0].primaryAttackName;
-            } else{
-                this.upArrow.innerText = "Attack";
-            }
-            
-            this.downArrow.innerText = "Retreat";
+            this.enablePlayerBattleControls();
             this.gameConsole.innerHTML += `<p>You encounter a ${thePlayer.currentEnemy.name}!</p>`;
             this.scrollToBottom("game-console");
-            this.enablePlayerBattleControls();
             this.audioPlayer.src = "./audio/battle-of-the-dragons-8037.mp3";
             this.audioPlayer.play();
          }, 2000);
@@ -136,44 +119,86 @@ export default class Controller {
             return true;     
         }
     }
-    enablePlayerMapControls(){
-        this.upArrow.addEventListener('click', this.moveNorthCallback);
-        this.rightArrow.addEventListener('click', this.moveEastCallback);
-        this.downArrow.addEventListener('click', this.moveSouthCallback);
-        this.leftArrow.addEventListener('click', this.moveWestCallback);
-        document.querySelectorAll('.direction-button').forEach((btn)=>{
-            btn.classList.remove('direction-button-disabled');
-            btn=>btn.classList.remove('direction-button-disabled:hover');
+    enableKeyControls(){
+        window.addEventListener("keydown", (e) => {
+            if(thePlayer.isInBattle == false){
+                switch(e.key){
+                    case 'w':
+                        thePlayer.moveNorth();
+                        break;
+                    case 'a':
+                        thePlayer.moveWest();
+                        break;
+                    case 's':
+                        thePlayer.moveSouth();
+                        break;
+                    case 'd':
+                        thePlayer.moveEast();
+                        break;
+                }
+            }
         });
     }
-    disablePlayerMapControls(){
-        this.upArrow.removeEventListener('click', this.moveNorthCallback);
-        this.rightArrow.removeEventListener('click', this.moveEastCallback);
-        this.downArrow.removeEventListener('click', this.moveSouthCallback);
-        this.leftArrow.removeEventListener('click', this.moveWestCallback);
+    enablePlayerMapControls(){
+        for(var i = 0; i < this.mapBtnArray.length; i++){
+            let controls = document.getElementById('map-button-container');
+            let oldBtn = controls.querySelector('button');
+                oldBtn.remove();
+        }
+        this.mapBtnArray = [];
+        let interactBtn = document.createElement('button');
+        interactBtn.classList.add('action-button');
+        interactBtn.innerText = "Interact";
+        //interactBtn.addEventListener('click', this.toggleMapCallback);
+        document.getElementById('map-button-container').appendChild(interactBtn);
+        this.mapBtnArray.push(interactBtn);
     }
     enablePlayerBattleControls(){
-        this.upArrow.addEventListener('click', this.playerPrimaryAttackCallback); 
-        this.downArrow.addEventListener('click', this.toggleMapCallback);
-        document.querySelectorAll('.direction-button').forEach((btn)=>{
-            btn.classList.remove('direction-button-disabled');
-            btn.classList.remove('direction-button-disabled:hover');
-        });
+        for(var i = 0; i < this.battleBtnArray.length; i++){
+            let controls = document.getElementById('battle-button-container');
+            let oldBtn = controls.querySelector('button');
+                oldBtn.remove();
+        }
+        this.battleBtnArray = [];
+        //primary attack btn
+        let primaryAttackBtn = document.createElement('button');
+        primaryAttackBtn.classList.add('action-button');
+        if(thePlayer.equippedArray[0] != "Empty"){
+            primaryAttackBtn.innerText = thePlayer.equippedArray[0].primaryAttackName;
+        }else{
+            primaryAttackBtn.innerText = "Attack";
+        }
+        primaryAttackBtn.addEventListener('click', this.playerPrimaryAttackCallback);
+        document.getElementById('battle-button-container').appendChild(primaryAttackBtn);
+        this.battleBtnArray.push(primaryAttackBtn);
+        //recover btn
+        let recoverBtn = document.createElement('button');
+        recoverBtn.classList.add('action-button');
+        recoverBtn.innerText = "Recover";
+        recoverBtn.addEventListener('click', this.playerRecoverCallback);
+        document.getElementById('battle-button-container').appendChild(recoverBtn);
+        this.battleBtnArray.push(recoverBtn);
+        //retreat btn
+        let retreatBtn = document.createElement('button');
+        retreatBtn.classList.add('action-button');
+        retreatBtn.innerText = "Retreat";
+        retreatBtn.addEventListener('click', this.toggleMapCallback);
+        document.getElementById('battle-button-container').appendChild(retreatBtn);
+        this.battleBtnArray.push(retreatBtn);
+
+        document.getElementById('map-button-container').style.display = "none";
+        document.getElementById('battle-button-container').style.display = "block";
+        document.getElementById('battle-button-container').style.visibility = "visible";
     }
     disablePlayerBattleControls(){
-        this.downArrow.removeEventListener('click', this.toggleMapCallback);
-        this.upArrow.removeEventListener('click', this.playerPrimaryAttackCallback); 
-        document.querySelectorAll('.direction-button').forEach((btn)=>{
-            btn.classList.add('direction-button-disabled');
-            btn.classList.add('direction-button-disabled:hover');
-        });
+        document.getElementById('battle-button-container').style.visibility = "hidden";
     }
     enableInventoryControls(){
-        this.equippedButton.addEventListener('click',()=>{
+        this.equippedTabButton.addEventListener('click',()=>{
             document.getElementById('inventory-tab').style.display = "none";
             document.getElementById('equipped-tab').style.display = "block";
         });
-        this.inventoryButton.addEventListener('click',()=>{
+        this.inventoryTabButton.addEventListener('click',()=>{
             document.getElementById('equipped-tab').style.display = "none";
             document.getElementById('inventory-tab').style.display = "block";
         });
@@ -185,7 +210,7 @@ export default class Controller {
     }
     updatePlayerInventoryTab(inventory){
         for(var i = -1; i < inventory.length; i++){
-            let oldSlot = this.inventoryTab.querySelector('div')
+            let oldSlot = this.inventoryTab.querySelector('div');
             if(oldSlot !== null){
                 oldSlot.remove();
             } 

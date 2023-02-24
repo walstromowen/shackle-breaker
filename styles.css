@@ -23,7 +23,6 @@ h1{
     color: lightgrey;
     font-size: 120px;
 }
-
 /*Title Screen*/
 .title-screen-button{
     height: 60px;
@@ -34,7 +33,6 @@ h1{
     color: black;
     text-align:center;
     border: 6px solid darkgrey;
-
 }
 .title-screen-button:hover, .title-screen-button-selected{
     background-color: white;
@@ -52,28 +50,20 @@ h1{
     margin: 10%auto;
     width: 300px;
 }
-
-
 /*App*/
 .app-row{
     margin: 0;
     padding: 0px;
     display: flex;
     justify-content:space-between;
-    height: 100vh;
-    
+    height: 100vh;    
 }
 .app-column{
     margin: 0;
     padding: 10px;
-    
-    
 }
-.direction-button-container{
-    display: inline;
-    margin: 0px auto;
-}
-.direction-button{
+.action-button{
+    background-color: white;
     border-radius: 100%;
     width: 92px;
     height: 64px;
@@ -81,15 +71,16 @@ h1{
     font-size: 20px;
     font-weight: bold;
     text-align: center;
+    margin: 0 5px;
 }
-.direction-button-disabled{
+.action-button-disabled{
     filter: brightness(0.85);
 }
-.direction-button:hover{
+.action-button:hover{
     border: 1px solid white;
     cursor: pointer;
 }
-.direction-button-disabled:hover{
+.action-button-disabled:hover{
     cursor: not-allowed;
 }
 .tab-label{
@@ -151,7 +142,6 @@ h1{
     background-color:#D7B75F;
     text-align: center;
 }
-
 .equip-slots-row{
     display: flex;
 }
@@ -175,11 +165,6 @@ h1{
     display: block;
 }
 
-
-
-
-
-
 #app{
     display: none;
 }
@@ -189,8 +174,6 @@ h1{
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
-    
-    
 }
 #app-column-2{
     background-color: #EADAAD;
@@ -231,10 +214,10 @@ h1{
     display: none;
 }
 
-#controls-row-1{
+#action-bar{
     width: 100%;
-    margin: 10px auto 0 auto;
-    display: flex;
+    margin: 10px 0 0 0;
+    background-color:#D7B75F;
 }
 #direction-controls-container{
     background-color: #D7B75F;
@@ -286,7 +269,7 @@ h1{
     object-fit: cover;
 }
 #location-name-container{
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     background-color:#EADAAD;
 }
 #location-name{
@@ -320,13 +303,11 @@ h1{
 #enemy-image{
     width: 288px;
     height: 288px;
-    object-fit: cover;
-    
+    object-fit: cover; 
 }
 #tabs-label-container{
    display:flex;
    background-color:#EADAAD;
-   
 }
 #items{
     display: none;
@@ -361,8 +342,13 @@ h1{
 #equip-slots-container{
     margin: 0 5px;
 }
-
-
+#battle-button-container{
+    display: flex;
+    margin: 5px;
+}
+#map-button-container{
+    margin: 5px;
+}
 /*Level Up Screen*/
 #level-up-screen{
     display: none;

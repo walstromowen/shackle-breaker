@@ -102,7 +102,7 @@ export class Bat extends Enemy{
         this.currentStamina = this.currentStamina - Math.floor(this.maxStamina*0.2);
     }
     fly(){
-        theController.gameConsole.innerHTML += `<p> The ${this.name} flies around</p>`;
+        theController.gameConsole.innerHTML += `<p> The ${this.name} flies into the air!</p>`;
         this.currentStamina = this.maxStamina;
     }
     dropLoot(){

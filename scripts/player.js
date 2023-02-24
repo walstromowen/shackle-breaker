@@ -59,7 +59,7 @@ export default class Player{
             }
         }
         else{
-            theController.gameConsole.innerHTML += "<p> I can't go this way...</p>";
+            theController.gameConsole.innerHTML += "<p> You can't go this way.</p>";
         }
         theController.updatePlayerStats();           
     }
@@ -71,6 +71,18 @@ export default class Player{
         theMiniMap.draw();//
         //theController.gameConsole.innerHTML += "<p>" + this.currentRoom.description + "</p>";//
         theController.scrollToBottom("game-console");
+    }
+    endTurn(){
+        theController.disablePlayerBattleControls();
+        theController.updateEnemyStats();
+        theController.updatePlayerStats();
+        setTimeout(()=>{
+            if(theController.battleOverCheck() === true){
+                theController.endBattle();
+            }else{
+                this.currentEnemy.chooseAttack(this);
+            }
+        }, 2000);
     }
     primaryAttack(){
         if(this.equippedArray[0] != "Empty"){
@@ -94,25 +106,15 @@ export default class Player{
                 theController.gameConsole.innerHTML += `<p> You punch the ${this.currentEnemy.name} for ${damageOutput} damage!</p>`;
             }
         }
-        theController.disablePlayerBattleControls();
-        theController.updateEnemyStats();
-        theController.updatePlayerStats();
-        setTimeout(()=>{
-            if(theController.battleOverCheck() === true){
-                theController.endBattle();
-            }else{
-                this.currentEnemy.chooseAttack(this);
-            }
-        }, 2000);
+        this.endTurn();
     }
-    generateNewMap(){
-        this.map = new Map(this.level);
-        this.currentEnemy = ""; 
-        this.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
-        this.nextRoom = this.currentRoom;
-        theController.locationImage.src = this.map.mapEnviorment.imageSrc;
-        theController.locationName.innerText = this.map.mapEnviorment.biome;
-        theMiniMap.draw();
+    recover(){
+        this.currentStamina = this.currentStamina + 2;
+        if(this.currentStamina > this.maxStamina){
+            this.currentStamina = this.maxStamina;
+        }
+        theController.gameConsole.innerHTML += `<p>You recover stamina.</p>`;
+        this.endTurn();
     }
     loot(){
         let loot = this.currentEnemy.dropLoot();
@@ -130,7 +132,7 @@ export default class Player{
                     }
                     this.equippedArray[0] = this.inventory[inventoryIndex];
                     this.inventory.splice(inventoryIndex, 1);
-                    theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[0].name}</p>`;
+                    theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[0].name}.</p>`;
                     theController.updatePlayerEquippedTab(0);
                     break;
                 case "offhand":
@@ -139,7 +141,7 @@ export default class Player{
                     }
                     this.equippedArray[1] = this.inventory[inventoryIndex];
                     this.inventory.splice(inventoryIndex, 1);
-                    theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[1].name}</p>`;
+                    theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[1].name}.</p>`;
                     theController.updatePlayerEquippedTab(1);
                     break;
                 case "head":
@@ -148,7 +150,7 @@ export default class Player{
                     } 
                     this.equippedArray[2] = this.inventory[inventoryIndex];
                     this.inventory.splice(inventoryIndex, 1); 
-                    theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[2].name}</p>`;
+                    theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[2].name}.</p>`;
                     theController.updatePlayerEquippedTab(2);
                     break;
                 case "torso":
@@ -157,7 +159,7 @@ export default class Player{
                     } 
                     this.equippedArray[3] = this.inventory[inventoryIndex];
                     this.inventory.splice(inventoryIndex, 1); 
-                    theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[3].name}</p>`;
+                    theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[3].name}.</p>`;
                     theController.updatePlayerEquippedTab(3);
                     break;
                 case "arms":
@@ -166,7 +168,7 @@ export default class Player{
                     } 
                     this.equippedArray[4] = this.inventory[inventoryIndex];
                     this.inventory.splice(inventoryIndex, 1); 
-                    theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[4].name}</p>`;
+                    theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[4].name}.</p>`;
                     theController.updatePlayerEquippedTab(4);
                     break;
                 case "legs":
@@ -175,7 +177,7 @@ export default class Player{
                     } 
                     this.equippedArray[5] = this.inventory[inventoryIndex];
                     this.inventory.splice(inventoryIndex, 1); 
-                    theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[5].name}</p>`;
+                    theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[5].name}.</p>`;
                     theController.updatePlayerEquippedTab(5);
                     break;
                 case "feet":
@@ -184,7 +186,7 @@ export default class Player{
                     } 
                     this.equippedArray[6] = this.inventory[inventoryIndex];
                     this.inventory.splice(inventoryIndex, 1); 
-                    theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[6].name}</p>`;
+                    theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[6].name}.</p>`;
                     theController.updatePlayerEquippedTab(6);
                     break;
                 default:
@@ -205,7 +207,7 @@ export default class Player{
     unequip(equippedArrayIndex){
         if(this.isInBattle == false){
             if(this.equippedArray[equippedArrayIndex] != "Empty"){
-                theController.gameConsole.innerHTML += `<p>You unequip ${this.equippedArray[equippedArrayIndex].name}</p>`;
+                theController.gameConsole.innerHTML += `<p>You unequip ${this.equippedArray[equippedArrayIndex].name}.</p>`;
                 this.inventory.push(this.equippedArray[equippedArrayIndex]);
                 this.equippedArray[equippedArrayIndex] = "Empty";
                 theController.updatePlayerInventoryTab(this.inventory);
@@ -220,8 +222,17 @@ export default class Player{
     }
     levelUp(){
         this.level = this.level + 1;
-        theController.gameConsole.innerHTML += `<p>Level up! New level: ${this.level}</p>`;
+        theController.gameConsole.innerHTML += `<p>Level up! New level: ${this.level}.</p>`;
         theController.displayLevelUpScreen();
+    }
+    generateNewMap(){
+        this.map = new Map(this.level);
+        this.currentEnemy = ""; 
+        this.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
+        this.nextRoom = this.currentRoom;
+        theController.locationImage.src = this.map.mapEnviorment.imageSrc;
+        theController.locationName.innerText = this.map.mapEnviorment.biome;
+        theMiniMap.draw();
     }
 }
 
