@@ -5,11 +5,9 @@ Text adventure game based on the ShacklerBreaker story
 * tweak inventory UI
 * Traps / encounters
 * Game over screen
-* Secondary abilities
 * Character creation screen
 * Rework character level and xp display
 * Rework enemies class
-* Rework items class
 * Consumablabe items
 * Alphabetize CSS rules
 * Retreat Penalties

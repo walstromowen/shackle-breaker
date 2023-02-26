@@ -32,10 +32,8 @@ export default class Controller {
         this.inventoryTab = document.getElementById('inventory-tab');
         this.toggleBattleCallback = this.toggleBattle.bind(this);
         this.toggleMapCallback = this.toggleMap.bind(this);
-        this.playerPrimaryAttackCallback = thePlayer.primaryAttack.bind(thePlayer);
         this.playerRecoverCallback = thePlayer.recover.bind(thePlayer);
         this.updatePlayerStats();
-        this.updateEnemyStats();
         this.enableKeyControls();
         this.enablePlayerMapControls();
         this.enableInventoryControls();
@@ -85,6 +83,7 @@ export default class Controller {
         document.getElementById(elementId).scrollTop = document.getElementById(elementId).scrollHeight;
     }
     updatePlayerStats(){
+        thePlayer.boundStats();
         this.currentHealthPlayer.innerText = thePlayer.currentHP;
         this.currentStaminaPlayer.innerText = thePlayer.currentStamina;
         this.currentMagicPlayer.innerText = thePlayer.currentMagic;
@@ -95,6 +94,7 @@ export default class Controller {
         this.scrollToBottom("game-console");
     }
     updateEnemyStats(){
+        thePlayer.currentEnemy.boundStats();
         this.currentHealthEnemy.innerText = thePlayer.currentEnemy.currentHP;
         this.currentStaminaEnemy.innerText = thePlayer.currentEnemy.currentStamina;
         this.currentMagicEnemy.innerText = thePlayer.currentEnemy.currentMagic;
@@ -154,23 +154,39 @@ export default class Controller {
         this.mapBtnArray.push(interactBtn);
     }
     enablePlayerBattleControls(){
+        //remove old buttons
         for(var i = 0; i < this.battleBtnArray.length; i++){
             let controls = document.getElementById('battle-button-container');
             let oldBtn = controls.querySelector('button');
                 oldBtn.remove();
         }
         this.battleBtnArray = [];
-        //primary attack btn
-        let primaryAttackBtn = document.createElement('button');
-        primaryAttackBtn.classList.add('action-button');
-        if(thePlayer.equippedArray[0] != "Empty"){
-            primaryAttackBtn.innerText = thePlayer.equippedArray[0].primaryAttackName;
-        }else{
-            primaryAttackBtn.innerText = "Attack";
+        //Ability Buttons
+        for(let x = 0; x < thePlayer.equippedArray.length; x++){
+            if(thePlayer.equippedArray[x] != "Empty"){
+                if(thePlayer.equippedArray[x].abilityArray.length != 0){
+                    for(let y = 0; y < thePlayer.equippedArray[x].abilityArray.length; y++){
+                        let abilityBtn = document.createElement('button');
+                        abilityBtn.classList.add('action-button');
+                        let abilityName = thePlayer.equippedArray[x].abilityArray[y].name;
+                        abilityName = abilityName.charAt(0).toUpperCase() + abilityName.slice(1);
+                        abilityBtn.innerText = abilityName;
+                        abilityBtn.addEventListener('click', ()=>{
+                            thePlayer.useEquipment(x, y);
+                        });
+                        document.getElementById('battle-button-container').appendChild(abilityBtn);
+                        this.battleBtnArray.push(abilityBtn);
+                    }
+                }
+            }
         }
-        primaryAttackBtn.addEventListener('click', this.playerPrimaryAttackCallback);
-        document.getElementById('battle-button-container').appendChild(primaryAttackBtn);
-        this.battleBtnArray.push(primaryAttackBtn);
+        //punch btn
+        let punchBtn = document.createElement('button');
+        punchBtn.classList.add('action-button');
+        punchBtn.innerText = "Punch";
+        punchBtn.addEventListener('click', thePlayer.punch.bind(thePlayer));
+        document.getElementById('battle-button-container').appendChild(punchBtn);
+        this.battleBtnArray.push(punchBtn);
         //recover btn
         let recoverBtn = document.createElement('button');
         recoverBtn.classList.add('action-button');
@@ -222,7 +238,9 @@ export default class Controller {
             inventorySlot.classList.add('inventory-slot');
             inventorySlotMenu.classList.add('inventory-slot-menu');
             slotMenuEquipBtn.classList.add('slot-menu-equip-btn');
-            inventorySlot.innerText = inventory[i].name;
+            let itemName = inventory[i].name;
+            itemName = itemName.charAt(0).toUpperCase() + itemName.slice(1);
+            inventorySlot.innerText = itemName;
             slotMenuEquipBtn.innerText = "Equip";
             inventorySlot.appendChild(inventorySlotMenu);
             inventorySlotMenu.appendChild(slotMenuEquipBtn);
@@ -236,7 +254,9 @@ export default class Controller {
         if(thePlayer.equippedArray[equippedArrayIndex] =="Empty"){
             document.getElementById('equip-slot-' + equippedArrayIndex).innerText = "Empty";
         }else{
-            document.getElementById('equip-slot-' + equippedArrayIndex).innerText = thePlayer.equippedArray[equippedArrayIndex].name;
+            let itemName = thePlayer.equippedArray[equippedArrayIndex].name;
+            itemName = itemName.charAt(0).toUpperCase() + itemName.slice(1);
+            document.getElementById('equip-slot-' + equippedArrayIndex).innerText = itemName;
         } 
     }
     displayLevelUpScreen(){
@@ -276,9 +296,9 @@ export default class Controller {
         });
         document.getElementById('submit-level-btn').addEventListener('click', ()=>{
             if(levelCheck == true){
-                thePlayer.maxHP =  thePlayer.currentHP;
-                thePlayer.maxStamina =  thePlayer.currentStamina;
-                thePlayer.maxMagic =  thePlayer.currentMagic;
+                thePlayer.maxHP = thePlayer.currentHP;
+                thePlayer.maxStamina = thePlayer.currentStamina;
+                thePlayer.maxMagic = thePlayer.currentMagic;
                 document.getElementById("app").style.display = "block";
                 document.getElementById('level-up-screen').style.display = "none";
                 this.audioPlayer.play();

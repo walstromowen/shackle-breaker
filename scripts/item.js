@@ -1,103 +1,93 @@
-import {controller as theController} from "./main.js";
+import {Slash, Stab, Block} from "./abilities.js"
 
 export class Dagger{
     constructor(){
+        this.name = "dagger";
         this.type = "weapon";
         this.level = 0;
         this.armor = 0;
-        this.name = "Dagger";
-        this.primaryAttackName = "Slash";
         this.staminaCost = 2;
+        this.abilityArray = [new Stab(), new Slash()];
         this.damageRange = [1 + this.level, 3 + this.level];
     }
-    primaryAttack(weilder){
-        let target = weilder.currentEnemy;
-        let damageOutput = weilder.baseAttack;
-        if(weilder.currentStamina - 2 < 0){
-            theController.gameConsole.innerHTML += `<p>Not Enough Stamina!</p>`;
-            theController.scrollToBottom("game-console");
-            return;
-        }
-        damageOutput = damageOutput + Math.floor(Math.random() * (this.damageRange[1] - this.damageRange[0] + 1)) + this.damageRange[0];
-        damageOutput = damageOutput - target.armorLevel;
-        if(damageOutput > 0){
-            target.currentHP = target.currentHP - damageOutput;
-            theController.gameConsole.innerHTML += `<p> You slash the ${target.name} for ${damageOutput} damage!</p>`;
-        }
-        else{
-            theController.gameConsole.innerHTML += `<p>The ${target.name} evades your attatck!</p>`;
-        }
-        weilder.currentStamina = weilder.currentStamina - 2;
+    useAbility(abilityIndex, weilder, target){
+        if(this.abilityArray[abilityIndex].activate(this, weilder, target) == false){
+            return false;
+        };
     }
 }
 export class Spear{
     constructor(){
+        this.name = "spear";
         this.type = "weapon";
         this.level = 0;
         this.armor = 0;
-        this.name = "Spear";
-        this.primaryAttackName = "Stab";
-        this.staminaCost = 3;
-        this.damageRange = [2 + this.level, 5 + this.level]; //multiplied by level?
+        this.staminaCost = 2;
+        this.abilityArray = [new Stab()];
+        this.damageRange = [2 + this.level, 5 + this.level];
     }
-    primaryAttack(weilder){
-        let target = weilder.currentEnemy;
-        let damageOutput = weilder.baseAttack;
-        if(weilder.currentStamina - 2 < 0){
-            theController.gameConsole.innerHTML += `<p>Not Enough Stamina!</p>`;
-            theController.scrollToBottom("game-console");
-            return;
-        }
-        damageOutput = damageOutput + Math.floor(Math.random() * (this.damageRange[1] - this.damageRange[0] + 1)) + this.damageRange[0];
-        damageOutput = damageOutput - target.armorLevel;
-        if(damageOutput > 0){
-            target.currentHP = target.currentHP - damageOutput;
-            theController.gameConsole.innerHTML += `<p> You stab the ${target.name} for ${damageOutput} damage!</p>`;
-        }
-        else{
-            theController.gameConsole.innerHTML += `<p>The ${target.name} evades your attatck!</p>`;
-        }
-        weilder.currentStamina = weilder.currentStamina - 2;
+    useAbility(abilityIndex, weilder, target){
+        if(this.abilityArray[abilityIndex].activate(this, weilder, target) == false){
+            return false;
+        };
     }
 }
-
+export class IronSheild{
+    constructor(){
+        this.name = "iron sheild";
+        this.type = "offhand";
+        this.level = 0;
+        this.armor = 2;
+        this.staminaCost = 2;
+        this.abilityArray = [new Block()];
+        this.damageRange = [this.level, this.level + 1];
+    }
+    useAbility(abilityIndex, weilder, target){
+        this.abilityArray[abilityIndex].activate(this, weilder, target);
+    }
+}
 export class IronHelmet{
     constructor(){
+        this.name = "iron helmet";
         this.type = "head";
         this.level = 0;
-        this.name = "Iron Helmet";
         this.armor = 2;
+        this.abilityArray = [];
     }
 }
 export class IronGuantlets{
     constructor(){
+        this.name = "iron guantlets";
         this.type = "arms";
         this.level = 0;
-        this.name = "Iron Guantlets";
         this.armor = 2;
+        this.abilityArray = [];
     }
 }
 export class IronChainmail{
     constructor(){
+        this.name = "iron chainmail";
         this.type = "torso";
         this.level = 0;
-        this.name = "Iron Chainmail";
         this.armor = 2;
+        this.abilityArray = [];
     }
 }
 export class IronGreaves{
     constructor(){
+        this.name = "iron greaves";
         this.type = "legs";
         this.level = 0;
-        this.name = "Iron Greaves";
         this.armor = 2;
+        this.abilityArray = [];
     }
 }
 export class IronBoots{
     constructor(){
+        this.name = "iron boots";
         this.type = "feet";
         this.level = 0;
-        this.name = "Iron Boots";
         this.armor = 2;
+        this.abilityArray = [];
     }
 }

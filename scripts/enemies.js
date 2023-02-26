@@ -11,6 +11,14 @@ class Enemy{
                 theController.endBattle();
         }
     }
+    boundStats(){
+        if(this.currentHP > this.maxHP)this.currentHP = this.maxHP;
+        if(this.currentStamina > this.maxStamina)this.currentStamina = this.maxStamina;
+        if(this.currentMagic > this.maxMagic)this.currentMagic = this.maxMagic;
+        if(this.currentHP < 0)this.currentHP = 0;
+        if(this.currentStamina < 0)this.currentStamina = 0;
+        if(this.currentMagic < 0)this.currentMagic = 0;
+    }
 }
 
 export class Skeleton extends Enemy{

@@ -1,12 +1,12 @@
 import Map from "./map.js";
-import {Dagger, Spear, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots} from "./item.js";
+import {Dagger, Spear, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots} from "./item.js";
 import {controller as theController} from "./main.js";
 import {miniMap as theMiniMap} from "./main.js";
 
 export default class Player{
     constructor(){
         this.equippedArray = ["Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"];
-        this.inventory = [new Spear(), new IronHelmet, new IronChainmail, new IronGuantlets, new IronGreaves, new IronBoots];
+        this.inventory = [new Dagger(), new Spear(), new IronSheild(), new IronHelmet, new IronChainmail, new IronGuantlets, new IronGreaves, new IronBoots];
         this.level = 0;
         this.currentXp = 0;
         this.maxHP = 10;
@@ -19,6 +19,7 @@ export default class Player{
         this.baseArmor = 1;
         this.armorLevel = this.baseArmor;
         this.baseAttack = 1;
+        this.currentAttack = this.baseAttack;
         this.isInBattle = false;
         this.map = new Map(this.level);
         this.name = "The Schackle Breaker";
@@ -72,6 +73,14 @@ export default class Player{
         //theController.gameConsole.innerHTML += "<p>" + this.currentRoom.description + "</p>";//
         theController.scrollToBottom("game-console");
     }
+    boundStats(){
+        if(this.currentHP > this.maxHP)this.currentHP = this.maxHP;
+        if(this.currentStamina > this.maxStamina)this.currentStamina = this.maxStamina;
+        if(this.currentMagic > this.maxMagic)this.currentMagic = this.maxMagic;
+        if(this.currentHP < 0)this.currentHP = 0;
+        if(this.currentStamina < 0)this.currentStamina = 0;
+        if(this.currentMagic < 0)this.currentMagic = 0;
+    }
     endTurn(){
         theController.disablePlayerBattleControls();
         theController.updateEnemyStats();
@@ -84,28 +93,25 @@ export default class Player{
             }
         }, 2000);
     }
-    primaryAttack(){
-        if(this.equippedArray[0] != "Empty"){
-            if(this.currentStamina - this.equippedArray[0].staminaCost < 0){
-                theController.gameConsole.innerHTML += `<p>Not Enough Stamina!</p>`;
-                theController.scrollToBottom("game-console");
-                return;
+    punch(){
+        let damageOutput = this.baseAttack - this.currentEnemy.armorLevel;
+        if(this.currentStamina - 2 < 0){
+            theController.gameConsole.innerHTML += `<p>Not Enough Stamina!</p>`;
+            return;
+        }else{
+            if(damageOutput < 0){
+                damageOutput = 0;
             }
-            this.equippedArray[0].primaryAttack(this);
-        }else{//no weapon equipped
-            let damageOutput = this.baseAttack - this.currentEnemy.armorLevel;
-            if(this.currentStamina - 2 < 0){
-                theController.gameConsole.innerHTML += `<p>Not Enough Stamina!</p>`;
-                return;
-            }else{
-                if(damageOutput < 0){
-                    damageOutput = 0;
-                }
-                this.currentStamina = this.currentStamina - 2;
-                this.currentEnemy.currentHP = this.currentEnemy.currentHP - damageOutput;
-                theController.gameConsole.innerHTML += `<p> You punch the ${this.currentEnemy.name} for ${damageOutput} damage!</p>`;
-            }
+            this.currentStamina = this.currentStamina - 2;
+            this.currentEnemy.currentHP = this.currentEnemy.currentHP - damageOutput;
+            theController.gameConsole.innerHTML += `<p> You punch the ${this.currentEnemy.name} for ${damageOutput} damage!</p>`;
         }
+        this.endTurn();
+    }
+    useEquipment(equippedIndex, abilityIndex){
+        if(this.equippedArray[equippedIndex].useAbility(abilityIndex, this, this.currentEnemy) == false){
+            return;
+        };
         this.endTurn();
     }
     recover(){
