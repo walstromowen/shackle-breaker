@@ -11,6 +11,7 @@ class ability{
     checkStamina(weilder, staminaCost){
         if(weilder.currentStamina - staminaCost < 0){
             theController.gameConsole.innerHTML += `<p>Not enough stamina!</p>`;
+            theController.scrollToBottom("game-console");
             return false;
         }else{
             weilder.currentStamina = weilder.currentStamina - staminaCost;
@@ -20,6 +21,7 @@ class ability{
     checkMagic(weilder, magicCost){
         if(weilder.currentMagic - magicCost < 0){
             theController.gameConsole.innerHTML += `<p>Not enough magic!</p>`;
+            theController.scrollToBottom("game-console");
             return false;
         }else{
             weilder.currentMagic = weilder.currentMagic - magicCost;
@@ -45,9 +47,7 @@ export class Slash extends ability{
     activate(item, weilder, target){
         if(this.checkStamina(weilder, item.staminaCost) == true){
             let damageOutput = weilder.currentAttack - target.armorLevel + Math.floor(Math.random() * (item.damageRange[1] - item.damageRange[0] + 1)) + item.damageRange[0];
-            console.log("Slash output: " + damageOutput);
             damageOutput = this.checkDamage(damageOutput, target);
-            console.log("Slash output: " + damageOutput);
             target.currentHP = target.currentHP - damageOutput;
             theController.gameConsole.innerHTML += `<p>You ${this.name} the ${target.name} for ${damageOutput} damage!</p>`;
         }else{
@@ -65,9 +65,7 @@ export class Stab extends ability{
     activate(item, weilder, target){
         if(this.checkStamina(weilder, item.staminaCost) == true){
             let damageOutput = weilder.currentAttack - target.armorLevel + Math.floor(Math.random() * (item.damageRange[1] - item.damageRange[0] + 1)) + item.damageRange[0];
-            console.log("Stab output: " + damageOutput);
             damageOutput = this.checkDamage(damageOutput, target);
-            console.log("Stab output: " + damageOutput);
             target.currentHP = target.currentHP - damageOutput;
             theController.gameConsole.innerHTML += `<p>You ${this.name} the ${target.name} for ${damageOutput} damage!</p>`;
         }else{
@@ -84,12 +82,9 @@ export class Block extends ability{
     }
     activate(item, weilder, target){
         if(this.checkStamina(weilder, item.staminaCost) == true){
-            let damageOutput = weilder.currentAttack - target.armorLevel + Math.floor(Math.random() * (item.damageRange[1] - item.damageRange[0] + 1)) + item.damageRange[0] + 3;
-            console.log("Stab output: " + damageOutput);
-            damageOutput = this.checkDamage(damageOutput, target);
-            console.log("Stab output: " + damageOutput);
-            target.currentHP = target.currentHP - damageOutput;
-            theController.gameConsole.innerHTML += `<p>You ${this.name} the ${target.name} for ${damageOutput} damage!</p>`;
+            weilder.armorLevel = weilder.armorLevel + item.level + 5;
+            theController.gameConsole.innerHTML += `<p>You hold up your ${this.name} in defense!</p>`;
+            console.log(weilder.armorLevel);
         }else{
             return false;
         }

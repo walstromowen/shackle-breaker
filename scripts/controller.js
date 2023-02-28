@@ -10,7 +10,7 @@ export default class Controller {
         this.playerName.innerText = thePlayer.name;
         this.enemyName = document.getElementById('enemy-name');
         this.locationName = document.getElementById('location-name');
-        this.locationName.innerText = thePlayer.map.mapEnviorment.biome; //occurs twice
+        this.locationName.innerText = thePlayer.map.mapEnviorment.biome.charAt(0).toUpperCase() + thePlayer.map.mapEnviorment.biome.slice(1); //occurs twice
         this.audioPlayer = document.getElementById('audio-player');
         this.enemyImage = document.getElementById('enemy-image');
         this.locationImage = document.getElementById('location-image');
@@ -30,9 +30,6 @@ export default class Controller {
         this.equippedTabButton = document.getElementById('equipped-tab-button');
         this.inventoryTabButton = document.getElementById('inventory-tab-button');
         this.inventoryTab = document.getElementById('inventory-tab');
-        this.toggleBattleCallback = this.toggleBattle.bind(this);
-        this.toggleMapCallback = this.toggleMap.bind(this);
-        this.playerRecoverCallback = thePlayer.recover.bind(thePlayer);
         this.updatePlayerStats();
         this.enableKeyControls();
         this.enablePlayerMapControls();
@@ -63,7 +60,7 @@ export default class Controller {
         this.gameConsole.innerHTML += "<p>Something approaches...</p>";
         this.scrollToBottom("game-console");
         setTimeout(()=>{
-            this.enemyName.innerText = thePlayer.currentEnemy.name;
+            this.enemyName.innerText = thePlayer.currentEnemy.name.charAt(0).toUpperCase() + thePlayer.currentEnemy.name.slice(1);
             this.enemyImage.src = thePlayer.currentEnemy.imageSrc;
             document.getElementById("location-name-container").style.display = "none";
             document.getElementById("enemy-name-container").style.display = "block";
@@ -149,7 +146,6 @@ export default class Controller {
         let interactBtn = document.createElement('button');
         interactBtn.classList.add('action-button');
         interactBtn.innerText = "Interact";
-        //interactBtn.addEventListener('click', this.toggleMapCallback);
         document.getElementById('map-button-container').appendChild(interactBtn);
         this.mapBtnArray.push(interactBtn);
     }
@@ -168,9 +164,7 @@ export default class Controller {
                     for(let y = 0; y < thePlayer.equippedArray[x].abilityArray.length; y++){
                         let abilityBtn = document.createElement('button');
                         abilityBtn.classList.add('action-button');
-                        let abilityName = thePlayer.equippedArray[x].abilityArray[y].name;
-                        abilityName = abilityName.charAt(0).toUpperCase() + abilityName.slice(1);
-                        abilityBtn.innerText = abilityName;
+                        abilityBtn.innerText = thePlayer.equippedArray[x].abilityArray[y].name.charAt(0).toUpperCase() + thePlayer.equippedArray[x].abilityArray[y].name.slice(1);
                         abilityBtn.addEventListener('click', ()=>{
                             thePlayer.useEquipment(x, y);
                         });
@@ -180,25 +174,27 @@ export default class Controller {
                 }
             }
         }
-        //punch btn
-        let punchBtn = document.createElement('button');
-        punchBtn.classList.add('action-button');
-        punchBtn.innerText = "Punch";
-        punchBtn.addEventListener('click', thePlayer.punch.bind(thePlayer));
-        document.getElementById('battle-button-container').appendChild(punchBtn);
-        this.battleBtnArray.push(punchBtn);
+        //Punch Button
+        if(thePlayer.equippedArray[0] == "Empty"){
+            let punchBtn = document.createElement('button');
+            punchBtn.classList.add('action-button');
+            punchBtn.innerText = "Punch";
+            punchBtn.addEventListener('click', thePlayer.punch.bind(thePlayer));
+            document.getElementById('battle-button-container').appendChild(punchBtn);
+            this.battleBtnArray.push(punchBtn);
+        }
         //recover btn
         let recoverBtn = document.createElement('button');
         recoverBtn.classList.add('action-button');
         recoverBtn.innerText = "Recover";
-        recoverBtn.addEventListener('click', this.playerRecoverCallback);
+        recoverBtn.addEventListener('click', thePlayer.recover.bind(thePlayer));
         document.getElementById('battle-button-container').appendChild(recoverBtn);
         this.battleBtnArray.push(recoverBtn);
         //retreat btn
         let retreatBtn = document.createElement('button');
         retreatBtn.classList.add('action-button');
         retreatBtn.innerText = "Retreat";
-        retreatBtn.addEventListener('click', this.toggleMapCallback);
+        retreatBtn.addEventListener('click', this.toggleMap.bind(this));
         document.getElementById('battle-button-container').appendChild(retreatBtn);
         this.battleBtnArray.push(retreatBtn);
 
@@ -234,29 +230,33 @@ export default class Controller {
         for(let i = 0; i < inventory.length; i++){
             let inventorySlot = document.createElement('div');
             let inventorySlotMenu = document.createElement('div');
-            let slotMenuEquipBtn = document.createElement('div');
+            let slotMenuUseBtn = document.createElement('div');
             inventorySlot.classList.add('inventory-slot');
             inventorySlotMenu.classList.add('inventory-slot-menu');
-            slotMenuEquipBtn.classList.add('slot-menu-equip-btn');
-            let itemName = inventory[i].name;
-            itemName = itemName.charAt(0).toUpperCase() + itemName.slice(1);
-            inventorySlot.innerText = itemName;
-            slotMenuEquipBtn.innerText = "Equip";
+            slotMenuUseBtn.classList.add('slot-menu-use-btn');//equipment specific
+            inventorySlot.innerText = inventory[i].name.charAt(0).toUpperCase() + inventory[i].name.slice(1);
             inventorySlot.appendChild(inventorySlotMenu);
-            inventorySlotMenu.appendChild(slotMenuEquipBtn);
+            inventorySlotMenu.appendChild(slotMenuUseBtn);//equipment specific
             this.inventoryTab.appendChild(inventorySlot);
-            slotMenuEquipBtn.addEventListener('click', ()=>{
-                thePlayer.equip(i);
-            });
+            if(inventory[i].type != "consumable"){
+                slotMenuUseBtn.innerText = "Equip";//equipment specific
+                slotMenuUseBtn.addEventListener('click', ()=>{ //equipment specific
+                    thePlayer.equip(i);
+                });
+            }
+            if(inventory[i].type == "consumable"){
+                slotMenuUseBtn.innerText = "Use";//equipment specific
+                slotMenuUseBtn.addEventListener('click', ()=>{ //equipment specific
+                    thePlayer.useConsumable(i);
+                });
+            }
         }
     }
     updatePlayerEquippedTab(equippedArrayIndex){
         if(thePlayer.equippedArray[equippedArrayIndex] =="Empty"){
             document.getElementById('equip-slot-' + equippedArrayIndex).innerText = "Empty";
         }else{
-            let itemName = thePlayer.equippedArray[equippedArrayIndex].name;
-            itemName = itemName.charAt(0).toUpperCase() + itemName.slice(1);
-            document.getElementById('equip-slot-' + equippedArrayIndex).innerText = itemName;
+            document.getElementById('equip-slot-' + equippedArrayIndex).innerText = thePlayer.equippedArray[equippedArrayIndex].name.charAt(0).toUpperCase() + thePlayer.equippedArray[equippedArrayIndex].name.slice(1);
         } 
     }
     displayLevelUpScreen(){

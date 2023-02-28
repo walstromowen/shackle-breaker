@@ -1,16 +1,16 @@
 import Map from "./map.js";
-import {Dagger, Spear, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots} from "./item.js";
+import {Dagger, Spear, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots, HealingPotion, ThrowingKnife} from "./item.js";
 import {controller as theController} from "./main.js";
 import {miniMap as theMiniMap} from "./main.js";
 
 export default class Player{
     constructor(){
         this.equippedArray = ["Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"];
-        this.inventory = [new Dagger(), new Spear(), new IronSheild(), new IronHelmet, new IronChainmail, new IronGuantlets, new IronGreaves, new IronBoots];
+        this.inventory = [new ThrowingKnife(), new HealingPotion(), new Dagger(), new Spear(), new IronSheild(), new IronHelmet, new IronChainmail, new IronGuantlets, new IronGreaves, new IronBoots];
         this.level = 0;
         this.currentXp = 0;
         this.maxHP = 10;
-        this.currentHP = this.maxHP;
+        this.currentHP = this.maxHP * 0.5;
         this.maxStamina = 10
         this.currentStamina = this.maxStamina;
         this.maxMagic = 10;
@@ -109,13 +109,26 @@ export default class Player{
         this.endTurn();
     }
     useEquipment(equippedIndex, abilityIndex){
-        if(this.equippedArray[equippedIndex].useAbility(abilityIndex, this, this.currentEnemy) == false){
-            return;
-        };
+        switch(this.equippedArray[equippedIndex].abilityArray[abilityIndex].type){
+            case "attack":
+                if(this.equippedArray[equippedIndex].useAbility(abilityIndex, this, this.currentEnemy) == false){
+                    return;
+                };
+                break;
+            case "buff":
+                if(this.equippedArray[equippedIndex].useAbility(abilityIndex, this, this) == false){
+                    return;
+                };
+                break;
+        }
         this.endTurn();
     }
     recover(){
-        this.currentStamina = this.currentStamina + 2;
+        if(this.currentStamina == this.maxStamina){
+            theController.gameConsole.innerHTML += `<p>Cannot recover more stamina!</p>`;
+            return;
+        }
+        this.currentStamina = this.currentStamina + Math.floor(this.maxStamina * 0.2);
         if(this.currentStamina > this.maxStamina){
             this.currentStamina = this.maxStamina;
         }
@@ -128,6 +141,18 @@ export default class Player{
             this.inventory.push(loot);
             theController.updatePlayerInventoryTab(this.inventory);
         }
+    }
+    useConsumable(inventoryIndex){
+        if(this.inventory[inventoryIndex].consume(this, this.currentEnemy) == false){
+            return;
+        }
+        this.inventory.splice(inventoryIndex, 1);
+        if(this.isInBattle == false){
+            theController.updatePlayerStats();
+        }else{
+            this.endTurn();
+        }
+        theController.updatePlayerInventoryTab(this.inventory);
     }
     equip(inventoryIndex){
         if(this.isInBattle == false){
@@ -237,9 +262,12 @@ export default class Player{
         this.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
         this.nextRoom = this.currentRoom;
         theController.locationImage.src = this.map.mapEnviorment.imageSrc;
-        theController.locationName.innerText = this.map.mapEnviorment.biome;
+        let locationName = this.map.mapEnviorment.biome
+        locationName = locationName.charAt(0).toUpperCase() + locationName.slice(1);
+        theController.locationName.innerText = locationName;
         theMiniMap.draw();
     }
 }
+
 
 

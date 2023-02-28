@@ -1,4 +1,5 @@
 import {Slash, Stab, Block} from "./abilities.js"
+import {controller as theController} from "./main.js";
 
 export class Dagger{
     constructor(){
@@ -89,5 +90,34 @@ export class IronBoots{
         this.level = 0;
         this.armor = 2;
         this.abilityArray = [];
+    }
+}
+
+export class HealingPotion{
+    constructor(){
+        this.name = "healing potion";
+        this.type = "consumable";
+        this.level = 0;
+    }
+    consume(weilder){
+        weilder.currentHP = weilder.currentHP + 10;
+    }
+}
+
+export class ThrowingKnife{
+    constructor(){
+        this.name = "throwing knife";
+        this.type = "consumable";
+        this.level = 0;
+    }
+    consume(weilder){
+        if(weilder.isInBattle == false){
+            return false;
+        }
+        let damageOutput =  2 * (weilder.level + 1);
+        weilder.currentEnemy.currentHP = weilder.currentEnemy.currentHP - damageOutput;
+        //need to check damage like in abilities (should move to abilities)
+        theController.gameConsole.innerHTML += `<p>You throw a ${this.name} at ${weilder.currentEnemy.name} for ${damageOutput} damage!</p>`;
+        theController.scrollToBottom("game-console");
     }
 }

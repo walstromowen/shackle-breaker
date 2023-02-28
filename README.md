@@ -8,13 +8,17 @@ Text adventure game based on the ShacklerBreaker story
 * Character creation screen
 * Rework character level and xp display
 * Rework enemies class
-* Consumablabe items
+* Rework Consumablabe items and consumable abilities
+* Distinguish between equipment and consumable items "item / equipment types"
+* 
 * Alphabetize CSS rules
 * Retreat Penalties
 * Staminina recovery?
-* Capitalize and center location/ enemy names
 * Enviorment specific music
 * Sound effects
 * Loop Music
 * Exit button functionality
+* Buffs (turn counter);
+* Transfer all screen renders to controller (capitalization as well)
+
 
