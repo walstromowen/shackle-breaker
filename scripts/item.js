@@ -97,10 +97,11 @@ export class HealingPotion{
     constructor(){
         this.name = "healing potion";
         this.type = "consumable";
-        this.level = 0;
     }
     consume(weilder){
-        weilder.currentHP = weilder.currentHP + 10;
+        let hp = 5 + weilder.level;
+        weilder.currentHP = weilder.currentHP + hp;
+        theController.gameConsole.innerHTML += `<p>You restore ${hp} health!</p>`;
     }
 }
 
@@ -117,7 +118,7 @@ export class ThrowingKnife{
         let damageOutput =  2 * (weilder.level + 1);
         weilder.currentEnemy.currentHP = weilder.currentEnemy.currentHP - damageOutput;
         //need to check damage like in abilities (should move to abilities)
-        theController.gameConsole.innerHTML += `<p>You throw a ${this.name} at ${weilder.currentEnemy.name} for ${damageOutput} damage!</p>`;
+        theController.gameConsole.innerHTML += `<p>You throw a ${this.name} at the ${weilder.currentEnemy.name} for ${damageOutput} damage!</p>`;
         theController.scrollToBottom("game-console");
     }
 }

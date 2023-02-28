@@ -6,10 +6,10 @@ import {miniMap as theMiniMap} from "./main.js";
 export default class Player{
     constructor(){
         this.equippedArray = ["Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"];
-        this.inventory = [new ThrowingKnife(), new HealingPotion(), new Dagger(), new Spear(), new IronSheild(), new IronHelmet, new IronChainmail, new IronGuantlets, new IronGreaves, new IronBoots];
+        this.inventory = [new ThrowingKnife(), new ThrowingKnife(), new HealingPotion(), new Dagger(), new Spear(), new IronSheild(), new IronHelmet, new IronChainmail, new IronGuantlets, new IronGreaves, new IronBoots];
         this.level = 0;
         this.currentXp = 0;
-        this.maxHP = 10;
+        this.maxHP = 8;
         this.currentHP = this.maxHP * 0.5;
         this.maxStamina = 10
         this.currentStamina = this.maxStamina;

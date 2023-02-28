@@ -1,5 +1,5 @@
 import {controller as theController} from "./main.js";
-import {Dagger, Spear, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots} from "./item.js";
+import {Dagger, Spear, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots, HealingPotion, ThrowingKnife} from "./item.js";
 
 class Enemy{
     endTurn(){
@@ -61,7 +61,7 @@ export class Skeleton extends Enemy{
     dropLoot(){
         switch(Math.floor(Math.random()*2)){
             case 0: 
-                return "";
+                return new ThrowingKnife;
             case 1:
                 return ""; 
             default:
@@ -116,7 +116,7 @@ export class Bat extends Enemy{
     dropLoot(){
         switch(Math.floor(Math.random()*2)){
             case 0: 
-                return "";
+                return new ThrowingKnife;
             case 1:
                 return "";
             default:
@@ -172,7 +172,7 @@ export class Wolf extends Enemy{
     dropLoot(){
         switch(Math.floor(Math.random()*2)){
             case 0: 
-                return "";
+                return new HealingPotion;
             case 1:
                 return "";
             default:

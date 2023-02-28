@@ -83,7 +83,7 @@ export class Block extends ability{
     activate(item, weilder, target){
         if(this.checkStamina(weilder, item.staminaCost) == true){
             weilder.armorLevel = weilder.armorLevel + item.level + 5;
-            theController.gameConsole.innerHTML += `<p>You hold up your ${this.name} in defense!</p>`;
+            theController.gameConsole.innerHTML += `<p>You hold up your ${item.name} in defense!</p>`;
             console.log(weilder.armorLevel);
         }else{
             return false;
