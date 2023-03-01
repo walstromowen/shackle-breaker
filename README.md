@@ -10,7 +10,9 @@ Text adventure game based on the ShacklerBreaker story
 * Rework enemies class
 * Rework Consumablabe items and consumable abilities
 * Distinguish between equipment and consumable items "item / equipment types"
-* 
+* More Stats
+* Parry System
+* Bonus actions / reactions
 * Alphabetize CSS rules
 * Retreat Penalties
 * Staminina recovery?

@@ -1,54 +1,55 @@
 import {Slash, Stab, Block} from "./abilities.js"
 import {controller as theController} from "./main.js";
 
-export class Dagger{
+class equipment{
+    useAbility(abilityIndex, weilder, target){
+        if(this.abilityArray[abilityIndex].activate(this, weilder, target) == false){
+            return false;
+        };
+    }
+}
+export class Dagger extends equipment{
     constructor(){
+        super();
         this.name = "dagger";
         this.type = "weapon";
         this.level = 0;
         this.armor = 0;
+        this.speed = 3;
         this.staminaCost = 2;
         this.abilityArray = [new Stab(), new Slash()];
         this.damageRange = [1 + this.level, 3 + this.level];
     }
-    useAbility(abilityIndex, weilder, target){
-        if(this.abilityArray[abilityIndex].activate(this, weilder, target) == false){
-            return false;
-        };
-    }
 }
-export class Spear{
+export class Spear extends equipment{
     constructor(){
+        super();
         this.name = "spear";
         this.type = "weapon";
         this.level = 0;
         this.armor = 0;
+        this.speed = 1;
         this.staminaCost = 2;
         this.abilityArray = [new Stab()];
         this.damageRange = [2 + this.level, 5 + this.level];
     }
-    useAbility(abilityIndex, weilder, target){
-        if(this.abilityArray[abilityIndex].activate(this, weilder, target) == false){
-            return false;
-        };
-    }
 }
-export class IronSheild{
+export class IronSheild extends equipment{
     constructor(){
+        super();
         this.name = "iron sheild";
         this.type = "offhand";
         this.level = 0;
         this.armor = 2;
+        this.speed = 1;
         this.staminaCost = 2;
         this.abilityArray = [new Block()];
         this.damageRange = [this.level, this.level + 1];
     }
-    useAbility(abilityIndex, weilder, target){
-        this.abilityArray[abilityIndex].activate(this, weilder, target);
-    }
 }
-export class IronHelmet{
+export class IronHelmet extends equipment{
     constructor(){
+        super();
         this.name = "iron helmet";
         this.type = "head";
         this.level = 0;
@@ -56,8 +57,9 @@ export class IronHelmet{
         this.abilityArray = [];
     }
 }
-export class IronGuantlets{
+export class IronGuantlets extends equipment{
     constructor(){
+        super();
         this.name = "iron guantlets";
         this.type = "arms";
         this.level = 0;
@@ -65,8 +67,9 @@ export class IronGuantlets{
         this.abilityArray = [];
     }
 }
-export class IronChainmail{
+export class IronChainmail extends equipment{
     constructor(){
+        super();
         this.name = "iron chainmail";
         this.type = "torso";
         this.level = 0;
@@ -74,8 +77,9 @@ export class IronChainmail{
         this.abilityArray = [];
     }
 }
-export class IronGreaves{
+export class IronGreaves extends equipment{
     constructor(){
+        super();
         this.name = "iron greaves";
         this.type = "legs";
         this.level = 0;
@@ -83,8 +87,9 @@ export class IronGreaves{
         this.abilityArray = [];
     }
 }
-export class IronBoots{
+export class IronBoots extends equipment{
     constructor(){
+        super();
         this.name = "iron boots";
         this.type = "feet";
         this.level = 0;

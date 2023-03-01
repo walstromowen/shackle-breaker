@@ -264,6 +264,7 @@ export default class Controller {
         document.getElementById("app").style.display = "none";
     }
     enableLevelUpControls(){
+        thePlayer.isInBattle = true; //may need to change this just so that movement controls are disabled 
         let levelCheck = false;
         let fullHeal = () =>{
             thePlayer.currentHP =  thePlayer.maxHP;

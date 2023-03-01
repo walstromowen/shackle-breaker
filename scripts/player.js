@@ -15,11 +15,11 @@ export default class Player{
         this.currentStamina = this.maxStamina;
         this.maxMagic = 10;
         this.currentMagic = this.maxMagic;
-        this.maxMagic = 10;
         this.baseArmor = 1;
-        this.armorLevel = this.baseArmor;
+        this.currentArmor = this.baseArmor;
         this.baseAttack = 1;
         this.currentAttack = this.baseAttack;
+        this.statusArray = [];
         this.isInBattle = false;
         this.map = new Map(this.level);
         this.name = "The Schackle Breaker";
@@ -94,7 +94,7 @@ export default class Player{
         }, 2000);
     }
     punch(){
-        let damageOutput = this.baseAttack - this.currentEnemy.armorLevel;
+        let damageOutput = this.baseAttack - this.currentEnemy.currentArmor;
         if(this.currentStamina - 2 < 0){
             theController.gameConsole.innerHTML += `<p>Not Enough Stamina!</p>`;
             return;
@@ -109,6 +109,14 @@ export default class Player{
         this.endTurn();
     }
     useEquipment(equippedIndex, abilityIndex){
+        //if(this.equippedArray[equippedIndex].speed + this.equippedArray[equippedIndex].abilityArray[abilityIndex].speed < this.currentEnemy.speed + this.currentEnemy)
+        //speed check who goes first
+            //get enemies's ability speed + base speed this means enemy must run choose attack?
+            //get players ability speed + equipment speed
+            //if player faster -> run normal attack routine
+            //if enemy faster -> disable your attacks, enemy chooses attack enemy attacks, you attack, reset
+
+        
         switch(this.equippedArray[equippedIndex].abilityArray[abilityIndex].type){
             case "attack":
                 if(this.equippedArray[equippedIndex].useAbility(abilityIndex, this, this.currentEnemy) == false){
@@ -223,10 +231,10 @@ export default class Player{
                 default:
                     break;
             }
-            this.armorLevel = this.baseArmor;
+            this.currentArmor = this.baseArmor;
             for(var i = 0; i < this.equippedArray.length; i++){
                 if(this.equippedArray[i] != "Empty"){
-                    this.armorLevel = this.armorLevel + this.equippedArray[i].armor;
+                    this.currentArmor = this.currentArmor + this.equippedArray[i].armor;
                 }
             }
             theController.updatePlayerInventoryTab(this.inventory);

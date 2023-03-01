@@ -33,11 +33,12 @@ export class Skeleton extends Enemy{
         this.maxMagic = 10 + playerLevel*2;
         this.currentMagic = this.maxMagic;
         this.baseArmor = 1;
-        this.armorLevel = this.baseArmor;
+        this.currentArmor = this.baseArmor;
         this.baseAttack = 3 + playerLevel;
+        this.abilityArray = [];
     }
     chooseAttack(target){
-        this.armorLevel = this.baseArmor;
+        this.currentArmor = this.baseArmor;
         if(Math.floor(Math.random()*2) < 1){
             this.slash(target);
         }else{
@@ -46,17 +47,18 @@ export class Skeleton extends Enemy{
         this.endTurn();
     }
     slash(target){
-        if(this.baseAttack - target.armorLevel > 0){
-            target.currentHP = target.currentHP - this.baseAttack + target.armorLevel;
-            theController.gameConsole.innerHTML += `<p> The ${this.name} slashes you for ${this.baseAttack - target.armorLevel} damage!</p>`;
+        if(this.baseAttack - target.currentArmor > 0){
+            target.currentHP = target.currentHP - this.baseAttack + target.currentArmor;
+            theController.gameConsole.innerHTML += `<p> The ${this.name} slashes you for ${this.baseAttack - target.currentArmor} damage!</p>`;
         }else{
             theController.gameConsole.innerHTML += `<p>You deflect the ${this.name}'s attack!</p>`; 
         }
         this.currentStamina = this.currentStamina - Math.floor(this.maxStamina*0.2);
     }
     block(){
-        this.armorLevel = this.armorLevel + 5 ;
+        this.currentArmor = this.currentArmor + 5 ;
         theController.gameConsole.innerHTML += `<p> The ${this.name} raises its sheild!`;
+        console.log(this.currentArmor);
     }
     dropLoot(){
         switch(Math.floor(Math.random()*2)){
@@ -81,7 +83,7 @@ export class Bat extends Enemy{
         this.currentStamina = this.maxStamina;
         this.maxMagic = 0 + playerLevel*2;
         this.currentMagic = this.maxMagic;
-        this.armorLevel = 0;
+        this.currentArmor = 0;
         this.baseAttack = 4 + playerLevel;
     }
     chooseAttack(target){
@@ -94,7 +96,7 @@ export class Bat extends Enemy{
     }
     bite(target){
         let damageOutput = this.baseAttack;
-        damageOutput = damageOutput - target.armorLevel;
+        damageOutput = damageOutput - target.currentArmor;
         if(damageOutput > 0){
             target.currentHP = target.currentHP - damageOutput;
             theController.gameConsole.innerHTML += `<p> The ${this.name} bites you for ${damageOutput} damage!</p>`;
@@ -136,7 +138,7 @@ export class Wolf extends Enemy{
         this.currentStamina = this.maxStamina;
         this.maxMagic = 0;
         this.currentMagic = this.maxMagic;
-        this.armorLevel = 0;
+        this.currentArmor = 0;
         this.baseAttack = 3 + playerLevel*2;
     }
     chooseAttack(target){
@@ -149,7 +151,7 @@ export class Wolf extends Enemy{
     }
     bite(target){
         let damageOutput = this.baseAttack;
-        damageOutput = damageOutput - target.armorLevel;
+        damageOutput = damageOutput - target.currentArmor;
         if(damageOutput > 0){
             target.currentHP = target.currentHP - damageOutput;
             theController.gameConsole.innerHTML += `<p> The ${this.name} bites you for ${damageOutput} damage!</p>`;
@@ -160,7 +162,7 @@ export class Wolf extends Enemy{
     }
     pounceOn(target){
         let damageOutput = this.baseAttack + 2;
-        damageOutput = damageOutput - target.armorLevel;
+        damageOutput = damageOutput - target.currentArmor;
         if( damageOutput > 0){
             target.currentHP = target.currentHP - damageOutput;
             theController.gameConsole.innerHTML += `<p> The ${this.name} pounces on you for ${ damageOutput} damage!</p>`;
@@ -192,7 +194,7 @@ export class Royalmage extends Enemy{
         this.currentStamina = this.maxStamina;
         this.maxMagic = 20 + playerLevel*2;
         this.currentMagic = this.maxMagic;
-        this.armorLevel = 1;
+        this.currentArmor = 1;
         this.baseAttack = 1 + playerLevel;
         this.currentAttack = this.baseAttack;
     }
@@ -206,7 +208,7 @@ export class Royalmage extends Enemy{
     }
     arcaneDart(target){
         let damageOutput = this.currentAttack;
-        damageOutput = damageOutput - target.armorLevel;
+        damageOutput = damageOutput - target.currentArmor;
         if(damageOutput > 0){
             theController.gameConsole.innerHTML += `<p>The ${this.name} fires an arcane dart at you for ${damageOutput} damage!</p>`;
             target.currentHP = target.currentHP - damageOutput;
@@ -223,7 +225,7 @@ export class Royalmage extends Enemy{
             theController.gameConsole.innerHTML += `<p>The ${this.name} channels something in the air!</p>`;
         }else{
             let damageOutput = this.currentAttack * 2;
-            damageOutput = damageOutput - target.armorLevel;
+            damageOutput = damageOutput - target.currentArmor;
             if(damageOutput > 0){
                 target.currentHP = target.currentHP - damageOutput;
                 theController.gameConsole.innerHTML += `<p>The ${this.name} blasts you with a beam of arcane energy for ${damageOutput} damage!</p>`;
