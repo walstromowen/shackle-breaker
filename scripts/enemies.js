@@ -58,7 +58,6 @@ export class Skeleton extends Enemy{
     block(){
         this.currentArmor = this.currentArmor + 5 ;
         theController.gameConsole.innerHTML += `<p> The ${this.name} raises its sheild!`;
-        console.log(this.currentArmor);
     }
     dropLoot(){
         switch(Math.floor(Math.random()*2)){

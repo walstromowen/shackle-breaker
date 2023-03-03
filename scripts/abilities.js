@@ -29,6 +29,9 @@ class ability{
         }
     }
     checkDamage(damage, target){
+        if(damage < 0){
+            return 0;
+        }
         if(target.currentHP - damage < 0){
             return target.currentHP;
         }

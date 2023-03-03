@@ -54,11 +54,12 @@ export default class Controller {
         theMiniMap.resizeCanvas();
         theMiniMap.draw();
         thePlayer.isInBattle = false;
+        thePlayer.canMoveRoom  = true;
     }
     toggleBattle(){
-        thePlayer.isInBattle = true;
         this.gameConsole.innerHTML += "<p>Something approaches...</p>";
         this.scrollToBottom("game-console");
+        thePlayer.canMoveRoom  = false;
         setTimeout(()=>{
             this.enemyName.innerText = thePlayer.currentEnemy.name.charAt(0).toUpperCase() + thePlayer.currentEnemy.name.slice(1);
             this.enemyImage.src = thePlayer.currentEnemy.imageSrc;
@@ -74,6 +75,8 @@ export default class Controller {
             this.scrollToBottom("game-console");
             this.audioPlayer.src = "./audio/battle-of-the-dragons-8037.mp3";
             this.audioPlayer.play();
+            thePlayer.awaitingInput = true;
+            thePlayer.isInBattle = true;
          }, 2000);
     }
     scrollToBottom(elementId){
@@ -107,6 +110,9 @@ export default class Controller {
                 alert("Game Over Please refresh!");
              }, 2000);
         }else{
+            Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
+                btn.style.visibility = "visible";
+            });
             thePlayer.defeatEnemy();
             this.toggleMap();
         }
@@ -118,7 +124,7 @@ export default class Controller {
     }
     enableKeyControls(){
         window.addEventListener("keydown", (e) => {
-            if(thePlayer.isInBattle == false){
+            if(thePlayer.canMoveRoom == true){
                 switch(e.key){
                     case 'w':
                         thePlayer.moveNorth();
@@ -201,9 +207,16 @@ export default class Controller {
         document.getElementById('map-button-container').style.display = "none";
         document.getElementById('battle-button-container').style.display = "block";
         document.getElementById('battle-button-container').style.visibility = "visible";
+        Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
+            btn.style.visibility = "visible";
+        });
     }
     disablePlayerBattleControls(){
         document.getElementById('battle-button-container').style.visibility = "hidden";
+        //Array.from used to convert HTML collection to regular array so forEach can be used
+        Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
+            btn.style.visibility = "hidden";
+        });
     }
     enableInventoryControls(){
         this.equippedTabButton.addEventListener('click',()=>{
@@ -264,7 +277,7 @@ export default class Controller {
         document.getElementById("app").style.display = "none";
     }
     enableLevelUpControls(){
-        thePlayer.isInBattle = true; //may need to change this just so that movement controls are disabled 
+        thePlayer.canMove = false;
         let levelCheck = false;
         let fullHeal = () =>{
             thePlayer.currentHP =  thePlayer.maxHP;

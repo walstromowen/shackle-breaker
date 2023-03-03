@@ -10,6 +10,7 @@ Text adventure game based on the ShacklerBreaker story
 * Rework enemies class
 * Rework Consumablabe items and consumable abilities
 * Distinguish between equipment and consumable items "item / equipment types"
+* prevent consumable items from being used between turns (hide use button or disable buttons? )
 * More Stats
 * Parry System
 * Bonus actions / reactions

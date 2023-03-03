@@ -21,6 +21,8 @@ export default class Player{
         this.currentAttack = this.baseAttack;
         this.statusArray = [];
         this.isInBattle = false;
+        this.awaitingInput = true;
+        this.canMoveRoom  = true;
         this.map = new Map(this.level);
         this.name = "The Schackle Breaker";
         this.currentEnemy = ""; 
@@ -116,7 +118,7 @@ export default class Player{
             //if player faster -> run normal attack routine
             //if enemy faster -> disable your attacks, enemy chooses attack enemy attacks, you attack, reset
 
-        
+        this.awaitingInput = false;
         switch(this.equippedArray[equippedIndex].abilityArray[abilityIndex].type){
             case "attack":
                 if(this.equippedArray[equippedIndex].useAbility(abilityIndex, this, this.currentEnemy) == false){
@@ -157,10 +159,11 @@ export default class Player{
         this.inventory.splice(inventoryIndex, 1);
         if(this.isInBattle == false){
             theController.updatePlayerStats();
+            theController.updatePlayerInventoryTab(this.inventory);
         }else{
+            theController.updatePlayerInventoryTab(this.inventory);//must be done before?
             this.endTurn();
         }
-        theController.updatePlayerInventoryTab(this.inventory);
     }
     equip(inventoryIndex){
         if(this.isInBattle == false){

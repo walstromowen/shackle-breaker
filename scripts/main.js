@@ -16,5 +16,3 @@ document.getElementById('title-start-button').addEventListener("click", ()=>{
     document.getElementById("title-screen").style.display = "none";
     document.getElementById("app").style.display = "block";
 });
-
-console.log("hello there".charAt(0).toUpperCase());
