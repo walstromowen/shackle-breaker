@@ -1,4 +1,5 @@
 import {controller as theController} from "./main.js";
+import {Slash, Bite, Pounce, LeechLife, ArcaneDart, ArcaneBlast, ChannelMagic} from "./enemyAbilities.js"
 import {Dagger, Spear, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots, HealingPotion, ThrowingKnife} from "./item.js";
 
 class Enemy{
@@ -19,8 +20,35 @@ class Enemy{
         if(this.currentStamina < 0)this.currentStamina = 0;
         if(this.currentMagic < 0)this.currentMagic = 0;
     }
+    chooseAttack(target){
+        let ability = this.abilityArray[Math.floor(Math.random()*this.abilityArray.length)];
+        switch(ability.type){
+            case "attack":
+                ability.activate(this, target);
+                break;
+        }
+        this.endTurn();
+    }
+    dropLoot(){
+        if(Math.floor(Math.random()*this.lootChanceMultiplier < 1)){
+            return this.lootArray[Math.floor(Math.random()*this.lootArray.length)];
+        }else{
+            return "";
+        }
+    }
+    recover(){
+        if(this.currentStamina == this.maxStamina){
+            theController.gameConsole.innerHTML += `<p>Cannot recover more stamina!</p>`;
+            return;
+        }
+        this.currentStamina = this.currentStamina + Math.floor(this.maxStamina * 0.2);
+        if(this.currentStamina > this.maxStamina){
+            this.currentStamina = this.maxStamina;
+        }
+        theController.gameConsole.innerHTML += `<p>the ${this.name} recovers stamina.</p>`;
+        this.endTurn();
+    }
 }
-
 export class Skeleton extends Enemy{
     constructor(playerLevel){
         super();
@@ -35,42 +63,12 @@ export class Skeleton extends Enemy{
         this.baseArmor = 1;
         this.currentArmor = this.baseArmor;
         this.baseAttack = 3 + playerLevel;
-        this.abilityArray = [];
-    }
-    chooseAttack(target){
-        this.currentArmor = this.baseArmor;
-        if(Math.floor(Math.random()*2) < 1){
-            this.slash(target);
-        }else{
-            this.block();
-        }
-        this.endTurn();
-    }
-    slash(target){
-        if(this.baseAttack - target.currentArmor > 0){
-            target.currentHP = target.currentHP - this.baseAttack + target.currentArmor;
-            theController.gameConsole.innerHTML += `<p> The ${this.name} slashes you for ${this.baseAttack - target.currentArmor} damage!</p>`;
-        }else{
-            theController.gameConsole.innerHTML += `<p>You deflect the ${this.name}'s attack!</p>`; 
-        }
-        this.currentStamina = this.currentStamina - Math.floor(this.maxStamina*0.2);
-    }
-    block(){
-        this.currentArmor = this.currentArmor + 5 ;
-        theController.gameConsole.innerHTML += `<p> The ${this.name} raises its sheild!`;
-    }
-    dropLoot(){
-        switch(Math.floor(Math.random()*2)){
-            case 0: 
-                return new ThrowingKnife;
-            case 1:
-                return ""; 
-            default:
-                return "";
-        }
+        this.currentAttack = this.baseAttack;
+        this.abilityArray = [new Slash()];
+        this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootArray = [new ThrowingKnife];
     }
 }
-
 export class Bat extends Enemy{
     constructor(playerLevel){
         super();
@@ -84,48 +82,12 @@ export class Bat extends Enemy{
         this.currentMagic = this.maxMagic;
         this.currentArmor = 0;
         this.baseAttack = 4 + playerLevel;
-    }
-    chooseAttack(target){
-        if(Math.floor(Math.random()*3) < 2){
-            this.bite(target);
-        }else{
-            this.fly();
-        }
-        this.endTurn();
-    }
-    bite(target){
-        let damageOutput = this.baseAttack;
-        damageOutput = damageOutput - target.currentArmor;
-        if(damageOutput > 0){
-            target.currentHP = target.currentHP - damageOutput;
-            theController.gameConsole.innerHTML += `<p> The ${this.name} bites you for ${damageOutput} damage!</p>`;
-            if(Math.floor(Math.random()*2 < 1)){
-                this.currentHP = this.currentHP + damageOutput;
-                if(this.currentHP > this.maxHP){
-                    this.currenHP = this.maxHP;
-                }
-            }
-        }else{
-            theController.gameConsole.innerHTML += `<p>You deflect the ${this.name}'s attack!</p>`; 
-        }
-        this.currentStamina = this.currentStamina - Math.floor(this.maxStamina*0.2);
-    }
-    fly(){
-        theController.gameConsole.innerHTML += `<p> The ${this.name} flies into the air!</p>`;
-        this.currentStamina = this.maxStamina;
-    }
-    dropLoot(){
-        switch(Math.floor(Math.random()*2)){
-            case 0: 
-                return new ThrowingKnife;
-            case 1:
-                return "";
-            default:
-                return "";
-        }
+        this.currentAttack = this.baseAttack;
+        this.abilityArray = [new Bite(), new LeechLife()];
+        this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootArray = [new HealingPotion];
     }
 }
-
 export class Wolf extends Enemy{
     constructor(playerLevel){
         super();
@@ -139,49 +101,12 @@ export class Wolf extends Enemy{
         this.currentMagic = this.maxMagic;
         this.currentArmor = 0;
         this.baseAttack = 3 + playerLevel*2;
-    }
-    chooseAttack(target){
-        if(Math.floor(Math.random()*3) < 2){
-            this.bite(target);
-        }else{
-            this.pounceOn(target);
-        } 
-        this.endTurn();
-    }
-    bite(target){
-        let damageOutput = this.baseAttack;
-        damageOutput = damageOutput - target.currentArmor;
-        if(damageOutput > 0){
-            target.currentHP = target.currentHP - damageOutput;
-            theController.gameConsole.innerHTML += `<p> The ${this.name} bites you for ${damageOutput} damage!</p>`;
-        }else{
-            theController.gameConsole.innerHTML += `<p>You deflect the ${this.name}'s attack!</p>`; 
-        }
-        this.currentStamina = this.currentStamina - Math.floor(this.maxStamina*0.2);
-    }
-    pounceOn(target){
-        let damageOutput = this.baseAttack + 2;
-        damageOutput = damageOutput - target.currentArmor;
-        if( damageOutput > 0){
-            target.currentHP = target.currentHP - damageOutput;
-            theController.gameConsole.innerHTML += `<p> The ${this.name} pounces on you for ${ damageOutput} damage!</p>`;
-        }else{
-            theController.gameConsole.innerHTML += `<p>You deflect the ${this.name}'s attack!</p>`; 
-        }
-        this.currentStamina = this.currentStamina - Math.floor(this.maxStamina*0.4);
-    }
-    dropLoot(){
-        switch(Math.floor(Math.random()*2)){
-            case 0: 
-                return new HealingPotion;
-            case 1:
-                return "";
-            default:
-                return "";
-        }
+        this.currentAttack = this.baseAttack;
+        this.abilityArray = [new Bite(), new Pounce()];
+        this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootArray = [new HealingPotion, new ThrowingKnife];
     }
 }
-
 export class Royalmage extends Enemy{
     constructor(playerLevel){
         super();
@@ -196,59 +121,8 @@ export class Royalmage extends Enemy{
         this.currentArmor = 1;
         this.baseAttack = 1 + playerLevel;
         this.currentAttack = this.baseAttack;
-    }
-    chooseAttack(target){
-        if(Math.floor(Math.random()*2) < 1){
-            this.arcaneDart(target);
-        }else{
-            this.arcaneBlast(target);
-        } 
-        this.endTurn();
-    }
-    arcaneDart(target){
-        let damageOutput = this.currentAttack;
-        damageOutput = damageOutput - target.currentArmor;
-        if(damageOutput > 0){
-            theController.gameConsole.innerHTML += `<p>The ${this.name} fires an arcane dart at you for ${damageOutput} damage!</p>`;
-            target.currentHP = target.currentHP - damageOutput;
-        }else{
-            theController.gameConsole.innerHTML += `<p>You deflect the ${this.name}'s attack!</p>`; 
-        }
-        this.currentMagic = this.currentMagic - Math.floor(this.maxMagic*0.2);
-
-    }
-    arcaneBlast(target){
-        if(Math.random()*4 < 3){
-            this.currentAttack = this.currentAttack + 2;
-            this.currentMagic = this.currentMagic + Math.floor(this.maxMagic*0.2);
-            theController.gameConsole.innerHTML += `<p>The ${this.name} channels something in the air!</p>`;
-        }else{
-            let damageOutput = this.currentAttack * 2;
-            damageOutput = damageOutput - target.currentArmor;
-            if(damageOutput > 0){
-                target.currentHP = target.currentHP - damageOutput;
-                theController.gameConsole.innerHTML += `<p>The ${this.name} blasts you with a beam of arcane energy for ${damageOutput} damage!</p>`;
-                this.currentMagic = this.currentMagic - Math.floor(this.maxMagic*0.5);
-                this.currentAttack = this.baseAttack;
-            }else{
-                theController.gameConsole.innerHTML += `<p>You deflect the ${this.name}'s attack!</p>`; 
-            }
-        }
-    }
-    dropLoot(){
-        switch(Math.floor(Math.random()*5)){
-            case 0: 
-                return new IronHelmet;
-            case 1:
-                return new IronChainmail;
-            case 2:
-                return new IronGuantlets;
-            case 3:
-                return new IronGreaves;
-            case 4:
-                return new IronBoots;
-            default:
-                return "";
-        }
+        this.abilityArray = [new ArcaneDart(), new ArcaneBlast()];
+        this.lootChanceMultiplier = 0; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootArray = [new IronHelmet, new IronChainmail, new IronGuantlets, new IronGreaves, new IronBoots, new IronSheild];
     }
 }

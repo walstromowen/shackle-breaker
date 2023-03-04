@@ -83,7 +83,7 @@ export default class Controller {
         document.getElementById(elementId).scrollTop = document.getElementById(elementId).scrollHeight;
     }
     updatePlayerStats(){
-        thePlayer.boundStats();
+        //thePlayer.boundStats(); //double protection during combat
         this.currentHealthPlayer.innerText = thePlayer.currentHP;
         this.currentStaminaPlayer.innerText = thePlayer.currentStamina;
         this.currentMagicPlayer.innerText = thePlayer.currentMagic;
@@ -94,7 +94,7 @@ export default class Controller {
         this.scrollToBottom("game-console");
     }
     updateEnemyStats(){
-        thePlayer.currentEnemy.boundStats();
+        //thePlayer.currentEnemy.boundStats();
         this.currentHealthEnemy.innerText = thePlayer.currentEnemy.currentHP;
         this.currentStaminaEnemy.innerText = thePlayer.currentEnemy.currentStamina;
         this.currentMagicEnemy.innerText = thePlayer.currentEnemy.currentMagic;

@@ -105,6 +105,9 @@ export class HealingPotion{
     }
     consume(weilder){
         let hp = 5 + weilder.level;
+        if(weilder.currentHP + hp > weilder.maxHP){
+            hp = weilder.maxHP - weilder.currentHP;
+        }
         weilder.currentHP = weilder.currentHP + hp;
         theController.gameConsole.innerHTML += `<p>You restore ${hp} health!</p>`;
     }
