@@ -163,47 +163,17 @@ export default class Controller {
                 oldBtn.remove();
         }
         this.battleBtnArray = [];
-        //Ability Buttons
-        for(let x = 0; x < thePlayer.equippedArray.length; x++){
-            if(thePlayer.equippedArray[x] != "Empty"){
-                if(thePlayer.equippedArray[x].abilityArray.length != 0){
-                    for(let y = 0; y < thePlayer.equippedArray[x].abilityArray.length; y++){
-                        let abilityBtn = document.createElement('button');
-                        abilityBtn.classList.add('action-button');
-                        abilityBtn.innerText = thePlayer.equippedArray[x].abilityArray[y].name.charAt(0).toUpperCase() + thePlayer.equippedArray[x].abilityArray[y].name.slice(1);
-                        abilityBtn.addEventListener('click', ()=>{
-                            thePlayer.useEquipment(x, y);
-                        });
-                        document.getElementById('battle-button-container').appendChild(abilityBtn);
-                        this.battleBtnArray.push(abilityBtn);
-                    }
-                }
-            }
-        }
-        //Punch Button
-        if(thePlayer.equippedArray[0] == "Empty"){
-            let punchBtn = document.createElement('button');
-            punchBtn.classList.add('action-button');
-            punchBtn.innerText = "Punch";
-            punchBtn.addEventListener('click', thePlayer.punch.bind(thePlayer));
-            document.getElementById('battle-button-container').appendChild(punchBtn);
-            this.battleBtnArray.push(punchBtn);
-        }
-        //recover btn
-        let recoverBtn = document.createElement('button');
-        recoverBtn.classList.add('action-button');
-        recoverBtn.innerText = "Recover";
-        recoverBtn.addEventListener('click', thePlayer.recover.bind(thePlayer));
-        document.getElementById('battle-button-container').appendChild(recoverBtn);
-        this.battleBtnArray.push(recoverBtn);
-        //retreat btn
-        let retreatBtn = document.createElement('button');
-        retreatBtn.classList.add('action-button');
-        retreatBtn.innerText = "Retreat";
-        retreatBtn.addEventListener('click', this.toggleMap.bind(this));
-        document.getElementById('battle-button-container').appendChild(retreatBtn);
-        this.battleBtnArray.push(retreatBtn);
-
+        //Add New Ability Buttons
+        for(let x = 0; x < thePlayer.abilityArray.length; x++){
+            let abilityBtn = document.createElement('button');
+            abilityBtn.classList.add('action-button');
+            abilityBtn.innerText = thePlayer.abilityArray[x].name.charAt(0).toUpperCase() + thePlayer.abilityArray[x].name.slice(1);
+            abilityBtn.addEventListener('click', ()=>{
+                thePlayer.useAbility(x);
+            });
+            document.getElementById('battle-button-container').appendChild(abilityBtn);
+            this.battleBtnArray.push(abilityBtn);
+         }
         document.getElementById('map-button-container').style.display = "none";
         document.getElementById('battle-button-container').style.display = "block";
         document.getElementById('battle-button-container').style.visibility = "visible";

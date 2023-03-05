@@ -1,5 +1,5 @@
 import {controller as theController} from "./main.js";
-import {Slash, Bite, Pounce, LeechLife, ArcaneDart, ArcaneBlast, ChannelMagic} from "./enemyAbilities.js"
+import {Slash, Bite, Pounce, LeechLife, ArcaneDart, ArcaneBlast, ChannelMagic} from "./abilities.js"
 import {Dagger, Spear, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots, HealingPotion, ThrowingKnife} from "./item.js";
 
 class Enemy{
@@ -11,14 +11,6 @@ class Enemy{
         if(theController.battleOverCheck() === true){
                 theController.endBattle();
         }
-    }
-    boundStats(){
-        if(this.currentHP > this.maxHP)this.currentHP = this.maxHP;
-        if(this.currentStamina > this.maxStamina)this.currentStamina = this.maxStamina;
-        if(this.currentMagic > this.maxMagic)this.currentMagic = this.maxMagic;
-        if(this.currentHP < 0)this.currentHP = 0;
-        if(this.currentStamina < 0)this.currentStamina = 0;
-        if(this.currentMagic < 0)this.currentMagic = 0;
     }
     chooseAttack(target){
         let ability = this.abilityArray[Math.floor(Math.random()*this.abilityArray.length)];
@@ -36,37 +28,25 @@ class Enemy{
             return "";
         }
     }
-    recover(){
-        if(this.currentStamina == this.maxStamina){
-            theController.gameConsole.innerHTML += `<p>Cannot recover more stamina!</p>`;
-            return;
-        }
-        this.currentStamina = this.currentStamina + Math.floor(this.maxStamina * 0.2);
-        if(this.currentStamina > this.maxStamina){
-            this.currentStamina = this.maxStamina;
-        }
-        theController.gameConsole.innerHTML += `<p>the ${this.name} recovers stamina.</p>`;
-        this.endTurn();
-    }
 }
 export class Skeleton extends Enemy{
     constructor(playerLevel){
         super();
         this.name = "skeleton";
         this.imageSrc = "media/skeleton.jpg"
-        this.maxHP = 10 + playerLevel*2; 
+        this.maxHP = 10 + playerLevel; 
         this.currentHP = this.maxHP;
-        this.maxStamina = 10 + playerLevel*2;
+        this.maxStamina = 10 + playerLevel;
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 10 + playerLevel*2;
+        this.maxMagic = 10 + playerLevel;
         this.currentMagic = this.maxMagic;
         this.baseArmor = 1;
         this.currentArmor = this.baseArmor;
-        this.baseAttack = 3 + playerLevel;
+        this.baseAttack = 1 + playerLevel;
         this.currentAttack = this.baseAttack;
-        this.abilityArray = [new Slash()];
+        this.abilityArray = [new Slash];
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new ThrowingKnife];
+        this.lootArray = [new ThrowingKnife, new Dagger, new Spear];
     }
 }
 export class Bat extends Enemy{
@@ -74,16 +54,16 @@ export class Bat extends Enemy{
         super();
         this.name = "bat";
         this.imageSrc = "media/bat.jpg"
-        this.maxHP = 4 + playerLevel*2 ; 
+        this.maxHP = 4 + playerLevel ; 
         this.currentHP = this.maxHP;
-        this.maxStamina = 10 + playerLevel*2;
+        this.maxStamina = 10 + playerLevel;
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 0 + playerLevel*2;
+        this.maxMagic = 0 + playerLevel;
         this.currentMagic = this.maxMagic;
         this.currentArmor = 0;
-        this.baseAttack = 4 + playerLevel;
+        this.baseAttack = 1 + playerLevel;
         this.currentAttack = this.baseAttack;
-        this.abilityArray = [new Bite(), new LeechLife()];
+        this.abilityArray = [new Bite, new LeechLife];
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new HealingPotion];
     }
@@ -93,16 +73,16 @@ export class Wolf extends Enemy{
         super();
         this.name = "wolf";
         this.imageSrc = "media/wolf.jpg"
-        this.maxHP = 8 + playerLevel*2;
+        this.maxHP = 8 + playerLevel;
         this.currentHP = this.maxHP;
-        this.maxStamina = 12 + playerLevel*2;
+        this.maxStamina = 12 + playerLevel;
         this.currentStamina = this.maxStamina;
         this.maxMagic = 0;
         this.currentMagic = this.maxMagic;
         this.currentArmor = 0;
-        this.baseAttack = 3 + playerLevel*2;
+        this.baseAttack = 2 + playerLevel;
         this.currentAttack = this.baseAttack;
-        this.abilityArray = [new Bite(), new Pounce()];
+        this.abilityArray = [new Bite, new Pounce];
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new HealingPotion, new ThrowingKnife];
     }
@@ -114,14 +94,14 @@ export class Royalmage extends Enemy{
         this.imageSrc = "media/royal-mage.jpg"
         this.maxHP = 20 + playerLevel*4;
         this.currentHP = this.maxHP;
-        this.maxStamina = 20 + playerLevel*2;
+        this.maxStamina = 20 + playerLevel;
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 20 + playerLevel*2;
+        this.maxMagic = 20 + playerLevel;
         this.currentMagic = this.maxMagic;
         this.currentArmor = 1;
-        this.baseAttack = 1 + playerLevel;
+        this.baseAttack = 2 + playerLevel;
         this.currentAttack = this.baseAttack;
-        this.abilityArray = [new ArcaneDart(), new ArcaneBlast()];
+        this.abilityArray = [new ArcaneDart, new ArcaneBlast];
         this.lootChanceMultiplier = 0; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new IronHelmet, new IronChainmail, new IronGuantlets, new IronGreaves, new IronBoots, new IronSheild];
     }

@@ -7,7 +7,6 @@ Text adventure game based on the ShacklerBreaker story
 * Game over screen
 * Character creation screen
 * Rework character level and xp display
-* Rework enemies class
 * Rework Consumablabe items and consumable abilities
 * More Stats
 * Parry System

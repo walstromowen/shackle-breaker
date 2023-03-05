@@ -1,12 +1,14 @@
 import Map from "./map.js";
 import {Dagger, Spear, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots, HealingPotion, ThrowingKnife} from "./item.js";
+import {Recover, Punch, Retreat} from "./abilities.js"
 import {controller as theController} from "./main.js";
 import {miniMap as theMiniMap} from "./main.js";
 
 export default class Player{
     constructor(){
         this.equippedArray = ["Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"];
-        this.inventory = [new ThrowingKnife(), new HealingPotion(), new Dagger(), new IronSheild()];
+        this.inventory = [new Dagger, new IronSheild, new ThrowingKnife, new HealingPotion];
+        this.abilityArray = [new Punch, new Recover, new Retreat];
         this.level = 0;
         this.currentXp = 0;
         this.maxHP = 10;
@@ -62,7 +64,7 @@ export default class Player{
             }
         }
         else{
-            theController.gameConsole.innerHTML += "<p> You can't go this way.</p>";
+            theController.gameConsole.innerHTML += "<p>Cannot go this way.</p>";
         }
         theController.updatePlayerStats();           
     }
@@ -74,14 +76,6 @@ export default class Player{
         theMiniMap.draw();//
         //theController.gameConsole.innerHTML += "<p>" + this.currentRoom.description + "</p>";//
         theController.scrollToBottom("game-console");
-    }
-    boundStats(){
-        if(this.currentHP > this.maxHP)this.currentHP = this.maxHP;
-        if(this.currentStamina > this.maxStamina)this.currentStamina = this.maxStamina;
-        if(this.currentMagic > this.maxMagic)this.currentMagic = this.maxMagic;
-        if(this.currentHP < 0)this.currentHP = 0;
-        if(this.currentStamina < 0)this.currentStamina = 0;
-        if(this.currentMagic < 0)this.currentMagic = 0;
     }
     endTurn(){
         theController.disablePlayerBattleControls();
@@ -95,54 +89,20 @@ export default class Player{
             }
         }, 2000);
     }
-    punch(){
-        let damageOutput = this.baseAttack - this.currentEnemy.currentArmor;
-        if(this.currentStamina - 2 < 0){
-            theController.gameConsole.innerHTML += `<p>Not Enough Stamina!</p>`;
-            return;
-        }else{
-            if(damageOutput < 0){
-                damageOutput = 0;
-            }
-            this.currentStamina = this.currentStamina - 2;
-            this.currentEnemy.currentHP = this.currentEnemy.currentHP - damageOutput;
-            theController.gameConsole.innerHTML += `<p> You punch the ${this.currentEnemy.name} for ${damageOutput} damage!</p>`;
-        }
-        this.endTurn();
-    }
-    useEquipment(equippedIndex, abilityIndex){
-        //if(this.equippedArray[equippedIndex].speed + this.equippedArray[equippedIndex].abilityArray[abilityIndex].speed < this.currentEnemy.speed + this.currentEnemy)
-        //speed check who goes first
-            //get enemies's ability speed + base speed this means enemy must run choose attack?
-            //get players ability speed + equipment speed
-            //if player faster -> run normal attack routine
-            //if enemy faster -> disable your attacks, enemy chooses attack enemy attacks, you attack, reset
-
+    useAbility(abilityIndex){
         this.awaitingInput = false;
-        switch(this.equippedArray[equippedIndex].abilityArray[abilityIndex].type){
+        switch(this.abilityArray[abilityIndex].type){
             case "attack":
-                if(this.equippedArray[equippedIndex].useAbility(abilityIndex, this, this.currentEnemy) == false){
+                if(this.abilityArray[abilityIndex].activate(this, this.currentEnemy) == false){
                     return;
                 };
                 break;
             case "buff":
-                if(this.equippedArray[equippedIndex].useAbility(abilityIndex, this, this) == false){
+                if(this.abilityArray[abilityIndex].activate(this, this) == false){
                     return;
                 };
                 break;
         }
-        this.endTurn();
-    }
-    recover(){
-        if(this.currentStamina == this.maxStamina){
-            theController.gameConsole.innerHTML += `<p>Cannot recover more stamina!</p>`;
-            return;
-        }
-        this.currentStamina = this.currentStamina + Math.floor(this.maxStamina * 0.2);
-        if(this.currentStamina > this.maxStamina){
-            this.currentStamina = this.maxStamina;
-        }
-        theController.gameConsole.innerHTML += `<p>You recover stamina.</p>`;
         this.endTurn();
     }
     loot(){
@@ -165,6 +125,29 @@ export default class Player{
             this.endTurn();
         }
     }
+    calcAbilitiesAndStats(){
+        this.currentAttack = this.baseAttack;
+        this.currentArmor = this.baseArmor;
+        this.abilityArray = [];
+        for(let i = 0; i < this.equippedArray.length; i++){
+            if(this.equippedArray[i] != "Empty"){
+                this.currentArmor = this.currentArmor + this.equippedArray[i].armor;
+                this.currentAttack = this.currentAttack + this.equippedArray[i].attack;
+            }
+        }
+        if(this.equippedArray[0] == "Empty"){
+            this.abilityArray.push(new Punch);
+        }
+        for(let x = 0; x < this.equippedArray.length; x ++){
+            if(this.equippedArray[x] != "Empty"){
+                for(let y = 0; y < this.equippedArray[x].abilityArray.length; y ++){
+                    this.abilityArray.push(this.equippedArray[x].abilityArray[y]);
+                }
+            }
+        }
+        this.abilityArray.push(new Recover);
+        this.abilityArray.push(new Retreat);
+      }
     equip(inventoryIndex){
         if(this.isInBattle == false){
             switch(this.inventory[inventoryIndex].type){
@@ -234,12 +217,7 @@ export default class Player{
                 default:
                     break;
             }
-            this.currentArmor = this.baseArmor;
-            for(var i = 0; i < this.equippedArray.length; i++){
-                if(this.equippedArray[i] != "Empty"){
-                    this.currentArmor = this.currentArmor + this.equippedArray[i].armor;
-                }
-            }
+            this.calcAbilitiesAndStats();
             theController.updatePlayerInventoryTab(this.inventory);
         }else{
             theController.gameConsole.innerHTML += `<p>Cannot equip during combat!</p>`;
@@ -254,6 +232,7 @@ export default class Player{
                 this.equippedArray[equippedArrayIndex] = "Empty";
                 theController.updatePlayerInventoryTab(this.inventory);
                 theController.updatePlayerEquippedTab(equippedArrayIndex);
+                this.calcAbilitiesAndStats();
             }else{
                 theController.gameConsole.innerHTML += `<p>Nothing equipped!</p>`;
             }
