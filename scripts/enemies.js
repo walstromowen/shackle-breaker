@@ -1,8 +1,10 @@
-import {controller as theController} from "./main.js";
-import {Slash, Bite, Pounce, LeechLife, ArcaneDart, ArcaneBlast, ChannelMagic} from "./abilities.js"
+import {Slash, Block, Bite, Pounce, LeechLife, ArcaneDart, ArcaneBlast, ChannelMagic} from "./abilities.js"
 import {Dagger, Spear, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots, HealingPotion, ThrowingKnife} from "./item.js";
 
 class Enemy{
+    constructor(){
+        this.statusArray = [];
+    }
     chooseAttack(){
         return this.abilityArray[Math.floor(Math.random()*this.abilityArray.length)];
     }
@@ -27,11 +29,11 @@ export class Skeleton extends Enemy{
         this.currentMagic = this.maxMagic;
         this.baseArmor = 1;
         this.currentArmor = this.baseArmor;
-        this.baseAttack = 1 + playerLevel;
+        this.baseAttack = 2 + playerLevel;
         this.currentAttack = this.baseAttack;
         this.baseSpeed = 1;
         this.currentSpeed = this.baseSpeed;
-        this.abilityArray = [new Slash];
+        this.abilityArray = [new Slash, new Block];
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new ThrowingKnife, new Dagger, new Spear];
     }
@@ -48,7 +50,7 @@ export class Bat extends Enemy{
         this.maxMagic = 0 + playerLevel;
         this.currentMagic = this.maxMagic;
         this.currentArmor = 0;
-        this.baseAttack = 1 + playerLevel;
+        this.baseAttack = 2 + playerLevel;
         this.currentAttack = this.baseAttack;
         this.baseSpeed = 2;
         this.currentSpeed = this.baseSpeed;

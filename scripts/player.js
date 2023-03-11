@@ -7,7 +7,7 @@ import {miniMap as theMiniMap} from "./main.js";
 export default class Player{
     constructor(){
         this.equippedArray = ["Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"];
-        this.inventory = [new Dagger, new IronSheild, new ThrowingKnife, new HealingPotion];
+        this.inventory = [new Dagger, new IronSheild, new IronHelmet, new IronChainmail, new IronGuantlets, new IronGreaves, new IronBoots, new ThrowingKnife, new HealingPotion];
         this.abilityArray = [new Punch, new Recover, new Retreat];
         this.level = 0;
         this.currentXp = 0;
@@ -17,7 +17,7 @@ export default class Player{
         this.currentStamina = this.maxStamina;
         this.maxMagic = 10;
         this.currentMagic = this.maxMagic;
-        this.baseArmor = 1;
+        this.baseArmor = 0;
         this.currentArmor = this.baseArmor;
         this.baseAttack = 1;
         this.currentAttack = this.baseAttack;
@@ -29,6 +29,7 @@ export default class Player{
         this.canMoveRoom  = true;
         this.map = new Map(this.level);
         this.name = "schackle breaker";
+        this.turnCounter;
         this.currentEnemy = ""; 
         this.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
         this.nextRoom = this.currentRoom;
@@ -83,6 +84,17 @@ export default class Player{
         theController.scrollToBottom("game-console");
         theController.updatePlayerStats();
         theController.updateEnemyStats();
+        //update status effects for player
+        for(var i = 0; i < this.statusArray.length; i++){
+            this.statusArray[i].turnCounter = this.statusArray[i].turnCounter + 1;
+            this.statusArray[i].checkDuration();
+        }
+         //update status effects for enemy
+        for(var i = 0; i < this.currentEnemy.statusArray.length; i++){
+            this.currentEnemy.statusArray[i].turnCounter = this.currentEnemy.statusArray[i].turnCounter + 1;
+            this.currentEnemy.statusArray[i].checkDuration();
+        }
+        console.log(this.statusArray);
         if(this.currentEnemy.currentHP <= 0 || this.currentHP <= 0){
             return true;     
         }else{
@@ -104,12 +116,30 @@ export default class Player{
         }
         setTimeout(()=>{
             if(this.isFirst == true){
-                if(this.nextMove.activate(this, this.currentEnemy) == false){
-                    return;
+                switch(this.nextMove.type){
+                    case "attack":
+                        if(this.nextMove.activate(this, this.currentEnemy) == false){
+                            return;
+                        }
+                        break;
+                    case "buff":
+                        if(this.nextMove.activate(this, this) == false){
+                            return;
+                        }
+                        break;
                 }
             }else{
-                if(this.currentEnemy.nextMove.activate(this.currentEnemy, this) == false){
-                    return;
+                switch(this.currentEnemy.nextMove.type){
+                    case "attack":
+                        if(this.currentEnemy.nextMove.activate(this.currentEnemy, this) == false){
+                            return;
+                        }
+                        break;
+                    case "buff":
+                        if(this.currentEnemy.nextMove.activate(this.currentEnemy, this.currentEnemy) == false){
+                            return;
+                        }
+                        break;
                 }
             }
             if(this.endTurn() == false){
@@ -122,12 +152,30 @@ export default class Player{
     determineSecondMove(){
         setTimeout(()=>{
             if(this.isFirst == false){
-                if(this.nextMove.activate(this, this.currentEnemy) == false){
-                    return;
+                switch(this.nextMove.type){
+                    case "attack":
+                        if(this.nextMove.activate(this, this.currentEnemy) == false){
+                            return;
+                        }
+                        break;
+                    case "buff":
+                        if(this.nextMove.activate(this, this) == false){
+                            return;
+                        }
+                        break;
                 }
             }else{
-                if(this.currentEnemy.nextMove.activate(this.currentEnemy, this) == false){
-                    return;
+                switch(this.currentEnemy.nextMove.type){
+                    case "attack":
+                        if(this.currentEnemy.nextMove.activate(this.currentEnemy, this) == false){
+                            return;
+                        }
+                        break;
+                    case "buff":
+                        if(this.currentEnemy.nextMove.activate(this.currentEnemy, this.currentEnemy) == false){
+                            return;
+                        }
+                        break;
                 }
             }
             if(this.endTurn() == false){
@@ -137,7 +185,7 @@ export default class Player{
             }
         }, 2000);
     }
-     useConsumable(inventoryIndex){
+    useConsumable(inventoryIndex){
         if(this.isInBattle == false){
             if(this.inventory[inventoryIndex].consume(this, this.currentEnemy) == false){
                 return;
@@ -163,9 +211,6 @@ export default class Player{
             }, 1000);
         }
     }
-
-
-
     loot(){
         let loot = this.currentEnemy.dropLoot();
         if(loot != ""){
@@ -174,18 +219,22 @@ export default class Player{
         }
     }
     calcAbilitiesAndStats(){
+        //reset stats and abilities
         this.currentAttack = this.baseAttack;
         this.currentArmor = this.baseArmor;
         this.abilityArray = [];
-        for(let i = 0; i < this.equippedArray.length; i++){
+        //update stats
+        for(var i = 0; i < this.equippedArray.length; i++){
             if(this.equippedArray[i] != "Empty"){
                 this.currentArmor = this.currentArmor + this.equippedArray[i].armor;
                 this.currentAttack = this.currentAttack + this.equippedArray[i].attack;
             }
         }
+        //punch check
         if(this.equippedArray[0] == "Empty"){
             this.abilityArray.push(new Punch);
         }
+        //update abilities
         for(let x = 0; x < this.equippedArray.length; x ++){
             if(this.equippedArray[x] != "Empty"){
                 for(let y = 0; y < this.equippedArray[x].abilityArray.length; y ++){
@@ -207,6 +256,8 @@ export default class Player{
                     this.inventory.splice(inventoryIndex, 1);
                     theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[0].name}.</p>`;
                     theController.updatePlayerEquippedTab(0);
+                    theController.soundEffectPlayer.src = "./audio/soundEffects/anvil-hit-2-14845.mp3";
+                    theController.soundEffectPlayer.play();
                     break;
                 case "offhand":
                     if(this.equippedArray[1] !== "Empty"){
@@ -216,6 +267,8 @@ export default class Player{
                     this.inventory.splice(inventoryIndex, 1);
                     theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[1].name}.</p>`;
                     theController.updatePlayerEquippedTab(1);
+                    theController.soundEffectPlayer.src = "./audio/soundEffects/anvil-hit-2-14845.mp3";
+                    theController.soundEffectPlayer.play();
                     break;
                 case "head":
                     if(this.equippedArray[2] !== "Empty"){
@@ -225,6 +278,8 @@ export default class Player{
                     this.inventory.splice(inventoryIndex, 1); 
                     theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[2].name}.</p>`;
                     theController.updatePlayerEquippedTab(2);
+                    theController.soundEffectPlayer.src = "./audio/soundEffects/anvil-hit-2-14845.mp3";
+                    theController.soundEffectPlayer.play();
                     break;
                 case "torso":
                     if(this.equippedArray[3] !== "Empty"){
@@ -234,6 +289,8 @@ export default class Player{
                     this.inventory.splice(inventoryIndex, 1); 
                     theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[3].name}.</p>`;
                     theController.updatePlayerEquippedTab(3);
+                    theController.soundEffectPlayer.src = "./audio/soundEffects/anvil-hit-2-14845.mp3";
+                    theController.soundEffectPlayer.play();
                     break;
                 case "arms":
                     if(this.equippedArray[4] !== "Empty"){
@@ -243,6 +300,8 @@ export default class Player{
                     this.inventory.splice(inventoryIndex, 1); 
                     theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[4].name}.</p>`;
                     theController.updatePlayerEquippedTab(4);
+                    theController.soundEffectPlayer.src = "./audio/soundEffects/anvil-hit-2-14845.mp3";
+                    theController.soundEffectPlayer.play();
                     break;
                 case "legs":
                     if(this.equippedArray[5] !== "Empty"){
@@ -252,6 +311,8 @@ export default class Player{
                     this.inventory.splice(inventoryIndex, 1); 
                     theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[5].name}.</p>`;
                     theController.updatePlayerEquippedTab(5);
+                    theController.soundEffectPlayer.src = "./audio/soundEffects/anvil-hit-2-14845.mp3";
+                    theController.soundEffectPlayer.play();
                     break;
                 case "feet":
                     if(this.equippedArray[6] !== "Empty"){
@@ -261,6 +322,8 @@ export default class Player{
                     this.inventory.splice(inventoryIndex, 1); 
                     theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[6].name}.</p>`;
                     theController.updatePlayerEquippedTab(6);
+                    theController.soundEffectPlayer.src = "./audio/soundEffects/anvil-hit-2-14845.mp3";
+                    theController.soundEffectPlayer.play();
                     break;
                 default:
                     break;
@@ -271,8 +334,7 @@ export default class Player{
             theController.gameConsole.innerHTML += `<p>Cannot equip during combat!</p>`;
         }
         theController.scrollToBottom("game-console");
-        theController.soundEffectPlayer.src = "./audio/soundEffects/anvil-hit-2-14845.mp3";
-        theController.soundEffectPlayer.play();
+        
     }
     unequip(equippedArrayIndex){
         if(this.isInBattle == false){
