@@ -21,12 +21,14 @@ export default class Player{
         this.currentArmor = this.baseArmor;
         this.baseAttack = 1;
         this.currentAttack = this.baseAttack;
+        this.baseSpeed = 1;
+        this.currentSpeed = this.baseSpeed;
         this.statusArray = [];
         this.isInBattle = false;
-        this.awaitingInput = true;
+        this.isFirst = true;
         this.canMoveRoom  = true;
         this.map = new Map(this.level);
-        this.name = "The Schackle Breaker";
+        this.name = "schackle breaker";
         this.currentEnemy = ""; 
         this.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
         this.nextRoom = this.currentRoom;
@@ -78,51 +80,97 @@ export default class Player{
         theController.scrollToBottom("game-console");
     }
     endTurn(){
-        theController.disablePlayerBattleControls();
-        theController.updateEnemyStats();
+        theController.scrollToBottom("game-console");
         theController.updatePlayerStats();
+        theController.updateEnemyStats();
+        if(this.currentEnemy.currentHP <= 0 || this.currentHP <= 0){
+            return true;     
+        }else{
+            return false;
+        }
+    }
+    determineFirstMove(abilityIndex){
+        this.nextMove = this.abilityArray[abilityIndex];
+        if(this.nextMove.canUse(this) == false){
+            return;
+        }
+        this.currentEnemy.nextMove = this.currentEnemy.chooseAttack();
+        this.currentEnemy.nextMove.canUse(this.currentEnemy);
+        theController.disablePlayerBattleControls();
+        if(this.nextMove.speed + this.currentSpeed >= this.currentEnemy.currentSpeed + this.currentEnemy.nextMove.speed){
+            this.isFirst = true;
+        }else{
+            this.isFirst = false;
+        }
         setTimeout(()=>{
-            if(theController.battleOverCheck() === true){
-                theController.endBattle();
+            if(this.isFirst == true){
+                if(this.nextMove.activate(this, this.currentEnemy) == false){
+                    return;
+                }
             }else{
-                this.currentEnemy.chooseAttack(this);
+                if(this.currentEnemy.nextMove.activate(this.currentEnemy, this) == false){
+                    return;
+                }
+            }
+            if(this.endTurn() == false){
+                this.determineSecondMove();
+            }else{
+                theController.endBattle();
+            }
+        }, 1000);
+    }
+    determineSecondMove(){
+        setTimeout(()=>{
+            if(this.isFirst == false){
+                if(this.nextMove.activate(this, this.currentEnemy) == false){
+                    return;
+                }
+            }else{
+                if(this.currentEnemy.nextMove.activate(this.currentEnemy, this) == false){
+                    return;
+                }
+            }
+            if(this.endTurn() == false){
+                theController.enablePlayerBattleControls();
+            }else{
+                theController.endBattle();
             }
         }, 2000);
     }
-    useAbility(abilityIndex){
-        this.awaitingInput = false;
-        switch(this.abilityArray[abilityIndex].type){
-            case "attack":
-                if(this.abilityArray[abilityIndex].activate(this, this.currentEnemy) == false){
-                    return;
-                };
-                break;
-            case "buff":
-                if(this.abilityArray[abilityIndex].activate(this, this) == false){
-                    return;
-                };
-                break;
+     useConsumable(inventoryIndex){
+        if(this.isInBattle == false){
+            if(this.inventory[inventoryIndex].consume(this, this.currentEnemy) == false){
+                return;
+            }
+            theController.updatePlayerStats();
+            this.inventory.splice(inventoryIndex, 1);
+            theController.updatePlayerInventoryTab(this.inventory);
+        }else{
+            theController.disablePlayerBattleControls();
+            this.currentEnemy.nextMove = this.currentEnemy.chooseAttack();
+            setTimeout(()=>{ 
+                if(this.inventory[inventoryIndex].consume(this, this.currentEnemy) == true){
+                    this.inventory.splice(inventoryIndex, 1);
+                    theController.updatePlayerInventoryTab(this.inventory);
+                    theController.disablePlayerBattleControls();
+                }
+                if(this.endTurn() == false){
+                    this.isFirst = true;
+                    this.determineSecondMove();
+                }else{
+                    theController.endBattle();
+                }
+            }, 1000);
         }
-        this.endTurn();
     }
+
+
+
     loot(){
         let loot = this.currentEnemy.dropLoot();
         if(loot != ""){
             this.inventory.push(loot);
             theController.updatePlayerInventoryTab(this.inventory);
-        }
-    }
-    useConsumable(inventoryIndex){
-        if(this.inventory[inventoryIndex].consume(this, this.currentEnemy) == false){
-            return;
-        }
-        this.inventory.splice(inventoryIndex, 1);
-        if(this.isInBattle == false){
-            theController.updatePlayerStats();
-            theController.updatePlayerInventoryTab(this.inventory);
-        }else{
-            theController.updatePlayerInventoryTab(this.inventory);//must be done before?
-            this.endTurn();
         }
     }
     calcAbilitiesAndStats(){
@@ -223,6 +271,8 @@ export default class Player{
             theController.gameConsole.innerHTML += `<p>Cannot equip during combat!</p>`;
         }
         theController.scrollToBottom("game-console");
+        theController.soundEffectPlayer.src = "./audio/soundEffects/anvil-hit-2-14845.mp3";
+        theController.soundEffectPlayer.play();
     }
     unequip(equippedArrayIndex){
         if(this.isInBattle == false){

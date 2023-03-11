@@ -12,6 +12,7 @@ export default class Controller {
         this.locationName = document.getElementById('location-name');
         this.locationName.innerText = thePlayer.map.mapEnviorment.biome.charAt(0).toUpperCase() + thePlayer.map.mapEnviorment.biome.slice(1); //occurs twice
         this.audioPlayer = document.getElementById('audio-player');
+        this.soundEffectPlayer = document.getElementById('sound-effect-player');
         this.enemyImage = document.getElementById('enemy-image');
         this.locationImage = document.getElementById('location-image');
         this.locationImage.src = thePlayer.map.mapEnviorment.imageSrc; //occurs twice
@@ -75,7 +76,6 @@ export default class Controller {
             this.scrollToBottom("game-console");
             this.audioPlayer.src = "./audio/battle-of-the-dragons-8037.mp3";
             this.audioPlayer.play();
-            thePlayer.awaitingInput = true;
             thePlayer.isInBattle = true;
          }, 2000);
     }
@@ -110,16 +110,13 @@ export default class Controller {
                 alert("Game Over Please refresh!");
              }, 2000);
         }else{
-            Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
-                btn.style.visibility = "visible";
-            });
-            thePlayer.defeatEnemy();
-            this.toggleMap();
-        }
-    }
-    battleOverCheck(){
-        if(thePlayer.currentEnemy.currentHP <= 0 || thePlayer.currentHP <= 0){
-            return true;     
+            setTimeout(()=>{
+                Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
+                    btn.style.visibility = "visible";
+                });
+                thePlayer.defeatEnemy();
+                this.toggleMap();
+             }, 2000);
         }
     }
     enableKeyControls(){
@@ -169,7 +166,7 @@ export default class Controller {
             abilityBtn.classList.add('action-button');
             abilityBtn.innerText = thePlayer.abilityArray[x].name.charAt(0).toUpperCase() + thePlayer.abilityArray[x].name.slice(1);
             abilityBtn.addEventListener('click', ()=>{
-                thePlayer.useAbility(x);
+                thePlayer.determineFirstMove(x);
             });
             document.getElementById('battle-button-container').appendChild(abilityBtn);
             this.battleBtnArray.push(abilityBtn);

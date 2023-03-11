@@ -1,14 +1,27 @@
 import {Slash, Stab, Block} from "./abilities.js"
 import {controller as theController} from "./main.js";
 
-class equipment{
+class Equipment{
     useAbility(abilityIndex, weilder, target){
         if(this.abilityArray[abilityIndex].activate(this, weilder, target) == false){
             return false;
         };
     }
 }
-export class Dagger extends equipment{
+class Consumable{
+    checkDamage(damage, target){
+        if(damage < 0){
+            return 0;
+        }
+        if(target.currentHP - damage < 0){
+            return target.currentHP;
+        }
+        else{
+            return damage;
+        }
+    }
+}
+export class Dagger extends Equipment{
     constructor(){
         super();
         this.name = "dagger";
@@ -21,7 +34,7 @@ export class Dagger extends equipment{
         this.abilityArray = [new Stab(), new Slash()];
     }
 }
-export class Spear extends equipment{
+export class Spear extends Equipment{
     constructor(){
         super();
         this.name = "spear";
@@ -34,7 +47,7 @@ export class Spear extends equipment{
         this.abilityArray = [new Stab()];
     }
 }
-export class IronSheild extends equipment{
+export class IronSheild extends Equipment{
     constructor(){
         super();
         this.name = "iron sheild";
@@ -42,12 +55,12 @@ export class IronSheild extends equipment{
         this.level = 0;
         this.attack = 0;
         this.armor = 2;
-        this.speed = 1;
+        this.speed = -1;
         this.staminaCost = 2;
         this.abilityArray = [new Block()];
     }
 }
-export class IronHelmet extends equipment{
+export class IronHelmet extends Equipment{
     constructor(){
         super();
         this.name = "iron helmet";
@@ -55,11 +68,11 @@ export class IronHelmet extends equipment{
         this.level = 0;
         this.attack = 0;
         this.armor = 2;
-        this.speed = 1;
+        this.speed = -1;
         this.abilityArray = [];
     }
 }
-export class IronGuantlets extends equipment{
+export class IronGuantlets extends Equipment{
     constructor(){
         super();
         this.name = "iron guantlets";
@@ -67,11 +80,11 @@ export class IronGuantlets extends equipment{
         this.level = 0;
         this.attack = 0;
         this.armor = 2;
-        this.speed = 1;
+        this.speed = -1;
         this.abilityArray = [];
     }
 }
-export class IronChainmail extends equipment{
+export class IronChainmail extends Equipment{
     constructor(){
         super();
         this.name = "iron chainmail";
@@ -79,11 +92,11 @@ export class IronChainmail extends equipment{
         this.level = 0;
         this.attack = 0;
         this.armor = 2;
-        this.speed = 1;
+        this.speed = -1;
         this.abilityArray = [];
     }
 }
-export class IronGreaves extends equipment{
+export class IronGreaves extends Equipment{
     constructor(){
         super();
         this.name = "iron greaves";
@@ -91,11 +104,11 @@ export class IronGreaves extends equipment{
         this.level = 0;
         this.attack = 0;
         this.armor = 2;
-        this.speed = 1;
+        this.speed = -1;
         this.abilityArray = [];
     }
 }
-export class IronBoots extends equipment{
+export class IronBoots extends Equipment{
     constructor(){
         super();
         this.name = "iron boots";
@@ -103,40 +116,45 @@ export class IronBoots extends equipment{
         this.level = 0;
         this.attack = 0;
         this.armor = 2;
-        this.speed = 1;
+        this.speed = -1;
         this.abilityArray = [];
     }
 }
 
-export class HealingPotion{
+export class HealingPotion extends Consumable{
     constructor(){
+        super();
         this.name = "healing potion";
         this.type = "consumable";
     }
-    consume(weilder){
+    consume(weilder, target){
         let hp = 5 + weilder.level;
         if(weilder.currentHP + hp > weilder.maxHP){
             hp = weilder.maxHP - weilder.currentHP;
         }
         weilder.currentHP = weilder.currentHP + hp;
         theController.gameConsole.innerHTML += `<p>${weilder.name} restores ${hp} health!</p>`;
+        return true;
     }
 }
 
-export class ThrowingKnife{
+export class ThrowingKnife extends Consumable{
     constructor(){
+        super();
         this.name = "throwing knife";
         this.type = "consumable";
         this.level = 0;
     }
-    consume(weilder){
+    consume(weilder, target){
         if(weilder.isInBattle == false){
             return false;
+        }else{
+            let damageOutput =  2 * (weilder.level + 1) - target.currentArmor;
+            damageOutput = this.checkDamage(damageOutput, target);
+            weilder.currentEnemy.currentHP = weilder.currentEnemy.currentHP - damageOutput;
+            theController.gameConsole.innerHTML += `<p>${weilder.name} throws a ${this.name} at the ${weilder.currentEnemy.name} for ${damageOutput} damage!</p>`;
+            theController.scrollToBottom("game-console");
+            return true;
         }
-        let damageOutput =  2 * (weilder.level + 1);
-        weilder.currentEnemy.currentHP = weilder.currentEnemy.currentHP - damageOutput;
-        //need to check damage like in abilities (should move to abilities)
-        theController.gameConsole.innerHTML += `<p>${weilder.name} throws a ${this.name} at the ${weilder.currentEnemy.name} for ${damageOutput} damage!</p>`;
-        theController.scrollToBottom("game-console");
     }
 }

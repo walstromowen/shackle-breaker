@@ -12,7 +12,6 @@ Text adventure game based on the ShacklerBreaker story
 * Parry System
 * Bonus actions / reactions
 * Alphabetize CSS rules
-* Retreat Penalties
 * Staminina recovery?
 * Enviorment specific music
 * Sound effects
@@ -20,5 +19,6 @@ Text adventure game based on the ShacklerBreaker story
 * Exit button functionality
 * Buffs (turn counter);
 * Transfer all screen renders to controller (capitalization as well)
+* Encounters (choices before battles)
 
 
