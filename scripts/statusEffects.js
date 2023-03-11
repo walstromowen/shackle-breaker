@@ -28,14 +28,11 @@ export class Bound{
     }
     checkDuration(){
         if(this.turnCounter >= this.abilityDuration){
-            this.holder.currentArmor = this.holder.currentArmor - 5;
             this.holder.statusArray.splice(this, 1);
-            console.log("bound removed");
     }else
         this.applyEffect();
     }
     applyEffect(){
         this.holder.nextMove = new Struggle;
-        console.log("bound applied");
     }
 }

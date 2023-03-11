@@ -1,5 +1,5 @@
 import {Slash, Block, Bite, Pounce, LeechLife, ArcaneDart, ArcaneBlast, ChannelMagic} from "./abilities.js"
-import {Dagger, Spear, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots, HealingPotion, ThrowingKnife} from "./item.js";
+import {Dagger, Spear, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots, HealingPotion, StaminaPotion, ThrowingKnife} from "./item.js";
 
 class Enemy{
     constructor(){
@@ -35,7 +35,7 @@ export class Skeleton extends Enemy{
         this.currentSpeed = this.baseSpeed;
         this.abilityArray = [new Slash, new Block];
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new ThrowingKnife, new Dagger, new Spear];
+        this.lootArray = [new ThrowingKnife, new Dagger, new Spear, new StaminaPotion];
     }
 }
 export class Bat extends Enemy{
@@ -77,7 +77,7 @@ export class Wolf extends Enemy{
         this.currentSpeed = this.baseSpeed;
         this.abilityArray = [new Bite, new Pounce];
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new HealingPotion, new ThrowingKnife];
+        this.lootArray = [new StaminaPotion, new ThrowingKnife];
     }
 }
 export class Royalmage extends Enemy{

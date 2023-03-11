@@ -1,5 +1,5 @@
 import Map from "./map.js";
-import {Dagger, Spear, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots, HealingPotion, ThrowingKnife} from "./item.js";
+import {Dagger, Spear, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots, HealingPotion, StaminaPotion, ThrowingKnife} from "./item.js";
 import {Recover, Punch, Retreat} from "./abilities.js"
 import {controller as theController} from "./main.js";
 import {miniMap as theMiniMap} from "./main.js";
@@ -7,7 +7,7 @@ import {miniMap as theMiniMap} from "./main.js";
 export default class Player{
     constructor(){
         this.equippedArray = ["Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"];
-        this.inventory = [new Dagger, new IronSheild, new IronHelmet, new IronChainmail, new IronGuantlets, new IronGreaves, new IronBoots, new ThrowingKnife, new HealingPotion];
+        this.inventory = [new Dagger, new IronSheild, new IronHelmet, new IronChainmail, new IronGuantlets, new IronGreaves, new IronBoots, new ThrowingKnife, new HealingPotion, new StaminaPotion];
         this.abilityArray = [new Punch, new Recover, new Retreat];
         this.level = 0;
         this.currentXp = 0;
@@ -94,7 +94,7 @@ export default class Player{
             this.currentEnemy.statusArray[i].turnCounter = this.currentEnemy.statusArray[i].turnCounter + 1;
             this.currentEnemy.statusArray[i].checkDuration();
         }
-        console.log(this.statusArray);
+        console.log("player armor" + this.currentArmor);
         if(this.currentEnemy.currentHP <= 0 || this.currentHP <= 0){
             return true;     
         }else{

@@ -191,7 +191,7 @@ export class Recover extends ability{
     activate(weilder, target){
         if(weilder.currentStamina == weilder.maxStamina){
             theController.gameConsole.innerHTML += `<p>${weilder.name} cannot recover more stamina!</p>`;
-            return false;
+            return;
         }
         let stamina = Math.floor(weilder.maxStamina * 0.2);
         if(weilder.currentStamina + stamina > weilder.maxStamina){

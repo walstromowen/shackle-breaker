@@ -14,11 +14,10 @@ Text adventure game based on the ShacklerBreaker story
 * Alphabetize CSS rules
 * Staminina recovery?
 * Enviorment specific music
-* Sound effects
 * Loop Music
 * Exit button functionality
-* Buffs (turn counter);
 * Transfer all screen renders to controller (capitalization as well)
 * Encounters (choices before battles)
+* prevent recover from firing enemy attack at max stamina
 
 

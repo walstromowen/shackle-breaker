@@ -138,6 +138,23 @@ export class HealingPotion extends Consumable{
     }
 }
 
+export class StaminaPotion extends Consumable{
+    constructor(){
+        super();
+        this.name = "stamina potion";
+        this.type = "consumable";
+    }
+    consume(weilder, target){
+        let stamina = 5 + weilder.level;
+        if(weilder.currentStamina + stamina > weilder.maxHP){
+            stamina = weilder.maxStamina - weilder.currentStamina;
+        }
+        weilder.currentStamina = weilder.currentStamina + stamina;
+        theController.gameConsole.innerHTML += `<p>${weilder.name} restores ${stamina} stamina!</p>`;
+        return true;
+    }
+}
+
 export class ThrowingKnife extends Consumable{
     constructor(){
         super();
