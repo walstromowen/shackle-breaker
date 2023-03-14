@@ -47,7 +47,7 @@ h1{
     display:flex;
     justify-content: center;
     flex-direction: column;	
-    margin: 10%auto;
+    margin: 10% auto;
     width: 300px;
 }
 /*App*/
@@ -363,4 +363,17 @@ h1{
 }
 #submit-level-btn{
     margin:auto;
+}
+
+/*Game Over Screen*/
+#gameover-screen{
+    display:none;
+}
+
+#gameover-screen-btn-container{
+    display:flex;
+    justify-content: center;
+    flex-direction: column;	
+    margin: 10% auto;
+    width: 300px;
 }

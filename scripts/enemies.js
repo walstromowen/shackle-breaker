@@ -1,9 +1,10 @@
-import {Slash, Block, Bite, Pounce, LeechLife, ArcaneDart, ArcaneBlast, ChannelMagic} from "./abilities.js"
+import {Slash, Block, Bite, Pounce, LeechLife, ArcaneDart, ArcaneBlast} from "./abilities.js"
 import {Dagger, Spear, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots, HealingPotion, StaminaPotion, ThrowingKnife} from "./item.js";
 
 class Enemy{
     constructor(){
         this.statusArray = [];
+        this.isFirst = false;
     }
     chooseAttack(){
         return this.abilityArray[Math.floor(Math.random()*this.abilityArray.length)];
@@ -13,6 +14,11 @@ class Enemy{
             return this.lootArray[Math.floor(Math.random()*this.lootArray.length)];
         }else{
             return "";
+        }
+    }
+    updateStatusEffects(){
+        for(var i = 0; i < this.statusArray.length; i++){
+            this.statusArray[i].checkCharges();
         }
     }
 }

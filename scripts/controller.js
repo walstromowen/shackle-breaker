@@ -107,7 +107,9 @@ export default class Controller {
         if(thePlayer.currentHP <= 0){
             this.disablePlayerBattleControls();
             setTimeout(()=>{
-                alert("Game Over Please refresh!");
+                this.audioPlayer.pause();
+                document.getElementById('gameover-screen').style.display = "block";
+                document.getElementById("app").style.display = "none";
              }, 2000);
         }else{
             setTimeout(()=>{

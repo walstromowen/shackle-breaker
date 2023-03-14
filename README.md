@@ -18,6 +18,6 @@ Text adventure game based on the ShacklerBreaker story
 * Exit button functionality
 * Transfer all screen renders to controller (capitalization as well)
 * Encounters (choices before battles)
-* prevent recover from firing enemy attack at max stamina
+* Prevent being able to use block when bound
 
 

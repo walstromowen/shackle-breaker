@@ -7,7 +7,7 @@ import {miniMap as theMiniMap} from "./main.js";
 export default class Player{
     constructor(){
         this.equippedArray = ["Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"];
-        this.inventory = [new Dagger, new IronSheild, new IronHelmet, new IronChainmail, new IronGuantlets, new IronGreaves, new IronBoots, new ThrowingKnife, new HealingPotion, new StaminaPotion];
+        this.inventory = [new Dagger, new IronSheild, new HealingPotion, new StaminaPotion];
         this.abilityArray = [new Punch, new Recover, new Retreat];
         this.level = 0;
         this.currentXp = 0;
@@ -29,7 +29,6 @@ export default class Player{
         this.canMoveRoom  = true;
         this.map = new Map(this.level);
         this.name = "schackle breaker";
-        this.turnCounter;
         this.currentEnemy = ""; 
         this.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
         this.nextRoom = this.currentRoom;
@@ -80,25 +79,22 @@ export default class Player{
         //theController.gameConsole.innerHTML += "<p>" + this.currentRoom.description + "</p>";//
         theController.scrollToBottom("game-console");
     }
+
+
     endTurn(){
         theController.scrollToBottom("game-console");
         theController.updatePlayerStats();
         theController.updateEnemyStats();
-        //update status effects for player
-        for(var i = 0; i < this.statusArray.length; i++){
-            this.statusArray[i].turnCounter = this.statusArray[i].turnCounter + 1;
-            this.statusArray[i].checkDuration();
-        }
-         //update status effects for enemy
-        for(var i = 0; i < this.currentEnemy.statusArray.length; i++){
-            this.currentEnemy.statusArray[i].turnCounter = this.currentEnemy.statusArray[i].turnCounter + 1;
-            this.currentEnemy.statusArray[i].checkDuration();
-        }
-        console.log("player armor" + this.currentArmor);
+        console.log(this.currentArmor);
         if(this.currentEnemy.currentHP <= 0 || this.currentHP <= 0){
             return true;     
         }else{
             return false;
+        }
+    }
+    updateStatusEffects(){
+        for(var i = 0; i < this.statusArray.length; i++){
+            this.statusArray[i].checkCharges();
         }
     }
     determineFirstMove(abilityIndex){
@@ -111,8 +107,10 @@ export default class Player{
         theController.disablePlayerBattleControls();
         if(this.nextMove.speed + this.currentSpeed >= this.currentEnemy.currentSpeed + this.currentEnemy.nextMove.speed){
             this.isFirst = true;
+            
         }else{
             this.isFirst = false;
+           
         }
         setTimeout(()=>{
             if(this.isFirst == true){
@@ -150,6 +148,7 @@ export default class Player{
         }, 1000);
     }
     determineSecondMove(){
+        this.currentEnemy.nextMove.canUse(this.currentEnemy);
         setTimeout(()=>{
             if(this.isFirst == false){
                 switch(this.nextMove.type){
@@ -164,7 +163,7 @@ export default class Player{
                         }
                         break;
                 }
-            }else{
+            }else{   
                 switch(this.currentEnemy.nextMove.type){
                     case "attack":
                         if(this.currentEnemy.nextMove.activate(this.currentEnemy, this) == false){
@@ -185,6 +184,10 @@ export default class Player{
             }
         }, 2000);
     }
+
+
+
+
     useConsumable(inventoryIndex){
         if(this.isInBattle == false){
             if(this.inventory[inventoryIndex].consume(this, this.currentEnemy) == false){
@@ -203,7 +206,7 @@ export default class Player{
                     theController.disablePlayerBattleControls();
                 }
                 if(this.endTurn() == false){
-                    this.isFirst = true;
+                    this.isTurn = true;
                     this.determineSecondMove();
                 }else{
                     theController.endBattle();

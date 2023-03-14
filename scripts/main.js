@@ -16,3 +16,14 @@ document.getElementById('title-start-button').addEventListener("click", ()=>{
     document.getElementById("title-screen").style.display = "none";
     document.getElementById("app").style.display = "block";
 });
+document.getElementById('title-exit-button').addEventListener("click", ()=>{
+    window.close();
+});
+
+document.getElementById('gameover-to-menu-btn').addEventListener("click", ()=>{
+    document.getElementById("title-screen").style.display = "block";
+    document.getElementById("gameover-screen").style.display = "block";
+});
+document.getElementById('gameover-exit-btn').addEventListener("click", ()=>{
+    window.close();
+});

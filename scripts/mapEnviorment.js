@@ -31,14 +31,14 @@ export default class MapEnviorment{
                     case 0:
                         return new Skeleton(playerLevel);
                     case 1:
-                        return new Bat(playerLevel);
+                        return new Skeleton(playerLevel);
                     default:
                         return;
                 }
             case "forest":
                 switch(Math.floor(Math.random()*2)){ 
                     case 0:
-                        return new Bat(playerLevel);
+                        return new Wolf(playerLevel);
                     case 1:
                         return new Wolf(playerLevel);
                     default:
@@ -47,9 +47,9 @@ export default class MapEnviorment{
             case "plains":
                 switch(Math.floor(Math.random()*3)){ 
                     case 0:
-                        return new Skeleton(playerLevel);
+                        return new Royalmage(playerLevel);
                     case 1:
-                        return new Wolf(playerLevel);
+                        return new Royalmage(playerLevel);
                     case 2:
                         return new Royalmage(playerLevel);
                     default:
