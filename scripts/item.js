@@ -16,10 +16,10 @@ class Consumable{
         }
     }
 }
-export class Dagger extends Equipment{
+export class WoodDagger extends Equipment{
     constructor(){
         super();
-        this.name = "dagger";
+        this.name = "wood dagger";
         this.type = "weapon";
         this.level = 0;
         this.attack = 1;
@@ -29,10 +29,10 @@ export class Dagger extends Equipment{
         this.abilityArray = [new Stab(), new Slash()];
     }
 }
-export class Spear extends Equipment{
+export class WoodSpear extends Equipment{
     constructor(){
         super();
-        this.name = "spear";
+        this.name = "wood spear";
         this.type = "weapon";
         this.level = 0;
         this.attack = 3;
@@ -42,6 +42,19 @@ export class Spear extends Equipment{
         this.abilityArray = [new Stab()];
     }
 }
+export class WoodSheild extends Equipment{
+    constructor(){
+        super();
+        this.name = "wood sheild";
+        this.type = "offhand";
+        this.level = 0;
+        this.attack = 0;
+        this.armor = 1;
+        this.speed = -1;
+        this.staminaCost = 2;
+        this.abilityArray = [new Block()];
+    }
+}
 export class IronSheild extends Equipment{
     constructor(){
         super();
@@ -49,7 +62,7 @@ export class IronSheild extends Equipment{
         this.type = "offhand";
         this.level = 0;
         this.attack = 0;
-        this.armor = 0;
+        this.armor = 2;
         this.speed = -1;
         this.staminaCost = 2;
         this.abilityArray = [new Block()];

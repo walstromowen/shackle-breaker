@@ -1,7 +1,7 @@
 *{
     margin: 0;
     padding: 0px;
-    font-family: papyrus, fantasy;
+    font-family: Roboto Slab, serif;
     user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
@@ -19,6 +19,7 @@ p{
     font-size: 16px;
 }
 h1{
+    font-family: papyrus, fantasy;
     text-align: center;
     color: lightgrey;
     font-size: 120px;

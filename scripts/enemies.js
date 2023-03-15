@@ -1,5 +1,5 @@
-import {Slash, Block, Bite, Pounce, LeechLife, ArcaneDart, ArcaneBlast} from "./abilities.js"
-import {Dagger, Spear, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots, HealingPotion, StaminaPotion, ThrowingKnife} from "./item.js";
+import {Slash, Block, Bite, Pounce, LeechLife, ArcaneDart, ArcaneBlast, SpitBile} from "./abilities.js"
+import {WoodDagger, WoodSpear, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots, HealingPotion, StaminaPotion, ThrowingKnife} from "./item.js";
 
 class Enemy{
     constructor(){
@@ -44,7 +44,7 @@ export class Skeleton extends Enemy{
         this.currentSpeed = this.baseSpeed;
         this.abilityArray = [new Slash, new Block];
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new ThrowingKnife, new Dagger, new Spear, new StaminaPotion];
+        this.lootArray = [new ThrowingKnife, new WoodDagger, new WoodSpear, new StaminaPotion];
     }
 }
 export class Bat extends Enemy{
@@ -108,5 +108,26 @@ export class Royalmage extends Enemy{
         this.abilityArray = [new ArcaneDart, new ArcaneBlast];
         this.lootChanceMultiplier = 0; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new IronHelmet, new IronChainmail, new IronGuantlets, new IronGreaves, new IronBoots, new IronSheild];
+    }
+}
+export class CaveSpider extends Enemy{
+    constructor(playerLevel){
+        super();
+        this.name = "cave spider";
+        this.imageSrc = "media/cave-spider.jpg"
+        this.maxHP = 6 + playerLevel ; 
+        this.currentHP = this.maxHP;
+        this.maxStamina = 10 + playerLevel;
+        this.currentStamina = this.maxStamina;
+        this.maxMagic = 0 + playerLevel;
+        this.currentMagic = this.maxMagic;
+        this.currentArmor = 0;
+        this.baseAttack = 2 + playerLevel;
+        this.currentAttack = this.baseAttack;
+        this.baseSpeed = 2;
+        this.currentSpeed = this.baseSpeed;
+        this.abilityArray = [new Bite, new SpitBile];
+        this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootArray = [new StaminaPotion];
     }
 }

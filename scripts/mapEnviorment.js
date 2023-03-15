@@ -1,4 +1,4 @@
-import {Skeleton, Bat, Wolf, Royalmage} from "./enemies.js";
+import {Skeleton, Bat, Wolf, Royalmage, CaveSpider} from "./enemies.js";
 
 export default class MapEnviorment{
     constructor(){
@@ -27,18 +27,20 @@ export default class MapEnviorment{
     generateEnemy(playerLevel){
         switch(this.biome){ 
             case "cave": 
-                switch(Math.floor(Math.random()*2)){ 
+                switch(Math.floor(Math.random()*3)){ 
                     case 0:
-                        return new Skeleton(playerLevel);
+                        return new CaveSpider(playerLevel);
                     case 1:
-                        return new Skeleton(playerLevel);
+                        return new CaveSpider(playerLevel);
+                    case 2:
+                        return new CaveSpider(playerLevel);
                     default:
                         return;
                 }
             case "forest":
                 switch(Math.floor(Math.random()*2)){ 
                     case 0:
-                        return new Wolf(playerLevel);
+                        return new Bat(playerLevel);
                     case 1:
                         return new Wolf(playerLevel);
                     default:
@@ -47,9 +49,9 @@ export default class MapEnviorment{
             case "plains":
                 switch(Math.floor(Math.random()*3)){ 
                     case 0:
-                        return new Royalmage(playerLevel);
+                        return new Skeleton(playerLevel);
                     case 1:
-                        return new Royalmage(playerLevel);
+                        return new Wolf(playerLevel);
                     case 2:
                         return new Royalmage(playerLevel);
                     default:

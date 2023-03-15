@@ -7,7 +7,7 @@
 
 import {controller as theController} from "./main.js";
 import {player as thePlayer} from "./main.js";
-import {Reinforced, Bound} from "./statusEffects.js";
+import {Reinforced, Bound, Posioned} from "./statusEffects.js";
 
 class ability{
     canUse(weilder){
@@ -359,4 +359,33 @@ export class Struggle extends ability{
             theController.gameConsole.innerHTML += `<p>${weilder.name} cannot move!</p>`;
             this.playSound();
     }
+}
+
+export class SpitBile extends ability{
+    constructor(){
+        super();
+        this.name = "spit bile";
+        this.type = "attack";
+        this.speed = 1;
+        this.staminaCost = 4;
+        this.magicCost = 0;
+        this.damageModifier = 1.8;
+        this.soundEffect = "./audio/soundEffects/sword-sound-2-36274.mp3";
+    }
+    activate(weilder, target){
+        if(this.checkStamina(weilder, this.staminaCost) == true){
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentAttack*this.damageModifier) - weilder.currentAttack + 1)) + weilder.currentAttack;
+            damageOutput = this.checkDamage(damageOutput, target);
+            target.currentHP = target.currentHP - damageOutput;
+            theController.gameConsole.innerHTML += `<p> The ${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
+            this.playSound();
+            for(let i = 0; i < target.statusArray.length; i++){
+                if(target.statusArray[i].name == "posioned"){
+                    target.statusArray[i].currentCharges = target.statusArray[i].maxCharges;
+                    return;
+                }
+            }
+            target.statusArray.push(new Posioned(target));
+        }
+    }    
 }

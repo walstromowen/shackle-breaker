@@ -1,5 +1,5 @@
 import Map from "./map.js";
-import {Dagger, Spear, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots, HealingPotion, StaminaPotion, ThrowingKnife} from "./item.js";
+import {WoodDagger, WoodSpear, WoodSheild, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots, HealingPotion, StaminaPotion, ThrowingKnife} from "./item.js";
 import {Recover, Punch, Retreat} from "./abilities.js"
 import {controller as theController} from "./main.js";
 import {miniMap as theMiniMap} from "./main.js";
@@ -7,11 +7,11 @@ import {miniMap as theMiniMap} from "./main.js";
 export default class Player{
     constructor(){
         this.equippedArray = ["Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"];
-        this.inventory = [new Dagger, new IronSheild, new HealingPotion, new StaminaPotion];
+        this.inventory = [new WoodDagger, new WoodSheild, new HealingPotion, new StaminaPotion];
         this.abilityArray = [new Punch, new Recover, new Retreat];
         this.level = 0;
         this.currentXp = 0;
-        this.maxHP = 100;
+        this.maxHP = 10;
         this.currentHP = this.maxHP;
         this.maxStamina = 10
         this.currentStamina = this.maxStamina;

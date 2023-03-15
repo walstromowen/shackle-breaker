@@ -1,4 +1,5 @@
 import {Struggle} from "./abilities.js";
+import {controller as theController} from "./main.js";
 
 class StatusEffect{
     update(type, statusArrayIndex){ 
@@ -25,6 +26,17 @@ class StatusEffect{
     }
     onRemove(statusArrayIndex){
         
+    }
+    checkDamage(damage, target){;
+        if(damage < 0){
+            return 0;
+        }
+        if(target.currentHP - damage< 0){
+            return target.currentHP;
+        }
+        else{
+            return damage;
+        }
     }
 }
 export class Reinforced extends StatusEffect{//curently has bug where if your next attack is first the reinfored effect is still apllied but it acually makes and interesting game mechanic
@@ -53,8 +65,31 @@ export class Bound extends StatusEffect{
         this.maxCharges = 2;
         this.currentCharges = this.maxCharges;
     }
-    onStartTurn(){//not firing on first pounce
+    onStartTurn(){
         this.holder.nextMove = new Struggle;
+        this.currentCharges = this.currentCharges - 1;
+    }
+    onRemove(statusArrayIndex){
+        this.holder.statusArray.splice(statusArrayIndex, 1);
+    }
+}
+
+export class Posioned extends StatusEffect{
+    constructor(holder){
+        super();
+        this.name = "posioned";
+        this.holder = holder;
+        this.maxCharges = 10;
+        this.currentCharges = this.maxCharges;
+        this.serverityMultiplier = 0.1;
+    }
+    onEndTurn(){
+        let damageOutput = Math.floor(this.holder.maxHP*this.serverityMultiplier);
+        damageOutput = this.checkDamage(damageOutput, this.holder);
+        this.serverityMultiplier = this.serverityMultiplier + 0.01;
+        this.holder.currentHP = this.holder.currentHP - damageOutput;
+        theController.gameConsole.innerHTML += `<p>${this.holder.name} suffers ${damageOutput} posion damage!</p>`;
+        theController.scrollToBottom("game-console");
         this.currentCharges = this.currentCharges - 1;
     }
     onRemove(statusArrayIndex){
