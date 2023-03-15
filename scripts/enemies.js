@@ -4,7 +4,6 @@ import {Dagger, Spear, IronSheild, IronHelmet, IronChainmail, IronGuantlets, Iro
 class Enemy{
     constructor(){
         this.statusArray = [];
-        this.isFirst = false;
     }
     chooseAttack(){
         return this.abilityArray[Math.floor(Math.random()*this.abilityArray.length)];
@@ -16,9 +15,9 @@ class Enemy{
             return "";
         }
     }
-    updateStatusEffects(){
+    updateStatusEffects(type){
         for(var i = 0; i < this.statusArray.length; i++){
-            this.statusArray[i].checkCharges();
+            this.statusArray[i].update(type, i);
         }
     }
 }

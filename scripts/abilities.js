@@ -66,14 +66,6 @@ class ability{
         theController.soundEffectPlayer.src = this.soundEffect;
         theController.soundEffectPlayer.play();
     }
-    checkIfStatusPresent(target, statusName){
-        for(let i = 0; i < target.statusArray.length; i++){
-            if(target.statusArray[i].name == statusName){
-                return true;
-            }
-        }
-        return false;
-    }
 }
 export class Punch extends ability{
     constructor(){
@@ -151,11 +143,15 @@ export class Block extends ability{
     }
     activate(weilder, target){
         if(this.checkStamina(weilder, this.staminaCost) == true){
-            if(this.checkIfStatusPresent(target, "reinforced") == false){
-                target.statusArray.push(new Reinforced(weilder));
-            }
             theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name}!</p>`;
             this.playSound();
+            for(let i = 0; i < weilder.statusArray.length; i++){
+                if(weilder.statusArray[i].name == "reinforced"){
+                    weilder.statusArray[i].currentCharges = weilder.statusArray[i].maxCharges;
+                    return;
+                }
+            }
+            weilder.statusArray.push(new Reinforced(weilder));
         }
     }
 }
@@ -264,13 +260,15 @@ export class Pounce extends ability{
             let damageOutput = Math.floor(Math.random() * ((weilder.currentAttack*this.damageModifier) - weilder.currentAttack + 1)) + weilder.currentAttack;
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
-            if(Math.random() * 2 < 2){
-                if(this.checkIfStatusPresent(target, "bound") == false){
-                    target.statusArray.push(new Bound(target));
-                }
-            }
             theController.gameConsole.innerHTML += `<p> The ${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
             this.playSound();
+            for(let i = 0; i < target.statusArray.length; i++){
+                if(target.statusArray[i].name == "bound"){
+                    target.statusArray[i].currentCharges = target.statusArray[i].maxCharges;
+                    return;
+                }
+            }
+            target.statusArray.push(new Bound(target));
         }
     }    
 }

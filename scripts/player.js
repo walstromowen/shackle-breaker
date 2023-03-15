@@ -26,9 +26,9 @@ export default class Player{
         this.statusArray = [];
         this.isInBattle = false;
         this.isFirst = true;
-        this.canMoveRoom  = true;
+        this.canMoveRoom = true;
         this.map = new Map(this.level);
-        this.name = "schackle breaker";
+        this.name = "shackle breaker";
         this.currentEnemy = ""; 
         this.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
         this.nextRoom = this.currentRoom;
@@ -85,18 +85,19 @@ export default class Player{
         theController.scrollToBottom("game-console");
         theController.updatePlayerStats();
         theController.updateEnemyStats();
-        console.log(this.currentArmor);
         if(this.currentEnemy.currentHP <= 0 || this.currentHP <= 0){
             return true;     
         }else{
             return false;
         }
     }
-    updateStatusEffects(){
+    updateStatusEffects(type){
         for(var i = 0; i < this.statusArray.length; i++){
-            this.statusArray[i].checkCharges();
+            this.statusArray[i].update(type, i);
         }
     }
+
+
     determineFirstMove(abilityIndex){
         this.nextMove = this.abilityArray[abilityIndex];
         if(this.nextMove.canUse(this) == false){
@@ -107,38 +108,22 @@ export default class Player{
         theController.disablePlayerBattleControls();
         if(this.nextMove.speed + this.currentSpeed >= this.currentEnemy.currentSpeed + this.currentEnemy.nextMove.speed){
             this.isFirst = true;
-            
         }else{
             this.isFirst = false;
-           
         }
         setTimeout(()=>{
             if(this.isFirst == true){
-                switch(this.nextMove.type){
-                    case "attack":
-                        if(this.nextMove.activate(this, this.currentEnemy) == false){
-                            return;
-                        }
-                        break;
-                    case "buff":
-                        if(this.nextMove.activate(this, this) == false){
-                            return;
-                        }
-                        break;
+                this.updateStatusEffects("start");
+                if(this.nextMove.activate(this, this.currentEnemy) == false){
+                    return;
                 }
+                this.updateStatusEffects("end");
             }else{
-                switch(this.currentEnemy.nextMove.type){
-                    case "attack":
-                        if(this.currentEnemy.nextMove.activate(this.currentEnemy, this) == false){
-                            return;
-                        }
-                        break;
-                    case "buff":
-                        if(this.currentEnemy.nextMove.activate(this.currentEnemy, this.currentEnemy) == false){
-                            return;
-                        }
-                        break;
+                this.currentEnemy.updateStatusEffects("start");
+                if(this.currentEnemy.nextMove.activate(this.currentEnemy, this) == false){
+                    return;
                 }
+                this.currentEnemy.updateStatusEffects("end");
             }
             if(this.endTurn() == false){
                 this.determineSecondMove();
@@ -151,31 +136,17 @@ export default class Player{
         this.currentEnemy.nextMove.canUse(this.currentEnemy);
         setTimeout(()=>{
             if(this.isFirst == false){
-                switch(this.nextMove.type){
-                    case "attack":
-                        if(this.nextMove.activate(this, this.currentEnemy) == false){
-                            return;
-                        }
-                        break;
-                    case "buff":
-                        if(this.nextMove.activate(this, this) == false){
-                            return;
-                        }
-                        break;
+                this.updateStatusEffects("start");
+                if(this.nextMove.activate(this, this.currentEnemy) == false){
+                    return;
                 }
+                this.updateStatusEffects("end");
             }else{   
-                switch(this.currentEnemy.nextMove.type){
-                    case "attack":
-                        if(this.currentEnemy.nextMove.activate(this.currentEnemy, this) == false){
-                            return;
-                        }
-                        break;
-                    case "buff":
-                        if(this.currentEnemy.nextMove.activate(this.currentEnemy, this.currentEnemy) == false){
-                            return;
-                        }
-                        break;
+                this.currentEnemy.updateStatusEffects("start");
+                if(this.currentEnemy.nextMove.activate(this.currentEnemy, this) == false){
+                    return;
                 }
+                this.currentEnemy.updateStatusEffects("end");
             }
             if(this.endTurn() == false){
                 theController.enablePlayerBattleControls();
@@ -206,7 +177,6 @@ export default class Player{
                     theController.disablePlayerBattleControls();
                 }
                 if(this.endTurn() == false){
-                    this.isTurn = true;
                     this.determineSecondMove();
                 }else{
                     theController.endBattle();

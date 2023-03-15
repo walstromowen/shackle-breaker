@@ -60,7 +60,7 @@ export default class Controller {
     toggleBattle(){
         this.gameConsole.innerHTML += "<p>Something approaches...</p>";
         this.scrollToBottom("game-console");
-        thePlayer.canMoveRoom  = false;
+        thePlayer.canMoveRoom = false;
         setTimeout(()=>{
             this.enemyName.innerText = thePlayer.currentEnemy.name.charAt(0).toUpperCase() + thePlayer.currentEnemy.name.slice(1);
             this.enemyImage.src = thePlayer.currentEnemy.imageSrc;
@@ -244,9 +244,9 @@ export default class Controller {
     displayLevelUpScreen(){
         document.getElementById('level-up-screen').style.display = "block";
         document.getElementById("app").style.display = "none";
+        thePlayer.canMoveRoom = false;
     }
     enableLevelUpControls(){
-        thePlayer.canMove = false;
         let levelCheck = false;
         let fullHeal = () =>{
             thePlayer.currentHP =  thePlayer.maxHP;
@@ -286,6 +286,7 @@ export default class Controller {
                 document.getElementById('level-up-screen').style.display = "none";
                 this.audioPlayer.play();
                 this.updatePlayerStats();
+                thePlayer.canMoveRoom = true;
             }
         });
     }

@@ -18,6 +18,7 @@ Text adventure game based on the ShacklerBreaker story
 * Exit button functionality
 * Transfer all screen renders to controller (capitalization as well)
 * Encounters (choices before battles)
-* Prevent being able to use block when bound
+* MAJOR BUG IN STATUS EFFECTS need to overhaul battle sequence
+* can't equip items after retreating first
 
 

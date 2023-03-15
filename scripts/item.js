@@ -2,11 +2,6 @@ import {Slash, Stab, Block} from "./abilities.js"
 import {controller as theController} from "./main.js";
 
 class Equipment{
-    useAbility(abilityIndex, weilder, target){
-        if(this.abilityArray[abilityIndex].activate(this, weilder, target) == false){
-            return false;
-        };
-    }
 }
 class Consumable{
     checkDamage(damage, target){
