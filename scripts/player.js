@@ -11,7 +11,7 @@ export default class Player{
         this.abilityArray = [new Punch, new Recover, new Retreat];
         this.level = 0;
         this.currentXp = 0;
-        this.maxHP = 10;
+        this.maxHP = 100;
         this.currentHP = this.maxHP;
         this.maxStamina = 10
         this.currentStamina = this.maxStamina;
@@ -92,8 +92,12 @@ export default class Player{
         }
     }
     updateStatusEffects(type){
-        for(var i = 0; i < this.statusArray.length; i++){
-            this.statusArray[i].update(type, i);
+        let initialLength = this.statusArray.length //once a status is removed, the length of the array changes, which is why I need to save the length of the initial array
+        let statusArrayIndex = 0;
+        for(let i = 0; i < initialLength; i++){
+            if(this.statusArray[statusArrayIndex].update(type, statusArrayIndex) == true){
+                statusArrayIndex = statusArrayIndex + 1;
+            }//once the length of the array changes, the index of the next status will change to you need to account for that 
         }
     }
 
@@ -172,11 +176,14 @@ export default class Player{
             this.currentEnemy.nextMove = this.currentEnemy.chooseAttack();
             setTimeout(()=>{ 
                 if(this.inventory[inventoryIndex].consume(this, this.currentEnemy) == true){
+                    this.updateStatusEffects("start");
                     this.inventory.splice(inventoryIndex, 1);
                     theController.updatePlayerInventoryTab(this.inventory);
                     theController.disablePlayerBattleControls();
+                    this.updateStatusEffects("end");
                 }
                 if(this.endTurn() == false){
+                    this.isFirst = true;//allows c urrent enemy to attack;
                     this.determineSecondMove();
                 }else{
                     theController.endBattle();

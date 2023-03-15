@@ -49,7 +49,7 @@ export class IronSheild extends Equipment{
         this.type = "offhand";
         this.level = 0;
         this.attack = 0;
-        this.armor = 2;
+        this.armor = 0;
         this.speed = -1;
         this.staminaCost = 2;
         this.abilityArray = [new Block()];
@@ -141,7 +141,7 @@ export class StaminaPotion extends Consumable{
     }
     consume(weilder, target){
         let stamina = 5 + weilder.level;
-        if(weilder.currentStamina + stamina > weilder.maxHP){
+        if(weilder.currentStamina + stamina > weilder.maxStamina){
             stamina = weilder.maxStamina - weilder.currentStamina;
         }
         weilder.currentStamina = weilder.currentStamina + stamina;

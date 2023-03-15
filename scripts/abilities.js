@@ -14,13 +14,14 @@ class ability{
         if(weilder === thePlayer){
             if(weilder.currentStamina - this.staminaCost < 0){
                 theController.gameConsole.innerHTML += `<p>Not enough stamina!</p>`;
+                theController.scrollToBottom("game-console");
                 return false;
             }
             if(weilder.currentMagic - this.magicCost < 0){
                 theController.gameConsole.innerHTML += `<p>Not enough magic!</p>`;
+                theController.scrollToBottom("game-console");
                 return false;
             }
-            theController.scrollToBottom("game-console");
         }else{
             if(weilder.currentStamina - this.staminaCost < 0){
                 weilder.nextMove = new Recover;

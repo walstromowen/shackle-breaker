@@ -36,7 +36,6 @@ export default class Controller {
         this.enablePlayerMapControls();
         this.enableInventoryControls();
         this.enableLevelUpControls();
-        this.updatePlayerInventoryTab(thePlayer.inventory)
         this.toggleMap();
     }
     toggleMap(){
@@ -56,6 +55,7 @@ export default class Controller {
         theMiniMap.draw();
         thePlayer.isInBattle = false;
         thePlayer.canMoveRoom  = true;
+        this.updatePlayerInventoryTab(thePlayer.inventory);
     }
     toggleBattle(){
         this.gameConsole.innerHTML += "<p>Something approaches...</p>";

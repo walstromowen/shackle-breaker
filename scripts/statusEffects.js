@@ -1,38 +1,33 @@
 import {Struggle} from "./abilities.js";
 
 class StatusEffect{
-    update(type, statusEffectIndex){
+    update(type, statusArrayIndex){ 
         if(this.currentCharges > 0){
-            switch(type){
-                case "start":
+            switch(type){ //not firing on first pounce
+                case "start": 
                     this.onStartTurn();
-                    break;
+                    return true;
                 case "end":
                     this.onEndTurn();
-                    break;
+                    return true;
             }
         }
         else{
-            this.onRemove();
+            this.onRemove(statusArrayIndex);
+            return false;
         }
     }
     onStartTurn(){
-        console.log(`${this.holder.name} was affected by ${this.name} before its turn`);
-        console.log(this.holder.statusArray);
+       
     }
     onEndTurn(){
-        console.log(`${this.holder.name} was affected by ${this.name} after its turn`);
-        console.log(this.holder.statusArray);
+      
     }
-    onRemove(){
-        console.log(`${this.name} removed from ${this.holder.name}`);
-        holder.statusArray.splice(statusEffectIndex, 1);
+    onRemove(statusArrayIndex){
+        
     }
 }
-
-
-
-export class Reinforced extends StatusEffect{
+export class Reinforced extends StatusEffect{//curently has bug where if your next attack is first the reinfored effect is still apllied but it acually makes and interesting game mechanic
     constructor(holder){
         super();
         this.name = "reinforced";
@@ -41,15 +36,12 @@ export class Reinforced extends StatusEffect{
         this.currentCharges = this.maxCharges;
     }
     onEndTurn(){
-        console.log(`${this.holder.name} gained 5 armor`);
         this.holder.currentArmor = this.holder.currentArmor + 5;
-        this.currentCharges =  this.currentCharges - 1;
-        console.log(this.holder.statusArray);
+        this.currentCharges = this.currentCharges - 1;
     }
-    onRemove(){
-        console.log(`${this.holder.name} lost 5 armor`);
+    onRemove(statusArrayIndex){
         this.holder.currentArmor = this.holder.currentArmor - 5;
-        this.holder.statusArray.splice(this.holder.statusEffectIndex, 1);
+        this.holder.statusArray.splice(statusArrayIndex, 1);
     }
 }
 
@@ -60,5 +52,12 @@ export class Bound extends StatusEffect{
         this.holder = holder;
         this.maxCharges = 2;
         this.currentCharges = this.maxCharges;
+    }
+    onStartTurn(){//not firing on first pounce
+        this.holder.nextMove = new Struggle;
+        this.currentCharges = this.currentCharges - 1;
+    }
+    onRemove(statusArrayIndex){
+        this.holder.statusArray.splice(statusArrayIndex, 1);
     }
 }
