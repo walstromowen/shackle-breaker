@@ -5,6 +5,7 @@ export default class Controller {
     constructor(){
         this.battleBtnArray = [];
         this.mapBtnArray = [];
+        this.battleSequenceArray = [];
         this.gameConsole = document.getElementById("game-console");
         this.playerName = document.getElementById('player-name');
         this.playerName.innerText = thePlayer.name;

@@ -7,7 +7,7 @@ import {miniMap as theMiniMap} from "./main.js";
 export default class Player{
     constructor(){
         this.equippedArray = ["Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"];
-        this.inventory = [new WoodDagger];
+        this.inventory = [new WoodDagger, new WoodFireStaff];
         this.abilityArray = [new Punch, new Recover, new Retreat];
         this.level = 0;
         this.currentXP = 0;
