@@ -5,18 +5,18 @@ Text adventure game based on the ShacklerBreaker story
 * tweak inventory UI
 * Traps / encounters
 * Character creation screen
-* Rework character level and xp display
-* Rework Consumablabe items and consumable abilities
-* More Stats
+* Rework character level / xp 
+* More Stats (revocovery, attributes)
 * Parry System
 * Bonus actions / reactions
 * Alphabetize CSS rules
-* Staminina recovery?
 * Enviorment specific music
-* Loop Music
-* Exit button functionality / Game over screen
 * Transfer all screen renders to controller (capitalization as well)
 * Encounters (choices before battles)
 * Display section for statuses and stats
+* Shop/crafting/weapon level up / Town
+* interact with stairs / loot bodies
+* pauses for status effects
+* mini Menu for items
 
 

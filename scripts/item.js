@@ -1,4 +1,4 @@
-import {Slash, Stab, Block} from "./abilities.js"
+import {Slash, Stab, Block, Fireball, Channel} from "./abilities.js"
 import {controller as theController} from "./main.js";
 
 class Equipment{
@@ -22,10 +22,9 @@ export class WoodDagger extends Equipment{
         this.name = "wood dagger";
         this.type = "weapon";
         this.level = 0;
-        this.attack = 1;
+        this.attack = 2;
         this.armor = 0;
         this.speed = 3;
-        this.staminaCost = 2;
         this.abilityArray = [new Stab(), new Slash()];
     }
 }
@@ -38,8 +37,19 @@ export class WoodSpear extends Equipment{
         this.attack = 3;
         this.armor = 0;
         this.speed = 1;
-        this.staminaCost = 2;
         this.abilityArray = [new Stab()];
+    }
+}
+export class WoodFireStaff extends Equipment{
+    constructor(){
+        super();
+        this.name = "wood fire staff";
+        this.type = "weapon";
+        this.level = 0;
+        this.attack = 3;
+        this.armor = 0;
+        this.speed = 1;
+        this.abilityArray = [new Fireball(), new Channel()];
     }
 }
 export class WoodSheild extends Equipment{
@@ -51,7 +61,6 @@ export class WoodSheild extends Equipment{
         this.attack = 0;
         this.armor = 1;
         this.speed = -1;
-        this.staminaCost = 2;
         this.abilityArray = [new Block()];
     }
 }
@@ -64,7 +73,6 @@ export class IronSheild extends Equipment{
         this.attack = 0;
         this.armor = 2;
         this.speed = -1;
-        this.staminaCost = 2;
         this.abilityArray = [new Block()];
     }
 }
@@ -129,7 +137,7 @@ export class IronBoots extends Equipment{
     }
 }
 
-export class HealingPotion extends Consumable{
+export class HealthPotion extends Consumable{
     constructor(){
         super();
         this.name = "healing potion";
@@ -159,6 +167,23 @@ export class StaminaPotion extends Consumable{
         }
         weilder.currentStamina = weilder.currentStamina + stamina;
         theController.gameConsole.innerHTML += `<p>${weilder.name} restores ${stamina} stamina!</p>`;
+        return true;
+    }
+}
+
+export class MagicPotion extends Consumable{
+    constructor(){
+        super();
+        this.name = "magic potion";
+        this.type = "consumable";
+    }
+    consume(weilder, target){
+        let magic = 5 + weilder.level;
+        if(weilder.currentMagic + stamina > weilder.maxMagic){
+            magic = weilder.maxMagic - weilder.currentMagic;
+        }
+        weilder.currentMagic = weilder.currentMagic + magic;
+        theController.gameConsole.innerHTML += `<p>${weilder.name} restores ${magic} stamina!</p>`;
         return true;
     }
 }

@@ -1,28 +1,38 @@
+:root{
+    --main-color: #EADAAD;
+    --secondary-color: #D7B75F;
+    --tertiary-color: #0D0A03;
+}
 *{
     margin: 0;
     padding: 0px;
-    font-family: Roboto Slab, serif;
+    font-family: "Roboto Slab", serif;
     user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
 }
 body{
-    background-color: #0D0A03;
-}
-h5{
-    font-size: 20px;
-}
-h6{
-    font-size: 18px;
-}
-p{
-    font-size: 16px;
+    background-color: var(--tertiary-color);
 }
 h1{
     font-family: papyrus, fantasy;
     text-align: center;
     color: lightgrey;
     font-size: 120px;
+}
+h4{
+    margin:auto 0;
+    font-weight: 400;
+    font-size: 28px;
+}
+h5{
+    font-size: 24px;
+}
+h6{
+    font-size: 20px;
+}
+p{
+    font-size: 18px;
 }
 /*Title Screen*/
 .title-screen-button{
@@ -34,6 +44,8 @@ h1{
     color: black;
     text-align:center;
     border: 6px solid darkgrey;
+    display:flex;
+    justify-content: center;
 }
 .title-screen-button:hover, .title-screen-button-selected{
     background-color: white;
@@ -68,7 +80,6 @@ h1{
     border-radius: 100%;
     width: 92px;
     height: 64px;
-    font-family: papyrus, fantasy;
     font-size: 20px;
     font-weight: bold;
     text-align: center;
@@ -95,7 +106,7 @@ h1{
     overflow-y: auto;
     height: 100%;
     width: 100%;
-    background-color:#EADAAD;
+    background-color: var(--main-color);
     
 }
 .vital-bar-container{
@@ -140,7 +151,7 @@ h1{
 }
 .slot-menu-use-btn{
     border-radius: 20px;
-    background-color:#D7B75F;
+    background-color: var(--secondary-color);
     text-align: center;
 }
 .equip-slots-row{
@@ -154,12 +165,12 @@ h1{
 }
 .unequip-btn{
     display:none;
-    background-color:#D7B75F;
+    background-color: var(--secondary-color);
     text-align: center;
     border-radius: 20px;
     width: 30%;
 }
-.unequip-btn:hover{
+.unequip-btn:hover, .slot-menu-use-btn:hover{
     color: white;
 }
 .equip-slots-row:hover .unequip-btn {
@@ -170,14 +181,14 @@ h1{
     display: none;
 }
 #app-column-1{
-    background-color:#D7B75F;
+    background-color: var(--secondary-color);
     width: 288px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
 }
 #app-column-2{
-    background-color: #EADAAD;
+    background-color: var(--main-color);
     width: 100%;
     min-width: 288px;
     display: flex;
@@ -185,12 +196,12 @@ h1{
     justify-content:space-between;
 }
 #app-column-3{
-    background-color:#D7B75F;
+    background-color:var(--secondary-color);
     width: 288px;
     flex-shrink: 0;
 }
 #player-name-container{
-    background-color: #EADAAD;
+    background-color: var(--main-color);
     margin-bottom: 10px;
     display:flex;
     justify-content:space-between;
@@ -199,29 +210,29 @@ h1{
    margin: 0px 5px;
 }
 #player-main-stats-container{
-    background-color: #EADAAD;
+    background-color: var(--main-color);
     margin: 10px auto;
     width: 100%;
 }
 #game-console{
-    background-color: #D7B75F;
+    background-color: var(--secondary-color);
     height: 100%;
     overflow-y: auto;
     text-align: bottom;
     padding:20px;
 }
 #enemy-main-stats-container{
-    background-color: #EADAAD;
+    background-color: var(--main-color);
     display: none;
 }
 
 #action-bar{
     width: 100%;
     margin: 10px 0 0 0;
-    background-color:#D7B75F;
+    background-color:var(--secondary-color);
 }
 #direction-controls-container{
-    background-color: #D7B75F;
+    background-color: var(--secondary-color);
     display: grid;
     grid-template-columns: auto auto auto;
     row-gap: 6px;
@@ -249,7 +260,7 @@ h1{
     grid-row: 2 / span 1;
 }
 #mini-map-container{
-    background-color:#EADAAD;
+    background-color:var(--main-color);
     width: 288px;
     height: 288px;
     display: none;
@@ -259,7 +270,7 @@ h1{
  
 }
 #player-image-container{
-    background-color:#EADAAD;
+    background-color:var(--main-color);
     width: 288px;
     height: 288px;
     display: none;
@@ -271,21 +282,21 @@ h1{
 }
 #location-name-container{
     margin-bottom: 10px;
-    background-color:#EADAAD;
+    background-color:var(--main-color);
 }
 #location-name{
     margin: 0 5px;
 }
 #enemy-name-container{
     margin-bottom: 10px;
-    background-color: #EADAAD;
+    background-color: var(--main-color);
     display: none;
 }
 #enemy-name{
     margin: 0 5px;
 }
 #location-image-container{
-    background-color:#EADAAD;
+    background-color:var(--main-color);
     width: 288px;
     height: 288px;
 }
@@ -295,7 +306,7 @@ h1{
     object-fit: cover;
 }
 #enemy-image-container{
-    background-color:#EADAAD;
+    background-color: var(--main-color);
     margin: 0px auto 10px auto;
     width: 288px;
     height: 288px;
@@ -308,7 +319,7 @@ h1{
 }
 #tabs-label-container{
    display:flex;
-   background-color:#EADAAD;
+   background-color:var(--main-color);
 }
 #items{
     display: none;

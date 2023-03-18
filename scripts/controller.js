@@ -11,7 +11,7 @@ export default class Controller {
         this.enemyName = document.getElementById('enemy-name');
         this.locationName = document.getElementById('location-name');
         this.locationName.innerText = thePlayer.map.mapEnviorment.biome.charAt(0).toUpperCase() + thePlayer.map.mapEnviorment.biome.slice(1); //occurs twice
-        this.audioPlayer = document.getElementById('audio-player');
+        this.musicPlayer = document.getElementById('music-player');
         this.soundEffectPlayer = document.getElementById('sound-effect-player');
         this.enemyImage = document.getElementById('enemy-image');
         this.locationImage = document.getElementById('location-image');
@@ -48,9 +48,9 @@ export default class Controller {
         document.getElementById("enemy-image-container").style.display = "none";
         document.getElementById("location-image-container").style.display = "block";
         document.getElementById("enemy-main-stats-container").style.display = "none";
-        this.audioPlayer.pause();
-        this.audioPlayer.src = "./audio/deep-in-the-dell-126916.mp3";
-        this.audioPlayer.play();
+        this.musicPlayer.pause();
+        this.musicPlayer.src = "./audio/deep-in-the-dell-126916.mp3";
+        this.musicPlayer.play();
         theMiniMap.resizeCanvas();
         theMiniMap.draw();
         thePlayer.isInBattle = false;
@@ -74,8 +74,8 @@ export default class Controller {
             this.enablePlayerBattleControls();
             this.gameConsole.innerHTML += `<p>You encounter a ${thePlayer.currentEnemy.name}!</p>`;
             this.scrollToBottom("game-console");
-            this.audioPlayer.src = "./audio/battle-of-the-dragons-8037.mp3";
-            this.audioPlayer.play();
+            this.musicPlayer.src = "./audio/battle-of-the-dragons-8037.mp3";
+            this.musicPlayer.play();
             thePlayer.isInBattle = true;
          }, 2000);
     }
@@ -83,7 +83,6 @@ export default class Controller {
         document.getElementById(elementId).scrollTop = document.getElementById(elementId).scrollHeight;
     }
     updatePlayerStats(){
-        //thePlayer.boundStats(); //double protection during combat
         this.currentHealthPlayer.innerText = thePlayer.currentHP;
         this.currentStaminaPlayer.innerText = thePlayer.currentStamina;
         this.currentMagicPlayer.innerText = thePlayer.currentMagic;
@@ -94,7 +93,6 @@ export default class Controller {
         this.scrollToBottom("game-console");
     }
     updateEnemyStats(){
-        //thePlayer.currentEnemy.boundStats();
         this.currentHealthEnemy.innerText = thePlayer.currentEnemy.currentHP;
         this.currentStaminaEnemy.innerText = thePlayer.currentEnemy.currentStamina;
         this.currentMagicEnemy.innerText = thePlayer.currentEnemy.currentMagic;
@@ -107,7 +105,7 @@ export default class Controller {
         if(thePlayer.currentHP <= 0){
             this.disablePlayerBattleControls();
             setTimeout(()=>{
-                this.audioPlayer.pause();
+                this.musicPlayer.pause();
                 document.getElementById('gameover-screen').style.display = "block";
                 document.getElementById("app").style.display = "none";
              }, 2000);
@@ -204,13 +202,13 @@ export default class Controller {
     }
     updatePlayerInventoryTab(inventory){
         for(var i = -1; i < inventory.length; i++){
-            let oldSlot = this.inventoryTab.querySelector('div');
+            let oldSlot = this.inventoryTab.querySelector('p');
             if(oldSlot !== null){
                 oldSlot.remove();
             } 
         }
         for(let i = 0; i < inventory.length; i++){
-            let inventorySlot = document.createElement('div');
+            let inventorySlot = document.createElement('p');
             let inventorySlotMenu = document.createElement('div');
             let slotMenuUseBtn = document.createElement('div');
             inventorySlot.classList.add('inventory-slot');
@@ -251,7 +249,7 @@ export default class Controller {
         let fullHeal = () =>{
             thePlayer.currentHP =  thePlayer.maxHP;
             thePlayer.currentStamina =  thePlayer.maxStamina;
-            thePlayer.currentMagic =  thePlayer.maxMagic;
+            thePlayer.currentMagic = thePlayer.maxMagic;
         }
         document.getElementById('increase-hp-btn').addEventListener('click', ()=>{
             fullHeal();
@@ -279,12 +277,13 @@ export default class Controller {
         });
         document.getElementById('submit-level-btn').addEventListener('click', ()=>{
             if(levelCheck == true){
-                thePlayer.maxHP = thePlayer.currentHP;
-                thePlayer.maxStamina = thePlayer.currentStamina;
-                thePlayer.maxMagic = thePlayer.currentMagic;
+                thePlayer.maxHP = thePlayer.currentHP + 1;
+                thePlayer.maxStamina = thePlayer.currentStamina + 1;
+                thePlayer.maxMagic = thePlayer.currentMagic + 1;
+                fullHeal();
                 document.getElementById("app").style.display = "block";
                 document.getElementById('level-up-screen').style.display = "none";
-                this.audioPlayer.play();
+                this.musicPlayer.play();
                 this.updatePlayerStats();
                 thePlayer.canMoveRoom = true;
             }

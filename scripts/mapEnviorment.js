@@ -1,4 +1,4 @@
-import {Skeleton, Bat, Wolf, Royalmage, CaveSpider} from "./enemies.js";
+import {Skeleton, Bat, Wolf, Royalmage, CaveSpider, Grovechomper} from "./enemies.js";
 
 export default class MapEnviorment{
     constructor(){
@@ -31,18 +31,20 @@ export default class MapEnviorment{
                     case 0:
                         return new CaveSpider(playerLevel);
                     case 1:
-                        return new CaveSpider(playerLevel);
+                        return new Bat(playerLevel);
                     case 2:
-                        return new CaveSpider(playerLevel);
+                        return new Skeleton(playerLevel);
                     default:
                         return;
                 }
             case "forest":
-                switch(Math.floor(Math.random()*2)){ 
+                switch(Math.floor(Math.random()*3)){ 
                     case 0:
                         return new Bat(playerLevel);
                     case 1:
                         return new Wolf(playerLevel);
+                    case 2:
+                        return new Grovechomper(playerLevel);
                     default:
                         return;
                 }

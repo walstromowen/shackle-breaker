@@ -1,5 +1,5 @@
 import Map from "./map.js";
-import {WoodDagger, WoodSpear, WoodSheild, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots, HealingPotion, StaminaPotion, ThrowingKnife} from "./item.js";
+import {WoodDagger, WoodSpear, WoodSheild, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots, HealthPotion, StaminaPotion, MagicPotion, ThrowingKnife, WoodFireStaff} from "./item.js";
 import {Recover, Punch, Retreat} from "./abilities.js"
 import {controller as theController} from "./main.js";
 import {miniMap as theMiniMap} from "./main.js";
@@ -7,10 +7,10 @@ import {miniMap as theMiniMap} from "./main.js";
 export default class Player{
     constructor(){
         this.equippedArray = ["Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"];
-        this.inventory = [new WoodDagger, new WoodSheild, new HealingPotion, new StaminaPotion];
+        this.inventory = [new WoodDagger];
         this.abilityArray = [new Punch, new Recover, new Retreat];
         this.level = 0;
-        this.currentXp = 0;
+        this.currentXP = 0;
         this.maxHP = 10;
         this.currentHP = this.maxHP;
         this.maxStamina = 10
@@ -95,7 +95,7 @@ export default class Player{
         let initialLength = this.statusArray.length //once a status is removed, the length of the array changes, which is why I need to save the length of the initial array
         let statusArrayIndex = 0;
         for(let i = 0; i < initialLength; i++){
-            if(this.statusArray[statusArrayIndex].update(type, statusArrayIndex) == true){
+            if(this.statusArray[statusArrayIndex].update(type, statusArrayIndex) == true){//if false, the status effect was removed
                 statusArrayIndex = statusArrayIndex + 1;
             }//once the length of the array changes, the index of the next status will change to you need to account for that 
         }
@@ -183,7 +183,7 @@ export default class Player{
                     this.updateStatusEffects("end");
                 }
                 if(this.endTurn() == false){
-                    this.isFirst = true;//allows c urrent enemy to attack;
+                    this.isFirst = true;//allows current enemy to attack;
                     this.determineSecondMove();
                 }else{
                     theController.endBattle();

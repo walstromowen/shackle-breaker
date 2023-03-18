@@ -1,5 +1,5 @@
-import {Slash, Block, Bite, Pounce, LeechLife, ArcaneDart, ArcaneBlast, SpitBile} from "./abilities.js"
-import {WoodDagger, WoodSpear, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots, HealingPotion, StaminaPotion, ThrowingKnife} from "./item.js";
+import {Slash, Block, Bite, Pounce, LeechLife, ArcaneDart, ArcaneBlast, SpitBile, Devour, Channel, Fireball} from "./abilities.js"
+import {WoodDagger, WoodSpear, WoodSheild, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots, HealthPotion, StaminaPotion, MagicPotion, ThrowingKnife, WoodFireStaff} from "./item.js";
 
 class Enemy{
     constructor(){
@@ -30,11 +30,11 @@ export class Skeleton extends Enemy{
         super();
         this.name = "skeleton";
         this.imageSrc = "media/skeleton.jpg"
-        this.maxHP = 10 + playerLevel; 
+        this.maxHP = 8 + playerLevel; 
         this.currentHP = this.maxHP;
-        this.maxStamina = 10 + playerLevel;
+        this.maxStamina = 8 + playerLevel;
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 10 + playerLevel;
+        this.maxMagic = 8 + playerLevel;
         this.currentMagic = this.maxMagic;
         this.baseArmor = 1;
         this.currentArmor = this.baseArmor;
@@ -44,7 +44,7 @@ export class Skeleton extends Enemy{
         this.currentSpeed = this.baseSpeed;
         this.abilityArray = [new Slash, new Block];
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new ThrowingKnife, new WoodDagger, new WoodSpear, new StaminaPotion];
+        this.lootArray = [new ThrowingKnife, new WoodDagger, new WoodSheild, new WoodSpear, new IronHelmet, new IronChainmail, new IronGuantlets, new IronGreaves, new IronBoots, new IronSheild];
     }
 }
 export class Bat extends Enemy{
@@ -65,7 +65,7 @@ export class Bat extends Enemy{
         this.currentSpeed = this.baseSpeed;
         this.abilityArray = [new Bite, new LeechLife];
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new HealingPotion];
+        this.lootArray = [new HealthPotion];
     }
 }
 export class Wolf extends Enemy{
@@ -73,7 +73,7 @@ export class Wolf extends Enemy{
         super();
         this.name = "wolf";
         this.imageSrc = "media/wolf.jpg"
-        this.maxHP = 8 + playerLevel;
+        this.maxHP = 6 + playerLevel;
         this.currentHP = this.maxHP;
         this.maxStamina = 12 + playerLevel;
         this.currentStamina = this.maxStamina;
@@ -86,7 +86,7 @@ export class Wolf extends Enemy{
         this.currentSpeed = this.baseSpeed;
         this.abilityArray = [new Bite, new Pounce];
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new StaminaPotion, new ThrowingKnife];
+        this.lootArray = [new StaminaPotion];
     }
 }
 export class Royalmage extends Enemy{
@@ -94,11 +94,11 @@ export class Royalmage extends Enemy{
         super();
         this.name = "royal mage";
         this.imageSrc = "media/royal-mage.jpg"
-        this.maxHP = 20 + playerLevel*4;
+        this.maxHP = 15 + playerLevel;
         this.currentHP = this.maxHP;
-        this.maxStamina = 20 + playerLevel;
+        this.maxStamina = 15 + playerLevel;
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 20 + playerLevel;
+        this.maxMagic = 15 + playerLevel;
         this.currentMagic = this.maxMagic;
         this.currentArmor = 1;
         this.baseAttack = 2 + playerLevel;
@@ -107,7 +107,7 @@ export class Royalmage extends Enemy{
         this.currentSpeed = this.baseSpeed;
         this.abilityArray = [new ArcaneDart, new ArcaneBlast];
         this.lootChanceMultiplier = 0; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new IronHelmet, new IronChainmail, new IronGuantlets, new IronGreaves, new IronBoots, new IronSheild];
+        this.lootArray = [new WoodFireStaff, new MagicPotion];
     }
 }
 export class CaveSpider extends Enemy{
@@ -129,5 +129,26 @@ export class CaveSpider extends Enemy{
         this.abilityArray = [new Bite, new SpitBile];
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new StaminaPotion];
+    }
+}
+export class Grovechomper extends Enemy{
+    constructor(playerLevel){
+        super();
+        this.name = "grove chomper";
+        this.imageSrc = "media/grove-chomper.jpg"
+        this.maxHP = 30 + playerLevel*2 ; 
+        this.currentHP = this.maxHP;
+        this.maxStamina = 20 + playerLevel*2 ; 
+        this.currentStamina = this.maxStamina;
+        this.maxMagic = 20 + playerLevel*2 ; 
+        this.currentMagic = this.maxMagic;
+        this.currentArmor = 2;
+        this.baseAttack = 3 + playerLevel;
+        this.currentAttack = this.baseAttack;
+        this.baseSpeed = 1;
+        this.currentSpeed = this.baseSpeed;
+        this.abilityArray = [new Bite, new Devour];
+        this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootArray = [new HealthPotion];
     }
 }

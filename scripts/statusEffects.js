@@ -39,10 +39,10 @@ class StatusEffect{
         }
     }
 }
-export class Reinforced extends StatusEffect{//curently has bug where if your next attack is first the reinfored effect is still apllied but it acually makes and interesting game mechanic
+export class Sheilded extends StatusEffect{//curently has bug where if your next attack is first the reinfored effect is still apllied but it acually makes and interesting game mechanic
     constructor(holder){
         super();
-        this.name = "reinforced";
+        this.name = "sheilded";
         this.holder = holder;
         this.maxCharges = 1;
         this.currentCharges = this.maxCharges;
@@ -66,7 +66,9 @@ export class Bound extends StatusEffect{
         this.currentCharges = this.maxCharges;
     }
     onStartTurn(){
-        this.holder.nextMove = new Struggle;
+        if(Math.random()*3 > 2){
+            this.holder.nextMove = new Struggle;
+        }
         this.currentCharges = this.currentCharges - 1;
     }
     onRemove(statusArrayIndex){
@@ -89,6 +91,29 @@ export class Posioned extends StatusEffect{
         this.serverityMultiplier = this.serverityMultiplier + 0.01;
         this.holder.currentHP = this.holder.currentHP - damageOutput;
         theController.gameConsole.innerHTML += `<p>${this.holder.name} suffers ${damageOutput} posion damage!</p>`;
+        theController.scrollToBottom("game-console");
+        this.currentCharges = this.currentCharges - 1;
+    }
+    onRemove(statusArrayIndex){
+        this.holder.statusArray.splice(statusArrayIndex, 1);
+    }
+}
+
+export class Burned extends StatusEffect{
+    constructor(holder){
+        super();
+        this.name = "burned";
+        this.holder = holder;
+        this.maxCharges = 3;
+        this.currentCharges = this.maxCharges;
+        this.serverityMultiplier = 0.3;
+    }
+    onEndTurn(){
+        let damageOutput = Math.floor(this.holder.maxHP*this.serverityMultiplier);
+        damageOutput = this.checkDamage(damageOutput, this.holder);
+        this.serverityMultiplier = this.serverityMultiplier - 0.1;
+        this.holder.currentHP = this.holder.currentHP - damageOutput;
+        theController.gameConsole.innerHTML += `<p>${this.holder.name} suffers ${damageOutput} burn damage!</p>`;
         theController.scrollToBottom("game-console");
         this.currentCharges = this.currentCharges - 1;
     }
