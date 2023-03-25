@@ -136,6 +136,7 @@ export default class Player{
             }
         }, 1000);
     }
+    hello
     determineSecondMove(){
         this.currentEnemy.nextMove.canUse(this.currentEnemy);
         setTimeout(()=>{
