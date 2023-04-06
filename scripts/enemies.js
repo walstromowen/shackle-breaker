@@ -15,15 +15,6 @@ class Enemy{
             return "";
         }
     }
-    updateStatusEffects(type){
-        let initialLength = this.statusArray.length //once a status is removed, the length of the array changes, which is why I need to save the length of the initial array
-        let statusArrayIndex = 0;
-        for(let i = 0; i < initialLength; i++){
-            if(this.statusArray[statusArrayIndex].update(type, statusArrayIndex) == true){
-                statusArrayIndex = statusArrayIndex + 1;
-            }//once the length of the array changes, the index of the next status will change to you need to account for that 
-        }
-    }
 }
 export class Skeleton extends Enemy{
     constructor(playerLevel){

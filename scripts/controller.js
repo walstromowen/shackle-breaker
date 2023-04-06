@@ -1,5 +1,6 @@
 import {player as thePlayer} from "./main.js";
 import {miniMap as theMiniMap} from "./main.js";
+import Battle from "./battle.js";
 
 export default class Controller {
     constructor(){
@@ -32,6 +33,7 @@ export default class Controller {
         this.equippedTabButton = document.getElementById('equipped-tab-button');
         this.inventoryTabButton = document.getElementById('inventory-tab-button');
         this.inventoryTab = document.getElementById('inventory-tab');
+        this.currentBattle = "";
         this.updatePlayerStats();
         this.enableKeyControls();
         this.enablePlayerMapControls();
@@ -58,13 +60,14 @@ export default class Controller {
         thePlayer.canMoveRoom  = true;
         this.updatePlayerInventoryTab(thePlayer.inventory);
     }
-    toggleBattle(){
+    toggleBattle(enemy){
+        this.battle = new Battle(thePlayer, enemy);
         this.gameConsole.innerHTML += "<p>Something approaches...</p>";
         this.scrollToBottom("game-console");
         thePlayer.canMoveRoom = false;
         setTimeout(()=>{
-            this.enemyName.innerText = thePlayer.currentEnemy.name.charAt(0).toUpperCase() + thePlayer.currentEnemy.name.slice(1);
-            this.enemyImage.src = thePlayer.currentEnemy.imageSrc;
+            this.enemyName.innerText = this.battle.enemy.name.charAt(0).toUpperCase() + this.battle.enemy.name.slice(1);
+            this.enemyImage.src = this.battle.enemy.imageSrc;
             document.getElementById("location-name-container").style.display = "none";
             document.getElementById("enemy-name-container").style.display = "block";
             document.getElementById("mini-map-container").style.display = "none";
@@ -73,7 +76,7 @@ export default class Controller {
             document.getElementById("enemy-image-container").style.display = "block";
             document.getElementById("enemy-main-stats-container").style.display = "block";
             this.enablePlayerBattleControls();
-            this.gameConsole.innerHTML += `<p>You encounter a ${thePlayer.currentEnemy.name}!</p>`;
+            this.gameConsole.innerHTML += `<p>You encounter a ${this.battle.enemy.name}!</p>`;
             this.scrollToBottom("game-console");
             this.musicPlayer.src = "./audio/battle-of-the-dragons-8037.mp3";
             this.musicPlayer.play();
@@ -94,12 +97,12 @@ export default class Controller {
         this.scrollToBottom("game-console");
     }
     updateEnemyStats(){
-        this.currentHealthEnemy.innerText = thePlayer.currentEnemy.currentHP;
-        this.currentStaminaEnemy.innerText = thePlayer.currentEnemy.currentStamina;
-        this.currentMagicEnemy.innerText = thePlayer.currentEnemy.currentMagic;
-        this.healthBarEnemyProgress.style.width = Math.floor(thePlayer.currentEnemy.currentHP/thePlayer.currentEnemy.maxHP*100) + "%";
-        this.staminaBarEnemyProgress.style.width = Math.floor(thePlayer.currentEnemy.currentStamina/thePlayer.currentEnemy.maxStamina*100) + "%";
-        this.magicBarEnemyProgress.style.width = Math.floor(thePlayer.currentEnemy.currentMagic/thePlayer.currentEnemy.maxMagic*100) + "%";
+        this.currentHealthEnemy.innerText = this.battle.enemy.currentHP;
+        this.currentStaminaEnemy.innerText = this.battle.enemy.currentStamina;
+        this.currentMagicEnemy.innerText = this.battle.enemy.currentMagic;
+        this.healthBarEnemyProgress.style.width = Math.floor(this.battle.enemy.currentHP/this.battle.enemy.maxHP*100) + "%";
+        this.staminaBarEnemyProgress.style.width = Math.floor(this.battle.enemy.currentStamina/this.battle.enemy.maxStamina*100) + "%";
+        this.magicBarEnemyProgress.style.width = Math.floor(this.battle.enemy.currentMagic/this.battle.enemy.maxMagic*100) + "%";
         this.scrollToBottom("game-console");
     }
     endBattle(){
@@ -167,7 +170,7 @@ export default class Controller {
             abilityBtn.classList.add('action-button');
             abilityBtn.innerText = thePlayer.abilityArray[x].name.charAt(0).toUpperCase() + thePlayer.abilityArray[x].name.slice(1);
             abilityBtn.addEventListener('click', ()=>{
-                thePlayer.determineFirstMove(x);
+                this.battle.determineFirstTurn(x);
             });
             document.getElementById('battle-button-container').appendChild(abilityBtn);
             this.battleBtnArray.push(abilityBtn);
@@ -228,7 +231,7 @@ export default class Controller {
             if(inventory[i].type == "consumable"){
                 slotMenuUseBtn.innerText = "Use";//equipment specific
                 slotMenuUseBtn.addEventListener('click', ()=>{ //equipment specific
-                    thePlayer.useConsumable(i);
+                    this.battle.useConsumable(i);
                 });
             }
         }

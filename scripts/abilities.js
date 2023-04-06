@@ -223,14 +223,10 @@ export class Retreat extends ability{
     activate(weilder, target){
         theController.gameConsole.innerHTML += `<p>${weilder.name} retreats!</p>`;
         this.playSound();
-        setTimeout(()=>{
-            weilder.currentStamina = weilder.maxStamina;
-            weilder.magicStamina = weilder.maxMagic;
-            weilder.targetStamina = target.maxStamina;
-            weilder.targetStamina = target.maxMagic;
-            theController.toggleMap();
-        }, 2000);
-        theController.scrollToBottom("game-console");
+        weilder.currentStamina = weilder.maxStamina;
+        weilder.magicStamina = weilder.maxMagic;
+        weilder.targetStamina = target.maxStamina;
+        weilder.targetStamina = target.maxMagic;
         return false;
     }
 }

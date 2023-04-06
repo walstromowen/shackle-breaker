@@ -3,15 +3,16 @@ import {WoodDagger, WoodSpear, WoodSheild, IronSheild, IronHelmet, IronChainmail
 import {Recover, Punch, Retreat} from "./abilities.js"
 import {controller as theController} from "./main.js";
 import {miniMap as theMiniMap} from "./main.js";
+import {Sheilded, Bound, Posioned, Burned} from "./statusEffects.js";
 
 export default class Player{
     constructor(){
         this.equippedArray = ["Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"];
-        this.inventory = [new WoodDagger, new WoodFireStaff];
+        this.inventory = [new WoodSheild, new WoodDagger, new WoodFireStaff];
         this.abilityArray = [new Punch, new Recover, new Retreat];
         this.level = 0;
         this.currentXP = 0;
-        this.maxHP = 10;
+        this.maxHP = 100;
         this.currentHP = this.maxHP;
         this.maxStamina = 10
         this.currentStamina = this.maxStamina;
@@ -23,13 +24,12 @@ export default class Player{
         this.currentAttack = this.baseAttack;
         this.baseSpeed = 1;
         this.currentSpeed = this.baseSpeed;
-        this.statusArray = [];
+        this.statusArray = [];//new Posioned(this)
         this.isInBattle = false;
         this.isFirst = true;
         this.canMoveRoom = true;
         this.map = new Map(this.level);
         this.name = "shackle breaker";
-        this.currentEnemy = ""; 
         this.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
         this.nextRoom = this.currentRoom;
     }
@@ -49,9 +49,8 @@ export default class Player{
         if(nextRoom !== ""){
             if(nextRoom.enemy !== ""){
                 this.nextRoom = nextRoom;
-                this.currentEnemy = nextRoom.enemy
+                theController.toggleBattle(nextRoom.enemy);
                 theController.updateEnemyStats();
-                theController.toggleBattle();
                 return; 
             }
             this.currentRoom.visited = true;//
@@ -73,131 +72,11 @@ export default class Player{
     defeatEnemy(){
         this.currentRoom.visited = true;//
         this.currentRoom = this.nextRoom;//
-        this.loot();
+        theController.battle.loot();
         this.currentRoom.enemy = "";
         theMiniMap.draw();//
         //theController.gameConsole.innerHTML += "<p>" + this.currentRoom.description + "</p>";//
         theController.scrollToBottom("game-console");
-    }
-
-
-    endTurn(){
-        theController.scrollToBottom("game-console");
-        theController.updatePlayerStats();
-        theController.updateEnemyStats();
-        if(this.currentEnemy.currentHP <= 0 || this.currentHP <= 0){
-            return true;     
-        }else{
-            return false;
-        }
-    }
-    updateStatusEffects(type){
-        let initialLength = this.statusArray.length //once a status is removed, the length of the array changes, which is why I need to save the length of the initial array
-        let statusArrayIndex = 0;
-        for(let i = 0; i < initialLength; i++){
-            if(this.statusArray[statusArrayIndex].update(type, statusArrayIndex) == true){//if false, the status effect was removed
-                statusArrayIndex = statusArrayIndex + 1;
-            }//once the length of the array changes, the index of the next status will change to you need to account for that 
-        }
-    }
-
-
-    determineFirstMove(abilityIndex){
-        this.nextMove = this.abilityArray[abilityIndex];
-        if(this.nextMove.canUse(this) == false){
-            return;
-        }
-        this.currentEnemy.nextMove = this.currentEnemy.chooseAttack();
-        this.currentEnemy.nextMove.canUse(this.currentEnemy);
-        theController.disablePlayerBattleControls();
-        if(this.nextMove.speed + this.currentSpeed >= this.currentEnemy.currentSpeed + this.currentEnemy.nextMove.speed){
-            this.isFirst = true;
-        }else{
-            this.isFirst = false;
-        }
-        setTimeout(()=>{
-            if(this.isFirst == true){
-                this.updateStatusEffects("start");
-                if(this.nextMove.activate(this, this.currentEnemy) == false){
-                    return;
-                }
-                this.updateStatusEffects("end");
-            }else{
-                this.currentEnemy.updateStatusEffects("start");
-                if(this.currentEnemy.nextMove.activate(this.currentEnemy, this) == false){
-                    return;
-                }
-                this.currentEnemy.updateStatusEffects("end");
-            }
-            if(this.endTurn() == false){
-                this.determineSecondMove();
-            }else{
-                theController.endBattle();
-            }
-        }, 1000);
-    }
-    hello
-    determineSecondMove(){
-        this.currentEnemy.nextMove.canUse(this.currentEnemy);
-        setTimeout(()=>{
-            if(this.isFirst == false){
-                this.updateStatusEffects("start");
-                if(this.nextMove.activate(this, this.currentEnemy) == false){
-                    return;
-                }
-                this.updateStatusEffects("end");
-            }else{   
-                this.currentEnemy.updateStatusEffects("start");
-                if(this.currentEnemy.nextMove.activate(this.currentEnemy, this) == false){
-                    return;
-                }
-                this.currentEnemy.updateStatusEffects("end");
-            }
-            if(this.endTurn() == false){
-                theController.enablePlayerBattleControls();
-            }else{
-                theController.endBattle();
-            }
-        }, 2000);
-    }
-
-
-
-
-    useConsumable(inventoryIndex){
-        if(this.isInBattle == false){
-            if(this.inventory[inventoryIndex].consume(this, this.currentEnemy) == false){
-                return;
-            }
-            theController.updatePlayerStats();
-            this.inventory.splice(inventoryIndex, 1);
-            theController.updatePlayerInventoryTab(this.inventory);
-        }else{
-            theController.disablePlayerBattleControls();
-            this.currentEnemy.nextMove = this.currentEnemy.chooseAttack();
-            setTimeout(()=>{ 
-                if(this.inventory[inventoryIndex].consume(this, this.currentEnemy) == true){
-                    this.updateStatusEffects("start");
-                    this.inventory.splice(inventoryIndex, 1);
-                    theController.updatePlayerInventoryTab(this.inventory);
-                    theController.disablePlayerBattleControls();
-                    this.updateStatusEffects("end");
-                }
-                if(this.endTurn() == false){
-                    this.isFirst = true;//allows current enemy to attack;
-                    this.determineSecondMove();
-                }else{
-                    theController.endBattle();
-                }
-            }, 1000);
-        }
-    }
-    loot(){
-        let loot = this.currentEnemy.dropLoot();
-        if(loot != ""){
-            this.inventory.push(loot);
-            theController.updatePlayerInventoryTab(this.inventory);
-        }
     }
     calcAbilitiesAndStats(){
         //reset stats and abilities
@@ -341,7 +220,7 @@ export default class Player{
     }
     generateNewMap(){
         this.map = new Map(this.level);
-        this.currentEnemy = ""; 
+        //this.currentEnemy = ""; 
         this.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
         this.nextRoom = this.currentRoom;
         theController.locationImage.src = this.map.mapEnviorment.imageSrc;

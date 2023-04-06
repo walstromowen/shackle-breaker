@@ -17,6 +17,7 @@ class StatusEffect{
             this.onRemove(statusArrayIndex);
             return false;
         }
+        theController.scrollToBottom("game-console");
     }
     onStartTurn(){
        
@@ -42,6 +43,7 @@ class StatusEffect{
 export class Sheilded extends StatusEffect{//curently has bug where if your next attack is first the reinfored effect is still apllied but it acually makes and interesting game mechanic
     constructor(holder){
         super();
+        this.type = "end";
         this.name = "sheilded";
         this.holder = holder;
         this.maxCharges = 1;
@@ -49,6 +51,7 @@ export class Sheilded extends StatusEffect{//curently has bug where if your next
     }
     onEndTurn(){
         this.holder.currentArmor = this.holder.currentArmor + 5;
+        theController.gameConsole.innerHTML += `<p>${this.holder.name} is Sheilded!</p>`;
         this.currentCharges = this.currentCharges - 1;
     }
     onRemove(statusArrayIndex){
@@ -60,13 +63,14 @@ export class Sheilded extends StatusEffect{//curently has bug where if your next
 export class Bound extends StatusEffect{
     constructor(holder){
         super();
+        this.type = "start";
         this.name = "bound";
         this.holder = holder;
         this.maxCharges = 2;
         this.currentCharges = this.maxCharges;
     }
     onStartTurn(){
-        if(Math.random()*3 > 2){
+        if(Math.random()*3 < 2){
             this.holder.nextMove = new Struggle;
         }
         this.currentCharges = this.currentCharges - 1;
@@ -79,6 +83,7 @@ export class Bound extends StatusEffect{
 export class Posioned extends StatusEffect{
     constructor(holder){
         super();
+        this.type = "end";
         this.name = "posioned";
         this.holder = holder;
         this.maxCharges = 10;
@@ -91,7 +96,6 @@ export class Posioned extends StatusEffect{
         this.serverityMultiplier = this.serverityMultiplier + 0.01;
         this.holder.currentHP = this.holder.currentHP - damageOutput;
         theController.gameConsole.innerHTML += `<p>${this.holder.name} suffers ${damageOutput} posion damage!</p>`;
-        theController.scrollToBottom("game-console");
         this.currentCharges = this.currentCharges - 1;
     }
     onRemove(statusArrayIndex){
@@ -102,6 +106,7 @@ export class Posioned extends StatusEffect{
 export class Burned extends StatusEffect{
     constructor(holder){
         super();
+        this.type = "end";
         this.name = "burned";
         this.holder = holder;
         this.maxCharges = 3;
@@ -114,7 +119,6 @@ export class Burned extends StatusEffect{
         this.serverityMultiplier = this.serverityMultiplier - 0.1;
         this.holder.currentHP = this.holder.currentHP - damageOutput;
         theController.gameConsole.innerHTML += `<p>${this.holder.name} suffers ${damageOutput} burn damage!</p>`;
-        theController.scrollToBottom("game-console");
         this.currentCharges = this.currentCharges - 1;
     }
     onRemove(statusArrayIndex){
