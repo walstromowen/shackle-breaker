@@ -52,9 +52,10 @@ export default class Battle{
                                 weilder.statusArray[i].update(type, i);
                                 if(this.checkBattleStatus() == true){//false means battle is still on
                                     theController.endBattle();
+                                }else{
+                                    resolve("status " + i);
                                 }
-                                resolve("status " + i);
-                            }, 2000);
+                            }, 2000 * i + 2000); //add 2000 because of overlap with activate ability
                         }else{
                             resolve("status none");
                         }
@@ -64,9 +65,7 @@ export default class Battle{
             return Promise.all(promiseArray);
         }else{
             return new Promise((resolve, reject)=>{
-                setTimeout(()=>{
-                    resolve("no active status effects")
-                }, 2000);
+                resolve("no active status effects")
             });
         }
     }
