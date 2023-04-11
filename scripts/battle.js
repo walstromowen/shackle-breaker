@@ -22,7 +22,6 @@ export default class Battle{
             this.takeTurn(this.enemy, this.player);
         }
     }
-    //I think you just need to fix the promise chain now
     takeTurn(weilder, target){
         this.updateStatusEffects(weilder,"start")
         .then((USEsResolve)=>{
@@ -40,7 +39,6 @@ export default class Battle{
             }
         })
     }
-    //. no pause if not active statusEffects
     updateStatusEffects(weilder, type){
         if(weilder.statusArray.length !=0){
             let promiseArray = [];
@@ -69,7 +67,6 @@ export default class Battle{
             });
         }
     }
-//pause then attack (it activates and resolves at the same time)
     activateAbility(weilder, target){
         return new Promise((resolve)=>{
             setTimeout(()=>{
@@ -87,7 +84,6 @@ export default class Battle{
             }, 2000);
         });
     }
-
     checkBattleStatus(){
         theController.scrollToBottom("game-console");
         theController.updatePlayerStats();
@@ -98,85 +94,6 @@ export default class Battle{
             return false;
         }
     }
- /* Does not work   
-    takeTurn(weilder, target){
-        Promise.allSettled(this.updateStatusEffects(weilder, "start"))
-        .then((resolveValues)=>{
-           return this.activateAbility(weilder, target);
-        })
-        .then((resolveValue)=>{
-            return Promise.allSettled(this.updateStatusEffects(weilder, "end"));
-        })
-        .then((resolveValues)=>{
-            theController.enablePlayerBattleControls();
-        });
-    }
-*/
-/*
-    if(this.checkBattleStatus == false){
-        if(this.isSecondTurn == false){
-            this.isSecondTurn = true;
-            this.takeTurn(target, weilder);
-        }else{
-            theController.enablePlayerBattleControls();
-        }
-    }else{
-        theController.endBattle();
-    }
-*/
-
-
-
-
-
-
-/*
- takeTurn(weilder, target, recIndex, initStatusArrayLength, type){ 
-        if(recIndex < initStatusArrayLength){
-            let newRecIndex = recIndex;
-            if(weilder.statusArray[recIndex].type != type){//refire if statusEffect should not fire for start/end
-                newRecIndex = recIndex + 1;
-                this.takeTurn(weilder, target, newRecIndex, initStatusArrayLength, type);
-            }
-            setTimeout(()=>{
-                if(weilder.statusArray[recIndex].update(type, recIndex) == true){//if false, the status effect was removed
-                    newRecIndex = recIndex + 1;    //once the length of the array changes, the index of the next status will change to you need to account for that 
-                }else{
-                    initStatusArrayLength = initStatusArrayLength - 1;
-                }
-                theController.scrollToBottom("game-console");
-                this.takeTurn(weilder, target, newRecIndex, initStatusArrayLength, type);//this.takeTurn(weilder, target, ***newRecIndex***, initStatusArrayLength, type)***newRecIndex*** is 1 when it should be 0 and type is start?
-            }, 1000);
-        }else{
-            setTimeout(()=>{
-                if(type == "start"){
-                    weilder.nextMove.canUse(weilder);
-                    if(weilder.nextMove.activate(weilder, target) == false){ //false if retreat
-                        theController.updatePlayerStats();
-                        theController.scrollToBottom("game-console");
-                        setTimeout(()=>{
-                            theController.toggleMap();
-                        }, 2000);
-                        return;
-                    }
-                    this.takeTurn(weilder, target, 0, weilder.statusArray.length, "end");  //rec index must be 0 because you need to cycle through array again
-                }else{
-                    if(this.endTurn() == false){ //this check should be called 2 times per round
-                        if(this.isSecondTurn == false){
-                            this.isSecondTurn = true;
-                            this.takeTurn(target, weilder, 0, target.statusArray.length, "start");
-                        }else{
-                            theController.enablePlayerBattleControls();
-                        }
-                    }else{
-                        theController.endBattle();
-                    }
-                }
-            }, 1000);
-        }
-    }*/
-
-
     loot(){
         let loot = this.enemy.dropLoot();
         if(loot != ""){
@@ -184,8 +101,6 @@ export default class Battle{
             theController.updatePlayerInventoryTab(this.player.inventory);
         }
     }
-    
-    
     useConsumable(inventoryIndex){
         if(this.player.isInBattle == false){
             if(this.player.inventory[inventoryIndex].consume(this.player, this.enemy) == false){
