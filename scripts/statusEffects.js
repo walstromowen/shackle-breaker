@@ -116,6 +116,9 @@ export class Burned extends StatusEffect{
     onEndTurn(){
         let damageOutput = Math.floor(this.holder.maxHP*this.serverityMultiplier);
         damageOutput = this.checkDamage(damageOutput, this.holder);
+        if(damageOutput == 0){
+            damageOutput = 1;
+        }
         this.serverityMultiplier = this.serverityMultiplier - 0.1;
         this.holder.currentHP = this.holder.currentHP - damageOutput;
         theController.gameConsole.innerHTML += `<p>${this.holder.name} suffers ${damageOutput} burn damage!</p>`;

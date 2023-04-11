@@ -24,7 +24,7 @@ export default class Player{
         this.currentAttack = this.baseAttack;
         this.baseSpeed = 1;
         this.currentSpeed = this.baseSpeed;
-        this.statusArray = [];//new Posioned(this)
+        this.statusArray = [new Posioned(this), new Burned(this)];//new Posioned(this)
         this.isInBattle = false;
         this.isFirst = true;
         this.canMoveRoom = true;
