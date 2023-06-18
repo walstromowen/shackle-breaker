@@ -2,33 +2,24 @@ import {Struggle} from "./abilities.js";
 import {controller as theController} from "./main.js";
 
 class StatusEffect{
-    update(type, statusArrayIndex){ 
-        if(this.currentCharges > 0){
-            switch(type){ //not firing on first pounce
-                case "start": 
-                    this.onStartTurn();
-                    return true;
-                case "end":
-                    this.onEndTurn();
-                    return true;
-            }
+    update(type){ 
+        if(type == "start"){ 
+            this.onStartTurn();
+        }else{
+            this.onEndTurn();
         }
-        else{
-            this.onRemove(statusArrayIndex);
-            return false;
-        }
-        theController.scrollToBottom("game-console");
     }
+    
     onStartTurn(){
-       
+        //theController.gameConsole.innerHTML += `<p>${this.name} skipped on ${this.holder.name}</p>`;
     }
     onEndTurn(){
-      
+        //theController.gameConsole.innerHTML += `<p>${this.name} skipped on ${this.holder.name}</p>`;
     }
-    onRemove(statusArrayIndex){
+    onRemove(){
         
     }
-    checkDamage(damage, target){;
+    checkDamage(damage, target){
         if(damage < 0){
             return 0;
         }
@@ -54,12 +45,10 @@ export class Sheilded extends StatusEffect{//curently has bug where if your next
         theController.gameConsole.innerHTML += `<p>${this.holder.name} is Sheilded!</p>`;
         this.currentCharges = this.currentCharges - 1;
     }
-    onRemove(statusArrayIndex){
+    onRemove(){
         this.holder.currentArmor = this.holder.currentArmor - 5;
-        this.holder.statusArray.splice(statusArrayIndex, 1);
     }
 }
-
 export class Bound extends StatusEffect{
     constructor(holder){
         super();
@@ -70,13 +59,11 @@ export class Bound extends StatusEffect{
         this.currentCharges = this.maxCharges;
     }
     onStartTurn(){
-        if(Math.random()*3 < 2){
+        if(Math.random()*4 < 3){
             this.holder.nextMove = new Struggle;
         }
         this.currentCharges = this.currentCharges - 1;
-    }
-    onRemove(statusArrayIndex){
-        this.holder.statusArray.splice(statusArrayIndex, 1);
+        theController.gameConsole.innerHTML += `<p>${this.holder.name} is bound!</p>`;
     }
 }
 
@@ -98,9 +85,6 @@ export class Posioned extends StatusEffect{
         theController.gameConsole.innerHTML += `<p>${this.holder.name} suffers ${damageOutput} posion damage!</p>`;
         this.currentCharges = this.currentCharges - 1;
     }
-    onRemove(statusArrayIndex){
-        this.holder.statusArray.splice(statusArrayIndex, 1);
-    }
 }
 
 export class Burned extends StatusEffect{
@@ -111,7 +95,7 @@ export class Burned extends StatusEffect{
         this.holder = holder;
         this.maxCharges = 3;
         this.currentCharges = this.maxCharges;
-        this.serverityMultiplier = 0.3;
+        this.serverityMultiplier = 0.25;
     }
     onEndTurn(){
         let damageOutput = Math.floor(this.holder.maxHP*this.serverityMultiplier);
@@ -123,8 +107,5 @@ export class Burned extends StatusEffect{
         this.holder.currentHP = this.holder.currentHP - damageOutput;
         theController.gameConsole.innerHTML += `<p>${this.holder.name} suffers ${damageOutput} burn damage!</p>`;
         this.currentCharges = this.currentCharges - 1;
-    }
-    onRemove(statusArrayIndex){
-        this.holder.statusArray.splice(statusArrayIndex, 1);
     }
 }

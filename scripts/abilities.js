@@ -9,7 +9,7 @@ import {controller as theController} from "./main.js";
 import {player as thePlayer} from "./main.js";
 import {Sheilded, Bound, Posioned, Burned} from "./statusEffects.js";
 
-class ability{
+class Ability{
     canUse(weilder){
         if(weilder === thePlayer){
             if(weilder.currentStamina - this.staminaCost < 0){
@@ -68,7 +68,7 @@ class ability{
         theController.soundEffectPlayer.play();
     }
 }
-export class Punch extends ability{
+export class Punch extends Ability{
     constructor(){
         super();
         this.name = "punch";
@@ -89,7 +89,7 @@ export class Punch extends ability{
         }
     }
 }
-export class Slash extends ability{
+export class Slash extends Ability{
     constructor(){
         super();
         this.name = "slash";
@@ -111,7 +111,7 @@ export class Slash extends ability{
     }
 }
 
-export class Stab extends ability{
+export class Stab extends Ability{
     constructor(){
         super();
         this.name = "stab";
@@ -132,7 +132,7 @@ export class Stab extends ability{
         }
     }
 }
-export class Block extends ability{
+export class Block extends Ability{
     constructor(){
         super();
         this.name = "block";
@@ -157,7 +157,7 @@ export class Block extends ability{
     }
 }
 
-export class Channel extends ability{
+export class Channel extends Ability{
     constructor(){
         super();
         this.name = "channel";
@@ -184,7 +184,7 @@ export class Channel extends ability{
     }
 }
 
-export class Recover extends ability{
+export class Recover extends Ability{
     constructor(){
         super();
         this.name = "recover";
@@ -210,7 +210,7 @@ export class Recover extends ability{
         }
     }
 }
-export class Retreat extends ability{
+export class Retreat extends Ability{
     constructor(){
         super();
         this.name = "retreat";
@@ -227,10 +227,13 @@ export class Retreat extends ability{
         weilder.magicStamina = weilder.maxMagic;
         weilder.targetStamina = target.maxStamina;
         weilder.targetStamina = target.maxMagic;
+        setTimeout(()=>{
+            theController.toggleMap();
+        }, 2000);
         return false;
     }
 }
-export class Bite extends ability{
+export class Bite extends Ability{
     constructor(){
         super();
         this.name = "bite";
@@ -251,7 +254,7 @@ export class Bite extends ability{
         }
     }
 }
-export class Pounce extends ability{
+export class Pounce extends Ability{
     constructor(){
         super();
         this.name = "pounce";
@@ -282,7 +285,7 @@ export class Pounce extends ability{
         }
     }    
 }
-export class LeechLife extends ability{
+export class LeechLife extends Ability{
     constructor(){
         super();
         this.name = "leech life";
@@ -309,7 +312,7 @@ export class LeechLife extends ability{
     }
 }
 
-export class ArcaneDart extends ability{
+export class ArcaneDart extends Ability{
     constructor(){
         super();
         this.name = "arcane dart";
@@ -331,7 +334,7 @@ export class ArcaneDart extends ability{
     }
 }
 
-export class ArcaneBlast extends ability{
+export class ArcaneBlast extends Ability{
     constructor(){
         super();
         this.name = "arcane blast";
@@ -354,7 +357,7 @@ export class ArcaneBlast extends ability{
     }
 }
 
-export class Struggle extends ability{
+export class Struggle extends Ability{
     constructor(){
         super();
         this.name = "struggle";
@@ -370,7 +373,7 @@ export class Struggle extends ability{
     }
 }
 
-export class SpitBile extends ability{
+export class SpitBile extends Ability{
     constructor(){
         super();
         this.name = "spit bile";
@@ -401,7 +404,7 @@ export class SpitBile extends ability{
         }
     }  
 }
-export class Fireball extends ability{
+export class Fireball extends Ability{
     constructor(){
         super();
         this.name = "fireball";
@@ -434,8 +437,7 @@ export class Fireball extends ability{
         }
     } 
 }
-
-export class Devour extends ability{
+export class Devour extends Ability{
     constructor(){
         super();
         this.name = "devour";
@@ -456,3 +458,85 @@ export class Devour extends ability{
         }
     }
 }
+export class DrinkHealthPotion extends Ability{
+    constructor(){
+        super();
+        this.name = "drink health potion";
+        this.type = "buff";
+        this.speed = 3;
+        this.staminaCost = 0;
+        this.magicCost = 0;
+        this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
+    }
+    activate(weilder, target){
+        let hp = 10 + 2 * weilder.level;
+        if(weilder.currentHP + hp > weilder.maxHP){
+            hp = weilder.maxHP - weilder.currentHP;
+        }
+        weilder.currentHP = weilder.currentHP + hp;
+        theController.gameConsole.innerHTML += `<p>${weilder.name} restores ${hp} health!</p>`;
+    }
+}
+export class DrinkStaminaPotion extends Ability{
+    constructor(){
+        super();
+        this.name = "drink stamina potion";
+        this.type = "buff";
+        this.speed = 3;
+        this.staminaCost = 0;
+        this.magicCost = 0;
+        this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
+    }
+    activate(weilder, target){
+        let stamina = 5 + weilder.level;
+        if(weilder.currentStamina + stamina > weilder.maxStamina){
+            stamina = weilder.maxStamina - weilder.currentStamina;
+        }
+        weilder.currentStamina = weilder.currentStamina + stamina;
+        theController.gameConsole.innerHTML += `<p>${weilder.name} restores ${stamina} stamina!</p>`;
+    }
+}
+export class DrinkMagicPotion extends Ability{
+    constructor(){
+        super();
+        this.name = "drink magic potion";
+        this.type = "buff";
+        this.speed = 3;
+        this.staminaCost = 0;
+        this.magicCost = 0;
+        this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
+    }
+    activate(weilder, target){
+        let magic = 5 + weilder.level;
+        if(weilder.currentMagic + stamina > weilder.maxMagic){
+            magic = weilder.maxMagic - weilder.currentMagic;
+        }
+        weilder.currentMagic = weilder.currentMagic + magic;
+        theController.gameConsole.innerHTML += `<p>${weilder.name} restores ${magic} stamina!</p>`;
+    }
+}
+export class ThrowKnife extends Ability{
+    constructor(){
+        super();
+        this.name = "throw knife";
+        this.type = "attack";
+        this.speed = 3;
+        this.staminaCost = 0;
+        this.magicCost = 0;
+        this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
+    }
+    activate(weilder, target){
+        if(target === undefined){
+            theController.gameConsole.innerHTML += `<p>cannot use outside of combat!</p>`;
+            return;
+        }
+        let damageOutput =  3 + (weilder.level * 2) - target.currentArmor;
+        damageOutput = this.checkDamage(damageOutput, target);
+        target.currentHP = target.currentHP - damageOutput;
+        theController.gameConsole.innerHTML += `<p>${weilder.name} throws a throwing knfife at the ${target.name} for ${damageOutput} damage!</p>`;
+        theController.scrollToBottom("game-console");
+    }
+}
+
+
+

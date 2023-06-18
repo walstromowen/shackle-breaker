@@ -33,7 +33,7 @@ export default class Controller {
         this.equippedTabButton = document.getElementById('equipped-tab-button');
         this.inventoryTabButton = document.getElementById('inventory-tab-button');
         this.inventoryTab = document.getElementById('inventory-tab');
-        this.currentBattle = "";
+        this.battle = "";
         this.updatePlayerStats();
         this.enableKeyControls();
         this.enablePlayerMapControls();
@@ -231,7 +231,7 @@ export default class Controller {
             if(inventory[i].type == "consumable"){
                 slotMenuUseBtn.innerText = "Use";//equipment specific
                 slotMenuUseBtn.addEventListener('click', ()=>{ //equipment specific
-                    this.battle.useConsumable(i);
+                    this.useConsumable(i);
                 });
             }
         }
@@ -292,5 +292,18 @@ export default class Controller {
                 thePlayer.canMoveRoom = true;
             }
         });
+    }
+    useConsumable(inventoryIndex){
+        if(thePlayer.isInBattle == true){
+            this.battle.determineFirstTurn(0, inventoryIndex);
+            thePlayer.inventory.splice(inventoryIndex, 1);
+            this.updatePlayerInventoryTab(thePlayer.inventory);
+        }else{
+            if(thePlayer.inventory[inventoryIndex].abilityArray[0].activate(thePlayer)==true){
+                thePlayer.inventory.splice(inventoryIndex, 1);
+                this.updatePlayerInventoryTab(thePlayer.inventory);
+                this.updatePlayerStats();
+            };
+        }
     }
 }

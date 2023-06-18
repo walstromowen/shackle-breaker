@@ -122,11 +122,11 @@ export class CaveSpider extends Enemy{
         this.lootArray = [new StaminaPotion];
     }
 }
-export class Grovechomper extends Enemy{
+export class Groveguardian extends Enemy{
     constructor(playerLevel){
         super();
-        this.name = "grove chomper";
-        this.imageSrc = "media/grove-chomper.jpg"
+        this.name = "grove guardian";
+        this.imageSrc = "media/grove-guardian.jpg"
         this.maxHP = 30 + playerLevel*2 ; 
         this.currentHP = this.maxHP;
         this.maxStamina = 20 + playerLevel*2 ; 

@@ -5,11 +5,14 @@ export default class Battle{
         this.player = player;
         this.enemy = enemy;
         this.isSecondTurn = false;
-        this.takeTurnCounter = 1;
     }
-    determineFirstTurn(abilityIndex){
+    determineFirstTurn(abilityIndex, inventoryIndex){
         this.isSecondTurn = false;
-        this.player.nextMove = this.player.abilityArray[abilityIndex];
+        if(inventoryIndex === undefined){
+            this.player.nextMove = this.player.abilityArray[abilityIndex];
+        }else{
+            this.player.nextMove = this.player.inventory[inventoryIndex].abilityArray[abilityIndex];
+        }
         if(this.player.nextMove.canUse(this.player) == false){
             return;
         }
@@ -22,51 +25,61 @@ export default class Battle{
             this.takeTurn(this.enemy, this.player);
         }
     }
+   
     takeTurn(weilder, target){
-        this.updateStatusEffects(weilder,"start")
-        .then((USEsResolve)=>{
-        return this.activateAbility(weilder, target);
+        this.cycleStatusEffects(this.updateStatusEffect, weilder.statusArray, "start")
+        .then(()=>{
+            return this.activateAbility(weilder, target);
         })
-        .then((AAResolve)=>{
-            return this.updateStatusEffects(weilder, "end");
+        .then(()=>{
+            return this.cycleStatusEffects(this.updateStatusEffect, weilder.statusArray, "end");
         })
-        .then((AAResolve)=>{
+        .then(()=>{
             if(this.isSecondTurn == true){
                 theController.enablePlayerBattleControls();
             }else{
                 this.isSecondTurn = true;
                 this.takeTurn(target, weilder);
             }
-        })
+        }) 
     }
-    updateStatusEffects(weilder, type){
-        if(weilder.statusArray.length !=0){
-            let promiseArray = [];
-            for(let i = 0; i < weilder.statusArray.length; i++){
-                promiseArray.push(
-                    new Promise((resolve, reject)=>{
-                        if(weilder.statusArray[i].type == type){
-                            setTimeout(()=>{
-                                weilder.statusArray[i].update(type, i);
-                                if(this.checkBattleStatus() == true){//false means battle is still on
-                                    theController.endBattle();
-                                }else{
-                                    resolve("status " + i);
-                                }
-                            }, 2000 * i + 2000); //add 2000 because of overlap with activate ability
-                        }else{
-                            resolve("status none");
-                        }
-                    })
-                );
+    cycleStatusEffects(fn, statusArray, type){
+        let promiseArray = [];
+        let counter = 0;
+        for(let i = 0; i < statusArray.length; i++){
+            if(type == statusArray[i].type){
+                promiseArray.push(fn(statusArray[i], counter, type));
+                counter ++;
+            }else{
+                promiseArray.push(fn(statusArray[i], -1, type));
             }
-            return Promise.all(promiseArray);
-        }else{
-            return new Promise((resolve, reject)=>{
-                resolve("no active status effects")
-            });
+            
         }
+        counter = 0;
+        for(let j = 0; j < statusArray.length; j++){
+            if(statusArray[counter].currentCharges <= 0){
+                statusArray[counter].onRemove();
+                statusArray.splice(counter, 1);
+            }else{
+                counter ++;
+            }
+        }
+        return Promise.all(promiseArray);
     }
+
+    updateStatusEffect(status, counter, type){
+        return new Promise((resolve)=>{
+            setTimeout(()=>{
+                status.update(type);
+                if(theController.battle.checkBattleStatus() == true){
+                    theController.endBattle();
+                }else{
+                    resolve();
+                }
+            }, 2000 * (1 + counter));
+        });
+    }
+
     activateAbility(weilder, target){
         return new Promise((resolve)=>{
             setTimeout(()=>{
@@ -74,15 +87,17 @@ export default class Battle{
                 if(weilder.nextMove.activate(weilder, target) == false){ //false if retreat
                     theController.updatePlayerStats();//may need to change for enemy retreats
                     theController.scrollToBottom("game-console");
-                    theController.toggleMap();
-                }
-                if(this.checkBattleStatus() == true){//false means battle is still on
-                    theController.endBattle();
+                    //reject here?
                 }else{
-                    resolve("activateAbility resolved");
+                    if(this.checkBattleStatus() == true){//false means battle is still on
+                        theController.endBattle();
+                        //reject here?
+                    }else{
+                        resolve();
+                    }
                 }
-            }, 2000);
-        });
+            }, 2000); 
+         });
     }
     checkBattleStatus(){
         theController.scrollToBottom("game-console");
@@ -99,34 +114,6 @@ export default class Battle{
         if(loot != ""){
             this.player.inventory.push(loot);
             theController.updatePlayerInventoryTab(this.player.inventory);
-        }
-    }
-    useConsumable(inventoryIndex){
-        if(this.player.isInBattle == false){
-            if(this.player.inventory[inventoryIndex].consume(this.player, this.enemy) == false){
-                return;
-            }
-            theController.updatePlayerStats();
-            this.player.inventory.splice(inventoryIndex, 1);
-            theController.updatePlayerInventoryTab(this.player.inventory);
-        }else{
-            theController.disablePlayerBattleControls();
-            this.enemy.nextMove = this.enemy.chooseAttack();
-            setTimeout(()=>{ 
-                if(this.inventory[inventoryIndex].consume(this.player, this.enemy) == true){
-                    this.updateStatusEffects("start");
-                    this.inventory.splice(inventoryIndex, 1);
-                    theController.updatePlayerInventoryTab(this.inventory);
-                    theController.disablePlayerBattleControls();
-                    this.updateStatusEffects("end");
-                }
-                if(this.endTurn() == false){
-                    this.isFirst = true;//allows current enemy to attack;
-                    this.determineSecondMove();
-                }else{
-                    theController.endBattle();
-                }
-            }, 1000);
         }
     }
 }

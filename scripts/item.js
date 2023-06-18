@@ -1,21 +1,8 @@
-import {Slash, Stab, Block, Fireball, Channel} from "./abilities.js"
+import {Slash, Stab, Block, Fireball, Channel, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife} from "./abilities.js"
 import {controller as theController} from "./main.js";
 
-class Equipment{
-}
-class Consumable{
-    checkDamage(damage, target){
-        if(damage < 0){
-            return 0;
-        }
-        if(target.currentHP - damage < 0){
-            return target.currentHP;
-        }
-        else{
-            return damage;
-        }
-    }
-}
+class Equipment{}
+class Consumable{}
 export class WoodDagger extends Equipment{
     constructor(){
         super();
@@ -142,15 +129,7 @@ export class HealthPotion extends Consumable{
         super();
         this.name = "healing potion";
         this.type = "consumable";
-    }
-    consume(weilder, target){
-        let hp = 5 + weilder.level;
-        if(weilder.currentHP + hp > weilder.maxHP){
-            hp = weilder.maxHP - weilder.currentHP;
-        }
-        weilder.currentHP = weilder.currentHP + hp;
-        theController.gameConsole.innerHTML += `<p>${weilder.name} restores ${hp} health!</p>`;
-        return true;
+        this.abilityArray = [new DrinkHealthPotion];
     }
 }
 
@@ -159,15 +138,7 @@ export class StaminaPotion extends Consumable{
         super();
         this.name = "stamina potion";
         this.type = "consumable";
-    }
-    consume(weilder, target){
-        let stamina = 5 + weilder.level;
-        if(weilder.currentStamina + stamina > weilder.maxStamina){
-            stamina = weilder.maxStamina - weilder.currentStamina;
-        }
-        weilder.currentStamina = weilder.currentStamina + stamina;
-        theController.gameConsole.innerHTML += `<p>${weilder.name} restores ${stamina} stamina!</p>`;
-        return true;
+        this.abilityArray = [new DrinkStaminaPotion];
     }
 }
 
@@ -176,15 +147,7 @@ export class MagicPotion extends Consumable{
         super();
         this.name = "magic potion";
         this.type = "consumable";
-    }
-    consume(weilder, target){
-        let magic = 5 + weilder.level;
-        if(weilder.currentMagic + stamina > weilder.maxMagic){
-            magic = weilder.maxMagic - weilder.currentMagic;
-        }
-        weilder.currentMagic = weilder.currentMagic + magic;
-        theController.gameConsole.innerHTML += `<p>${weilder.name} restores ${magic} stamina!</p>`;
-        return true;
+        this.abilityArray = [new DrinkMagicPotion];
     }
 }
 
@@ -194,17 +157,6 @@ export class ThrowingKnife extends Consumable{
         this.name = "throwing knife";
         this.type = "consumable";
         this.level = 0;
-    }
-    consume(weilder, target){
-        if(weilder.isInBattle == false){
-            return false;
-        }else{
-            let damageOutput =  2 * (weilder.level + 1) - target.currentArmor;
-            damageOutput = this.checkDamage(damageOutput, target);
-            weilder.currentEnemy.currentHP = weilder.currentEnemy.currentHP - damageOutput;
-            theController.gameConsole.innerHTML += `<p>${weilder.name} throws a ${this.name} at the ${weilder.currentEnemy.name} for ${damageOutput} damage!</p>`;
-            theController.scrollToBottom("game-console");
-            return true;
-        }
+        this.abilityArray = [new ThrowKnife];
     }
 }

@@ -8,11 +8,11 @@ import {Sheilded, Bound, Posioned, Burned} from "./statusEffects.js";
 export default class Player{
     constructor(){
         this.equippedArray = ["Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"];
-        this.inventory = [new WoodSheild, new WoodDagger, new WoodFireStaff];
+        this.inventory = [new WoodSheild, new WoodDagger, new WoodFireStaff, new ThrowingKnife];
         this.abilityArray = [new Punch, new Recover, new Retreat];
         this.level = 0;
         this.currentXP = 0;
-        this.maxHP = 100;
+        this.maxHP = 10;
         this.currentHP = this.maxHP;
         this.maxStamina = 10
         this.currentStamina = this.maxStamina;
@@ -24,7 +24,7 @@ export default class Player{
         this.currentAttack = this.baseAttack;
         this.baseSpeed = 1;
         this.currentSpeed = this.baseSpeed;
-        this.statusArray = [new Posioned(this), new Burned(this)];//new Posioned(this)
+        this.statusArray = [];//new Posioned(this)
         this.isInBattle = false;
         this.isFirst = true;
         this.canMoveRoom = true;

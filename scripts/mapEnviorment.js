@@ -1,4 +1,4 @@
-import {Skeleton, Bat, Wolf, Royalmage, CaveSpider, Grovechomper} from "./enemies.js";
+import {Skeleton, Bat, Wolf, Royalmage, CaveSpider, Groveguardian} from "./enemies.js";
 
 export default class MapEnviorment{
     constructor(){
@@ -44,7 +44,7 @@ export default class MapEnviorment{
                     case 1:
                         return new Wolf(playerLevel);
                     case 2:
-                        return new Grovechomper(playerLevel);
+                        return new Groveguardian(playerLevel);
                     default:
                         return;
                 }
