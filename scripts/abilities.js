@@ -280,7 +280,7 @@ export class Pounce extends Ability{
                     }
                 }
                 target.statusArray.push(new Bound(target));
-                theController.gameConsole.innerHTML += `<p>${target.name} is bound!</p>`;
+                theController.gameConsole.innerHTML += `<p>${target.name} has been bound!</p>`;
             }
         }
     }    
@@ -423,7 +423,7 @@ export class Fireball extends Ability{
             theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
             this.playSound();
             if(damageOutput > 0){
-                if(Math.random()*5 < 1){
+                if(Math.random()*4 < 1){
                     for(let i = 0; i < target.statusArray.length; i++){
                         if(target.statusArray[i].name == "burned"){
                             target.statusArray[i].currentCharges = target.statusArray[i].maxCharges;
@@ -469,12 +469,18 @@ export class DrinkHealthPotion extends Ability{
         this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
     }
     activate(weilder, target){
+        if(weilder.currentHP == weilder.maxHP){
+            theController.gameConsole.innerHTML += `<p>${weilder.name} cannot restore more health!</p>`;
+            return false;
+        }
         let hp = 10 + 2 * weilder.level;
         if(weilder.currentHP + hp > weilder.maxHP){
             hp = weilder.maxHP - weilder.currentHP;
         }
         weilder.currentHP = weilder.currentHP + hp;
         theController.gameConsole.innerHTML += `<p>${weilder.name} restores ${hp} health!</p>`;
+        return true;
+        
     }
 }
 export class DrinkStaminaPotion extends Ability{
@@ -488,12 +494,23 @@ export class DrinkStaminaPotion extends Ability{
         this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
     }
     activate(weilder, target){
+        if(weilder.currentStamina == weilder.maxStamina){
+            theController.gameConsole.innerHTML += `<p>${weilder.name} cannot restore more stamina!</p>`;
+            return false;
+        }
         let stamina = 5 + weilder.level;
         if(weilder.currentStamina + stamina > weilder.maxStamina){
             stamina = weilder.maxStamina - weilder.currentStamina;
         }
         weilder.currentStamina = weilder.currentStamina + stamina;
         theController.gameConsole.innerHTML += `<p>${weilder.name} restores ${stamina} stamina!</p>`;
+        return true;
+    }
+    canUse(weilder){
+        if(weilder.currentStamina == weilder.maxStamina){
+            theController.gameConsole.innerHTML += `<p>${weilder.name} cannot recover more stamina!</p>`;
+            return false;
+        }
     }
 }
 export class DrinkMagicPotion extends Ability{
@@ -507,12 +524,17 @@ export class DrinkMagicPotion extends Ability{
         this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
     }
     activate(weilder, target){
+        if(weilder.currentMagic == weilder.maxMagic){
+            theController.gameConsole.innerHTML += `<p>${weilder.name} cannot restore more magic!</p>`;
+            return false;
+        }
         let magic = 5 + weilder.level;
         if(weilder.currentMagic + stamina > weilder.maxMagic){
             magic = weilder.maxMagic - weilder.currentMagic;
         }
         weilder.currentMagic = weilder.currentMagic + magic;
         theController.gameConsole.innerHTML += `<p>${weilder.name} restores ${magic} stamina!</p>`;
+        return true;
     }
 }
 export class ThrowKnife extends Ability{

@@ -3,6 +3,7 @@ Text adventure game based on the ShacklerBreaker story
 
 ##TODO
 * tweak inventory UI
+* Fix consumables
 * Traps / encounters / choices before battles
 * Character creation screen
 * Rework character level / xp 

@@ -1,5 +1,5 @@
 import Map from "./map.js";
-import {WoodDagger, WoodSpear, WoodSheild, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots, HealthPotion, StaminaPotion, MagicPotion, ThrowingKnife, WoodFireStaff} from "./item.js";
+import {WoodDagger, WoodSpear, WoodSheild, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots, HealthPotion, StaminaPotion, MagicPotion, ThrowingKnife, WoodFireStaff} from "./items.js";
 import {Recover, Punch, Retreat} from "./abilities.js"
 import {controller as theController} from "./main.js";
 import {miniMap as theMiniMap} from "./main.js";
@@ -8,7 +8,7 @@ import {Sheilded, Bound, Posioned, Burned} from "./statusEffects.js";
 export default class Player{
     constructor(){
         this.equippedArray = ["Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"];
-        this.inventory = [new WoodSheild, new WoodDagger, new WoodFireStaff, new ThrowingKnife];
+        this.inventory = [new WoodSheild, new WoodDagger, new WoodFireStaff, new ThrowingKnife, new StaminaPotion];
         this.abilityArray = [new Punch, new Recover, new Retreat];
         this.level = 0;
         this.currentXP = 0;

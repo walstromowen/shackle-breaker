@@ -1,5 +1,5 @@
 import {Slash, Block, Bite, Pounce, LeechLife, ArcaneDart, ArcaneBlast, SpitBile, Devour, Channel, Fireball} from "./abilities.js"
-import {WoodDagger, WoodSpear, WoodSheild, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots, HealthPotion, StaminaPotion, MagicPotion, ThrowingKnife, WoodFireStaff} from "./item.js";
+import {WoodDagger, WoodSpear, WoodSheild, IronSheild, IronHelmet, IronChainmail, IronGuantlets, IronGreaves, IronBoots, HealthPotion, StaminaPotion, MagicPotion, ThrowingKnife, WoodFireStaff} from "./items.js";
 
 class Enemy{
     constructor(){

@@ -295,15 +295,17 @@ export default class Controller {
     }
     useConsumable(inventoryIndex){
         if(thePlayer.isInBattle == true){
-            this.battle.determineFirstTurn(0, inventoryIndex);
-            thePlayer.inventory.splice(inventoryIndex, 1);
-            this.updatePlayerInventoryTab(thePlayer.inventory);
+            if(thePlayer.inventory[inventoryIndex].abilityArray[0].canUse(thePlayer) != false){
+                this.battle.determineFirstTurn(0, inventoryIndex);
+                thePlayer.inventory.splice(inventoryIndex, 1);
+                this.updatePlayerInventoryTab(thePlayer.inventory);
+            }
         }else{
             if(thePlayer.inventory[inventoryIndex].abilityArray[0].activate(thePlayer)==true){
                 thePlayer.inventory.splice(inventoryIndex, 1);
                 this.updatePlayerInventoryTab(thePlayer.inventory);
                 this.updatePlayerStats();
-            };
+            }
         }
     }
 }
