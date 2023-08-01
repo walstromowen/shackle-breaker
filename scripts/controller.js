@@ -118,8 +118,12 @@ export default class Controller {
                 Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
                     btn.style.visibility = "visible";
                 });
-                thePlayer.defeatEnemy();
+                if(this.battle.battlePhase != "retreat"){
+                    thePlayer.defeatEnemy();
+                }
                 this.toggleMap();
+                this.updateEnemyStats();
+                this.updatePlayerStats();
              }, 2000);
         }
     }

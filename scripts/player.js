@@ -8,7 +8,7 @@ import {Sheilded, Bound, Posioned, Burned} from "./statusEffects.js";
 export default class Player{
     constructor(){
         this.equippedArray = ["Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"];
-        this.inventory = [new WoodSheild, new WoodDagger, new WoodFireStaff, new ThrowingKnife, new StaminaPotion];
+        this.inventory = [new WoodDagger];
         this.abilityArray = [new Punch, new Recover, new Retreat];
         this.level = 0;
         this.currentXP = 0;

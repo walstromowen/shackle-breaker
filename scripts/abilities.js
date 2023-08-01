@@ -1,10 +1,3 @@
-//parry system 4 stances
-//opposite stance crit damage
-//adjacent stances normal damage
-//same stance parry
-//weapons attack speeds
-//faster attacks change stances faster
-
 import {controller as theController} from "./main.js";
 import {player as thePlayer} from "./main.js";
 import {Sheilded, Bound, Posioned, Burned} from "./statusEffects.js";
@@ -223,14 +216,7 @@ export class Retreat extends Ability{
     activate(weilder, target){
         theController.gameConsole.innerHTML += `<p>${weilder.name} retreats!</p>`;
         this.playSound();
-        weilder.currentStamina = weilder.maxStamina;
-        weilder.magicStamina = weilder.maxMagic;
-        weilder.targetStamina = target.maxStamina;
-        weilder.targetStamina = target.maxMagic;
-        setTimeout(()=>{
-            theController.toggleMap();
-        }, 2000);
-        return false;
+        return "retreat";
     }
 }
 export class Bite extends Ability{

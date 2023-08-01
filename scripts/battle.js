@@ -4,10 +4,10 @@ export default class Battle{
     constructor(player, enemy){
         this.player = player;
         this.enemy = enemy;
-        this.isSecondTurn = false;
+        this.battlePhase = "firstTurn";
     }
     determineFirstTurn(abilityIndex, inventoryIndex){
-        this.isSecondTurn = false;
+        this.battlePhase = "firstTurn";
         if(inventoryIndex === undefined){
             this.player.nextMove = this.player.abilityArray[abilityIndex];
         }else{
@@ -35,10 +35,10 @@ export default class Battle{
             return this.cycleStatusEffects(this.updateStatusEffect, weilder.statusArray, "end");
         })
         .then(()=>{
-            if(this.isSecondTurn == true){
+            if(this.battlePhase == "secondTurn"){
                 theController.enablePlayerBattleControls();
             }else{
-                this.isSecondTurn = true;
+                this.battlePhase = "secondTurn";
                 this.takeTurn(target, weilder);
             }
         }) 
@@ -73,6 +73,7 @@ export default class Battle{
                 status.update(type);
                 if(theController.battle.checkBattleStatus() == true){
                     theController.endBattle();
+                    //reject here?
                 }else{
                     resolve();
                 }
@@ -84,28 +85,31 @@ export default class Battle{
         return new Promise((resolve)=>{
             setTimeout(()=>{
                 weilder.nextMove.canUse(weilder);
-                if(weilder.nextMove.activate(weilder, target) == false){ //false if retreat
-                    theController.updatePlayerStats();//may need to change for enemy retreats
-                    theController.scrollToBottom("game-console");
-                    //reject here?
+                if(weilder.nextMove.activate(weilder, target) == "retreat"){ 
+                    this.battlePhase = "retreat";
+                }
+                theController.scrollToBottom("game-console");
+                theController.updatePlayerStats();
+                theController.updateEnemyStats();
+                if(this.checkBattleStatus() == true){//false means battle is still on
+                    theController.endBattle();
                 }else{
-                    if(this.checkBattleStatus() == true){//false means battle is still on
-                        theController.endBattle();
-                        //reject here?
-                    }else{
-                        resolve();
-                    }
+                    resolve();
                 }
             }, 2000); 
          });
     }
     checkBattleStatus(){
-        theController.scrollToBottom("game-console");
-        theController.updatePlayerStats();
-        theController.updateEnemyStats();
         if(this.player.currentHP <= 0 || this.enemy.currentHP <= 0){
             return true;     
         }else{
+            if(this.battlePhase == "retreat"){
+                this.player.currentStamina = this.player.maxStamina;
+                this.player.currentMagic = this.player.maxMagic;
+                this.enemy.currentStamina = this.enemy.maxStamina;
+                this.enemy.currentMagic = this.enemy.maxMagic;
+                return true;
+            }
             return false;
         }
     }
