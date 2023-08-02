@@ -59,7 +59,7 @@ export class Bound extends StatusEffect{
         this.currentCharges = this.maxCharges;
     }
     onStartTurn(){
-        if(Math.random()*4 < 3){
+        if(Math.random()*2 < 1){
             this.holder.nextMove = new Struggle;
         }
         this.currentCharges = this.currentCharges - 1;
@@ -67,11 +67,11 @@ export class Bound extends StatusEffect{
     }
 }
 
-export class Posioned extends StatusEffect{
+export class Poisoned extends StatusEffect{
     constructor(holder){
         super();
         this.type = "end";
-        this.name = "posioned";
+        this.name = "poisoned";
         this.holder = holder;
         this.maxCharges = 10;
         this.currentCharges = this.maxCharges;
@@ -82,7 +82,7 @@ export class Posioned extends StatusEffect{
         damageOutput = this.checkDamage(damageOutput, this.holder);
         this.serverityMultiplier = this.serverityMultiplier + 0.01;
         this.holder.currentHP = this.holder.currentHP - damageOutput;
-        theController.gameConsole.innerHTML += `<p>${this.holder.name} suffers ${damageOutput} posion damage!</p>`;
+        theController.gameConsole.innerHTML += `<p>${this.holder.name} suffers ${damageOutput} poison damage!</p>`;
         this.currentCharges = this.currentCharges - 1;
     }
 }

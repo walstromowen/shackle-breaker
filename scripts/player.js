@@ -3,20 +3,23 @@ import {WoodDagger, WoodSpear, WoodSheild, IronSheild, IronHelmet, IronChainmail
 import {Recover, Punch, Retreat} from "./abilities.js"
 import {controller as theController} from "./main.js";
 import {miniMap as theMiniMap} from "./main.js";
-import {Sheilded, Bound, Posioned, Burned} from "./statusEffects.js";
+import {Sheilded, Bound, Poisoned, Burned} from "./statusEffects.js";
 
 export default class Player{
-    constructor(){
+    constructor(characterCreationArray){
+        this.name = characterCreationArray[0];
+        this.apperance = characterCreationArray[1]
+        this.origin = characterCreationArray[2]
         this.equippedArray = ["Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"];
-        this.inventory = [new WoodDagger];
+        this.inventory = characterCreationArray[3];
         this.abilityArray = [new Punch, new Recover, new Retreat];
         this.level = 0;
         this.currentXP = 0;
-        this.maxHP = 10;
+        this.maxHP = characterCreationArray[4];
         this.currentHP = this.maxHP;
-        this.maxStamina = 10
+        this.maxStamina = characterCreationArray[5]
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 10;
+        this.maxMagic = characterCreationArray[6];
         this.currentMagic = this.maxMagic;
         this.baseArmor = 0;
         this.currentArmor = this.baseArmor;
@@ -24,12 +27,10 @@ export default class Player{
         this.currentAttack = this.baseAttack;
         this.baseSpeed = 1;
         this.currentSpeed = this.baseSpeed;
-        this.statusArray = [];//new Posioned(this)
+        this.statusArray = [];//new Poisoned(this)
         this.isInBattle = false;
-        this.isFirst = true;
         this.canMoveRoom = true;
         this.map = new Map(this.level);
-        this.name = "shackle breaker";
         this.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
         this.nextRoom = this.currentRoom;
     }
@@ -116,8 +117,6 @@ export default class Player{
                     this.inventory.splice(inventoryIndex, 1);
                     theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[0].name}.</p>`;
                     theController.updatePlayerEquippedTab(0);
-                    theController.soundEffectPlayer.src = "./audio/soundEffects/anvil-hit-2-14845.mp3";
-                    theController.soundEffectPlayer.play();
                     break;
                 case "offhand":
                     if(this.equippedArray[1] !== "Empty"){
@@ -127,9 +126,6 @@ export default class Player{
                     this.inventory.splice(inventoryIndex, 1);
                     theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[1].name}.</p>`;
                     theController.updatePlayerEquippedTab(1);
-                    theController.soundEffectPlayer.src = "./audio/soundEffects/anvil-hit-2-14845.mp3";
-                    theController.soundEffectPlayer.play();
-                    break;
                 case "head":
                     if(this.equippedArray[2] !== "Empty"){
                         this.inventory.push(this.equippedArray[2]);
@@ -138,8 +134,6 @@ export default class Player{
                     this.inventory.splice(inventoryIndex, 1); 
                     theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[2].name}.</p>`;
                     theController.updatePlayerEquippedTab(2);
-                    theController.soundEffectPlayer.src = "./audio/soundEffects/anvil-hit-2-14845.mp3";
-                    theController.soundEffectPlayer.play();
                     break;
                 case "torso":
                     if(this.equippedArray[3] !== "Empty"){
@@ -149,8 +143,6 @@ export default class Player{
                     this.inventory.splice(inventoryIndex, 1); 
                     theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[3].name}.</p>`;
                     theController.updatePlayerEquippedTab(3);
-                    theController.soundEffectPlayer.src = "./audio/soundEffects/anvil-hit-2-14845.mp3";
-                    theController.soundEffectPlayer.play();
                     break;
                 case "arms":
                     if(this.equippedArray[4] !== "Empty"){
@@ -160,8 +152,6 @@ export default class Player{
                     this.inventory.splice(inventoryIndex, 1); 
                     theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[4].name}.</p>`;
                     theController.updatePlayerEquippedTab(4);
-                    theController.soundEffectPlayer.src = "./audio/soundEffects/anvil-hit-2-14845.mp3";
-                    theController.soundEffectPlayer.play();
                     break;
                 case "legs":
                     if(this.equippedArray[5] !== "Empty"){
@@ -171,8 +161,6 @@ export default class Player{
                     this.inventory.splice(inventoryIndex, 1); 
                     theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[5].name}.</p>`;
                     theController.updatePlayerEquippedTab(5);
-                    theController.soundEffectPlayer.src = "./audio/soundEffects/anvil-hit-2-14845.mp3";
-                    theController.soundEffectPlayer.play();
                     break;
                 case "feet":
                     if(this.equippedArray[6] !== "Empty"){
@@ -182,12 +170,12 @@ export default class Player{
                     this.inventory.splice(inventoryIndex, 1); 
                     theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[6].name}.</p>`;
                     theController.updatePlayerEquippedTab(6);
-                    theController.soundEffectPlayer.src = "./audio/soundEffects/anvil-hit-2-14845.mp3";
-                    theController.soundEffectPlayer.play();
                     break;
                 default:
                     break;
             }
+            theController.soundEffectPlayer.src = "./audio/soundEffects/anvil-hit-2-14845.mp3";
+            theController.soundEffectPlayer.play();
             this.calcAbilitiesAndStats();
             theController.updatePlayerInventoryTab(this.inventory);
         }else{

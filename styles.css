@@ -20,9 +20,14 @@ h1{
     color: lightgrey;
     font-size: 120px;
 }
+h2{
+    font-size:48px;
+    
+}
+h3{
+    font-size: 36px;
+}
 h4{
-    margin:auto 0;
-    font-weight: 400;
     font-size: 28px;
 }
 h5{
@@ -33,6 +38,9 @@ h6{
 }
 p{
     font-size: 18px;
+}
+.flex{
+    display:flex;
 }
 /*Title Screen*/
 .title-screen-button{
@@ -51,6 +59,9 @@ p{
     background-color: white;
     border: 6px solid lightgrey;
 }
+.title-screen-button-header{
+    margin: auto 0;
+}
 #title-screen{
     background-image: url("./media/titleScreen.jpg");
     background-size:cover;
@@ -62,6 +73,102 @@ p{
     flex-direction: column;	
     margin: 10% auto;
     width: 300px;
+}
+/*Character Creation Screen*/
+.character-creation-input-row{
+    display:flex;
+    justify-content: space-between;
+    margin: 2px 0;
+}
+.character-creation-input{
+    background-color: lightgrey;
+    width: 70%;
+    font-size:24px;
+    border: none;
+    padding: none;
+}
+.character-creation-inventory-stats-div{
+    width:49%;
+    height: 100%;
+    background-color: var(--main-color);
+}
+.character-creation-label-header{
+    padding-left: 5px;
+}
+.character-creation-stat-container{
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 5px;
+}
+#background-lore-header{
+    background-color: var(--secondary-color);
+}
+#character-creation-screen{
+    display:none;
+    background-color: var( --tertiary-color);
+    height: 100vh;
+}
+#character-creation-header{
+    font-size: 28;
+    background-color: var(--main-color);
+    padding: 0px 5px;
+}
+#character-creation-row{
+    display:flex;
+    justify-content: space-between;
+}
+#character-creation-column-1{
+    background-color: var(--secondary-color);
+    width: 50%;
+    min-width: 576px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+}
+#character-creation-column-2{
+    background-color: var(--main-color);
+    width: 100%;
+    min-width: 288px;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+}
+#character-creation-inputs-container{
+    background-color: var(--main-color);
+    margin-top: 10px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 144px;
+}
+#character-creation-inventory{
+    background-color: var(--main-color);
+    padding: 5px;
+    
+}
+#character-creator-apperance-image{
+    width: 300px;
+    margin-top: 10px;
+    
+}
+#character-creation-inventory-stats-container{
+    display: flex;
+    justify-content:space-between;
+    margin-top: 10px;
+    height: 100%;
+}
+#character-creation-image-submit-btn-container{
+    margin-top: 10px;
+    background-color: var(--secondary-color);
+    
+}
+#character-creator-image-container{
+    text-align: center;
+    width: 100%;
+}
+#character-creation-submit-btn{
+    margin: auto;
 }
 /*App*/
 .app-row{
@@ -176,7 +283,13 @@ p{
 .equip-slots-row:hover .unequip-btn {
     display: block;
 }
-
+.console{
+    background-color: var(--secondary-color);
+    height: 100%;
+    overflow-y: auto;
+    text-align: bottom;
+    padding:20px;
+}
 #app{
     display: none;
 }
@@ -184,9 +297,7 @@ p{
     background-color: var(--secondary-color);
     width: 288px;
     flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-}
+} 
 #app-column-2{
     background-color: var(--main-color);
     width: 100%;
@@ -213,13 +324,6 @@ p{
     background-color: var(--main-color);
     margin: 10px auto;
     width: 100%;
-}
-#game-console{
-    background-color: var(--secondary-color);
-    height: 100%;
-    overflow-y: auto;
-    text-align: bottom;
-    padding:20px;
 }
 #enemy-main-stats-container{
     background-color: var(--main-color);

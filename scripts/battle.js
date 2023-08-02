@@ -71,6 +71,9 @@ export default class Battle{
         return new Promise((resolve)=>{
             setTimeout(()=>{
                 status.update(type);
+                theController.scrollToBottom("game-console");
+                theController.updatePlayerStats();
+                theController.updateEnemyStats();
                 if(theController.battle.checkBattleStatus() == true){
                     theController.endBattle();
                     //reject here?

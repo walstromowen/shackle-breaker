@@ -1,6 +1,6 @@
 import {controller as theController} from "./main.js";
 import {player as thePlayer} from "./main.js";
-import {Sheilded, Bound, Posioned, Burned} from "./statusEffects.js";
+import {Sheilded, Bound, Poisoned, Burned} from "./statusEffects.js";
 
 class Ability{
     canUse(weilder){
@@ -259,14 +259,16 @@ export class Pounce extends Ability{
             theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
             this.playSound();
             if(damageOutput > 0){
-                for(let i = 0; i < target.statusArray.length; i++){
-                    if(target.statusArray[i].name == "bound"){
-                        target.statusArray[i].currentCharges = target.statusArray[i].maxCharges;
-                        return;
+                if(Math.random()*2 < 1){
+                    for(let i = 0; i < target.statusArray.length; i++){
+                        if(target.statusArray[i].name == "bound"){
+                            target.statusArray[i].currentCharges = target.statusArray[i].maxCharges;
+                            return;
+                        }
                     }
+                    target.statusArray.push(new Bound(target));
+                    theController.gameConsole.innerHTML += `<p>${target.name} has been bound!</p>`;
                 }
-                target.statusArray.push(new Bound(target));
-                theController.gameConsole.innerHTML += `<p>${target.name} has been bound!</p>`;
             }
         }
     }    
@@ -358,7 +360,6 @@ export class Struggle extends Ability{
             this.playSound();
     }
 }
-
 export class SpitBile extends Ability{
     constructor(){
         super();
@@ -379,13 +380,13 @@ export class SpitBile extends Ability{
             this.playSound();
             if(damageOutput > 0){
                 for(let i = 0; i < target.statusArray.length; i++){
-                    if(target.statusArray[i].name == "posioned"){
+                    if(target.statusArray[i].name == "poisoned"){
                         target.statusArray[i].currentCharges = target.statusArray[i].maxCharges;
                         return;
                     }
                 }
-                target.statusArray.push(new Posioned(target));
-                theController.gameConsole.innerHTML += `<p>${target.name} has been posioned!</p>`;
+                target.statusArray.push(new Poisoned(target));
+                theController.gameConsole.innerHTML += `<p>${target.name} has been poisoned!</p>`;
             }
         }
     }  
@@ -409,7 +410,7 @@ export class Fireball extends Ability{
             theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
             this.playSound();
             if(damageOutput > 0){
-                if(Math.random()*4 < 1){
+                if(Math.random()*3 < 1){
                     for(let i = 0; i < target.statusArray.length; i++){
                         if(target.statusArray[i].name == "burned"){
                             target.statusArray[i].currentCharges = target.statusArray[i].maxCharges;
@@ -437,6 +438,30 @@ export class Devour extends Ability{
     activate(weilder, target){
         if(this.checkStamina(weilder, this.staminaCost) == true){
             let damageOutput = Math.floor(target.maxHP*0.7);
+            damageOutput = this.checkDamage(damageOutput, target);
+            target.currentHP = target.currentHP - damageOutput;
+            theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
+            this.playSound();
+        }
+    }
+}
+export class Eviscerate extends Ability{
+    constructor(){
+        super();
+        this.name = "eviscerate";
+        this.type = "attack";
+        this.speed = 2;
+        this.staminaCost = 5;
+        this.magicCost = 0;
+        this.damageModifier = 2;
+        this.soundEffect = "./audio/soundEffects/slash1.mp3";
+    }
+    activate(weilder, target){
+        if(this.checkStamina(weilder, this.staminaCost) == true){
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentAttack + this.damageModifier) - weilder.currentAttack + 1)) + weilder.currentAttack;
+            if(target.currentHP = target.maxHP){
+                damageOutput = Math.floor(damageOutput * 1.5);
+            }
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
             theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
@@ -515,11 +540,11 @@ export class DrinkMagicPotion extends Ability{
             return false;
         }
         let magic = 5 + weilder.level;
-        if(weilder.currentMagic + stamina > weilder.maxMagic){
+        if(weilder.currentMagic + magic > weilder.maxMagic){
             magic = weilder.maxMagic - weilder.currentMagic;
         }
         weilder.currentMagic = weilder.currentMagic + magic;
-        theController.gameConsole.innerHTML += `<p>${weilder.name} restores ${magic} stamina!</p>`;
+        theController.gameConsole.innerHTML += `<p>${weilder.name} restores ${magic} magic!</p>`;
         return true;
     }
 }
@@ -543,6 +568,38 @@ export class ThrowKnife extends Ability{
         target.currentHP = target.currentHP - damageOutput;
         theController.gameConsole.innerHTML += `<p>${weilder.name} throws a throwing knfife at the ${target.name} for ${damageOutput} damage!</p>`;
         theController.scrollToBottom("game-console");
+    }
+}
+export class ThrowPoisonedKnife extends Ability{
+    constructor(){
+        super();
+        this.name = "throw poison knife";
+        this.type = "attack";
+        this.speed = 3;
+        this.staminaCost = 0;
+        this.magicCost = 0;
+        this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
+    }
+    activate(weilder, target){
+        if(target === undefined){
+            theController.gameConsole.innerHTML += `<p>cannot use outside of combat!</p>`;
+            return;
+        }
+        let damageOutput =  3 + (weilder.level * 2) - target.currentArmor;
+        damageOutput = this.checkDamage(damageOutput, target);
+        target.currentHP = target.currentHP - damageOutput;
+        theController.gameConsole.innerHTML += `<p>${weilder.name} throws a poisoned throwing knfife at the ${target.name} for ${damageOutput} damage!</p>`;
+        theController.scrollToBottom("game-console");
+        if(damageOutput > 0){
+            for(let i = 0; i < target.statusArray.length; i++){
+                if(target.statusArray[i].name == "poisoned"){
+                    target.statusArray[i].currentCharges = target.statusArray[i].maxCharges;
+                    return;
+                }
+            }
+            target.statusArray.push(new Poisoned(target));
+            theController.gameConsole.innerHTML += `<p>${target.name} has been poisoned!</p>`;
+        }
     }
 }
 

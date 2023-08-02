@@ -34,6 +34,7 @@ export default class Controller {
         this.inventoryTabButton = document.getElementById('inventory-tab-button');
         this.inventoryTab = document.getElementById('inventory-tab');
         this.battle = "";
+        document.getElementById('player-image').src = thePlayer.apperance;
         this.updatePlayerStats();
         this.enableKeyControls();
         this.enablePlayerMapControls();

@@ -10,10 +10,94 @@
         <div id='title-screen'>
             <h1>Shackle Breaker</h1>
             <div id='title-screen-button-container'>
-                <div class='title-screen-button' id='title-start-button'><h4>Start</h4></div>
-                <div class='title-screen-button' id='title-exit-button'><h4>Exit</h4></div>
+                <div class='title-screen-button' id='title-start-button'><h4 class='title-screen-button-header'>Start</h4></div>
+                <div class='title-screen-button' id='title-exit-button'><h4 class='title-screen-button-header'>Exit</h4></div>
             </div>
         </div>
+
+
+
+        <div id='character-creation-screen'>
+            <div class='app-row' id='character-creation-row'>
+                <div class='app-column'id='character-creation-column-1'>
+                    <h2 id='character-creation-header'>Create Character</h2>
+                    <div id='character-creation-inputs-container'>
+                        <div class='character-creation-input-row' id='character-creation-name-row'>
+                            <h5>Name</h5>
+                            <input id='name-selection' type='text' class='character-creation-input'>
+                        </div>
+                        <div class='character-creation-input-row' id='character-creation-apperance-row'>
+                            <h5>Apperance</h5>
+                            <select id='apperance-selection' class='character-creation-input'>
+                                <option id='knight-1' value='media/knight-1.jpg'>Knight 1</option>
+                                <option id='knight-2' value='media/knight-2.jpg'>Knight 2</option>
+                                <option id='rogue-1' value='media/rogue-1.jpg'>Rogue 1</option>
+                                <option id='rogue-2' value='media/rogue-2.jpg'>Rouge 2</option>
+                                <option id='mage-1' value='media/mage-1.jpg'>Mage 1</option>
+                                <option id='mage-2' value='media/mage-2.jpg'>Mage 2</option>
+                            </select>
+                        </div>
+                        <div class='character-creation-input-row' id='character-creation-background-row'>
+                            <h5>Background</h5>
+                            <select id='background-selection' class='character-creation-input'>
+                                <option value='traveler'>Traveler</option>
+                                <option value='blacksmith'>Blacksmith</option>
+                                <option value='ranger'>Ranger</option>
+                                <option value='hermit'>Hermit</option>
+                            </select>
+                        </div>
+                        <div class='character-creation-input-row' id='character-creation-keepsake-row'>
+                            <h5>Keepsake</h5>
+                            <select id='keepsake-selection' class='character-creation-input'>
+                                <option value='none'>None</option>
+                                <option value='throwing-knifes'>Throwing Knives</option>
+                                <option value='bag-of-potions'>Bag of Potions</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id='character-creation-inventory-stats-container'>
+                        <div class='character-creation-inventory-stats-div'>
+                            <h3 class='character-creation-label-header'>Inventory</h3>
+                            <div id='character-creation-inventory'></div>
+                        </div>
+                        <div class='character-creation-inventory-stats-div'>
+                            <h3 class='character-creation-label-header'>Stats</h3>
+                            <div id='character-creation-stats'>
+                                <div class='character-creation-stat-container'>
+                                    <h5>Health</h5>
+                                    <p><span id='character-creation-health'>12</span></p>
+                                </div>
+                                <div class='character-creation-stat-container'>
+                                    <h5>Stamina</h5>
+                                    <p><span id='character-creation-stamina'>12</span></p>
+                                </div>
+                                <div class='character-creation-stat-container'>
+                                    <h5>Magic</h5>
+                                    <p><span id='character-creation-magic'>12</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                <div class='app-column' id='character-creation-column-2'>
+                    <h3 class='character-creation-label-header' id='background-lore-header'>Background Lore</h3>
+                    <div class='console'id='background-description'>
+                        <p>Who are you...?</p>
+                    </div>
+                    <div id='character-creation-image-submit-btn-container'>
+                        <div id='character-creator-image-container'>
+                            <image id='character-creator-apperance-image' src='./media/knight-1.jpg'></image>
+                        </div>
+                            <div class='title-screen-button' id='character-creation-submit-btn'><h4>Submit</h4></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
 
         <div id='app'>
             <div class='app-row'>
@@ -26,7 +110,7 @@
                         <canvas id='mini-map-canvas'></canvas>
                     </div>
                     <div id='player-image-container'> <!--Toggle during encounters-->
-                        <image id='player-image' src='./media/hero.png'></image>
+                        <image id='player-image' src='./media/knight-1.jpg'></image>
                     </div>
                     <div id='player-main-stats-container'>
                         <div class='vital-bar-container'>
@@ -99,7 +183,7 @@
                     </div> 
                 </div>
                 <div class='app-column' id='app-column-2'>
-                    <div id='game-console'>
+                    <div class='console' id='game-console'>
                         <p>Your adventure begins...</p>
                         <p>Use w, a, s, and d keys to move</p>
                     </div>
@@ -131,21 +215,21 @@
                             <div class='vital-bar' id='health-bar-enemy'>
                                 <div class='vital-bar-progress' id='health-bar-enemy-progress'></div>
                             </div>
-                            <p><span class ='current-vital-label' id='current-health-enemy'>100</span></p>
+                            <p><span class ='current-vital-label' id='current-health-enemy'>10</span></p>
                         </div>
                         <div class='vital-bar-container'>
                             <h5 class = 'vital-label'>Stamina</h5>
                             <div class='vital-bar' id='stamina-bar-enemy'>
                                 <div class='vital-bar-progress' id='stamina-bar-enemy-progress'></div>
                             </div>
-                            <p><span class ='current-vital-label' id='current-stamina-enemy'>100</span></p>
+                            <p><span class ='current-vital-label' id='current-stamina-enemy'>10</span></p>
                         </div>
                         <div class='vital-bar-container'>
                             <h5 class = 'vital-label'>Magic</h5>
                             <div class='vital-bar' id='magic-bar-enemy'>
                                 <div class='vital-bar-progress' id='magic-bar-enemy-progress'></div>
                             </div>
-                            <p><span class ='current-vital-label' id='current-magic-enemy'>100</span></p>
+                            <p><span class ='current-vital-label' id='current-magic-enemy'>10</span></p>
                         </div>
                     </div>
                 </div>
@@ -155,9 +239,9 @@
         <div id='level-up-screen'>
             <h1 id='level-up-screen-title'>Level Up!</h1>
             <div id='level-up-screen-btn-container'>
-                <div class='title-screen-button' id='increase-hp-btn'><h4>Health</h4></div>
-                <div class='title-screen-button' id='increase-stamina-btn'><h4>Stamina</h4></div>
-                <div class='title-screen-button' id='increase-magic-btn'><h4>Magic</h4></div>
+                <div class='title-screen-button' id='increase-hp-btn'><h4 class='title-screen-button-header'>Health</h4></div>
+                <div class='title-screen-button' id='increase-stamina-btn'><h4 class='title-screen-button-header'>Stamina</h4></div>
+                <div class='title-screen-button' id='increase-magic-btn'><h4 class='title-screen-button-header'>Magic</h4></div>
             </div>
             <div class='title-screen-button' id='submit-level-btn'><h4>Submit</h4></div>
         </div>
@@ -165,8 +249,8 @@
         <div id='gameover-screen'>
             <h1 id='gameover-screen-title'>Game Over!</h1>
             <div id='gameover-screen-btn-container'>
-                <div class='title-screen-button' id='gameover-to-menu-btn'><h4>Main Menu</h4></div>
-                <div class='title-screen-button' id='gameover-exit-btn'><h4>Exit</h4></div>
+                <div class='title-screen-button' id='gameover-to-menu-btn'><h4 class='title-screen-button-header'>Main Menu</h4></div>
+                <div class='title-screen-button' id='gameover-exit-btn'><h4 class='title-screen-button-header'>Exit</h4></div>
             </div>
         </div>
 
