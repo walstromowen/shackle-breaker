@@ -599,7 +599,35 @@ export class ThrowPoisonedKnife extends Ability{
             }
             target.statusArray.push(new Poisoned(target));
             theController.gameConsole.innerHTML += `<p>${target.name} has been poisoned!</p>`;
+            theController.scrollToBottom("game-console");
         }
+    }
+}
+export class SmashMeteorite extends Ability{
+    constructor(){
+        super();
+        this.name = "smash meteorite";
+        this.type = "buff";
+        this.speed = 0;
+        this.staminaCost = 0;
+        this.magicCost = 0;
+        this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
+    }
+    activate(weilder, target){
+        if(target !== undefined){
+            theController.gameConsole.innerHTML += `<p>cannot use in combat!</p>`;
+            theController.scrollToBottom("game-console");
+            return;
+        }
+        weilder.maxHP = weilder.maxHP + 1;
+        weilder.maxStamina = weilder.maxStamina + 1;
+        weilder.maxMagic = weilder.maxMagic + 1;
+        weilder.currentHP = weilder.currentHP + 1;
+        weilder.currentStamina = weilder.currentStamina + 1;
+        weilder.currentMagic = weilder.currentMagic + 1;
+        theController.gameConsole.innerHTML += `<p>${weilder.name} smashes a meteorite!</p>`;
+        theController.scrollToBottom("game-console");
+        return true;
     }
 }
 

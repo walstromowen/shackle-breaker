@@ -6,12 +6,12 @@ import {LinenShirt, LinenPants, WoodDagger, WoodSpear, WoodSword,
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
         LeatherBoots, IronSheild, IronHelmet, IronGuantlets, IronChainmail, 
         IronGreaves, IronBoots, HealthPotion, StaminaPotion, MagicPotion, 
-        ThrowingKnife, PoisonedThrowingKnife} from "./items.js";
+        ThrowingKnife, PoisonedThrowingKnife, Meteorite} from "./items.js";
 
 export let player;
 export let miniMap;
 export let controller;
-let characterCreationArray = ["name", "apperance", "background", [], 0, 0, 0];
+let characterCreationArray = ["name", "apperance", "background", [], 12, 12, 12];
 
 document.getElementById('music-player').src = "./audio/a-sinister-power-rising-epic-dark-gothic-soundtrack-15021.mp3";
 document.getElementById('music-player').play();
@@ -78,15 +78,16 @@ document.getElementById("keepsake-selection").addEventListener("change", ()=>{
 function updateInventory(){
     let inventoryArray = [];
     let value = document.getElementById("background-selection").value;
+    inventoryArray.push(new LinenShirt, new LinenPants)
     switch(value){
         case "traveler":
-            inventoryArray.push(new WoodSpear, new LeatherChestplate);
+            inventoryArray.push(new WoodSpear, new LeatherBoots);
             break;
         case "blacksmith":
-            inventoryArray.push(new WoodSword, new IronChainmail);
+            inventoryArray.push(new WoodSword, new IronHelmet);
             break;
         case "ranger":
-            inventoryArray.push(new WoodDagger, new WoodSideDagger, new LeatherChestplate);
+            inventoryArray.push(new WoodDagger, new WoodSideDagger);
             break;
         case "hermit":
             inventoryArray.push(new WoodFireStaff);
@@ -101,6 +102,9 @@ function updateInventory(){
             break;
         case "bag-of-potions":
             inventoryArray.push(new HealthPotion, new StaminaPotion , new MagicPotion);
+            break;
+        case "meteorite":
+            inventoryArray.push(new Meteorite);
             break;
     }
     for(let i = -1; i < characterCreationArray[3].length; i++){

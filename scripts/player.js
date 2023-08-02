@@ -126,6 +126,7 @@ export default class Player{
                     this.inventory.splice(inventoryIndex, 1);
                     theController.gameConsole.innerHTML += `<p>You equip ${this.equippedArray[1].name}.</p>`;
                     theController.updatePlayerEquippedTab(1);
+                    break;
                 case "head":
                     if(this.equippedArray[2] !== "Empty"){
                         this.inventory.push(this.equippedArray[2]);
@@ -137,7 +138,7 @@ export default class Player{
                     break;
                 case "torso":
                     if(this.equippedArray[3] !== "Empty"){
-                        this.inventory.push(this.equippedArray[2]);
+                        this.inventory.push(this.equippedArray[3]);
                     } 
                     this.equippedArray[3] = this.inventory[inventoryIndex];
                     this.inventory.splice(inventoryIndex, 1); 

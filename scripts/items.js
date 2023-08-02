@@ -1,4 +1,4 @@
-import {Slash, Stab, Eviscerate, Block, Fireball, Channel, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife} from "./abilities.js"
+import {Slash, Stab, Eviscerate, Block, Fireball, Channel, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite} from "./abilities.js"
 
 class Equipment{}
 class Consumable{}
@@ -113,7 +113,7 @@ export class LeatherHelmet extends Equipment{
 export class LeatherHood extends Equipment{
     constructor(){
         super();
-        this.name = "leather helmet";
+        this.name = "leather hood";
         this.type = "head";
         this.level = 0;
         this.attack = 0;
@@ -285,5 +285,14 @@ export class PoisonedThrowingKnife extends Consumable{
         this.type = "consumable";
         this.level = 0;
         this.abilityArray = [new ThrowPoisonedKnife];
+    }
+}
+export class Meteorite extends Consumable{
+    constructor(){
+        super();
+        this.name = "meteorite";
+        this.type = "consumable";
+        this.level = 0;
+        this.abilityArray = [new SmashMeteorite];
     }
 }
