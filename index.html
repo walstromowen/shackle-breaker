@@ -140,6 +140,7 @@
                     <div id='tabs-label-container'>
                         <h6 id='equipped-tab-button' class='tab-label'>Equip</h6>
                         <h6 id='inventory-tab-button' class='tab-label'> Items</h6>
+                        <h6 id='secondary-stats-tab-button' class='tab-label'> Stats</h6>
                     </div>
                     <div class='tab' id='equipped-tab'> <!--Toggle on click-->
                         <div id='equip-slots-container'>
@@ -180,9 +181,47 @@
                             </div>
                         </div>
                     </div>
-                    <div class='tab' id='inventory-tab'> <!--Toggle on click-->
-
-                    </div> 
+                    <div class='tab' id='inventory-tab'></div>
+                    <div class='tab' id='secondary-stats-tab'> <!--Toggle on click-->
+                        <div id='secondary-stats-container'>
+                            <div class ='secondary-stat-row'>
+                                <p class='secondary-stat-slot-label'>Expereince:</p>
+                                <p id='current-experience' class='secondary-stat-slot'>0</p>
+                            </div>
+                            <div class ='secondary-stat-row'>
+                                <p class='secondary-stat-slot-label'>Speed:</p>
+                                <p id='current-speed' class='secondary-stat-slot'>0</p>
+                            </div>
+                            <div class ='secondary-stat-row'>
+                                <p class='secondary-stat-slot-label'>Blunt Attack:</p>
+                                <p id='current-blunt-attack' class='secondary-stat-slot'>0</p>
+                            </div>
+                            <div class ='secondary-stat-row'>
+                                <p class='secondary-stat-slot-label'>Sharp Attack:</p>
+                                <p id='current-sharp-attack' class='secondary-stat-slot'>0</p>
+                            </div>
+                            <div class ='secondary-stat-row'>
+                                <p class='secondary-stat-slot-label'>Magic Attack:</p>
+                                <p id='current-magic-attack' class='secondary-stat-slot'>0</p>
+                            </div>
+                            <div class ='secondary-stat-row'>
+                                <p class='secondary-stat-slot-label'>Armor:</p>
+                                <p id='current-armor' class='secondary-stat-slot'>0</p>
+                            </div>
+                            <div class ='secondary-stat-row'>
+                                <p class='secondary-stat-slot-label'>HP Recovery:</p>
+                                <p id='current-health-recovery' class='secondary-stat-slot'>0</p>
+                            </div>
+                            <div class ='secondary-stat-row'>
+                                <p class='secondary-stat-slot-label'>Stamina Recovery:</p>
+                                <p id='current-stamina-recovery' class='secondary-stat-slot'>0</p>
+                            </div>
+                            <div class ='secondary-stat-row'>
+                                <p class='secondary-stat-slot-label'>Magic Recovery:</p>
+                                <p id='current-magic-recovery' class='secondary-stat-slot'>0</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class='app-column' id='app-column-2'>
                     <div class='console' id='game-console'>

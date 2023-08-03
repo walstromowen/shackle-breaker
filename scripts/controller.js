@@ -27,11 +27,23 @@ export default class Controller {
         this.currentHealthPlayer = document.getElementById('current-health-player');
         this.currentStaminaPlayer = document.getElementById('current-stamina-player');
         this.currentMagicPlayer = document.getElementById('current-magic-player');
+
+        this.currentExperience = document.getElementById('current-experience');
+        this.currentSpeed = document.getElementById('current-speed');
+        this.currentBluntAttack = document.getElementById('current-blunt-attack');
+        this.currentSharpAttack = document.getElementById('current-sharp-attack');
+        this.currentMagicAttack = document.getElementById('current-magic-attack');
+        this.currentArmor = document.getElementById('current-armor');
+        this.currentHealthRecovery = document.getElementById('current-health-recovery');
+        this.currentStaminaRecovery = document.getElementById('current-stamina-recovery');
+        this.currentMagicRecovery = document.getElementById('current-magic-recovery');
+
         this.currentHealthEnemy = document.getElementById('current-health-enemy');
         this.currentStaminaEnemy = document.getElementById('current-stamina-enemy');
         this.currentMagicEnemy = document.getElementById('current-magic-enemy');
         this.equippedTabButton = document.getElementById('equipped-tab-button');
         this.inventoryTabButton = document.getElementById('inventory-tab-button');
+        this.secondaryStatsTabButton = document.getElementById('secondary-stats-tab-button');
         this.inventoryTab = document.getElementById('inventory-tab');
         this.battle = "";
         document.getElementById('player-image').src = thePlayer.apperance;
@@ -95,6 +107,16 @@ export default class Controller {
         this.staminaBarPlayerProgress.style.width = Math.floor(thePlayer.currentStamina/thePlayer.maxStamina*100) + "%";
         this.magicBarPlayerProgress.style.width = Math.floor(thePlayer.currentMagic/thePlayer.maxMagic*100) + "%";
         document.getElementById('player-level-label').innerText = "★ " + thePlayer.level;
+        this.currentExperience.innerText = thePlayer.currentXP;
+        this.currentSpeed.innerText = thePlayer.currentSpeed;
+        this.currentArmor.innerText = thePlayer.currentArmor;
+        this.currentBluntAttack.innerText = thePlayer.currentAttack; //blunt attack as place holder for reqgular attack
+        this.currentHealthRecovery.innerText = thePlayer.currentHealthRecovery;
+        this.currentStaminaRecovery.innerText = thePlayer.currentStaminaRecovery;
+        this.currentMagicRecovery.innerText = thePlayer.currentMagicRecovery;
+        //this.currentBluntAttackPlayer.innertext = thePlayer.currentBluntAttack;
+        //this.currentSharpAttackPlayer.innertext = thePlayer.currentSharpAttack;
+        //this.currentMagicPlayer.innertext = thePlayer.currentMagicAttack;
         this.scrollToBottom("game-console");
     }
     updateEnemyStats(){
@@ -198,10 +220,17 @@ export default class Controller {
         this.equippedTabButton.addEventListener('click',()=>{
             document.getElementById('inventory-tab').style.display = "none";
             document.getElementById('equipped-tab').style.display = "block";
+            document.getElementById('secondary-stats-tab').style.display = "none";
         });
         this.inventoryTabButton.addEventListener('click',()=>{
             document.getElementById('equipped-tab').style.display = "none";
             document.getElementById('inventory-tab').style.display = "block";
+            document.getElementById('secondary-stats-tab').style.display = "none";
+        });
+        this.secondaryStatsTabButton.addEventListener('click',()=>{
+            document.getElementById('equipped-tab').style.display = "none";
+            document.getElementById('inventory-tab').style.display = "none";
+            document.getElementById('secondary-stats-tab').style.display = "block";
         });
         for(let i = 0; i < thePlayer.equippedArray.length; i++){
             document.getElementById('unequip-btn-' + i).addEventListener('click', ()=>{

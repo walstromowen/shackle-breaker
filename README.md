@@ -1,27 +1,29 @@
 # ShackleBreaker
 Text adventure game based on the ShacklerBreaker story
 
-##TODO
+## TODO
+
+# New Features
 * Traps / encounters / choices before battles
-* tweak inventory UI
-* Rework character level / xp 
-* More Stats (recovery, attributes)
-* Parry System
-* Bonus actions / reactions
-* Alphabetize CSS rules
+* Parrying System
+* Display armor and attack stats
+* New Stats (Recovery and Damage Types)
 * Enviorment specific music
-* Organize Controllers
-* Display section for statuses and stats /  Status effect icons
+* Status effect icons
 * Shop/crafting/weapon level up / Town / Gold
 * interact with stairs / loot bodies
 * mini Menu for items and action buttons
+* animation for vital bars changing
 
+# Quality of Life
+* Rework character level / xp 
+* Alphabetize CSS rules
+* Organize Controllers
+* UI overhall
 
-//parry system 4 stances
-//opposite stance crit damage
-//adjacent stances normal damage
-//same stance parry
-//weapons attack speeds
-//faster attacks change stances faster
+# Bug Fixes
+* Blocking still active on quick second attack
+* Image Flashing
+
 
 

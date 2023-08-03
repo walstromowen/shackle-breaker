@@ -27,6 +27,12 @@ export default class Player{
         this.currentAttack = this.baseAttack;
         this.baseSpeed = 1;
         this.currentSpeed = this.baseSpeed;
+        this.baseHealthRecovery = 0;
+        this.currentHealthRecovery =  this.baseHealthRecovery;
+        this.baseStaminaRecovery = 0;
+        this.currentStaminaRecovery = this.baseStaminaRecovery;
+        this.baseMagicRecovery = 0;
+        this.currentMagicRecovery =  this.baseMagicRecovery;
         this.statusArray = [];//new Poisoned(this)
         this.isInBattle = false;
         this.canMoveRoom = true;
@@ -179,6 +185,7 @@ export default class Player{
             theController.soundEffectPlayer.play();
             this.calcAbilitiesAndStats();
             theController.updatePlayerInventoryTab(this.inventory);
+            theController.updatePlayerStats();
         }else{
             theController.gameConsole.innerHTML += `<p>Cannot equip during combat!</p>`;
         }

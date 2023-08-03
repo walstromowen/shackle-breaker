@@ -181,6 +181,8 @@ p{
 .app-column{
     margin: 0;
     padding: 10px;
+    display:flex;
+    flex-direction: column;
 }
 .action-button{
     background-color: white;
@@ -203,7 +205,8 @@ p{
     cursor: not-allowed;
 }
 .tab-label{
-   margin: 5px;
+    width: 20%;
+    margin: 5px;
 }
 .tab-label:hover{
     color: white;
@@ -212,9 +215,8 @@ p{
 .tab{
     overflow-y: auto;
     height: 100%;
-    width: 100%;
     background-color: var(--main-color);
-    
+    padding: 0px 5px;
 }
 .vital-bar-container{
     display:flex;
@@ -243,7 +245,6 @@ p{
     margin: 5px;
 }
 .inventory-slot{
-    margin: 0 5px;
     width: calc(100%-10px);
     display: flex;
     justify-content: space-between;
@@ -261,7 +262,7 @@ p{
     background-color: var(--secondary-color);
     text-align: center;
 }
-.equip-slots-row{
+.equip-slots-row, .secondary-stat-row{
     display: flex;
 }
 .equip-slot-label{
@@ -290,6 +291,13 @@ p{
     text-align: bottom;
     padding:20px;
 }
+.secondary-stat-slot-label{
+    width: 80%;
+}
+.secondary-stat-slot{
+    width: 20%;
+}
+#a
 #app{
     display: none;
 }
@@ -452,11 +460,8 @@ p{
     background-color: darkblue;
     margin-left: auto;
 }
-#inventory-tab{
+#inventory-tab, #secondary-stats-tab{
     display: none;
-}
-#equip-slots-container{
-    margin: 0 5px;
 }
 #battle-button-container{
     display: flex;
