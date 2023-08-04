@@ -66,10 +66,10 @@ export class Punch extends Ability{
         super();
         this.name = "punch";
         this.type = "attack";
-        this.speed = 2;
+        this.speedMultiplier = 0.75;
         this.staminaCost = 1;
         this.magicCost = 0;
-        this.damageModifier = 0;
+        this.damageModifier = 1;
         this.soundEffect = "./audio/soundEffects/soundEffects/punch-140236.mp3";
     }
     activate(weilder, target){
@@ -87,7 +87,7 @@ export class Slash extends Ability{
         super();
         this.name = "slash";
         this.type = "attack";
-        this.speed = 2;
+        this.speedMultiplier = 0.75;
         this.staminaCost = 2;
         this.magicCost = 0;
         this.damageModifier = 3;
@@ -109,7 +109,7 @@ export class Stab extends Ability{
         super();
         this.name = "stab";
         this.type = "attack";
-        this.speed = 1;
+        this.speedMultiplier = 0.5;
         this.staminaCost = 3;
         this.magicCost = 0;
         this.damageModifier = 5;
@@ -130,7 +130,7 @@ export class Block extends Ability{
         super();
         this.name = "block";
         this.type = "buff";
-        this.speed = 3;
+        this.speedMultiplier = 0.75;
         this.staminaCost = 1;
         this.magicCost = 0;
         this.soundEffect = "./audio/soundEffects/anvil-hit-2-14845.mp3";
@@ -155,7 +155,7 @@ export class Channel extends Ability{
         super();
         this.name = "channel";
         this.type = "buff";
-        this.speed = 3;
+        this.speedMultiplier = 0.75;
         this.staminaCost = 0;
         this.magicCost = 0;
         this.soundEffect = "./audio/soundEffects/magic-spell-6005.mp3";
@@ -182,7 +182,7 @@ export class Recover extends Ability{
         super();
         this.name = "recover";
         this.type = "buff";
-        this.speed = 3;
+        this.speedMultiplier = 0.75;
         this.staminaCost = 0;
         this.magicCost = 0;
         this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
@@ -208,7 +208,7 @@ export class Retreat extends Ability{
         super();
         this.name = "retreat";
         this.type = "buff";
-        this.speed = 2;
+        this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 0;
         this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
@@ -224,7 +224,7 @@ export class Bite extends Ability{
         super();
         this.name = "bite";
         this.type = "attack";
-        this.speed = 2;
+        this.speedMultiplier = 0.5;
         this.staminaCost = 2;
         this.magicCost = 0;
         this.damageModifier = 3;
@@ -245,7 +245,7 @@ export class Pounce extends Ability{
         super();
         this.name = "pounce";
         this.type = "attack";
-        this.speed = 1;
+        this.speedMultiplier = 0.25;
         this.staminaCost = 4;
         this.magicCost = 0;
         this.damageModifier = 2;
@@ -278,7 +278,7 @@ export class LeechLife extends Ability{
         super();
         this.name = "leech life";
         this.type = "attack";
-        this.speed = 1;
+        this.speedMultiplier = 0.25;
         this.staminaCost = 4;
         this.magicCost = 0;
         this.damageModifier = 2;
@@ -305,7 +305,7 @@ export class ArcaneDart extends Ability{
         super();
         this.name = "arcane dart";
         this.type = "attack";
-        this.speed = 2;
+        this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 2;
         this.damageModifier = 3;
@@ -327,7 +327,7 @@ export class ArcaneBlast extends Ability{
         super();
         this.name = "arcane blast";
         this.type = "attack";
-        this.speed = 1;
+        this.speedMultiplier = 0.25;
         this.staminaCost = 0;
         this.magicCost = 6;
         this.damageModifier = 6;
@@ -350,7 +350,7 @@ export class Struggle extends Ability{
         super();
         this.name = "struggle";
         this.type = "attack";
-        this.speed = 0;
+        this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 0;
         this.soundEffect = "./audio/soundEffects/power-down-45784.mp3";
@@ -365,7 +365,7 @@ export class SpitBile extends Ability{
         super();
         this.name = "spit bile";
         this.type = "attack";
-        this.speed = 1;
+        this.speedMultiplier = 0.25;
         this.staminaCost = 4;
         this.magicCost = 0;
         this.damageModifier = 2;
@@ -396,7 +396,7 @@ export class Fireball extends Ability{
         super();
         this.name = "fireball";
         this.type = "attack";
-        this.speed = 1;
+        this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 4;
         this.damageModifier = 2;
@@ -429,7 +429,7 @@ export class Devour extends Ability{
         super();
         this.name = "devour";
         this.type = "attack";
-        this.speed = 0;
+        this.speedMultiplier = 0.25;
         this.staminaCost = 20;
         this.magicCost = 0;
         this.damageModifier = "";
@@ -450,7 +450,7 @@ export class Eviscerate extends Ability{
         super();
         this.name = "eviscerate";
         this.type = "attack";
-        this.speed = 2;
+        this.speedMultiplier = 0.75;
         this.staminaCost = 5;
         this.magicCost = 0;
         this.damageModifier = 2;
@@ -474,7 +474,7 @@ export class DrinkHealthPotion extends Ability{
         super();
         this.name = "drink health potion";
         this.type = "buff";
-        this.speed = 3;
+        this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 0;
         this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
@@ -499,7 +499,7 @@ export class DrinkStaminaPotion extends Ability{
         super();
         this.name = "drink stamina potion";
         this.type = "buff";
-        this.speed = 3;
+        this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 0;
         this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
@@ -529,7 +529,7 @@ export class DrinkMagicPotion extends Ability{
         super();
         this.name = "drink magic potion";
         this.type = "buff";
-        this.speed = 3;
+        this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 0;
         this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
@@ -553,7 +553,7 @@ export class ThrowKnife extends Ability{
         super();
         this.name = "throw knife";
         this.type = "attack";
-        this.speed = 3;
+        this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 0;
         this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
@@ -575,7 +575,7 @@ export class ThrowPoisonedKnife extends Ability{
         super();
         this.name = "throw poison knife";
         this.type = "attack";
-        this.speed = 3;
+        this.speedMultiplier = 0.75;
         this.staminaCost = 0;
         this.magicCost = 0;
         this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
@@ -607,10 +607,6 @@ export class SmashMeteorite extends Ability{
     constructor(){
         super();
         this.name = "smash meteorite";
-        this.type = "buff";
-        this.speed = 0;
-        this.staminaCost = 0;
-        this.magicCost = 0;
         this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
     }
     activate(weilder, target){

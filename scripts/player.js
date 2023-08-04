@@ -27,12 +27,6 @@ export default class Player{
         this.currentAttack = this.baseAttack;
         this.baseSpeed = 1;
         this.currentSpeed = this.baseSpeed;
-        this.baseHealthRecovery = 0;
-        this.currentHealthRecovery =  this.baseHealthRecovery;
-        this.baseStaminaRecovery = 0;
-        this.currentStaminaRecovery = this.baseStaminaRecovery;
-        this.baseMagicRecovery = 0;
-        this.currentMagicRecovery =  this.baseMagicRecovery;
         this.statusArray = [];//new Poisoned(this)
         this.isInBattle = false;
         this.canMoveRoom = true;
@@ -89,12 +83,14 @@ export default class Player{
         //reset stats and abilities
         this.currentAttack = this.baseAttack;
         this.currentArmor = this.baseArmor;
+        this.currentSpeed = this.baseSpeed;
         this.abilityArray = [];
         //update stats
         for(var i = 0; i < this.equippedArray.length; i++){
             if(this.equippedArray[i] != "Empty"){
                 this.currentArmor = this.currentArmor + this.equippedArray[i].armor;
                 this.currentAttack = this.currentAttack + this.equippedArray[i].attack;
+                this.currentSpeed = this.currentSpeed + this.equippedArray[i].speed;
             }
         }
         //punch check
@@ -201,6 +197,7 @@ export default class Player{
                 theController.updatePlayerInventoryTab(this.inventory);
                 theController.updatePlayerEquippedTab(equippedArrayIndex);
                 this.calcAbilitiesAndStats();
+                theController.updatePlayerStats();
             }else{
                 theController.gameConsole.innerHTML += `<p>Nothing equipped!</p>`;
             }
