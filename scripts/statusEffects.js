@@ -41,12 +41,12 @@ export class Sheilded extends StatusEffect{//curently has bug where if your next
         this.currentCharges = this.maxCharges;
     }
     onEndTurn(){
-        this.holder.currentArmor = this.holder.currentArmor + 5;
+        this.holder.currentPhysicalDefense = this.holder.currentPhysicalDefense + 5;
         theController.gameConsole.innerHTML += `<p>${this.holder.name} is Sheilded!</p>`;
         this.currentCharges = this.currentCharges - 1;
     }
     onRemove(){
-        this.holder.currentArmor = this.holder.currentArmor - 5;
+        this.holder.currentPhysicalDefense = this.holder.currentPhysicalDefense - 5;
     }
 }
 export class Bound extends StatusEffect{

@@ -44,8 +44,13 @@ class Ability{
             return true;
         }
     }
-    checkDamage(damage, target){
-        damage = damage - target.currentArmor;
+    checkDamage(damage, target, type){
+        if(type == "physical"){
+            damage = damage - target.currentPhysicalDefense;
+        }
+        if(type == "magic"){
+            damage = damage - target.currentMagicDefense;
+        }
         if(damage < 0){
             return 0;
         }
@@ -65,16 +70,16 @@ export class Punch extends Ability{
     constructor(){
         super();
         this.name = "punch";
-        this.type = "attack";
+        this.type = "physical";
         this.speedMultiplier = 0.75;
         this.staminaCost = 1;
         this.magicCost = 0;
-        this.damageModifier = 1;
+        this.damageModifier = 0;
         this.soundEffect = "./audio/soundEffects/soundEffects/punch-140236.mp3";
     }
     activate(weilder, target){
         if(this.checkStamina(weilder, this.staminaCost) == true){
-            let damageOutput = Math.floor(Math.random() * ((weilder.currentAttack + this.damageModifier) - weilder.currentAttack + 1)) + weilder.currentAttack;
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentPhysicalAttack + this.damageModifier) - weilder.currentPhysicalAttack + 1)) + weilder.currentPhysicalAttack;
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
             theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
@@ -86,7 +91,7 @@ export class Slash extends Ability{
     constructor(){
         super();
         this.name = "slash";
-        this.type = "attack";
+        this.type = "physical";
         this.speedMultiplier = 0.75;
         this.staminaCost = 2;
         this.magicCost = 0;
@@ -95,7 +100,7 @@ export class Slash extends Ability{
     }
     activate(weilder, target){
         if(this.checkStamina(weilder, this.staminaCost) == true){
-            let damageOutput = Math.floor(Math.random() * ((weilder.currentAttack + this.damageModifier) - weilder.currentAttack + 1)) + weilder.currentAttack;
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentPhysicalAttack + this.damageModifier) - weilder.currentPhysicalAttack + 1)) + weilder.currentPhysicalAttack;
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
             theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
@@ -108,7 +113,7 @@ export class Stab extends Ability{
     constructor(){
         super();
         this.name = "stab";
-        this.type = "attack";
+        this.type = "physical";
         this.speedMultiplier = 0.5;
         this.staminaCost = 3;
         this.magicCost = 0;
@@ -117,7 +122,7 @@ export class Stab extends Ability{
     }
     activate(weilder, target){
         if(this.checkStamina(weilder, this.staminaCost) == true){
-            let damageOutput = Math.floor(Math.random() * ((weilder.currentAttack + this.damageModifier) - weilder.currentAttack + 1)) + weilder.currentAttack;
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentPhysicalAttack + this.damageModifier) - weilder.currentPhysicalAttack + 1)) + weilder.currentPhysicalAttack;
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
             theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
@@ -129,7 +134,7 @@ export class Block extends Ability{
     constructor(){
         super();
         this.name = "block";
-        this.type = "buff";
+        this.type = "physical";
         this.speedMultiplier = 0.75;
         this.staminaCost = 1;
         this.magicCost = 0;
@@ -154,7 +159,7 @@ export class Channel extends Ability{
     constructor(){
         super();
         this.name = "channel";
-        this.type = "buff";
+        this.type = "magic";
         this.speedMultiplier = 0.75;
         this.staminaCost = 0;
         this.magicCost = 0;
@@ -181,7 +186,7 @@ export class Recover extends Ability{
     constructor(){
         super();
         this.name = "recover";
-        this.type = "buff";
+        this.type = "physical";
         this.speedMultiplier = 0.75;
         this.staminaCost = 0;
         this.magicCost = 0;
@@ -207,7 +212,7 @@ export class Retreat extends Ability{
     constructor(){
         super();
         this.name = "retreat";
-        this.type = "buff";
+        this.type = "physical";
         this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 0;
@@ -223,7 +228,7 @@ export class Bite extends Ability{
     constructor(){
         super();
         this.name = "bite";
-        this.type = "attack";
+        this.type = "physical";
         this.speedMultiplier = 0.5;
         this.staminaCost = 2;
         this.magicCost = 0;
@@ -232,7 +237,7 @@ export class Bite extends Ability{
     }
     activate(weilder, target){
         if(this.checkStamina(weilder, this.staminaCost) == true){
-            let damageOutput = Math.floor(Math.random() * ((weilder.currentAttack + this.damageModifier) - weilder.currentAttack + 1)) + weilder.currentAttack;
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentPhysicalAttack + this.damageModifier) - weilder.currentPhysicalAttack + 1)) + weilder.currentPhysicalAttack;
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
             theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
@@ -244,7 +249,7 @@ export class Pounce extends Ability{
     constructor(){
         super();
         this.name = "pounce";
-        this.type = "attack";
+        this.type = "physical";
         this.speedMultiplier = 0.25;
         this.staminaCost = 4;
         this.magicCost = 0;
@@ -253,7 +258,7 @@ export class Pounce extends Ability{
     }
     activate(weilder, target){
         if(this.checkStamina(weilder, this.staminaCost) == true){
-            let damageOutput = Math.floor(Math.random() * ((weilder.currentAttack + this.damageModifier) - weilder.currentAttack + 1)) + weilder.currentAttack;
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentPhysicalAttack + this.damageModifier) - weilder.currentPhysicalAttack + 1)) + weilder.currentPhysicalAttack;
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
             theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
@@ -277,7 +282,7 @@ export class LeechLife extends Ability{
     constructor(){
         super();
         this.name = "leech life";
-        this.type = "attack";
+        this.type = "physical";
         this.speedMultiplier = 0.25;
         this.staminaCost = 4;
         this.magicCost = 0;
@@ -286,7 +291,7 @@ export class LeechLife extends Ability{
     }
     activate(weilder, target){
         if(this.checkStamina(weilder, this.staminaCost) == true){
-            let damageOutput = Math.floor(Math.random() * ((weilder.currentAttack + this.damageModifier) - weilder.currentAttack + 1)) + weilder.currentAttack;
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentPhysicalAttack + this.damageModifier) - weilder.currentPhysicalAttack + 1)) + weilder.currentPhysicalAttack;
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
             let restoreAmount = damageOutput;
@@ -304,7 +309,7 @@ export class ArcaneDart extends Ability{
     constructor(){
         super();
         this.name = "arcane dart";
-        this.type = "attack";
+        this.type = "magic";
         this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 2;
@@ -313,7 +318,7 @@ export class ArcaneDart extends Ability{
     }
     activate(weilder, target){
         if(this.checkMagic(weilder, this.magicCost) == true){
-            let damageOutput = Math.floor(Math.random() * ((weilder.currentAttack + this.damageModifier) - weilder.currentAttack + 1)) + weilder.currentAttack;
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentMagicAttack + this.damageModifier) - weilder.currentMagicAttack + 1)) + weilder.currentMagicAttack;
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
             theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
@@ -326,7 +331,7 @@ export class ArcaneBlast extends Ability{
     constructor(){
         super();
         this.name = "arcane blast";
-        this.type = "attack";
+        this.type = "magic";
         this.speedMultiplier = 0.25;
         this.staminaCost = 0;
         this.magicCost = 6;
@@ -335,11 +340,11 @@ export class ArcaneBlast extends Ability{
     }
     activate(weilder, target){
         if(this.checkMagic(weilder, this.magicCost) == true){
-            let damageOutput = Math.floor(Math.random() * ((weilder.currentAttack + this.damageModifier) - weilder.currentAttack + 1)) + weilder.currentAttack;
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentMagicAttack + this.damageModifier) - weilder.currentMagicAttack + 1)) + weilder.currentMagicAttack;
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
             theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
-            weilder.currentAttack = weilder.baseAttack;
+            weilder.currentMagicAttack = weilder.baseMagicAttack;
             this.playSound();
         }
     }
@@ -349,7 +354,7 @@ export class Struggle extends Ability{
     constructor(){
         super();
         this.name = "struggle";
-        this.type = "attack";
+        this.type = "physical";
         this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 0;
@@ -364,7 +369,7 @@ export class SpitBile extends Ability{
     constructor(){
         super();
         this.name = "spit bile";
-        this.type = "attack";
+        this.type = "physical";
         this.speedMultiplier = 0.25;
         this.staminaCost = 4;
         this.magicCost = 0;
@@ -373,7 +378,7 @@ export class SpitBile extends Ability{
     }
     activate(weilder, target){
         if(this.checkStamina(weilder, this.staminaCost) == true){
-            let damageOutput = Math.floor(Math.random() * ((weilder.currentAttack + this.damageModifier) - weilder.currentAttack + 1)) + weilder.currentAttack;
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentPhysicalAttack + this.damageModifier) - weilder.currentPhysicalAttack + 1)) + weilder.currentPhysicalAttack;
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
             theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
@@ -395,7 +400,7 @@ export class Fireball extends Ability{
     constructor(){
         super();
         this.name = "fireball";
-        this.type = "attack";
+        this.type = "magic";
         this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 4;
@@ -404,7 +409,7 @@ export class Fireball extends Ability{
     }
     activate(weilder, target){
         if(this.checkMagic(weilder, this.magicCost) == true){
-            let damageOutput = Math.floor(Math.random() * ((weilder.currentAttack + this.damageModifier) - weilder.currentAttack + 1)) + weilder.currentAttack;
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentMagicAttack + this.damageModifier) - weilder.currentMagicAttack + 1)) + weilder.currentMagicAttack;
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
             theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
@@ -428,7 +433,7 @@ export class Devour extends Ability{
     constructor(){
         super();
         this.name = "devour";
-        this.type = "attack";
+        this.type = "physical";
         this.speedMultiplier = 0.25;
         this.staminaCost = 20;
         this.magicCost = 0;
@@ -437,7 +442,7 @@ export class Devour extends Ability{
     }
     activate(weilder, target){
         if(this.checkStamina(weilder, this.staminaCost) == true){
-            let damageOutput = Math.floor(target.maxHP*0.7);
+            let damageOutput = Math.floor(target.currentHP*0.7);
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
             theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
@@ -449,7 +454,7 @@ export class Eviscerate extends Ability{
     constructor(){
         super();
         this.name = "eviscerate";
-        this.type = "attack";
+        this.type = "physical";
         this.speedMultiplier = 0.75;
         this.staminaCost = 5;
         this.magicCost = 0;
@@ -458,8 +463,8 @@ export class Eviscerate extends Ability{
     }
     activate(weilder, target){
         if(this.checkStamina(weilder, this.staminaCost) == true){
-            let damageOutput = Math.floor(Math.random() * ((weilder.currentAttack + this.damageModifier) - weilder.currentAttack + 1)) + weilder.currentAttack;
-            if(target.currentHP = target.maxHP){
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentPhysicalAttack + this.damageModifier) - weilder.currentPhysicalAttack + 1)) + weilder.currentPhysicalAttack;
+            if(target.currentHP == target.maxHP){
                 damageOutput = Math.floor(damageOutput * 1.5);
             }
             damageOutput = this.checkDamage(damageOutput, target);
@@ -473,7 +478,7 @@ export class DrinkHealthPotion extends Ability{
     constructor(){
         super();
         this.name = "drink health potion";
-        this.type = "buff";
+        this.type = "magic";
         this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 0;
@@ -491,14 +496,19 @@ export class DrinkHealthPotion extends Ability{
         weilder.currentHP = weilder.currentHP + hp;
         theController.gameConsole.innerHTML += `<p>${weilder.name} restores ${hp} health!</p>`;
         return true;
-        
+    }
+    canUse(weilder){
+        if(weilder.currentHP == weilder.maxHP){
+            theController.gameConsole.innerHTML += `<p>${weilder.name} cannot restore more health</p>`;
+            return false;
+        }
     }
 }
 export class DrinkStaminaPotion extends Ability{
     constructor(){
         super();
         this.name = "drink stamina potion";
-        this.type = "buff";
+        this.type = "magic";
         this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 0;
@@ -528,7 +538,7 @@ export class DrinkMagicPotion extends Ability{
     constructor(){
         super();
         this.name = "drink magic potion";
-        this.type = "buff";
+        this.type = "magic";
         this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 0;
@@ -547,12 +557,18 @@ export class DrinkMagicPotion extends Ability{
         theController.gameConsole.innerHTML += `<p>${weilder.name} restores ${magic} magic!</p>`;
         return true;
     }
+    canUse(weilder){
+        if(weilder.currentMagic == weilder.maxMagic){
+            theController.gameConsole.innerHTML += `<p>${weilder.name} cannot recover more magic!</p>`;
+            return false;
+        }
+    }
 }
 export class ThrowKnife extends Ability{
     constructor(){
         super();
         this.name = "throw knife";
-        this.type = "attack";
+        this.type = "physical";
         this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 0;
@@ -563,7 +579,7 @@ export class ThrowKnife extends Ability{
             theController.gameConsole.innerHTML += `<p>cannot use outside of combat!</p>`;
             return;
         }
-        let damageOutput =  3 + (weilder.level * 2) - target.currentArmor;
+        let damageOutput =  3 + (weilder.level * 2);
         damageOutput = this.checkDamage(damageOutput, target);
         target.currentHP = target.currentHP - damageOutput;
         theController.gameConsole.innerHTML += `<p>${weilder.name} throws a throwing knfife at the ${target.name} for ${damageOutput} damage!</p>`;
@@ -574,7 +590,7 @@ export class ThrowPoisonedKnife extends Ability{
     constructor(){
         super();
         this.name = "throw poison knife";
-        this.type = "attack";
+        this.type = "physical";
         this.speedMultiplier = 0.75;
         this.staminaCost = 0;
         this.magicCost = 0;
@@ -585,7 +601,7 @@ export class ThrowPoisonedKnife extends Ability{
             theController.gameConsole.innerHTML += `<p>cannot use outside of combat!</p>`;
             return;
         }
-        let damageOutput =  3 + (weilder.level * 2) - target.currentArmor;
+        let damageOutput =  3 + (weilder.level * 2);
         damageOutput = this.checkDamage(damageOutput, target);
         target.currentHP = target.currentHP - damageOutput;
         theController.gameConsole.innerHTML += `<p>${weilder.name} throws a poisoned throwing knfife at the ${target.name} for ${damageOutput} damage!</p>`;

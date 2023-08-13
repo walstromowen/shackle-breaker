@@ -6,7 +6,8 @@ Text adventure game based on the ShacklerBreaker story
 # New Features
 * Traps / encounters / choices before battles
 * Parrying System
-* New Stats (Damage Types)
+* Attributes linked to stats ()
+* New Stats maybe? (Blunt, piercing, arcane, Elemental Damage Types)
 * Enviorment specific music
 * Status effect icons
 * Shop/crafting/weapon level up / Town / Gold

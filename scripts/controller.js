@@ -31,7 +31,8 @@ export default class Controller {
         this.currentExperience = document.getElementById('current-experience');
         this.currentPhysicalAttack = document.getElementById('current-physical-attack');
         this.currentMagicAttack = document.getElementById('current-magic-attack');
-        this.currentArmor = document.getElementById('current-armor');
+        this.currentPhysicalDefense = document.getElementById('current-physical-defense');
+        this.currentMagicDefense = document.getElementById('current-magic-defense');
         this.currentSpeed = document.getElementById('current-speed');
 
         this.currentHealthEnemy = document.getElementById('current-health-enemy');
@@ -105,9 +106,10 @@ export default class Controller {
         document.getElementById('player-level-label').innerText = "★ " + thePlayer.level;
         this.currentExperience.innerText = thePlayer.currentXP;
         this.currentSpeed.innerText = thePlayer.currentSpeed;
-        this.currentArmor.innerText = thePlayer.currentArmor;
-        this.currentPhysicalAttack.innerText = thePlayer.currentAttack; //Need to add different attacks
-        this.currentMagicPlayer.innertext = thePlayer.currentMagicAttack;
+        this.currentPhysicalAttack.innerText = thePlayer.currentPhysicalAttack; 
+        this.currentMagicAttack.innerText = thePlayer.currentMagicAttack;
+        this.currentPhysicalDefense.innerText = thePlayer.currentPhysicalDefense;
+        this.currentMagicDefense.innerText = thePlayer.currentMagicDefense;
         this.scrollToBottom("game-console");
     }
     updateEnemyStats(){

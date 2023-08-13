@@ -21,10 +21,14 @@ export default class Player{
         this.currentStamina = this.maxStamina;
         this.maxMagic = characterCreationArray[6];
         this.currentMagic = this.maxMagic;
-        this.baseArmor = 0;
-        this.currentArmor = this.baseArmor;
-        this.baseAttack = 1;
-        this.currentAttack = this.baseAttack;
+        this.basePhysicalDefense = 0;
+        this.currentPhysicalDefense = this.basePhysicalDefense;
+        this.baseMagicDefense = 0;
+        this.currentMagicDefense =  this.baseMagicDefense;
+        this.basePhysicalAttack = 1;
+        this.currentPhysicalAttack = this.basePhysicalAttack;
+        this.baseMagicAttack = 1;
+        this.currentMagicAttack = this.baseMagicAttack;
         this.baseSpeed = 1;
         this.currentSpeed = this.baseSpeed;
         this.statusArray = [];//new Poisoned(this)
@@ -81,15 +85,19 @@ export default class Player{
     }
     calcAbilitiesAndStats(){
         //reset stats and abilities
-        this.currentAttack = this.baseAttack;
-        this.currentArmor = this.baseArmor;
+        this.currentPhysicalAttack = this.basePhysicalAttack;
+        this.currentMagicAttack = this.baseMagicAttack;
+        this.currentPhysicalDefense = this.basePhysicalDefense;
+        this.currentMagicDefense =  this.baseMagicDefense;
         this.currentSpeed = this.baseSpeed;
         this.abilityArray = [];
         //update stats
         for(var i = 0; i < this.equippedArray.length; i++){
             if(this.equippedArray[i] != "Empty"){
-                this.currentArmor = this.currentArmor + this.equippedArray[i].armor;
-                this.currentAttack = this.currentAttack + this.equippedArray[i].attack;
+                this.currentPhysicalDefense = this.currentPhysicalDefense + this.equippedArray[i].physicalDefense;;
+                this.currentMagicDefense =  this.currentMagicDefense + this.equippedArray[i].magicDefense;;
+                this.currentPhysicalAttack = this.currentPhysicalAttack + this.equippedArray[i].physicalAttack;
+                this.currentMagicAttack = this.currentMagicAttack + this.equippedArray[i].magicAttack;
                 this.currentSpeed = this.currentSpeed + this.equippedArray[i].speed;
             }
         }
