@@ -56,32 +56,113 @@
                             </select>
                         </div>
                     </div>
-                    <div id='character-creation-inventory-stats-container'>
-                        <div class='character-creation-inventory-stats-div'>
-                            <h3 class='character-creation-label-header'>Inventory</h3>
+                    <div id='character-creation-inventory-stats-attributes-container'>
+                        <div id='character-creation-inventory-container'>
+                            <h3>Inventory</h3>
                             <div id='character-creation-inventory'></div>
                         </div>
-                        <div class='character-creation-inventory-stats-div'>
-                            <h3 class='character-creation-label-header'>Stats</h3>
-                            <div id='character-creation-stats'>
-                                <div class='character-creation-stat-container'>
-                                    <h5>Health</h5>
-                                    <p><span id='character-creation-health'>12</span></p>
+                        <div id='character-creation-stats-attributes-container'>
+                            <div id='character-creation-attributes-container'>
+                                <h3>Attributes</h3>
+                                <div class='character-creation-stat-row'>
+                                    <div class='character-creation-stat-cell'>
+                                        <p>Vigor</p>
+                                        <p><span id='character-creation-vigor'>0</span></p>
+                                    </div>
+                                    <div class='character-creation-stat-cell'>
+                                        <p>Endurance</p>
+                                        <p><span id='character-creation-endurance'>0</span></p>
+                                    </div>
                                 </div>
-                                <div class='character-creation-stat-container'>
-                                    <h5>Stamina</h5>
-                                    <p><span id='character-creation-stamina'>12</span></p>
+                                <div class='character-creation-stat-row'>
+                                    <div class='character-creation-stat-cell'>
+                                        <p>Strength</p>
+                                        <p><span id='character-creation-strength'>0</span></p>
+                                    </div>
+                                    <div class='character-creation-stat-cell'>
+                                        <p>Dexterity</p>
+                                        <p><span id='character-creation-dexterity'>0</span></p>
+                                    </div>
                                 </div>
-                                <div class='character-creation-stat-container'>
-                                    <h5>Magic</h5>
-                                    <p><span id='character-creation-magic'>12</span></p>
+                                <div class='character-creation-stat-row'>
+                                    <div class='character-creation-stat-cell'>
+                                        <p>Insight</p>
+                                        <p><span id='character-creation-insight'>0</span></p>
+                                    </div>
+                                    <div class='character-creation-stat-cell'>
+                                        <p>Focus</p>
+                                        <p><span id='character-creation-focus'>0</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id='character-creation-stats-container'>
+                                <h3>Stats</h3>
+                                <div class='character-creation-stat-row'>
+                                    <div class='character-creation-stat-cell'>
+                                        <p>Health</p>
+                                        <p><span id='character-creation-health'>0</span></p>
+                                    </div>
+                                    <div class='character-creation-stat-cell'>
+                                        <p>Stamina</p>
+                                        <p><span id='character-creation-stamina'>0</span></p>
+                                    </div>
+                                </div>
+                                <div class='character-creation-stat-row'>
+                                    <div class='character-creation-stat-cell'>
+                                        <p>Magic</p>
+                                        <p><span id='character-creation-magic'>0</span></p>
+                                    </div>
+                                    <div class='character-creation-stat-cell'>
+                                        <p>Speed</p>
+                                        <p><span id='character-creation-speed'>0</span></p>
+                                    </div>
+                                </div>
+                                <div class='character-creation-stat-row'>
+                                    <div class='character-creation-stat-cell'>
+                                        <p>Blunt ATK</p>
+                                        <p><span id='character-creation-blunt-attack'>0</span></p>
+                                    </div>
+                                    <div class='character-creation-stat-cell'>
+                                        <p>Blunt DEF</p>
+                                        <p><span id='character-creation-blunt-defense'>0</span></p>
+                                    </div>
+                                </div>
+                                <div class='character-creation-stat-row'>
+                                    <div class='character-creation-stat-cell'>
+                                        <p>Pierce ATK</p>
+                                        <p><span id='character-creation-pierce-attack'>0</span></p>
+                                    </div>
+                                    <div class='character-creation-stat-cell'>
+                                        <p>Pierce DEF</p>
+                                        <p><span id='character-creation-pierce-defense'>0</span></p>
+                                    </div>
+                                </div>
+                                <div class='character-creation-stat-row'>
+                                    <div class='character-creation-stat-cell'>
+                                        <p>Arcane ATK</p>
+                                        <p><span id='character-creation-arcane-attack'>0</span></p>
+                                    </div>
+                                    <div class='character-creation-stat-cell'>
+                                        <p>Arcane DEF</p>
+                                        <p><span id='character-creation-arcane-defense'>0</span></p>
+                                    </div>
+                                </div>
+                                <div class='character-creation-stat-row'>
+                                    <div class='character-creation-stat-cell'>
+                                        <p>Element ATK</p>
+                                        <p><span id='character-creation-element-attack'>0</span></p>
+                                    </div>
+                                    <div class='character-creation-stat-cell'>
+                                        <p>Element DEF</p>
+                                        <p><span id='character-creation-element-defense'>0</span></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div> 
                 </div>
                 <div class='app-column' id='character-creation-column-2'>
-                    <h3 class='character-creation-label-header' id='background-lore-header'>Background Lore</h3>
+                    <h3 id='background-lore-header'>Background Lore</h3>
                     <div class='console'id='background-description'>
                         <p>Which is worse, rotting in the prision cell you just escaped from, or facing the journey ahead. Perhaps they would take you back? No, they would make an example of you. Not that anyone would notice anyway.
                             Yet can you make the journey ahead? Afterall, what makes you so special?</p>
@@ -189,20 +270,36 @@
                                 <p id='current-experience' class='secondary-stat-slot'>0</p>
                             </div>
                             <div class ='secondary-stat-row'>
-                                <p class='secondary-stat-slot-label'>Physical Attack:</p>
-                                <p id='current-physical-attack' class='secondary-stat-slot'>0</p>
+                                <p class='secondary-stat-slot-label'>Blunt ATK:</p>
+                                <p id='current-blunt-attack' class='secondary-stat-slot'>0</p>
                             </div>
                             <div class ='secondary-stat-row'>
-                                <p class='secondary-stat-slot-label'>Magic Attack:</p>
-                                <p id='current-magic-attack' class='secondary-stat-slot'>0</p>
+                                <p class='secondary-stat-slot-label'>Pierce ATK:</p>
+                                <p id='current-pierce-attack' class='secondary-stat-slot'>0</p>
                             </div>
                             <div class ='secondary-stat-row'>
-                                <p class='secondary-stat-slot-label'>Physical Defense:</p>
-                                <p id='current-physical-defense' class='secondary-stat-slot'>0</p>
+                                <p class='secondary-stat-slot-label'>Arcane ATK:</p>
+                                <p id='current-arcane-attack' class='secondary-stat-slot'>0</p>
                             </div>
                             <div class ='secondary-stat-row'>
-                                <p class='secondary-stat-slot-label'>Magic Defense:</p>
-                                <p id='current-magic-defense' class='secondary-stat-slot'>0</p>
+                                <p class='secondary-stat-slot-label'>Element ATK:</p>
+                                <p id='current-element-attack' class='secondary-stat-slot'>0</p>
+                            </div>
+                            <div class ='secondary-stat-row'>
+                                <p class='secondary-stat-slot-label'>Blunt DEF:</p>
+                                <p id='current-blunt-defense' class='secondary-stat-slot'>0</p>
+                            </div>
+                            <div class ='secondary-stat-row'>
+                                <p class='secondary-stat-slot-label'>Pierce DEF:</p>
+                                <p id='current-pierce-defense' class='secondary-stat-slot'>0</p>
+                            </div>
+                            <div class ='secondary-stat-row'>
+                                <p class='secondary-stat-slot-label'>Arcane DEF:</p>
+                                <p id='current-arcane-defense' class='secondary-stat-slot'>0</p>
+                            </div>
+                            <div class ='secondary-stat-row'>
+                                <p class='secondary-stat-slot-label'>Element DEF:</p>
+                                <p id='current-element-defense' class='secondary-stat-slot'>0</p>
                             </div>
                             <div class ='secondary-stat-row'>
                                 <p class='secondary-stat-slot-label'>Speed:</p>

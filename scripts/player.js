@@ -21,14 +21,22 @@ export default class Player{
         this.currentStamina = this.maxStamina;
         this.maxMagic = characterCreationArray[6];
         this.currentMagic = this.maxMagic;
-        this.basePhysicalDefense = 0;
-        this.currentPhysicalDefense = this.basePhysicalDefense;
-        this.baseMagicDefense = 0;
-        this.currentMagicDefense =  this.baseMagicDefense;
-        this.basePhysicalAttack = 1;
-        this.currentPhysicalAttack = this.basePhysicalAttack;
-        this.baseMagicAttack = 1;
-        this.currentMagicAttack = this.baseMagicAttack;
+        this.baseBluntAttack = 1;
+        this.currentBluntAttack = this.baseBluntAttack;
+        this.basePierceAttack = 1;
+        this.currentPierceAttack = this.basePierceAttack;
+        this.baseArcaneAttack = 1;
+        this.currentArcaneAttack = this.baseArcaneAttack;
+        this.baseElementalAttack = 1;
+        this.currentElementalAttack = this.baseElementalAttack;
+        this.baseBluntDefense = 1;
+        this.currentBluntDefense = this.baseBluntDefense;
+        this.basePierceDefense = 1;
+        this.currentPierceDefense = this.basePierceDefense;
+        this.baseArcaneDefense = 1;
+        this.currentArcaneDefense = this.baseArcaneDefense;
+        this.baseElementalDefense = 1;
+        this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 1;
         this.currentSpeed = this.baseSpeed;
         this.statusArray = [];//new Poisoned(this)
@@ -85,19 +93,27 @@ export default class Player{
     }
     calcAbilitiesAndStats(){
         //reset stats and abilities
-        this.currentPhysicalAttack = this.basePhysicalAttack;
-        this.currentMagicAttack = this.baseMagicAttack;
-        this.currentPhysicalDefense = this.basePhysicalDefense;
-        this.currentMagicDefense =  this.baseMagicDefense;
+        this.currentBluntAttack = this.baseBluntAttack;
+        this.currentPierceAttack = this.basePierceAttack;
+        this.currentArcaneAttack = this.baseArcaneAttack;
+        this.currentElementalAttack = this.baseElementalAttack;
+        this.currentBluntDefense = this.baseBluntDefense;
+        this.currentPierceDefense = this.basePierceDefense;
+        this.currentArcaneDefense = this.baseArcaneDefense;
+        this.currentElementalDefense = this.baseElementalDefense;
         this.currentSpeed = this.baseSpeed;
         this.abilityArray = [];
         //update stats
         for(var i = 0; i < this.equippedArray.length; i++){
             if(this.equippedArray[i] != "Empty"){
-                this.currentPhysicalDefense = this.currentPhysicalDefense + this.equippedArray[i].physicalDefense;;
-                this.currentMagicDefense =  this.currentMagicDefense + this.equippedArray[i].magicDefense;;
-                this.currentPhysicalAttack = this.currentPhysicalAttack + this.equippedArray[i].physicalAttack;
-                this.currentMagicAttack = this.currentMagicAttack + this.equippedArray[i].magicAttack;
+                this.currentBluntAttack = this.currentBluntAttack + this.equippedArray[i].bluntAttack;
+                this.currentPierceAttack = this.currentPierceAttack + this.equippedArray[i].pierceAttack;
+                this.currentArcaneAttack = this.currentArcaneAttack + this.equippedArray[i].arcaneAttack;
+                this.currentElementalAttack = this.currentElementalAttack + this.equippedArray[i].elementalAttack;
+                this.currentBluntDefense = this.currentBluntDefense + this.equippedArray[i].bluntDefense;
+                this.currentPierceDefense = this.currentPierceDefense + this.equippedArray[i].pierceDefense;
+                this.currentArcaneDefense = this.currentArcaneDefense + this.equippedArray[i].arcaneDefense;
+                this.currentElementalDefense = this.currentElementalDefense + this.equippedArray[i].elementalDefense;
                 this.currentSpeed = this.currentSpeed + this.equippedArray[i].speed;
             }
         }

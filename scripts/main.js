@@ -20,6 +20,7 @@ document.getElementById('title-start-button').addEventListener("click", ()=>{
     document.getElementById("title-screen").style.display = "none";
     document.getElementById('music-player').pause();
     document.getElementById("character-creation-screen").style.display = "block";
+    determineUpdateStats()
     updateInventory();
 });
 
@@ -54,21 +55,7 @@ document.getElementById("apperance-selection").addEventListener("change", ()=>{
     document.getElementById("character-creator-apperance-image").src = document.getElementById("apperance-selection").value; 
 });
 document.getElementById("background-selection").addEventListener("change", ()=>{
-    let value = document.getElementById("background-selection").value;
-    switch(value){
-        case "traveler":
-            updateStats(12, 12, 12);
-            break;
-        case "blacksmith":
-            updateStats(15, 12, 8);
-            break;
-        case "ranger":
-            updateStats(12, 15, 8);
-            break;
-        case "hermit":
-            updateStats(12, 8, 15);
-            break;
-    }
+    determineUpdateStats();
     updateInventory();
 });
 document.getElementById("keepsake-selection").addEventListener("change", ()=>{
@@ -121,7 +108,23 @@ function updateInventory(){
     }
     characterCreationArray[3] = inventoryArray;
 }
-
+function determineUpdateStats(){
+    let value = document.getElementById("background-selection").value;
+    switch(value){
+        case "traveler":
+            updateStats(12, 12, 12);
+            break;
+        case "blacksmith":
+            updateStats(15, 12, 8);
+            break;
+        case "ranger":
+            updateStats(12, 15, 8);
+            break;
+        case "hermit":
+            updateStats(12, 8, 15);
+            break;
+    }
+}
 function updateStats(health, stamina, magic){
     characterCreationArray[4] = health;
     characterCreationArray[5] = stamina;

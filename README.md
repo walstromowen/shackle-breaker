@@ -7,9 +7,8 @@ Text adventure game based on the ShacklerBreaker story
 * Traps / encounters / choices before battles
 * Parrying System
 * Attributes linked to stats ()
-* New Stats maybe? (Blunt, piercing, arcane, Elemental Damage Types)
 * Enviorment specific music
-* Status effect icons
+* Status effect icons / Indicators
 * Shop/crafting/weapon level up / Town / Gold
 * interact with stairs / loot bodies
 * mini Menu for items and action buttons
@@ -21,7 +20,7 @@ Text adventure game based on the ShacklerBreaker story
 * Organize Controllers
 * UI overhall
 
-# Bug Fixes
+# Bugs
 * Blocking still active on quick second attack
 * Image Flashing
 

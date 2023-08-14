@@ -29,10 +29,14 @@ export default class Controller {
         this.currentMagicPlayer = document.getElementById('current-magic-player');
 
         this.currentExperience = document.getElementById('current-experience');
-        this.currentPhysicalAttack = document.getElementById('current-physical-attack');
-        this.currentMagicAttack = document.getElementById('current-magic-attack');
-        this.currentPhysicalDefense = document.getElementById('current-physical-defense');
-        this.currentMagicDefense = document.getElementById('current-magic-defense');
+        this.currentBluntAttack = document.getElementById('current-blunt-attack');
+        this.currentPierceAttack = document.getElementById('current-pierce-attack');
+        this.currentArcaneAttack = document.getElementById('current-arcane-attack');
+        this.currentElementalAttack = document.getElementById('current-element-attack');
+        this.currentBluntDefense = document.getElementById('current-blunt-defense');
+        this.currentPierceDefense = document.getElementById('current-pierce-defense');
+        this.currentArcaneDefense = document.getElementById('current-arcane-defense');
+        this.currentElementalDefense = document.getElementById('current-element-defense');
         this.currentSpeed = document.getElementById('current-speed');
 
         this.currentHealthEnemy = document.getElementById('current-health-enemy');
@@ -106,10 +110,14 @@ export default class Controller {
         document.getElementById('player-level-label').innerText = "★ " + thePlayer.level;
         this.currentExperience.innerText = thePlayer.currentXP;
         this.currentSpeed.innerText = thePlayer.currentSpeed;
-        this.currentPhysicalAttack.innerText = thePlayer.currentPhysicalAttack; 
-        this.currentMagicAttack.innerText = thePlayer.currentMagicAttack;
-        this.currentPhysicalDefense.innerText = thePlayer.currentPhysicalDefense;
-        this.currentMagicDefense.innerText = thePlayer.currentMagicDefense;
+        this.currentBluntAttack.innerText = thePlayer.currentBluntAttack; 
+        this.currentPierceAttack.innerText = thePlayer.currentPierceAttack;
+        this.currentArcaneAttack.innerText = thePlayer.currentArcaneAttack; 
+        this.currentElementalAttack.innerText = thePlayer.currentElementalAttack;
+        this.currentBluntDefense.innerText = thePlayer.currentBluntDefense; 
+        this.currentPierceDefense.innerText = thePlayer.currentPierceDefense;
+        this.currentArcaneDefense.innerText = thePlayer.currentArcaneDefense; 
+        this.currentElementalDefense.innerText = thePlayer.currentElementalDefense;
         this.scrollToBottom("game-console");
     }
     updateEnemyStats(){
