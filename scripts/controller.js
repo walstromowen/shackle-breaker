@@ -1,171 +1,96 @@
-import {player as thePlayer} from "./main.js";
-import {miniMap as theMiniMap} from "./main.js";
-import Battle from "./battle.js";
+import {LinenShirt, LinenPants, WoodDagger, WoodSpear, WoodSword, 
+        WoodSideDagger, WoodSheild, WoodFireStaff, LeatherHelmet, 
+        LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
+        LeatherBoots, IronSheild, IronHelmet, IronGuantlets, IronChainmail, 
+        IronGreaves, IronBoots, HealthPotion, StaminaPotion, MagicPotion, 
+        ThrowingKnife, PoisonedThrowingKnife, Meteorite} from "./items.js";
+import Player from "./player.js";
+import Map from "./map.js";
+import MiniMap from "./miniMap.js";
+//import Battle from "./battle.js";
 
 export default class Controller {
     constructor(){
-        this.battleBtnArray = [];
-        this.mapBtnArray = [];
-        this.battleSequenceArray = [];
-        this.gameConsole = document.getElementById("game-console");
-        this.playerName = document.getElementById('player-name');
-        this.playerName.innerText = thePlayer.name;
-        this.enemyName = document.getElementById('enemy-name');
-        this.locationName = document.getElementById('location-name');
-        this.locationName.innerText = thePlayer.map.mapEnviorment.biome.charAt(0).toUpperCase() + thePlayer.map.mapEnviorment.biome.slice(1); //occurs twice
-        this.musicPlayer = document.getElementById('music-player');
-        this.soundEffectPlayer = document.getElementById('sound-effect-player');
-        this.enemyImage = document.getElementById('enemy-image');
-        this.locationImage = document.getElementById('location-image');
-        this.locationImage.src = thePlayer.map.mapEnviorment.imageSrc; //occurs twice
-        this.healthBarPlayerProgress = document.getElementById('health-bar-player-progress');
-        this.staminaBarPlayerProgress = document.getElementById('stamina-bar-player-progress');
-        this.magicBarPlayerProgress = document.getElementById('magic-bar-player-progress');
-        this.healthBarEnemyProgress = document.getElementById('health-bar-enemy-progress');
-        this.staminaBarEnemyProgress = document.getElementById('stamina-bar-enemy-progress');
-        this.magicBarEnemyProgress = document.getElementById('magic-bar-enemy-progress');
-        this.currentHealthPlayer = document.getElementById('current-health-player');
-        this.currentStaminaPlayer = document.getElementById('current-stamina-player');
-        this.currentMagicPlayer = document.getElementById('current-magic-player');
-
-        this.currentExperience = document.getElementById('current-experience');
-        this.currentBluntAttack = document.getElementById('current-blunt-attack');
-        this.currentPierceAttack = document.getElementById('current-pierce-attack');
-        this.currentArcaneAttack = document.getElementById('current-arcane-attack');
-        this.currentElementalAttack = document.getElementById('current-element-attack');
-        this.currentBluntDefense = document.getElementById('current-blunt-defense');
-        this.currentPierceDefense = document.getElementById('current-pierce-defense');
-        this.currentArcaneDefense = document.getElementById('current-arcane-defense');
-        this.currentElementalDefense = document.getElementById('current-element-defense');
-        this.currentSpeed = document.getElementById('current-speed');
-
-        this.currentHealthEnemy = document.getElementById('current-health-enemy');
-        this.currentStaminaEnemy = document.getElementById('current-stamina-enemy');
-        this.currentMagicEnemy = document.getElementById('current-magic-enemy');
-        this.equippedTabButton = document.getElementById('equipped-tab-button');
-        this.inventoryTabButton = document.getElementById('inventory-tab-button');
-        this.secondaryStatsTabButton = document.getElementById('secondary-stats-tab-button');
-        this.inventoryTab = document.getElementById('inventory-tab');
+        this.characterCreationArray = ["name", "apperance", "background", [], 12, 12, 12];
+        this.player = "";
+        this.map = "";
+        this.miniMap = "";
         this.battle = "";
-        document.getElementById('player-image').src = thePlayer.apperance;
-        this.updatePlayerStats();
-        this.enableKeyControls();
-        this.enablePlayerMapControls();
-        this.enableInventoryControls();
-        this.enableLevelUpControls();
-        this.toggleMap();
+        this.mapBtnArray = [];
+        this.battleBtnArray = [];
+        this.initialize();
     }
-    toggleMap(){
-        document.getElementById('battle-button-container').style.display = "none";
-        document.getElementById('map-button-container').style.display = "block";
-        document.getElementById("location-name-container").style.display = "block";
-        document.getElementById("enemy-name-container").style.display = "none";
-        document.getElementById("player-image-container").style.display = "none";
-        document.getElementById("mini-map-container").style.display = "block";
-        document.getElementById("enemy-image-container").style.display = "none";
-        document.getElementById("location-image-container").style.display = "block";
-        document.getElementById("enemy-main-stats-container").style.display = "none";
-        this.musicPlayer.pause();
-        this.musicPlayer.src = "./audio/deep-in-the-dell-126916.mp3";
-        this.musicPlayer.play();
-        theMiniMap.resizeCanvas();
-        theMiniMap.draw();
-        thePlayer.isInBattle = false;
-        thePlayer.canMoveRoom  = true;
-        this.updatePlayerInventoryTab(thePlayer.inventory);
+    initialize(){
+        this.enableTitleScreenControls();
+        this.enableCharacterCreatorScreenControls();
+        this.enableGameOverScreenControls();
     }
-    toggleBattle(enemy){
-        this.battle = new Battle(thePlayer, enemy);
-        this.gameConsole.innerHTML += "<p>Something approaches...</p>";
-        this.scrollToBottom("game-console");
-        thePlayer.canMoveRoom = false;
-        setTimeout(()=>{
-            this.enemyName.innerText = this.battle.enemy.name.charAt(0).toUpperCase() + this.battle.enemy.name.slice(1);
-            this.enemyImage.src = this.battle.enemy.imageSrc;
-            document.getElementById("location-name-container").style.display = "none";
-            document.getElementById("enemy-name-container").style.display = "block";
-            document.getElementById("mini-map-container").style.display = "none";
-            document.getElementById("player-image-container").style.display = "block";
-            document.getElementById("location-image-container").style.display = "none";
-            document.getElementById("enemy-image-container").style.display = "block";
-            document.getElementById("enemy-main-stats-container").style.display = "block";
-            this.enablePlayerBattleControls();
-            this.gameConsole.innerHTML += `<p>You encounter a ${this.battle.enemy.name}!</p>`;
-            this.scrollToBottom("game-console");
-            this.musicPlayer.src = "./audio/battle-of-the-dragons-8037.mp3";
-            this.musicPlayer.play();
-            thePlayer.isInBattle = true;
-         }, 2000);
+    enableTitleScreenControls(){
+        document.getElementById('title-start-button').addEventListener("click", ()=>{
+            document.getElementById("title-screen").style.display = "none";
+            document.getElementById("character-creation-screen").style.display = "block";
+            this.characterCreatorDetermineUpdateStats();
+            this.characterCreatorUpdateInventory();
+        });
+        document.getElementById('title-exit-button').addEventListener("click", ()=>{
+            window.close();
+        });
     }
-    scrollToBottom(elementId){
-        document.getElementById(elementId).scrollTop = document.getElementById(elementId).scrollHeight;
+    enableCharacterCreatorScreenControls(){
+        document.getElementById('character-creation-submit-btn').addEventListener("click", ()=>{//start game code
+            document.getElementById("character-creation-screen").style.display = "none";
+            this.characterCreationArray[0] = document.getElementById("name-selection").value;
+            this.characterCreationArray[1] = document.getElementById("apperance-selection").value;
+            this.characterCreationArray[2] = document.getElementById("background-selection").value;
+            this.player = new Player(this.characterCreationArray);
+            this.map = new Map(this.player.level);
+            this.miniMap = new MiniMap();
+            document.getElementById("app").style.display = "block";
+            document.getElementById('player-name').innerText = this.player.name;
+            document.getElementById('player-image').src = this.player.apperance;
+            document.getElementById('location-name').innerText = this.capitalizeFirstLetter(this.map.mapEnviorment.biome);
+            document.getElementById('location-image').src = this.map.mapEnviorment.imageSrc;
+            this.updatePlayerStats();
+            this.enableKeyControls();
+            this.enablePlayerMapControls();
+            this.enableInventoryControls();
+            this.enableLevelUpControls();
+            this.toggleMap();
+        });
+        document.getElementById("apperance-selection").addEventListener("change", ()=>{
+            document.getElementById("character-creator-apperance-image").src = document.getElementById("apperance-selection").value; 
+        });
+        document.getElementById("background-selection").addEventListener("change", ()=>{
+            this.characterCreatorDetermineUpdateStats();
+            this.characterCreatorUpdateInventory();
+        });
+        document.getElementById("keepsake-selection").addEventListener("change", ()=>{
+            this.characterCreatorUpdateInventory();
+        });
     }
-    updatePlayerStats(){
-        this.currentHealthPlayer.innerText = thePlayer.currentHP;
-        this.currentStaminaPlayer.innerText = thePlayer.currentStamina;
-        this.currentMagicPlayer.innerText = thePlayer.currentMagic;
-        this.healthBarPlayerProgress.style.width = Math.floor(thePlayer.currentHP/thePlayer.maxHP*100) + "%";
-        this.staminaBarPlayerProgress.style.width = Math.floor(thePlayer.currentStamina/thePlayer.maxStamina*100) + "%";
-        this.magicBarPlayerProgress.style.width = Math.floor(thePlayer.currentMagic/thePlayer.maxMagic*100) + "%";
-        document.getElementById('player-level-label').innerText = "★ " + thePlayer.level;
-        this.currentExperience.innerText = thePlayer.currentXP;
-        this.currentSpeed.innerText = thePlayer.currentSpeed;
-        this.currentBluntAttack.innerText = thePlayer.currentBluntAttack; 
-        this.currentPierceAttack.innerText = thePlayer.currentPierceAttack;
-        this.currentArcaneAttack.innerText = thePlayer.currentArcaneAttack; 
-        this.currentElementalAttack.innerText = thePlayer.currentElementalAttack;
-        this.currentBluntDefense.innerText = thePlayer.currentBluntDefense; 
-        this.currentPierceDefense.innerText = thePlayer.currentPierceDefense;
-        this.currentArcaneDefense.innerText = thePlayer.currentArcaneDefense; 
-        this.currentElementalDefense.innerText = thePlayer.currentElementalDefense;
-        this.scrollToBottom("game-console");
-    }
-    updateEnemyStats(){
-        this.currentHealthEnemy.innerText = this.battle.enemy.currentHP;
-        this.currentStaminaEnemy.innerText = this.battle.enemy.currentStamina;
-        this.currentMagicEnemy.innerText = this.battle.enemy.currentMagic;
-        this.healthBarEnemyProgress.style.width = Math.floor(this.battle.enemy.currentHP/this.battle.enemy.maxHP*100) + "%";
-        this.staminaBarEnemyProgress.style.width = Math.floor(this.battle.enemy.currentStamina/this.battle.enemy.maxStamina*100) + "%";
-        this.magicBarEnemyProgress.style.width = Math.floor(this.battle.enemy.currentMagic/this.battle.enemy.maxMagic*100) + "%";
-        this.scrollToBottom("game-console");
-    }
-    endBattle(){
-        if(thePlayer.currentHP <= 0){
-            this.disablePlayerBattleControls();
-            setTimeout(()=>{
-                this.musicPlayer.pause();
-                document.getElementById('gameover-screen').style.display = "block";
-                document.getElementById("app").style.display = "none";
-             }, 2000);
-        }else{
-            setTimeout(()=>{
-                Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
-                    btn.style.visibility = "visible";
-                });
-                if(this.battle.battlePhase != "retreat"){
-                    thePlayer.defeatEnemy();
-                }
-                this.toggleMap();
-                this.updateEnemyStats();
-                this.updatePlayerStats();
-             }, 2000);
-        }
+    enableGameOverScreenControls(){
+        document.getElementById('gameover-to-menu-btn').addEventListener("click", ()=>{
+            location.reload();
+        });
+        document.getElementById('gameover-exit-btn').addEventListener("click", ()=>{
+            window.close();
+        });
     }
     enableKeyControls(){
         window.addEventListener("keydown", (e) => {
-            if(thePlayer.canMoveRoom == true){
+            if(this.player.canMoveRoom == true){
                 switch(e.key){
                     case 'w':
-                        thePlayer.moveNorth();
+                        this.player.moveNorth();
                         break;
                     case 'a':
-                        thePlayer.moveWest();
+                        this.player.moveWest();
                         break;
                     case 's':
-                        thePlayer.moveSouth();
+                        this.player.moveSouth();
                         break;
                     case 'd':
-                        thePlayer.moveEast();
+                        this.player.moveEast();
                         break;
                 }
             }
@@ -184,64 +109,165 @@ export default class Controller {
         document.getElementById('map-button-container').appendChild(interactBtn);
         this.mapBtnArray.push(interactBtn);
     }
-    enablePlayerBattleControls(){
-        //remove old buttons
-        for(var i = 0; i < this.battleBtnArray.length; i++){
-            let controls = document.getElementById('battle-button-container');
-            let oldBtn = controls.querySelector('button');
-                oldBtn.remove();
-        }
-        this.battleBtnArray = [];
-        //Add New Ability Buttons
-        for(let x = 0; x < thePlayer.abilityArray.length; x++){
-            let abilityBtn = document.createElement('button');
-            abilityBtn.classList.add('action-button');
-            abilityBtn.innerText = thePlayer.abilityArray[x].name.charAt(0).toUpperCase() + thePlayer.abilityArray[x].name.slice(1);
-            abilityBtn.addEventListener('click', ()=>{
-                this.battle.determineFirstTurn(x);
-            });
-            document.getElementById('battle-button-container').appendChild(abilityBtn);
-            this.battleBtnArray.push(abilityBtn);
-         }
-        document.getElementById('map-button-container').style.display = "none";
-        document.getElementById('battle-button-container').style.display = "block";
-        document.getElementById('battle-button-container').style.visibility = "visible";
-        Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
-            btn.style.visibility = "visible";
-        });
-    }
-    disablePlayerBattleControls(){
-        document.getElementById('battle-button-container').style.visibility = "hidden";
-        //Array.from used to convert HTML collection to regular array so forEach can be used
-        Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
-            btn.style.visibility = "hidden";
-        });
-    }
     enableInventoryControls(){
-        this.equippedTabButton.addEventListener('click',()=>{
+        document.getElementById('equipped-tab-button').addEventListener('click',()=>{
             document.getElementById('inventory-tab').style.display = "none";
             document.getElementById('equipped-tab').style.display = "block";
             document.getElementById('secondary-stats-tab').style.display = "none";
         });
-        this.inventoryTabButton.addEventListener('click',()=>{
+        document.getElementById('inventory-tab-button').addEventListener('click',()=>{
             document.getElementById('equipped-tab').style.display = "none";
             document.getElementById('inventory-tab').style.display = "block";
             document.getElementById('secondary-stats-tab').style.display = "none";
         });
-        this.secondaryStatsTabButton.addEventListener('click',()=>{
+        document.getElementById('secondary-stats-tab-button').addEventListener('click',()=>{
             document.getElementById('equipped-tab').style.display = "none";
             document.getElementById('inventory-tab').style.display = "none";
             document.getElementById('secondary-stats-tab').style.display = "block";
         });
-        for(let i = 0; i < thePlayer.equippedArray.length; i++){
+        for(let i = 0; i < this.player.equippedArray.length; i++){
             document.getElementById('unequip-btn-' + i).addEventListener('click', ()=>{
-                thePlayer.unequip(i);
+                this.player.unequip(i);
             });
         }
     }
+    enableLevelUpControls(){
+        let levelCheck = false;
+        let fullHeal = () =>{
+            this.player.currentHP = this.player.maxHP;
+            this.player.currentStamina = this.player.maxStamina;
+            this.player.currentMagic = this.player.maxMagic;
+        }
+        document.getElementById('increase-hp-btn').addEventListener('click', ()=>{
+            fullHeal();
+            this.player.currentHP = this.player.maxHP + 2;
+            levelCheck = true;
+            document.getElementById('increase-hp-btn').classList.add("title-screen-button-selected");
+            document.getElementById('increase-stamina-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-magic-btn').classList.remove("title-screen-button-selected");
+        });
+        document.getElementById('increase-stamina-btn').addEventListener('click', ()=>{
+            fullHeal();
+            this.player.currentStamina = this.player.maxStamina + 2;
+            levelCheck = true;
+            document.getElementById('increase-hp-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-stamina-btn').classList.add("title-screen-button-selected");
+            document.getElementById('increase-magic-btn').classList.remove("title-screen-button-selected");
+        });
+        document.getElementById('increase-magic-btn').addEventListener('click', ()=>{
+            fullHeal();
+            this.player.currentMagic = this.player.maxMagic + 2;
+            levelCheck = true;
+            document.getElementById('increase-hp-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-stamina-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-magic-btn').classList.add("title-screen-button-selected");
+        });
+        document.getElementById('submit-level-btn').addEventListener('click', ()=>{
+            if(levelCheck == true){
+                this.player.maxHP = this.player.currentHP + 1;
+                this.player.maxStamina = this.player.currentStamina + 1;
+                this.player.maxMagic = this.player.currentMagic + 1;
+                fullHeal();
+                document.getElementById("app").style.display = "block";
+                document.getElementById('level-up-screen').style.display = "none";
+                this.musicPlayer.play();
+                this.updatePlayerStats();
+                this.player.canMoveRoom = true;
+            }
+        });
+    }
+    characterCreatorDetermineUpdateStats(){
+        let value = document.getElementById("background-selection").value;
+        switch(value){
+            case "traveler":
+                this.characterCreatorUpdateStats(12, 12, 12);
+                break;
+            case "blacksmith":
+                this.characterCreatorUpdateStats(15, 12, 8);
+                break;
+            case "ranger":
+                this.characterCreatorUpdateStats(12, 15, 8);
+                break;
+            case "hermit":
+                this.characterCreatorUpdateStats(12, 8, 15);
+                break;
+        }
+    }
+    characterCreatorUpdateStats(health, stamina, magic){
+        this.characterCreationArray[4] = health;
+        this.characterCreationArray[5] = stamina;
+        this.characterCreationArray[6] = magic;
+        document.getElementById("character-creation-health").innerText = this.characterCreationArray[4];
+        document.getElementById("character-creation-stamina").innerText = this.characterCreationArray[5];
+        document.getElementById("character-creation-magic").innerText = this.characterCreationArray[6];
+    }
+    characterCreatorUpdateInventory(){
+        let inventoryArray = [];
+        let value = document.getElementById("background-selection").value;
+        inventoryArray.push(new LinenShirt, new LinenPants)
+        switch(value){
+            case "traveler":
+                inventoryArray.push(new WoodSpear, new LeatherBoots);
+                break;
+            case "blacksmith":
+                inventoryArray.push(new WoodSword, new IronHelmet);
+                break;
+            case "ranger":
+                inventoryArray.push(new WoodDagger, new WoodSideDagger);
+                break;
+            case "hermit":
+                inventoryArray.push(new WoodFireStaff);
+                break;
+        }
+        let value2 = document.getElementById("keepsake-selection").value;
+        switch(value2){
+            case "none":
+                break;
+            case "throwing-knifes":
+                inventoryArray.push(new ThrowingKnife, new ThrowingKnife, new PoisonedThrowingKnife );
+                break;
+            case "bag-of-potions":
+                inventoryArray.push(new HealthPotion, new StaminaPotion , new MagicPotion);
+                break;
+            case "meteorite":
+                inventoryArray.push(new Meteorite);
+                break;
+        }
+        for(let i = -1; i < this.characterCreationArray[3].length; i++){
+            let oldSlot = document.getElementById("character-creation-inventory").querySelector('p');
+            if(oldSlot !== null){
+                oldSlot.remove();
+            } 
+        }
+        for(let i = 0; i < inventoryArray.length; i++){
+            let inventorySlot = document.createElement('p');
+            inventorySlot.classList.add('inventory-slot');
+            inventorySlot.innerText = this.capitalizeFirstLetter(inventoryArray[i].name);
+            document.getElementById("character-creation-inventory").appendChild(inventorySlot);
+        }
+        this.characterCreationArray[3] = inventoryArray;
+    }
+    toggleMap(){
+        document.getElementById('battle-button-container').style.display = "none";
+        document.getElementById('map-button-container').style.display = "block";
+        document.getElementById("location-name-container").style.display = "block";
+        document.getElementById("enemy-name-container").style.display = "none";
+        document.getElementById("player-image-container").style.display = "none";
+        document.getElementById("mini-map-container").style.display = "block";
+        document.getElementById("enemy-image-container").style.display = "none";
+        document.getElementById("location-image-container").style.display = "block";
+        document.getElementById("enemy-main-stats-container").style.display = "none";
+        document.getElementById("music-player").src = "./audio/deep-in-the-dell-126916.mp3";
+        document.getElementById("music-player").play();
+        this.miniMap.resizeCanvas();
+        this.miniMap.draw(this.player);
+        this.player.isInBattle = false;
+        this.player.canMoveRoom = true;
+        this.updatePlayerInventoryTab(this.player.inventory);
+    }
     updatePlayerInventoryTab(inventory){
         for(var i = -1; i < inventory.length; i++){
-            let oldSlot = this.inventoryTab.querySelector('p');
+            let oldSlot = document.getElementById('inventory-tab').querySelector('p');
             if(oldSlot !== null){
                 oldSlot.remove();
             } 
@@ -253,14 +279,14 @@ export default class Controller {
             inventorySlot.classList.add('inventory-slot');
             inventorySlotMenu.classList.add('inventory-slot-menu');
             slotMenuUseBtn.classList.add('slot-menu-use-btn');//equipment specific
-            inventorySlot.innerText = inventory[i].name.charAt(0).toUpperCase() + inventory[i].name.slice(1);
+            inventorySlot.innerText = this.capitalizeFirstLetter(inventory[i].name);
             inventorySlot.appendChild(inventorySlotMenu);
             inventorySlotMenu.appendChild(slotMenuUseBtn);//equipment specific
-            this.inventoryTab.appendChild(inventorySlot);
+            document.getElementById('inventory-tab').appendChild(inventorySlot);
             if(inventory[i].type != "consumable"){
                 slotMenuUseBtn.innerText = "Equip";//equipment specific
                 slotMenuUseBtn.addEventListener('click', ()=>{ //equipment specific
-                    thePlayer.equip(i);
+                    this.player.equip(i);
                 });
             }
             if(inventory[i].type == "consumable"){
@@ -271,76 +297,35 @@ export default class Controller {
             }
         }
     }
-    updatePlayerEquippedTab(equippedArrayIndex){
-        if(thePlayer.equippedArray[equippedArrayIndex] =="Empty"){
-            document.getElementById('equip-slot-' + equippedArrayIndex).innerText = "Empty";
-        }else{
-            document.getElementById('equip-slot-' + equippedArrayIndex).innerText = thePlayer.equippedArray[equippedArrayIndex].name.charAt(0).toUpperCase() + thePlayer.equippedArray[equippedArrayIndex].name.slice(1);
-        } 
+    updatePlayerStats(){
+        document.getElementById('current-health-player').innerText = this.player.currentHP;
+        document.getElementById('current-stamina-player').innerText = this.player.currentStamina;
+        document.getElementById('current-magic-player').innerText = this.player.currentMagic;
+        document.getElementById('health-bar-player-progress').style.width = Math.floor(this.player.currentHP/this.player.maxHP*100) + "%";
+        document.getElementById('stamina-bar-player-progress').style.width = Math.floor(this.player.currentStamina/this.player.maxStamina*100) + "%";
+        document.getElementById('magic-bar-player-progress').style.width = Math.floor(this.player.currentMagic/this.player.maxMagic*100) + "%";
+        document.getElementById('player-level-label').innerText = "★ " + this.player.level;
+        document.getElementById('current-experience').innerText = this.player.currentXP;
+        document.getElementById('current-speed').innerText = this.player.currentSpeed;
+        document.getElementById('current-blunt-attack').innerText = this.player.currentBluntAttack; 
+        document.getElementById('current-pierce-attack').innerText = this.player.currentPierceAttack;
+        document.getElementById('current-arcane-attack').innerText = this.player.currentArcaneAttack; 
+        document.getElementById('current-element-attack').innerText = this.player.currentElementalAttack;
+        document.getElementById('current-blunt-defense').innerText = this.player.currentBluntDefense; 
+        document.getElementById('current-pierce-defense').innerText = this.player.currentPierceDefense;
+        document.getElementById('current-arcane-defense').innerText = this.player.currentArcaneDefense; 
+        document.getElementById('current-element-defense').innerText = this.player.currentElementalDefense;
+        this.scrollToBottom("game-console");
     }
-    displayLevelUpScreen(){
-        document.getElementById('level-up-screen').style.display = "block";
-        document.getElementById("app").style.display = "none";
-        thePlayer.canMoveRoom = false;
+    capitalizeFirstLetter(string){
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
-    enableLevelUpControls(){
-        let levelCheck = false;
-        let fullHeal = () =>{
-            thePlayer.currentHP =  thePlayer.maxHP;
-            thePlayer.currentStamina =  thePlayer.maxStamina;
-            thePlayer.currentMagic = thePlayer.maxMagic;
-        }
-        document.getElementById('increase-hp-btn').addEventListener('click', ()=>{
-            fullHeal();
-            thePlayer.currentHP = thePlayer.maxHP + 2;
-            levelCheck = true;
-            document.getElementById('increase-hp-btn').classList.add("title-screen-button-selected");
-            document.getElementById('increase-stamina-btn').classList.remove("title-screen-button-selected");
-            document.getElementById('increase-magic-btn').classList.remove("title-screen-button-selected");
-        });
-        document.getElementById('increase-stamina-btn').addEventListener('click', ()=>{
-            fullHeal();
-            thePlayer.currentStamina = thePlayer.maxStamina + 2;
-            levelCheck = true;
-            document.getElementById('increase-hp-btn').classList.remove("title-screen-button-selected");
-            document.getElementById('increase-stamina-btn').classList.add("title-screen-button-selected");
-            document.getElementById('increase-magic-btn').classList.remove("title-screen-button-selected");
-        });
-        document.getElementById('increase-magic-btn').addEventListener('click', ()=>{
-            fullHeal();
-            thePlayer.currentMagic = thePlayer.maxMagic + 2;
-            levelCheck = true;
-            document.getElementById('increase-hp-btn').classList.remove("title-screen-button-selected");
-            document.getElementById('increase-stamina-btn').classList.remove("title-screen-button-selected");
-            document.getElementById('increase-magic-btn').classList.add("title-screen-button-selected");
-        });
-        document.getElementById('submit-level-btn').addEventListener('click', ()=>{
-            if(levelCheck == true){
-                thePlayer.maxHP = thePlayer.currentHP + 1;
-                thePlayer.maxStamina = thePlayer.currentStamina + 1;
-                thePlayer.maxMagic = thePlayer.currentMagic + 1;
-                fullHeal();
-                document.getElementById("app").style.display = "block";
-                document.getElementById('level-up-screen').style.display = "none";
-                this.musicPlayer.play();
-                this.updatePlayerStats();
-                thePlayer.canMoveRoom = true;
-            }
-        });
+    scrollToBottom(elementId){
+        document.getElementById(elementId).scrollTop = document.getElementById(elementId).scrollHeight;
     }
-    useConsumable(inventoryIndex){
-        if(thePlayer.isInBattle == true){
-            if(thePlayer.inventory[inventoryIndex].abilityArray[0].canUse(thePlayer) != false){
-                this.battle.determineFirstTurn(0, inventoryIndex);
-                thePlayer.inventory.splice(inventoryIndex, 1);
-                this.updatePlayerInventoryTab(thePlayer.inventory);
-            }
-        }else{
-            if(thePlayer.inventory[inventoryIndex].abilityArray[0].activate(thePlayer)==true){
-                thePlayer.inventory.splice(inventoryIndex, 1);
-                this.updatePlayerInventoryTab(thePlayer.inventory);
-                this.updatePlayerStats();
-            }
-        }
+    printToGameConsole(message){
+        document.getElementById("game-console").innerHTML += `<p>${capitalizeFirstLetter(message)}</p>`;
+        scrollToBottom("game-console");
     }
 }
+

@@ -1,6 +1,6 @@
-//import {controller as theController} from "./main.js";
-//import {player as thePlayer} from "./main.js";
-//import {Sheilded, Bound, Poisoned, Burned} from "./statusEffects.js";
+import {controller as theController} from "./main.js";
+import {player as thePlayer} from "./main.js";
+import {Sheilded, Bound, Poisoned, Burned} from "./statusEffects.js";
 
 class Ability{
     canUse(weilder){

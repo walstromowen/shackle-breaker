@@ -1,3 +1,5 @@
+import {player as thePlayer} from "./main.js";
+
 export default class MiniMap{
     constructor(){
         this.miniMapCanvas = document.getElementById('mini-map-canvas');
@@ -13,9 +15,9 @@ export default class MiniMap{
         this.miniMapCanvas.height = this.height;
         
     }
-    draw(player){
+    draw(){
         this.ctx.clearRect(0, 0, 288, 288);
-        player.map.roomArray.forEach((room) => { 
+        thePlayer.map.roomArray.forEach((room) => { 
             if(room.visited === true){
                 this.ctx.fillStyle= "black";
                 this.ctx.fillRect(room.position[0]*this.tileWidth, room.position[1]*this.tileHeight, this.tileWidth, this.tileHeight);
@@ -24,7 +26,7 @@ export default class MiniMap{
             }
         });
         this.ctx.fillStyle= "yellow";
-        this.ctx.fillRect(player.currentRoom.position[0]*this.tileWidth, player.currentRoom.position[1]*this.tileHeight, this.tileWidth, this.tileHeight); 
+        this.ctx.fillRect(thePlayer.currentRoom.position[0]*this.tileWidth, thePlayer.currentRoom.position[1]*this.tileHeight, this.tileWidth, this.tileHeight); 
          
     }
 }
