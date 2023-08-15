@@ -13,9 +13,9 @@ export default class MiniMap{
         this.miniMapCanvas.height = this.height;
         
     }
-    draw(player){
+    draw(roomArray, playerCurrentRoom){
         this.ctx.clearRect(0, 0, 288, 288);
-        player.map.roomArray.forEach((room) => { 
+        roomArray.forEach((room) => { 
             if(room.visited === true){
                 this.ctx.fillStyle= "black";
                 this.ctx.fillRect(room.position[0]*this.tileWidth, room.position[1]*this.tileHeight, this.tileWidth, this.tileHeight);
@@ -24,7 +24,7 @@ export default class MiniMap{
             }
         });
         this.ctx.fillStyle= "yellow";
-        this.ctx.fillRect(player.currentRoom.position[0]*this.tileWidth, player.currentRoom.position[1]*this.tileHeight, this.tileWidth, this.tileHeight); 
+        this.ctx.fillRect(playerCurrentRoom.position[0]*this.tileWidth, playerCurrentRoom.position[1]*this.tileHeight, this.tileWidth, this.tileHeight); 
          
     }
 }

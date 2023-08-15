@@ -4,17 +4,18 @@ import {LinenShirt, LinenPants, WoodDagger, WoodSpear, WoodSword,
         LeatherBoots, IronSheild, IronHelmet, IronGuantlets, IronChainmail, 
         IronGreaves, IronBoots, HealthPotion, StaminaPotion, MagicPotion, 
         ThrowingKnife, PoisonedThrowingKnife, Meteorite} from "./items.js";
+import {Recover, Punch, Retreat} from "./abilities.js"
 import Player from "./player.js";
 import Map from "./map.js";
 import MiniMap from "./miniMap.js";
-//import Battle from "./battle.js";
+import Battle from "./battle.js";
 
 export default class Controller {
     constructor(){
         this.characterCreationArray = ["name", "apperance", "background", [], 12, 12, 12];
-        this.player = "";
         this.map = "";
         this.miniMap = "";
+        this.player = "";
         this.battle = "";
         this.mapBtnArray = [];
         this.battleBtnArray = [];
@@ -42,9 +43,9 @@ export default class Controller {
             this.characterCreationArray[0] = document.getElementById("name-selection").value;
             this.characterCreationArray[1] = document.getElementById("apperance-selection").value;
             this.characterCreationArray[2] = document.getElementById("background-selection").value;
-            this.player = new Player(this.characterCreationArray);
-            this.map = new Map(this.player.level);
+            this.map = new Map(0);
             this.miniMap = new MiniMap();
+            this.player = new Player(this.characterCreationArray, this.map);
             document.getElementById("app").style.display = "block";
             document.getElementById('player-name').innerText = this.player.name;
             document.getElementById('player-image').src = this.player.apperance;
@@ -81,16 +82,16 @@ export default class Controller {
             if(this.player.canMoveRoom == true){
                 switch(e.key){
                     case 'w':
-                        this.player.moveNorth();
+                        this.movePlayerNorth();
                         break;
                     case 'a':
-                        this.player.moveWest();
+                        this.movePlayerWest();
                         break;
                     case 's':
-                        this.player.moveSouth();
+                        this.movePlayerSouth();
                         break;
                     case 'd':
-                        this.player.moveEast();
+                        this.movePlayerEast();
                         break;
                 }
             }
@@ -127,7 +128,7 @@ export default class Controller {
         });
         for(let i = 0; i < this.player.equippedArray.length; i++){
             document.getElementById('unequip-btn-' + i).addEventListener('click', ()=>{
-                this.player.unequip(i);
+                this.unequip(i);
             });
         }
     }
@@ -170,10 +171,43 @@ export default class Controller {
                 fullHeal();
                 document.getElementById("app").style.display = "block";
                 document.getElementById('level-up-screen').style.display = "none";
-                this.musicPlayer.play();
+                document.getElementById('music-player').play();
                 this.updatePlayerStats();
                 this.player.canMoveRoom = true;
             }
+        });
+    }
+    enablePlayerBattleControls(){
+        //remove old buttons
+        for(let i = 0; i < this.battleBtnArray.length; i++){
+            let controls = document.getElementById('battle-button-container');
+            let oldBtn = controls.querySelector('button');
+                oldBtn.remove();
+        }
+        this.battleBtnArray = [];
+        //Add New Ability Buttons
+        for(let x = 0; x < this.player.abilityArray.length; x++){
+            let abilityBtn = document.createElement('button');
+            abilityBtn.classList.add('action-button');
+            abilityBtn.innerText = this.capitalizeFirstLetter(this.player.abilityArray[x].name);
+            abilityBtn.addEventListener('click', ()=>{
+                this.battle.determineFirstTurn(x);
+            });
+            document.getElementById('battle-button-container').appendChild(abilityBtn);
+            this.battleBtnArray.push(abilityBtn);
+         }
+        document.getElementById('map-button-container').style.display = "none";
+        document.getElementById('battle-button-container').style.display = "block";
+        document.getElementById('battle-button-container').style.visibility = "visible";
+        Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
+            btn.style.visibility = "visible";
+        });
+    }
+    disablePlayerBattleControls(){
+        document.getElementById('battle-button-container').style.visibility = "hidden";
+        //Array.from used to convert HTML collection to regular array so forEach can be used
+        Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
+            btn.style.visibility = "hidden";
         });
     }
     characterCreatorDetermineUpdateStats(){
@@ -260,13 +294,36 @@ export default class Controller {
         document.getElementById("music-player").src = "./audio/deep-in-the-dell-126916.mp3";
         document.getElementById("music-player").play();
         this.miniMap.resizeCanvas();
-        this.miniMap.draw(this.player);
+        this.miniMap.draw(this.map.roomArray, this.player.currentRoom);
         this.player.isInBattle = false;
         this.player.canMoveRoom = true;
         this.updatePlayerInventoryTab(this.player.inventory);
     }
+    toggleBattle(enemy){
+        this.battle = new Battle(this.player, enemy);
+        this.printToGameConsole("Something approaches...");
+        this.scrollToBottom("game-console");
+        this.player.canMoveRoom = false;
+        setTimeout(()=>{
+            document.getElementById('enemy-name').innerText = this.battle.enemy.name.charAt(0).toUpperCase() + this.battle.enemy.name.slice(1);
+            document.getElementById('enemy-image').src = this.battle.enemy.imageSrc;
+            document.getElementById("location-name-container").style.display = "none";
+            document.getElementById("enemy-name-container").style.display = "block";
+            document.getElementById("mini-map-container").style.display = "none";
+            document.getElementById("player-image-container").style.display = "block";
+            document.getElementById("location-image-container").style.display = "none";
+            document.getElementById("enemy-image-container").style.display = "block";
+            document.getElementById("enemy-main-stats-container").style.display = "block";
+            this.enablePlayerBattleControls();
+            this.printToGameConsole(`You encounter a ${this.battle.enemy.name}!`);
+            this.scrollToBottom("game-console");
+            document.getElementById('music-player').src = "./audio/battle-of-the-dragons-8037.mp3";
+            document.getElementById('music-player').play();
+            this.player.isInBattle = true;
+         }, 2000);
+    }
     updatePlayerInventoryTab(inventory){
-        for(var i = -1; i < inventory.length; i++){
+        for(let i = -1; i < inventory.length; i++){
             let oldSlot = document.getElementById('inventory-tab').querySelector('p');
             if(oldSlot !== null){
                 oldSlot.remove();
@@ -286,7 +343,7 @@ export default class Controller {
             if(inventory[i].type != "consumable"){
                 slotMenuUseBtn.innerText = "Equip";//equipment specific
                 slotMenuUseBtn.addEventListener('click', ()=>{ //equipment specific
-                    this.player.equip(i);
+                    this.equip(i);
                 });
             }
             if(inventory[i].type == "consumable"){
@@ -315,7 +372,252 @@ export default class Controller {
         document.getElementById('current-pierce-defense').innerText = this.player.currentPierceDefense;
         document.getElementById('current-arcane-defense').innerText = this.player.currentArcaneDefense; 
         document.getElementById('current-element-defense').innerText = this.player.currentElementalDefense;
-        this.scrollToBottom("game-console");
+    }
+    updateEnemyStats(){
+        document.getElementById('current-health-enemy').innerText = this.battle.enemy.currentHP;
+        document.getElementById('current-stamina-enemy').innerText = this.battle.enemy.currentStamina;
+        document.getElementById('current-magic-enemy').innerText = this.battle.enemy.currentMagic;
+        document.getElementById('health-bar-enemy-progress').style.width = Math.floor(this.battle.enemy.currentHP/this.battle.enemy.maxHP*100) + "%";
+        document.getElementById('stamina-bar-enemy-progress').style.width = Math.floor(this.battle.enemy.currentStamina/this.battle.enemy.maxStamina*100) + "%";
+        document.getElementById('magic-bar-enemy-progress').style.width = Math.floor(this.battle.enemy.currentMagic/this.battle.enemy.maxMagic*100) + "%";
+    }
+    movePlayerNorth(){
+        this.movePlayerRoom(this.player.currentRoom.roomNorth);
+    }
+    movePlayerEast(){
+        this.movePlayerRoom(this.player.currentRoom.roomEast);
+    }
+    movePlayerSouth(){
+        this.movePlayerRoom(this.player.currentRoom.roomSouth);
+    }
+    movePlayerWest(){
+        this.movePlayerRoom(this.player.currentRoom.roomWest);
+    }
+    movePlayerRoom(nextRoom){
+        if(nextRoom !== ""){
+            if(nextRoom.enemy !== ""){
+                this.player.nextRoom = nextRoom;
+                this.toggleBattle(nextRoom.enemy);
+                this.updateEnemyStats();
+                return; 
+            }
+            this.player.currentRoom.visited = true;
+            this.player.currentRoom = nextRoom;
+            this.miniMap.draw(this.map.roomArray, this.player.currentRoom);
+            if(this.player.currentRoom.isExit == true){
+                this.levelPlayerUp();
+                this.printToGameConsole("you find an exit!");
+                this.generateNewMap();
+            }
+        }
+        else{
+            this.printToGameConsole("cannot go this way");
+        }
+        this.updatePlayerStats();           
+    }
+    equip(inventoryIndex){
+        if(this.player.isInBattle == false){
+            switch(this.player.inventory[inventoryIndex].type){
+                case "weapon":
+                    if(this.player.equippedArray[0] !== "Empty"){
+                        this.player.inventory.push(this.player.equippedArray[0]);
+                    }
+                    this.player.equippedArray[0] = this.player.inventory[inventoryIndex];
+                    this.player.inventory.splice(inventoryIndex, 1);
+                    this.printToGameConsole(`You equip ${this.player.equippedArray[0].name}.`);
+                    this.updatePlayerEquippedTab(0);
+                    break;
+                case "offhand":
+                    if(this.player.equippedArray[1] !== "Empty"){
+                        this.player.inventory.push(this.player.equippedArray[1]);
+                    }
+                    this.player.equippedArray[1] = this.player.inventory[inventoryIndex];
+                    this.player.inventory.splice(inventoryIndex, 1);
+                    this.printToGameConsole(`You equip ${this.player.equippedArray[1].name}.`);
+                    this.updatePlayerEquippedTab(1);
+                    break;
+                case "head":
+                    if(this.player.equippedArray[2] !== "Empty"){
+                        this.player.inventory.push(this.player.equippedArray[2]);
+                    } 
+                    this.player.equippedArray[2] = this.player.inventory[inventoryIndex];
+                    this.player.inventory.splice(inventoryIndex, 1); 
+                    this.printToGameConsole(`You equip ${this.player.equippedArray[2].name}.`);
+                    this.updatePlayerEquippedTab(2);
+                    break;
+                case "torso":
+                    if(this.player.equippedArray[3] !== "Empty"){
+                        this.player.inventory.push(this.player.equippedArray[3]);
+                    } 
+                    this.player.equippedArray[3] = this.player.inventory[inventoryIndex];
+                    this.player.inventory.splice(inventoryIndex, 1); 
+                    this.printToGameConsole(`You equip ${this.player.equippedArray[3].name}.`);
+                    this.updatePlayerEquippedTab(3);
+                    break;
+                case "arms":
+                    if(this.player.equippedArray[4] !== "Empty"){
+                        this.player.inventory.push(this.player.equippedArray[4]);
+                    } 
+                    this.player.equippedArray[4] = this.player.inventory[inventoryIndex];
+                    this.player.inventory.splice(inventoryIndex, 1); 
+                    this.printToGameConsole(`You equip ${this.player.equippedArray[4].name}.`);
+                    this.updatePlayerEquippedTab(4);
+                    break;
+                case "legs":
+                    if(this.player.equippedArray[5] !== "Empty"){
+                        this.player.inventory.push(this.player.equippedArray[5]);
+                    } 
+                    this.player.equippedArray[5] = this.player.inventory[inventoryIndex];
+                    this.player.inventory.splice(inventoryIndex, 1); 
+                    this.printToGameConsole(`You equip ${this.player.equippedArray[5].name}.`);
+                    this.updatePlayerEquippedTab(5);
+                    break;
+                case "feet":
+                    if(this.player.equippedArray[6] !== "Empty"){
+                        this.player.inventory.push(this.player.equippedArray[6]);
+                    } 
+                    this.player.equippedArray[6] = this.player.inventory[inventoryIndex];
+                    this.player.inventory.splice(inventoryIndex, 1); 
+                    this.printToGameConsole(`You equip ${this.player.equippedArray[6].name}.`);
+                    this.updatePlayerEquippedTab(6);
+                    break;
+                default:
+                    break;
+            }
+            this.playSoundEffect("./audio/soundEffects/anvil-hit-2-14845.mp3");
+            this.calcPlayerAbilitiesAndStats();
+            this.updatePlayerInventoryTab(this.player.inventory);
+            this.updatePlayerStats();
+        }else{
+            this.printToGameConsole("Cannot equip during combat!");
+        }
+    }
+    unequip(equippedArrayIndex){
+        if(this.player.isInBattle == false){
+            if(this.player.equippedArray[equippedArrayIndex] != "Empty"){
+                this.printToGameConsole(`You unequip ${this.player.equippedArray[equippedArrayIndex].name}`);
+                this.player.inventory.push(this.player.equippedArray[equippedArrayIndex]);
+                this.player.equippedArray[equippedArrayIndex] = "Empty";
+                this.updatePlayerInventoryTab(this.player.inventory);
+                this.updatePlayerEquippedTab(equippedArrayIndex);
+                this.calcPlayerAbilitiesAndStats();
+                this.updatePlayerStats();
+            }else{
+                this.printToGameConsole("Nothing equipped!");
+            }
+        }else{
+            this.printToGameConsole("Cannot unequip during combat!");
+        }
+    }
+    calcPlayerAbilitiesAndStats(){
+        //reset stats and abilities
+        this.player.currentBluntAttack = this.player.baseBluntAttack;
+        this.player.currentPierceAttack = this.player.basePierceAttack;
+        this.player.currentArcaneAttack = this.player.baseArcaneAttack;
+        this.player.currentElementalAttack = this.player.baseElementalAttack;
+        this.player.currentBluntDefense = this.player.baseBluntDefense;
+        this.player.currentPierceDefense = this.player.basePierceDefense;
+        this.player.currentArcaneDefense = this.player.baseArcaneDefense;
+        this.player.currentElementalDefense = this.player.baseElementalDefense;
+        this.player.currentSpeed = this.player.baseSpeed;
+        this.player.abilityArray = [];
+        //update stats
+        for(let i = 0; i < this.player.equippedArray.length; i++){
+            if(this.player.equippedArray[i] != "Empty"){
+                this.player.currentBluntAttack = this.player.currentBluntAttack + this.player.equippedArray[i].bluntAttack;
+                this.player.currentPierceAttack = this.player.currentPierceAttack + this.player.equippedArray[i].pierceAttack;
+                this.player.currentArcaneAttack = this.player.currentArcaneAttack + this.player.equippedArray[i].arcaneAttack;
+                this.player.currentElementalAttack = this.player.currentElementalAttack + this.player.equippedArray[i].elementalAttack;
+                this.player.currentBluntDefense = this.player.currentBluntDefense + this.player.equippedArray[i].bluntDefense;
+                this.player.currentPierceDefense = this.player.currentPierceDefense + this.player.equippedArray[i].pierceDefense;
+                this.player.currentArcaneDefense = this.player.currentArcaneDefense + this.player.equippedArray[i].arcaneDefense;
+                this.player.currentElementalDefense = this.player.currentElementalDefense + this.player.equippedArray[i].elementalDefense;
+                this.player.currentSpeed = this.player.currentSpeed + this.player.equippedArray[i].speed;
+            }
+        }
+        //punch check
+        if(this.player.equippedArray[0] == "Empty"){
+            this.player.abilityArray.push(new Punch);
+        }
+        //update abilities
+        for(let x = 0; x < this.player.equippedArray.length; x ++){
+            if(this.player.equippedArray[x] != "Empty"){
+                for(let y = 0; y < this.player.equippedArray[x].abilityArray.length; y ++){
+                    this.player.abilityArray.push(this.player.equippedArray[x].abilityArray[y]);
+                }
+            }
+        }
+        this.player.abilityArray.push(new Recover);
+        this.player.abilityArray.push(new Retreat);
+      }
+    updatePlayerEquippedTab(equippedArrayIndex){
+        if(this.player.equippedArray[equippedArrayIndex] =="Empty"){
+            document.getElementById('equip-slot-' + equippedArrayIndex).innerText = "Empty";
+        }else{
+            document.getElementById('equip-slot-' + equippedArrayIndex).innerText = this.capitalizeFirstLetter(this.player.equippedArray[equippedArrayIndex].name);
+        } 
+    }
+    defeatEnemy(){
+        this.player.currentRoom.visited = true;
+        this.player.currentRoom = this.player.nextRoom;
+        this.battle.loot();
+        this.player.currentRoom.enemy = "";
+        this.miniMap.draw(this.map.roomArray, this.player.currentRoom);
+    }
+    useConsumable(inventoryIndex){
+        if(this.player.isInBattle == true){
+            if(this.player.inventory[inventoryIndex].abilityArray[0].canUse(this.player) != false){
+                this.battle.determineFirstTurn(0, inventoryIndex);
+                this.player.inventory.splice(inventoryIndex, 1);
+                this.updatePlayerInventoryTab(this.player.inventory);
+            }
+        }else{
+            if(this.player.inventory[inventoryIndex].abilityArray[0].activate(this.player)==true){
+                this.player.inventory.splice(inventoryIndex, 1);
+                this.updatePlayerInventoryTab(this.player.inventory);
+                this.updatePlayerStats();
+            }
+        }
+    }
+    levelPlayerUp(){
+        this.player.level = this.player.level + 1;
+        this.printToGameConsole(`Level up! New level: ${this.player.level}.`);
+        this.displayLevelUpScreen();
+    }
+    displayLevelUpScreen(){
+        document.getElementById('level-up-screen').style.display = "block";
+        document.getElementById("app").style.display = "none";
+        this.player.canMoveRoom = false;
+    }
+    generateNewMap(){
+        this.map = new Map(this.player.level);
+        this.player.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
+        this.player.nextRoom = this.player.currentRoom;
+        document.getElementById('location-image').src = this.map.mapEnviorment.imageSrc;
+        document.getElementById('location-name').innerText = this.capitalizeFirstLetter(this.map.mapEnviorment.biome);
+        this.miniMap.draw(this.map.roomArray, this.player.currentRoom);
+    }
+    endBattle(){
+        if(this.player.currentHP <= 0){
+            this.disablePlayerBattleControls();
+            setTimeout(()=>{
+                document.getElementById('music-player').pause();
+                document.getElementById('gameover-screen').style.display = "block";
+                document.getElementById("app").style.display = "none";
+             }, 2000);
+        }else{
+            setTimeout(()=>{
+                Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
+                    btn.style.visibility = "visible";
+                });
+                if(this.battle.battlePhase != "retreat"){
+                    this.defeatEnemy();
+                }
+                this.toggleMap();
+                this.updateEnemyStats();
+                this.updatePlayerStats();
+             }, 2000);
+        }
     }
     capitalizeFirstLetter(string){
         return string.charAt(0).toUpperCase() + string.slice(1);
@@ -324,8 +626,12 @@ export default class Controller {
         document.getElementById(elementId).scrollTop = document.getElementById(elementId).scrollHeight;
     }
     printToGameConsole(message){
-        document.getElementById("game-console").innerHTML += `<p>${capitalizeFirstLetter(message)}</p>`;
-        scrollToBottom("game-console");
+        document.getElementById("game-console").innerHTML += `<p>${this.capitalizeFirstLetter(message)}</p>`;
+        this.scrollToBottom("game-console");
+    }
+    playSoundEffect(soundEffectPath){
+        document.getElementById('sound-effect-player').src = soundEffectPath;
+        document.getElementById('sound-effect-player').play();  
     }
 }
 

@@ -1,8 +1,7 @@
 import {Recover, Punch, Retreat} from "./abilities.js";
-import Map from "./map.js";
 
 export default class Player{
-    constructor(characterCreationArray){
+    constructor(characterCreationArray, map){
         this.name = characterCreationArray[0];
         this.apperance = characterCreationArray[1]
         this.origin = characterCreationArray[2]
@@ -38,44 +37,7 @@ export default class Player{
         this.statusArray = [];//new Poisoned(this)
         this.isInBattle = false;
         this.canMoveRoom = true;
-        this.map = new Map(this.level);
-        this.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
+        this.currentRoom = map.roomArray[map.playerSpawnIndex];
         this.nextRoom = this.currentRoom;
-    }
-    moveNorth(){
-        this.moveRoom(this.currentRoom.roomNorth);
-    }
-    moveEast(){
-        this.moveRoom(this.currentRoom.roomEast);
-    }
-    moveSouth(){
-        this.moveRoom(this.currentRoom.roomSouth);
-    }
-    moveWest(){
-        this.moveRoom(this.currentRoom.roomWest);
-    }
-    moveRoom(nextRoom){
-        if(nextRoom !== ""){
-            if(nextRoom.enemy !== ""){
-                this.nextRoom = nextRoom;
-                theController.toggleBattle(nextRoom.enemy);
-                theController.updateEnemyStats();
-                return; 
-            }
-            this.currentRoom.visited = true;//
-            this.currentRoom = nextRoom;
-            theMiniMap.draw();
-            if(this.currentRoom.isExit == true){
-                this.levelUp();
-                theController.gameConsole.innerHTML += `<p>You find an exit!</p>`;
-                this.generateNewMap();
-            }else{
-                //theController.gameConsole.innerHTML += "<p>" + this.currentRoom.description + "</p>";
-            }
-        }
-        else{
-            theController.gameConsole.innerHTML += "<p>Cannot go this way.</p>";
-        }
-        theController.updatePlayerStats();           
-    }
+    }  
 }

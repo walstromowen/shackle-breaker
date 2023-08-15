@@ -1,18 +1,15 @@
-//import {controller as theController} from "./main.js";
-//import {player as thePlayer} from "./main.js";
-//import {Sheilded, Bound, Poisoned, Burned} from "./statusEffects.js";
+import {controller as theController} from "./main.js"
+import {Sheilded, Bound, Poisoned, Burned} from "./statusEffects.js";
 
 class Ability{
-    canUse(weilder){
-        if(weilder === thePlayer){
+    canUse(weilder, player){
+        if(weilder === player){
             if(weilder.currentStamina - this.staminaCost < 0){
-                theController.gameConsole.innerHTML += `<p>Not enough stamina!</p>`;
-                theController.scrollToBottom("game-console");
+                theController.printToGameConsole("Not enough stamina!");
                 return false;
             }
             if(weilder.currentMagic - this.magicCost < 0){
-                theController.gameConsole.innerHTML += `<p>Not enough magic!</p>`;
-                theController.scrollToBottom("game-console");
+                theController.printToGameConsole("Not enough magic!");
                 return false;
             }
         }else{
@@ -26,8 +23,7 @@ class Ability{
     }
     checkStamina(weilder, staminaCost){
         if(weilder.currentStamina - staminaCost < 0){
-            theController.gameConsole.innerHTML += `<p>${weilder.name} does not have enough stamina!</p>`;
-            theController.scrollToBottom("game-console");
+            theController.printToGameConsole(`${weilder.name} does not have enough stamina!`);
             return false;
         }else{
             weilder.currentStamina = weilder.currentStamina - staminaCost;
@@ -36,8 +32,7 @@ class Ability{
     }
     checkMagic(weilder, magicCost){
         if(weilder.currentMagic - magicCost < 0){
-            theController.gameConsole.innerHTML += `<p>${weilder.name} does not have enough magic!</p>`;
-            theController.scrollToBottom("game-console");
+            theController.printToGameConsole(`${weilder.name} does not have enough magic!`);
             return false;
         }else{
             weilder.currentMagic = weilder.currentMagic - magicCost;
@@ -67,10 +62,6 @@ class Ability{
             return damage;
         }
     }
-    playSound(){
-        theController.soundEffectPlayer.src = this.soundEffect;
-        theController.soundEffectPlayer.play();
-    }
 }
 export class Punch extends Ability{
     constructor(){
@@ -88,8 +79,8 @@ export class Punch extends Ability{
             let damageOutput = Math.floor(Math.random() * ((weilder.currentBluntAttack + this.damageModifier) - weilder.currentBluntAttack + 1)) + weilder.currentBluntAttack;
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
-            theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
-            this.playSound();
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
+            theController.playSoundEffect(this.soundEffect);
         }
     }
 }
@@ -109,8 +100,8 @@ export class Slash extends Ability{
             let damageOutput = Math.floor(Math.random() * ((weilder.currentPierceAttack + this.damageModifier) - weilder.currentPierceAttack + 1)) + weilder.currentPierceAttack;
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
-            theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
-            this.playSound();
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
+            theController.playSoundEffect(this.soundEffect);
         }
     }
 }
@@ -131,8 +122,8 @@ export class Stab extends Ability{
             let damageOutput = Math.floor(Math.random() * ((weilder.currentPierceAttack + this.damageModifier) - weilder.currentPierceAttack + 1)) + weilder.currentPierceAttack;
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
-            theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
-            this.playSound();
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
+            theController.playSoundEffect(this.soundEffect);
         }
     }
 }
@@ -148,8 +139,8 @@ export class Block extends Ability{
     }
     activate(weilder, target){
         if(this.checkStamina(weilder, this.staminaCost) == true){
-            theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name}!</p>`;
-            this.playSound();
+            theController.printToGameConsole(`${weilder.name} uses ${this.name}!`);
+            theController.playSoundEffect(this.soundEffect);
             for(let i = 0; i < weilder.statusArray.length; i++){
                 if(weilder.statusArray[i].name == "sheilded"){
                     weilder.statusArray[i].currentCharges = weilder.statusArray[i].maxCharges;
@@ -177,12 +168,12 @@ export class Channel extends Ability{
             magic = weilder.maxMagic - weilder.currentMagic;
         }
         weilder.currentMagic = weilder.currentMagic + magic;
-        theController.gameConsole.innerHTML += `<p>${weilder.name} channels magic!</p>`;
-        this.playSound();
+        theController.printToGameConsole(`${weilder.name} channels magic!`);
+        theController.playSoundEffect(this.soundEffect);
     }
     canUse(weilder){
         if(weilder.currentMagic == weilder.maxMagic){
-            theController.gameConsole.innerHTML += `<p>${weilder.name} cannot recover more magic!</p>`;
+            theController.printToGameConsole(`${weilder.name} cannot recover more magic!`);
             return false;
         }
     }
@@ -204,12 +195,12 @@ export class Recover extends Ability{
             stamina = weilder.maxStamina - weilder.currentStamina;
         }
         weilder.currentStamina = weilder.currentStamina + stamina;
-        theController.gameConsole.innerHTML += `<p>${weilder.name} recovers stamina!</p>`;
-        this.playSound();
+        theController.printToGameConsole(`${weilder.name} recovers stamina!`);
+        theController.playSoundEffect(this.soundEffect);
     }
     canUse(weilder){
         if(weilder.currentStamina == weilder.maxStamina){
-            theController.gameConsole.innerHTML += `<p>${weilder.name} cannot recover more stamina!</p>`;
+            theController.printToGameConsole(`${weilder.name} cannot recover more stamina!`);
             return false;
         }
     }
@@ -225,8 +216,8 @@ export class Retreat extends Ability{
         this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
     }
     activate(weilder, target){
-        theController.gameConsole.innerHTML += `<p>${weilder.name} retreats!</p>`;
-        this.playSound();
+        theController.printToGameConsole(`${weilder.name} retreats!`);
+        theController.playSoundEffect(this.soundEffect);
         return "retreat";
     }
 }
@@ -246,8 +237,8 @@ export class Bite extends Ability{
             let damageOutput = Math.floor(Math.random() * ((weilder.currentPierceAttack + this.damageModifier) - weilder.currentPierceAttack + 1)) + weilder.currentPierceAttack;
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
-            theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
-            this.playSound();
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
+            theController.playSoundEffect(this.soundEffect);
         }
     }
 }
@@ -267,8 +258,8 @@ export class Pounce extends Ability{
             let damageOutput = Math.floor(Math.random() * ((weilder.currentBluntAttack + this.damageModifier) - weilder.currentBluntAttack + 1)) + weilder.currentBluntAttack;
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
-            theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
-            this.playSound();
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
+            theController.playSoundEffect(this.soundEffect);
             if(damageOutput > 0){
                 if(Math.random()*2 < 1){
                     for(let i = 0; i < target.statusArray.length; i++){
@@ -278,7 +269,7 @@ export class Pounce extends Ability{
                         }
                     }
                     target.statusArray.push(new Bound(target));
-                    theController.gameConsole.innerHTML += `<p>${target.name} has been bound!</p>`;
+                    theController.printToGameConsole(`${target.name} has been bound!`);
                 }
             }
         }
@@ -305,8 +296,8 @@ export class LeechLife extends Ability{
                 restoreAmount = weilder.maxHP - weilder.currentHP 
             }
             weilder.currentHP = weilder.currentHP + restoreAmount;
-            theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage and restores ${restoreAmount} health!</p>`;
-            this.playSound();
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage and restores ${restoreAmount} health!`);
+            theController.playSoundEffect(this.soundEffect);
         }
     }
 }
@@ -327,8 +318,8 @@ export class ArcaneDart extends Ability{
             let damageOutput = Math.floor(Math.random() * ((weilder.currentArcaneAttack + this.damageModifier) - weilder.currentArcaneAttack + 1)) + weilder.currentArcaneAttack;
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
-            theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
-            this.playSound();
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
+            theController.playSoundEffect(this.soundEffect);
         }
     }
 }
@@ -349,9 +340,9 @@ export class ArcaneBlast extends Ability{
             let damageOutput = Math.floor(Math.random() * ((weilder.currentArcaneAttack + this.damageModifier) - weilder.currentArcaneAttack + 1)) + weilder.currentArcaneAttack;
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
-            theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
             weilder.currentArcaneAttack = weilder.baseArcaneAttack;
-            this.playSound();
+            theController.playSoundEffect(this.soundEffect);
         }
     }
 }
@@ -367,8 +358,8 @@ export class Struggle extends Ability{
         this.soundEffect = "./audio/soundEffects/power-down-45784.mp3";
     }
     activate(weilder, target){
-            theController.gameConsole.innerHTML += `<p>${weilder.name} cannot move!</p>`;
-            this.playSound();
+            theController.printToGameConsole(`${weilder.name} cannot move!`);
+            theController.playSoundEffect(this.soundEffect);
     }
 }
 export class SpitBile extends Ability{
@@ -387,8 +378,8 @@ export class SpitBile extends Ability{
             let damageOutput = Math.floor(Math.random() * ((weilder.currentElementalAttack + this.damageModifier) - weilder.currentElementalAttack + 1)) + weilder.currentElementalAttack;
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
-            theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
-            this.playSound();
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
+            theController.playSoundEffect(this.soundEffect);
             if(damageOutput > 0){
                 for(let i = 0; i < target.statusArray.length; i++){
                     if(target.statusArray[i].name == "poisoned"){
@@ -397,7 +388,7 @@ export class SpitBile extends Ability{
                     }
                 }
                 target.statusArray.push(new Poisoned(target));
-                theController.gameConsole.innerHTML += `<p>${target.name} has been poisoned!</p>`;
+                theController.printToGameConsole(`${target.name} has been poisoned!`);
             }
         }
     }  
@@ -418,8 +409,8 @@ export class Fireball extends Ability{
             let damageOutput = Math.floor(Math.random() * ((weilder.currentElementalAttack + this.damageModifier) - weilder.currentElementalAttack + 1)) + weilder.currentElementalAttack;
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
-            theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
-            this.playSound();
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
+            theController.playSoundEffect(this.soundEffect);
             if(damageOutput > 0){
                 if(Math.random()*3 < 1){
                     for(let i = 0; i < target.statusArray.length; i++){
@@ -429,7 +420,7 @@ export class Fireball extends Ability{
                         }
                     }
                     target.statusArray.push(new Burned(target));
-                    theController.gameConsole.innerHTML += `<p>${target.name} has been burned!</p>`;
+                    theController.printToGameConsole(`${target.name} has been burned!`);
                 } 
             }
         }
@@ -451,8 +442,8 @@ export class Devour extends Ability{
             let damageOutput = Math.floor(target.currentHP*0.7);
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
-            theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
-            this.playSound();
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
+            theController.playSoundEffect(this.soundEffect);
         }
     }
 }
@@ -475,8 +466,8 @@ export class Eviscerate extends Ability{
             }
             damageOutput = this.checkDamage(damageOutput, target);
             target.currentHP = target.currentHP - damageOutput;
-            theController.gameConsole.innerHTML += `<p>${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!</p>`;
-            this.playSound();
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
+            theController.playSoundEffect(this.soundEffect);
         }
     }
 }
@@ -492,7 +483,7 @@ export class DrinkHealthPotion extends Ability{
     }
     activate(weilder, target){
         if(weilder.currentHP == weilder.maxHP){
-            theController.gameConsole.innerHTML += `<p>${weilder.name} cannot restore more health!</p>`;
+            theController.printToGameConsole(`${weilder.name} cannot restore more health!`);
             return false;
         }
         let hp = 10 + 2 * weilder.level;
@@ -500,12 +491,12 @@ export class DrinkHealthPotion extends Ability{
             hp = weilder.maxHP - weilder.currentHP;
         }
         weilder.currentHP = weilder.currentHP + hp;
-        theController.gameConsole.innerHTML += `<p>${weilder.name} restores ${hp} health!</p>`;
+        theController.printToGameConsole(`${weilder.name} restores ${hp} health!`);
         return true;
     }
     canUse(weilder){
         if(weilder.currentHP == weilder.maxHP){
-            theController.gameConsole.innerHTML += `<p>${weilder.name} cannot restore more health</p>`;
+            theController.printToGameConsole(`${weilder.name} cannot restore more health`);
             return false;
         }
     }
@@ -522,7 +513,7 @@ export class DrinkStaminaPotion extends Ability{
     }
     activate(weilder, target){
         if(weilder.currentStamina == weilder.maxStamina){
-            theController.gameConsole.innerHTML += `<p>${weilder.name} cannot restore more stamina!</p>`;
+            theController.printToGameConsole(`${weilder.name} cannot restore more stamina!`);
             return false;
         }
         let stamina = 5 + weilder.level;
@@ -530,12 +521,12 @@ export class DrinkStaminaPotion extends Ability{
             stamina = weilder.maxStamina - weilder.currentStamina;
         }
         weilder.currentStamina = weilder.currentStamina + stamina;
-        theController.gameConsole.innerHTML += `<p>${weilder.name} restores ${stamina} stamina!</p>`;
+        theController.printToGameConsole(`${weilder.name} restores ${stamina} stamina!`);
         return true;
     }
     canUse(weilder){
         if(weilder.currentStamina == weilder.maxStamina){
-            theController.gameConsole.innerHTML += `<p>${weilder.name} cannot recover more stamina!</p>`;
+            theController.printToGameConsole(`${weilder.name} cannot recover more stamina!`);
             return false;
         }
     }
@@ -552,7 +543,7 @@ export class DrinkMagicPotion extends Ability{
     }
     activate(weilder, target){
         if(weilder.currentMagic == weilder.maxMagic){
-            theController.gameConsole.innerHTML += `<p>${weilder.name} cannot restore more magic!</p>`;
+            theController.printToGameConsole(`${weilder.name} cannot restore more magic!`);
             return false;
         }
         let magic = 5 + weilder.level;
@@ -560,12 +551,12 @@ export class DrinkMagicPotion extends Ability{
             magic = weilder.maxMagic - weilder.currentMagic;
         }
         weilder.currentMagic = weilder.currentMagic + magic;
-        theController.gameConsole.innerHTML += `<p>${weilder.name} restores ${magic} magic!</p>`;
+        theController.printToGameConsole(`${weilder.name} restores ${magic} magic!`);
         return true;
     }
     canUse(weilder){
         if(weilder.currentMagic == weilder.maxMagic){
-            theController.gameConsole.innerHTML += `<p>${weilder.name} cannot recover more magic!</p>`;
+            theController.printToGameConsole(`${weilder.name} cannot recover more magic!`);
             return false;
         }
     }
@@ -582,14 +573,13 @@ export class ThrowKnife extends Ability{
     }
     activate(weilder, target){
         if(target === undefined){
-            theController.gameConsole.innerHTML += `<p>cannot use outside of combat!</p>`;
+            theController.printToGameConsole("cannot use outside of combat!");
             return;
         }
         let damageOutput =  3 + (weilder.level * 2);
         damageOutput = this.checkDamage(damageOutput, target);
         target.currentHP = target.currentHP - damageOutput;
-        theController.gameConsole.innerHTML += `<p>${weilder.name} throws a throwing knfife at the ${target.name} for ${damageOutput} damage!</p>`;
-        theController.scrollToBottom("game-console");
+        theController.printToGameConsole(`${weilder.name} throws a throwing knfife at the ${target.name} for ${damageOutput} damage!`);
     }
 }
 export class ThrowPoisonedKnife extends Ability{
@@ -604,14 +594,13 @@ export class ThrowPoisonedKnife extends Ability{
     }
     activate(weilder, target){
         if(target === undefined){
-            theController.gameConsole.innerHTML += `<p>cannot use outside of combat!</p>`;
+            theController.printToGameConsole("cannot use outside of combat!");
             return;
         }
         let damageOutput =  3 + (weilder.level * 2);
         damageOutput = this.checkDamage(damageOutput, target);
         target.currentHP = target.currentHP - damageOutput;
-        theController.gameConsole.innerHTML += `<p>${weilder.name} throws a poisoned throwing knfife at the ${target.name} for ${damageOutput} damage!</p>`;
-        theController.scrollToBottom("game-console");
+        theController.printToGameConsole(`${weilder.name} throws a poisoned throwing knfife at the ${target.name} for ${damageOutput} damage!`);
         if(damageOutput > 0){
             for(let i = 0; i < target.statusArray.length; i++){
                 if(target.statusArray[i].name == "poisoned"){
@@ -620,8 +609,7 @@ export class ThrowPoisonedKnife extends Ability{
                 }
             }
             target.statusArray.push(new Poisoned(target));
-            theController.gameConsole.innerHTML += `<p>${target.name} has been poisoned!</p>`;
-            theController.scrollToBottom("game-console");
+            theController.printToGameConsole(`${target.name} has been poisoned!`);
         }
     }
 }
@@ -633,8 +621,7 @@ export class SmashMeteorite extends Ability{
     }
     activate(weilder, target){
         if(target !== undefined){
-            theController.gameConsole.innerHTML += `<p>cannot use in combat!</p>`;
-            theController.scrollToBottom("game-console");
+            theController.printToGameConsole("cannot use in combat!");
             return;
         }
         weilder.maxHP = weilder.maxHP + 1;
@@ -643,8 +630,7 @@ export class SmashMeteorite extends Ability{
         weilder.currentHP = weilder.currentHP + 1;
         weilder.currentStamina = weilder.currentStamina + 1;
         weilder.currentMagic = weilder.currentMagic + 1;
-        theController.gameConsole.innerHTML += `<p>${weilder.name} smashes a meteorite!</p>`;
-        theController.scrollToBottom("game-console");
+        theController.printToGameConsole(`${weilder.name} smashes a meteorite!`);
         return true;
     }
 }
