@@ -12,7 +12,7 @@ import Battle from "./battle.js";
 
 export default class Controller {
     constructor(){
-        this.characterCreationArray = ["name", "apperance", "background", [], 12, 12, 12];
+        this.characterCreationArray = ["name", "apperance", "background", "inventoryArray", "attributesArray", "statsArray"];
         this.map = "";
         this.miniMap = "";
         this.player = "";
@@ -68,6 +68,91 @@ export default class Controller {
         document.getElementById("keepsake-selection").addEventListener("change", ()=>{
             this.characterCreatorUpdateInventory();
         });
+    }
+    characterCreatorDetermineUpdateStats(){
+        let value = document.getElementById("background-selection").value;
+        switch(value){
+            case "traveler":
+                this.characterCreatorUpdateStats(5, 5, 5, 5, 5, 5);
+                break;
+            case "blacksmith":
+                this.characterCreatorUpdateStats(8, 5, 6, 4, 3, 3);
+                break;
+            case "ranger":
+                this.characterCreatorUpdateStats(6, 6, 3, 7, 3, 5);
+                break;
+            case "hermit":
+                this.characterCreatorUpdateStats(5, 5, 3, 4, 7, 6);
+                break;
+        }
+    }
+    characterCreatorUpdateStats(vigor, endurance, strength, dexterity, insight, focus){
+        this.characterCreationArray[4] = [vigor, endurance, strength, dexterity, insight, focus];
+        this.characterCreationArray[5] = this.scaleAttributes(vigor, endurance, strength, dexterity, insight, focus);
+        document.getElementById("character-creation-vigor").innerText = this.characterCreationArray[4][0];
+        document.getElementById("character-creation-endurance").innerText = this.characterCreationArray[4][1];
+        document.getElementById("character-creation-strength").innerText = this.characterCreationArray[4][2];
+        document.getElementById("character-creation-dexterity").innerText = this.characterCreationArray[4][3];
+        document.getElementById("character-creation-insight").innerText = this.characterCreationArray[4][4];
+        document.getElementById("character-creation-focus").innerText = this.characterCreationArray[4][5];
+        document.getElementById("character-creation-health").innerText = this.characterCreationArray[5][0];
+        document.getElementById("character-creation-stamina").innerText = this.characterCreationArray[5][1];
+        document.getElementById("character-creation-magic").innerText = this.characterCreationArray[5][2];
+        document.getElementById("character-creation-blunt-attack").innerText = this.characterCreationArray[5][3];
+        document.getElementById("character-creation-pierce-attack").innerText = this.characterCreationArray[5][4];
+        document.getElementById("character-creation-arcane-attack").innerText = this.characterCreationArray[5][5];
+        document.getElementById("character-creation-element-attack").innerText = this.characterCreationArray[5][6];
+        document.getElementById("character-creation-blunt-defense").innerText = this.characterCreationArray[5][7];
+        document.getElementById("character-creation-pierce-defense").innerText = this.characterCreationArray[5][8];
+        document.getElementById("character-creation-arcane-defense").innerText = this.characterCreationArray[5][9];
+        document.getElementById("character-creation-element-defense").innerText = this.characterCreationArray[5][10];
+        document.getElementById("character-creation-speed").innerText = this.characterCreationArray[5][11];
+    }
+    characterCreatorUpdateInventory(){
+        let inventoryArray = [];
+        let value = document.getElementById("background-selection").value;
+        inventoryArray.push(new LinenShirt, new LinenPants)
+        switch(value){
+            case "traveler":
+                inventoryArray.push(new WoodSpear, new LeatherBoots);
+                break;
+            case "blacksmith":
+                inventoryArray.push(new WoodSword, new IronHelmet);
+                break;
+            case "ranger":
+                inventoryArray.push(new WoodDagger, new WoodSideDagger);
+                break;
+            case "hermit":
+                inventoryArray.push(new WoodFireStaff);
+                break;
+        }
+        let value2 = document.getElementById("keepsake-selection").value;
+        switch(value2){
+            case "none":
+                break;
+            case "throwing-knifes":
+                inventoryArray.push(new ThrowingKnife, new ThrowingKnife, new PoisonedThrowingKnife );
+                break;
+            case "bag-of-potions":
+                inventoryArray.push(new HealthPotion, new StaminaPotion , new MagicPotion);
+                break;
+            case "meteorite":
+                inventoryArray.push(new Meteorite);
+                break;
+        }
+        for(let i = -1; i < this.characterCreationArray[3].length; i++){
+            let oldSlot = document.getElementById("character-creation-inventory").querySelector('p');
+            if(oldSlot !== null){
+                oldSlot.remove();
+            } 
+        }
+        for(let i = 0; i < inventoryArray.length; i++){
+            let inventorySlot = document.createElement('p');
+            inventorySlot.classList.add('inventory-slot');
+            inventorySlot.innerText = this.capitalizeFirstLetter(inventoryArray[i].name);
+            document.getElementById("character-creation-inventory").appendChild(inventorySlot);
+        }
+        this.characterCreationArray[3] = inventoryArray;
     }
     enableGameOverScreenControls(){
         document.getElementById('gameover-to-menu-btn').addEventListener("click", ()=>{
@@ -210,77 +295,6 @@ export default class Controller {
             btn.style.visibility = "hidden";
         });
     }
-    characterCreatorDetermineUpdateStats(){
-        let value = document.getElementById("background-selection").value;
-        switch(value){
-            case "traveler":
-                this.characterCreatorUpdateStats(12, 12, 12);
-                break;
-            case "blacksmith":
-                this.characterCreatorUpdateStats(15, 12, 8);
-                break;
-            case "ranger":
-                this.characterCreatorUpdateStats(12, 15, 8);
-                break;
-            case "hermit":
-                this.characterCreatorUpdateStats(12, 8, 15);
-                break;
-        }
-    }
-    characterCreatorUpdateStats(health, stamina, magic){
-        this.characterCreationArray[4] = health;
-        this.characterCreationArray[5] = stamina;
-        this.characterCreationArray[6] = magic;
-        document.getElementById("character-creation-health").innerText = this.characterCreationArray[4];
-        document.getElementById("character-creation-stamina").innerText = this.characterCreationArray[5];
-        document.getElementById("character-creation-magic").innerText = this.characterCreationArray[6];
-    }
-    characterCreatorUpdateInventory(){
-        let inventoryArray = [];
-        let value = document.getElementById("background-selection").value;
-        inventoryArray.push(new LinenShirt, new LinenPants)
-        switch(value){
-            case "traveler":
-                inventoryArray.push(new WoodSpear, new LeatherBoots);
-                break;
-            case "blacksmith":
-                inventoryArray.push(new WoodSword, new IronHelmet);
-                break;
-            case "ranger":
-                inventoryArray.push(new WoodDagger, new WoodSideDagger);
-                break;
-            case "hermit":
-                inventoryArray.push(new WoodFireStaff);
-                break;
-        }
-        let value2 = document.getElementById("keepsake-selection").value;
-        switch(value2){
-            case "none":
-                break;
-            case "throwing-knifes":
-                inventoryArray.push(new ThrowingKnife, new ThrowingKnife, new PoisonedThrowingKnife );
-                break;
-            case "bag-of-potions":
-                inventoryArray.push(new HealthPotion, new StaminaPotion , new MagicPotion);
-                break;
-            case "meteorite":
-                inventoryArray.push(new Meteorite);
-                break;
-        }
-        for(let i = -1; i < this.characterCreationArray[3].length; i++){
-            let oldSlot = document.getElementById("character-creation-inventory").querySelector('p');
-            if(oldSlot !== null){
-                oldSlot.remove();
-            } 
-        }
-        for(let i = 0; i < inventoryArray.length; i++){
-            let inventorySlot = document.createElement('p');
-            inventorySlot.classList.add('inventory-slot');
-            inventorySlot.innerText = this.capitalizeFirstLetter(inventoryArray[i].name);
-            document.getElementById("character-creation-inventory").appendChild(inventorySlot);
-        }
-        this.characterCreationArray[3] = inventoryArray;
-    }
     toggleMap(){
         document.getElementById('battle-button-container').style.display = "none";
         document.getElementById('map-button-container').style.display = "block";
@@ -324,7 +338,7 @@ export default class Controller {
     }
     updatePlayerInventoryTab(inventory){
         for(let i = -1; i < inventory.length; i++){
-            let oldSlot = document.getElementById('inventory-tab').querySelector('p');
+            let oldSlot = document.getElementById('inventory').querySelector('p');
             if(oldSlot !== null){
                 oldSlot.remove();
             } 
@@ -339,7 +353,7 @@ export default class Controller {
             inventorySlot.innerText = this.capitalizeFirstLetter(inventory[i].name);
             inventorySlot.appendChild(inventorySlotMenu);
             inventorySlotMenu.appendChild(slotMenuUseBtn);//equipment specific
-            document.getElementById('inventory-tab').appendChild(inventorySlot);
+            document.getElementById('inventory').appendChild(inventorySlot);
             if(inventory[i].type != "consumable"){
                 slotMenuUseBtn.innerText = "Equip";//equipment specific
                 slotMenuUseBtn.addEventListener('click', ()=>{ //equipment specific
@@ -362,6 +376,12 @@ export default class Controller {
         document.getElementById('stamina-bar-player-progress').style.width = Math.floor(this.player.currentStamina/this.player.maxStamina*100) + "%";
         document.getElementById('magic-bar-player-progress').style.width = Math.floor(this.player.currentMagic/this.player.maxMagic*100) + "%";
         document.getElementById('player-level-label').innerText = "★ " + this.player.level;
+        document.getElementById('current-vigor').innerText = this.player.vigor;
+        document.getElementById('current-endurance').innerText = this.player.endurance;
+        document.getElementById('current-strength').innerText = this.player.strength;
+        document.getElementById('current-dexterity').innerText = this.player.dexterity;
+        document.getElementById('current-insight').innerText = this.player.insight;
+        document.getElementById('current-focus').innerText = this.player.focus;
         document.getElementById('current-experience').innerText = this.player.currentXP;
         document.getElementById('current-speed').innerText = this.player.currentSpeed;
         document.getElementById('current-blunt-attack').innerText = this.player.currentBluntAttack; 
@@ -632,6 +652,21 @@ export default class Controller {
     playSoundEffect(soundEffectPath){
         document.getElementById('sound-effect-player').src = soundEffectPath;
         document.getElementById('sound-effect-player').play();  
+    }
+    scaleAttributes(vigor, endurance, strength, dexterity, insight, focus){
+        let maxHP = (vigor * 5) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 1) + (focus * 1);
+        let maxStamina = (vigor * 1) + (endurance * 3) + (strength * 2) + (dexterity * 2) + (insight * 1) + (focus * 1);
+        let maxMagic = (vigor * 1) + (endurance * 3) + (strength * 1) + (dexterity * 1) + (insight * 2) + (focus * 2);
+        let baseBluntAttack = (vigor * 1) + (endurance * 1) + (strength * 3) + (dexterity * 1) + (insight * 1) + (focus * 1);
+        let basePierceAttack = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 3) + (insight * 1) + (focus * 1);
+        let baseArcaneAttack = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 3) + (focus * 1);
+        let baseElementalAttack = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 1) + (focus * 3);
+        let baseBluntDefense = (vigor * 1) + (endurance * 1) + (strength * 2) + (dexterity * 1) + (insight * 1) + (focus * 1);
+        let basePierceDefense = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 2) + (insight * 1) + (focus * 1);
+        let baseArcaneDefense = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 2) + (focus * 1);
+        let baseElementalDefense = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 1) + (focus * 2);
+        let baseSpeed = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 1) + (focus * 1);
+        return [maxHP, maxStamina, maxMagic, baseBluntAttack, basePierceAttack, baseArcaneAttack, baseElementalAttack, baseBluntDefense, basePierceDefense, baseArcaneDefense, baseElementalDefense, baseSpeed];
     }
 }
 

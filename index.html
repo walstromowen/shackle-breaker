@@ -65,32 +65,32 @@
                         <div id='character-creation-stats-attributes-container'>
                             <div id='character-creation-attributes-container'>
                                 <h3>Attributes</h3>
-                                <div class='character-creation-stat-row'>
-                                    <div class='character-creation-stat-cell'>
+                                <div class='stat-row'>
+                                    <div class='stat-cell'>
                                         <p>Vigor</p>
                                         <p><span id='character-creation-vigor'>0</span></p>
                                     </div>
-                                    <div class='character-creation-stat-cell'>
+                                    <div class='stat-cell'>
                                         <p>Endurance</p>
                                         <p><span id='character-creation-endurance'>0</span></p>
                                     </div>
                                 </div>
-                                <div class='character-creation-stat-row'>
-                                    <div class='character-creation-stat-cell'>
+                                <div class='stat-row'>
+                                    <div class='stat-cell'>
                                         <p>Strength</p>
                                         <p><span id='character-creation-strength'>0</span></p>
                                     </div>
-                                    <div class='character-creation-stat-cell'>
+                                    <div class='stat-cell'>
                                         <p>Dexterity</p>
                                         <p><span id='character-creation-dexterity'>0</span></p>
                                     </div>
                                 </div>
-                                <div class='character-creation-stat-row'>
-                                    <div class='character-creation-stat-cell'>
+                                <div class='stat-row'>
+                                    <div class='stat-cell'>
                                         <p>Insight</p>
                                         <p><span id='character-creation-insight'>0</span></p>
                                     </div>
-                                    <div class='character-creation-stat-cell'>
+                                    <div class='stat-cell'>
                                         <p>Focus</p>
                                         <p><span id='character-creation-focus'>0</span></p>
                                     </div>
@@ -98,62 +98,62 @@
                             </div>
                             <div id='character-creation-stats-container'>
                                 <h3>Stats</h3>
-                                <div class='character-creation-stat-row'>
-                                    <div class='character-creation-stat-cell'>
+                                <div class='stat-row'>
+                                    <div class='stat-cell'>
                                         <p>Health</p>
                                         <p><span id='character-creation-health'>0</span></p>
                                     </div>
-                                    <div class='character-creation-stat-cell'>
+                                    <div class='stat-cell'>
                                         <p>Stamina</p>
                                         <p><span id='character-creation-stamina'>0</span></p>
                                     </div>
                                 </div>
-                                <div class='character-creation-stat-row'>
-                                    <div class='character-creation-stat-cell'>
+                                <div class='stat-row'>
+                                    <div class='stat-cell'>
                                         <p>Magic</p>
                                         <p><span id='character-creation-magic'>0</span></p>
                                     </div>
-                                    <div class='character-creation-stat-cell'>
+                                    <div class='stat-cell'>
                                         <p>Speed</p>
                                         <p><span id='character-creation-speed'>0</span></p>
                                     </div>
                                 </div>
-                                <div class='character-creation-stat-row'>
-                                    <div class='character-creation-stat-cell'>
+                                <div class='stat-row'>
+                                    <div class='stat-cell'>
                                         <p>Blunt ATK</p>
                                         <p><span id='character-creation-blunt-attack'>0</span></p>
                                     </div>
-                                    <div class='character-creation-stat-cell'>
+                                    <div class='stat-cell'>
                                         <p>Blunt DEF</p>
                                         <p><span id='character-creation-blunt-defense'>0</span></p>
                                     </div>
                                 </div>
-                                <div class='character-creation-stat-row'>
-                                    <div class='character-creation-stat-cell'>
+                                <div class='stat-row'>
+                                    <div class='stat-cell'>
                                         <p>Pierce ATK</p>
                                         <p><span id='character-creation-pierce-attack'>0</span></p>
                                     </div>
-                                    <div class='character-creation-stat-cell'>
+                                    <div class='stat-cell'>
                                         <p>Pierce DEF</p>
                                         <p><span id='character-creation-pierce-defense'>0</span></p>
                                     </div>
                                 </div>
-                                <div class='character-creation-stat-row'>
-                                    <div class='character-creation-stat-cell'>
+                                <div class='stat-row'>
+                                    <div class='stat-cell'>
                                         <p>Arcane ATK</p>
                                         <p><span id='character-creation-arcane-attack'>0</span></p>
                                     </div>
-                                    <div class='character-creation-stat-cell'>
+                                    <div class='stat-cell'>
                                         <p>Arcane DEF</p>
                                         <p><span id='character-creation-arcane-defense'>0</span></p>
                                     </div>
                                 </div>
-                                <div class='character-creation-stat-row'>
-                                    <div class='character-creation-stat-cell'>
+                                <div class='stat-row'>
+                                    <div class='stat-cell'>
                                         <p>Element ATK</p>
                                         <p><span id='character-creation-element-attack'>0</span></p>
                                     </div>
-                                    <div class='character-creation-stat-cell'>
+                                    <div class='stat-cell'>
                                         <p>Element DEF</p>
                                         <p><span id='character-creation-element-defense'>0</span></p>
                                     </div>
@@ -172,7 +172,7 @@
                         <div id='character-creator-image-container'>
                             <image id='character-creator-apperance-image' src='./media/knight-1.jpg'></image>
                         </div>
-                            <div class='title-screen-button' id='character-creation-submit-btn'><h4>Submit</h4></div>
+                            <div id='character-creation-submit-btn'><h4 class='title-screen-button-header'>Submit</h4></div>
                     </div>
                 </div>
             </div>
@@ -229,82 +229,138 @@
                             <div class ='equip-slots-row'>
                                 <p class='equip-slot-label'>Main:</p>
                                 <p id='equip-slot-0' class='equip-slot'>Empty</p>
-                                <p id='unequip-btn-0' class='unequip-btn'>Unequip</p>
+                                <p id='unequip-btn-0' class='unequip-btn'>x</p>
                             </div>
                             <div class ='equip-slots-row'>
                                 <p class='equip-slot-label'>Offhand:</p>
                                 <p id='equip-slot-1' class='equip-slot'>Empty</p>
-                                <p id='unequip-btn-1' class='unequip-btn'>Unequip</p>
+                                <p id='unequip-btn-1' class='unequip-btn'>x</p>
                             </div>
                             <div class ='equip-slots-row'>
                                 <p class='equip-slot-label'>Head:</p>
                                 <p id='equip-slot-2' class='equip-slot'>Empty</p>
-                                <p id='unequip-btn-2' class='unequip-btn'>Unequip</p>
+                                <p id='unequip-btn-2' class='unequip-btn'>x</p>
                             </div>
                             <div class ='equip-slots-row'>
                                 <p class='equip-slot-label'>Torso:</p>
                                 <p id='equip-slot-3' class='equip-slot'>Empty</p>
-                                <p id='unequip-btn-3' class='unequip-btn'>Unequip</p>
+                                <p id='unequip-btn-3' class='unequip-btn'>x</p>
                             </div>
                             <div class ='equip-slots-row'>
                                 <p class='equip-slot-label  '>Arms:</p>
                                 <p id='equip-slot-4' class='equip-slot'>Empty</p>
-                                <p id='unequip-btn-4' class='unequip-btn'>Unequip</p>
+                                <p id='unequip-btn-4' class='unequip-btn'>x</p>
                             </div>
                             <div class ='equip-slots-row'>
                                 <p class='equip-slot-label  '>Legs:</p>
                                 <p id='equip-slot-5' class='equip-slot'>Empty</p>
-                                <p id='unequip-btn-5' class='unequip-btn'>Unequip</p>
+                                <p id='unequip-btn-5' class='unequip-btn'>x</p>
                             </div>
                             <div class='equip-slots-row'>
                                 <p class='equip-slot-label  '>Feet:</p>
                                 <p id='equip-slot-6' class='equip-slot'>Empty</p>
-                                <p id='unequip-btn-6' class='unequip-btn'>Unequip</p>
+                                <p id='unequip-btn-6' class='unequip-btn'>x</p>
                             </div>
                         </div>
                     </div>
-                    <div class='tab' id='inventory-tab'></div>
+                    <div class='tab' id='inventory-tab'>
+                        <p class='stats-sub-label' >Currency</p>
+                        <div class='stat-row'>
+                            <div class ='stat-cell'>
+                                <p class='secondary-stat-slot-label'>Gold:</p>
+                                <p><span id='current-gold'>0</span></p>
+                            </div>
+                            <div class ='stat-cell'>
+                                <p class='secondary-stat-slot-label'>Silver:</p>
+                                <p><span id='current-silver'>0</span></p>
+                            </div>
+                        </div>
+                        <p class='stats-sub-label' >Items</p>
+                        <div id='inventory'></div>
+                    </div>
                     <div class='tab' id='secondary-stats-tab'> <!--Toggle on click-->
                         <div id='secondary-stats-container'>
-                            <div class ='secondary-stat-row'>
-                                <p class='secondary-stat-slot-label'>Expereince:</p>
-                                <p id='current-experience' class='secondary-stat-slot'>0</p>
+                            <p class='stats-sub-label' >Attributes</p>
+                            <div class='stat-row'>
+                                <div class ='stat-cell'>
+                                    <p class='secondary-stat-slot-label'>VIG:</p>
+                                    <p id='current-vigor' class='secondary-stat-slot'>0</p>
+                                </div>
+                                <div class ='stat-cell'>
+                                    <p class='secondary-stat-slot-label'>END:</p>
+                                    <p id='current-endurance' class='secondary-stat-slot'>0</p>
+                                </div>
                             </div>
-                            <div class ='secondary-stat-row'>
-                                <p class='secondary-stat-slot-label'>Blunt ATK:</p>
-                                <p id='current-blunt-attack' class='secondary-stat-slot'>0</p>
+                            <div class='stat-row'>
+                                <div class ='stat-cell'>
+                                    <p class='secondary-stat-slot-label'>STR:</p>
+                                    <p id='current-strength' class='secondary-stat-slot'>0</p>
+                                </div>
+                                <div class ='stat-cell'>
+                                    <p class='secondary-stat-slot-label'>DEX:</p>
+                                    <p id='current-dexterity' class='secondary-stat-slot'>0</p>
+                                </div>
                             </div>
-                            <div class ='secondary-stat-row'>
-                                <p class='secondary-stat-slot-label'>Pierce ATK:</p>
-                                <p id='current-pierce-attack' class='secondary-stat-slot'>0</p>
+                            <div class='stat-row'>
+                                <div class ='stat-cell'>
+                                    <p class='secondary-stat-slot-label'>INS:</p>
+                                    <p id='current-insight' class='secondary-stat-slot'>0</p>
+                                </div>
+                                <div class ='stat-cell'>
+                                    <p class='secondary-stat-slot-label'>FCS:</p>
+                                    <p id='current-focus' class='secondary-stat-slot'>0</p>
+                                </div>
                             </div>
-                            <div class ='secondary-stat-row'>
-                                <p class='secondary-stat-slot-label'>Arcane ATK:</p>
-                                <p id='current-arcane-attack' class='secondary-stat-slot'>0</p>
+                            <p class='stats-sub-label' >Stats</p>
+                            <div class='stat-row'>
+                                <div class ='stat-cell'>
+                                    <p class='secondary-stat-slot-label'>XP :</p>
+                                    <p id='current-experience' class='secondary-stat-slot'>0</p>
+                                </div>
+                                <div class ='stat-cell'>
+                                    <p class='secondary-stat-slot-label'>SPD:</p>
+                                    <p id='current-speed' class='secondary-stat-slot'>0</p>
+                                </div>
                             </div>
-                            <div class ='secondary-stat-row'>
-                                <p class='secondary-stat-slot-label'>Element ATK:</p>
-                                <p id='current-element-attack' class='secondary-stat-slot'>0</p>
+                            <div class='stat-row'>
+                                <div class ='stat-cell'>
+                                    <p class='secondary-stat-slot-label'>BLT ATK:</p>
+                                    <p id='current-blunt-attack' class='secondary-stat-slot'>0</p>
+                                </div>
+                                <div class ='stat-cell'>
+                                    <p class='secondary-stat-slot-label'>BLT DEF:</p>
+                                    <p id='current-blunt-defense' class='secondary-stat-slot'>0</p>
+                                </div>
                             </div>
-                            <div class ='secondary-stat-row'>
-                                <p class='secondary-stat-slot-label'>Blunt DEF:</p>
-                                <p id='current-blunt-defense' class='secondary-stat-slot'>0</p>
+                            <div class='stat-row'>
+                                <div class ='stat-cell'>
+                                    <p class='secondary-stat-slot-label'>PIR ATK:</p>
+                                    <p id='current-pierce-attack' class='secondary-stat-slot'>0</p>
+                                </div>
+                                <div class ='stat-cell'>
+                                    <p class='secondary-stat-slot-label'>PIR DEF:</p>
+                                    <p id='current-pierce-defense' class='secondary-stat-slot'>0</p>
+                                </div>
                             </div>
-                            <div class ='secondary-stat-row'>
-                                <p class='secondary-stat-slot-label'>Pierce DEF:</p>
-                                <p id='current-pierce-defense' class='secondary-stat-slot'>0</p>
+                            <div class='stat-row'>
+                                <div class ='stat-cell'>
+                                    <p class='secondary-stat-slot-label'>ARC ATK:</p>
+                                    <p id='current-arcane-attack' class='secondary-stat-slot'>0</p>
+                                </div>
+                                <div class ='stat-cell'>
+                                    <p class='secondary-stat-slot-label'>ARC DEF:</p>
+                                    <p id='current-arcane-defense' class='secondary-stat-slot'>0</p>
+                                </div>
                             </div>
-                            <div class ='secondary-stat-row'>
-                                <p class='secondary-stat-slot-label'>Arcane DEF:</p>
-                                <p id='current-arcane-defense' class='secondary-stat-slot'>0</p>
-                            </div>
-                            <div class ='secondary-stat-row'>
-                                <p class='secondary-stat-slot-label'>Element DEF:</p>
-                                <p id='current-element-defense' class='secondary-stat-slot'>0</p>
-                            </div>
-                            <div class ='secondary-stat-row'>
-                                <p class='secondary-stat-slot-label'>Speed:</p>
-                                <p id='current-speed' class='secondary-stat-slot'>0</p>
+                            <div class='stat-row'>
+                                <div class ='stat-cell'>
+                                    <p class='secondary-stat-slot-label'>ELM ATK:</p>
+                                    <p id='current-element-attack' class='secondary-stat-slot'>0</p>
+                                </div>
+                                <div class ='stat-cell'>
+                                    <p class='secondary-stat-slot-label'>ELM DEF:</p>
+                                    <p id='current-element-defense' class='secondary-stat-slot'>0</p>
+                                </div>
                             </div>
                         </div>
                     </div>

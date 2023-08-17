@@ -4,9 +4,9 @@ Text adventure game based on the ShacklerBreaker story
 ## TODO
 
 # New Features
+* stat scalling and link to attributes
 * Traps / encounters / choices before battles
 * Parrying System
-* Attributes linked to stats ()
 * Enviorment specific music
 * Status effect icons / Indicators
 * Shop/crafting/weapon level up / Town / Gold
@@ -17,7 +17,6 @@ Text adventure game based on the ShacklerBreaker story
 # Quality of Life
 * Rework character level / xp 
 * Alphabetize CSS rules
-* Organize Controllers
 * UI overhall
 
 # Bugs
