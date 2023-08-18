@@ -288,19 +288,19 @@ export default class Controller {
                         this.player.vigor = this.player.vigor + 1;
                         break;
                     case "endurance":
-                        this.player.vigor = this.player.endurance + 1;
+                        this.player.endurance = this.player.endurance + 1;
                         break;
                     case "strength":
-                        this.player.vigor = this.player.strength + 1;
+                        this.player.strength = this.player.strength + 1;
                         break;
                     case "dexterity":
-                        this.player.vigor = this.player.dexterity + 1;
+                        this.player.dexterity = this.player.dexterity + 1;
                         break;
                     case "insight":
-                        this.player.vigor = this.player.insight + 1;
+                        this.player.insight = this.player.insight + 1;
                         break;
                     case "focus":
-                        this.player.vigor = this.player.focus + 1;
+                        this.player.focus = this.player.focus + 1;
                         break;
                 }
                 let newStats = this.scaleAttributes(this.player.vigor, this.player.endurance, this.player.strength, this.player.dexterity, this.player.insight, this.player.focus);
@@ -318,6 +318,7 @@ export default class Controller {
                 this.player.currentHP = this.player.maxHP;
                 this.player.currentStamina = this.player.maxStamina;
                 this.player.currentMagic = this.player.maxMagic;
+                this.calcPlayerAbilitiesAndStats();
                 document.getElementById('music-player').play();
                 this.updatePlayerStats();
                 this.player.canMoveRoom = true;
@@ -437,6 +438,9 @@ export default class Controller {
         document.getElementById('health-bar-player-progress').style.width = Math.floor(this.player.currentHP/this.player.maxHP*100) + "%";
         document.getElementById('stamina-bar-player-progress').style.width = Math.floor(this.player.currentStamina/this.player.maxStamina*100) + "%";
         document.getElementById('magic-bar-player-progress').style.width = Math.floor(this.player.currentMagic/this.player.maxMagic*100) + "%";
+        
+        
+
         document.getElementById('player-level-label').innerText = "★ " + this.player.level;
         document.getElementById('current-vigor').innerText = this.player.vigor;
         document.getElementById('current-endurance').innerText = this.player.endurance;
@@ -462,6 +466,20 @@ export default class Controller {
         document.getElementById('health-bar-enemy-progress').style.width = Math.floor(this.battle.enemy.currentHP/this.battle.enemy.maxHP*100) + "%";
         document.getElementById('stamina-bar-enemy-progress').style.width = Math.floor(this.battle.enemy.currentStamina/this.battle.enemy.maxStamina*100) + "%";
         document.getElementById('magic-bar-enemy-progress').style.width = Math.floor(this.battle.enemy.currentMagic/this.battle.enemy.maxMagic*100) + "%";
+    }
+    animateVitalBar(entity, vitalBarType){
+        if(entity === this.player){
+            document.getElementById(`${vitalBarType}-bar-player-progress`).classList.toggle("is-flashing");
+            setTimeout(()=>{
+                document.getElementById(`${vitalBarType}-bar-player-progress`).classList.toggle("is-flashing");
+            }, 500);
+        }
+        else{
+            document.getElementById(`${vitalBarType}-bar-enemy-progress`).classList.toggle("is-flashing");
+            setTimeout(()=>{
+                document.getElementById(`${vitalBarType}-bar-enemy-progress`).classList.toggle("is-flashing");
+            }, 500);
+        }
     }
     movePlayerNorth(){
         this.movePlayerRoom(this.player.currentRoom.roomNorth);

@@ -257,7 +257,16 @@ p{
     border-radius: 10px;
     height: 100%;
     width: 100%;
-    margin: 0;
+    margin: 0; 
+    transition: 500ms linear;
+}
+.is-flashing{
+    animation: flash 100ms infinite;
+}
+@keyframes flash{
+    0% {filter: brightness(1.0)}
+    50% {filter: brightness(3.0)}
+    100% {filter: brightness(1.0)}
 }
 .vital-label{
     width:30%;

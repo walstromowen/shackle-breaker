@@ -24,9 +24,11 @@ class StatusEffect{
             return 0;
         }
         if(target.currentHP - damage< 0){
+            theController.animateVitalBar(target, "health");
             return target.currentHP;
         }
         else{
+            theController.animateVitalBar(target, "health");
             return damage;
         }
     }

@@ -48,7 +48,7 @@ export class Skeleton extends Enemy{
         this.currentArcaneDefense = this.baseArcaneDefense;
         this.baseElementalDefense = 35 + playerLevel*1; 
         this.currentElementalDefense = this.baseElementalDefense;
-        this.baseSpeed = 30 + playerLevel;
+        this.baseSpeed = 25 + playerLevel;
         this.currentSpeed = this.baseSpeed;
         this.abilityArray = [new Slash, new Block];
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot

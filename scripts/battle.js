@@ -19,7 +19,7 @@ export default class Battle{
         this.enemy.nextMove = this.enemy.chooseAttack();
         this.enemy.nextMove.canUse(this.enemy, this.player);
         theController.disablePlayerBattleControls();
-        if(this.player.nextMove.speedMultiplier * this.player.currentSpeed >= this.enemy.currentSpeed + this.enemy.nextMove.speedMultiplier){
+        if(this.player.nextMove.speedMultiplier * this.player.currentSpeed >= this.enemy.currentSpeed * this.enemy.nextMove.speedMultiplier){
             this.takeTurn(this.player, this.enemy);
         }else{
             this.takeTurn(this.enemy, this.player);

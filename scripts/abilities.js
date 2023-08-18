@@ -27,6 +27,7 @@ class Ability{
             return false;
         }else{
             weilder.currentStamina = weilder.currentStamina - staminaCost;
+            theController.animateVitalBar(weilder, "stamina");
             return true;
         }
     }
@@ -36,6 +37,7 @@ class Ability{
             return false;
         }else{
             weilder.currentMagic = weilder.currentMagic - magicCost;
+            theController.animateVitalBar(weilder, "magic");
             return true;
         }
     }
@@ -57,9 +59,11 @@ class Ability{
             return 0;
         }
         if(target.currentHP - damageOutput < 0){
+            theController.animateVitalBar(target, "health");
             return target.currentHP;
         }
         else{
+            theController.animateVitalBar(target, "health");
             return damageOutput;
         }
     }
