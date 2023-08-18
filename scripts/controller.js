@@ -106,7 +106,6 @@ export default class Controller {
         document.getElementById("character-creation-pierce-defense").innerText = this.characterCreationArray[5][8];
         document.getElementById("character-creation-arcane-defense").innerText = this.characterCreationArray[5][9];
         document.getElementById("character-creation-element-defense").innerText = this.characterCreationArray[5][10];
-        document.getElementById("character-creation-speed").innerText = this.characterCreationArray[5][11];
     }
     characterCreatorUpdateInventory(){
         let inventoryArray = [];
@@ -219,43 +218,106 @@ export default class Controller {
     }
     enableLevelUpControls(){
         let levelCheck = false;
-        let fullHeal = () =>{
-            this.player.currentHP = this.player.maxHP;
-            this.player.currentStamina = this.player.maxStamina;
-            this.player.currentMagic = this.player.maxMagic;
-        }
-        document.getElementById('increase-hp-btn').addEventListener('click', ()=>{
-            fullHeal();
-            this.player.currentHP = this.player.maxHP + 2;
+        let selectedStat = "";
+        document.getElementById('increase-vigor-btn').addEventListener('click', ()=>{
+            selectedStat = "vigor";
             levelCheck = true;
-            document.getElementById('increase-hp-btn').classList.add("title-screen-button-selected");
-            document.getElementById('increase-stamina-btn').classList.remove("title-screen-button-selected");
-            document.getElementById('increase-magic-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-vigor-btn').classList.add("title-screen-button-selected");
+            document.getElementById('increase-endurance-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-strength-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-dexterity-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-insight-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-focus-btn').classList.remove("title-screen-button-selected");
         });
-        document.getElementById('increase-stamina-btn').addEventListener('click', ()=>{
-            fullHeal();
-            this.player.currentStamina = this.player.maxStamina + 2;
+        document.getElementById('increase-endurance-btn').addEventListener('click', ()=>{
+            selectedStat = "endurance";
             levelCheck = true;
-            document.getElementById('increase-hp-btn').classList.remove("title-screen-button-selected");
-            document.getElementById('increase-stamina-btn').classList.add("title-screen-button-selected");
-            document.getElementById('increase-magic-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-vigor-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-endurance-btn').classList.add("title-screen-button-selected");
+            document.getElementById('increase-strength-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-dexterity-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-insight-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-focus-btn').classList.remove("title-screen-button-selected");
         });
-        document.getElementById('increase-magic-btn').addEventListener('click', ()=>{
-            fullHeal();
-            this.player.currentMagic = this.player.maxMagic + 2;
+        document.getElementById('increase-strength-btn').addEventListener('click', ()=>{
+            selectedStat = "strength";
             levelCheck = true;
-            document.getElementById('increase-hp-btn').classList.remove("title-screen-button-selected");
-            document.getElementById('increase-stamina-btn').classList.remove("title-screen-button-selected");
-            document.getElementById('increase-magic-btn').classList.add("title-screen-button-selected");
+            document.getElementById('increase-vigor-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-endurance-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-strength-btn').classList.add("title-screen-button-selected");
+            document.getElementById('increase-dexterity-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-insight-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-focus-btn').classList.remove("title-screen-button-selected");
+        });
+        document.getElementById('increase-dexterity-btn').addEventListener('click', ()=>{
+            selectedStat = "dexterity";
+            levelCheck = true;
+            document.getElementById('increase-vigor-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-endurance-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-strength-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-dexterity-btn').classList.add("title-screen-button-selected");
+            document.getElementById('increase-insight-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-focus-btn').classList.remove("title-screen-button-selected");
+        });
+        document.getElementById('increase-insight-btn').addEventListener('click', ()=>{
+            selectedStat = "insight";
+            levelCheck = true;
+            document.getElementById('increase-vigor-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-endurance-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-strength-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-dexterity-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-insight-btn').classList.add("title-screen-button-selected");
+            document.getElementById('increase-focus-btn').classList.remove("title-screen-button-selected");
+        });
+        document.getElementById('increase-focus-btn').addEventListener('click', ()=>{
+            selectedStat = "focus";
+            levelCheck = true;
+            document.getElementById('increase-vigor-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-endurance-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-strength-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-dexterity-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-insight-btn').classList.remove("title-screen-button-selected");
+            document.getElementById('increase-focus-btn').classList.add("title-screen-button-selected");
         });
         document.getElementById('submit-level-btn').addEventListener('click', ()=>{
             if(levelCheck == true){
-                this.player.maxHP = this.player.currentHP + 1;
-                this.player.maxStamina = this.player.currentStamina + 1;
-                this.player.maxMagic = this.player.currentMagic + 1;
-                fullHeal();
                 document.getElementById("app").style.display = "block";
                 document.getElementById('level-up-screen').style.display = "none";
+                switch(selectedStat){
+                    case "vigor":
+                        this.player.vigor = this.player.vigor + 1;
+                        break;
+                    case "endurance":
+                        this.player.vigor = this.player.endurance + 1;
+                        break;
+                    case "strength":
+                        this.player.vigor = this.player.strength + 1;
+                        break;
+                    case "dexterity":
+                        this.player.vigor = this.player.dexterity + 1;
+                        break;
+                    case "insight":
+                        this.player.vigor = this.player.insight + 1;
+                        break;
+                    case "focus":
+                        this.player.vigor = this.player.focus + 1;
+                        break;
+                }
+                let newStats = this.scaleAttributes(this.player.vigor, this.player.endurance, this.player.strength, this.player.dexterity, this.player.insight, this.player.focus);
+                this.player.maxHP = newStats[0];
+                this.player.maxStamina = newStats[1];
+                this.player.maxMagic = newStats[2];
+                this.player.baseBluntAttack = newStats[3];
+                this.player.basePierceAttack = newStats[4];
+                this.player.baseArcaneAttack = newStats[5];
+                this.player.baseElementalAttack = newStats[6];
+                this.player.baseBluntDefense = newStats[7];
+                this.player.basePierceDefense = newStats[8];
+                this.player.baseArcaneDefense = newStats[9];
+                this.player.baseElementalDefense = newStats[10];
+                this.player.currentHP = this.player.maxHP;
+                this.player.currentStamina = this.player.maxStamina;
+                this.player.currentMagic = this.player.maxMagic;
                 document.getElementById('music-player').play();
                 this.updatePlayerStats();
                 this.player.canMoveRoom = true;
@@ -665,8 +727,7 @@ export default class Controller {
         let basePierceDefense = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 2) + (insight * 1) + (focus * 1);
         let baseArcaneDefense = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 2) + (focus * 1);
         let baseElementalDefense = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 1) + (focus * 2);
-        let baseSpeed = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 1) + (focus * 1);
-        return [maxHP, maxStamina, maxMagic, baseBluntAttack, basePierceAttack, baseArcaneAttack, baseElementalAttack, baseBluntDefense, basePierceDefense, baseArcaneDefense, baseElementalDefense, baseSpeed];
+        return [maxHP, maxStamina, maxMagic, baseBluntAttack, basePierceAttack, baseArcaneAttack, baseElementalAttack, baseBluntDefense, basePierceDefense, baseArcaneDefense, baseElementalDefense];
     }
 }
 

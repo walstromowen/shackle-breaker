@@ -40,26 +40,27 @@ class Ability{
         }
     }
     checkDamage(damage, target, type){
+        let damageOutput = 0;
         if(type == "blunt"){
-            damage = damage - target.currentBluntDefense;
+            damageOutput = damage - target.currentBluntDefense;
         }
         if(type == "pierce"){
-            damage = damage - target.currentPierceDefense;
+            damageOutput = damage - target.currentPierceDefense;
         }
         if(type == "arcane"){
-            damage = damage - target.currentArcaneDefense;
+            damageOutput = damage - target.currentArcaneDefense;
         }
         if(type == "elemental"){
-            damage = damage - target.currentElementDefense;
+            damageOutput = damage - target.currentElementalDefense;
         }
-        if(damage < 0){
+        if(damageOutput < 0){
             return 0;
         }
-        if(target.currentHP - damage< 0){
+        if(target.currentHP - damageOutput < 0){
             return target.currentHP;
         }
         else{
-            return damage;
+            return damageOutput;
         }
     }
 }
@@ -77,7 +78,7 @@ export class Punch extends Ability{
     activate(weilder, target){
         if(this.checkStamina(weilder, this.staminaCost) == true){
             let damageOutput = Math.floor(Math.random() * ((weilder.currentBluntAttack + this.damageModifier) - weilder.currentBluntAttack + 1)) + weilder.currentBluntAttack;
-            damageOutput = this.checkDamage(damageOutput, target);
+            damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
             theController.playSoundEffect(this.soundEffect);
@@ -98,7 +99,7 @@ export class Slash extends Ability{
     activate(weilder, target){
         if(this.checkStamina(weilder, this.staminaCost) == true){
             let damageOutput = Math.floor(Math.random() * ((weilder.currentPierceAttack + this.damageModifier) - weilder.currentPierceAttack + 1)) + weilder.currentPierceAttack;
-            damageOutput = this.checkDamage(damageOutput, target);
+            damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
             theController.playSoundEffect(this.soundEffect);
@@ -120,7 +121,7 @@ export class Stab extends Ability{
     activate(weilder, target){
         if(this.checkStamina(weilder, this.staminaCost) == true){
             let damageOutput = Math.floor(Math.random() * ((weilder.currentPierceAttack + this.damageModifier) - weilder.currentPierceAttack + 1)) + weilder.currentPierceAttack;
-            damageOutput = this.checkDamage(damageOutput, target);
+            damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
             theController.playSoundEffect(this.soundEffect);
@@ -235,7 +236,7 @@ export class Bite extends Ability{
     activate(weilder, target){
         if(this.checkStamina(weilder, this.staminaCost) == true){
             let damageOutput = Math.floor(Math.random() * ((weilder.currentPierceAttack + this.damageModifier) - weilder.currentPierceAttack + 1)) + weilder.currentPierceAttack;
-            damageOutput = this.checkDamage(damageOutput, target);
+            damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
             theController.playSoundEffect(this.soundEffect);
@@ -256,7 +257,7 @@ export class Pounce extends Ability{
     activate(weilder, target){
         if(this.checkStamina(weilder, this.staminaCost) == true){
             let damageOutput = Math.floor(Math.random() * ((weilder.currentBluntAttack + this.damageModifier) - weilder.currentBluntAttack + 1)) + weilder.currentBluntAttack;
-            damageOutput = this.checkDamage(damageOutput, target);
+            damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
             theController.playSoundEffect(this.soundEffect);
@@ -289,7 +290,7 @@ export class LeechLife extends Ability{
     activate(weilder, target){
         if(this.checkStamina(weilder, this.staminaCost) == true){
             let damageOutput = Math.floor(Math.random() * ((weilder.currentPierceAttack + this.damageModifier) - weilder.currentPierceAttack + 1)) + weilder.currentPierceAttack;
-            damageOutput = this.checkDamage(damageOutput, target);
+            damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             let restoreAmount = damageOutput;
             if(weilder.currentHP + damageOutput > weilder.maxHP){
@@ -316,7 +317,7 @@ export class ArcaneDart extends Ability{
     activate(weilder, target){
         if(this.checkMagic(weilder, this.magicCost) == true){
             let damageOutput = Math.floor(Math.random() * ((weilder.currentArcaneAttack + this.damageModifier) - weilder.currentArcaneAttack + 1)) + weilder.currentArcaneAttack;
-            damageOutput = this.checkDamage(damageOutput, target);
+            damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
             theController.playSoundEffect(this.soundEffect);
@@ -338,7 +339,7 @@ export class ArcaneBlast extends Ability{
     activate(weilder, target){
         if(this.checkMagic(weilder, this.magicCost) == true){
             let damageOutput = Math.floor(Math.random() * ((weilder.currentArcaneAttack + this.damageModifier) - weilder.currentArcaneAttack + 1)) + weilder.currentArcaneAttack;
-            damageOutput = this.checkDamage(damageOutput, target);
+            damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
             weilder.currentArcaneAttack = weilder.baseArcaneAttack;
@@ -376,7 +377,7 @@ export class SpitBile extends Ability{
     activate(weilder, target){
         if(this.checkStamina(weilder, this.staminaCost) == true){
             let damageOutput = Math.floor(Math.random() * ((weilder.currentElementalAttack + this.damageModifier) - weilder.currentElementalAttack + 1)) + weilder.currentElementalAttack;
-            damageOutput = this.checkDamage(damageOutput, target);
+            damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
             theController.playSoundEffect(this.soundEffect);
@@ -407,7 +408,7 @@ export class Fireball extends Ability{
     activate(weilder, target){
         if(this.checkMagic(weilder, this.magicCost) == true){
             let damageOutput = Math.floor(Math.random() * ((weilder.currentElementalAttack + this.damageModifier) - weilder.currentElementalAttack + 1)) + weilder.currentElementalAttack;
-            damageOutput = this.checkDamage(damageOutput, target);
+            damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
             theController.playSoundEffect(this.soundEffect);
@@ -440,7 +441,7 @@ export class Devour extends Ability{
     activate(weilder, target){
         if(this.checkStamina(weilder, this.staminaCost) == true){
             let damageOutput = Math.floor(target.currentHP*0.7);
-            damageOutput = this.checkDamage(damageOutput, target);
+            damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
             theController.playSoundEffect(this.soundEffect);
@@ -464,7 +465,7 @@ export class Eviscerate extends Ability{
             if(target.currentHP == target.maxHP){
                 damageOutput = Math.floor(damageOutput * 1.5);
             }
-            damageOutput = this.checkDamage(damageOutput, target);
+            damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
             theController.playSoundEffect(this.soundEffect);
@@ -577,7 +578,7 @@ export class ThrowKnife extends Ability{
             return;
         }
         let damageOutput =  3 + (weilder.level * 2);
-        damageOutput = this.checkDamage(damageOutput, target);
+        damageOutput = this.checkDamage(damageOutput, target, this.type);
         target.currentHP = target.currentHP - damageOutput;
         theController.printToGameConsole(`${weilder.name} throws a throwing knfife at the ${target.name} for ${damageOutput} damage!`);
     }
@@ -598,7 +599,7 @@ export class ThrowPoisonedKnife extends Ability{
             return;
         }
         let damageOutput =  3 + (weilder.level * 2);
-        damageOutput = this.checkDamage(damageOutput, target);
+        damageOutput = this.checkDamage(damageOutput, target, this.type);
         target.currentHP = target.currentHP - damageOutput;
         theController.printToGameConsole(`${weilder.name} throws a poisoned throwing knfife at the ${target.name} for ${damageOutput} damage!`);
         if(damageOutput > 0){

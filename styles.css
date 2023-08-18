@@ -44,6 +44,7 @@ p{
 }
 .flex{
     display:flex;
+    justify-content: space-between;
 }
 /*Title Screen*/
 .title-screen-button{
@@ -494,8 +495,9 @@ p{
 }
 #level-up-screen-btn-container{
     display:flex;
+    flex-direction:column;
     justify-content: space-between;
-    margin: 10% 5%;
+    margin: 5%;
 }
 #submit-level-btn{
     margin:auto;

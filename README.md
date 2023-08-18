@@ -4,7 +4,7 @@ Text adventure game based on the ShacklerBreaker story
 ## TODO
 
 # New Features
-* stat scalling and link to attributes
+* stat scalling
 * Traps / encounters / choices before battles
 * Parrying System
 * Enviorment specific music
@@ -17,13 +17,13 @@ Text adventure game based on the ShacklerBreaker story
 # Quality of Life
 * Rework character level / xp 
 * Alphabetize CSS rules
-* UI overhall
 
 # Bugs
 * Blocking still active on quick second attack
 * Image Flashing
 
 # MISC notes
+* Enemy Level ups disstribute 16 points between stats
 * Ability speed multipliers 
 - 0.25 (slow) 
 - 0.5 (medium) 
