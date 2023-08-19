@@ -27,6 +27,10 @@ Text adventure game based on the ShacklerBreaker story
 - 0.25 (slow) 
 - 0.5 (medium) 
 - 0.75 (fast)
+* Ability Resource Multipliers
+- 0.9 (light) 
+- 0.8 (medium) 
+- 0.6 (heavy)
 * Ability Attack Modiffiers
 - Math.floor(Math.random() * (max - min + 1)) + min;
 - 1.0 to 1.25 (Light Attack) 

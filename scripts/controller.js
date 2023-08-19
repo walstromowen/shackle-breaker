@@ -34,6 +34,8 @@ export default class Controller {
             document.getElementById("character-creation-screen").style.display = "block";
             this.characterCreatorDetermineUpdateStats();
             this.characterCreatorUpdateInventory();
+            document.getElementById("music-player").src = "./audio/Alex-Productions - Epic Cinematic Adventure Vlog _ Eglair.mp3";
+            document.getElementById("music-player").play();
         });
         document.getElementById('title-exit-button').addEventListener("click", ()=>{
             window.close();
@@ -53,6 +55,8 @@ export default class Controller {
             document.getElementById('player-image').src = this.player.apperance;
             document.getElementById('location-name').innerText = this.capitalizeFirstLetter(this.map.mapEnviorment.biome);
             document.getElementById('location-image').src = this.map.mapEnviorment.imageSrc;
+            document.getElementById("music-player").src = this.map.mapEnviorment.backgroundMusicSrc;
+            document.getElementById("music-player").play();
             this.updatePlayerStats();
             this.enableKeyControls();
             this.enablePlayerMapControls();
@@ -402,9 +406,6 @@ export default class Controller {
         document.getElementById("location-image-container").style.display = "block";
         document.getElementById("enemy-main-stats-container").style.display = "none";
         document.getElementById("encounter-image-container").style.display = "none";
-        document.getElementById('music-player').pause();
-        document.getElementById("music-player").src = "./audio/deep-in-the-dell-126916.mp3";
-        document.getElementById("music-player").play();
         this.miniMap.resizeCanvas();
         this.miniMap.draw(this.map.roomArray, this.player.currentRoom);
         this.player.isInBattle = false;
@@ -774,6 +775,8 @@ export default class Controller {
                 }else{
                     
                 }
+                document.getElementById("music-player").src = this.map.mapEnviorment.backgroundMusicSrc;
+                document.getElementById("music-player").play();
                 this.toggleMap();
                 this.updateEnemyStats();
                 this.updatePlayerStats();

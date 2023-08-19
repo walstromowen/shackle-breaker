@@ -7,21 +7,25 @@ export default class MapEnviorment{
     constructor(){
         this.biome = "";
         this.imageSrc = "";
+        this.backgroundMusicSrc = "";
         this.generateBiome();
     }
     generateBiome(){
         switch(Math.floor(Math.random()*3)){ 
             case 0: 
                 this.biome = "cave";
-                this.imageSrc = "media/cave.jpg"
+                this.imageSrc = "media/cave.jpg";
+                this.backgroundMusicSrc = "./audio/gathering-darkness-kevin-macleod-main-version-04-22-8459.mp3";
                 break;
             case 1:
                 this.biome = "forest";
-                this.imageSrc = "media/forest.jpg"
+                this.imageSrc = "media/forest.jpg";
+                this.backgroundMusicSrc = "./audio/deep-in-the-dell-126916.mp3";
                 break;
             case 2:
                 this.biome = "plains";
-                this.imageSrc = "media/plains.jpg"
+                this.imageSrc = "media/plains.jpg";
+                this.backgroundMusicSrc = "./audio/the-epical-trailer-158083.mp3";
                 break;
             default:
                 break;
