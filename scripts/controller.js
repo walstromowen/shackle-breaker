@@ -3,7 +3,7 @@ import {LinenShirt, LinenPants, WoodDagger, WoodSpear, WoodSword,
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
         LeatherBoots, IronSheild, IronHelmet, IronGuantlets, IronChainmail, 
         IronGreaves, IronBoots, HealthPotion, StaminaPotion, MagicPotion, 
-        ThrowingKnife, PoisonedThrowingKnife, Meteorite} from "./items.js";
+        ThrowingKnife, PoisonedThrowingKnife, Meteorite, WoodHammer} from "./items.js";
 import {Recover, Punch, Retreat} from "./abilities.js"
 import Player from "./player.js";
 import Map from "./map.js";
@@ -119,10 +119,10 @@ export default class Controller {
         inventoryArray.push(new LinenShirt, new LinenPants)
         switch(value){
             case "traveler":
-                inventoryArray.push(new WoodSpear, new LeatherBoots);
+                inventoryArray.push(new WoodSword, new LeatherBoots);
                 break;
             case "blacksmith":
-                inventoryArray.push(new WoodSword, new IronHelmet);
+                inventoryArray.push(new WoodHammer, new IronHelmet);
                 break;
             case "ranger":
                 inventoryArray.push(new WoodDagger, new WoodSideDagger);
@@ -175,13 +175,13 @@ export default class Controller {
                         this.movePlayerNorth();
                         break;
                     case 'a':
-                        this.movePlayerWest();
+                        this.movePlayerEast();
                         break;
                     case 's':
                         this.movePlayerSouth();
                         break;
                     case 'd':
-                        this.movePlayerEast();
+                        this.movePlayerWest();
                         break;
                 }
             }
@@ -194,11 +194,44 @@ export default class Controller {
                 oldBtn.remove();
         }
         this.mapBtnArray = [];
-        let interactBtn = document.createElement('button');
-        interactBtn.classList.add('action-button');
-        interactBtn.innerText = "Interact";
-        document.getElementById('map-button-container').appendChild(interactBtn);
-        this.mapBtnArray.push(interactBtn);
+
+        let moveNorthBtn = document.createElement('button');
+        let moveSouthBtn = document.createElement('button');
+        let moveEastBtn = document.createElement('button');
+        let moveWestBtn = document.createElement('button');
+        moveNorthBtn.classList.add('action-button');
+        moveSouthBtn.classList.add('action-button');
+        moveEastBtn.classList.add('action-button');
+        moveWestBtn.classList.add('action-button');
+        moveNorthBtn.innerText = "Move North";
+        moveSouthBtn.innerText = "Move South";
+        moveEastBtn.innerText = "Move East";
+        moveWestBtn.innerText = "Move West";
+        moveNorthBtn.addEventListener('click',()=>{
+            if(this.player.canMoveRoom == true){
+                this.movePlayerNorth();
+            }
+        });
+        moveSouthBtn.addEventListener('click',()=>{
+            if(this.player.canMoveRoom == true){
+                this.movePlayerSouth();
+            }
+        });
+        moveEastBtn.addEventListener('click',()=>{
+            if(this.player.canMoveRoom == true){
+                this.movePlayerEast();
+            }
+        });
+        moveWestBtn.addEventListener('click',()=>{
+            if(this.player.canMoveRoom == true){
+                this.movePlayerWest();
+            }
+        });
+        document.getElementById('map-button-container').appendChild(moveNorthBtn);
+        document.getElementById('map-button-container').appendChild(moveSouthBtn);
+        document.getElementById('map-button-container').appendChild(moveEastBtn);
+        document.getElementById('map-button-container').appendChild(moveWestBtn);
+        this.mapBtnArray.push(moveNorthBtn, moveSouthBtn, moveEastBtn, moveWestBtn);
     }
     enableInventoryControls(){
         document.getElementById('equipped-tab-button').addEventListener('click',()=>{
@@ -287,8 +320,6 @@ export default class Controller {
         });
         document.getElementById('submit-level-btn').addEventListener('click', ()=>{
             if(levelCheck == true){
-                document.getElementById("app").style.display = "block";
-                document.getElementById('level-up-screen').style.display = "none";
                 switch(selectedStat){
                     case "vigor":
                         this.player.vigor = this.player.vigor + 1;
@@ -325,8 +356,11 @@ export default class Controller {
                 this.player.currentStamina = this.player.maxStamina;
                 this.player.currentMagic = this.player.maxMagic;
                 this.calcPlayerAbilitiesAndStats();
-                document.getElementById('music-player').play();
                 this.updatePlayerStats();
+                document.getElementById("app").style.display = "block";
+                document.getElementById('level-up-screen').style.display = "none";
+                document.getElementById("music-player").src = this.map.mapEnviorment.backgroundMusicSrc;
+                document.getElementById('music-player').play();
                 this.player.canMoveRoom = true;
             }
         });
@@ -432,7 +466,7 @@ export default class Controller {
             document.getElementById("enemy-main-stats-container").style.display = "block";
             document.getElementById("encounter-image-container").style.display = "none";
             this.enablePlayerBattleControls();
-            this.printToGameConsole(`You encounter a ${this.battle.enemy.name}!`);
+            this.printToGameConsole(`${this.player.name} encounter a ${this.battle.enemy.name}!`);
             document.getElementById('music-player').pause();
             document.getElementById('music-player').src = "./audio/battle-of-the-dragons-8037.mp3";
             document.getElementById('music-player').play();
@@ -565,7 +599,7 @@ export default class Controller {
             this.miniMap.draw(this.map.roomArray, this.player.currentRoom);
             if(this.player.currentRoom.isExit == true){
                 this.levelPlayerUp();
-                this.printToGameConsole("you find an exit!");
+                this.printToGameConsole(`${this.player.name} finds an exit!`);
                 this.generateNewMap();
             }
         }
@@ -583,7 +617,7 @@ export default class Controller {
                     }
                     this.player.equippedArray[0] = this.player.inventory[inventoryIndex];
                     this.player.inventory.splice(inventoryIndex, 1);
-                    this.printToGameConsole(`You equip ${this.player.equippedArray[0].name}.`);
+                    this.printToGameConsole(`${this.player.name} equips ${this.player.equippedArray[0].name}.`);
                     this.updatePlayerEquippedTab(0);
                     break;
                 case "offhand":
@@ -592,7 +626,7 @@ export default class Controller {
                     }
                     this.player.equippedArray[1] = this.player.inventory[inventoryIndex];
                     this.player.inventory.splice(inventoryIndex, 1);
-                    this.printToGameConsole(`You equip ${this.player.equippedArray[1].name}.`);
+                    this.printToGameConsole(`${this.player.name} equips ${this.player.equippedArray[1].name}.`);
                     this.updatePlayerEquippedTab(1);
                     break;
                 case "head":
@@ -601,7 +635,7 @@ export default class Controller {
                     } 
                     this.player.equippedArray[2] = this.player.inventory[inventoryIndex];
                     this.player.inventory.splice(inventoryIndex, 1); 
-                    this.printToGameConsole(`You equip ${this.player.equippedArray[2].name}.`);
+                    this.printToGameConsole(`${this.player.name} equips ${this.player.equippedArray[2].name}.`);
                     this.updatePlayerEquippedTab(2);
                     break;
                 case "torso":
@@ -610,7 +644,7 @@ export default class Controller {
                     } 
                     this.player.equippedArray[3] = this.player.inventory[inventoryIndex];
                     this.player.inventory.splice(inventoryIndex, 1); 
-                    this.printToGameConsole(`You equip ${this.player.equippedArray[3].name}.`);
+                    this.printToGameConsole(`${this.player.name} equips ${this.player.equippedArray[3].name}.`);
                     this.updatePlayerEquippedTab(3);
                     break;
                 case "arms":
@@ -619,7 +653,7 @@ export default class Controller {
                     } 
                     this.player.equippedArray[4] = this.player.inventory[inventoryIndex];
                     this.player.inventory.splice(inventoryIndex, 1); 
-                    this.printToGameConsole(`You equip ${this.player.equippedArray[4].name}.`);
+                    this.printToGameConsole(`${this.player.name} equips ${this.player.equippedArray[4].name}.`);
                     this.updatePlayerEquippedTab(4);
                     break;
                 case "legs":
@@ -628,7 +662,7 @@ export default class Controller {
                     } 
                     this.player.equippedArray[5] = this.player.inventory[inventoryIndex];
                     this.player.inventory.splice(inventoryIndex, 1); 
-                    this.printToGameConsole(`You equip ${this.player.equippedArray[5].name}.`);
+                    this.printToGameConsole(`${this.player.name} equips ${this.player.equippedArray[5].name}.`);
                     this.updatePlayerEquippedTab(5);
                     break;
                 case "feet":
@@ -637,7 +671,7 @@ export default class Controller {
                     } 
                     this.player.equippedArray[6] = this.player.inventory[inventoryIndex];
                     this.player.inventory.splice(inventoryIndex, 1); 
-                    this.printToGameConsole(`You equip ${this.player.equippedArray[6].name}.`);
+                    this.printToGameConsole(`${this.player.name} equips ${this.player.equippedArray[6].name}.`);
                     this.updatePlayerEquippedTab(6);
                     break;
                 default:
@@ -654,7 +688,7 @@ export default class Controller {
     unequip(equippedArrayIndex){
         if(this.player.isInBattle == false){
             if(this.player.equippedArray[equippedArrayIndex] != "Empty"){
-                this.printToGameConsole(`You unequip ${this.player.equippedArray[equippedArrayIndex].name}`);
+                this.printToGameConsole(`${this.player.name} unequips ${this.player.equippedArray[equippedArrayIndex].name}`);
                 this.player.inventory.push(this.player.equippedArray[equippedArrayIndex]);
                 this.player.equippedArray[equippedArrayIndex] = "Empty";
                 this.updatePlayerInventoryTab(this.player.inventory);
@@ -739,6 +773,7 @@ export default class Controller {
         }
     }
     levelPlayerUp(){
+        document.getElementById("music-player").pause();
         this.player.level = this.player.level + 1;
         this.printToGameConsole(`Level up! New level: ${this.player.level}.`);
         this.displayLevelUpScreen();
@@ -746,6 +781,7 @@ export default class Controller {
     displayLevelUpScreen(){
         document.getElementById('level-up-screen').style.display = "block";
         document.getElementById("app").style.display = "none";
+
         this.player.canMoveRoom = false;
     }
     generateNewMap(){

@@ -1,4 +1,4 @@
-import {Slash, Stab, Eviscerate, Block, Fireball, Channel, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite} from "./abilities.js"
+import {Slash, Strike, Stab, Eviscerate, Block, Fireball, Channel, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite} from "./abilities.js"
 
 export function getRandomItem(){
     let itemArray = [new LinenShirt(), new LinenPants, new WoodDagger, new WoodSpear, new WoodSword, 
@@ -58,6 +58,23 @@ export class WoodDagger {
         this.elementalDefense = 0;
         this.speed = 4;
         this.abilityArray = [new Stab(), new Slash()];
+    }
+}
+export class WoodHammer {
+    constructor(){
+        this.name = "wood hammer";
+        this.type = "weapon";
+        this.level = 0;
+        this.bluntAttack = 2;
+        this.pierceAttack = 1;
+        this.arcaneAttack = 0;
+        this.elementalAttack = 0;
+        this.bluntDefense = 0;
+        this.pierceDefense = 0;
+        this.arcaneDefense = 0;
+        this.elementalDefense = 0;
+        this.speed = 4;
+        this.abilityArray = [new Strike()];
     }
 }
 export class WoodSpear {

@@ -1,3 +1,5 @@
+import{Leave} from "./encounterResults.js";
+
 class Decision{
     activate(player, reward, consequence){
         if(this.checkSuccess(player, this.decisionAttribute) == true){
@@ -23,5 +25,15 @@ export class Loot extends Decision{
         super();
         this.name = "loot";
         this.decisionAttribute = "none";
+    }
+}
+export class MoveOn extends Decision{
+    constructor(){
+        super();
+        this.name = "move on";
+        this.decisionAttribute = "none";
+    }
+    activate(player, reward, consequence){
+        new Leave().trigger(player);
     }
 }

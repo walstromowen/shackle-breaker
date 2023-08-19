@@ -1,4 +1,4 @@
-import {Loot} from "./encounterDecisions.js";
+import {Loot, MoveOn} from "./encounterDecisions.js";
 class Encounter{
     constructor(rewardsArray, consequencesArray){
         this.rewardsArray = rewardsArray;
@@ -16,8 +16,8 @@ export class TreasureChest extends Encounter{
     constructor(rewardsArray, consequencesArray){
         super(rewardsArray, consequencesArray);
         this.name = "treasure chest";
-        this.message = "you see a large chest filled to the brim with loot. It seems a shame to just leave it there...";
+        this.message = "A large chest sits in the middle of the room filled to the brim with loot. It seems a shame to just leave it there...";
         this.imageSrc = "./media/kurty.jpg";
-        this.decisionArray = [new Loot()];
+        this.decisionArray = [new Loot(), new MoveOn()];
     }
 }

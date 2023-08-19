@@ -54,3 +54,9 @@ export class OpenChestAttractEnemy{
         player.nextRoom.enemy = this.enemy;
     }
 }
+export class Leave{
+    trigger(player){
+        theController.printToGameConsole(`${player.name} moves on.`);
+        theController.endEncounter();
+    }
+}

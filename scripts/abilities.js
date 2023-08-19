@@ -115,7 +115,27 @@ export class Slash extends Ability{
         }
     }
 }
-
+export class Strike extends Ability{
+    constructor(){
+        super();
+        this.name = "strike";
+        this.type = "blunt";
+        this.speedMultiplier = 0.75;
+        this.staminaCost = 8;
+        this.magicCost = 0;
+        this.damageModifier = 4;
+        this.soundEffect = "./audio/soundEffects/sword-sound-2-36274.mp3";
+    }
+    activate(weilder, target){
+        if(this.checkStamina(weilder) == true){
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentBluntAttack + this.damageModifier) - weilder.currentBluntAttack + 1)) + weilder.currentBluntAttack;
+            damageOutput = this.checkDamage(damageOutput, target, this.type);
+            target.currentHP = target.currentHP - damageOutput;
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
+            theController.playSoundEffect(this.soundEffect);
+        }
+    }
+}
 export class Stab extends Ability{
     constructor(){
         super();
@@ -581,6 +601,7 @@ export class ThrowKnife extends Ability{
         this.speedMultiplier = 0.75;
         this.staminaCost = 0;
         this.magicCost = 0;
+        this.damageModifier = 3;
         this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
     }
     activate(weilder, target){
