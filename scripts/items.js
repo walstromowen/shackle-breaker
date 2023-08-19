@@ -1,10 +1,16 @@
 import {Slash, Stab, Eviscerate, Block, Fireball, Channel, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite} from "./abilities.js"
 
-class Equipment{}
-class Consumable{}
-export class LinenShirt extends Equipment{
+export function getRandomItem(){
+    let itemArray = [new LinenShirt(), new LinenPants, new WoodDagger, new WoodSpear, new WoodSword, 
+                new WoodSideDagger, new WoodSheild, new WoodFireStaff, new LeatherHelmet, 
+                new LeatherHood, new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
+                new LeatherBoots, new IronSheild, new IronHelmet, new IronGuantlets, new IronChainmail, 
+                new IronGreaves, new IronBoots, new HealthPotion, new StaminaPotion, new MagicPotion, 
+                new ThrowingKnife, new PoisonedThrowingKnife, new Meteorite];
+                return itemArray[Math.floor(Math.random() * itemArray.length)];
+    }
+export class LinenShirt {
     constructor(){
-        super();
         this.name = "linen shirt";
         this.type = "torso";
         this.level = 0;
@@ -20,9 +26,8 @@ export class LinenShirt extends Equipment{
         this.abilityArray = [];
     }
 }
-export class LinenPants extends Equipment{
+export class LinenPants {
     constructor(){
-        super();
         this.name = "linen pants";
         this.type = "legs";
         this.level = 0;
@@ -38,9 +43,8 @@ export class LinenPants extends Equipment{
         this.abilityArray = [];
     }
 }
-export class WoodDagger extends Equipment{
+export class WoodDagger {
     constructor(){
-        super();
         this.name = "wood dagger";
         this.type = "weapon";
         this.level = 0;
@@ -56,9 +60,8 @@ export class WoodDagger extends Equipment{
         this.abilityArray = [new Stab(), new Slash()];
     }
 }
-export class WoodSpear extends Equipment{
+export class WoodSpear {
     constructor(){
-        super();
         this.name = "wood spear";
         this.type = "weapon";
         this.level = 0;
@@ -74,9 +77,8 @@ export class WoodSpear extends Equipment{
         this.abilityArray = [new Stab()];
     }
 }
-export class WoodSword extends Equipment{
+export class WoodSword {
     constructor(){
-        super();
         this.name = "wood sword";
         this.type = "weapon";
         this.level = 0;
@@ -92,9 +94,8 @@ export class WoodSword extends Equipment{
         this.abilityArray = [new Stab(), new Slash()];
     }
 }
-export class WoodSideDagger extends Equipment{
+export class WoodSideDagger {
     constructor(){
-        super();
         this.name = "wood side dagger";
         this.type = "offhand";
         this.level = 0;
@@ -110,9 +111,8 @@ export class WoodSideDagger extends Equipment{
         this.abilityArray = [new Eviscerate];
     }
 }
-export class WoodSheild extends Equipment{
+export class WoodSheild {
     constructor(){
-        super();
         this.name = "wood sheild";
         this.type = "offhand";
         this.level = 0;
@@ -128,9 +128,8 @@ export class WoodSheild extends Equipment{
         this.abilityArray = [new Block()];
     }
 }
-export class WoodFireStaff extends Equipment{
+export class WoodFireStaff {
     constructor(){
-        super();
         this.name = "wood fire staff";
         this.type = "weapon";
         this.level = 0;
@@ -146,9 +145,8 @@ export class WoodFireStaff extends Equipment{
         this.abilityArray = [new Fireball(), new Channel()];
     }
 }
-export class LeatherHelmet extends Equipment{
+export class LeatherHelmet {
     constructor(){
-        super();
         this.name = "leather helmet";
         this.type = "head";
         this.level = 0;
@@ -164,9 +162,8 @@ export class LeatherHelmet extends Equipment{
         this.abilityArray = [];
     }
 }
-export class LeatherHood extends Equipment{
+export class LeatherHood {
     constructor(){
-        super();
         this.name = "leather hood";
         this.type = "head";
         this.level = 0;
@@ -182,9 +179,8 @@ export class LeatherHood extends Equipment{
         this.abilityArray = [];
     }
 }
-export class LeatherGloves extends Equipment{
+export class LeatherGloves {
     constructor(){
-        super();
         this.name = "iron gloves";
         this.type = "arms";
         this.level = 0;
@@ -200,9 +196,8 @@ export class LeatherGloves extends Equipment{
         this.abilityArray = [];
     }
 }
-export class LeatherChestplate extends Equipment{
+export class LeatherChestplate {
     constructor(){
-        super();
         this.name = "leather chestplate";
         this.type = "torso";
         this.level = 0;
@@ -218,9 +213,8 @@ export class LeatherChestplate extends Equipment{
         this.abilityArray = [];
     }
 }
-export class LeatherGreaves extends Equipment{
+export class LeatherGreaves {
     constructor(){
-        super();
         this.name = "leather greaves";
         this.type = "legs";
         this.level = 0;
@@ -236,9 +230,8 @@ export class LeatherGreaves extends Equipment{
         this.abilityArray = [];
     }
 }
-export class LeatherBoots extends Equipment{
+export class LeatherBoots {
     constructor(){
-        super();
         this.name = "leather boots";
         this.type = "feet";
         this.level = 0;
@@ -254,9 +247,8 @@ export class LeatherBoots extends Equipment{
         this.abilityArray = [];
     }
 }
-export class IronSheild extends Equipment{
+export class IronSheild {
     constructor(){
-        super();
         this.name = "iron sheild";
         this.type = "offhand";
         this.level = 0;
@@ -272,9 +264,8 @@ export class IronSheild extends Equipment{
         this.abilityArray = [new Block()];
     }
 }
-export class IronHelmet extends Equipment{
+export class IronHelmet {
     constructor(){
-        super();
         this.name = "iron helmet";
         this.type = "head";
         this.level = 0;
@@ -290,9 +281,8 @@ export class IronHelmet extends Equipment{
         this.abilityArray = [];
     }
 }
-export class IronGuantlets extends Equipment{
+export class IronGuantlets {
     constructor(){
-        super();
         this.name = "iron guantlets";
         this.type = "arms";
         this.level = 0;
@@ -308,9 +298,8 @@ export class IronGuantlets extends Equipment{
         this.abilityArray = [];
     }
 }
-export class IronChainmail extends Equipment{
+export class IronChainmail {
     constructor(){
-        super();
         this.name = "iron chainmail";
         this.type = "torso";
         this.level = 0;
@@ -326,9 +315,8 @@ export class IronChainmail extends Equipment{
         this.abilityArray = [];
     }
 }
-export class IronGreaves extends Equipment{
+export class IronGreaves {
     constructor(){
-        super();
         this.name = "iron greaves";
         this.type = "legs";
         this.level = 0;
@@ -344,9 +332,8 @@ export class IronGreaves extends Equipment{
         this.abilityArray = [];
     }
 }
-export class IronBoots extends Equipment{
+export class IronBoots {
     constructor(){
-        super();
         this.name = "iron boots";
         this.type = "feet";
         this.level = 0;
@@ -362,54 +349,48 @@ export class IronBoots extends Equipment{
         this.abilityArray = [];
     }
 }
-export class HealthPotion extends Consumable{
+export class HealthPotion {
     constructor(){
-        super();
         this.name = "healing potion";
         this.type = "consumable";
         this.abilityArray = [new DrinkHealthPotion];
     }
 }
 
-export class StaminaPotion extends Consumable{
+export class StaminaPotion {
     constructor(){
-        super();
         this.name = "stamina potion";
         this.type = "consumable";
         this.abilityArray = [new DrinkStaminaPotion];
     }
 }
 
-export class MagicPotion extends Consumable{
+export class MagicPotion {
     constructor(){
-        super();
         this.name = "magic potion";
         this.type = "consumable";
         this.abilityArray = [new DrinkMagicPotion];
     }
 }
 
-export class ThrowingKnife extends Consumable{
+export class ThrowingKnife {
     constructor(){
-        super();
         this.name = "throwing knife";
         this.type = "consumable";
         this.level = 0;
         this.abilityArray = [new ThrowKnife];
     }
 }
-export class PoisonedThrowingKnife extends Consumable{
-    constructor(){
-        super();
+export class PoisonedThrowingKnife {
+    constructor(){  
         this.name = "poisoned throwing knife";
         this.type = "consumable";
         this.level = 0;
         this.abilityArray = [new ThrowPoisonedKnife];
     }
 }
-export class Meteorite extends Consumable{
+export class Meteorite {
     constructor(){
-        super();
         this.name = "meteorite";
         this.type = "consumable";
         this.level = 0;

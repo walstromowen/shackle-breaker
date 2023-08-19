@@ -4,23 +4,22 @@ Text adventure game based on the ShacklerBreaker story
 ## TODO
 
 # New Features
-* stat scalling
-* Traps / encounters / choices before battles
 * Parrying System
 * Enviorment specific music
 * Status effect icons / Indicators
 * Shop/crafting/weapon level up / Town / Gold
 * interact with stairs / loot bodies
 * mini Menu for items and action buttons
-* animation for vital bars changing
 
 # Quality of Life
 * Rework character level / xp 
 * Alphabetize CSS rules
+* redo stat scaling and stamina/ magic costs
 
 # Bugs
 * Blocking still active on quick second attack
 * Image Flashing
+
 
 # MISC notes
 * Enemy Level ups disstribute 16 points between stats

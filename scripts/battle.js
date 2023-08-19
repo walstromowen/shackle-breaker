@@ -71,7 +71,6 @@ export default class Battle{
         return new Promise((resolve)=>{
             setTimeout(()=>{
                 status.update(type);
-                theController.scrollToBottom("game-console");
                 theController.updatePlayerStats();
                 theController.updateEnemyStats();
                 if(theController.battle.checkBattleStatus() == true){
@@ -91,7 +90,6 @@ export default class Battle{
                 if(weilder.nextMove.activate(weilder, target) == "retreat"){ 
                     this.battlePhase = "retreat";
                 }
-                theController.scrollToBottom("game-console");
                 theController.updatePlayerStats();
                 theController.updateEnemyStats();
                 if(this.checkBattleStatus() == true){//false means battle is still on

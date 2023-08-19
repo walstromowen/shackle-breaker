@@ -433,6 +433,14 @@ p{
 #enemy-name{
     margin: 0 5px;
 }
+#encounter-name-container{
+    margin-bottom: 10px;
+    background-color:var(--color-2);
+    display: none;
+}
+#encounter-name{
+    margin: 0 5px;
+}
 #location-image-container{
     width: 288px;
     height: 288px;
@@ -450,6 +458,18 @@ p{
     display: none;
 }
 #enemy-image{
+    width: 288px;
+    height: 288px;
+    object-fit: cover; 
+}
+#encounter-image-container{
+    background-color: var(--color-1);
+    margin: 0px auto 10px auto;
+    width: 288px;
+    height: 288px;
+    display: none;
+}
+#encounter-image{
     width: 288px;
     height: 288px;
     object-fit: cover; 
@@ -488,11 +508,8 @@ p{
 #inventory-tab, #secondary-stats-tab{
     display: none;
 }
-#battle-button-container{
+#battle-button-container, #map-button-container, #encounter-button-container{
     display: flex;
-    margin: 5px;
-}
-#map-button-container{
     margin: 5px;
 }
 /*Level Up Screen*/

@@ -43,6 +43,11 @@ class Ability{
     }
     checkDamage(damage, target, type){
         let damageOutput = 0;
+        /*
+        for(let i = 0; i < damageTypes.length; i++){
+            
+        }
+        */
         if(type == "blunt"){
             damageOutput = damage - target.currentBluntDefense;
         }
@@ -76,7 +81,7 @@ export class Punch extends Ability{
         this.speedMultiplier = 0.75;
         this.staminaCost = 1;
         this.magicCost = 0;
-        this.damageModifier = 0;
+        this.damageModifier = 5;
         this.soundEffect = "./audio/soundEffects/soundEffects/punch-140236.mp3";
     }
     activate(weilder, target){
@@ -97,7 +102,7 @@ export class Slash extends Ability{
         this.speedMultiplier = 0.75;
         this.staminaCost = 2;
         this.magicCost = 0;
-        this.damageModifier = 3;
+        this.damageModifier = 5;
         this.soundEffect = "./audio/soundEffects/sword-sound-2-36274.mp3";
     }
     activate(weilder, target){
@@ -119,7 +124,7 @@ export class Stab extends Ability{
         this.speedMultiplier = 0.5;
         this.staminaCost = 3;
         this.magicCost = 0;
-        this.damageModifier = 5;
+        this.damageModifier = 7;
         this.soundEffect = "./audio/soundEffects/Knife-Stab-A10-www.fesliyanstudios.com.mp3";
     }
     activate(weilder, target){
@@ -444,7 +449,7 @@ export class Devour extends Ability{
     }
     activate(weilder, target){
         if(this.checkStamina(weilder, this.staminaCost) == true){
-            let damageOutput = Math.floor(target.currentHP*0.7);
+            let damageOutput = Math.floor(target.currentHP*0.7) + target.currentPierceDefense;
             damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
@@ -467,7 +472,7 @@ export class Eviscerate extends Ability{
         if(this.checkStamina(weilder, this.staminaCost) == true){
             let damageOutput = Math.floor(Math.random() * ((weilder.currentPierceAttack + this.damageModifier) - weilder.currentPierceAttack + 1)) + weilder.currentPierceAttack;
             if(target.currentHP == target.maxHP){
-                damageOutput = Math.floor(damageOutput * 1.5);
+                damageOutput = Math.floor(damageOutput * 1.2);
             }
             damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
@@ -629,13 +634,8 @@ export class SmashMeteorite extends Ability{
             theController.printToGameConsole("cannot use in combat!");
             return;
         }
-        weilder.maxHP = weilder.maxHP + 1;
-        weilder.maxStamina = weilder.maxStamina + 1;
-        weilder.maxMagic = weilder.maxMagic + 1;
-        weilder.currentHP = weilder.currentHP + 1;
-        weilder.currentStamina = weilder.currentStamina + 1;
-        weilder.currentMagic = weilder.currentMagic + 1;
         theController.printToGameConsole(`${weilder.name} smashes a meteorite!`);
+        theController.levelPlayerUp();
         return true;
     }
 }

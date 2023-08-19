@@ -371,12 +371,9 @@
                         <p>Use w, a, s, and d keys to move</p>
                     </div>
                     <div id='action-bar'>
-                        <div id='battle-button-container'>
-                            
-                        </div>
-                        <div id='map-button-container'>
-                            
-                        </div>
+                        <div id='battle-button-container'></div>
+                        <div id='map-button-container'></div>
+                        <div id='encounter-button-container'></div>
                     </div>
                 </div>
                 <div class='app-column' id='app-column-3'>
@@ -386,11 +383,17 @@
                     <div id='enemy-name-container'>
                         <h5 id='enemy-name'>Enemy Text</h5>
                     </div>
-                    <div id='location-image-container'>    <!--Toggle during encounters-->
+                    <div id='encounter-name-container'>
+                        <h5 id='encounter-name'>Encounter Text</h5>
+                    </div>
+                    <div id='location-image-container'>   
                         <image id='location-image'></image>
                     </div>
-                    <div id='enemy-image-container'>    <!--Toggle during encounters-->
+                    <div id='enemy-image-container'>    
                         <image id='enemy-image' src=''></image>
+                    </div>
+                    <div id='encounter-image-container'>    
+                        <image id='encounter-image' src=''></image>
                     </div>
                     <div id='enemy-main-stats-container'>
                         <div class='vital-bar-container'>

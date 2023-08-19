@@ -7,6 +7,7 @@ export default class Room{
         this.roomWest = "";
         this.visited = false;
         this.enemy = "";
+        this.encounter = "";
         this.isExit = false;
         this.position = [0, 0]; //tile position in 2D
     }

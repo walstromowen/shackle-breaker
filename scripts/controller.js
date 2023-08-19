@@ -17,8 +17,10 @@ export default class Controller {
         this.miniMap = "";
         this.player = "";
         this.battle = "";
+        this.encounter = "";
         this.mapBtnArray = [];
         this.battleBtnArray = [];
+        this.encounterBtnArray = [];
         this.initialize();
     }
     initialize(){
@@ -328,8 +330,7 @@ export default class Controller {
     enablePlayerBattleControls(){
         //remove old buttons
         for(let i = 0; i < this.battleBtnArray.length; i++){
-            let controls = document.getElementById('battle-button-container');
-            let oldBtn = controls.querySelector('button');
+            let oldBtn = document.getElementById('battle-button-container').querySelector('button');
                 oldBtn.remove();
         }
         this.battleBtnArray = [];
@@ -346,28 +347,62 @@ export default class Controller {
          }
         document.getElementById('map-button-container').style.display = "none";
         document.getElementById('battle-button-container').style.display = "block";
-        document.getElementById('battle-button-container').style.visibility = "visible";
+        document.getElementById('battle-button-container').style.visibility = "visible";// can remove?
         Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
             btn.style.visibility = "visible";
         });
     }
     disablePlayerBattleControls(){
         document.getElementById('battle-button-container').style.visibility = "hidden";
-        //Array.from used to convert HTML collection to regular array so forEach can be used
+        //Array.from used to convert HTML collection to regular array so forEach can be used -> hides use btns on items
+        Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
+            btn.style.visibility = "hidden";
+        });
+    }
+    enablePlayerEncounterControls(){
+        for(let i = 0; i < this.encounterBtnArray.length; i++){
+            let oldBtn = document.getElementById('encounter-button-container').querySelector('button');
+                oldBtn.remove();
+        }
+        this.encounterBtnArray = [];
+        for(let x = 0; x < this.encounter.decisionArray.length; x++){
+            let decisionBtn = document.createElement('button');
+            decisionBtn.classList.add('action-button');
+            decisionBtn.innerText = this.capitalizeFirstLetter(this.encounter.decisionArray[x].name);
+            decisionBtn.addEventListener('click', ()=>{
+                this.encounter.makeDecision(this.player, x);
+            });
+            document.getElementById('encounter-button-container').appendChild(decisionBtn);
+            this.encounterBtnArray.push(decisionBtn);
+         }
+         document.getElementById('map-button-container').style.display = "none";
+         document.getElementById('encounter-button-container').style.display = "block";
+         document.getElementById('encounter-button-container').style.visibility = "visible";// can remove?
+         Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
+             btn.style.visibility = "visible";
+         });
+    }
+    disablePlayerEncounterControls(){
+        document.getElementById('encounter-button-container').style.visibility = "hidden";
+        //Array.from used to convert HTML collection to regular array so forEach can be used -> hides use btns on items
         Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
             btn.style.visibility = "hidden";
         });
     }
     toggleMap(){
-        document.getElementById('battle-button-container').style.display = "none";
         document.getElementById('map-button-container').style.display = "block";
+        document.getElementById('battle-button-container').style.display = "none";
+        document.getElementById('encounter-button-container').style.display = "none";
         document.getElementById("location-name-container").style.display = "block";
         document.getElementById("enemy-name-container").style.display = "none";
-        document.getElementById("player-image-container").style.display = "none";
+        document.getElementById("encounter-name-container").style.display = "none";
         document.getElementById("mini-map-container").style.display = "block";
+        document.getElementById("player-image-container").style.display = "none";
         document.getElementById("enemy-image-container").style.display = "none";
         document.getElementById("location-image-container").style.display = "block";
         document.getElementById("enemy-main-stats-container").style.display = "none";
+        document.getElementById("encounter-image-container").style.display = "none";
+        document.getElementById('music-player').pause();
         document.getElementById("music-player").src = "./audio/deep-in-the-dell-126916.mp3";
         document.getElementById("music-player").play();
         this.miniMap.resizeCanvas();
@@ -378,26 +413,46 @@ export default class Controller {
     }
     toggleBattle(enemy){
         this.battle = new Battle(this.player, enemy);
-        this.printToGameConsole("Something approaches...");
-        this.scrollToBottom("game-console");
         this.player.canMoveRoom = false;
+        this.updateEnemyStats();
         setTimeout(()=>{
-            document.getElementById('enemy-name').innerText = this.battle.enemy.name.charAt(0).toUpperCase() + this.battle.enemy.name.slice(1);
+            document.getElementById('enemy-name').innerText = this.capitalizeFirstLetter(this.battle.enemy.name);
             document.getElementById('enemy-image').src = this.battle.enemy.imageSrc;
+            document.getElementById('map-button-container').style.display = "none";
+            document.getElementById('battle-button-container').style.display = "block";
+            document.getElementById('encounter-button-container').style.display = "none";
             document.getElementById("location-name-container").style.display = "none";
             document.getElementById("enemy-name-container").style.display = "block";
+            document.getElementById("encounter-name-container").style.display = "none";
             document.getElementById("mini-map-container").style.display = "none";
             document.getElementById("player-image-container").style.display = "block";
-            document.getElementById("location-image-container").style.display = "none";
             document.getElementById("enemy-image-container").style.display = "block";
+            document.getElementById("location-image-container").style.display = "none";
             document.getElementById("enemy-main-stats-container").style.display = "block";
+            document.getElementById("encounter-image-container").style.display = "none";
             this.enablePlayerBattleControls();
             this.printToGameConsole(`You encounter a ${this.battle.enemy.name}!`);
-            this.scrollToBottom("game-console");
+            document.getElementById('music-player').pause();
             document.getElementById('music-player').src = "./audio/battle-of-the-dragons-8037.mp3";
             document.getElementById('music-player').play();
             this.player.isInBattle = true;
-         }, 2000);
+        }, 2000);
+    }
+    toggleEncounter(encounter){
+        this.encounter = encounter;
+        this.player.canMoveRoom = false;
+        setTimeout(()=>{
+            document.getElementById('encounter-name').innerText = this.capitalizeFirstLetter(this.encounter.name);
+            document.getElementById('encounter-image').src = this.encounter.imageSrc;
+            document.getElementById("location-name-container").style.display = "none";
+            document.getElementById("encounter-name-container").style.display = "block";
+            document.getElementById("mini-map-container").style.display = "none";
+            document.getElementById("player-image-container").style.display = "block";
+            document.getElementById("location-image-container").style.display = "none";
+            document.getElementById("encounter-image-container").style.display = "block";
+            this.enablePlayerEncounterControls();
+            this.printToGameConsole(this.encounter.message);
+        }, 2000);
     }
     updatePlayerInventoryTab(inventory){
         for(let i = -1; i < inventory.length; i++){
@@ -438,9 +493,6 @@ export default class Controller {
         document.getElementById('health-bar-player-progress').style.width = Math.floor(this.player.currentHP/this.player.maxHP*100) + "%";
         document.getElementById('stamina-bar-player-progress').style.width = Math.floor(this.player.currentStamina/this.player.maxStamina*100) + "%";
         document.getElementById('magic-bar-player-progress').style.width = Math.floor(this.player.currentMagic/this.player.maxMagic*100) + "%";
-        
-        
-
         document.getElementById('player-level-label').innerText = "★ " + this.player.level;
         document.getElementById('current-vigor').innerText = this.player.vigor;
         document.getElementById('current-endurance').innerText = this.player.endurance;
@@ -497,8 +549,14 @@ export default class Controller {
         if(nextRoom !== ""){
             if(nextRoom.enemy !== ""){
                 this.player.nextRoom = nextRoom;
+                this.printToGameConsole("something approaches...");
                 this.toggleBattle(nextRoom.enemy);
-                this.updateEnemyStats();
+                return; 
+            }
+            if(nextRoom.encounter !== ""){
+                this.player.nextRoom = nextRoom;
+                this.printToGameConsole("something is ahead...");
+                this.toggleEncounter(nextRoom.encounter);
                 return; 
             }
             this.player.currentRoom.visited = true;
@@ -657,11 +715,11 @@ export default class Controller {
             document.getElementById('equip-slot-' + equippedArrayIndex).innerText = this.capitalizeFirstLetter(this.player.equippedArray[equippedArrayIndex].name);
         } 
     }
-    defeatEnemy(){
+    completeRoom(){
         this.player.currentRoom.visited = true;
         this.player.currentRoom = this.player.nextRoom;
-        this.battle.loot();
         this.player.currentRoom.enemy = "";
+        this.player.currentRoom.encounter = "";
         this.miniMap.draw(this.map.roomArray, this.player.currentRoom);
     }
     useConsumable(inventoryIndex){
@@ -711,12 +769,42 @@ export default class Controller {
                     btn.style.visibility = "visible";
                 });
                 if(this.battle.battlePhase != "retreat"){
-                    this.defeatEnemy();
+                    this.battle.loot();
+                    this.completeRoom();
+                }else{
+                    
                 }
                 this.toggleMap();
                 this.updateEnemyStats();
                 this.updatePlayerStats();
              }, 2000);
+        }
+    }
+    endEncounter(battleFlag){
+        this.updatePlayerStats();
+        this.disablePlayerEncounterControls();
+        if(this.player.currentHP <= 0){
+            setTimeout(()=>{
+                document.getElementById('music-player').pause();
+                document.getElementById('gameover-screen').style.display = "block";
+                document.getElementById("app").style.display = "none";
+             }, 2000);
+        }else{
+            if(battleFlag == true){
+                this.player.nextRoom.encounter = "";
+                return;
+            }
+            else{
+                setTimeout(()=>{
+                    Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
+                        btn.style.visibility = "visible";
+                    });
+                    this.toggleMap();
+                    this.completeRoom();
+                    //this.updateEnemyStats();   MAYBE ADD?
+                    this.updatePlayerStats();
+                }, 2000);
+            }
         }
     }
     capitalizeFirstLetter(string){
