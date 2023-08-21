@@ -40,7 +40,7 @@ export class AltusAmbushOpportunity extends Encounter{
         super();
         this.name = "ambush opportunity";
         this.message = "An official of the Altus Kingdom appears to be seperated from his escort nearby, this could prove an fortuneous opportunity...";
-        this.imageSrc = "./media/kurty.jpg";
+        this.imageSrc = "./media/";
         this.decisionArray = [new MoveOn(), new Assassinate()];
         this.followingEncounter = "";
         this.rewardsArray =  [new SucessfulAltusAssasination()];
