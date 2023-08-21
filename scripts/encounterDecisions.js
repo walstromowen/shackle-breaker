@@ -1,30 +1,53 @@
-import{Leave} from "./encounterResults.js";
+import{leave, progressEncounter} from "./encounterResults.js";
 
 class Decision{
-    activate(player, reward, consequence){
+    activate(player, followingEncounter, reward, consequence){
         if(this.checkSuccess(player, this.decisionAttribute) == true){
-            reward.trigger(player);
+            if(followingEncounter != ""){
+                progressEncounter(followingEncounter);
+            }else{
+                reward.trigger(player);
+            }
+
         }else{
             consequence.trigger(player);
         }
     }
     checkSuccess(player, decisionAttribute){
+        let multiplier = 0;
         switch(decisionAttribute){
             case "none":
-                if(Math.floor(Math.random()*2) == 1){
-                    return true;
-                }else{
-                    return false;
-                }
+                decisionAttribute = 8;
+            case "vigor":
+                decisionAttribute = player.vigor;
+            case "endurance":
+                decisionAttribute = player.endurance;
+            case "strength":
+                decisionAttribute = player.strength;
+            case "dexterity":
+                decisionAttribute = player.dexterity;
+            case "insight":
+                decisionAttribute = player.insight;
+            case "focus":
+                decisionAttribute = player.focus;
         }
-    }
-}
-
-export class Loot extends Decision{
-    constructor(){
-        super();
-        this.name = "loot";
-        this.decisionAttribute = "none";
+        if(decisionAttribute <= 8){
+            multiplier = 1.5;
+        }
+        if(decisionAttribute >= 8){
+            multiplier = 2;
+        }
+        if(decisionAttribute >= 12){
+            multiplier = 3;
+        }
+        if(decisionAttribute >= 20){
+            multiplier = 4;
+        }
+        if(Math.floor(Math.random()*multiplier) > 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
 export class MoveOn extends Decision{
@@ -34,6 +57,41 @@ export class MoveOn extends Decision{
         this.decisionAttribute = "none";
     }
     activate(player, reward, consequence){
-        new Leave().trigger(player);
+        leave(player);
+    }
+}
+export class ForceOpen extends Decision{
+    constructor(){
+        super();
+        this.name = "force open";
+        this.decisionAttribute = "strength";
+    }
+}
+export class PickLock extends Decision{
+    constructor(){
+        super();
+        this.name = "pick lock";
+        this.decisionAttribute = "dexterity";
+    }
+}
+export class LookForKey extends Decision{
+    constructor(){
+        super();
+        this.name = "look for key";
+        this.decisionAttribute = "insight";
+    }
+}
+export class Loot extends Decision{
+    constructor(){
+        super();
+        this.name = "loot";
+        this.decisionAttribute = "none";
+    }
+}
+export class Assassinate extends Decision{
+    constructor(){
+        super();
+        this.name = "assassinate";
+        this.decisionAttribute = "dexterity";
     }
 }

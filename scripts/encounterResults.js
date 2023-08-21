@@ -1,10 +1,13 @@
 import {controller as theController} from "./main.js"
-import {LinenShirt, LinenPants, WoodDagger, WoodSpear, WoodSword, 
-    WoodSideDagger, WoodSheild, WoodFireStaff, LeatherHelmet, 
-    LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
-    LeatherBoots, IronSheild, IronHelmet, IronGuantlets, IronChainmail, 
-    IronGreaves, IronBoots, HealthPotion, StaminaPotion, MagicPotion, 
-    ThrowingKnife, PoisonedThrowingKnife, Meteorite} from "./items.js";
+import {getRandomItem } from "./items.js";
+import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian} from "./enemies.js";
+export function leave(player){
+    theController.printToGameConsole(`${player.name} moves on.`);
+    theController.endEncounter();
+}
+export function progressEncounter(followingEncounter){
+    theController.toggleEncounter(followingEncounter);
+}
 class RecieveDebuff{
     checkDamage(damageOutput, target){
         if(damageOutput < 0){
@@ -21,14 +24,12 @@ class RecieveDebuff{
     }
 }
 
-export class OpenChest{
-    constructor(item){
-        this.item = item;
-    }
+export class LootChest{
     trigger(player){
-        player.inventory.push(this.item);
+        let newItem = getRandomItem();
+        player.inventory.push(newItem);
         theController.updatePlayerInventoryTab(player.inventory);
-        theController.printToGameConsole(`${player.name} opens the chest and finds a ${this.item.name}`);
+        theController.printToGameConsole(`${player.name} opens the chest and finds a ${newItem.name}`);
         theController.endEncounter();
     }
 }
@@ -42,21 +43,29 @@ export class OpenChestArrowTrap extends RecieveDebuff{
     }
 }
 export class OpenChestAttractEnemy{
-    constructor(item, enemy){
-        this.enemy = enemy;
-        this.enemy.lootChanceMultiplier = 0;
-        this.enemy.lootArray = [item];
-    }
     trigger(player){
-        theController.printToGameConsole(`Just as ${player.name} reaches to open the chest, a ${this.enemy.name} jumps out of the shadows and races towards ${player.name}!`);
+        theController.printToGameConsole(`Just as ${player.name} reaches to open the chest, something emerges from the shadows and races towards ${player.name}!`);
         theController.endEncounter(true);
-        theController.toggleBattle(this.enemy);
-        player.nextRoom.enemy = this.enemy;
+        let newEnemy = theController.map.mapEnviorment.generateEnemy(player.level);
+        theController.toggleBattle(newEnemy);
+        player.nextRoom.enemy = newEnemy;
     }
 }
-export class Leave{
+export class SucessfulAltusAssasination{
     trigger(player){
-        theController.printToGameConsole(`${player.name} moves on.`);
+        let newItem = getRandomItem();
+        player.inventory.push(newItem);
+        theController.updatePlayerInventoryTab(player.inventory);
+        theController.printToGameConsole(`${player.name} eliminates the offical without a sound. After searching the offical, ${player.name} slips away quietly with the official's ${newItem.name}.`);
         theController.endEncounter();
+    }
+}
+export class FailedAltusAssasination{
+    trigger(player){
+        theController.printToGameConsole(`${player.name} approaches the official quietly, only to find the offical has found ${player.name} first!`);
+        theController.endEncounter(true);
+        let newEnemy = new AltusMage(player.level);
+        theController.toggleBattle(newEnemy);
+        player.nextRoom.enemy = newEnemy;
     }
 }

@@ -26,11 +26,11 @@ export default class Map{
             //Room Specials
             switch(this.mapLayout.tileArray[i]){
                 case 0:
-                    let randomNumber = Math.floor(Math.random()*7)
-                    if(randomNumber == 0){
+                    let randomNumber = Math.floor(Math.random()*20)
+                    if(randomNumber <= 2){
                         this.roomArray[i].enemy = this.mapEnviorment.generateEnemy(playerLevel);
                     }
-                    if(randomNumber == 1){
+                    if(randomNumber == 3 || randomNumber == 4){
                         this.roomArray[i].encounter = this.mapEnviorment.generateEncounter(playerLevel);
                     }
                     break;

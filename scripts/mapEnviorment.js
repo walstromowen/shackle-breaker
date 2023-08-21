@@ -1,7 +1,5 @@
-import {TreasureChest} from "./encounters.js";
-import {getRandomItem } from "./items.js";
-import {OpenChest, OpenChestArrowTrap, OpenChestAttractEnemy} from "./encounterResults.js";
-import {Skeleton, Bat, Wolf, Royalmage, CaveSpider, Groveguardian} from "./enemies.js";
+import {LockedTreasureChest, AltusAmbushOpportunity} from "./encounters.js";
+import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian} from "./enemies.js";
 
 export default class MapEnviorment{
     constructor(){
@@ -62,7 +60,7 @@ export default class MapEnviorment{
                     case 1:
                         return new Wolf(playerLevel);
                     case 2:
-                        return new Royalmage(playerLevel);
+                        return new AltusMage(playerLevel);
                     default:
                         return;
                 }
@@ -75,27 +73,27 @@ export default class MapEnviorment{
             case "cave": 
                 switch(Math.floor(Math.random()*2)){ 
                     case 0:
-                        return new TreasureChest([new OpenChest(getRandomItem())], [new OpenChestArrowTrap(), new OpenChestAttractEnemy(getRandomItem(), this.generateEnemy(playerLevel))]);
+                        return new LockedTreasureChest();
                     case 1:
-                        return new TreasureChest([new OpenChest(getRandomItem())], [new OpenChestArrowTrap(), new OpenChestAttractEnemy(getRandomItem(), this.generateEnemy(playerLevel))]);
+                        return new LockedTreasureChest();
                     default:
                         return;
                 }
             case "forest":
                 switch(Math.floor(Math.random()*2)){ 
                     case 0:
-                        return new TreasureChest([new OpenChest(getRandomItem())], [new OpenChestArrowTrap(), new OpenChestAttractEnemy(getRandomItem(), this.generateEnemy(playerLevel))]);
+                        return new LockedTreasureChest();
                     case 1:
-                        return new TreasureChest([new OpenChest(getRandomItem())], [new OpenChestArrowTrap(), new OpenChestAttractEnemy(getRandomItem(), this.generateEnemy(playerLevel))]);
+                        return new LockedTreasureChest();
                     default:
                         return;
                 }
             case "plains":
                 switch(Math.floor(Math.random()*2)){ 
                     case 0:
-                        return new TreasureChest([new OpenChest(getRandomItem())], [new OpenChestArrowTrap(), new OpenChestAttractEnemy(getRandomItem(), this.generateEnemy(playerLevel))]);
+                        return new LockedTreasureChest();
                     case 1:
-                        return new TreasureChest([new OpenChest(getRandomItem())], [new OpenChestArrowTrap(), new OpenChestAttractEnemy(getRandomItem(), this.generateEnemy(playerLevel))]);
+                        return new AltusAmbushOpportunity();
                     default:
                         return;
                 }

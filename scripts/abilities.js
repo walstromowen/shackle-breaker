@@ -162,7 +162,7 @@ export class Block extends Ability{
         super();
         this.name = "block";
         this.type = "";
-        this.speedMultiplier = 0.75;
+        this.speedMultiplier = 1.0;
         this.staminaCost = 6;
         this.magicCost = 0;
         this.soundEffect = "./audio/soundEffects/anvil-hit-2-14845.mp3";
@@ -241,7 +241,7 @@ export class Retreat extends Ability{
         this.name = "retreat";
         this.type = "";
         this.speedMultiplier = 0.5;
-        this.staminaCost = 10;
+        this.staminaCost = 30;
         this.magicCost = 0;
         this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
     }
@@ -663,6 +663,5 @@ export class SmashMeteorite extends Ability{
         return true;
     }
 }
-
 
 

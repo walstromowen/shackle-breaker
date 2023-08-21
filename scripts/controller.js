@@ -1,9 +1,9 @@
-import {LinenShirt, LinenPants, WoodDagger, WoodSpear, WoodSword, 
+import {LinenShirt, LinenPants, WoodDagger, WoodHammer, WoodSpear, WoodSword, 
         WoodSideDagger, WoodSheild, WoodFireStaff, LeatherHelmet, 
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
         LeatherBoots, IronSheild, IronHelmet, IronGuantlets, IronChainmail, 
         IronGreaves, IronBoots, HealthPotion, StaminaPotion, MagicPotion, 
-        ThrowingKnife, PoisonedThrowingKnife, Meteorite, WoodHammer} from "./items.js";
+        ThrowingKnife, PoisonedThrowingKnife, Meteorite} from "./items.js";
 import {Recover, Punch, Retreat} from "./abilities.js"
 import Player from "./player.js";
 import Map from "./map.js";
@@ -112,6 +112,7 @@ export default class Controller {
         document.getElementById("character-creation-pierce-defense").innerText = this.characterCreationArray[5][8];
         document.getElementById("character-creation-arcane-defense").innerText = this.characterCreationArray[5][9];
         document.getElementById("character-creation-element-defense").innerText = this.characterCreationArray[5][10];
+        document.getElementById("character-creation-speed").innerText = 25;
     }
     characterCreatorUpdateInventory(){
         let inventoryArray = [];
@@ -466,7 +467,11 @@ export default class Controller {
             document.getElementById("enemy-main-stats-container").style.display = "block";
             document.getElementById("encounter-image-container").style.display = "none";
             this.enablePlayerBattleControls();
-            this.printToGameConsole(`${this.player.name} encounter a ${this.battle.enemy.name}!`);
+            if(this.battle.enemy.name.charAt(0) == "a" || this.battle.enemy.name.charAt(0) == "e" || this.battle.enemy.name.charAt(0) == "i" || this.battle.enemy.name.charAt(0) == "o" || this.battle.enemy.name.charAt(0) == "u"){
+                this.printToGameConsole(`${this.player.name} encounters an ${this.battle.enemy.name}!`);
+            }else{
+                this.printToGameConsole(`${this.player.name} encounters a ${this.battle.enemy.name}!`);
+            }
             document.getElementById('music-player').pause();
             document.getElementById('music-player').src = "./audio/battle-of-the-dragons-8037.mp3";
             document.getElementById('music-player').play();
@@ -594,8 +599,23 @@ export default class Controller {
                 this.toggleEncounter(nextRoom.encounter);
                 return; 
             }
-            this.player.currentRoom.visited = true;
+            if(nextRoom.status == "visited"){
+                if(Math.floor(Math.random()*20) <= 2){
+                    this.player.nextRoom = nextRoom;
+                    this.printToGameConsole("something approaches...");
+                    nextRoom.enemy = this.map.mapEnviorment.generateEnemy(this.player.level);
+                    this.toggleBattle(nextRoom.enemy);
+                    return;
+                }
+            }
+            this.player.currentRoom.status = "visited";
             this.player.currentRoom = nextRoom;
+            let stamina = Math.floor(this.player.maxStamina * 0.1);
+            let magic = Math.floor(this.player.maxMagic * 0.1);
+            if(this.player.currentStamina + stamina > this.player.maxStamina){stamina = this.player.maxStamina - this.player.currentStamina;}
+            if(this.player.currentMagic + magic > this.player.maxMagic){magic = this.player.maxMagic - this.player.currentMagic;}
+            this.player.currentStamina = this.player.currentStamina + stamina;
+            this.player.currentMagic = this.player.currentMagic + magic;
             this.miniMap.draw(this.map.roomArray, this.player.currentRoom);
             if(this.player.currentRoom.isExit == true){
                 this.levelPlayerUp();
@@ -751,7 +771,7 @@ export default class Controller {
         } 
     }
     completeRoom(){
-        this.player.currentRoom.visited = true;
+        this.player.currentRoom.status = "visited";
         this.player.currentRoom = this.player.nextRoom;
         this.player.currentRoom.enemy = "";
         this.player.currentRoom.encounter = "";
@@ -773,7 +793,6 @@ export default class Controller {
         }
     }
     levelPlayerUp(){
-        document.getElementById("music-player").pause();
         this.player.level = this.player.level + 1;
         this.printToGameConsole(`Level up! New level: ${this.player.level}.`);
         this.displayLevelUpScreen();
@@ -809,7 +828,7 @@ export default class Controller {
                     this.battle.loot();
                     this.completeRoom();
                 }else{
-                    
+                    this.player.nextRoom.status = "retreated";
                 }
                 document.getElementById("music-player").src = this.map.mapEnviorment.backgroundMusicSrc;
                 document.getElementById("music-player").play();
@@ -853,7 +872,7 @@ export default class Controller {
         document.getElementById(elementId).scrollTop = document.getElementById(elementId).scrollHeight;
     }
     printToGameConsole(message){
-        document.getElementById("game-console").innerHTML += `<p>${this.capitalizeFirstLetter(message)}</p>`;
+        document.getElementById("game-console").innerHTML += `<p class='console-message'>${this.capitalizeFirstLetter(message)}</p>`;
         this.scrollToBottom("game-console");
     }
     playSoundEffect(soundEffectPath){

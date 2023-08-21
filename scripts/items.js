@@ -1,7 +1,7 @@
 import {Slash, Strike, Stab, Eviscerate, Block, Fireball, Channel, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite} from "./abilities.js"
 
 export function getRandomItem(){
-    let itemArray = [new LinenShirt(), new LinenPants, new WoodDagger, new WoodSpear, new WoodSword, 
+    let itemArray = [new LinenShirt(), new LinenPants, new WoodDagger, new WoodHammer, new WoodSpear, new WoodSword, 
                 new WoodSideDagger, new WoodSheild, new WoodFireStaff, new LeatherHelmet, 
                 new LeatherHood, new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
                 new LeatherBoots, new IronSheild, new IronHelmet, new IronGuantlets, new IronChainmail, 
@@ -198,7 +198,7 @@ export class LeatherHood {
 }
 export class LeatherGloves {
     constructor(){
-        this.name = "iron gloves";
+        this.name = "leather gloves";
         this.type = "arms";
         this.level = 0;
         this.bluntAttack = 0;
@@ -370,7 +370,7 @@ export class HealthPotion {
     constructor(){
         this.name = "healing potion";
         this.type = "consumable";
-        this.abilityArray = [new DrinkHealthPotion];
+        this.abilityArray = [new DrinkHealthPotion()];
     }
 }
 
@@ -378,7 +378,7 @@ export class StaminaPotion {
     constructor(){
         this.name = "stamina potion";
         this.type = "consumable";
-        this.abilityArray = [new DrinkStaminaPotion];
+        this.abilityArray = [new DrinkStaminaPotion()];
     }
 }
 
@@ -386,7 +386,7 @@ export class MagicPotion {
     constructor(){
         this.name = "magic potion";
         this.type = "consumable";
-        this.abilityArray = [new DrinkMagicPotion];
+        this.abilityArray = [new DrinkMagicPotion()];
     }
 }
 
@@ -395,7 +395,7 @@ export class ThrowingKnife {
         this.name = "throwing knife";
         this.type = "consumable";
         this.level = 0;
-        this.abilityArray = [new ThrowKnife];
+        this.abilityArray = [new ThrowKnife()];
     }
 }
 export class PoisonedThrowingKnife {
@@ -403,7 +403,7 @@ export class PoisonedThrowingKnife {
         this.name = "poisoned throwing knife";
         this.type = "consumable";
         this.level = 0;
-        this.abilityArray = [new ThrowPoisonedKnife];
+        this.abilityArray = [new ThrowPoisonedKnife()];
     }
 }
 export class Meteorite {
@@ -411,6 +411,6 @@ export class Meteorite {
         this.name = "meteorite";
         this.type = "consumable";
         this.level = 0;
-        this.abilityArray = [new SmashMeteorite];
+        this.abilityArray = [new SmashMeteorite()];
     }
 }

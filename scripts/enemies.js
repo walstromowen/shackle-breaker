@@ -129,11 +129,11 @@ export class Wolf extends Enemy{
         this.lootArray = [new StaminaPotion];
     }
 }
-export class Royalmage extends Enemy{
+export class AltusMage extends Enemy{
     constructor(playerLevel){
         super();
-        this.name = "royal mage";
-        this.imageSrc = "media/royal-mage.jpg"
+        this.name = "altus mage";
+        this.imageSrc = "media/altus-mage.jpg"
         this.maxHP = 40 + playerLevel*2; 
         this.currentHP = this.maxHP;
         this.maxStamina = 30 + playerLevel*1; 

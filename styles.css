@@ -22,7 +22,9 @@ h1{
     text-align: center;
     color: var(--color-5);
     font-size: 120px;
+    text-shadow: 6px 6px var(--color-1);
 }
+
 h2{
     font-size:48px;
     
@@ -67,7 +69,7 @@ p{
     margin: auto 0;
 }
 #title-screen{
-    background-image: url("./media/titleScreen.jpg");
+    background-image: url("./media/title-screen.jpg");
     background-size:cover;
     height: 100vh;
 }
@@ -75,7 +77,7 @@ p{
     display:flex;
     justify-content: center;
     flex-direction: column;	
-    margin: 10% auto;
+    margin: 20% auto;
     width: 300px;
 }
 /*Character Creation Screen*/
@@ -210,7 +212,7 @@ p{
     background-color: var(--color-4);
     border: 2px solid var(--color-2);
     border-radius: 10px;
-    width: 92px;
+    width: 120px;
     height: 64px;
     font-size: 20px;
     font-weight: bold;
@@ -326,6 +328,9 @@ p{
 .stats-sub-label{
     font-weight: bold;
 
+}
+.console-message{
+    margin-top: 10px;
 }
 #app{
     display: none;
@@ -487,7 +492,7 @@ p{
 /*Level Up Screen*/
 #level-up-screen{
     display: none;
-    background-image: url("./media/titleScreen.jpg");
+    background-image: url("./media/title-screen.jpg");
     background-size:cover;
     height: 100vh;
 }

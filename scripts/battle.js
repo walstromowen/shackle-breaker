@@ -101,23 +101,9 @@ export default class Battle{
          });
     }
     checkBattleStatus(){
-        if(this.player.currentHP <= 0){
+        if(this.player.currentHP <= 0 || this.enemy.currentHP <= 0 || this.battlePhase == "retreat"){
             return true;  
         } 
-        if(this.enemy.currentHP <= 0){
-            this.player.currentStamina = this.player.maxStamina;
-            this.player.currentMagic = this.player.maxMagic;
-            this.enemy.currentStamina = this.enemy.maxStamina;
-            this.enemy.currentMagic = this.enemy.maxMagic;
-            return true;   
-        }
-        if(this.battlePhase == "retreat"){
-            this.player.currentStamina = this.player.maxStamina;
-            this.player.currentMagic = this.player.maxMagic;
-            this.enemy.currentStamina = this.enemy.maxStamina;
-            this.enemy.currentMagic = this.enemy.maxMagic;
-            return true;
-        }
         return false;
     }
     loot(){

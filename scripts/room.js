@@ -5,7 +5,7 @@ export default class Room{
         this.roomSouth = "";
         this.roomEast = "";
         this.roomWest = "";
-        this.visited = false;
+        this.status = "notVisited";
         this.enemy = "";
         this.encounter = "";
         this.isExit = false;
