@@ -333,6 +333,32 @@ export class LeechLife extends Ability{
         }
     }
 }
+export class DrainLife extends Ability{
+    constructor(){
+        super();
+        this.name = "leech life";
+        this.type = "arcane";
+        this.speedMultiplier = 0.25;
+        this.staminaCost = 0;
+        this.magicCost = 12;
+        this.damageModifier = 3;
+        this.soundEffect = "./audio/soundEffects/platzender-kopf_nachschlag-91637.mp3";
+    }
+    activate(weilder, target){
+        if(this.checkStamina(weilder) == true){
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentArcaneAttack + this.damageModifier) - weilder.currentArcaneAttack + 1)) + weilder.currentArcaneAttack;
+            damageOutput = this.checkDamage(damageOutput, target, this.type);
+            target.currentHP = target.currentHP - damageOutput;
+            let restoreAmount = damageOutput;
+            if(weilder.currentHP + damageOutput > weilder.maxHP){
+                restoreAmount = weilder.maxHP - weilder.currentHP 
+            }
+            weilder.currentHP = weilder.currentHP + restoreAmount;
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage and restores ${restoreAmount} health!`);
+            theController.playSoundEffect(this.soundEffect);
+        }
+    }
+}
 
 export class ArcaneDart extends Ability{
     constructor(){

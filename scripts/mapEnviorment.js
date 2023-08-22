@@ -1,5 +1,5 @@
 import {LockedTreasureChest, AltusAmbushOpportunity} from "./encounters.js";
-import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian} from "./enemies.js";
+import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos} from "./enemies.js";
 
 export default class MapEnviorment{
     constructor(){
@@ -54,13 +54,15 @@ export default class MapEnviorment{
                         return;
                 }
             case "plains":
-                switch(Math.floor(Math.random()*3)){ 
+                switch(Math.floor(Math.random()*4)){ 
                     case 0:
                         return new Skeleton(playerLevel);
                     case 1:
                         return new Wolf(playerLevel);
                     case 2:
                         return new AltusMage(playerLevel);
+                    case 3:
+                        return new EmperorDolos(playerLevel);
                     default:
                         return;
                 }

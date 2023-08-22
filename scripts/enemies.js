@@ -1,4 +1,4 @@
-import {Slash, Block, Bite, Pounce, LeechLife, ArcaneDart, ArcaneBlast, SpitBile, Devour, Channel, Fireball} from "./abilities.js"
+import {Slash, Block, Bite, Pounce, LeechLife, ArcaneDart, ArcaneBlast, SpitBile, Devour, Channel, Fireball, DrainLife} from "./abilities.js"
 import {LinenShirt, LinenPants, WoodDagger, WoodSpear, WoodSword, 
         WoodSideDagger, WoodSheild, WoodFireStaff, LeatherHelmet, 
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
@@ -229,5 +229,39 @@ export class Groveguardian extends Enemy{
         this.abilityArray = [new Bite, new Devour];
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new HealthPotion];
+    }
+}
+export class EmperorDolos extends Enemy{
+    constructor(playerLevel){
+        super();
+        this.name = "emperor dolos";
+        this.imageSrc = "media/emperor-dolos.jpg"
+        this.maxHP = 100 + playerLevel*5; 
+        this.currentHP = this.maxHP;
+        this.maxStamina = 100 + playerLevel*1; 
+        this.currentStamina = this.maxStamina;
+        this.maxMagic = 100 + playerLevel*1; 
+        this.currentMagic = this.maxMagic;
+        this.baseBluntAttack = 40 + playerLevel*1; 
+        this.currentBluntAttack = this.baseBluntAttack;
+        this.basePierceAttack = 40 + playerLevel*1; 
+        this.currentPierceAttack = this.basePierceAttack;
+        this.baseArcaneAttack = 40 + playerLevel*1; 
+        this.currentArcaneAttack = this.baseArcaneAttack;
+        this.baseElementalAttack = 40 + playerLevel*1; 
+        this.currentElementalAttack = this.baseElementalAttack;
+        this.baseBluntDefense = 40 + playerLevel*1; 
+        this.currentBluntDefense = this.baseBluntDefense;
+        this.basePierceDefense = 40 + playerLevel*1; 
+        this.currentPierceDefense = this.basePierceDefense;
+        this.baseArcaneDefense = 40 + playerLevel*1; 
+        this.currentArcaneDefense = this.baseArcaneDefense;
+        this.baseElementalDefense = 40 + playerLevel*1; 
+        this.currentElementalDefense = this.baseElementalDefense;
+        this.baseSpeed = 25;
+        this.currentSpeed = this.baseSpeed;
+        this.abilityArray = [new ArcaneDart, new DrainLife, new Slash];
+        this.lootChanceMultiplier = 0; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootArray = [];
     }
 }
