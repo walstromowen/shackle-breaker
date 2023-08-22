@@ -1,6 +1,9 @@
 import {controller as theController} from "./main.js"
 import {getRandomItem } from "./items.js";
 import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian} from "./enemies.js";
+import {UnlockedTreasureChest} from  "./encounters.js";
+
+
 export function leave(player){
     theController.printToGameConsole(`${player.name} moves on.`);
     theController.endEncounter();
@@ -49,6 +52,13 @@ export class OpenChestAttractEnemy{
         let newEnemy = theController.map.mapEnviorment.generateEnemy(player.level);
         theController.toggleBattle(newEnemy);
         player.nextRoom.enemy = newEnemy;
+    }
+}
+export class UnlockTreasureChest{
+     trigger(player){
+        theController.printToGameConsole(`${player.name} unlocks the chest!`);
+        theController.disablePlayerEncounterControls();
+        theController.toggleEncounter(new UnlockedTreasureChest());
     }
 }
 export class SucessfulAltusAssasination{

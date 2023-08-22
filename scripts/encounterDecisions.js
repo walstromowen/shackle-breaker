@@ -1,14 +1,9 @@
-import{leave, progressEncounter} from "./encounterResults.js";
+import{leave} from "./encounterResults.js";
 
 class Decision{
-    activate(player, followingEncounter, reward, consequence){
-        if(this.checkSuccess(player, this.decisionAttribute) == true){
-            if(followingEncounter != ""){
-                progressEncounter(followingEncounter);
-            }else{
-                reward.trigger(player);
-            }
-
+    activate(player, reward, consequence){
+        if(this.checkSuccess(player, this.decisionAttribute) == true){  
+            reward.trigger(player);
         }else{
             consequence.trigger(player);
         }
@@ -18,20 +13,27 @@ class Decision{
         switch(decisionAttribute){
             case "none":
                 decisionAttribute = 8;
+                break;
             case "vigor":
                 decisionAttribute = player.vigor;
+                break;
             case "endurance":
                 decisionAttribute = player.endurance;
+                break;
             case "strength":
                 decisionAttribute = player.strength;
+                break;
             case "dexterity":
                 decisionAttribute = player.dexterity;
+                break;
             case "insight":
                 decisionAttribute = player.insight;
+                break;
             case "focus":
                 decisionAttribute = player.focus;
+                break;
         }
-        if(decisionAttribute <= 8){
+        if(decisionAttribute < 8){
             multiplier = 1.5;
         }
         if(decisionAttribute >= 8){
