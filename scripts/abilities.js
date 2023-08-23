@@ -574,7 +574,7 @@ export class DrinkStaminaPotion extends Ability{
             theController.printToGameConsole(`${weilder.name} cannot restore more stamina!`);
             return false;
         }
-        let stamina = weilder.maxStamia * 0.5;
+        let stamina = Math.floor(weilder.maxStamina * 0.5);
         if(weilder.currentStamina + stamina > weilder.maxStamina){
             stamina = weilder.maxStamina - weilder.currentStamina;
         }
@@ -604,7 +604,7 @@ export class DrinkMagicPotion extends Ability{
             theController.printToGameConsole(`${weilder.name} cannot restore more magic!`);
             return false;
         }
-        let magic = weilder.maxMagic * 0.5;
+        let magic = Math.floor(weilder.maxMagic * 0.5);
         if(weilder.currentMagic + magic > weilder.maxMagic){
             magic = weilder.maxMagic - weilder.currentMagic;
         }
