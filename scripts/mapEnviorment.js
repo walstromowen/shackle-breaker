@@ -1,4 +1,4 @@
-import {LockedTreasureChest, AltusAmbushOpportunity} from "./encounters.js";
+import {LockedTreasureChest, AltusAmbushOpportunity, MysteriousDoor1} from "./encounters.js";
 import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos} from "./enemies.js";
 
 export default class MapEnviorment{
@@ -70,14 +70,14 @@ export default class MapEnviorment{
                 break;
         }
     }
-    generateEncounter(playerLevel){
+    generateEncounter(){
         switch(this.biome){ 
             case "cave": 
                 switch(Math.floor(Math.random()*2)){ 
                     case 0:
                         return new LockedTreasureChest();
                     case 1:
-                        return new LockedTreasureChest();
+                        return new MysteriousDoor1();
                     default:
                         return;
                 }

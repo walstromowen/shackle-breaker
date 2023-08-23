@@ -414,3 +414,13 @@ export class Meteorite {
         this.abilityArray = [new SmashMeteorite()];
     }
 }
+/*
+export class Antidote {
+    constructor(){
+        this.name = "antidote";
+        this.type = "consumable";
+        this.level = 0;
+        this.abilityArray = [new UseAntidote()];
+    }
+}
+*/

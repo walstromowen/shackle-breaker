@@ -236,19 +236,19 @@ export class EmperorDolos extends Enemy{
         super();
         this.name = "emperor dolos";
         this.imageSrc = "media/emperor-dolos.jpg"
-        this.maxHP = 100 + playerLevel*5; 
+        this.maxHP = 100 + playerLevel*1; 
         this.currentHP = this.maxHP;
         this.maxStamina = 100 + playerLevel*1; 
         this.currentStamina = this.maxStamina;
         this.maxMagic = 100 + playerLevel*1; 
         this.currentMagic = this.maxMagic;
-        this.baseBluntAttack = 40 + playerLevel*1; 
+        this.baseBluntAttack = 40 + playerLevel*2; 
         this.currentBluntAttack = this.baseBluntAttack;
-        this.basePierceAttack = 40 + playerLevel*1; 
+        this.basePierceAttack = 40 + playerLevel*2; 
         this.currentPierceAttack = this.basePierceAttack;
-        this.baseArcaneAttack = 40 + playerLevel*1; 
+        this.baseArcaneAttack = 40 + playerLevel*2; 
         this.currentArcaneAttack = this.baseArcaneAttack;
-        this.baseElementalAttack = 40 + playerLevel*1; 
+        this.baseElementalAttack = 40 + playerLevel*2; 
         this.currentElementalAttack = this.baseElementalAttack;
         this.baseBluntDefense = 40 + playerLevel*1; 
         this.currentBluntDefense = this.baseBluntDefense;

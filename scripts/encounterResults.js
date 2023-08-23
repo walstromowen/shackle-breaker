@@ -1,7 +1,7 @@
 import {controller as theController} from "./main.js"
 import {getRandomItem } from "./items.js";
 import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian} from "./enemies.js";
-import {UnlockedTreasureChest} from  "./encounters.js";
+import {UnlockedTreasureChest, MysteriousDoor2, MysteriousDoor3} from  "./encounters.js";
 
 
 export function leave(player){
@@ -32,7 +32,7 @@ export class LootChest{
         let newItem = getRandomItem();
         player.inventory.push(newItem);
         theController.updatePlayerInventoryTab(player.inventory);
-        theController.printToGameConsole(`${player.name} opens the chest and finds a ${newItem.name}`);
+        theController.printToGameConsole(`${player.name} opens the chest and finds ${newItem.name}`);
         theController.endEncounter();
     }
 }
@@ -77,5 +77,32 @@ export class FailedAltusAssasination{
         let newEnemy = new AltusMage(player.level);
         theController.toggleBattle(newEnemy);
         player.nextRoom.enemy = newEnemy;
+    }
+}
+export class MysteriousDoorCollapses{
+    trigger(player){
+        theController.printToGameConsole(`The gate collapses into a heap of rubble! The magic glow recedes...`);
+        theController.endEncounter();
+    }
+}
+export class BreakSealMysteriousDoor1{
+    trigger(player){
+       theController.printToGameConsole(`The door's mechanism shudders...`);
+       theController.disablePlayerEncounterControls();
+       theController.toggleEncounter(new MysteriousDoor2());
+   }
+}
+export class BreakSealMysteriousDoor2{
+    trigger(player){
+       theController.printToGameConsole(`The door's mechanism shudders violently...`);
+       theController.disablePlayerEncounterControls();
+       theController.toggleEncounter(new MysteriousDoor3());
+   }
+}
+export class BreakSealMysteriousDoor3{
+    trigger(player){
+        theController.printToGameConsole(`The gate opens and pulls ${player.name} inside!`);
+        theController.generateNewMap();
+        theController.endEncounter();
     }
 }

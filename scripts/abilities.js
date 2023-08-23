@@ -336,13 +336,13 @@ export class LeechLife extends Ability{
 export class DrainLife extends Ability{
     constructor(){
         super();
-        this.name = "leech life";
+        this.name = "drain life";
         this.type = "arcane";
         this.speedMultiplier = 0.25;
         this.staminaCost = 0;
         this.magicCost = 12;
         this.damageModifier = 3;
-        this.soundEffect = "./audio/soundEffects/platzender-kopf_nachschlag-91637.mp3";
+        this.soundEffect = "./audio/soundEffects/mixkit-deep-air-woosh-2604.wav";
     }
     activate(weilder, target){
         if(this.checkStamina(weilder) == true){
@@ -689,5 +689,41 @@ export class SmashMeteorite extends Ability{
         return true;
     }
 }
-
+/*
+export class UseAntidote extends Ability{
+    constructor(){
+        super();
+        this.name = "use antidote";
+        this.type = "";
+        this.speedMultiplier = 0.5;
+        this.staminaCost = 0;
+        this.magicCost = 0;
+        this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
+    }
+    activate(weilder, target){
+        for(let i = 0; i < weilder.statusArray.length; i++){
+            if(weilder.statusArray[i].name == posioned){
+                weilder.statusArray.splice
+            }
+        }
+        if(weilder.currentMagic == weilder.maxMagic){
+            theController.printToGameConsole(`${weilder.name} cannot restore more magic!`);
+            return false;
+        }
+        let magic = Math.floor(weilder.maxMagic * 0.5);
+        if(weilder.currentMagic + magic > weilder.maxMagic){
+            magic = weilder.maxMagic - weilder.currentMagic;
+        }
+        weilder.currentMagic = weilder.currentMagic + magic;
+        theController.printToGameConsole(`${weilder.name} restores ${magic} magic!`);
+        return true;
+    }
+    canUse(weilder){
+        if(weilder.currentMagic == weilder.maxMagic){
+            theController.printToGameConsole(`${weilder.name} cannot recover more magic!`);
+            return false;
+        }
+    }
+}
+*/
 

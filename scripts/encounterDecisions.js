@@ -97,3 +97,10 @@ export class Assassinate extends Decision{
         this.decisionAttribute = "dexterity";
     }
 }
+export class ChooseRune extends Decision{
+    constructor(message){
+        super();
+        this.name = message;
+        this.decisionAttribute = "none";
+    }
+}

@@ -31,7 +31,7 @@ export default class Map{
                         this.roomArray[i].enemy = this.mapEnviorment.generateEnemy(playerLevel);
                     }
                     if(randomNumber == 3 || randomNumber == 4){
-                        this.roomArray[i].encounter = this.mapEnviorment.generateEncounter(playerLevel);
+                        this.roomArray[i].encounter = this.mapEnviorment.generateEncounter();
                     }
                     break;
                 case 2:

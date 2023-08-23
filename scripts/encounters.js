@@ -1,6 +1,7 @@
-import {Loot, MoveOn, Assassinate, ForceOpen, PickLock, LookForKey} from "./encounterDecisions.js";
-import {LootChest, OpenChestArrowTrap, OpenChestAttractEnemy, SucessfulAltusAssasination, FailedAltusAssasination, UnlockTreasureChest} from "./encounterResults.js";
-
+import {Loot, MoveOn, Assassinate, ForceOpen, PickLock, LookForKey,
+        ChooseRune} from "./encounterDecisions.js";
+import {LootChest, OpenChestArrowTrap, OpenChestAttractEnemy, SucessfulAltusAssasination, FailedAltusAssasination, UnlockTreasureChest, MysteriousDoorCollapses,
+        BreakSealMysteriousDoor1, BreakSealMysteriousDoor2, BreakSealMysteriousDoor3} from "./encounterResults.js";
 class Encounter{
     makeDecision(player, decisionArrayIndex){
         let reward = Math.floor(Math.random() * this.rewardsArray.length);
@@ -24,7 +25,7 @@ export class LockedTreasureChest extends Encounter{
 export class UnlockedTreasureChest extends Encounter{
     constructor(){
         super();
-        this.name = "open treasure chest";
+        this.name = "unlocked treasure chest";
         this.message = "A large chest sits all alone. It is unlocked...";
         this.imageSrc = "./media/treasureChestLocked.jpg";
         this.decisionArray = [new MoveOn(), new Loot()];
@@ -41,5 +42,68 @@ export class AltusAmbushOpportunity extends Encounter{
         this.decisionArray = [new MoveOn(), new Assassinate()];
         this.rewardsArray =  [new SucessfulAltusAssasination()];
         this.consequencesArray = [new FailedAltusAssasination()];
+    }
+}
+export class MysteriousDoor1 extends Encounter{
+    constructor(){
+        super();
+        this.name = "a mysterious door";
+        this.message = "A mysterious door stands at the end of the passagea. A faint light appears to emit from the door...";
+        this.imageSrc = "./media/mysterious-door.jpg";
+        let characters =["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+        let rand1 = Math.floor(Math.random()*26);
+        let rune1 = new ChooseRune(characters[rand1]);
+        characters.splice(rand1);
+        let rand2 = Math.floor(Math.random()*25);
+        let rune2 = new ChooseRune(characters[rand2]);
+        characters.splice(rand2);
+        let rand3 = Math.floor(Math.random()*24);
+        let rune3 = new ChooseRune(characters[rand3]);
+        characters.splice(rand3);
+        this.decisionArray = [new MoveOn(), rune1, rune2, rune3];
+        this.rewardsArray =  [new BreakSealMysteriousDoor1()];
+        this.consequencesArray = [new MysteriousDoorCollapses()];
+    }
+}
+export class MysteriousDoor2 extends Encounter{
+    constructor(){
+        super();
+        this.name = "a mysterious door";
+        this.message = "The door glows with magical energy...";
+        this.imageSrc = "./media/mysterious-door.jpg";
+        let characters =["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+        let rand1 = Math.floor(Math.random()*26);
+        let rune1 = new ChooseRune(characters[rand1]);
+        characters.splice(rand1);
+        let rand2 = Math.floor(Math.random()*25);
+        let rune2 = new ChooseRune(characters[rand2]);
+        characters.splice(rand2);
+        let rand3 = Math.floor(Math.random()*24);
+        let rune3 = new ChooseRune(characters[rand3]);
+        characters.splice(rand3);
+        this.decisionArray = [new MoveOn(), rune1, rune2, rune3];
+        this.rewardsArray =  [new BreakSealMysteriousDoor2()];
+        this.consequencesArray = [new MysteriousDoorCollapses()];
+    }
+}
+export class MysteriousDoor3 extends Encounter{
+    constructor(){
+        super();
+        this.name = "a mysterious door";
+        this.message = "The door trembles violently and radiates light in all directions!...";
+        this.imageSrc = "./media/mysterious-door.jpg";
+        let characters =["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+        let rand1 = Math.floor(Math.random()*26);
+        let rune1 = new ChooseRune(characters[rand1]);
+        characters.splice(rand1);
+        let rand2 = Math.floor(Math.random()*25);
+        let rune2 = new ChooseRune(characters[rand2]);
+        characters.splice(rand2);
+        let rand3 = Math.floor(Math.random()*24);
+        let rune3 = new ChooseRune(characters[rand3]);
+        characters.splice(rand3);
+        this.decisionArray = [new MoveOn(), rune1, rune2, rune3];
+        this.rewardsArray =  [new BreakSealMysteriousDoor3];
+        this.consequencesArray = [new MysteriousDoorCollapses()];
     }
 }
