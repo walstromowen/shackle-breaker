@@ -212,12 +212,14 @@ p{
     background-color: var(--color-4);
     border: 2px solid var(--color-2);
     border-radius: 10px;
-    width: 120px;
+    padding: 5px;
+    width: 100px;
     height: 64px;
     font-size: 20px;
     font-weight: bold;
     text-align: center;
     margin: 0 5px;
+    display: block;
 }
 .action-button-disabled{
     filter: brightness(0.85);
@@ -488,6 +490,7 @@ p{
 #battle-button-container, #map-button-container, #encounter-button-container{
     display: flex;
     margin: 5px;
+    justify-content: center;
 }
 /*Level Up Screen*/
 #level-up-screen{

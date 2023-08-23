@@ -385,7 +385,7 @@ export default class Controller {
             this.battleBtnArray.push(abilityBtn);
          }
         document.getElementById('map-button-container').style.display = "none";
-        document.getElementById('battle-button-container').style.display = "block";
+        document.getElementById('battle-button-container').style.display = "flex";
         document.getElementById('battle-button-container').style.visibility = "visible";// can remove?
         Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
             btn.style.visibility = "visible";
@@ -415,7 +415,7 @@ export default class Controller {
             this.encounterBtnArray.push(decisionBtn);
          }
          document.getElementById('map-button-container').style.display = "none";
-         document.getElementById('encounter-button-container').style.display = "block";
+         document.getElementById('encounter-button-container').style.display = "flex";
          document.getElementById('encounter-button-container').style.visibility = "visible";// can remove?
          Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
              btn.style.visibility = "visible";
@@ -429,7 +429,7 @@ export default class Controller {
         });
     }
     toggleMap(){
-        document.getElementById('map-button-container').style.display = "block";
+        document.getElementById('map-button-container').style.display = "flex";
         document.getElementById('battle-button-container').style.display = "none";
         document.getElementById('encounter-button-container').style.display = "none";
         document.getElementById("location-name-container").style.display = "block";
@@ -455,7 +455,7 @@ export default class Controller {
             document.getElementById('enemy-name').innerText = this.capitalizeFirstLetter(this.battle.enemy.name);
             document.getElementById('enemy-image').src = this.battle.enemy.imageSrc;
             document.getElementById('map-button-container').style.display = "none";
-            document.getElementById('battle-button-container').style.display = "block";
+            document.getElementById('battle-button-container').style.display = "flex";
             document.getElementById('encounter-button-container').style.display = "none";
             document.getElementById("location-name-container").style.display = "none";
             document.getElementById("enemy-name-container").style.display = "block";
