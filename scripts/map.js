@@ -50,8 +50,8 @@ export default class Map{
             }
             //East Check
             if(this.roomArray[i].position[0] < this.mapWidth - 1){
-                if(this.mapLayout.tileArray[i - 1] !== 1){
-                    this.roomArray[i].setRoomEast(this.roomArray[(i - 1)]);
+                if(this.mapLayout.tileArray[i + 1] !== 1){
+                    this.roomArray[i].setRoomEast(this.roomArray[(i + 1)]);
                 }
             }
             //South Check 
@@ -61,9 +61,9 @@ export default class Map{
                 }
             }
              //West Check
-             if(this.roomArray[i].position[0] ){
-                if(this.mapLayout.tileArray[i + 1] !== 1){
-                    this.roomArray[i].setRoomWest(this.roomArray[(i + 1)]);
+             if(this.roomArray[i].position[0] > 0){
+                if(this.mapLayout.tileArray[i - 1] !== 1){
+                    this.roomArray[i].setRoomWest(this.roomArray[(i - 1)]);
                 }
             }
         }  

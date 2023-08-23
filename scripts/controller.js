@@ -176,13 +176,13 @@ export default class Controller {
                         this.movePlayerNorth();
                         break;
                     case 'a':
-                        this.movePlayerEast();
+                        this.movePlayerWest();
                         break;
                     case 's':
                         this.movePlayerSouth();
                         break;
                     case 'd':
-                        this.movePlayerWest();
+                        this.movePlayerEast();
                         break;
                 }
             }
