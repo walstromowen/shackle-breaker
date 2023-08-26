@@ -1,4 +1,5 @@
 import {Recover, Punch, Retreat} from "./abilities.js";
+import {Poisoned} from "./statusEffects.js";
 
 export default class Player{
     constructor(characterCreationArray, map){

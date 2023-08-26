@@ -3,7 +3,7 @@ import {LinenShirt, LinenPants, WoodDagger, WoodHammer, WoodSpear, WoodSword,
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
         LeatherBoots, IronSheild, IronHelmet, IronGuantlets, IronChainmail, 
         IronGreaves, IronBoots, HealthPotion, StaminaPotion, MagicPotion, 
-        ThrowingKnife, PoisonedThrowingKnife, Meteorite} from "./items.js";
+        ThrowingKnife, PoisonedThrowingKnife, Meteorite, Antidote, AloeRemedy, Net} from "./items.js";
 import {Recover, Punch, Retreat} from "./abilities.js"
 import Player from "./player.js";
 import Map from "./map.js";
@@ -47,7 +47,7 @@ export default class Controller {
             this.characterCreationArray[0] = document.getElementById("name-selection").value;
             this.characterCreationArray[1] = document.getElementById("apperance-selection").value;
             this.characterCreationArray[2] = document.getElementById("background-selection").value;
-            this.map = new Map(0);
+            this.map = new Map(0, "basic");
             this.miniMap = new MiniMap();
             this.player = new Player(this.characterCreationArray, this.map);
             document.getElementById("app").style.display = "block";
@@ -117,33 +117,35 @@ export default class Controller {
     characterCreatorUpdateInventory(){
         let inventoryArray = [];
         let value = document.getElementById("background-selection").value;
-        inventoryArray.push(new LinenShirt, new LinenPants)
         switch(value){
             case "traveler":
-                inventoryArray.push(new WoodSword, new LeatherBoots);
+                inventoryArray.push(new WoodSword, new LinenShirt, new LinenPants, new LeatherBoots);
                 break;
             case "blacksmith":
-                inventoryArray.push(new WoodHammer, new IronHelmet);
+                inventoryArray.push(new WoodHammer, new LinenShirt, new LinenPants, new LeatherBoots);
                 break;
             case "ranger":
-                inventoryArray.push(new WoodDagger, new WoodSideDagger);
+                inventoryArray.push(new WoodDagger, new WoodSideDagger, new LinenShirt, new LinenPants, new LeatherBoots);
                 break;
             case "hermit":
-                inventoryArray.push(new WoodFireStaff);
+                inventoryArray.push(new WoodFireStaff, new LinenShirt, new LinenPants, new LeatherBoots);
                 break;
         }
         let value2 = document.getElementById("keepsake-selection").value;
         switch(value2){
             case "none":
                 break;
-            case "throwing-knifes":
-                inventoryArray.push(new ThrowingKnife, new ThrowingKnife, new PoisonedThrowingKnife );
+            case "hunters-tools":
+                inventoryArray.push(new ThrowingKnife, new ThrowingKnife, new Net);
                 break;
             case "bag-of-potions":
                 inventoryArray.push(new HealthPotion, new StaminaPotion , new MagicPotion);
                 break;
             case "meteorite":
                 inventoryArray.push(new Meteorite);
+                break;
+            case "herbal-medicine":
+                inventoryArray.push(new Antidote, new AloeRemedy);
                 break;
         }
         for(let i = -1; i < this.characterCreationArray[3].length; i++){
@@ -508,6 +510,9 @@ export default class Controller {
             inventorySlot.classList.add('inventory-slot');
             inventorySlotMenu.classList.add('inventory-slot-menu');
             slotMenuUseBtn.classList.add('slot-menu-use-btn');//equipment specific
+            if(this.player.isInBattle == true){
+                slotMenuUseBtn.style.visibility = "hidden";
+            }
             inventorySlot.innerText = this.capitalizeFirstLetter(inventory[i].name);
             inventorySlot.appendChild(inventorySlotMenu);
             inventorySlotMenu.appendChild(slotMenuUseBtn);//equipment specific
@@ -620,7 +625,7 @@ export default class Controller {
             if(this.player.currentRoom.isExit == true){
                 this.levelPlayerUp();
                 this.printToGameConsole(`${this.player.name} finds an exit!`);
-                this.generateNewMap();
+                this.generateNewMap("basic");
             }
         }
         else{
@@ -785,7 +790,8 @@ export default class Controller {
                 this.updatePlayerInventoryTab(this.player.inventory);
             }
         }else{
-            if(this.player.inventory[inventoryIndex].abilityArray[0].activate(this.player)==true){
+            if(this.player.inventory[inventoryIndex].abilityArray[0].canUse(this.player) != false){
+                this.player.inventory[inventoryIndex].abilityArray[0].activate(this.player)
                 this.player.inventory.splice(inventoryIndex, 1);
                 this.updatePlayerInventoryTab(this.player.inventory);
                 this.updatePlayerStats();
@@ -803,8 +809,8 @@ export default class Controller {
 
         this.player.canMoveRoom = false;
     }
-    generateNewMap(){
-        this.map = new Map(this.player.level);
+    generateNewMap(biome){
+        this.map = new Map(this.player.level, biome);
         this.player.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
         this.player.nextRoom = this.player.currentRoom;
         document.getElementById('location-image').src = this.map.mapEnviorment.imageSrc;

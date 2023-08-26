@@ -1,4 +1,5 @@
-import {Slash, Strike, Stab, Eviscerate, Block, Fireball, Channel, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite} from "./abilities.js"
+import {Slash, Strike, Stab, Eviscerate, Block, Fireball, Channel, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
+        ThrowNet} from "./abilities.js"
 
 export function getRandomItem(){
     let itemArray = [new LinenShirt(), new LinenPants, new WoodDagger, new WoodHammer, new WoodSpear, new WoodSword, 
@@ -6,7 +7,7 @@ export function getRandomItem(){
                 new LeatherHood, new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
                 new LeatherBoots, new IronSheild, new IronHelmet, new IronGuantlets, new IronChainmail, 
                 new IronGreaves, new IronBoots, new HealthPotion, new StaminaPotion, new MagicPotion, 
-                new ThrowingKnife, new PoisonedThrowingKnife, new Meteorite];
+                new ThrowingKnife, new PoisonedThrowingKnife, new Meteorite, new Antidote(), new AloeRemedy(), new Net()];
                 return itemArray[Math.floor(Math.random() * itemArray.length)];
     }
 export class LinenShirt {
@@ -414,7 +415,6 @@ export class Meteorite {
         this.abilityArray = [new SmashMeteorite()];
     }
 }
-/*
 export class Antidote {
     constructor(){
         this.name = "antidote";
@@ -423,4 +423,19 @@ export class Antidote {
         this.abilityArray = [new UseAntidote()];
     }
 }
-*/
+export class AloeRemedy {
+    constructor(){
+        this.name = "aloe remedy";
+        this.type = "consumable";
+        this.level = 0;
+        this.abilityArray = [new UseAloeRemedy()];
+    }
+}
+export class Net {
+    constructor(){
+        this.name = "net";
+        this.type = "consumable";
+        this.level = 0;
+        this.abilityArray = [new ThrowNet()];
+    }
+}

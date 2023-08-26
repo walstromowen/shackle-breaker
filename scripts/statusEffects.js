@@ -63,15 +63,18 @@ export class Bound extends StatusEffect{
         this.type = "start";
         this.name = "bound";
         this.holder = holder;
-        this.maxCharges = 2;
+        this.maxCharges = 3;
         this.currentCharges = this.maxCharges;
     }
     onStartTurn(){
         if(Math.random()*2 < 1){
             this.holder.nextMove = new Struggle;
+            this.currentCharges = this.currentCharges - 1;
+            theController.printToGameConsole(`${this.holder.name} is bound!`);
+        }else{
+            this.currentCharges = this.currentCharges = 0;
+            theController.printToGameConsole(`${this.holder.name} breaks free!`);
         }
-        this.currentCharges = this.currentCharges - 1;
-        theController.printToGameConsole(`${this.holder.name} is bound!`);
     }
 }
 
@@ -83,7 +86,7 @@ export class Poisoned extends StatusEffect{
         this.holder = holder;
         this.maxCharges = 10;
         this.currentCharges = this.maxCharges;
-        this.serverityMultiplier = 0.1;
+        this.serverityMultiplier = 0.5;
     }
     onEndTurn(){
         let damageOutput = Math.floor(this.holder.maxHP*this.serverityMultiplier);
@@ -103,7 +106,7 @@ export class Burned extends StatusEffect{
         this.holder = holder;
         this.maxCharges = 3;
         this.currentCharges = this.maxCharges;
-        this.serverityMultiplier = 0.25;
+        this.serverityMultiplier = 0.15;
     }
     onEndTurn(){
         let damageOutput = Math.floor(this.holder.maxHP*this.serverityMultiplier);
@@ -111,7 +114,7 @@ export class Burned extends StatusEffect{
         if(damageOutput == 0){
             damageOutput = 1;
         }
-        this.serverityMultiplier = this.serverityMultiplier - 0.1;
+        this.serverityMultiplier = this.serverityMultiplier - 0.01;
         this.holder.currentHP = this.holder.currentHP - damageOutput;
         theController.printToGameConsole(`${this.holder.name} suffers ${damageOutput} burn damage!`);
         this.currentCharges = this.currentCharges - 1;

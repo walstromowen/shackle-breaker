@@ -4,7 +4,7 @@ import {LinenShirt, LinenPants, WoodDagger, WoodSpear, WoodSword,
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
         LeatherBoots, IronSheild, IronHelmet, IronGuantlets, IronChainmail, 
         IronGreaves, IronBoots, HealthPotion, StaminaPotion, MagicPotion, 
-        ThrowingKnife, PoisonedThrowingKnife} from "./items.js";
+        ThrowingKnife, PoisonedThrowingKnife, AloeRemedy, Antidote} from "./items.js";
 
 class Enemy{
     constructor(){
@@ -52,8 +52,7 @@ export class Skeleton extends Enemy{
         this.currentSpeed = this.baseSpeed;
         this.abilityArray = [new Slash, new Block];
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new LinenShirt, new LinenPants, new WoodDagger, 
-                          new WoodSpear, new WoodSword, new WoodSideDagger, 
+        this.lootArray = [new WoodSpear, new WoodSword, new WoodDagger, new WoodSideDagger, 
                           new WoodSheild, new LeatherHelmet, new LeatherHood, 
                           new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
                           new LeatherBoots, new IronSheild, new IronHelmet, new IronGuantlets, 
@@ -228,7 +227,7 @@ export class Groveguardian extends Enemy{
         this.currentSpeed = this.baseSpeed;
         this.abilityArray = [new Bite, new Devour];
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new HealthPotion];
+        this.lootArray = [new HealthPotion, new AloeRemedy, new Antidote];
     }
 }
 export class EmperorDolos extends Enemy{

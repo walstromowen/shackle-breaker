@@ -3,10 +3,10 @@ import MapLayout from "./mapLayout.js";
 import MapEnviorment from "./mapEnviorment.js";
 
 export default class Map{
-    constructor(playerLevel){
+    constructor(playerLevel, biome){
         this.roomArray = []; //Room array is 1 Dimensional
         this.mapLayout = new MapLayout();
-        this.mapEnviorment = new MapEnviorment();
+        this.mapEnviorment = new MapEnviorment(biome);
         this.mapWidth = this.mapLayout.width; //in tiles  
         this.mapHeight = this.mapLayout.height; //in tiles
         this.playerSpawnIndex = "";

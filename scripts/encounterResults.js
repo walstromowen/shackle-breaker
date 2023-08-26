@@ -102,7 +102,7 @@ export class BreakSealMysteriousDoor2{
 export class BreakSealMysteriousDoor3{
     trigger(player){
         theController.printToGameConsole(`The gate opens and pulls ${player.name} inside!`);
-        theController.generateNewMap();
+        theController.generateNewMap("portal");
         theController.endEncounter();
     }
 }
