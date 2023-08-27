@@ -1,13 +1,13 @@
-import {Slash, Strike, Stab, Eviscerate, Block, Fireball, Channel, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
+import {Slash, Strike, Stab, Eviscerate, Block, Fireball, Channel, Cleanse, SheildBash, PrepareSpell, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
         ThrowNet} from "./abilities.js"
 
 export function getRandomItem(){
-    let itemArray = [new LinenShirt(), new LinenPants, new WoodDagger, new WoodHammer, new WoodSpear, new WoodSword, 
-                new WoodSideDagger, new WoodSheild, new WoodFireStaff, new LeatherHelmet, 
+    let itemArray = [new LinenShirt, new LinenPants, new Dagger, new BlacksmithHammer, new Spear, new Shortsword, 
+                new Shiv, new Buckler, new FireStaff, new LeatherHelmet, 
                 new LeatherHood, new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
-                new LeatherBoots, new IronSheild, new IronHelmet, new IronGuantlets, new IronChainmail, 
+                new LeatherBoots, new KiteSheild, new IronHelmet, new IronGuantlets, new IronChainmail, 
                 new IronGreaves, new IronBoots, new HealthPotion, new StaminaPotion, new MagicPotion, 
-                new ThrowingKnife, new PoisonedThrowingKnife, new Meteorite, new Antidote(), new AloeRemedy(), new Net()];
+                new ThrowingKnife, new PoisonedThrowingKnife, new Meteorite, new Antidote, new AloeRemedy, new Net];
                 return itemArray[Math.floor(Math.random() * itemArray.length)];
     }
 export class LinenShirt {
@@ -44,9 +44,9 @@ export class LinenPants {
         this.abilityArray = [];
     }
 }
-export class WoodDagger {
+export class Dagger {
     constructor(){
-        this.name = "wood dagger";
+        this.name = "dagger";
         this.type = "weapon";
         this.level = 0;
         this.bluntAttack = 1;
@@ -61,9 +61,9 @@ export class WoodDagger {
         this.abilityArray = [new Stab(), new Slash()];
     }
 }
-export class WoodHammer {
+export class BlacksmithHammer {
     constructor(){
-        this.name = "wood hammer";
+        this.name = "blacksmith hammer";
         this.type = "weapon";
         this.level = 0;
         this.bluntAttack = 2;
@@ -78,9 +78,9 @@ export class WoodHammer {
         this.abilityArray = [new Strike()];
     }
 }
-export class WoodSpear {
+export class Spear {
     constructor(){
-        this.name = "wood spear";
+        this.name = "spear";
         this.type = "weapon";
         this.level = 0;
         this.bluntAttack = 2;
@@ -95,9 +95,9 @@ export class WoodSpear {
         this.abilityArray = [new Stab()];
     }
 }
-export class WoodSword {
+export class Shortsword {
     constructor(){
-        this.name = "wood sword";
+        this.name = "shortsword";
         this.type = "weapon";
         this.level = 0;
         this.bluntAttack = 3;
@@ -112,9 +112,9 @@ export class WoodSword {
         this.abilityArray = [new Stab(), new Slash()];
     }
 }
-export class WoodSideDagger {
+export class Shiv {
     constructor(){
-        this.name = "wood side dagger";
+        this.name = "shiv";
         this.type = "offhand";
         this.level = 0;
         this.bluntAttack = 1;
@@ -129,9 +129,9 @@ export class WoodSideDagger {
         this.abilityArray = [new Eviscerate];
     }
 }
-export class WoodSheild {
+export class Buckler {
     constructor(){
-        this.name = "wood sheild";
+        this.name = "Buckler";
         this.type = "offhand";
         this.level = 0;
         this.bluntAttack = 1;
@@ -142,13 +142,13 @@ export class WoodSheild {
         this.pierceDefense = 1;
         this.arcaneDefense = 0;
         this.elementalDefense = 0;
-        this.speed = -1;
+        this.speed = 0;
         this.abilityArray = [new Block()];
     }
 }
-export class WoodFireStaff {
+export class FireStaff {
     constructor(){
-        this.name = "wood fire staff";
+        this.name = "fire staff";
         this.type = "weapon";
         this.level = 0;
         this.bluntAttack = 1;
@@ -160,7 +160,7 @@ export class WoodFireStaff {
         this.arcaneDefense = 0;
         this.elementalDefense = 0;
         this.speed = 1;
-        this.abilityArray = [new Fireball(), new Channel()];
+        this.abilityArray = [new Fireball(), new Strike(), new Channel()];
     }
 }
 export class LeatherHelmet {
@@ -265,9 +265,9 @@ export class LeatherBoots {
         this.abilityArray = [];
     }
 }
-export class IronSheild {
+export class KiteSheild {
     constructor(){
-        this.name = "iron sheild";
+        this.name = "kite sheild";
         this.type = "offhand";
         this.level = 0;
         this.bluntAttack = 0;
@@ -278,8 +278,8 @@ export class IronSheild {
         this.pierceDefense = 4;
         this.arcaneDefense = 1;
         this.elementalDefense = 1;
-        this.speed = -1;
-        this.abilityArray = [new Block()];
+        this.speed = -5;
+        this.abilityArray = [new Block(), new SheildBash()];
     }
 }
 export class IronHelmet {
@@ -365,6 +365,40 @@ export class IronBoots {
         this.elementalDefense = 1;
         this.speed = -1;
         this.abilityArray = [];
+    }
+}
+export class StudentsSpellbook {
+    constructor(){
+        this.name = "crystal ball";
+        this.type = "student's spellbook";
+        this.level = 0;
+        this.bluntAttack = 0;
+        this.pierceAttack = 0;
+        this.arcaneAttack = 0;
+        this.elementalAttack = 0;
+        this.bluntDefense = 0;
+        this.pierceDefense = 0;
+        this.arcaneDefense = 0;
+        this.elementalDefense = 0;
+        this.speed = -5;
+        this.abilityArray = [new PrepareSpell()];
+    }
+}
+export class SpellbookOfCleasning {
+    constructor(){
+        this.name = "spellbook of cleasning";
+        this.type = "offhand";
+        this.level = 0;
+        this.bluntAttack = 0;
+        this.pierceAttack = 0;
+        this.arcaneAttack = 0;
+        this.elementalAttack = 0;
+        this.bluntDefense = 0;
+        this.pierceDefense = 0;
+        this.arcaneDefense = 0;
+        this.elementalDefense = 1;
+        this.speed = -1;
+        this.abilityArray = [new Cleanse()];
     }
 }
 export class HealthPotion {

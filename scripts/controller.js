@@ -1,9 +1,10 @@
-import {LinenShirt, LinenPants, WoodDagger, WoodHammer, WoodSpear, WoodSword, 
-        WoodSideDagger, WoodSheild, WoodFireStaff, LeatherHelmet, 
+import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, 
+        Shiv, Buckler, FireStaff, LeatherHelmet, 
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
-        LeatherBoots, IronSheild, IronHelmet, IronGuantlets, IronChainmail, 
+        LeatherBoots, KiteSheild, IronHelmet, IronGuantlets, IronChainmail, 
         IronGreaves, IronBoots, HealthPotion, StaminaPotion, MagicPotion, 
-        ThrowingKnife, PoisonedThrowingKnife, Meteorite, Antidote, AloeRemedy, Net} from "./items.js";
+        ThrowingKnife, PoisonedThrowingKnife, Meteorite, Antidote, AloeRemedy, Net,
+        SpellbookOfCleasning} from "./items.js";
 import {Recover, Punch, Retreat} from "./abilities.js"
 import Player from "./player.js";
 import Map from "./map.js";
@@ -84,11 +85,11 @@ export default class Controller {
             case "blacksmith":
                 this.characterCreatorUpdateStats(8, 5, 6, 4, 3, 3);
                 break;
-            case "ranger":
-                this.characterCreatorUpdateStats(6, 6, 3, 7, 3, 5);
+            case "theif":
+                this.characterCreatorUpdateStats(6, 6, 3, 7, 5, 3);
                 break;
             case "hermit":
-                this.characterCreatorUpdateStats(5, 5, 3, 4, 7, 6);
+                this.characterCreatorUpdateStats(5, 5, 3, 4, 6, 7);
                 break;
         }
     }
@@ -119,16 +120,16 @@ export default class Controller {
         let value = document.getElementById("background-selection").value;
         switch(value){
             case "traveler":
-                inventoryArray.push(new WoodSword, new LinenShirt, new LinenPants, new LeatherBoots);
+                inventoryArray.push(new Shortsword, new Buckler, new LinenShirt, new LinenPants, new LeatherBoots);
                 break;
             case "blacksmith":
-                inventoryArray.push(new WoodHammer, new LinenShirt, new LinenPants, new LeatherBoots);
+                inventoryArray.push(new BlacksmithHammer, new KiteSheild, new LinenShirt, new LinenPants, new LeatherBoots);
                 break;
-            case "ranger":
-                inventoryArray.push(new WoodDagger, new WoodSideDagger, new LinenShirt, new LinenPants, new LeatherBoots);
+            case "theif":
+                inventoryArray.push(new Dagger, new Shiv, new LinenShirt, new LinenPants, new LeatherBoots);
                 break;
             case "hermit":
-                inventoryArray.push(new WoodFireStaff, new LinenShirt, new LinenPants, new LeatherBoots);
+                inventoryArray.push(new FireStaff, new LinenShirt, new LinenPants, new LeatherBoots);
                 break;
         }
         let value2 = document.getElementById("keepsake-selection").value;

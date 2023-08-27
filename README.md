@@ -13,11 +13,11 @@ Text adventure game based on the ShacklerBreaker story
 * Ability conflicts
 * Weapon Level Ups /crafting
 * Distance System in battle
-* 
 
 # Quality of Life
 * Rework character level / xp 
 * Alphabetize CSS rules
+* scaling
 
 # Bugs
 * Blocking still active on quick second attack

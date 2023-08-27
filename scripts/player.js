@@ -10,7 +10,6 @@ export default class Player{
         this.inventory = characterCreationArray[3];
         this.abilityArray = [new Punch, new Recover, new Retreat];
         this.level = 0;
-        this.attributeSum = characterCreationArray[6];
         this.currentXP = 0;
         this.vigor = characterCreationArray[4][0];
         this.endurance = characterCreationArray[4][1];

@@ -1,10 +1,11 @@
-import {Slash, Block, Bite, Pounce, LeechLife, ArcaneDart, ArcaneBlast, SpitBile, Devour, Channel, Fireball, DrainLife} from "./abilities.js"
-import {LinenShirt, LinenPants, WoodDagger, WoodSpear, WoodSword, 
-        WoodSideDagger, WoodSheild, WoodFireStaff, LeatherHelmet, 
+import {Slash, Stab, Strike, Block, Bite, Pounce, LeechLife, ArcaneDart, ArcaneBlast, SpitBile, Devour, Channel, Fireball, DrainLife, Recover, Cleanse} from "./abilities.js"
+import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, 
+        Shiv, Buckler, FireStaff, LeatherHelmet, 
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
-        LeatherBoots, IronSheild, IronHelmet, IronGuantlets, IronChainmail, 
+        LeatherBoots, KiteSheild, IronHelmet, IronGuantlets, IronChainmail, 
         IronGreaves, IronBoots, HealthPotion, StaminaPotion, MagicPotion, 
-        ThrowingKnife, PoisonedThrowingKnife, AloeRemedy, Antidote} from "./items.js";
+        ThrowingKnife, PoisonedThrowingKnife, Meteorite, Antidote, AloeRemedy, Net,
+        SpellbookOfCleasning} from "./items.js";
 
 class Enemy{
     constructor(){
@@ -26,23 +27,23 @@ export class Skeleton extends Enemy{
         super();
         this.name = "skeleton";
         this.imageSrc = "media/skeleton.jpg"
-        this.maxHP = 30 + playerLevel*2; 
+        this.maxHP = 35 + playerLevel*2; 
         this.currentHP = this.maxHP;
-        this.maxStamina = 30 + playerLevel*1; 
+        this.maxStamina = 35 + playerLevel*1; 
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 30 + playerLevel*1; 
+        this.maxMagic = 35 + playerLevel*1; 
         this.currentMagic = this.maxMagic;
-        this.baseBluntAttack = 40 + playerLevel*1; 
+        this.baseBluntAttack = 45 + playerLevel*2; 
         this.currentBluntAttack = this.baseBluntAttack;
-        this.basePierceAttack = 40 + playerLevel*2; 
+        this.basePierceAttack = 45 + playerLevel*2; 
         this.currentPierceAttack = this.basePierceAttack;
-        this.baseArcaneAttack = 40 + playerLevel*1; 
+        this.baseArcaneAttack = 45 + playerLevel*1; 
         this.currentArcaneAttack = this.baseArcaneAttack;
-        this.baseElementalAttack = 40 + playerLevel*1; 
+        this.baseElementalAttack = 45 + playerLevel*1; 
         this.currentElementalAttack = this.baseElementalAttack;
         this.baseBluntDefense = 35 + playerLevel*1; 
         this.currentBluntDefense = this.baseBluntDefense;
-        this.basePierceDefense = 35 + playerLevel*3; 
+        this.basePierceDefense = 40 + playerLevel*2; 
         this.currentPierceDefense = this.basePierceDefense;
         this.baseArcaneDefense = 35 + playerLevel*1; 
         this.currentArcaneDefense = this.baseArcaneDefense;
@@ -50,12 +51,12 @@ export class Skeleton extends Enemy{
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 25 + playerLevel;
         this.currentSpeed = this.baseSpeed;
-        this.abilityArray = [new Slash, new Block];
+        this.abilityArray = [new Slash, new Stab, new Strike, new Block];
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new WoodSpear, new WoodSword, new WoodDagger, new WoodSideDagger, 
-                          new WoodSheild, new LeatherHelmet, new LeatherHood, 
+        this.lootArray = [new Spear, new Shortsword, new Dagger, new Shiv, 
+                          new Buckler, new LeatherHelmet, new LeatherHood, 
                           new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
-                          new LeatherBoots, new IronSheild, new IronHelmet, new IronGuantlets, 
+                          new LeatherBoots, new KiteSheild, new IronHelmet, new IronGuantlets, 
                           new IronChainmail, new IronGreaves, new IronBoots, 
                           new HealthPotion, new StaminaPotion, new ThrowingKnife];
     }
@@ -65,19 +66,19 @@ export class Bat extends Enemy{
         super();
         this.name = "bat";
         this.imageSrc = "media/bat.jpg"
-        this.maxHP = 15 + playerLevel*2; 
+        this.maxHP = 20 + playerLevel*2; 
         this.currentHP = this.maxHP;
-        this.maxStamina = 15 + playerLevel*2; 
+        this.maxStamina = 20 + playerLevel*2; 
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 15 + playerLevel*1; 
+        this.maxMagic = 20 + playerLevel*1; 
         this.currentMagic = this.maxMagic;
-        this.baseBluntAttack = 40 + playerLevel*2; 
+        this.baseBluntAttack = 45 + playerLevel*2; 
         this.currentBluntAttack = this.baseBluntAttack;
-        this.basePierceAttack = 40 + playerLevel*2; 
+        this.basePierceAttack = 45 + playerLevel*2; 
         this.currentPierceAttack = this.basePierceAttack;
-        this.baseArcaneAttack = 40 + playerLevel*2; 
+        this.baseArcaneAttack = 45 + playerLevel*2; 
         this.currentArcaneAttack = this.baseArcaneAttack;
-        this.baseElementalAttack = 40 + playerLevel*1; 
+        this.baseElementalAttack = 45 + playerLevel*1; 
         this.currentElementalAttack = this.baseElementalAttack;
         this.baseBluntDefense = 35 + playerLevel*1; 
         this.currentBluntDefense = this.baseBluntDefense;
@@ -99,19 +100,19 @@ export class Wolf extends Enemy{
         super();
         this.name = "wolf";
         this.imageSrc = "media/wolf.jpg"
-        this.maxHP =  25 + playerLevel*2; 
+        this.maxHP =  30 + playerLevel*2; 
         this.currentHP = this.maxHP;
-        this.maxStamina = 25 + playerLevel*3; 
+        this.maxStamina = 30 + playerLevel*3; 
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 10 + playerLevel*1; 
+        this.maxMagic = 15 + playerLevel*1; 
         this.currentMagic = this.maxMagic;
-        this.baseBluntAttack = 40 + playerLevel*2; 
+        this.baseBluntAttack = 45 + playerLevel*2; 
         this.currentBluntAttack = this.baseBluntAttack;
-        this.basePierceAttack = 40 + playerLevel*2; 
+        this.basePierceAttack = 45 + playerLevel*2; 
         this.currentPierceAttack = this.basePierceAttack;
-        this.baseArcaneAttack = 40 + playerLevel*1; 
+        this.baseArcaneAttack = 45 + playerLevel*1; 
         this.currentArcaneAttack = this.baseArcaneAttack;
-        this.baseElementalAttack = 40 + playerLevel*1; 
+        this.baseElementalAttack = 45 + playerLevel*1; 
         this.currentElementalAttack = this.baseElementalAttack;
         this.baseBluntDefense = 35 + playerLevel*1; 
         this.currentBluntDefense = this.baseBluntDefense;
@@ -133,11 +134,11 @@ export class AltusMage extends Enemy{
         super();
         this.name = "altus mage";
         this.imageSrc = "media/altus-mage.jpg"
-        this.maxHP = 40 + playerLevel*2; 
+        this.maxHP = 45 + playerLevel*2; 
         this.currentHP = this.maxHP;
-        this.maxStamina = 30 + playerLevel*1; 
+        this.maxStamina = 35 + playerLevel*1; 
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 40 + playerLevel*2; 
+        this.maxMagic = 45 + playerLevel*2; 
         this.currentMagic = this.maxMagic;
         this.baseBluntAttack = 40 + playerLevel*1; 
         this.currentBluntAttack = this.baseBluntAttack;
@@ -149,17 +150,17 @@ export class AltusMage extends Enemy{
         this.currentElementalAttack = this.baseElementalAttack;
         this.baseBluntDefense = 35 + playerLevel*1; 
         this.currentBluntDefense = this.baseBluntDefense;
-        this.basePierceDefense = 30 + playerLevel*1; 
+        this.basePierceDefense = 35 + playerLevel*1; 
         this.currentPierceDefense = this.basePierceDefense;
         this.baseArcaneDefense = 35 + playerLevel*2; 
         this.currentArcaneDefense = this.baseArcaneDefense;
         this.baseElementalDefense = 35 + playerLevel*1; 
         this.currentElementalDefense = this.baseElementalDefense;
-        this.baseSpeed = 25;
+        this.baseSpeed = 30;
         this.currentSpeed = this.baseSpeed;
-        this.abilityArray = [new ArcaneDart, new ArcaneBlast];
+        this.abilityArray = [new ArcaneDart, new ArcaneBlast, new Fireball, new Cleanse];
         this.lootChanceMultiplier = 0; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new WoodFireStaff, new MagicPotion];
+        this.lootArray = [new FireStaff, new MagicPotion];
     }
 }
 export class CaveSpider extends Enemy{
@@ -167,19 +168,19 @@ export class CaveSpider extends Enemy{
         super();
         this.name = "cave spider";
         this.imageSrc = "media/cave-spider.jpg"
-        this.maxHP = 15 + playerLevel*2; 
+        this.maxHP = 20 + playerLevel*2; 
         this.currentHP = this.maxHP;
-        this.maxStamina = 15 + playerLevel*2;
+        this.maxStamina = 20 + playerLevel*2;
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 15 + playerLevel*2;
+        this.maxMagic = 20 + playerLevel*2;
         this.currentMagic = this.maxMagic;
-        this.baseBluntAttack = 40 + playerLevel*2;
+        this.baseBluntAttack = 45 + playerLevel*2;
         this.currentBluntAttack = this.baseBluntAttack;
-        this.basePierceAttack = 40 + playerLevel*2;
+        this.basePierceAttack = 45 + playerLevel*2;
         this.currentPierceAttack = this.basePierceAttack;
-        this.baseArcaneAttack = 40 + playerLevel*2;
+        this.baseArcaneAttack = 45 + playerLevel*2;
         this.currentArcaneAttack = this.baseArcaneAttack;
-        this.baseElementalAttack = 40 + playerLevel*2;
+        this.baseElementalAttack = 45 + playerLevel*2;
         this.currentElementalAttack = this.baseElementalAttack;
         this.baseBluntDefense = 30 + playerLevel*2;
         this.currentBluntDefense = this.baseBluntDefense;
@@ -203,17 +204,17 @@ export class Groveguardian extends Enemy{
         this.imageSrc = "media/grove-guardian.jpg"
         this.maxHP = 50 + playerLevel*2 ; 
         this.currentHP = this.maxHP;
-        this.maxStamina = 20 + playerLevel*2 ; 
+        this.maxStamina = 25 + playerLevel*2 ; 
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 30 + playerLevel*2; 
+        this.maxMagic = 35 + playerLevel*2; 
         this.currentMagic = this.maxMagic;
-        this.baseBluntAttack = 45 + playerLevel*2 ; 
+        this.baseBluntAttack = 50 + playerLevel*2 ; 
         this.currentBluntAttack = this.baseBluntAttack;
-        this.basePierceAttack = 40 + playerLevel*2 ; 
+        this.basePierceAttack = 45 + playerLevel*2 ; 
         this.currentPierceAttack = this.basePierceAttack;
-        this.baseArcaneAttack = 40 + playerLevel*2 ; 
+        this.baseArcaneAttack = 45 + playerLevel*2 ; 
         this.currentArcaneAttack = this.baseArcaneAttack;
-        this.baseElementalAttack = 45 + playerLevel*2 ; 
+        this.baseElementalAttack = 50 + playerLevel*2 ; 
         this.currentElementalAttack = this.baseElementalAttack;
         this.baseBluntDefense = 45 + playerLevel*2 ; 
         this.currentBluntDefense = this.baseBluntDefense;
@@ -235,29 +236,29 @@ export class EmperorDolos extends Enemy{
         super();
         this.name = "emperor dolos";
         this.imageSrc = "media/emperor-dolos.jpg"
-        this.maxHP = 100 + playerLevel*1; 
+        this.maxHP = 150 + playerLevel*1; 
         this.currentHP = this.maxHP;
-        this.maxStamina = 100 + playerLevel*1; 
+        this.maxStamina = 150 + playerLevel*1; 
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 100 + playerLevel*1; 
+        this.maxMagic = 150 + playerLevel*1; 
         this.currentMagic = this.maxMagic;
-        this.baseBluntAttack = 40 + playerLevel*2; 
+        this.baseBluntAttack = 45 + playerLevel*2; 
         this.currentBluntAttack = this.baseBluntAttack;
-        this.basePierceAttack = 40 + playerLevel*2; 
+        this.basePierceAttack = 45 + playerLevel*2; 
         this.currentPierceAttack = this.basePierceAttack;
-        this.baseArcaneAttack = 40 + playerLevel*2; 
+        this.baseArcaneAttack = 45 + playerLevel*2; 
         this.currentArcaneAttack = this.baseArcaneAttack;
-        this.baseElementalAttack = 40 + playerLevel*2; 
+        this.baseElementalAttack = 45 + playerLevel*2; 
         this.currentElementalAttack = this.baseElementalAttack;
-        this.baseBluntDefense = 40 + playerLevel*1; 
+        this.baseBluntDefense = 45 + playerLevel*1; 
         this.currentBluntDefense = this.baseBluntDefense;
-        this.basePierceDefense = 40 + playerLevel*1; 
+        this.basePierceDefense = 45 + playerLevel*1; 
         this.currentPierceDefense = this.basePierceDefense;
-        this.baseArcaneDefense = 40 + playerLevel*1; 
+        this.baseArcaneDefense = 45 + playerLevel*1; 
         this.currentArcaneDefense = this.baseArcaneDefense;
-        this.baseElementalDefense = 40 + playerLevel*1; 
+        this.baseElementalDefense = 45 + playerLevel*1; 
         this.currentElementalDefense = this.baseElementalDefense;
-        this.baseSpeed = 25;
+        this.baseSpeed = 30;
         this.currentSpeed = this.baseSpeed;
         this.abilityArray = [new ArcaneDart, new DrainLife, new Slash];
         this.lootChanceMultiplier = 0; //lower numbers = more likely to drop loot, 0 is certain to drop loot

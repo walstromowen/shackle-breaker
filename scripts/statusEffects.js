@@ -50,7 +50,7 @@ export class Sheilded extends StatusEffect{//curently has bug where if your next
         theController.printToGameConsole(`${this.holder.name} is Sheilded!`);
         this.currentCharges = this.currentCharges - 1;
     }
-    onRemove(){
+    onStartTurn(){
         this.holder.currentBluntDefense = this.holder.currentBluntDefense - 5;
         this.holder.currentPierceDefense = this.holder.currentPierceDefense - 5;
         this.holder.currentArcaneDefense = this.holder.currentArcaneDefense - 5;
@@ -86,7 +86,7 @@ export class Poisoned extends StatusEffect{
         this.holder = holder;
         this.maxCharges = 10;
         this.currentCharges = this.maxCharges;
-        this.serverityMultiplier = 0.5;
+        this.serverityMultiplier = 0.05;
     }
     onEndTurn(){
         let damageOutput = Math.floor(this.holder.maxHP*this.serverityMultiplier);
