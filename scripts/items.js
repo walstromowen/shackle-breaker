@@ -1,4 +1,4 @@
-import {Slash, Strike, Stab, Eviscerate, Block, Fireball, Channel, Cleanse, SheildBash, PrepareSpell, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
+import {Slash, Strike, Stab, Eviscerate, Block, Fireball, Channel, Cleanse, SheildBash, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
         ThrowNet} from "./abilities.js"
 
 export function getRandomItem(){
