@@ -61,7 +61,7 @@ export class MysteriousDoor1 extends Encounter{
         let rune3 = new ChooseRune(characters[rand3]);
         characters.splice(characters.indexOf(rand3));
         this.decisionArray = [new MoveOn(), rune1, rune2, rune3];
-        this.rewardsArray =  [new BreakSealMysteriousDoor1()];
+        this.rewardsArray =  [new BreakSealMysteriousDoor1(), new BreakSealMysteriousDoor2(), new BreakSealMysteriousDoor3()];
         this.consequencesArray = [new MysteriousDoorCollapses()];
     }
 }
@@ -82,7 +82,7 @@ export class MysteriousDoor2 extends Encounter{
         let rune3 = new ChooseRune(characters[rand3]);
         characters.splice(characters.indexOf(rand3));
         this.decisionArray = [new MoveOn(), rune1, rune2, rune3];
-        this.rewardsArray =  [new BreakSealMysteriousDoor2()];
+        this.rewardsArray =  [new BreakSealMysteriousDoor2(), new BreakSealMysteriousDoor3()];
         this.consequencesArray = [new MysteriousDoorCollapses()];
     }
 }
@@ -103,7 +103,7 @@ export class MysteriousDoor3 extends Encounter{
         let rune3 = new ChooseRune(characters[rand3]);
         characters.splice(characters.indexOf(rand3));
         this.decisionArray = [new MoveOn(), rune1, rune2, rune3];
-        this.rewardsArray =  [new BreakSealMysteriousDoor3];
+        this.rewardsArray =  [new BreakSealMysteriousDoor3()];
         this.consequencesArray = [new MysteriousDoorCollapses()];
     }
 }

@@ -9,7 +9,7 @@ Text adventure game based on the ShacklerBreaker story
 * Shop/crafting/weapon level up / Town / Gold
 * interact with stairs / loot bodies
 * mini Menu for items and action buttons
-* Two Handing / Weapons equipable in eithr hand
+* Two Handing / Weapons equipable in either hand
 * Ability conflicts
 * Weapon Level Ups /crafting
 * Distance System in battle
