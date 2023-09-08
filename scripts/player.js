@@ -6,10 +6,11 @@ export default class Player{
         this.name = characterCreationArray[0];
         this.apperance = characterCreationArray[1]
         this.origin = characterCreationArray[2]
-        this.equippedArray = ["Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"];
+        this.equippedArray = ["Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"]; //[name, apperanceSrc, origin, inventory, attributesArray, StatsArray, ]
         this.inventory = characterCreationArray[3];
         this.abilityArray = [new Punch, new Recover, new Retreat];
         this.level = 0;
+        this.currentGold = characterCreationArray[6];
         this.currentXP = 0;
         this.vigor = characterCreationArray[4][0];
         this.endurance = characterCreationArray[4][1];

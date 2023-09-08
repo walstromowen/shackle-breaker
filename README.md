@@ -8,7 +8,7 @@ Text adventure game based on the ShacklerBreaker story
 * Status effect icons / Indicators
 * Shop/crafting/weapon level up / Town / Gold
 * interact with stairs / loot bodies
-* mini Menu for items and action buttons
+* mini Menu for items and action buttons (with sell / trash btns)
 * Two Handing / Weapons equipable in either hand
 * Ability conflicts
 * Weapon Level Ups /crafting
@@ -22,6 +22,7 @@ Text adventure game based on the ShacklerBreaker story
 # Bugs
 * Blocking still active on quick second attack
 * Image Flashing
+* Enemy cleasning after player attack first reults in bug
 
 
 # MISC notes

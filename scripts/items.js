@@ -7,7 +7,7 @@ export function getRandomItem(){
                 new LeatherHood, new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
                 new LeatherBoots, new KiteSheild, new IronHelmet, new IronGuantlets, new IronChainmail, 
                 new IronGreaves, new IronBoots, new HealthPotion, new StaminaPotion, new MagicPotion, 
-                new ThrowingKnife, new PoisonedThrowingKnife, new Meteorite, new Antidote, new AloeRemedy, new Net];
+                new ThrowingKnife, new PoisonedKnife, new Meteorite, new Antidote, new AloeRemedy, new Net];
                 return itemArray[Math.floor(Math.random() * itemArray.length)];
     }
 export class LinenShirt {
@@ -15,6 +15,7 @@ export class LinenShirt {
         this.name = "linen shirt";
         this.type = "torso";
         this.level = 0;
+        this.price = 5;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -32,6 +33,7 @@ export class LinenPants {
         this.name = "linen pants";
         this.type = "legs";
         this.level = 0;
+        this.price = 5;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -49,6 +51,7 @@ export class Dagger {
         this.name = "dagger";
         this.type = "weapon";
         this.level = 0;
+        this.price = 10;
         this.bluntAttack = 1;
         this.pierceAttack = 2;
         this.arcaneAttack = 0;
@@ -66,6 +69,7 @@ export class BlacksmithHammer {
         this.name = "blacksmith hammer";
         this.type = "weapon";
         this.level = 0;
+        this.price = 20;
         this.bluntAttack = 2;
         this.pierceAttack = 1;
         this.arcaneAttack = 0;
@@ -83,6 +87,7 @@ export class Spear {
         this.name = "spear";
         this.type = "weapon";
         this.level = 0;
+        this.price = 20;
         this.bluntAttack = 2;
         this.pierceAttack = 4;
         this.arcaneAttack = 0;
@@ -100,6 +105,7 @@ export class Shortsword {
         this.name = "shortsword";
         this.type = "weapon";
         this.level = 0;
+        this.price = 20;
         this.bluntAttack = 3;
         this.pierceAttack = 3;
         this.arcaneAttack = 0;
@@ -117,6 +123,7 @@ export class Shiv {
         this.name = "shiv";
         this.type = "offhand";
         this.level = 0;
+        this.price = 20;
         this.bluntAttack = 1;
         this.pierceAttack = 1;
         this.arcaneAttack = 0;
@@ -134,6 +141,7 @@ export class Buckler {
         this.name = "Buckler";
         this.type = "offhand";
         this.level = 0;
+        this.price = 20;
         this.bluntAttack = 1;
         this.pierceAttack = 2;
         this.arcaneAttack = 0;
@@ -151,6 +159,7 @@ export class FireStaff {
         this.name = "fire staff";
         this.type = "weapon";
         this.level = 0;
+        this.price = 30;
         this.bluntAttack = 1;
         this.pierceAttack = 0;
         this.arcaneAttack = 1;
@@ -168,6 +177,7 @@ export class LeatherHelmet {
         this.name = "leather helmet";
         this.type = "head";
         this.level = 0;
+        this.price = 30;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -185,6 +195,7 @@ export class LeatherHood {
         this.name = "leather hood";
         this.type = "head";
         this.level = 0;
+        this.price = 35;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -202,6 +213,7 @@ export class LeatherGloves {
         this.name = "leather gloves";
         this.type = "arms";
         this.level = 0;
+        this.price = 30;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -219,6 +231,7 @@ export class LeatherChestplate {
         this.name = "leather chestplate";
         this.type = "torso";
         this.level = 0;
+        this.price = 50;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -236,6 +249,7 @@ export class LeatherGreaves {
         this.name = "leather greaves";
         this.type = "legs";
         this.level = 0;
+        this.price = 40;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -253,6 +267,7 @@ export class LeatherBoots {
         this.name = "leather boots";
         this.type = "feet";
         this.level = 0;
+        this.price = 30;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -270,6 +285,7 @@ export class KiteSheild {
         this.name = "kite sheild";
         this.type = "offhand";
         this.level = 0;
+        this.price = 150;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -287,6 +303,7 @@ export class IronHelmet {
         this.name = "iron helmet";
         this.type = "head";
         this.level = 0;
+        this.price = 200;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -304,6 +321,7 @@ export class IronGuantlets {
         this.name = "iron guantlets";
         this.type = "arms";
         this.level = 0;
+        this.price = 200;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -321,6 +339,7 @@ export class IronChainmail {
         this.name = "iron chainmail";
         this.type = "torso";
         this.level = 0;
+        this.price = 200;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -338,6 +357,7 @@ export class IronGreaves {
         this.name = "iron greaves";
         this.type = "legs";
         this.level = 0;
+        this.price = 200;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -355,6 +375,7 @@ export class IronBoots {
         this.name = "iron boots";
         this.type = "feet";
         this.level = 0;
+        this.price = 200;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -367,28 +388,12 @@ export class IronBoots {
         this.abilityArray = [];
     }
 }
-export class StudentsSpellbook {
-    constructor(){
-        this.name = "crystal ball";
-        this.type = "student's spellbook";
-        this.level = 0;
-        this.bluntAttack = 0;
-        this.pierceAttack = 0;
-        this.arcaneAttack = 0;
-        this.elementalAttack = 0;
-        this.bluntDefense = 0;
-        this.pierceDefense = 0;
-        this.arcaneDefense = 0;
-        this.elementalDefense = 0;
-        this.speed = -5;
-        this.abilityArray = [new PrepareSpell()];
-    }
-}
 export class SpellbookOfCleasning {
     constructor(){
         this.name = "spellbook of cleasning";
         this.type = "offhand";
         this.level = 0;
+        this.price = 300;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -405,6 +410,7 @@ export class HealthPotion {
     constructor(){
         this.name = "healing potion";
         this.type = "consumable";
+        this.price = 50;
         this.abilityArray = [new DrinkHealthPotion()];
     }
 }
@@ -413,6 +419,7 @@ export class StaminaPotion {
     constructor(){
         this.name = "stamina potion";
         this.type = "consumable";
+        this.price = 20;
         this.abilityArray = [new DrinkStaminaPotion()];
     }
 }
@@ -421,6 +428,7 @@ export class MagicPotion {
     constructor(){
         this.name = "magic potion";
         this.type = "consumable";
+        this.price = 20;
         this.abilityArray = [new DrinkMagicPotion()];
     }
 }
@@ -430,14 +438,16 @@ export class ThrowingKnife {
         this.name = "throwing knife";
         this.type = "consumable";
         this.level = 0;
+        this.price = 20;
         this.abilityArray = [new ThrowKnife()];
     }
 }
-export class PoisonedThrowingKnife {
+export class PoisonedKnife {
     constructor(){  
-        this.name = "poisoned throwing knife";
+        this.name = "poisoned knife";
         this.type = "consumable";
         this.level = 0;
+        this.price = 50;
         this.abilityArray = [new ThrowPoisonedKnife()];
     }
 }
@@ -446,6 +456,7 @@ export class Meteorite {
         this.name = "meteorite";
         this.type = "consumable";
         this.level = 0;
+        this.price = 150;
         this.abilityArray = [new SmashMeteorite()];
     }
 }
@@ -454,6 +465,7 @@ export class Antidote {
         this.name = "antidote";
         this.type = "consumable";
         this.level = 0;
+        this.price = 100;
         this.abilityArray = [new UseAntidote()];
     }
 }
@@ -462,6 +474,7 @@ export class AloeRemedy {
         this.name = "aloe remedy";
         this.type = "consumable";
         this.level = 0;
+        this.price = 100;
         this.abilityArray = [new UseAloeRemedy()];
     }
 }
@@ -470,6 +483,7 @@ export class Net {
         this.name = "net";
         this.type = "consumable";
         this.level = 0;
+        this.price = 50;
         this.abilityArray = [new ThrowNet()];
     }
 }

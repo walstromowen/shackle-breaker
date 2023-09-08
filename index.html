@@ -61,6 +61,14 @@
                     <div id='character-creation-inventory-stats-attributes-container'>
                         <div id='character-creation-inventory-container'>
                             <h3>Inventory</h3>
+                            <p class='stats-sub-label' >Currency</p>
+                            <div class='stat-row'>
+                                <div class ='stat-cell'>
+                                    <p class='secondary-stat-slot-label'>Gold:</p>
+                                    <p><span id='character-creation-gold'>0</span></p>
+                                </div>
+                            </div>
+                            <p class='stats-sub-label' >Items</p>
                             <div id='character-creation-inventory'></div>
                         </div>
                         <div id='character-creation-stats-attributes-container'>
@@ -220,7 +228,7 @@
                             <p><span class ='current-vital-label' id='current-magic-player'>100</span></p>
                         </div>
                     </div>
-                    <div id='tabs-label-container'>
+                    <div class='tabs-label-container'>
                         <h6 id='equipped-tab-button' class='tab-label'>Equip</h6>
                         <h6 id='inventory-tab-button' class='tab-label'> Items</h6>
                         <h6 id='secondary-stats-tab-button' class='tab-label'> Stats</h6>
@@ -270,10 +278,6 @@
                             <div class ='stat-cell'>
                                 <p class='secondary-stat-slot-label'>Gold:</p>
                                 <p><span id='current-gold'>0</span></p>
-                            </div>
-                            <div class ='stat-cell'>
-                                <p class='secondary-stat-slot-label'>Silver:</p>
-                                <p><span id='current-silver'>0</span></p>
                             </div>
                         </div>
                         <p class='stats-sub-label' >Items</p>
@@ -418,6 +422,11 @@
                             </div>
                             <p><span class ='current-vital-label' id='current-magic-enemy'>10</span></p>
                         </div>
+                    </div>
+                    <div class='tab' id='merchant-inventory-container'>
+                        <h5 id='merchant-inventory-header'>Merchant Inventory</h5>
+                        <p class='stats-sub-label' >Items</p>
+                        <div id='inventory-merchant'></div>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import{leave} from "./encounterResults.js";
+import{leave, showTravelingMerchantInventory} from "./encounterResults.js";
 
 class Decision{
     activate(player, reward, consequence){
@@ -11,6 +11,8 @@ class Decision{
     checkSuccess(player, decisionAttribute){
         let multiplier = 0;
         switch(decisionAttribute){
+            case "certain":
+                return true;
             case "none":
                 decisionAttribute = 8;
                 break;
@@ -60,6 +62,16 @@ export class MoveOn extends Decision{
     }
     activate(player, reward, consequence){
         leave(player);
+    }
+}
+export class Trade extends Decision{
+    constructor(){
+        super();
+        this.name = "trade";
+        this.decisionAttribute = "none";
+    }
+    activate(player, reward, consequence){
+        showTravelingMerchantInventory(player);
     }
 }
 export class ForceOpen extends Decision{

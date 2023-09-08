@@ -1,4 +1,4 @@
-import {Loot, MoveOn, Assassinate, ForceOpen, PickLock, LookForKey,
+import {Loot, MoveOn, Trade, Assassinate, ForceOpen, PickLock, LookForKey,
         ChooseRune} from "./encounterDecisions.js";
 import {LootChest, OpenChestArrowTrap, OpenChestAttractEnemy, SucessfulAltusAssasination, FailedAltusAssasination, UnlockTreasureChest, MysteriousDoorCollapses,
         BreakSealMysteriousDoor1, BreakSealMysteriousDoor2, BreakSealMysteriousDoor3} from "./encounterResults.js";
@@ -105,5 +105,16 @@ export class MysteriousDoor3 extends Encounter{
         this.decisionArray = [new MoveOn(), rune1, rune2, rune3];
         this.rewardsArray =  [new BreakSealMysteriousDoor3()];
         this.consequencesArray = [new MysteriousDoorCollapses()];
+    }
+}
+export class TravelingMerchant extends Encounter{
+    constructor(){
+        super();
+        this.name = "traveling merchant";
+        this.message = "a traveling merchant hails you...";
+        this.imageSrc = "./media/kurty.jpg";
+        this.decisionArray = [new MoveOn(), new Trade()];
+        this.rewardsArray = [];
+        this.consequencesArray = [];
     }
 }

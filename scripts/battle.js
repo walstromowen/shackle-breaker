@@ -112,5 +112,6 @@ export default class Battle{
             this.player.inventory.push(loot);
             theController.updatePlayerInventoryTab(this.player.inventory);
         }
+        this.player.currentGold = this.player.currentGold + this.enemy.gold
     }
 }

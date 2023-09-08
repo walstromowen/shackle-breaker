@@ -2,14 +2,23 @@ import {controller as theController} from "./main.js"
 import {getRandomItem } from "./items.js";
 import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian} from "./enemies.js";
 import {UnlockedTreasureChest, MysteriousDoor2, MysteriousDoor3} from  "./encounters.js";
+import {MoveOn} from "./encounterDecisions.js";
 
 
 export function leave(player){
     theController.printToGameConsole(`${player.name} moves on.`);
     theController.endEncounter();
 }
-export function progressEncounter(followingEncounter){
-    theController.toggleEncounter(followingEncounter);
+export function showTravelingMerchantInventory(player){
+    theController.printToGameConsole(`${player.name} offers to trade.`);
+    theController.encounter.decisionArray = [new MoveOn()];
+    theController.toggleTrading([getRandomItem(), getRandomItem(), getRandomItem(), getRandomItem(), getRandomItem()]);
+    theController.disablePlayerEncounterControls();
+    setTimeout(()=>{
+        document.getElementById("merchant-inventory-container").style.display = "block";
+        theController.enablePlayerEncounterControls();
+    }, 2000);
+
 }
 class RecieveDebuff{
     checkDamage(damageOutput, target){

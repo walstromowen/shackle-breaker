@@ -224,7 +224,7 @@ p{
 .action-button-disabled{
     filter: brightness(0.85);
 }
-.action-button:hover, .tab-label:hover, .unequip-btn:hover, .slot-menu-use-btn:hover, #character-creation-submit-btn:hover{
+.action-button:hover, .tab-label:hover, .unequip-btn:hover, .slot-menu-btn:hover, #character-creation-submit-btn:hover{
     border: 2px solid var(--color-4);
     cursor: pointer;
 }
@@ -292,7 +292,7 @@ p{
     width: 30%;
     position: relative;
 }
-.slot-menu-use-btn{
+.slot-menu-btn{
     border-radius: 10px;
     background-color: var(--color-4);
     border:solid 2px var(--color-2);
@@ -334,6 +334,10 @@ p{
 .console-message{
     margin-top: 10px;
 }
+.tabs-label-container{
+    display:flex;
+    background-color:var(--color-2);
+ }
 #app{
     display: none;
 }
@@ -453,10 +457,6 @@ p{
     height: 288px;
     object-fit: cover; 
 }
-#tabs-label-container{
-   display:flex;
-   background-color:var(--color-2);
-}
 #items{
     display: none;
 }
@@ -484,7 +484,7 @@ p{
     background-color: darkblue;
     margin-left: auto;
 }
-#inventory-tab, #secondary-stats-tab{
+#inventory-tab, #secondary-stats-tab, #merchant-inventory-sell-tab{
     display: none;
 }
 #battle-button-container, #map-button-container, #encounter-button-container{

@@ -3,7 +3,7 @@ import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword,
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
         LeatherBoots, KiteSheild, IronHelmet, IronGuantlets, IronChainmail, 
         IronGreaves, IronBoots, HealthPotion, StaminaPotion, MagicPotion, 
-        ThrowingKnife, PoisonedThrowingKnife, Meteorite, Antidote, AloeRemedy, Net,
+        ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net,
         SpellbookOfCleasning} from "./items.js";
 import {Recover, Punch, Retreat} from "./abilities.js"
 import Player from "./player.js";
@@ -13,7 +13,7 @@ import Battle from "./battle.js";
 
 export default class Controller {
     constructor(){
-        this.characterCreationArray = ["name", "apperance", "background", "inventoryArray", "attributesArray", "statsArray"];
+        this.characterCreationArray = ["name", "apperance", "background", "inventoryArray", "attributesArray", "statsArray", "gold"];
         this.map = "";
         this.miniMap = "";
         this.player = "";
@@ -121,15 +121,19 @@ export default class Controller {
         switch(value){
             case "traveler":
                 inventoryArray.push(new Shortsword, new Buckler, new LinenShirt, new LinenPants, new LeatherBoots);
+                this.characterCreationArray[6] = 40;
                 break;
             case "blacksmith":
                 inventoryArray.push(new BlacksmithHammer, new KiteSheild, new LinenShirt, new LinenPants, new LeatherBoots);
+                this.characterCreationArray[6] = 30;
                 break;
             case "theif":
                 inventoryArray.push(new Dagger, new Shiv, new LinenShirt, new LinenPants, new LeatherBoots);
+                this.characterCreationArray[6] = 25;
                 break;
             case "hermit":
                 inventoryArray.push(new FireStaff, new LinenShirt, new LinenPants, new LeatherBoots);
+                this.characterCreationArray[6] = 20;
                 break;
         }
         let value2 = document.getElementById("keepsake-selection").value;
@@ -161,6 +165,7 @@ export default class Controller {
             inventorySlot.innerText = this.capitalizeFirstLetter(inventoryArray[i].name);
             document.getElementById("character-creation-inventory").appendChild(inventorySlot);
         }
+        document.getElementById("character-creation-gold").innerText = this.characterCreationArray[6];
         this.characterCreationArray[3] = inventoryArray;
     }
     enableGameOverScreenControls(){
@@ -390,14 +395,14 @@ export default class Controller {
         document.getElementById('map-button-container').style.display = "none";
         document.getElementById('battle-button-container').style.display = "flex";
         document.getElementById('battle-button-container').style.visibility = "visible";// can remove?
-        Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
+        Array.from(document.getElementsByClassName('slot-menu-btn')).forEach(btn=>{
             btn.style.visibility = "visible";
         });
     }
     disablePlayerBattleControls(){
         document.getElementById('battle-button-container').style.visibility = "hidden";
         //Array.from used to convert HTML collection to regular array so forEach can be used -> hides use btns on items
-        Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
+        Array.from(document.getElementsByClassName('slot-menu-btn')).forEach(btn=>{
             btn.style.visibility = "hidden";
         });
     }
@@ -420,14 +425,14 @@ export default class Controller {
          document.getElementById('map-button-container').style.display = "none";
          document.getElementById('encounter-button-container').style.display = "flex";
          document.getElementById('encounter-button-container').style.visibility = "visible";// can remove?
-         Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
+         Array.from(document.getElementsByClassName('slot-menu-btn')).forEach(btn=>{
              btn.style.visibility = "visible";
          });
     }
     disablePlayerEncounterControls(){
         document.getElementById('encounter-button-container').style.visibility = "hidden";
         //Array.from used to convert HTML collection to regular array so forEach can be used -> hides use btns on items
-        Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
+        Array.from(document.getElementsByClassName('slot-menu-btn')).forEach(btn=>{
             btn.style.visibility = "hidden";
         });
     }
@@ -444,6 +449,7 @@ export default class Controller {
         document.getElementById("location-image-container").style.display = "block";
         document.getElementById("enemy-main-stats-container").style.display = "none";
         document.getElementById("encounter-image-container").style.display = "none";
+        document.getElementById("merchant-inventory-container").style.display = "none";
         this.miniMap.resizeCanvas();
         this.miniMap.draw(this.map.roomArray, this.player.currentRoom);
         this.player.isInBattle = false;
@@ -510,7 +516,7 @@ export default class Controller {
             let slotMenuUseBtn = document.createElement('div');
             inventorySlot.classList.add('inventory-slot');
             inventorySlotMenu.classList.add('inventory-slot-menu');
-            slotMenuUseBtn.classList.add('slot-menu-use-btn');//equipment specific
+            slotMenuUseBtn.classList.add('slot-menu-btn');//equipment specific
             if(this.player.isInBattle == true){
                 slotMenuUseBtn.style.visibility = "hidden";
             }
@@ -531,6 +537,7 @@ export default class Controller {
                 });
             }
         }
+        document.getElementById("current-gold").innerText = this.player.currentGold;
     }
     updatePlayerStats(){
         document.getElementById('current-health-player').innerText = this.player.currentHP;
@@ -828,7 +835,7 @@ export default class Controller {
              }, 2000);
         }else{
             setTimeout(()=>{
-                Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
+                Array.from(document.getElementsByClassName('slot-menu-btn')).forEach(btn=>{
                     btn.style.visibility = "visible";
                 });
                 if(this.battle.battlePhase != "retreat"){
@@ -861,7 +868,7 @@ export default class Controller {
             }
             else{
                 setTimeout(()=>{
-                    Array.from(document.getElementsByClassName('slot-menu-use-btn')).forEach(btn=>{
+                    Array.from(document.getElementsByClassName('slot-menu-btn')).forEach(btn=>{
                         btn.style.visibility = "visible";
                     });
                     this.toggleMap();
@@ -872,6 +879,44 @@ export default class Controller {
             }
         }
     }
+    toggleTrading(merchantInventory){
+         for(let i = -1; i < merchantInventory.length; i++){
+                let oldSlot = document.getElementById('inventory-merchant').querySelector('p');
+                if(oldSlot !== null){
+                    oldSlot.remove();
+                } 
+            }
+            for(let i = 0; i < merchantInventory.length; i++){
+                let inventorySlot = document.createElement('p');
+                let inventorySlotMenu = document.createElement('div');
+                let slotMenuBuyBtn = document.createElement('div');
+                inventorySlot.classList.add('inventory-slot');
+                inventorySlotMenu.classList.add('inventory-slot-menu');
+                slotMenuBuyBtn.classList.add('slot-menu-btn');
+                
+                inventorySlot.innerText = `${merchantInventory[i].price} G: ${this.capitalizeFirstLetter(merchantInventory[i].name)}`;
+                inventorySlot.appendChild(inventorySlotMenu);
+                inventorySlotMenu.appendChild(slotMenuBuyBtn);
+                document.getElementById('inventory-merchant').appendChild(inventorySlot);
+                slotMenuBuyBtn.innerText = "Buy";
+                slotMenuBuyBtn.addEventListener('click', ()=>{ 
+                    this.buyFromMerchant(merchantInventory, i);
+                });
+            }
+    }
+    buyFromMerchant(remainingInventory, index){
+        if(this.player.currentGold >= remainingInventory[index].price){
+            this.player.inventory.push(remainingInventory[index]);
+            this.player.currentGold -= remainingInventory[index].price;
+            this.printToGameConsole(`${this.player.name} buys ${this.capitalizeFirstLetter(remainingInventory[index].name)}`)
+            remainingInventory.splice(index, 1);
+            this.updatePlayerInventoryTab(this.player.inventory);
+            this.toggleTrading(remainingInventory);
+        }else{
+            this.printToGameConsole(`Not enough gold to buy ${this.capitalizeFirstLetter(remainingInventory[index].name)}`)
+        }
+    }
+
     capitalizeFirstLetter(string){
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
