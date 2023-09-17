@@ -19,7 +19,7 @@ export class LockedTreasureChest extends Encounter{
         this.imageSrc = "./media/treasureChestLocked.jpg";
         this.decisionArray = [new MoveOn(), new ForceOpen(), new PickLock(), new LookForKey()];
         this.rewardsArray = [new UnlockTreasureChest()];
-        this.consequencesArray = [new OpenChestArrowTrap(), new OpenChestAttractEnemy()];
+        this.consequencesArray = [new OpenChestAttractEnemy()];
     }
 }
 export class UnlockedTreasureChest extends Encounter{
@@ -30,7 +30,7 @@ export class UnlockedTreasureChest extends Encounter{
         this.imageSrc = "./media/treasureChestLocked.jpg";
         this.decisionArray = [new MoveOn(), new Loot()];
         this.rewardsArray = [new LootChest()];
-        this.consequencesArray = [new OpenChestArrowTrap(), new OpenChestAttractEnemy()];
+        this.consequencesArray = [new LootChest(), new OpenChestArrowTrap()];
     }
 }
 export class AltusAmbushOpportunity extends Encounter{

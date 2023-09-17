@@ -1,9 +1,9 @@
-import {Slash, Strike, Stab, Eviscerate, Block, Fireball, Channel, Cleanse, SheildBash, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
-        ThrowNet} from "./abilities.js"
+import {Slash, Strike, Stab, Eviscerate, Block, Fireball, Channel, Cleanse, SheildBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
+        ThrowNet, Immolate, LightningBolt, Energize, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast} from "./abilities.js"
 
 export function getRandomItem(){
     let itemArray = [new LinenShirt, new LinenPants, new Dagger, new BlacksmithHammer, new Spear, new Shortsword, 
-                new Shiv, new Buckler, new FireStaff, new LeatherHelmet, 
+                new Shiv, new Buckler, new FireStaff, new LightningStaff, new IceStaff, new ArcaneStaff, new LightStaff, new DarkStaff, new LeatherHelmet, 
                 new LeatherHood, new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
                 new LeatherBoots, new KiteSheild, new IronHelmet, new IronGuantlets, new IronChainmail, 
                 new IronGreaves, new IronBoots, new HealthPotion, new StaminaPotion, new MagicPotion, 
@@ -159,7 +159,7 @@ export class FireStaff {
         this.name = "fire staff";
         this.type = "weapon";
         this.level = 0;
-        this.price = 30;
+        this.price = 300;
         this.bluntAttack = 1;
         this.pierceAttack = 0;
         this.arcaneAttack = 1;
@@ -167,9 +167,99 @@ export class FireStaff {
         this.bluntDefense = 0;
         this.pierceDefense = 0;
         this.arcaneDefense = 0;
+        this.elementalDefense = 1;
+        this.speed = 0;
+        this.abilityArray = [new Fireball(), new Immolate(), new Strike(), new Channel()];
+    }
+}
+export class LightningStaff {
+    constructor(){
+        this.name = "fire staff";
+        this.type = "weapon";
+        this.level = 0;
+        this.price = 300;
+        this.bluntAttack = 1;
+        this.pierceAttack = 0;
+        this.arcaneAttack = 1;
+        this.elementalAttack = 3;
+        this.bluntDefense = 0;
+        this.pierceDefense = 0;
+        this.arcaneDefense = 0;
+        this.elementalDefense = 1;
+        this.speed = 0;
+        this.abilityArray = [new LightningBolt(), new Energize(), new Strike(), new Channel()];
+    }
+}
+export class IceStaff {
+    constructor(){
+        this.name = "ice staff";
+        this.type = "weapon";
+        this.level = 0;
+        this.price = 300;
+        this.bluntAttack = 1;
+        this.pierceAttack = 0;
+        this.arcaneAttack = 1;
+        this.elementalAttack = 3;
+        this.bluntDefense = 0;
+        this.pierceDefense = 0;
+        this.arcaneDefense = 0;
+        this.elementalDefense = 1;
+        this.speed = 0;
+        this.abilityArray = [new IceShard(), new IceBarrier(), new Strike(), new Channel()];
+    }
+}
+export class ArcaneStaff {
+    constructor(){
+        this.name = "arcane staff";
+        this.type = "weapon";
+        this.level = 0;
+        this.price = 300;
+        this.bluntAttack = 1;
+        this.pierceAttack = 0;
+        this.arcaneAttack = 3;
+        this.elementalAttack = 1;
+        this.bluntDefense = 0;
+        this.pierceDefense = 0;
+        this.arcaneDefense = 1;
         this.elementalDefense = 0;
-        this.speed = 1;
-        this.abilityArray = [new Fireball(), new Strike(), new Channel()];
+        this.speed = 0;
+        this.abilityArray = [new ArcaneDart(), new ArcaneBlast(), new Strike(), new Channel()];
+    }
+}
+export class LightStaff {
+    constructor(){
+        this.name = "light staff";
+        this.type = "weapon";
+        this.level = 0;
+        this.price = 300;
+        this.bluntAttack = 0;
+        this.pierceAttack = 0;
+        this.arcaneAttack = 2;
+        this.elementalAttack = 2;
+        this.bluntDefense = 0;
+        this.pierceDefense = 0;
+        this.arcaneDefense = 1;
+        this.elementalDefense = 0;
+        this.speed = 0;
+        this.abilityArray = [new LightBeam(), new Cleanse(), new Strike(), new Channel()];
+    }
+}
+export class DarkStaff {
+    constructor(){
+        this.name = "dark staff";
+        this.type = "weapon";
+        this.level = 0;
+        this.price = 300;
+        this.bluntAttack = 0;
+        this.pierceAttack = 0;
+        this.arcaneAttack = 3;
+        this.elementalAttack = 1;
+        this.bluntDefense = 0;
+        this.pierceDefense = 0;
+        this.arcaneDefense = 1;
+        this.elementalDefense = 0;
+        this.speed = 0;
+        this.abilityArray = [new DrainLife(), new Siphon(), new Strike(), new Channel()];
     }
 }
 export class LeatherHelmet {
@@ -386,24 +476,6 @@ export class IronBoots {
         this.elementalDefense = 1;
         this.speed = -1;
         this.abilityArray = [];
-    }
-}
-export class SpellbookOfCleasning {
-    constructor(){
-        this.name = "spellbook of cleasning";
-        this.type = "offhand";
-        this.level = 0;
-        this.price = 300;
-        this.bluntAttack = 0;
-        this.pierceAttack = 0;
-        this.arcaneAttack = 0;
-        this.elementalAttack = 0;
-        this.bluntDefense = 0;
-        this.pierceDefense = 0;
-        this.arcaneDefense = 0;
-        this.elementalDefense = 1;
-        this.speed = -1;
-        this.abilityArray = [new Cleanse()];
     }
 }
 export class HealthPotion {

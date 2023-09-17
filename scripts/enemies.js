@@ -1,11 +1,11 @@
 import {Slash, Stab, Strike, Block, Bite, Pounce, LeechLife, ArcaneDart, ArcaneBlast, SpitBile, Devour, Channel, Fireball, DrainLife, Recover, Cleanse} from "./abilities.js"
 import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, 
-        Shiv, Buckler, FireStaff, LeatherHelmet, 
+        Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, 
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
         LeatherBoots, KiteSheild, IronHelmet, IronGuantlets, IronChainmail, 
         IronGreaves, IronBoots, HealthPotion, StaminaPotion, MagicPotion, 
         ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net,
-        SpellbookOfCleasning} from "./items.js";
+        } from "./items.js";
 
 class Enemy{
     constructor(){
@@ -163,7 +163,7 @@ export class AltusMage extends Enemy{
         this.currentSpeed = this.baseSpeed;
         this.abilityArray = [new ArcaneDart, new ArcaneBlast, new Fireball, new Cleanse];
         this.lootChanceMultiplier = 0; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new FireStaff, new MagicPotion];
+        this.lootArray = [new FireStaff, new LightningStaff, new IceStaff, new ArcaneStaff, new LightStaff, new DarkStaff, new MagicPotion];
         this.gold = Math.floor(Math.random() *  ((20 + playerLevel*2) - (0 + playerLevel*2) + 1)) + (0 + playerLevel*2);
     }
 }
@@ -266,7 +266,7 @@ export class EmperorDolos extends Enemy{
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 30;
         this.currentSpeed = this.baseSpeed;
-        this.abilityArray = [new ArcaneDart, new DrainLife, new Slash];
+        this.abilityArray = [new ArcaneDart, new DrainLife, new Siphon, new Slash];
         this.lootChanceMultiplier = 0; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [];
         this.gold = Math.floor(Math.random() *  ((100 + playerLevel*2) - (75 + playerLevel*2) + 1)) + (0 + playerLevel*2);

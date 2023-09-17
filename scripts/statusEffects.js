@@ -120,3 +120,93 @@ export class Burned extends StatusEffect{
         this.currentCharges = this.currentCharges - 1;
     }
 }
+export class Empowered extends StatusEffect{
+    constructor(holder){
+        super();
+        this.type = "end";
+        this.name = "empowered";
+        this.holder = holder;
+        this.maxCharges = 3;
+        this.currentCharges = this.maxCharges;
+    }
+    onEndTurn(){
+        this.holder.currentArcaneAttack = this.holder.currentArcaneDefense + 3;
+        this.holder.currentElementalAttack = this.holder.currentElementalDefense + 3;
+        theController.printToGameConsole(`${this.holder.name} is empowered!`);
+        this.currentCharges = this.currentCharges - 1;
+    }
+    onStartTurn(){
+        this.holder.currentArcaneAttack = this.holder.currentArcaneAttack - 3;
+        this.holder.currentElementalAttack = this.holder.currentElementalDefense - 3;
+    }
+}
+export class Paralyzed extends StatusEffect{
+    constructor(holder){
+        super();
+        this.type = "start";
+        this.name = "paralyed";
+        this.holder = holder;
+        this.maxCharges = 2;
+        this.currentCharges = this.maxCharges;
+    }
+    onStartTurn(){
+        this.holder.nextMove = new Struggle;
+        this.currentCharges = this.currentCharges - 1;
+        theController.printToGameConsole(`${this.holder.name} is paralyzed!`);
+    }
+}
+export class Energized extends StatusEffect{
+    constructor(holder){
+        super();
+        this.type = "start";
+        this.name = "energized";
+        this.holder = holder;
+        this.maxCharges = 5;
+        this.currentCharges = this.maxCharges;
+    }
+    onStartTurn(){;
+        let restoreAmount = weilder.maxMagic * 0.1;
+        if(weilder.currentMagic + restoreAmount > weilder.maxHP){
+            restoreAmount = weilder.maxMagic - weilder.currentMagic 
+        }
+        this.holder.currentMagic = this.holder.currentMagic + restoreAmount;
+        this.currentCharges = this.currentCharges - 1;
+        theController.printToGameConsole(`${this.holder.name} is energized!`);
+    }
+}
+export class Frostbite extends StatusEffect{
+    constructor(holder){
+        super();
+        this.type = "start";
+        this.name = "frostbite";
+        this.holder = holder;
+        this.maxCharges = 5;
+        this.currentCharges = this.maxCharges;
+        this.serverityMultiplier = 0.05;
+    }
+    onStartTurn(){
+        theController.printToGameConsole(`${this.holder.name} suffers from frostbite!`);
+        switch(Math.floor(Math.random * 3)){
+            case 0:
+                this.holder.nextMove = new Struggle;
+                break;
+            case 1:
+                let damageOutput = Math.floor(this.holder.maxHP*this.serverityMultiplier);
+                damageOutput = this.checkDamage(damageOutput, this.holder);
+                if(damageOutput == 0){
+                    damageOutput = 1;
+                }
+                this.holder.currentHP = this.holder.currentHP - damageOutput;
+                theController.printToGameConsole(`${this.holder.name} suffers ${damageOutput} frostbite damage!`);
+                break;
+            case 2:
+                theController.printToGameConsole(`${this.holder.name} is slowed by frostbite!`);
+                this.holder.currentSpeed = this.holder.currentSpeed - 5;
+                break
+        }
+        this.currentCharges = this.currentCharges - 1;
+    }
+    onStartTurn(){
+        this.holder.currentSpeed = this.holder.currentSpeed + 5;
+    }
+}

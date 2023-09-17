@@ -1,10 +1,10 @@
 import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, 
-        Shiv, Buckler, FireStaff, LeatherHelmet, 
+        Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, 
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
         LeatherBoots, KiteSheild, IronHelmet, IronGuantlets, IronChainmail, 
         IronGreaves, IronBoots, HealthPotion, StaminaPotion, MagicPotion, 
         ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net,
-        SpellbookOfCleasning} from "./items.js";
+} from "./items.js";
 import {Recover, Punch, Retreat} from "./abilities.js"
 import Player from "./player.js";
 import Map from "./map.js";
@@ -132,7 +132,7 @@ export default class Controller {
                 this.characterCreationArray[6] = 25;
                 break;
             case "hermit":
-                inventoryArray.push(new FireStaff, new LinenShirt, new LinenPants, new LeatherBoots);
+                inventoryArray.push(new ArcaneStaff, new LinenShirt, new LinenPants, new LeatherBoots);
                 this.characterCreationArray[6] = 20;
                 break;
         }
@@ -152,7 +152,10 @@ export default class Controller {
             case "herbal-medicine":
                 inventoryArray.push(new Antidote, new AloeRemedy);
                 break;
-        }
+            case "assasians-belt":
+                inventoryArray.push(new PoisonedKnife);
+                break;
+    }
         for(let i = -1; i < this.characterCreationArray[3].length; i++){
             let oldSlot = document.getElementById("character-creation-inventory").querySelector('p');
             if(oldSlot !== null){

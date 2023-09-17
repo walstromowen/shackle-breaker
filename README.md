@@ -5,6 +5,8 @@ Text adventure game based on the ShacklerBreaker story
 
 # New Features
 * Parrying System
+* Attack Animations
+* Mew Mini Map
 * Status effect icons / Indicators
 * Shop/crafting/weapon level up / Town / Gold
 * interact with stairs / loot bodies
