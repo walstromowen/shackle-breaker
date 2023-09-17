@@ -174,7 +174,7 @@ export class FireStaff {
 }
 export class LightningStaff {
     constructor(){
-        this.name = "fire staff";
+        this.name = "lightning staff";
         this.type = "weapon";
         this.level = 0;
         this.price = 300;

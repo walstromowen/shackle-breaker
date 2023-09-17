@@ -1,5 +1,5 @@
 import {controller as theController} from "./main.js"
-import {Sheilded, Bound, Poisoned, Burned} from "./statusEffects.js";
+import {Sheilded, Bound, Poisoned, Burned, Empowered, Paralyzed, Energized, Frostbite} from "./statusEffects.js";
 
 class Ability{
     canUse(weilder, player){
