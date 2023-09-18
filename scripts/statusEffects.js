@@ -11,7 +11,7 @@ class StatusEffect{
     }
     
     onStartTurn(){
-        //theController.printToGameConsole`${this.name} skipped on ${this.holder.name}`);
+        //theController.printToGameConsole(`${this.name} skipped on ${this.holder.name}`);
     }
     onEndTurn(){
         //theController.printToGameConsole(`${this.name} skipped on ${this.holder.name}`);
@@ -38,6 +38,7 @@ export class Sheilded extends StatusEffect{//curently has bug where if your next
         super();
         this.type = "end";
         this.name = "sheilded";
+        this.iconSrc = "./media/icons/shield.png";
         this.holder = holder;
         this.maxCharges = 1;
         this.currentCharges = this.maxCharges;
@@ -62,6 +63,7 @@ export class Bound extends StatusEffect{
         super();
         this.type = "start";
         this.name = "bound";
+        this.iconSrc = "./media/icons/crossed-chains.png";
         this.holder = holder;
         this.maxCharges = 3;
         this.currentCharges = this.maxCharges;
@@ -83,6 +85,7 @@ export class Poisoned extends StatusEffect{
         super();
         this.type = "end";
         this.name = "poisoned";
+        this.iconSrc = "./media/icons/poison.png";
         this.holder = holder;
         this.maxCharges = 10;
         this.currentCharges = this.maxCharges;
@@ -103,6 +106,7 @@ export class Burned extends StatusEffect{
         super();
         this.type = "end";
         this.name = "burned";
+        this.iconSrc = "./media/icons/flame.png";
         this.holder = holder;
         this.maxCharges = 3;
         this.currentCharges = this.maxCharges;
@@ -125,6 +129,7 @@ export class Empowered extends StatusEffect{
         super();
         this.type = "end";
         this.name = "empowered";
+        this.iconSrc = "./media/icons/crystal-ball.png";
         this.holder = holder;
         this.maxCharges = 3;
         this.currentCharges = this.maxCharges;
@@ -144,7 +149,8 @@ export class Paralyzed extends StatusEffect{
     constructor(holder){
         super();
         this.type = "start";
-        this.name = "paralyed";
+        this.name = "paralyzed";
+        this.iconSrc = "./media/icons/electric.png";
         this.holder = holder;
         this.maxCharges = 2;
         this.currentCharges = this.maxCharges;
@@ -158,16 +164,17 @@ export class Paralyzed extends StatusEffect{
 export class Energized extends StatusEffect{
     constructor(holder){
         super();
-        this.type = "start";
+        this.type = "end";
         this.name = "energized";
+        this.iconSrc = "./media/icons/up-card-blue.png";
         this.holder = holder;
         this.maxCharges = 5;
         this.currentCharges = this.maxCharges;
     }
-    onStartTurn(){;
-        let restoreAmount = weilder.maxMagic * 0.1;
-        if(weilder.currentMagic + restoreAmount > weilder.maxHP){
-            restoreAmount = weilder.maxMagic - weilder.currentMagic 
+    onEndTurn(){;
+        let restoreAmount = Math.floor(this.holder.maxMagic * 0.1);
+        if(this.holder.currentMagic + restoreAmount > this.holder.maxHP){
+            restoreAmount = this.holder.maxMagic - this.holder.currentMagic 
         }
         this.holder.currentMagic = this.holder.currentMagic + restoreAmount;
         this.currentCharges = this.currentCharges - 1;
@@ -179,34 +186,25 @@ export class Frostbite extends StatusEffect{
         super();
         this.type = "start";
         this.name = "frostbite";
+        this.iconSrc = "./media/icons/frozen-block.png";
         this.holder = holder;
         this.maxCharges = 5;
         this.currentCharges = this.maxCharges;
         this.serverityMultiplier = 0.05;
     }
     onStartTurn(){
-        theController.printToGameConsole(`${this.holder.name} suffers from frostbite!`);
-        switch(Math.floor(Math.random * 3)){
-            case 0:
-                this.holder.nextMove = new Struggle;
-                break;
-            case 1:
-                let damageOutput = Math.floor(this.holder.maxHP*this.serverityMultiplier);
-                damageOutput = this.checkDamage(damageOutput, this.holder);
-                if(damageOutput == 0){
-                    damageOutput = 1;
-                }
-                this.holder.currentHP = this.holder.currentHP - damageOutput;
-                theController.printToGameConsole(`${this.holder.name} suffers ${damageOutput} frostbite damage!`);
-                break;
-            case 2:
-                theController.printToGameConsole(`${this.holder.name} is slowed by frostbite!`);
-                this.holder.currentSpeed = this.holder.currentSpeed - 5;
-                break
+        if(Math.random()*2 < 1){
+            theController.printToGameConsole(`${this.holder.name} is frozen!`);
+            this.holder.nextMove = new Struggle();
+        }else{
+            let damageOutput = Math.floor(this.holder.maxHP*this.serverityMultiplier);
+            damageOutput = this.checkDamage(damageOutput, this.holder);
+            if(damageOutput == 0){
+                damageOutput = 1;
+            }
+            this.holder.currentHP = this.holder.currentHP - damageOutput;
+            theController.printToGameConsole(`${this.holder.name} suffers ${damageOutput} frostbite damage!`);
         }
         this.currentCharges = this.currentCharges - 1;
-    }
-    onStartTurn(){
-        this.holder.currentSpeed = this.holder.currentSpeed + 5;
     }
 }

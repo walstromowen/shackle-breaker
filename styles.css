@@ -338,6 +338,11 @@ p{
     display:flex;
     background-color:var(--color-2);
  }
+ .status-icon{
+    height: 30px;
+    width: 30px;
+    margin: 0 2px;
+ }
 #app{
     display: none;
 }
@@ -457,9 +462,6 @@ p{
     height: 288px;
     object-fit: cover; 
 }
-#items{
-    display: none;
-}
 #health-bar-player-progress{
     background-color: darkred;
     margin-left: auto;
@@ -484,13 +486,19 @@ p{
     background-color: darkblue;
     margin-left: auto;
 }
-#inventory-tab, #secondary-stats-tab, #merchant-inventory-sell-tab{
+#equipped-tab, #secondary-stats-tab, #merchant-inventory-sell-tab{
     display: none;
 }
 #battle-button-container, #map-button-container, #encounter-button-container{
     display: flex;
     margin: 5px;
     justify-content: center;
+}
+#player-status-icon-container, #enemy-status-icon-container{
+    position: relative;
+    bottom: 38px;
+    background-color: rbga(255, 255, 255, 0.5);
+    margin: 2px;
 }
 /*Level Up Screen*/
 #level-up-screen{

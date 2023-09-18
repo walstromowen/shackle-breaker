@@ -1,5 +1,5 @@
 # ShackleBreaker
-Text adventure game based on the ShacklerBreaker story
+Text adventure game based on the ShackleBreaker story
 
 ## TODO
 
@@ -7,7 +7,6 @@ Text adventure game based on the ShacklerBreaker story
 * Parrying System
 * Attack Animations
 * Mew Mini Map
-* Status effect icons / Indicators
 * Shop/crafting/weapon level up / Town / Gold
 * interact with stairs / loot bodies
 * mini Menu for items and action buttons (with sell / trash btns)
@@ -20,11 +19,10 @@ Text adventure game based on the ShacklerBreaker story
 * Rework character level / xp 
 * Alphabetize CSS rules
 * scaling
+* sounds 
 
 # Bugs
-* Blocking still active on quick second attack
 * Image Flashing
-* Enemy cleasning after player attack first reults in bug
 
 
 # MISC notes
@@ -33,5 +31,5 @@ Text adventure game based on the ShacklerBreaker story
 - 0.25 (slow) 
 - 0.5 (medium) 
 - 0.75 (fast)
-* Ability Attack Modiffiers
+* Ability Attack formula
 - Math.floor(Math.random() * (max - min + 1)) + min;

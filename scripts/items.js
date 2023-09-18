@@ -51,7 +51,7 @@ export class Dagger {
         this.name = "dagger";
         this.type = "weapon";
         this.level = 0;
-        this.price = 10;
+        this.price = 20;
         this.bluntAttack = 1;
         this.pierceAttack = 2;
         this.arcaneAttack = 0;
@@ -87,7 +87,7 @@ export class Spear {
         this.name = "spear";
         this.type = "weapon";
         this.level = 0;
-        this.price = 20;
+        this.price = 30;
         this.bluntAttack = 2;
         this.pierceAttack = 4;
         this.arcaneAttack = 0;
@@ -105,7 +105,7 @@ export class Shortsword {
         this.name = "shortsword";
         this.type = "weapon";
         this.level = 0;
-        this.price = 20;
+        this.price = 30;
         this.bluntAttack = 3;
         this.pierceAttack = 3;
         this.arcaneAttack = 0;
@@ -123,7 +123,7 @@ export class Shiv {
         this.name = "shiv";
         this.type = "offhand";
         this.level = 0;
-        this.price = 20;
+        this.price = 50;
         this.bluntAttack = 1;
         this.pierceAttack = 1;
         this.arcaneAttack = 0;
@@ -141,7 +141,7 @@ export class Buckler {
         this.name = "Buckler";
         this.type = "offhand";
         this.level = 0;
-        this.price = 20;
+        this.price = 30;
         this.bluntAttack = 1;
         this.pierceAttack = 2;
         this.arcaneAttack = 0;
@@ -159,7 +159,7 @@ export class FireStaff {
         this.name = "fire staff";
         this.type = "weapon";
         this.level = 0;
-        this.price = 300;
+        this.price = 200;
         this.bluntAttack = 1;
         this.pierceAttack = 0;
         this.arcaneAttack = 1;
@@ -177,7 +177,7 @@ export class LightningStaff {
         this.name = "lightning staff";
         this.type = "weapon";
         this.level = 0;
-        this.price = 300;
+        this.price = 200;
         this.bluntAttack = 1;
         this.pierceAttack = 0;
         this.arcaneAttack = 1;
@@ -195,7 +195,7 @@ export class IceStaff {
         this.name = "ice staff";
         this.type = "weapon";
         this.level = 0;
-        this.price = 300;
+        this.price = 200;
         this.bluntAttack = 1;
         this.pierceAttack = 0;
         this.arcaneAttack = 1;
@@ -213,7 +213,7 @@ export class ArcaneStaff {
         this.name = "arcane staff";
         this.type = "weapon";
         this.level = 0;
-        this.price = 300;
+        this.price = 200;
         this.bluntAttack = 1;
         this.pierceAttack = 0;
         this.arcaneAttack = 3;
@@ -231,7 +231,7 @@ export class LightStaff {
         this.name = "light staff";
         this.type = "weapon";
         this.level = 0;
-        this.price = 300;
+        this.price = 200;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 2;
@@ -249,7 +249,7 @@ export class DarkStaff {
         this.name = "dark staff";
         this.type = "weapon";
         this.level = 0;
-        this.price = 300;
+        this.price = 200;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 3;
@@ -482,7 +482,7 @@ export class HealthPotion {
     constructor(){
         this.name = "healing potion";
         this.type = "consumable";
-        this.price = 50;
+        this.price = 30;
         this.abilityArray = [new DrinkHealthPotion()];
     }
 }

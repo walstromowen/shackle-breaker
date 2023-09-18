@@ -132,7 +132,7 @@ export default class Controller {
                 this.characterCreationArray[6] = 25;
                 break;
             case "hermit":
-                inventoryArray.push(new ArcaneStaff, new LinenShirt, new LinenPants, new LeatherBoots);
+                inventoryArray.push(new LightningStaff, new LinenShirt, new LinenPants, new LeatherBoots);
                 this.characterCreationArray[6] = 20;
                 break;
         }
@@ -371,8 +371,6 @@ export default class Controller {
                 this.updatePlayerStats();
                 document.getElementById("app").style.display = "block";
                 document.getElementById('level-up-screen').style.display = "none";
-                document.getElementById("music-player").src = this.map.mapEnviorment.backgroundMusicSrc;
-                document.getElementById('music-player').play();
                 this.player.canMoveRoom = true;
             }
         });
@@ -566,6 +564,22 @@ export default class Controller {
         document.getElementById('current-pierce-defense').innerText = this.player.currentPierceDefense;
         document.getElementById('current-arcane-defense').innerText = this.player.currentArcaneDefense; 
         document.getElementById('current-element-defense').innerText = this.player.currentElementalDefense;
+        for(let i = -1; i < this.player.statusArray.length; i++){
+            let oldIcon = document.getElementById('player-status-icon-container').querySelector('img');
+            if(oldIcon !== null){
+                oldIcon.remove();
+            } 
+        }
+        for(let i = 0; i < this.player.statusArray.length; i++){
+            let statusIcon = document.createElement('img');
+            statusIcon.classList.add('status-icon');
+            statusIcon.src = this.player.statusArray[i].iconSrc;
+            document.getElementById('player-status-icon-container').appendChild(statusIcon);
+        }
+        if(this.player.currentXP == Math.floor(((this.player.level + 10)**2)*0.05)){
+            this.levelPlayerUp();
+            this.player.currentXP = 0;
+        }
     }
     updateEnemyStats(){
         document.getElementById('current-health-enemy').innerText = this.battle.enemy.currentHP;
@@ -574,6 +588,18 @@ export default class Controller {
         document.getElementById('health-bar-enemy-progress').style.width = Math.floor(this.battle.enemy.currentHP/this.battle.enemy.maxHP*100) + "%";
         document.getElementById('stamina-bar-enemy-progress').style.width = Math.floor(this.battle.enemy.currentStamina/this.battle.enemy.maxStamina*100) + "%";
         document.getElementById('magic-bar-enemy-progress').style.width = Math.floor(this.battle.enemy.currentMagic/this.battle.enemy.maxMagic*100) + "%";
+        for(let i = -1; i < this.battle.enemy.statusArray.length; i++){
+            let oldIcon = document.getElementById('enemy-status-icon-container').querySelector('img');
+            if(oldIcon !== null){
+                oldIcon.remove();
+            } 
+        }
+        for(let i = 0; i < this.battle.enemy.statusArray.length; i++){
+            let statusIcon = document.createElement('img');
+            statusIcon.classList.add('status-icon');
+            statusIcon.src = this.battle.enemy.statusArray[i].iconSrc;
+            document.getElementById('enemy-status-icon-container').appendChild(statusIcon);
+        }
     }
     animateVitalBar(entity, vitalBarType){
         if(entity === this.player){
@@ -634,7 +660,7 @@ export default class Controller {
             this.player.currentMagic = this.player.currentMagic + magic;
             this.miniMap.draw(this.map.roomArray, this.player.currentRoom);
             if(this.player.currentRoom.isExit == true){
-                this.levelPlayerUp();
+                //this.levelPlayerUp();
                 this.printToGameConsole(`${this.player.name} finds an exit!`);
                 this.generateNewMap("basic");
             }
@@ -827,6 +853,8 @@ export default class Controller {
         document.getElementById('location-image').src = this.map.mapEnviorment.imageSrc;
         document.getElementById('location-name').innerText = this.capitalizeFirstLetter(this.map.mapEnviorment.biome);
         this.miniMap.draw(this.map.roomArray, this.player.currentRoom);
+        document.getElementById("music-player").src = this.map.mapEnviorment.backgroundMusicSrc;
+        document.getElementById('music-player').play();
     }
     endBattle(){
         if(this.player.currentHP <= 0){

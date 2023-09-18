@@ -116,5 +116,6 @@ export default class Battle{
             theController.updatePlayerInventoryTab(this.player.inventory);
         }
         this.player.currentGold = this.player.currentGold + this.enemy.gold
+        this.player.currentXP = this.player.currentXP + this.enemy.XP
     }
 }
