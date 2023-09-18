@@ -91,7 +91,7 @@ export default class MapEnviorment{
                     case 0:
                         return new Wolf(playerLevel);
                     case 1:
-                        return new Wolf(playerLevel);
+                        return new EmperorDolos(playerLevel);
                     default:
                         return;
                 }
@@ -100,7 +100,7 @@ export default class MapEnviorment{
                     case 0:
                         return new Skeleton(playerLevel);
                     case 1:
-                        return new Skeleton(playerLevel);
+                        return new EmperorDolos(playerLevel);
                     default:
                         return;
                 }

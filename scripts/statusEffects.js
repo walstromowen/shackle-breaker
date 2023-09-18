@@ -181,6 +181,26 @@ export class Energized extends StatusEffect{
         theController.printToGameConsole(`${this.holder.name} is energized!`);
     }
 }
+export class Invigorated extends StatusEffect{
+    constructor(holder){
+        super();
+        this.type = "end";
+        this.name = "invigorated";
+        this.iconSrc = "./media/icons/up-card-green.png";
+        this.holder = holder;
+        this.maxCharges = 5;
+        this.currentCharges = this.maxCharges;
+    }
+    onEndTurn(){;
+        let restoreAmount = Math.floor(this.holder.maxStamina * 0.1);
+        if(this.holder.currentStamina + restoreAmount > this.holder.maxHP){
+            restoreAmount = this.holder.maxStamina - this.holder.currentStamina 
+        }
+        this.holder.currentStamina = this.holder.currentStamina + restoreAmount;
+        this.currentCharges = this.currentCharges - 1;
+        theController.printToGameConsole(`${this.holder.name} is invigorated!`);
+    }
+}
 export class Frostbite extends StatusEffect{
     constructor(holder){
         super();

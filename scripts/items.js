@@ -1,5 +1,5 @@
 import {Slash, Strike, Stab, Eviscerate, Block, Fireball, Channel, Cleanse, SheildBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
-        ThrowNet, Immolate, LightningBolt, Energize, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast} from "./abilities.js"
+        ThrowNet, Immolate, LightningBolt, Energize, Recuperate, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast} from "./abilities.js"
 
 export function getRandomItem(){
     let itemArray = [new LinenShirt, new LinenPants, new Dagger, new BlacksmithHammer, new Spear, new Shortsword, 
@@ -367,7 +367,7 @@ export class LeatherBoots {
         this.arcaneDefense = 1;
         this.elementalDefense = 2;
         this.speed = 1;
-        this.abilityArray = [];
+        this.abilityArray = [new Recuperate()];
     }
 }
 export class KiteSheild {

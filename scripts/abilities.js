@@ -1,5 +1,5 @@
 import {controller as theController} from "./main.js"
-import {Sheilded, Bound, Poisoned, Burned, Empowered, Paralyzed, Energized, Frostbite} from "./statusEffects.js";
+import {Sheilded, Bound, Poisoned, Burned, Empowered, Paralyzed, Energized, Frostbite, Invigorated} from "./statusEffects.js";
 
 class Ability{
     canUse(weilder, player){
@@ -555,12 +555,12 @@ export class Energize extends Ability{
     constructor(){
         super();
         this.name = "energize";
-        this.type = "elemental";
+        this.type = "arcaneElemental";
         this.speedMultiplier = 0.75;
         this.staminaCost = 0;
         this.magicCost = 10;
         this.damageModifier = 0;
-        
+        this.soundEffect = "./audio/soundEffects/075681_electric-shock-33018.wav";
     }
      activate(weilder, target){
         if(this.checkMagic(weilder) == true){
@@ -573,6 +573,31 @@ export class Energize extends Ability{
                 }
             }
             weilder.statusArray.push(new Energized(weilder));
+        }
+    }
+}
+export class Recuperate extends Ability{
+    constructor(){
+        super();
+        this.name = "recuperate";
+        this.type = "bluntPierce";
+        this.speedMultiplier = 0.75;
+        this.staminaCost = 10;
+        this.magicCost = 0;
+        this.damageModifier = 0;
+        this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
+    }
+     activate(weilder, target){
+        if(this.checkStamina(weilder) == true){
+            theController.printToGameConsole(`${weilder.name} uses ${this.name}!`);
+            theController.playSoundEffect(this.soundEffect);
+            for(let i = 0; i < weilder.statusArray.length; i++){
+                if(weilder.statusArray[i].name == "invigorated"){
+                    weilder.statusArray[i].currentCharges = weilder.statusArray[i].maxCharges;
+                    return;
+                }
+            }
+            weilder.statusArray.push(new Invigorated(weilder));
         }
     }
 }

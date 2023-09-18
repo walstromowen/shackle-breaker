@@ -1,4 +1,5 @@
-import {Slash, Stab, Strike, Block, Bite, Pounce, LeechLife, ArcaneDart, ArcaneBlast, SpitBile, Devour, Channel, Fireball, DrainLife, Recover, Cleanse} from "./abilities.js"
+import {Slash, Strike, Stab, Eviscerate, Block, Fireball, Channel, Cleanse, SheildBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
+    ThrowNet, Immolate, LightningBolt, Energize, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Bite, SpitBile, LeechLife, Devour, Pounce} from "./abilities.js"
 import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, 
         Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, 
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
@@ -272,7 +273,7 @@ export class EmperorDolos extends Enemy{
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 30;
         this.currentSpeed = this.baseSpeed;
-        this.abilityArray = [new ArcaneDart, new DrainLife, new Siphon, new Slash];
+        this.abilityArray = [new ArcaneDart, new DrainLife, new Siphon, new LightningBolt, new Energize, new Cleanse];
         this.lootChanceMultiplier = 0; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [];
         this.gold = Math.floor(Math.random() *  ((100 + playerLevel*2) - (75 + playerLevel*2) + 1)) + (0 + playerLevel*2);

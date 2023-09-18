@@ -132,7 +132,7 @@ export default class Controller {
                 this.characterCreationArray[6] = 25;
                 break;
             case "hermit":
-                inventoryArray.push(new LightningStaff, new LinenShirt, new LinenPants, new LeatherBoots);
+                inventoryArray.push(new ArcaneStaff, new LinenShirt, new LinenPants, new LeatherBoots);
                 this.characterCreationArray[6] = 20;
                 break;
         }
