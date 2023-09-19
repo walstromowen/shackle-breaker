@@ -16,7 +16,6 @@ Text adventure game based on the ShackleBreaker story
 * Distance System in battle
 
 # Quality of Life
-* Rework character level / xp and level up all enemies
 * random enemy stats
 * Alphabetize CSS rules
 * scaling

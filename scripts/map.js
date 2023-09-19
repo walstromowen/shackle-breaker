@@ -68,4 +68,11 @@ export default class Map{
             }
         }  
     }
+    increaseAllEnemyLevels(playerLevel){
+        for(let i = 0; i < this.roomArray.length; i++ ){
+            if(this.roomArray[i].enemy != ""){
+                this.roomArray[i].enemy.levelUp(playerLevel);
+            }
+        }
+    }
 }

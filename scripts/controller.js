@@ -571,14 +571,16 @@ export default class Controller {
             } 
         }
         for(let i = 0; i < this.player.statusArray.length; i++){
-            let statusIcon = document.createElement('img');
-            statusIcon.classList.add('status-icon');
-            statusIcon.src = this.player.statusArray[i].iconSrc;
-            document.getElementById('player-status-icon-container').appendChild(statusIcon);
+            if(this.player.statusArray[i].iconSrc != ""){
+                let statusIcon = document.createElement('img');
+                statusIcon.classList.add('status-icon');
+                statusIcon.src = this.player.statusArray[i].iconSrc;
+                document.getElementById('player-status-icon-container').appendChild(statusIcon);
+            }
         }
-        if(this.player.currentXP == Math.floor(((this.player.level + 10)**2)*0.05)){
+        if(this.player.currentXP >= Math.floor(((this.player.level + 10)**2)*0.5)){
+            this.player.currentXP = this.player.currentXP - Math.floor(((this.player.level + 10)**2)*0.5);
             this.levelPlayerUp();
-            this.player.currentXP = 0;
         }
     }
     updateEnemyStats(){
@@ -595,10 +597,12 @@ export default class Controller {
             } 
         }
         for(let i = 0; i < this.battle.enemy.statusArray.length; i++){
-            let statusIcon = document.createElement('img');
-            statusIcon.classList.add('status-icon');
-            statusIcon.src = this.battle.enemy.statusArray[i].iconSrc;
-            document.getElementById('enemy-status-icon-container').appendChild(statusIcon);
+            if(this.battle.enemy.statusArray[i].iconSrc != ""){
+                let statusIcon = document.createElement('img');
+                statusIcon.classList.add('status-icon');
+                statusIcon.src = this.battle.enemy.statusArray[i].iconSrc;
+                document.getElementById('enemy-status-icon-container').appendChild(statusIcon);
+            }
         }
     }
     animateVitalBar(entity, vitalBarType){
@@ -660,7 +664,6 @@ export default class Controller {
             this.player.currentMagic = this.player.currentMagic + magic;
             this.miniMap.draw(this.map.roomArray, this.player.currentRoom);
             if(this.player.currentRoom.isExit == true){
-                //this.levelPlayerUp();
                 this.printToGameConsole(`${this.player.name} finds an exit!`);
                 this.generateNewMap("basic");
             }
@@ -837,6 +840,7 @@ export default class Controller {
     }
     levelPlayerUp(){
         this.player.level = this.player.level + 1;
+        this.map.increaseAllEnemyLevels(this.player.level);
         this.printToGameConsole(`Level up! New level: ${this.player.level}.`);
         this.displayLevelUpScreen();
     }
@@ -947,7 +951,9 @@ export default class Controller {
             this.printToGameConsole(`Not enough gold to buy ${this.capitalizeFirstLetter(remainingInventory[index].name)}`)
         }
     }
-
+    toggleElementClass(elementId, cssClass){
+        document.getElementById(elementId).classList.toggle(cssClass);
+    }
     capitalizeFirstLetter(string){
         return string.charAt(0).toUpperCase() + string.slice(1);
     }

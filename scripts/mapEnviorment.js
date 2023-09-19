@@ -1,5 +1,5 @@
 import {LockedTreasureChest, AltusAmbushOpportunity, MysteriousDoor1, TravelingMerchant} from "./encounters.js";
-import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos} from "./enemies.js";
+import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos, ShadowStrider, TerrorBear} from "./enemies.js";
 
 export default class MapEnviorment{
     constructor(biome){
@@ -89,9 +89,9 @@ export default class MapEnviorment{
             case "twilight realm":
                 switch(Math.floor(Math.random()*2)){ 
                     case 0:
-                        return new Wolf(playerLevel);
+                        return new ShadowStrider(playerLevel);
                     case 1:
-                        return new EmperorDolos(playerLevel);
+                        return new TerrorBear(playerLevel);
                     default:
                         return;
                 }

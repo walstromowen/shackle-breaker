@@ -1,5 +1,5 @@
 import {controller as theController} from "./main.js"
-import {Sheilded, Bound, Poisoned, Burned, Empowered, Paralyzed, Energized, Frostbite, Invigorated} from "./statusEffects.js";
+import {Sheilded, Bound, Poisoned, Burned, Empowered, Paralyzed, Energized, Frostbite, Invigorated, Hidden} from "./statusEffects.js";
 
 class Ability{
     canUse(weilder, player){
@@ -627,8 +627,8 @@ export class IceShard extends Ability{
                             return;
                         }
                     }
-                    target.statusArray.push(new Frozen(target));
-                    theController.printToGameConsole(`${target.name} has been frostbiten!`);
+                    target.statusArray.push(new Frostbite(target));
+                    theController.printToGameConsole(`${target.name} has frostbite!`);
                 } 
             }
         }
@@ -818,7 +818,6 @@ export class Devour extends Ability{
         this.speedMultiplier = 0.25;
         this.staminaCost = 20;
         this.magicCost = 0;
-        this.damageModifier = "";
         this.soundEffect = "./audio/soundEffects/chomp1.mp3";
     }
     activate(weilder, target){
@@ -828,6 +827,41 @@ export class Devour extends Ability{
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
             theController.playSoundEffect(this.soundEffect);
+        }
+    }
+}
+export class BlinkStrike extends Ability{
+    constructor(){
+        super();
+        this.name = "blink strike";
+        this.type = "pierceArcane";
+        this.speedMultiplier = 0.5;
+        this.staminaCost = 8;
+        this.magicCost = 10;
+        this.soundEffect = "./audio/soundEffects/mixkit-deep-air-woosh-2604.wav";
+    }
+    activate(weilder, target){
+        if(this.checkStamina(weilder) == true && this.checkMagic(weilder) == true){
+            theController.printToGameConsole(`${weilder.name} uses ${this.name}!`);
+            theController.playSoundEffect(this.soundEffect);
+            let hiddenCheck = true;
+            let empoweredCheck = true;
+            for(let i = 0; i < weilder.statusArray.length; i++){
+                if(weilder.statusArray[i].name == "hidden" && hiddenCheck == true){
+                    weilder.statusArray[i].currentCharges = weilder.statusArray[i].maxCharges;
+                    hiddenCheck = false;
+                }
+                if(weilder.statusArray[i].name == "empowered" && hiddenCheck == false){
+                    weilder.statusArray[i].currentCharges = weilder.statusArray[i].maxCharges;
+                    empoweredCheck = false;
+                }
+            }
+            if(hiddenCheck == true){
+                weilder.statusArray.push(new Hidden(weilder));
+            }
+            if(empoweredCheck == true){
+                weilder.statusArray.push(new Empowered(weilder));
+            }
         }
     }
 }

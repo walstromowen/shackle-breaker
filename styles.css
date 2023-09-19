@@ -343,6 +343,10 @@ p{
     width: 30px;
     margin: 0 2px;
  }
+ .black-and-white {
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+  }
 #app{
     display: none;
 }

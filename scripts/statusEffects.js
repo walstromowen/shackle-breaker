@@ -168,12 +168,12 @@ export class Energized extends StatusEffect{
         this.name = "energized";
         this.iconSrc = "./media/icons/up-card-blue.png";
         this.holder = holder;
-        this.maxCharges = 5;
+        this.maxCharges = 6;
         this.currentCharges = this.maxCharges;
     }
     onEndTurn(){;
         let restoreAmount = Math.floor(this.holder.maxMagic * 0.1);
-        if(this.holder.currentMagic + restoreAmount > this.holder.maxHP){
+        if(this.holder.currentMagic + restoreAmount >= this.holder.maxMagic){
             restoreAmount = this.holder.maxMagic - this.holder.currentMagic 
         }
         this.holder.currentMagic = this.holder.currentMagic + restoreAmount;
@@ -188,12 +188,12 @@ export class Invigorated extends StatusEffect{
         this.name = "invigorated";
         this.iconSrc = "./media/icons/up-card-green.png";
         this.holder = holder;
-        this.maxCharges = 5;
+        this.maxCharges = 6;
         this.currentCharges = this.maxCharges;
     }
     onEndTurn(){;
         let restoreAmount = Math.floor(this.holder.maxStamina * 0.1);
-        if(this.holder.currentStamina + restoreAmount > this.holder.maxHP){
+        if(this.holder.currentStamina + restoreAmount >= this.holder.maxMagic){
             restoreAmount = this.holder.maxStamina - this.holder.currentStamina 
         }
         this.holder.currentStamina = this.holder.currentStamina + restoreAmount;
@@ -226,5 +226,32 @@ export class Frostbite extends StatusEffect{
             theController.printToGameConsole(`${this.holder.name} suffers ${damageOutput} frostbite damage!`);
         }
         this.currentCharges = this.currentCharges - 1;
+    }
+}
+export class Hidden extends StatusEffect{
+    constructor(holder){
+        super();
+        this.type = "end";
+        this.name = "hidden";
+        this.iconSrc = "";
+        this.holder = holder;
+        this.maxCharges = 1;
+        this.currentCharges = this.maxCharges;
+    }
+    onEndTurn(){
+        if(this.holder === theController.player){
+            theController.toggleElementClass("player-image", "black-and-white");
+        }else{
+            theController.toggleElementClass("enemy-image", "black-and-white");
+        }
+        theController.printToGameConsole(`${this.holder.name} is hidden!`);
+        this.currentCharges = this.currentCharges - 1;
+    }
+    onStartTurn(){
+        if(this.holder === theController.player){
+            theController.toggleElementClass("player-image", "black-and-white");
+        }else{
+            theController.toggleElementClass("enemy-image", "black-and-white");
+        }
     }
 }
