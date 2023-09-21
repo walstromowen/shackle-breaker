@@ -521,6 +521,20 @@ p{
 #submit-level-btn{
     margin:auto;
 }
+/*Transition Screen*/
+#map-transition-screen{
+    display: none;
+    background-image: url("./media/title-screen.jpg");
+    background-size:cover;
+    height: 100vh;
+}
+#map-transisiton-screen-btn-container{
+    display:flex;
+    justify-content: center;
+    flex-direction: column;	
+    margin: 20% auto;
+    width: 300px;
+}
 
 /*Game Over Screen*/
 #gameover-screen{

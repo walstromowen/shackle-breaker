@@ -28,6 +28,7 @@ export default class Controller {
         this.enableTitleScreenControls();
         this.enableCharacterCreatorScreenControls();
         this.enableGameOverScreenControls();
+        this.enableMapTransitionControls();
     }
     enableTitleScreenControls(){
         document.getElementById('title-start-button').addEventListener("click", ()=>{
@@ -177,6 +178,18 @@ export default class Controller {
         });
         document.getElementById('gameover-exit-btn').addEventListener("click", ()=>{
             window.close();
+        });
+    }
+    enableMapTransitionControls(){
+        document.getElementById('map-transition-continue-btn').addEventListener("click", ()=>{
+            this.generateNewMap("basic");
+            document.getElementById('map-transition-screen').style.display = "none";
+            document.getElementById("app").style.display = "block";
+            this.player.canMoveRoom = true;
+        });
+        document.getElementById('map-transition-town-btn').addEventListener("click", ()=>{
+            //to town
+            alert("not ready yet!");
         });
     }
     enableKeyControls(){
@@ -504,6 +517,14 @@ export default class Controller {
             this.printToGameConsole(this.encounter.message);
         }, 2000);
     }
+    toggleMapTransitionScreen(){
+        this.player.canMoveRoom = false;
+        setTimeout(()=>{
+            document.getElementById('music-player').pause();
+            document.getElementById('map-transition-screen').style.display = "block";
+            document.getElementById("app").style.display = "none";
+        }, 2000);
+    }
     updatePlayerInventoryTab(inventory){
         for(let i = -1; i < inventory.length; i++){
             let oldSlot = document.getElementById('inventory').querySelector('p');
@@ -665,7 +686,7 @@ export default class Controller {
             this.miniMap.draw(this.map.roomArray, this.player.currentRoom);
             if(this.player.currentRoom.isExit == true){
                 this.printToGameConsole(`${this.player.name} finds an exit!`);
-                this.generateNewMap("basic");
+                this.toggleMapTransitionScreen();
             }
         }
         else{

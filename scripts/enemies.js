@@ -198,7 +198,7 @@ export class AltusMage extends Enemy{
         this.currentPierceAttack = this.basePierceAttack;
         this.baseArcaneAttack = 45;
         this.currentArcaneAttack = this.baseArcaneAttack;
-        this.baseElementalAttack = 40;
+        this.baseElementalAttack = 45;
         this.currentElementalAttack = this.baseElementalAttack;
         this.baseBluntDefense = 35;
         this.currentBluntDefense = this.baseBluntDefense;
@@ -218,7 +218,7 @@ export class AltusMage extends Enemy{
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
-        this.incrementStats(playerLevel, 2,1,2,1,1,2,1,1,1,2,1);
+        this.incrementStats(playerLevel, 2,1,2,1,1,2,2,1,1,2,1);
         this.gold = Math.floor(Math.random() * ((20 + playerLevel*2) - (0 + playerLevel*2) + 1)) + (0 + playerLevel*2);
         this.XP = 50;
     }

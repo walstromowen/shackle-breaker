@@ -112,6 +112,17 @@ export class TravelingMerchant extends Encounter{
         super();
         this.name = "traveling merchant";
         this.message = "a traveling merchant hails you...";
+        this.imageSrc = "./media/traveling-merchant.jpg";
+        this.decisionArray = [new MoveOn(), new Trade()];
+        this.rewardsArray = [];
+        this.consequencesArray = [];
+    }
+}
+export class skeletonAmbush extends Encounter{
+    constructor(){
+        super();
+        this.name = "traveling merchant";
+        this.message = "a traveling merchant hails you...";
         this.imageSrc = "./media/kurty.jpg";
         this.decisionArray = [new MoveOn(), new Trade()];
         this.rewardsArray = [];
