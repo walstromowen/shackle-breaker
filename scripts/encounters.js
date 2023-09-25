@@ -122,7 +122,7 @@ export class AbandonedCabin extends Encounter{
     constructor(){
         super();
         this.name = "an abandoned cabin";
-        this.message = "An abandoned cabin lies ahead...";
+        this.message = "an abandoned cabin lies ahead...";
         this.imageSrc = "./media/abandoned-cabin.jpg";
         this.decisionArray = [new MoveOn(), new Loot(), new Rest()];
         this.rewardsArray = [new RestfulSleep(), new LootCabin()];

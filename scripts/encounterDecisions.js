@@ -117,9 +117,9 @@ export class ChooseRune extends Decision{
     }
 }
 export class Rest extends Decision{
-    constructor(message){
+    constructor(){
         super();
-        this.name = message;
+        this.name = "rest";
         this.decisionAttribute = "none";
     }
 }

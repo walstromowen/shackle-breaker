@@ -122,19 +122,19 @@ export default class Controller {
         switch(value){
             case "traveler":
                 inventoryArray.push(new Shortsword, new Buckler, new LinenShirt, new LinenPants, new LeatherBoots);
-                this.characterCreationArray[6] = 40;
+                this.characterCreationArray[6] = 50;
                 break;
             case "blacksmith":
                 inventoryArray.push(new BlacksmithHammer, new KiteSheild, new LinenShirt, new LinenPants, new LeatherBoots);
-                this.characterCreationArray[6] = 30;
+                this.characterCreationArray[6] = 40;
                 break;
             case "theif":
                 inventoryArray.push(new Dagger, new Shiv, new LinenShirt, new LinenPants, new LeatherBoots);
-                this.characterCreationArray[6] = 25;
+                this.characterCreationArray[6] = 45;
                 break;
             case "hermit":
                 inventoryArray.push(new ArcaneStaff, new CrystalBall, new LinenShirt, new LinenPants, new LeatherBoots);
-                this.characterCreationArray[6] = 20;
+                this.characterCreationArray[6] = 30;
                 break;
         }
         let value2 = document.getElementById("keepsake-selection").value;

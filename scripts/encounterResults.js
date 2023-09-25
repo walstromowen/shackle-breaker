@@ -127,7 +127,7 @@ export class RestfulSleep{
         if(player.currentHP + hp > player.maxHP){
             hp = player.maxHP - player.currentHP;
         }
-        weilder.currentHP = weilder.currentHP + hp;
+        player.currentHP = player.currentHP + hp;
         theController.printToGameConsole(`${player.name} sleeps soundly and resotres ${hp} health!`);
         theController.endEncounter();
     }
