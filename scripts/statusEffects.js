@@ -161,11 +161,11 @@ export class Paralyzed extends StatusEffect{
         theController.printToGameConsole(`${this.holder.name} is paralyzed!`);
     }
 }
-export class Energized extends StatusEffect{
+export class Channeled extends StatusEffect{
     constructor(holder){
         super();
         this.type = "end";
-        this.name = "energized";
+        this.name = "channeled";
         this.iconSrc = "./media/icons/up-card-blue.png";
         this.holder = holder;
         this.maxCharges = 6;
@@ -178,7 +178,7 @@ export class Energized extends StatusEffect{
         }
         this.holder.currentMagic = this.holder.currentMagic + restoreAmount;
         this.currentCharges = this.currentCharges - 1;
-        theController.printToGameConsole(`${this.holder.name} is energized!`);
+        theController.printToGameConsole(`${this.holder.name} channels ${restoreAmount} magic!`);
     }
 }
 export class Invigorated extends StatusEffect{
@@ -198,7 +198,7 @@ export class Invigorated extends StatusEffect{
         }
         this.holder.currentStamina = this.holder.currentStamina + restoreAmount;
         this.currentCharges = this.currentCharges - 1;
-        theController.printToGameConsole(`${this.holder.name} is invigorated!`);
+        theController.printToGameConsole(`${this.holder.name} regains ${restoreAmount} stamina!`);
     }
 }
 export class Frostbite extends StatusEffect{

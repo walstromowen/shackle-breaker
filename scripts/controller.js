@@ -2,7 +2,7 @@ import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword,
         Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, 
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
         LeatherBoots, KiteSheild, IronHelmet, IronGuantlets, IronChainmail, 
-        IronGreaves, IronBoots, HealthPotion, StaminaPotion, MagicPotion, 
+        IronGreaves, IronBoots, CrystalBall, HealthPotion, StaminaPotion, MagicPotion, 
         ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net,
 } from "./items.js";
 import {Recover, Punch, Retreat} from "./abilities.js"
@@ -90,7 +90,7 @@ export default class Controller {
                 this.characterCreatorUpdateStats(6, 6, 3, 7, 5, 3);
                 break;
             case "hermit":
-                this.characterCreatorUpdateStats(5, 5, 3, 4, 6, 7);
+                this.characterCreatorUpdateStats(5, 5, 3, 4, 7, 6);
                 break;
         }
     }
@@ -133,7 +133,7 @@ export default class Controller {
                 this.characterCreationArray[6] = 25;
                 break;
             case "hermit":
-                inventoryArray.push(new ArcaneStaff, new LinenShirt, new LinenPants, new LeatherBoots);
+                inventoryArray.push(new ArcaneStaff, new CrystalBall, new LinenShirt, new LinenPants, new LeatherBoots);
                 this.characterCreationArray[6] = 20;
                 break;
         }
@@ -154,7 +154,7 @@ export default class Controller {
                 inventoryArray.push(new Antidote, new AloeRemedy);
                 break;
             case "assasians-belt":
-                inventoryArray.push(new PoisonedKnife);
+                inventoryArray.push(new PoisonedKnife, new PoisonedKnife);
                 break;
     }
         for(let i = -1; i < this.characterCreationArray[3].length; i++){

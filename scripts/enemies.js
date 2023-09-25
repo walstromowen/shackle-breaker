@@ -1,13 +1,13 @@
-import {Slash, Strike, Stab, Eviscerate, Block, Fireball, Channel, Cleanse, SheildBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
-    ThrowNet, Immolate, LightningBolt, Energize, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Bite, SpitBile, LeechLife, Devour, Pounce, BlinkStrike} from "./abilities.js"
+import {Slash, Strike, Stab, Eviscerate, Block, Fireball, Meditate, Cleanse, SheildBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
+    ThrowNet, Immolate, LightningBolt, Channel, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Bite, SpitBile, LeechLife, Devour, Pounce, BlinkStrike} from "./abilities.js"
 import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, 
         Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, 
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
         LeatherBoots, KiteSheild, IronHelmet, IronGuantlets, IronChainmail, 
-        IronGreaves, IronBoots, HealthPotion, StaminaPotion, MagicPotion, 
+        IronGreaves, IronBoots, CrystalBall, HealthPotion, StaminaPotion, MagicPotion, 
         ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net,
         } from "./items.js";
-import { Energized, Invigorated } from "./statusEffects.js";
+import { Channeled, Invigorated } from "./statusEffects.js";
 
 class Enemy{
     constructor(){
@@ -336,7 +336,7 @@ export class EmperorDolos extends Enemy{
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 30;
         this.currentSpeed = this.baseSpeed;
-        this.abilityArray = [new ArcaneDart, new DrainLife, new Siphon, new LightningBolt, new Energize, new Cleanse];
+        this.abilityArray = [new ArcaneDart, new DrainLife, new Siphon, new LightningBolt, new Channel, new Cleanse];
         this.lootChanceMultiplier = 0; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [];
         this.gold = 0;
@@ -379,7 +379,7 @@ export class TerrorBear extends Enemy{
         this.baseSpeed = 25;
         this.currentSpeed = this.baseSpeed;
         this.abilityArray = [new Bite, new Devour, new LightningBolt];
-        this.statusArray = [new Energized(this), new Invigorated(this)]
+        this.statusArray = [new Channeled(this), new Invigorated(this)]
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new HealthPotion];
         this.gold = 0;
@@ -422,7 +422,7 @@ export class ShadowStrider extends Enemy{
         this.baseSpeed = 35;
         this.currentSpeed = this.baseSpeed;
         this.abilityArray = [new Bite, new LightningBolt, new BlinkStrike];
-        this.statusArray = [new Energized(this), new Invigorated(this)]
+        this.statusArray = [new Channeled(this), new Invigorated(this)]
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new StaminaPotion];
         this.gold = 0;

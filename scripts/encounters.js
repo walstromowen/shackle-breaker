@@ -1,7 +1,7 @@
 import {Loot, MoveOn, Trade, Assassinate, ForceOpen, PickLock, LookForKey,
-        ChooseRune} from "./encounterDecisions.js";
+        ChooseRune, Rest} from "./encounterDecisions.js";
 import {LootChest, OpenChestArrowTrap, OpenChestAttractEnemy, SucessfulAltusAssasination, FailedAltusAssasination, UnlockTreasureChest, MysteriousDoorCollapses,
-        BreakSealMysteriousDoor1, BreakSealMysteriousDoor2, BreakSealMysteriousDoor3} from "./encounterResults.js";
+        BreakSealMysteriousDoor1, BreakSealMysteriousDoor2, BreakSealMysteriousDoor3, RestfulSleep, LootCabin, EnterCabinAttractEnemy} from "./encounterResults.js";
 class Encounter{
     makeDecision(player, decisionArrayIndex){
         let reward = Math.floor(Math.random() * this.rewardsArray.length);
@@ -118,14 +118,14 @@ export class TravelingMerchant extends Encounter{
         this.consequencesArray = [];
     }
 }
-export class skeletonAmbush extends Encounter{
+export class AbandonedCabin extends Encounter{
     constructor(){
         super();
-        this.name = "traveling merchant";
-        this.message = "a traveling merchant hails you...";
-        this.imageSrc = "./media/kurty.jpg";
-        this.decisionArray = [new MoveOn(), new Trade()];
-        this.rewardsArray = [];
-        this.consequencesArray = [];
+        this.name = "an abandoned cabin";
+        this.message = "An abandoned cabin lies ahead...";
+        this.imageSrc = "./media/abandoned-cabin.jpg";
+        this.decisionArray = [new MoveOn(), new Loot(), new Rest()];
+        this.rewardsArray = [new RestfulSleep(), new LootCabin()];
+        this.consequencesArray = [new EnterCabinAttractEnemy()];
     }
 }

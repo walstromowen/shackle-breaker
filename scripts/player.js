@@ -1,5 +1,5 @@
 import {Recover, Punch, Retreat} from "./abilities.js";
-import {Poisoned, Burned, Frostbite, Paralyzed, Sheilded, Energized, Empowered, Bound} from "./statusEffects.js";
+import {Poisoned, Burned, Frostbite, Paralyzed, Sheilded, Channeled, Empowered, Bound} from "./statusEffects.js";
 
 export default class Player{
     constructor(characterCreationArray, map){

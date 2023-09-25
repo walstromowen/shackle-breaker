@@ -1,5 +1,5 @@
 import {controller as theController} from "./main.js"
-import {Sheilded, Bound, Poisoned, Burned, Empowered, Paralyzed, Energized, Frostbite, Invigorated, Hidden} from "./statusEffects.js";
+import {Sheilded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden} from "./statusEffects.js";
 
 class Ability{
     canUse(weilder, player){
@@ -20,7 +20,7 @@ class Ability{
                 weilder.nextMove = new Recover;
             }
             if(weilder.currentMagic - this.magicCost < 0){
-                weilder.nextMove = new Channel;
+                weilder.nextMove = new Meditate;
             }
             if(this.canUseSpecialCondition(weilder, player) == false){
                 return false;
@@ -123,10 +123,10 @@ export class Recover extends Ability{
         }
     }
 }
-export class Channel extends Ability{
+export class Meditate extends Ability{
     constructor(){
         super();
-        this.name = "channel";
+        this.name = "meditate";
         this.type = "";
         this.speedMultiplier = 0.75;
         this.staminaCost = 0;
@@ -139,7 +139,7 @@ export class Channel extends Ability{
             magic = weilder.maxMagic - weilder.currentMagic;
         }
         weilder.currentMagic = weilder.currentMagic + magic;
-        theController.printToGameConsole(`${weilder.name} channels magic!`);
+        theController.printToGameConsole(`${weilder.name} meditates magic!`);
         theController.playSoundEffect(this.soundEffect);
     }
     canUseSpecialCondition(weilder){
@@ -551,10 +551,31 @@ export class LightningBolt extends Ability{
         }
     } 
 }
-export class Energize extends Ability{
+export class Shockwave extends Ability{
     constructor(){
         super();
-        this.name = "energize";
+        this.name = "shock wave";
+        this.type = "bluntElemental";
+        this.speedMultiplier = 0.75;
+        this.staminaCost = 0;
+        this.magicCost = 8;
+        this.damageModifier = 4;
+        this.soundEffect = "./audio/soundEffects/075681_electric-shock-33018.wav";
+    }
+    activate(weilder, target){
+        if(this.checkMagic(weilder) == true){
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentElementalAttack + this.damageModifier) - weilder.currentElementalAttack + 1)) + weilder.currentElementalAttack;
+            damageOutput = this.checkDamage(damageOutput, target, this.type);
+            target.currentHP = target.currentHP - damageOutput;
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
+            theController.playSoundEffect(this.soundEffect);
+        }
+    } 
+}
+export class Channel extends Ability{
+    constructor(){
+        super();
+        this.name = "channel";
         this.type = "arcaneElemental";
         this.speedMultiplier = 0.75;
         this.staminaCost = 0;
@@ -567,12 +588,12 @@ export class Energize extends Ability{
             theController.printToGameConsole(`${weilder.name} uses ${this.name}!`);
             theController.playSoundEffect(this.soundEffect);
             for(let i = 0; i < weilder.statusArray.length; i++){
-                if(weilder.statusArray[i].name == "energized"){
+                if(weilder.statusArray[i].name == "channeled"){
                     weilder.statusArray[i].currentCharges = weilder.statusArray[i].maxCharges;
                     return;
                 }
             }
-            weilder.statusArray.push(new Energized(weilder));
+            weilder.statusArray.push(new Channeled(weilder));
         }
     }
 }

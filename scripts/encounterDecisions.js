@@ -116,3 +116,11 @@ export class ChooseRune extends Decision{
         this.decisionAttribute = "none";
     }
 }
+export class Rest extends Decision{
+    constructor(message){
+        super();
+        this.name = message;
+        this.decisionAttribute = "none";
+    }
+}
+

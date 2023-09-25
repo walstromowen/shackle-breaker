@@ -40,8 +40,14 @@ export class LootChest{
     trigger(player){
         let newItem = getRandomItem();
         player.inventory.push(newItem);
+        if(Math.floor(Math.random()*2 == 0)){
+            let newItem2 = getRandomItem();
+            player.inventory.push(newItem2);
+            theController.printToGameConsole(`${player.name} opens the chest and finds ${newItem.name} and ${newItem2.name}.`);
+        }else{
+            theController.printToGameConsole(`${player.name} opens the chest and finds ${newItem.name}.`);
+        }
         theController.updatePlayerInventoryTab(player.inventory);
-        theController.printToGameConsole(`${player.name} opens the chest and finds ${newItem.name}`);
         theController.endEncounter();
     }
 }
@@ -113,5 +119,40 @@ export class BreakSealMysteriousDoor3{
         theController.printToGameConsole(`The gate opens and pulls ${player.name} inside!`);
         theController.generateNewMap("portal");
         theController.endEncounter();
+    }
+}
+export class RestfulSleep{
+    trigger(player){
+        let hp = Math.floor(player.maxHP * 0.5);
+        if(player.currentHP + hp > player.maxHP){
+            hp = player.maxHP - player.currentHP;
+        }
+        weilder.currentHP = weilder.currentHP + hp;
+        theController.printToGameConsole(`${player.name} sleeps soundly and resotres ${hp} health!`);
+        theController.endEncounter();
+    }
+}
+export class LootCabin{
+    trigger(player){
+        let newItem = getRandomItem();
+        player.inventory.push(newItem);
+        if(Math.floor(Math.random()*2 == 0)){
+            let newItem2 = getRandomItem();
+            player.inventory.push(newItem2);
+            theController.printToGameConsole(`${player.name} loots the cabin and finds ${newItem.name} and ${newItem2.name}.`);
+        }else{
+            theController.printToGameConsole(`${player.name} loots the cabin and finds ${newItem.name}.`);
+        }
+        theController.updatePlayerInventoryTab(player.inventory);
+        theController.endEncounter();
+    }
+}
+export class EnterCabinAttractEnemy{
+    trigger(player){
+        theController.printToGameConsole(`${player.name} enters the cabin and finds it is already occupied!`);
+        theController.endEncounter(true);
+        let newEnemy = theController.map.mapEnviorment.generateEnemy(player.level);
+        theController.toggleBattle(newEnemy);
+        player.nextRoom.enemy = newEnemy;
     }
 }
