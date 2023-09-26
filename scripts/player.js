@@ -2,7 +2,7 @@ import {Recover, Punch, Retreat} from "./abilities.js";
 import {Poisoned, Burned, Frostbite, Paralyzed, Sheilded, Channeled, Empowered, Bound} from "./statusEffects.js";
 
 export default class Player{
-    constructor(characterCreationArray, map){
+    constructor(characterCreationArray){
         this.name = characterCreationArray[0];
         this.apperance = characterCreationArray[1]
         this.origin = characterCreationArray[2]
@@ -45,7 +45,11 @@ export default class Player{
         this.statusArray = [];//new Poisoned(this), new Burned(this), new Frostbite(this), new Paralyzed(this), new Sheilded(this), new Energized(this), new Empowered(this), new Bound(this)
         this.isInBattle = false;
         this.canMoveRoom = true;
+        this.currentRoom = "";
+        this.nextRoom = "";
+    } 
+    initializeRooms(map){
         this.currentRoom = map.roomArray[map.playerSpawnIndex];
         this.nextRoom = this.currentRoom;
-    }  
+    }
 }

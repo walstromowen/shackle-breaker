@@ -1,4 +1,4 @@
-import {LockedTreasureChest, AltusAmbushOpportunity, MysteriousDoor1, TravelingMerchant, AbandonedCabin} from "./encounters.js";
+import {LockedTreasureChest, AltusAmbushOpportunity, MysteriousDoor, TravelingMerchant, AbandonedCabin} from "./encounters.js";
 import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos, ShadowStrider, TerrorBear} from "./enemies.js";
 
 export default class MapEnviorment{
@@ -115,7 +115,7 @@ export default class MapEnviorment{
                     case 0:
                         return new LockedTreasureChest();
                     case 1:
-                        return new MysteriousDoor1();
+                        return new MysteriousDoor();
                     default:
                         return;
                 }

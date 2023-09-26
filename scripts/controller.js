@@ -49,9 +49,10 @@ export default class Controller {
             this.characterCreationArray[0] = document.getElementById("name-selection").value;
             this.characterCreationArray[1] = document.getElementById("apperance-selection").value;
             this.characterCreationArray[2] = document.getElementById("background-selection").value;
+            this.player = new Player(this.characterCreationArray);
             this.map = new Map(0, "basic");
             this.miniMap = new MiniMap();
-            this.player = new Player(this.characterCreationArray, this.map);
+            this.player.initializeRooms(this.map);
             document.getElementById("app").style.display = "block";
             document.getElementById('player-name').innerText = this.player.name;
             document.getElementById('player-image').src = this.player.apperance;
@@ -431,7 +432,9 @@ export default class Controller {
             decisionBtn.classList.add('action-button');
             decisionBtn.innerText = this.capitalizeFirstLetter(this.encounter.decisionArray[x].name);
             decisionBtn.addEventListener('click', ()=>{
-                this.encounter.makeDecision(this.player, x);
+                this.disablePlayerEncounterControls();
+                this.printToGameConsole(this.encounter.decisionArray[x].message);
+                this.encounter.decisionArray[x].activate(this.player);
             });
             document.getElementById('encounter-button-container').appendChild(decisionBtn);
             this.encounterBtnArray.push(decisionBtn);
