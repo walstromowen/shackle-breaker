@@ -72,7 +72,7 @@ export class UnlockedTreasureChest extends Encounter{
     constructor(){
         super();
         this.name = "unlocked treasure chest";
-        this.message = "A large chest sits all alone. It is unlocked...";
+        this.message = "A large chest sits all alone. It is unlocked.";
         this.imageSrc = "./media/treasureChestLocked.jpg";
         this.decisionArray = [
             new Decision(
@@ -106,7 +106,7 @@ export class AltusAmbushOpportunity extends Encounter{
     constructor(){
         super();
         this.name = "ambush opportunity";
-        this.message = "An official of the Altus Kingdom appears to be seperated from his escort nearby, this could prove an fortuneous opportunity...";
+        this.message = "An official of the Altus Kingdom appears to be seperated from his escort nearby, this could prove an fortuneous opportunity.";
         this.imageSrc = "./media/altus-ambush-opportunity.jpg";
         this.decisionArray = [
             new Decision(
@@ -134,7 +134,7 @@ export class AltusAmbushOpportunity extends Encounter{
             new Decision(
                 "set trap", 
                 `${theController.player.name} sets a pit trap for the official and whistles for the guard.`,
-                "insight",
+                "focus",
                 [
                     ()=>{
                         let enemy = new AltusMage(theController.player.level);
@@ -210,7 +210,7 @@ export class TravelingMerchant extends Encounter{
     constructor(){
         super();
         this.name = "traveling merchant";
-        this.message = "a traveling merchant hails you...";
+        this.message = "a traveling offers to trade.";
         this.imageSrc = "./media/traveling-merchant.jpg";
         this.decisionArray = [
             new Decision(
@@ -229,7 +229,7 @@ export class TravelingMerchant extends Encounter{
                 `${theController.player.name} approaches the merchant`,
                 "certain",
                 [
-                    ()=>{initiateTrade(`${theController.player.name} offers to trade`, [getRandomItem(), getRandomItem(), getRandomItem(), getRandomItem(), getRandomItem()])}
+                    ()=>{initiateTrade(`${theController.player.name} offers to trade`, [getRandomItem(), getRandomItem(), getRandomItem(), getRandomItem(), getRandomItem()], "trade")}
                 ],
                 [
                     
@@ -242,7 +242,7 @@ export class AbandonedCabin extends Encounter{
     constructor(){
         super();
         this.name = "an abandoned cabin";
-        this.message = "an abandoned cabin lies ahead...";
+        this.message = "an abandoned cabin lies ahead.";
         this.imageSrc = "./media/abandoned-cabin.jpg";
         this.decisionArray = [
             new Decision(
