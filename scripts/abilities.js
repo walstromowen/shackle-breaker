@@ -96,6 +96,12 @@ class Ability{
             return damageOutput;
         }
     }
+    checkMiss(weilder, target, abilityName){
+        if(Math.random()*this.accuracy < target.currentEvasion){
+            theController.printToGameConsole(`${target.name} avoids ${weilder.name}'s ${abilityName} attack!`);
+            return true; //attack misses
+        }
+    }
 }
 export class Recover extends Ability{
     constructor(){
@@ -113,7 +119,7 @@ export class Recover extends Ability{
             stamina = weilder.maxStamina - weilder.currentStamina;
         }
         weilder.currentStamina = weilder.currentStamina + stamina;
-        theController.printToGameConsole(`${weilder.name} recovers stamina!`);
+        theController.printToGameConsole(`${weilder.name} recovers ${stamina} stamina!`);
         theController.playSoundEffect(this.soundEffect);
     }
     canUseSpecialCondition(weilder){
@@ -131,6 +137,7 @@ export class Meditate extends Ability{
         this.speedMultiplier = 0.75;
         this.staminaCost = 0;
         this.magicCost = 0;
+        this.accuracy = "";
         this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
     }
     activate(weilder, target){
@@ -139,7 +146,7 @@ export class Meditate extends Ability{
             magic = weilder.maxMagic - weilder.currentMagic;
         }
         weilder.currentMagic = weilder.currentMagic + magic;
-        theController.printToGameConsole(`${weilder.name} meditates magic!`);
+        theController.printToGameConsole(`${weilder.name} restores ${magic} magic!`);
         theController.playSoundEffect(this.soundEffect);
     }
     canUseSpecialCondition(weilder){
@@ -157,6 +164,7 @@ export class Retreat extends Ability{
         this.speedMultiplier = 0.5;
         this.staminaCost = 30;
         this.magicCost = 0;
+        this.accuracy = "";
         this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
     }
     activate(weilder, target){
@@ -175,6 +183,7 @@ export class Struggle extends Ability{
         this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 0;
+        this.accuracy = "";
         this.soundEffect = "./audio/soundEffects/power-down-45784.mp3";
     }
     activate(weilder, target){
@@ -191,15 +200,19 @@ export class Punch extends Ability{
         this.staminaCost = 4;
         this.magicCost = 0;
         this.damageModifier = 2;
+        this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/soundEffects/face-punch-2-84757.wav";
     }
     activate(weilder, target){
         if(this.checkStamina(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
             let damageOutput = Math.floor(Math.random() * ((weilder.currentBluntAttack + this.damageModifier) - weilder.currentBluntAttack + 1)) + weilder.currentBluntAttack;
             damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
-            theController.playSoundEffect(this.soundEffect);
         }
     }
 }
@@ -212,15 +225,19 @@ export class Slash extends Ability{
         this.staminaCost = 8;
         this.magicCost = 0;
         this.damageModifier = 4;
+        this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/sword-sound-2-36274.mp3";
     }
     activate(weilder, target){
         if(this.checkStamina(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
             let damageOutput = Math.floor(Math.random() * ((((weilder.currentBluntAttack + weilder.currentPierceAttack)/2) + this.damageModifier) - ((weilder.currentBluntAttack + weilder.currentPierceAttack)/2) + 1)) + Math.floor(((weilder.currentBluntAttack + weilder.currentPierceAttack)/2));
             damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
-            theController.playSoundEffect(this.soundEffect);
         }
     }
 }
@@ -233,15 +250,19 @@ export class Strike extends Ability{
         this.staminaCost = 8;
         this.magicCost = 0;
         this.damageModifier = 4;
+        this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/crash-6711.wav";
     }
     activate(weilder, target){
         if(this.checkStamina(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
             let damageOutput = Math.floor(Math.random() * ((weilder.currentBluntAttack + this.damageModifier) - weilder.currentBluntAttack + 1)) + weilder.currentBluntAttack;
             damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
-            theController.playSoundEffect(this.soundEffect);
         }
     }
 }
@@ -254,15 +275,19 @@ export class Stab extends Ability{
         this.staminaCost = 12;
         this.magicCost = 0;
         this.damageModifier = 6;
+        this.accuracy = 60;
         this.soundEffect = "./audio/soundEffects/Knife-Stab-A10-www.fesliyanstudios.com.mp3";
     }
     activate(weilder, target){
         if(this.checkStamina(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
             let damageOutput = Math.floor(Math.random() * ((weilder.currentPierceAttack + this.damageModifier) - weilder.currentPierceAttack + 1)) + weilder.currentPierceAttack;
             damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
-            theController.playSoundEffect(this.soundEffect);
         }
     }
 }
@@ -275,15 +300,19 @@ export class Bite extends Ability{
         this.staminaCost = 6;
         this.magicCost = 0;
         this.damageModifier = 4;
+        this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/chomp1.mp3";
     }
     activate(weilder, target){
         if(this.checkStamina(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
             let damageOutput = Math.floor(Math.random() * ((((weilder.currentBluntAttack + weilder.currentPierceAttack)/2) + this.damageModifier) - ((weilder.currentBluntAttack + weilder.currentPierceAttack)/2) + 1)) + Math.floor(((weilder.currentBluntAttack + weilder.currentPierceAttack)/2));
             damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
-            theController.playSoundEffect(this.soundEffect);
         }
     }
 }
@@ -296,15 +325,19 @@ export class Pounce extends Ability{
         this.staminaCost = 16;
         this.magicCost = 0;
         this.damageModifier = 4;
+        this.accuracy = 60;
         this.soundEffect = "./audio/soundEffects/sword-sound-2-36274.mp3";
     }
     activate(weilder, target){
         if(this.checkStamina(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
             let damageOutput = Math.floor(Math.random() * ((weilder.currentBluntAttack + this.damageModifier) - weilder.currentBluntAttack + 1)) + weilder.currentBluntAttack;
             damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
-            theController.playSoundEffect(this.soundEffect);
             if(damageOutput > 0){
                 if(Math.random()*2 < 1){
                     for(let i = 0; i < target.statusArray.length; i++){
@@ -314,7 +347,6 @@ export class Pounce extends Ability{
                         }
                     }
                     target.statusArray.push(new Bound(target));
-                    theController.printToGameConsole(`${target.name} has been bound!`);
                 }
             }
         }
@@ -329,10 +361,15 @@ export class Eviscerate extends Ability{
         this.staminaCost = 12;
         this.magicCost = 0;
         this.damageModifier = 3;
+        this.accuracy = 60;
         this.soundEffect = "./audio/soundEffects/slash1.mp3";
     }
     activate(weilder, target){
         if(this.checkStamina(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
             let damageOutput = Math.floor(Math.random() * ((weilder.currentPierceAttack + this.damageModifier) - weilder.currentPierceAttack + 1)) + weilder.currentPierceAttack;
             if(target.currentHP >= target.maxHP * 0.5){
                 damageOutput = Math.floor(damageOutput * 1.1);
@@ -340,7 +377,6 @@ export class Eviscerate extends Ability{
             damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
-            theController.playSoundEffect(this.soundEffect);
         }
     }
 }
@@ -352,6 +388,7 @@ export class Block extends Ability{
         this.speedMultiplier = 1.0;
         this.staminaCost = 6;
         this.magicCost = 0;
+        this.accuracy = "";
         this.soundEffect = "./audio/soundEffects/anvil-hit-2-14845.mp3";
     }
     activate(weilder, target){
@@ -377,10 +414,15 @@ export class SheildBash extends Ability{
         this.staminaCost = 10;
         this.magicCost = 0;
         this.damageModifier = 4;
+        this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/anvil-hit-2-14845.mp3";
     }
     activate(weilder, target){
         if(this.checkStamina(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
             let damageOutput = Math.floor(Math.random() * (weilder.currentBluntAttack - (weilder.currentBluntAttack - this.damageModifier) + 1)) + (weilder.currentBluntAttack - this.damageModifier);
             let messageAddon = "";
             if(target.currentBluntDefense >= (target.baseBluntDefense - 6)){
@@ -394,7 +436,6 @@ export class SheildBash extends Ability{
             damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name}` + messageAddon + ` dealing ${damageOutput} damage!`);
-            theController.playSoundEffect(this.soundEffect);
         }
     }
 }
@@ -407,10 +448,15 @@ export class LeechLife extends Ability{
         this.staminaCost = 12;
         this.magicCost = 0;
         this.damageModifier = 3;
+        this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/platzender-kopf_nachschlag-91637.mp3";
     }
     activate(weilder, target){
         if(this.checkStamina(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
             let damageOutput = Math.floor(Math.random() * ((((weilder.currentArcaneAttack + weilder.currentPierceAttack)/2) + this.damageModifier) - ((weilder.currentArcaneAttack + weilder.currentPierceAttack)/2) + 1)) + Math.floor(((weilder.currentArcaneAttack + weilder.currentPierceAttack)/2));
             damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
@@ -420,7 +466,6 @@ export class LeechLife extends Ability{
             }
             weilder.currentHP = weilder.currentHP + restoreAmount;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage and restores ${restoreAmount} health!`);
-            theController.playSoundEffect(this.soundEffect);
         }
     }
 }
@@ -433,15 +478,19 @@ export class SpitBile extends Ability{
         this.staminaCost = 12;
         this.magicCost = 0;
         this.damageModifier = 3;
+        this.accuracy = 60;
         this.soundEffect = "./audio/soundEffects/platzender-kopf_nachschlag-91637.mp3";
     }
     activate(weilder, target){
         if(this.checkStamina(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
             let damageOutput = Math.floor(Math.random() * ((weilder.currentElementalAttack + this.damageModifier) - weilder.currentElementalAttack + 1)) + weilder.currentElementalAttack;
             damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
-            theController.playSoundEffect(this.soundEffect);
             if(damageOutput > 0){
                 for(let i = 0; i < target.statusArray.length; i++){
                     if(target.statusArray[i].name == "poisoned"){
@@ -450,7 +499,6 @@ export class SpitBile extends Ability{
                     }
                 }
                 target.statusArray.push(new Poisoned(target));
-                theController.printToGameConsole(`${target.name} has been poisoned!`);
             }
         }
     }  
@@ -464,10 +512,15 @@ export class Fireball extends Ability{
         this.staminaCost = 0;
         this.magicCost = 12;
         this.damageModifier = 3;
+        this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/short-fireball-woosh-6146.mp3";
     }
     activate(weilder, target){
         if(this.checkMagic(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
             let damageOutput = Math.floor(Math.random() * ((weilder.currentElementalAttack + this.damageModifier) - weilder.currentElementalAttack + 1)) + weilder.currentElementalAttack;
             damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
@@ -482,7 +535,6 @@ export class Fireball extends Ability{
                         }
                     }
                     target.statusArray.push(new Burned(target));
-                    theController.printToGameConsole(`${target.name} has been burned!`);
                 } 
             }
         }
@@ -497,17 +549,21 @@ export class Immolate extends Ability{
         this.staminaCost = 0;
         this.magicCost = 2;
         this.damageModifier = 2;
+        this.accuracy = "";
         this.soundEffect = "./audio/soundEffects/short-fireball-woosh-6146.mp3";
     }
      activate(weilder, target){
         if(this.checkMagic(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
             let damageOutput = Math.floor(Math.random() * ((weilder.currentElementalAttack + this.damageModifier) - weilder.currentElementalAttack + 1)) + weilder.currentElementalAttack;
             damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             damageOutput = this.checkDamage(damageOutput, weilder, this.type);
             weilder.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name}!`);
-            theController.playSoundEffect(this.soundEffect);
             for(let i = 0; i < weilder.statusArray.length; i++){
                 if(weilder.statusArray[i].name == "empowered"){
                     weilder.statusArray[i].currentCharges = weilder.statusArray[i].maxCharges;
@@ -527,15 +583,19 @@ export class LightningBolt extends Ability{
         this.staminaCost = 0;
         this.magicCost = 12;
         this.damageModifier = 3;
+        this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/075681_electric-shock-33018.wav";
     }
     activate(weilder, target){
         if(this.checkMagic(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
             let damageOutput = Math.floor(Math.random() * ((weilder.currentElementalAttack + this.damageModifier) - weilder.currentElementalAttack + 1)) + weilder.currentElementalAttack;
             damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
-            theController.playSoundEffect(this.soundEffect);
             if(damageOutput > 0){
                 if(Math.random()*3 < 1){
                     for(let i = 0; i < target.statusArray.length; i++){
@@ -545,7 +605,6 @@ export class LightningBolt extends Ability{
                         }
                     }
                     target.statusArray.push(new Paralyzed(target));
-                    theController.printToGameConsole(`${target.name} has been paralyzed!`);
                 } 
             }
         }
@@ -560,15 +619,19 @@ export class Shockwave extends Ability{
         this.staminaCost = 0;
         this.magicCost = 8;
         this.damageModifier = 4;
+        this.accuracy = 100;
         this.soundEffect = "./audio/soundEffects/075681_electric-shock-33018.wav";
     }
     activate(weilder, target){
         if(this.checkMagic(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
             let damageOutput = Math.floor(Math.random() * ((weilder.currentElementalAttack + this.damageModifier) - weilder.currentElementalAttack + 1)) + weilder.currentElementalAttack;
             damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
-            theController.playSoundEffect(this.soundEffect);
         }
     } 
 }
@@ -581,6 +644,7 @@ export class Channel extends Ability{
         this.staminaCost = 0;
         this.magicCost = 10;
         this.damageModifier = 0;
+        this.accuracy = "";
         this.soundEffect = "./audio/soundEffects/075681_electric-shock-33018.wav";
     }
      activate(weilder, target){
@@ -606,6 +670,7 @@ export class Recuperate extends Ability{
         this.staminaCost = 10;
         this.magicCost = 0;
         this.damageModifier = 0;
+        this.accuracy = "";
         this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
     }
      activate(weilder, target){
@@ -631,10 +696,15 @@ export class IceShard extends Ability{
         this.staminaCost = 0;
         this.magicCost = 12;
         this.damageModifier = 3;
+        this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/magic-spell-6005.mp3";
     }
     activate(weilder, target){
         if(this.checkMagic(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
             let damageOutput = Math.floor(Math.random() * ((weilder.currentElementalAttack + this.damageModifier) - weilder.currentElementalAttack + 1)) + weilder.currentElementalAttack;
             damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
@@ -649,7 +719,6 @@ export class IceShard extends Ability{
                         }
                     }
                     target.statusArray.push(new Frostbite(target));
-                    theController.printToGameConsole(`${target.name} has frostbite!`);
                 } 
             }
         }
@@ -664,6 +733,7 @@ export class IceBarrier extends Ability{
         this.staminaCost = 0;
         this.magicCost = 6;
         this.damageModifier = 0;
+        this.accuracy = "";
         this.soundEffect = "./audio/soundEffects/mixkit-deep-air-woosh-2604.wav";
     }
      activate(weilder, target){
@@ -689,15 +759,19 @@ export class ArcaneDart extends Ability{
         this.staminaCost = 0;
         this.magicCost = 8;
         this.damageModifier = 4;
+        this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/magic-spell-6005.mp3";
     }
     activate(weilder, target){
         if(this.checkMagic(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
             let damageOutput = Math.floor(Math.random() * ((((weilder.currentPierceAttack + weilder.currentArcaneAttack)/2) + this.damageModifier) - ((weilder.currentPierceAttack + weilder.currentArcaneAttack)/2) + 1)) + Math.floor(((weilder.currentPierceAttack + weilder.currentArcaneAttack)/2));
             damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
-            theController.playSoundEffect(this.soundEffect);
         }
     }
 }
@@ -711,16 +785,20 @@ export class ArcaneBlast extends Ability{
         this.staminaCost = 0;
         this.magicCost = 16;
         this.damageModifier = 8;
+        this.accuracy = 40;
         this.soundEffect = "./audio/soundEffects/supernatural-explosion-104295.wav";
     }
     activate(weilder, target){
         if(this.checkMagic(weilder) == true){
-            let damageOutput = Math.floor(Math.random() * ((weilder.currentArcaneAttack + this.damageModifier) - weilder.currentArcaneAttack + 1)) + weilder.currentArcaneAttack;
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentArcaneAttack + this.damageModifier) - (weilder.currentArcaneAttack + (this.damageModifier/2)) + 1)) + (weilder.currentArcaneAttack + (this.damageModifier/2));
             damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
             weilder.currentArcaneAttack = weilder.baseArcaneAttack;
-            theController.playSoundEffect(this.soundEffect);
         }
     }
 }
@@ -733,15 +811,19 @@ export class LightBeam extends Ability{
         this.staminaCost = 0;
         this.magicCost = 10;
         this.damageModifier = 6;
+        this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/supernatural-explosion-104295.wav";
     }
     activate(weilder, target){
         if(this.checkMagic(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
             let damageOutput = Math.floor(Math.random() * ((weilder.currentArcaneAttack + this.damageModifier) - weilder.currentArcaneAttack + 1)) + weilder.currentArcaneAttack;
             damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
-            theController.playSoundEffect(this.soundEffect);
         }
     }
 }
@@ -753,6 +835,7 @@ export class Cleanse extends Ability{
         this.speedMultiplier = 0.75;
         this.staminaCost = 0;
         this.magicCost = 25;
+        this.accuracy = "";
         this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
     }
     activate(weilder, target){ 
@@ -785,10 +868,15 @@ export class DrainLife extends Ability{
         this.staminaCost = 0;
         this.magicCost = 15;
         this.damageModifier = 3;
+        this.accuracy = 60;
         this.soundEffect = "./audio/soundEffects/totem-strike-96497.wav";
     }
     activate(weilder, target){
         if(this.checkMagic(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
             let damageOutput = Math.floor(Math.random() * ((weilder.currentArcaneAttack + this.damageModifier) - weilder.currentArcaneAttack + 1)) + weilder.currentArcaneAttack;
             damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
@@ -798,7 +886,6 @@ export class DrainLife extends Ability{
             }
             weilder.currentHP = weilder.currentHP + restoreAmount;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage and restores ${restoreAmount} health!`);
-            theController.playSoundEffect(this.soundEffect);
         }
     }
 }
@@ -811,10 +898,15 @@ export class Siphon extends Ability{
         this.staminaCost = 0;
         this.magicCost = 8;
         this.damageModifier = 1;
+        this.accuracy = 100;
         this.soundEffect = "./audio/soundEffects/mixkit-deep-air-woosh-2604.wav";
     }
     activate(weilder, target){
         if(this.checkMagic(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
             let damageOutput = Math.floor(Math.random() * ((weilder.currentArcaneAttack + this.damageModifier) - weilder.currentArcaneAttack + 1)) + weilder.currentArcaneAttack;
             damageOutput = this.checkDamage(damageOutput, target, this.type);
             if(target.currentMagic - damageOutput < 0){
@@ -827,7 +919,6 @@ export class Siphon extends Ability{
             }
             weilder.currentMagic = weilder.currentMagic + restoreAmount;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} magic damage and shipons ${restoreAmount} magic!`);
-            theController.playSoundEffect(this.soundEffect);
         }
     }
 }
@@ -839,15 +930,19 @@ export class Devour extends Ability{
         this.speedMultiplier = 0.25;
         this.staminaCost = 20;
         this.magicCost = 0;
+        this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/chomp1.mp3";
     }
     activate(weilder, target){
         if(this.checkStamina(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
             let damageOutput = Math.floor(target.currentHP + ((target.currentBluntDefense + target.currentPierceDefense)/2) * 0.7);
             damageOutput = this.checkDamage(damageOutput, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
-            theController.playSoundEffect(this.soundEffect);
         }
     }
 }
@@ -859,6 +954,7 @@ export class BlinkStrike extends Ability{
         this.speedMultiplier = 0.5;
         this.staminaCost = 8;
         this.magicCost = 10;
+        this.accuracy = "";
         this.soundEffect = "./audio/soundEffects/mixkit-deep-air-woosh-2604.wav";
     }
     activate(weilder, target){

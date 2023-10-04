@@ -79,6 +79,8 @@ export class Skeleton extends Enemy{
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 25;
         this.currentSpeed = this.baseSpeed;
+        this.baseEvasion = 10;
+        this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Slash, new Stab, new Strike, new Block];
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new Spear, new Shortsword, new Dagger, new Shiv, 
@@ -126,6 +128,8 @@ export class Bat extends Enemy{
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 30;
         this.currentSpeed = this.baseSpeed;
+        this.baseEvasion = 20;
+        this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Bite, new LeechLife];
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new HealthPotion];
@@ -168,6 +172,8 @@ export class Wolf extends Enemy{
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 30;
         this.currentSpeed = this.baseSpeed;
+        this.baseEvasion = 15;
+        this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Bite, new Pounce];
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new StaminaPotion];
@@ -210,6 +216,8 @@ export class AltusMage extends Enemy{
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 25;
         this.currentSpeed = this.baseSpeed;
+        this.baseEvasion = 10;
+        this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new ArcaneDart, new ArcaneBlast, new Fireball, new Cleanse];
         this.lootChanceMultiplier = 0; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new FireStaff, new LightningStaff, new IceStaff, new ArcaneStaff, new LightStaff, new DarkStaff, new MagicPotion];
@@ -252,6 +260,8 @@ export class CaveSpider extends Enemy{
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 30;
         this.currentSpeed = this.baseSpeed;
+        this.baseEvasion = 15;
+        this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Bite, new SpitBile];
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new StaminaPotion, new PoisonedKnife];
@@ -294,6 +304,8 @@ export class Groveguardian extends Enemy{
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 20;
         this.currentSpeed = this.baseSpeed;
+        this.baseEvasion = 5;
+        this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Bite, new Devour];
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new HealthPotion, new AloeRemedy, new Antidote];
@@ -336,6 +348,8 @@ export class EmperorDolos extends Enemy{
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 30;
         this.currentSpeed = this.baseSpeed;
+        this.baseEvasion = 15;
+        this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new ArcaneDart, new DrainLife, new Siphon, new LightningBolt, new Channel, new Cleanse];
         this.lootChanceMultiplier = 0; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [];
@@ -378,6 +392,8 @@ export class TerrorBear extends Enemy{
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 25;
         this.currentSpeed = this.baseSpeed;
+        this.baseEvasion = 5;
+        this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Bite, new Devour, new LightningBolt];
         this.statusArray = [new Channeled(this), new Invigorated(this)]
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
@@ -421,6 +437,8 @@ export class ShadowStrider extends Enemy{
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 35;
         this.currentSpeed = this.baseSpeed;
+        this.baseEvasion = 20;
+        this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Bite, new LightningBolt, new BlinkStrike];
         this.statusArray = [new Channeled(this), new Invigorated(this)]
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot

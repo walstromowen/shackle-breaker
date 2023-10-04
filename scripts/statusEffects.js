@@ -246,6 +246,7 @@ export class Hidden extends StatusEffect{
         }
         theController.printToGameConsole(`${this.holder.name} is hidden!`);
         this.currentCharges = this.currentCharges - 1;
+        this.holder.currentEvasion = this.holder.currentEvasion + 100;
     }
     onStartTurn(){
         if(this.holder === theController.player){
@@ -253,5 +254,6 @@ export class Hidden extends StatusEffect{
         }else{
             theController.toggleElementClass("enemy-image", "black-and-white");
         }
+        this.holder.currentEvasion = this.holder.currentEvasion - 100;
     }
 }

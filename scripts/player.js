@@ -42,6 +42,8 @@ export default class Player{
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 25;
         this.currentSpeed = this.baseSpeed;
+        this.baseEvasion = 10;
+        this.currentEvasion = this.baseEvasion;
         this.statusArray = [];//new Poisoned(this), new Burned(this), new Frostbite(this), new Paralyzed(this), new Sheilded(this), new Energized(this), new Empowered(this), new Bound(this)
         this.isInBattle = false;
         this.canMoveRoom = true;

@@ -48,7 +48,7 @@ export class LockedTreasureChest extends Encounter{
                 ],
                 [
                     ()=>{retry(`the lock doesn't budge.`)},
-                    ()=>{removeDecision(`${theController.player.name} jams the lock!`, "break lock")},
+                    ()=>{removeDecision(`${theController.player.name} cannot break the lock!`, "break lock")},
                     ()=>{toggleBattle(`upon hearing the loud noise, something emerges from the shadows and races towards ${theController.player.name}!`, theController.map.mapEnviorment.generateEnemy(theController.player.level))}
                 ]
             ),

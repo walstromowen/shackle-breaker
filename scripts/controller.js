@@ -578,8 +578,8 @@ export default class Controller {
         document.getElementById('current-dexterity').innerText = this.player.dexterity;
         document.getElementById('current-insight').innerText = this.player.insight;
         document.getElementById('current-focus').innerText = this.player.focus;
-        document.getElementById('current-experience').innerText = this.player.currentXP;
         document.getElementById('current-speed').innerText = this.player.currentSpeed;
+        document.getElementById('current-evasion').innerText = this.player.currentEvasion;
         document.getElementById('current-blunt-attack').innerText = this.player.currentBluntAttack; 
         document.getElementById('current-pierce-attack').innerText = this.player.currentPierceAttack;
         document.getElementById('current-arcane-attack').innerText = this.player.currentArcaneAttack; 
@@ -588,6 +588,7 @@ export default class Controller {
         document.getElementById('current-pierce-defense').innerText = this.player.currentPierceDefense;
         document.getElementById('current-arcane-defense').innerText = this.player.currentArcaneDefense; 
         document.getElementById('current-element-defense').innerText = this.player.currentElementalDefense;
+        document.getElementById('current-experience').innerText = this.player.currentXP;
         for(let i = -1; i < this.player.statusArray.length; i++){
             let oldIcon = document.getElementById('player-status-icon-container').querySelector('img');
             if(oldIcon !== null){
