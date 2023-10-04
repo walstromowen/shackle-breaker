@@ -1245,4 +1245,32 @@ export class ThrowNet extends Ability{
         }
     }
 }
-
+export class ThrowSmokebomb extends Ability{
+    constructor(){
+        super();
+        this.name = "throw smokebomb";
+        this.type = "";
+        this.speedMultiplier = 0.75;
+        this.staminaCost = 0;
+        this.magicCost = 0;
+        this.damageModifier = 0;
+        this.soundEffect = "./audio/soundEffects/supernatural-explosion-104295.wav";
+    }
+    activate(weilder, target){
+        theController.printToGameConsole(`${weilder.name} thows a smokebomb!`);
+        for(let i = 0; i < weilder.statusArray.length; i++){
+            if(weilder.statusArray[i].name == "bound"){
+                weilder.statusArray[i].currentCharges = weilder.statusArray[i].maxCharges;
+                theController.playSoundEffect(this.soundEffect);
+                return;
+            }
+        }
+        weilder.statusArray.push(new Hidden(weilder));
+    }
+    canUse(weilder){
+        if(weilder.isInBattle == false){
+            theController.printToGameConsole("cannot use outside of combat.");
+            return false;
+        }
+    }
+}

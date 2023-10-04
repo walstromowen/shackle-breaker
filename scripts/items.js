@@ -1,13 +1,13 @@
 import {Slash, Strike, Stab, Eviscerate, Block, Fireball, Meditate, Cleanse, SheildBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
-        ThrowNet, Immolate, LightningBolt, Shockwave, Recuperate, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Channel} from "./abilities.js"
+        ThrowNet, Immolate, LightningBolt, Shockwave, Recuperate, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Channel, ThrowSmokebomb} from "./abilities.js"
 
 export function getRandomItem(){
-    let itemArray = [new LinenShirt, new LinenPants, new Dagger, new BlacksmithHammer, new Spear, new Shortsword, 
+    let itemArray = [new LinenShirt, new LinenPants, new Dagger, new BlacksmithHammer, new Spear, new Shortsword, new Longsword,
                 new Shiv, new Buckler, new FireStaff, new LightningStaff, new IceStaff, new ArcaneStaff, new LightStaff, new DarkStaff, new LeatherHelmet, 
                 new LeatherHood, new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
                 new LeatherBoots, new KiteSheild, new IronHelmet, new IronGuantlets, new IronChainmail, 
                 new IronGreaves, new IronBoots, new CrystalBall, new HealthPotion, new StaminaPotion, new MagicPotion, 
-                new ThrowingKnife, new PoisonedKnife, new Meteorite, new Antidote, new AloeRemedy, new Net];
+                new ThrowingKnife, new PoisonedKnife, new Meteorite, new Antidote, new AloeRemedy, new Net, new SmokeBomb];
                 return itemArray[Math.floor(Math.random() * itemArray.length)];
     }
 export class LinenShirt {
@@ -25,6 +25,7 @@ export class LinenShirt {
         this.arcaneDefense = 1;
         this.elementalDefense = 1;
         this.speed = 0;
+        this.evasion = 0;
         this.abilityArray = [];
     }
 }
@@ -43,6 +44,7 @@ export class LinenPants {
         this.arcaneDefense = 1;
         this.elementalDefense = 1;
         this.speed = 0;
+        this.evasion = 0;
         this.abilityArray = [];
     }
 }
@@ -61,6 +63,7 @@ export class Dagger {
         this.arcaneDefense = 0;
         this.elementalDefense = 0;
         this.speed = 4;
+        this.evasion = 0;
         this.abilityArray = [new Stab(), new Slash()];
     }
 }
@@ -79,6 +82,7 @@ export class BlacksmithHammer {
         this.arcaneDefense = 0;
         this.elementalDefense = 0;
         this.speed = 4;
+        this.evasion = 0;
         this.abilityArray = [new Strike()];
     }
 }
@@ -97,6 +101,7 @@ export class Spear {
         this.arcaneDefense = 0;
         this.elementalDefense = 0;
         this.speed = 1;
+        this.evasion = 0;
         this.abilityArray = [new Stab()];
     }
 }
@@ -115,6 +120,26 @@ export class Shortsword {
         this.arcaneDefense = 0;
         this.elementalDefense = 0;
         this.speed = 2;
+        this.evasion = 0;
+        this.abilityArray = [new Stab(), new Slash()];
+    }
+}
+export class Longsword {
+    constructor(){
+        this.name = "longsword";
+        this.type = "weapon";
+        this.level = 0;
+        this.price = 150;
+        this.bluntAttack = 3;
+        this.pierceAttack = 5;
+        this.arcaneAttack = 0;
+        this.elementalAttack = 0;
+        this.bluntDefense = 0;
+        this.pierceDefense = 0;
+        this.arcaneDefense = 0;
+        this.elementalDefense = 0;
+        this.speed = 1;
+        this.evasion = 0;
         this.abilityArray = [new Stab(), new Slash()];
     }
 }
@@ -133,6 +158,7 @@ export class Shiv {
         this.arcaneDefense = 0;
         this.elementalDefense = 0;
         this.speed = 1;
+        this.evasion = 0;
         this.abilityArray = [new Eviscerate];
     }
 }
@@ -151,6 +177,7 @@ export class Buckler {
         this.arcaneDefense = 2;
         this.elementalDefense = 2;
         this.speed = 0;
+        this.evasion = 0;
         this.abilityArray = [new Block()];
     }
 }
@@ -169,6 +196,7 @@ export class FireStaff {
         this.arcaneDefense = 0;
         this.elementalDefense = 1;
         this.speed = 0;
+        this.evasion = 0;
         this.abilityArray = [new Fireball(), new Immolate(), new Strike(), new Meditate()];
     }
 }
@@ -187,6 +215,7 @@ export class LightningStaff {
         this.arcaneDefense = 0;
         this.elementalDefense = 1;
         this.speed = 0;
+        this.evasion = 0;
         this.abilityArray = [new LightningBolt(), new Shockwave(), new Strike(), new Meditate()];
     }
 }
@@ -205,6 +234,7 @@ export class IceStaff {
         this.arcaneDefense = 0;
         this.elementalDefense = 1;
         this.speed = 0;
+        this.evasion = 0;
         this.abilityArray = [new IceShard(), new IceBarrier(), new Strike(), new Meditate()];
     }
 }
@@ -223,6 +253,7 @@ export class ArcaneStaff {
         this.arcaneDefense = 1;
         this.elementalDefense = 0;
         this.speed = 0;
+        this.evasion = 0;
         this.abilityArray = [new ArcaneDart(), new ArcaneBlast(), new Strike(), new Meditate()];
     }
 }
@@ -241,6 +272,7 @@ export class LightStaff {
         this.arcaneDefense = 1;
         this.elementalDefense = 0;
         this.speed = 0;
+        this.evasion = 0;
         this.abilityArray = [new LightBeam(), new Cleanse(), new Strike(), new Meditate()];
     }
 }
@@ -259,6 +291,7 @@ export class DarkStaff {
         this.arcaneDefense = 1;
         this.elementalDefense = 0;
         this.speed = 0;
+        this.evasion = 0;
         this.abilityArray = [new DrainLife(), new Siphon(), new Strike(), new Meditate()];
     }
 }
@@ -277,6 +310,7 @@ export class LeatherHelmet {
         this.arcaneDefense = 1;
         this.elementalDefense = 2;
         this.speed = 1;
+        this.evasion = 1;
         this.abilityArray = [];
     }
 }
@@ -295,6 +329,7 @@ export class LeatherHood {
         this.arcaneDefense = 1;
         this.elementalDefense = 3;
         this.speed = 1;
+        this.evasion = 2;
         this.abilityArray = [];
     }
 }
@@ -313,6 +348,7 @@ export class LeatherGloves {
         this.arcaneDefense = 1;
         this.elementalDefense = 2;
         this.speed = 1;
+        this.evasion = 1;
         this.abilityArray = [];
     }
 }
@@ -331,6 +367,7 @@ export class LeatherChestplate {
         this.arcaneDefense = 1;
         this.elementalDefense = 2;
         this.speed = 1;
+        this.evasion = 1;
         this.abilityArray = [];
     }
 }
@@ -349,6 +386,7 @@ export class LeatherGreaves {
         this.arcaneDefense = 1;
         this.elementalDefense = 2;
         this.speed = 1;
+        this.evasion = 1;
         this.abilityArray = [];
     }
 }
@@ -367,6 +405,7 @@ export class LeatherBoots {
         this.arcaneDefense = 1;
         this.elementalDefense = 2;
         this.speed = 1;
+        this.evasion = 1;
         this.abilityArray = [new Recuperate()];
     }
 }
@@ -385,6 +424,7 @@ export class KiteSheild {
         this.arcaneDefense = 1;
         this.elementalDefense = 1;
         this.speed = -5;
+        this.evasion = -2;
         this.abilityArray = [new Block(), new SheildBash()];
     }
 }
@@ -403,6 +443,7 @@ export class IronHelmet {
         this.arcaneDefense = 1;
         this.elementalDefense = 1;
         this.speed = -1;
+        this.evasion = -1;
         this.abilityArray = [];
     }
 }
@@ -421,6 +462,7 @@ export class IronGuantlets {
         this.arcaneDefense = 1;
         this.elementalDefense = 1;
         this.speed = -1;
+        this.evasion = -1;
         this.abilityArray = [];
     }
 }
@@ -439,6 +481,7 @@ export class IronChainmail {
         this.arcaneDefense = 1;
         this.elementalDefense = 1;
         this.speed = -1;
+        this.evasion = -1;
         this.abilityArray = [];
     }
 }
@@ -457,6 +500,7 @@ export class IronGreaves {
         this.arcaneDefense = 1;
         this.elementalDefense = 1;
         this.speed = -1;
+        this.evasion = -1;
         this.abilityArray = [];
     }
 }
@@ -475,6 +519,7 @@ export class IronBoots {
         this.arcaneDefense = 1;
         this.elementalDefense = 1;
         this.speed = -1;
+        this.evasion = -1;
         this.abilityArray = [];
     }
 }
@@ -493,6 +538,7 @@ export class CrystalBall {
         this.arcaneDefense = 1;
         this.elementalDefense = 1;
         this.speed = 0;
+        this.evasion = 0;
         this.abilityArray = [new Channel()];
     }
 }
@@ -500,7 +546,7 @@ export class HealthPotion {
     constructor(){
         this.name = "healing potion";
         this.type = "consumable";
-        this.price = 30;
+        this.price = 20;
         this.abilityArray = [new DrinkHealthPotion()];
     }
 }
@@ -555,7 +601,7 @@ export class Antidote {
         this.name = "antidote";
         this.type = "consumable";
         this.level = 0;
-        this.price = 100;
+        this.price = 30;
         this.abilityArray = [new UseAntidote()];
     }
 }
@@ -564,7 +610,7 @@ export class AloeRemedy {
         this.name = "aloe remedy";
         this.type = "consumable";
         this.level = 0;
-        this.price = 100;
+        this.price = 30;
         this.abilityArray = [new UseAloeRemedy()];
     }
 }
@@ -575,5 +621,14 @@ export class Net {
         this.level = 0;
         this.price = 50;
         this.abilityArray = [new ThrowNet()];
+    }
+}
+export class SmokeBomb {
+    constructor(){
+        this.name = "smoke bomb";
+        this.type = "consumable";
+        this.level = 0;
+        this.price = 50;
+        this.abilityArray = [new ThrowSmokebomb()];
     }
 }

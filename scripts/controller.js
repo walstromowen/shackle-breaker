@@ -1,9 +1,9 @@
-import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, 
+import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword,
         Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, 
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
         LeatherBoots, KiteSheild, IronHelmet, IronGuantlets, IronChainmail, 
         IronGreaves, IronBoots, CrystalBall, HealthPotion, StaminaPotion, MagicPotion, 
-        ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net,
+        ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb
 } from "./items.js";
 import {Recover, Punch, Retreat} from "./abilities.js"
 import Player from "./player.js";
@@ -85,13 +85,22 @@ export default class Controller {
                 this.characterCreatorUpdateStats(5, 5, 5, 5, 5, 5);
                 break;
             case "blacksmith":
-                this.characterCreatorUpdateStats(8, 5, 6, 4, 3, 3);
+                this.characterCreatorUpdateStats(8, 5, 5, 5, 4, 3);
+                break;
+            case "ranger":
+                this.characterCreatorUpdateStats(5, 8, 5, 5, 3, 4);
+                break;
+            case "scholar":
+                this.characterCreatorUpdateStats(5, 5, 3, 4, 8, 5);
+                break;
+            case "soldier":
+                this.characterCreatorUpdateStats(5, 5, 8, 5, 3, 4);
                 break;
             case "theif":
-                this.characterCreatorUpdateStats(6, 6, 3, 7, 5, 3);
+                this.characterCreatorUpdateStats(5, 5, 4, 8, 5, 3);
                 break;
             case "hermit":
-                this.characterCreatorUpdateStats(5, 5, 3, 4, 7, 6);
+                this.characterCreatorUpdateStats(5, 5, 3, 4, 5, 8);
                 break;
         }
     }
@@ -116,6 +125,7 @@ export default class Controller {
         document.getElementById("character-creation-arcane-defense").innerText = this.characterCreationArray[5][9];
         document.getElementById("character-creation-element-defense").innerText = this.characterCreationArray[5][10];
         document.getElementById("character-creation-speed").innerText = 25;
+        document.getElementById("character-creation-evasion").innerText = 10;
     }
     characterCreatorUpdateInventory(){
         let inventoryArray = [];
@@ -123,19 +133,31 @@ export default class Controller {
         switch(value){
             case "traveler":
                 inventoryArray.push(new Shortsword, new Buckler, new LinenShirt, new LinenPants, new LeatherBoots);
-                this.characterCreationArray[6] = 50;
+                this.characterCreationArray[6] = 100;
                 break;
             case "blacksmith":
                 inventoryArray.push(new BlacksmithHammer, new KiteSheild, new LinenShirt, new LinenPants, new LeatherBoots);
-                this.characterCreationArray[6] = 40;
+                this.characterCreationArray[6] = 90;
+                break;
+            case "ranger":
+                inventoryArray.push(new Shortsword, new LeatherHood, new LinenShirt, new LinenPants, new LeatherBoots);
+                this.characterCreationArray[6] = 70;
+                break;
+            case "scholar":
+                inventoryArray.push(new ArcaneStaff, new CrystalBall, new LinenShirt, new LinenPants, new LeatherBoots);
+                this.characterCreationArray[6] = 80;
+                break;
+            case "soldier":
+                inventoryArray.push(new Longsword, new LeatherChestplate, new LinenPants, new LeatherBoots);
+                this.characterCreationArray[6] = 80;
                 break;
             case "theif":
                 inventoryArray.push(new Dagger, new Shiv, new LinenShirt, new LinenPants, new LeatherBoots);
-                this.characterCreationArray[6] = 45;
+                this.characterCreationArray[6] = 90;
                 break;
             case "hermit":
-                inventoryArray.push(new ArcaneStaff, new CrystalBall, new LinenShirt, new LinenPants, new LeatherBoots);
-                this.characterCreationArray[6] = 30;
+                inventoryArray.push(new LightningStaff, new LeatherHood, new LinenShirt, new LinenPants, new LeatherBoots);
+                this.characterCreationArray[6] = 70;
                 break;
         }
         let value2 = document.getElementById("keepsake-selection").value;
@@ -155,7 +177,7 @@ export default class Controller {
                 inventoryArray.push(new Antidote, new AloeRemedy);
                 break;
             case "assasians-belt":
-                inventoryArray.push(new PoisonedKnife, new PoisonedKnife);
+                inventoryArray.push(new PoisonedKnife, new SmokeBomb);
                 break;
     }
         for(let i = -1; i < this.characterCreationArray[3].length; i++){
@@ -803,6 +825,7 @@ export default class Controller {
         this.player.currentArcaneDefense = this.player.baseArcaneDefense;
         this.player.currentElementalDefense = this.player.baseElementalDefense;
         this.player.currentSpeed = this.player.baseSpeed;
+        this.player.currentEvasion = this.player.baseEvasion;
         this.player.abilityArray = [];
         //update stats
         for(let i = 0; i < this.player.equippedArray.length; i++){
@@ -816,6 +839,7 @@ export default class Controller {
                 this.player.currentArcaneDefense = this.player.currentArcaneDefense + this.player.equippedArray[i].arcaneDefense;
                 this.player.currentElementalDefense = this.player.currentElementalDefense + this.player.equippedArray[i].elementalDefense;
                 this.player.currentSpeed = this.player.currentSpeed + this.player.equippedArray[i].speed;
+                this.player.currentEvasion = this.player.currentEvasion + this.player.equippedArray[i].evasion;
             }
         }
         //punch check

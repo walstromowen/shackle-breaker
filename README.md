@@ -14,7 +14,6 @@ Text adventure game based on the ShackleBreaker story
 * Ability conflicts
 * Weapon Level Ups /crafting
 * Distance System in battle
-* Evasion / Hidding
 * Decision Success modifier
 
 # Quality of Life
