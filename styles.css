@@ -285,10 +285,8 @@ p{
     display: flex;
     justify-content: space-between;
 }
-
 .inventory-slot-menu{
     width: 30%;
-    
 }
 .slot-menu-btn{
     border-radius: 10px;
@@ -345,17 +343,8 @@ p{
     -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
     filter: grayscale(100%);
   }
-.inventory-slot-context-menu{
-    display:none;
-    position: absolute;
-    width: 288px;
-    height: 200px;
-    background-color: green;
-   
-}
 #app{
     display: none;
-    position: relative;
 }
 #app-column-1{
     width: 288px;
@@ -518,9 +507,6 @@ p{
     background-image: url("./media/title-screen.jpg");
     background-size:cover;
     height: 100vh;
-}
-#inventory{
-    position: relative;
 }
 #level-up-screen-btn-container{
     display:flex;

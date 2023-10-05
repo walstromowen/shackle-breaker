@@ -561,11 +561,9 @@ export default class Controller {
             let inventorySlot = document.createElement('p');
             let inventorySlotMenu = document.createElement('div');
             let slotMenuUseBtn = document.createElement('div');
-            let inventorySlotContextMenu = document.createElement('div');
             inventorySlot.classList.add('inventory-slot');
             inventorySlotMenu.classList.add('inventory-slot-menu');
             slotMenuUseBtn.classList.add('slot-menu-btn');//equipment specific
-            inventorySlotContextMenu.classList.add('inventory-slot-context-menu');
             if(this.player.isInBattle == true){
                 slotMenuUseBtn.style.visibility = "hidden";
             }
@@ -585,14 +583,6 @@ export default class Controller {
                     this.useConsumable(i);
                 });
             }
-            inventorySlot.addEventListener('contextmenu', (e)=>{ 
-                e.preventDefault();
-                document.getElementById("app").appendChild(inventorySlotContextMenu);
-                inventorySlotContextMenu.style.left = `${e.offsetX}px`;
-                inventorySlotContextMenu.style.top = `${e.offsetY}px`;
-                inventorySlotContextMenu.style.display = "block";
-
-            });
         }
         document.getElementById("current-gold").innerText = this.player.currentGold;
     }
