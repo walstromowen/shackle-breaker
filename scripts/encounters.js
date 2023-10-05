@@ -205,12 +205,59 @@ export class MysteriousDoor extends Encounter{
         ];
     }
 }
-
+export class SuspiciousSkeleton extends Encounter{
+    constructor(){
+        super();
+        this.name = "suspicious skeleton";
+        this.message = "A skeleton stands dormant ahead.";
+        this.imageSrc = "./media/suspicious-skeleton.jpg";
+        this.decisionArray = [
+            new Decision(
+                "go around", 
+                `${theController.player.name} attempts to sneak around the skeleton.`,
+                "dexterity",
+                [
+                    ()=>{leave(`${theController.player.name} slips away quietly.`)}
+                ],
+                [
+                    ()=>{toggleBattle(`the skeleton spots ${theController.player.name} and draws his weapon!`, new Skeleton(theController.player.level))}
+                ]
+            ),
+            new Decision(
+                "lure away", 
+                `${theController.player.name} throws a rock in the distance attempting to lure the skeleton away.`,
+                "focus",
+                [
+                    ()=>{leave(`The skeleton leaves its post to investigates the sound leaving ${theController.player.name} a clear path forward.`)}
+                ],
+                [
+                    ()=>{toggleBattle(`the skeleton spots ${theController.player.name} and draws his weapon!`, new Skeleton(theController.player.level))}
+                ]
+            ),
+            new Decision(
+                "talk to it", 
+                `${theController.player.name} attempts to talk to the skeleton.`,
+                "insight",
+                [
+                    ()=>{lootItems(`${theController.player.name} and the skeleton have a pleasant discussion about the good old days. Then the skeleton gives ${theController.player.name} a parting gift,`, getRandomItem())},
+                    ()=>{leave(`${theController.player.name} politely asks the skeleton for directions. The skeleton stares back in disbelief and then nods to the hallway ahead. ${theController.player.name} thanks the skeleton and proceeds.`)}
+                ],
+                [
+                    ()=>{toggleBattle(`the skeleton fixes its gaze upon ${theController.player.name} and draws its weapon!`, new Skeleton(theController.player.level))},
+                    ()=>{
+                        theController.player.statusArray.push(new Bound(theController.player));
+                        toggleBattle(`the skeleton grabs onto ${theController.player.name}!`, new Skeleton(theController.player.level))
+                    }
+                ]
+            )
+        ];
+    }
+}
 export class TravelingMerchant extends Encounter{
     constructor(){
         super();
         this.name = "traveling merchant";
-        this.message = "a traveling offers to trade.";
+        this.message = "a traveling merchant offers to trade.";
         this.imageSrc = "./media/traveling-merchant.jpg";
         this.decisionArray = [
             new Decision(
