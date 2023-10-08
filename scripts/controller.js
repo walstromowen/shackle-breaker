@@ -610,7 +610,7 @@ export default class Controller {
         document.getElementById('current-pierce-defense').innerText = this.player.currentPierceDefense;
         document.getElementById('current-arcane-defense').innerText = this.player.currentArcaneDefense; 
         document.getElementById('current-element-defense').innerText = this.player.currentElementalDefense;
-        document.getElementById('current-experience').innerText = this.player.currentXP;
+        document.getElementById('current-experience').innerText = this.player.currentXP + " / " + Math.floor(((this.player.level + 10)**2)*0.5);
         for(let i = -1; i < this.player.statusArray.length; i++){
             let oldIcon = document.getElementById('player-status-icon-container').querySelector('img');
             if(oldIcon !== null){
