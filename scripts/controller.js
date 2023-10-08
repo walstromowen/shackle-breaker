@@ -557,6 +557,16 @@ export default class Controller {
                 oldSlot.remove();
             } 
         }
+
+
+
+        /*
+        for(let i = -1; i < inventory.length; i++){
+            let oldSlot = document.getElementById('inventory').querySelector('p');
+            if(oldSlot !== null){
+                oldSlot.remove();
+            } 
+        }
         for(let i = 0; i < inventory.length; i++){
             let inventorySlot = document.createElement('p');
             let inventorySlotMenu = document.createElement('div');
@@ -585,6 +595,7 @@ export default class Controller {
             }
         }
         document.getElementById("current-gold").innerText = this.player.currentGold;
+        */
     }
     updatePlayerStats(){
         document.getElementById('current-health-player').innerText = this.player.currentHP;
