@@ -574,7 +574,7 @@ export default class Controller {
             if(inventory[i].type != "consumable"){
                 slotMenuUseBtn.innerText = "Equip";//equipment specific
                 slotMenuUseBtn.addEventListener('click', ()=>{ //equipment specific
-                    this.equip(i);
+                    this.equip(i);sssssssssssssssssssssssssssssssssssssssss
                 });
             }
             if(inventory[i].type == "consumable"){
