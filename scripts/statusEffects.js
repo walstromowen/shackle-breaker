@@ -33,11 +33,11 @@ class StatusEffect{
         }
     }
 }
-export class Sheilded extends StatusEffect{//curently has bug where if your next attack is first the reinfored effect is still apllied but it acually makes and interesting game mechanic
+export class Shielded extends StatusEffect{//curently has bug where if your next attack is first the reinfored effect is still apllied but it acually makes and interesting game mechanic
     constructor(holder){
         super();
         this.type = "end";
-        this.name = "sheilded";
+        this.name = "shielded";
         this.iconSrc = "./media/icons/shield.png";
         this.holder = holder;
         this.maxCharges = 1;
@@ -48,7 +48,7 @@ export class Sheilded extends StatusEffect{//curently has bug where if your next
         this.holder.currentPierceDefense = this.holder.currentPierceDefense + 5;
         this.holder.currentArcaneDefense = this.holder.currentArcaneDefense + 5;
         this.holder.currentElementalDefense = this.holder.currentElementalDefense + 5;
-        theController.printToGameConsole(`${this.holder.name} is Sheilded!`);
+        theController.printToGameConsole(`${this.holder.name} is Shielded!`);
         this.currentCharges = this.currentCharges - 1;
     }
     onStartTurn(){

@@ -1,7 +1,7 @@
 import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword,
         Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, 
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
-        LeatherBoots, KiteSheild, IronHelmet, IronGuantlets, IronChainmail, 
+        LeatherBoots, KiteShield, IronHelmet, IronGuantlets, IronChainmail, 
         IronGreaves, IronBoots, CrystalBall, HealthPotion, StaminaPotion, MagicPotion, 
         ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb
 } from "./items.js";
@@ -136,7 +136,7 @@ export default class Controller {
                 this.characterCreationArray[6] = 100;
                 break;
             case "blacksmith":
-                inventoryArray.push(new BlacksmithHammer, new KiteSheild, new LinenShirt, new LinenPants, new LeatherBoots);
+                inventoryArray.push(new BlacksmithHammer, new KiteShield, new LinenShirt, new LinenPants, new LeatherBoots);
                 this.characterCreationArray[6] = 90;
                 break;
             case "ranger":
@@ -432,14 +432,14 @@ export default class Controller {
         document.getElementById('map-button-container').style.display = "none";
         document.getElementById('battle-button-container').style.display = "flex";
         document.getElementById('battle-button-container').style.visibility = "visible";// can remove?
-        Array.from(document.getElementsByClassName('slot-menu-btn')).forEach(btn=>{
+        Array.from(document.getElementsByClassName('mini-menu-btn')).forEach(btn=>{
             btn.style.visibility = "visible";
         });
     }
     disablePlayerBattleControls(){
         document.getElementById('battle-button-container').style.visibility = "hidden";
         //Array.from used to convert HTML collection to regular array so forEach can be used -> hides use btns on items
-        Array.from(document.getElementsByClassName('slot-menu-btn')).forEach(btn=>{
+        Array.from(document.getElementsByClassName('mini-menu-btn')).forEach(btn=>{
             btn.style.visibility = "hidden";
         });
     }
@@ -464,14 +464,14 @@ export default class Controller {
          document.getElementById('map-button-container').style.display = "none";
          document.getElementById('encounter-button-container').style.display = "flex";
          document.getElementById('encounter-button-container').style.visibility = "visible";// can remove?
-         Array.from(document.getElementsByClassName('slot-menu-btn')).forEach(btn=>{
+         Array.from(document.getElementsByClassName('mini-menu-btn')).forEach(btn=>{
              btn.style.visibility = "visible";
          });
     }
     disablePlayerEncounterControls(){
         document.getElementById('encounter-button-container').style.visibility = "hidden";
         //Array.from used to convert HTML collection to regular array so forEach can be used -> hides use btns on items
-        Array.from(document.getElementsByClassName('slot-menu-btn')).forEach(btn=>{
+        Array.from(document.getElementsByClassName('mini-menu-btn')).forEach(btn=>{
             btn.style.visibility = "hidden";
         });
     }
@@ -551,11 +551,222 @@ export default class Controller {
         }, 2000);
     }
     updatePlayerInventoryTab(inventory){
-        for(let i = -1; i < inventory.length; i++){
-            let oldSlot = document.getElementById('inventory').querySelector('p');
-            if(oldSlot !== null){
-                oldSlot.remove();
-            } 
+        Array.from(document.getElementById("inventory").getElementsByClassName("inventory-slot")).forEach(slot=>{
+            slot.remove();
+        });
+        Array.from(document.querySelector("body").getElementsByClassName("mini-menu")).forEach(miniMenu=>{
+            miniMenu.remove();
+        });
+        for(let i = 0; i < inventory.length; i++){
+            let slot = document.createElement("div");
+            slot.innerText = inventory[i].name;
+            slot.classList.add("inventory-slot");
+            document.getElementById("inventory").appendChild(slot);
+    
+            let miniMenu = document.createElement("div");
+            let col1 = document.createElement("div");
+            let col2 = document.createElement("div");
+            let row1 = document.createElement("div");
+            let row2 = document.createElement("div");
+            let row3 = document.createElement("div");
+            let row4 = document.createElement("div");
+            let row5 = document.createElement("div");
+            let row6 = document.createElement("div");
+            let row7 = document.createElement("div");
+            let row8 = document.createElement("div");
+            let statCell1 = document.createElement("div");
+            let statCell2 = document.createElement("div");
+            let statCell3 = document.createElement("div");
+            let statCell4 = document.createElement("div");
+            let statCell5 = document.createElement("div");
+            let statCell6 = document.createElement("div");
+            let statCell7 = document.createElement("div");
+            let statCell8 = document.createElement("div");
+            let statCell9 = document.createElement("div");
+            let statCell10 = document.createElement("div");
+    
+            let closeBtn = document.createElement("div");
+            let img = document.createElement("img");
+            let name = document.createElement("p");
+            let description = document.createElement("p");
+    
+            let lvlLabel = document.createElement("p");
+            let typeLabel = document.createElement("p");
+            let speedLabel = document.createElement("p");
+            let evasionLabel = document.createElement("p");
+            let bluntAttackLabel = document.createElement("p");
+            let bluntDefenseLabel = document.createElement("p");
+            let pierceAttackLabel = document.createElement("p");
+            let pierceDefenseLabel = document.createElement("p");
+            let arcaneAttackLabel = document.createElement("p");
+            let arcaneDefenseLabel = document.createElement("p");
+            let elementalAttackLabel = document.createElement("p");
+            let elementalDefenseLabel = document.createElement("p");
+    
+            let itemLvl = document.createElement("p");
+            let itemType = document.createElement("p");
+            let itemSpeed = document.createElement("p");
+            let itemEvasion = document.createElement("p");
+            let itemBluntAttack = document.createElement("p");
+            let itemBluntDefense = document.createElement("p");
+            let itemPierceAttack = document.createElement("p");
+            let itemPierceDefense = document.createElement("p");
+            let itemArcaneAttack = document.createElement("p");
+            let itemArcaneDefense = document.createElement("p");
+            let itemElementalAttack = document.createElement("p");
+            let itemElementalDefense = document.createElement("p");
+    
+            let upgradeBtn = document.createElement("div");
+            let useBtn = document.createElement("div");
+            let trashBtn = document.createElement("div"); 
+    
+            miniMenu.classList.add("mini-menu");
+            col1.classList.add("mini-menu-col");
+            col2.classList.add("mini-menu-col2");
+            row1.classList.add("stat-row");
+            row2.classList.add("stat-row");
+            row3.classList.add("stat-row");
+            row4.classList.add("stat-row");
+            row5.classList.add("stat-row");
+            row6.classList.add("stat-row");
+            row7.classList.add("stat-row");
+            row8.classList.add("stat-row");
+            statCell1.classList.add("stat-cell");
+            statCell2.classList.add("stat-cell");
+            statCell3.classList.add("stat-cell");
+            statCell4.classList.add("stat-cell");
+            statCell5.classList.add("stat-cell");
+            statCell6.classList.add("stat-cell");
+            statCell7.classList.add("stat-cell");
+            statCell8.classList.add("stat-cell");
+            statCell9.classList.add("stat-cell");
+            statCell10.classList.add("stat-cell");
+            img.classList.add("mini-menu-img");
+            upgradeBtn.classList.add("mini-menu-btn");
+            useBtn.classList.add("mini-menu-btn");
+            trashBtn.classList.add("mini-menu-btn");
+            closeBtn.classList.add("mini-menu-close-btn");
+    
+            img.src= inventory[i].imageSrc;
+            upgradeBtn.innerText = "Upgrade";
+
+            trashBtn.innerText = "Trash";
+            closeBtn.innerText = "x";
+            name.innerText = inventory[i].name;
+            description.innerText = inventory[i].description;
+            lvlLabel.innerText = "LVL:";
+            typeLabel.innerText = "TYPE:";
+            speedLabel.innerText = "SPD:";
+            evasionLabel.innerText = "EVA:";
+            bluntAttackLabel.innerText = "BLT ATK:";
+            bluntDefenseLabel.innerText = "BLT DEF:";
+            pierceAttackLabel.innerText = "PIR ATK:";
+            pierceDefenseLabel.innerText = "PIR DEF:";
+            arcaneAttackLabel.innerText = "ARC ATK:";
+            arcaneDefenseLabel.innerText = "ARC DEF:";
+            elementalAttackLabel.innerText = "ELM ATCK:";
+            elementalDefenseLabel.innerText = "ELM DEF:";
+    
+            itemLvl.innerText = inventory[i].level;
+            itemType.innerText = inventory[i].type;
+            itemSpeed.innerText = inventory[i].speed;
+            itemEvasion.innerText = inventory[i].evasion;
+            itemBluntAttack.innerText = inventory[i].bluntAttack;
+            itemBluntDefense.innerText = inventory[i].bluntDefense;
+            itemPierceAttack.innerText = inventory[i].pierceAttack;
+            itemPierceDefense.innerText = inventory[i].pierceDefense;
+            itemArcaneAttack.innerText = inventory[i].arcaneAttack;
+            itemArcaneDefense.innerText = inventory[i].arcaneDefense;
+            itemElementalAttack.innerText = inventory[i].elementalAttack;
+            itemElementalDefense.innerText = inventory[i].elementalDefense;
+    
+            miniMenu.appendChild(col1);
+            col1.appendChild(row1);
+            col1.appendChild(row2);
+            col1.appendChild(row3);
+            col1.appendChild(row4)
+            col1.appendChild(row5)
+            col1.appendChild(row6)
+            col1.appendChild(row7)
+            col1.appendChild(description)
+            col1.appendChild(row8)
+    
+            row1.appendChild(img);
+            row1.appendChild(col2);
+            row1.appendChild(closeBtn);
+    
+            col2.appendChild(name);
+            col2.appendChild(row2);
+    
+            row2.appendChild(lvlLabel);
+            row2.appendChild(itemLvl);
+            row2.appendChild(typeLabel);
+            row2.appendChild(itemType);
+    
+            row3.appendChild(statCell1);
+            row3.appendChild(statCell2);
+            statCell1.appendChild(speedLabel);
+            statCell1.appendChild(itemSpeed);
+            statCell2.appendChild(evasionLabel);
+            statCell2.appendChild(itemEvasion);
+    
+            row4.appendChild(statCell3);
+            row4.appendChild(statCell4);
+            statCell3.appendChild(bluntAttackLabel);
+            statCell3.appendChild(itemBluntAttack);
+            statCell4.appendChild(bluntDefenseLabel);
+            statCell4.appendChild(itemBluntDefense);
+    
+            row5.appendChild(statCell5);
+            row5.appendChild(statCell6);
+            statCell5.appendChild(pierceAttackLabel);
+            statCell5.appendChild(itemPierceAttack);
+            statCell6.appendChild(pierceDefenseLabel);
+            statCell6.appendChild(itemPierceDefense);
+    
+            row6.appendChild(statCell7);
+            row6.appendChild(statCell8);
+            statCell7.appendChild(arcaneAttackLabel);
+            statCell7.appendChild(itemArcaneAttack);
+            statCell8.appendChild(arcaneDefenseLabel); 
+            statCell8.appendChild(itemArcaneDefense);
+    
+            row7.appendChild(statCell9);
+            row7.appendChild(statCell10);
+            statCell9.appendChild(elementalAttackLabel);
+            statCell9.appendChild(itemElementalAttack);
+            statCell10.appendChild(elementalDefenseLabel);
+            statCell10.appendChild(itemElementalDefense);
+    
+            row8.appendChild(useBtn);
+            row8.appendChild(upgradeBtn);
+            row8.appendChild(trashBtn);
+            document.querySelector("body").appendChild(miniMenu);
+    
+            slot.addEventListener("click", ()=>{
+                Array.from(document.getElementsByClassName("mini-menu")).forEach(menu=>{
+                    menu.style.display = "none";
+                });
+                miniMenu.style.display = "block";
+                miniMenu.style.left = document.getElementById("game-console").getBoundingClientRect().x  + "px";
+                miniMenu.style.top = document.getElementById("game-console").getBoundingClientRect().y + document.getElementById("game-console").getBoundingClientRect().height - miniMenu.getBoundingClientRect().height + "px";
+            });
+            closeBtn.addEventListener("click", ()=>{
+                miniMenu.style.display = "none";
+            });
+            if(inventory[i].type != "consumable"){
+                useBtn.innerText = "Equip";
+                useBtn.addEventListener('click', ()=>{
+                    this.equip(i);
+                });
+            }
+            if(inventory[i].type == "consumable"){
+                useBtn.innerText = "Use";
+                useBtn.addEventListener('click', ()=>{
+                    this.useConsumable(i);
+                });
+            }
+            document.getElementById("current-gold").innerText = this.player.currentGold;
         }
 
 
@@ -584,7 +795,7 @@ export default class Controller {
             if(inventory[i].type != "consumable"){
                 slotMenuUseBtn.innerText = "Equip";//equipment specific
                 slotMenuUseBtn.addEventListener('click', ()=>{ //equipment specific
-                    this.equip(i);sssssssssssssssssssssssssssssssssssssssss
+                    this.equip(i);
                 });
             }
             if(inventory[i].type == "consumable"){
@@ -930,7 +1141,7 @@ export default class Controller {
              }, 2000);
         }else{
             setTimeout(()=>{
-                Array.from(document.getElementsByClassName('slot-menu-btn')).forEach(btn=>{
+                Array.from(document.getElementsByClassName('mini-menu-btn')).forEach(btn=>{
                     btn.style.visibility = "visible";
                 });
                 if(this.battle.battlePhase != "retreat"){
@@ -963,7 +1174,7 @@ export default class Controller {
             }
             else{
                 setTimeout(()=>{
-                    Array.from(document.getElementsByClassName('slot-menu-btn')).forEach(btn=>{
+                    Array.from(document.getElementsByClassName('mini-menu-btn')).forEach(btn=>{
                         btn.style.visibility = "visible";
                     });
                     this.toggleMap();
@@ -987,7 +1198,7 @@ export default class Controller {
                 let slotMenuBuyBtn = document.createElement('div');
                 inventorySlot.classList.add('inventory-slot');
                 inventorySlotMenu.classList.add('inventory-slot-menu');
-                slotMenuBuyBtn.classList.add('slot-menu-btn');
+                slotMenuBuyBtn.classList.add('mini-menu-btn');
                 
                 inventorySlot.innerText = `${merchantInventory[i].price} G: ${this.capitalizeFirstLetter(merchantInventory[i].name)}`;
                 inventorySlot.appendChild(inventorySlotMenu);

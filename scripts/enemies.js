@@ -1,9 +1,9 @@
-import {Slash, Strike, Stab, Eviscerate, Block, Fireball, Meditate, Cleanse, SheildBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
+import {Slash, Strike, Stab, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
     ThrowNet, Immolate, LightningBolt, Channel, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Bite, SpitBile, LeechLife, Devour, Pounce, BlinkStrike} from "./abilities.js"
 import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, 
         Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, 
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
-        LeatherBoots, KiteSheild, IronHelmet, IronGuantlets, IronChainmail, 
+        LeatherBoots, KiteShield, IronHelmet, IronGuantlets, IronChainmail, 
         IronGreaves, IronBoots, CrystalBall, HealthPotion, StaminaPotion, MagicPotion, 
         ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net,
         } from "./items.js";
@@ -86,7 +86,7 @@ export class Skeleton extends Enemy{
         this.lootArray = [new Spear, new Shortsword, new Dagger, new Shiv, 
                           new Buckler, new LeatherHelmet, new LeatherHood, 
                           new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
-                          new LeatherBoots, new KiteSheild, new IronHelmet, new IronGuantlets, 
+                          new LeatherBoots, new KiteShield, new IronHelmet, new IronGuantlets, 
                           new IronChainmail, new IronGreaves, new IronBoots, 
                           new HealthPotion, new StaminaPotion, new ThrowingKnife];
         this.gold = 0;

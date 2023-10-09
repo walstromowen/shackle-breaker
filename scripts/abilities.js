@@ -1,5 +1,5 @@
 import {controller as theController} from "./main.js"
-import {Sheilded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden} from "./statusEffects.js";
+import {Shielded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden} from "./statusEffects.js";
 
 class Ability{
     canUse(weilder, player){
@@ -396,19 +396,19 @@ export class Block extends Ability{
             theController.printToGameConsole(`${weilder.name} uses ${this.name}!`);
             theController.playSoundEffect(this.soundEffect);
             for(let i = 0; i < weilder.statusArray.length; i++){
-                if(weilder.statusArray[i].name == "sheilded"){
+                if(weilder.statusArray[i].name == "shielded"){
                     weilder.statusArray[i].currentCharges = weilder.statusArray[i].maxCharges;
                     return;
                 }
             }
-            weilder.statusArray.push(new Sheilded(weilder));
+            weilder.statusArray.push(new Shielded(weilder));
         }
     }
 }
-export class SheildBash extends Ability{
+export class ShieldBash extends Ability{
     constructor(){
         super();
-        this.name = "sheild bash";
+        this.name = "shield bash";
         this.type = "blunt";
         this.speedMultiplier = 0.75;
         this.staminaCost = 10;
@@ -741,12 +741,12 @@ export class IceBarrier extends Ability{
             theController.printToGameConsole(`${weilder.name} uses ${this.name}!`);
             theController.playSoundEffect(this.soundEffect);
             for(let i = 0; i < weilder.statusArray.length; i++){
-                if(weilder.statusArray[i].name == "sheilded"){
+                if(weilder.statusArray[i].name == "shielded"){
                     weilder.statusArray[i].currentCharges = weilder.statusArray[i].maxCharges;
                     return;
                 }
             }
-            weilder.statusArray.push(new Sheilded(weilder));
+            weilder.statusArray.push(new Shielded(weilder));
         }
     }
 }

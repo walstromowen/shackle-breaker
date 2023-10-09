@@ -1,7 +1,7 @@
 import {controller as theController} from "./main.js"
 import {Decision} from "./encounterDecision.js";
 import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian} from "./enemies.js";
-import {Sheilded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden} from "./statusEffects.js";
+import {Shielded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden} from "./statusEffects.js";
 import {getRandomItem} from "./items.js";
 import {regainHP, initiateTrade, leave, retry, removeDecision, toggleNewEncounter, toggleBattle, lootItems, takeDamage, recieveStatusEffect, changeMap} from "./encounterResults.js";
 
