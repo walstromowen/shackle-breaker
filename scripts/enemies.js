@@ -1,11 +1,11 @@
 import {Slash, Strike, Stab, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
     ThrowNet, Immolate, LightningBolt, Channel, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Bite, SpitBile, LeechLife, Devour, Pounce, BlinkStrike} from "./abilities.js"
-import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, 
+import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword,
         Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, 
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
         LeatherBoots, KiteShield, IronHelmet, IronGuantlets, IronChainmail, 
         IronGreaves, IronBoots, CrystalBall, HealthPotion, StaminaPotion, MagicPotion, 
-        ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net,
+        ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb,
         } from "./items.js";
 import { Channeled, Invigorated } from "./statusEffects.js";
 
@@ -82,20 +82,20 @@ export class Skeleton extends Enemy{
         this.baseEvasion = 10;
         this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Slash, new Stab, new Strike, new Block];
-        this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new Spear, new Shortsword, new Dagger, new Shiv, 
+        this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootArray = [new Spear, new Shortsword, new Longsword, new Dagger, new Shiv, new BlacksmithHammer,
                           new Buckler, new LeatherHelmet, new LeatherHood, 
                           new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
                           new LeatherBoots, new KiteShield, new IronHelmet, new IronGuantlets, 
                           new IronChainmail, new IronGreaves, new IronBoots, 
-                          new HealthPotion, new StaminaPotion, new ThrowingKnife];
+                          new HealthPotion, new StaminaPotion, new ThrowingKnife, new SmokeBomb];
         this.gold = 0;
         this.XP = 0;             
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
         this.incrementStats(playerLevel, 2,1,1,2,2,2,1,1,1,2,1,1);
-        this.gold = Math.floor(Math.random() * ((10 + playerLevel*2) - (0 + playerLevel*2) + 1)) + (0 + playerLevel*2);
+        this.gold = Math.floor(Math.random() * (15*playerLevel - 5*playerLevel + 1)) + 5*playerLevel;
         this.XP = 35;
     }
 }
@@ -132,14 +132,14 @@ export class Bat extends Enemy{
         this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Bite, new LeechLife];
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new HealthPotion];
+        this.lootArray = [new HealthPotion, new Antidote];
         this.gold = 0;
         this.XP = 0;
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
         this.incrementStats(playerLevel, 2,2,1,2,2,2,1,1,1,1,1);
-        this.gold = Math.floor(Math.random() * ((5 + playerLevel*2) - (0 + playerLevel*2) + 1)) + (0 + playerLevel*2);
+        this.gold = Math.floor(Math.random() * (15*playerLevel - 5*playerLevel + 1)) + 5*playerLevel;
         this.XP = 20;
     }
 }
@@ -183,7 +183,7 @@ export class Wolf extends Enemy{
     }
     levelUp(playerLevel){
         this.incrementStats(playerLevel, 2,3,1,2,2,1,1,1,1,1,1);
-        this.gold = Math.floor(Math.random() * ((5 + playerLevel*2) - (0 + playerLevel*2) + 1)) + (0 + playerLevel*2);
+        this.gold = Math.floor(Math.random() * (15*playerLevel - 5*playerLevel + 1)) + 5*playerLevel;
         this.XP = 30;
     }
 }
@@ -220,14 +220,14 @@ export class AltusMage extends Enemy{
         this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new ArcaneDart, new ArcaneBlast, new Fireball, new Cleanse];
         this.lootChanceMultiplier = 0; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new FireStaff, new LightningStaff, new IceStaff, new ArcaneStaff, new LightStaff, new DarkStaff, new MagicPotion];
+        this.lootArray = [new FireStaff, new LightningStaff, new IceStaff, new ArcaneStaff, new LightStaff, new DarkStaff, new CrystalBall, new MagicPotion];
         this.gold = 0;
         this.XP = 0;
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
         this.incrementStats(playerLevel, 2,1,2,1,1,2,2,1,1,2,1);
-        this.gold = Math.floor(Math.random() * ((20 + playerLevel*2) - (0 + playerLevel*2) + 1)) + (0 + playerLevel*2);
+        this.gold = Math.floor(Math.random() * (20*playerLevel - 5*playerLevel + 1)) + 5*playerLevel;
         this.XP = 50;
     }
 }
@@ -263,15 +263,15 @@ export class CaveSpider extends Enemy{
         this.baseEvasion = 15;
         this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Bite, new SpitBile];
-        this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new StaminaPotion, new PoisonedKnife];
+        this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootArray = [new StaminaPotion, new PoisonedKnife, new Antidote];
         this.gold = 0;
         this.XP = 0;
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
         this.incrementStats(playerLevel, 1,2,2,1,2,1,1,1,1,2,1);
-        this.gold = Math.floor(Math.random() * ((5 + playerLevel*2) - (0 + playerLevel*2) + 1)) + (0 + playerLevel*2);
+        this.gold = Math.floor(Math.random() * (15*playerLevel - 5*playerLevel + 1)) + 5*playerLevel;
         this.XP = 20;
     }
 }
@@ -307,7 +307,7 @@ export class Groveguardian extends Enemy{
         this.baseEvasion = 5;
         this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Bite, new Devour];
-        this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new HealthPotion, new AloeRemedy, new Antidote];
         this.gold = 0;
         this.XP = 0;
@@ -315,7 +315,7 @@ export class Groveguardian extends Enemy{
     }
     levelUp(playerLevel){
         this.incrementStats(playerLevel, 2,2,2,2,2,2,2,2,2,2,2);
-        this.gold = Math.floor(Math.random() * ((5 + playerLevel*2) - (0 + playerLevel*2) + 1)) + (0 + playerLevel*2);
+        this.gold = Math.floor(Math.random() * (20*playerLevel - 5*playerLevel + 1)) + 5*playerLevel;
         this.XP = 50;
     }
 }
@@ -359,7 +359,7 @@ export class EmperorDolos extends Enemy{
     }
     levelUp(playerLevel){
         this.incrementStats(playerLevel, 2,2,2,2,2,2,2,2,2,2,2);
-        this.gold = Math.floor(Math.random() * ((5 + playerLevel*2) - (0 + playerLevel*2) + 1)) + (0 + playerLevel*2);
+        this.gold = 500;
         this.XP = 100;
     }
 }
@@ -396,15 +396,15 @@ export class TerrorBear extends Enemy{
         this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Bite, new Devour, new LightningBolt];
         this.statusArray = [new Channeled(this), new Invigorated(this)]
-        this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new HealthPotion];
+        this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootArray = [new HealthPotion, new LightningStaff, new Meteorite];
         this.gold = 0;
         this.XP = 0;
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
         this.incrementStats(playerLevel, 2,2,2,2,2,2,2,2,2,2,2);
-        this.gold = Math.floor(Math.random() * ((5 + playerLevel*2) - (0 + playerLevel*2) + 1)) + (0 + playerLevel*2);
+        this.gold = Math.floor(Math.random() * (30*playerLevel - 10*playerLevel + 1)) + 10*playerLevel;
         this.XP = 75;
     }
 }
@@ -442,14 +442,14 @@ export class ShadowStrider extends Enemy{
         this.abilityArray = [new Bite, new LightningBolt, new BlinkStrike];
         this.statusArray = [new Channeled(this), new Invigorated(this)]
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new StaminaPotion];
+        this.lootArray = [new StaminaPotion, new Meteorite];
         this.gold = 0;
         this.XP = 0;
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
         this.incrementStats(playerLevel, 2,3,1,2,2,1,1,1,1,1,1);
-        this.gold = Math.floor(Math.random() * ((5 + playerLevel*2) - (0 + playerLevel*2) + 1)) + (0 + playerLevel*2);
+        this.gold = Math.floor(Math.random() * (20*playerLevel - 5*playerLevel + 1)) + 5*playerLevel;
         this.XP = 40;
     }
 }

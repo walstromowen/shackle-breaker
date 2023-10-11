@@ -15,7 +15,7 @@ export class LinenShirt {
         this.name = "linen shirt";
         this.type = "torso";
         this.imageSrc = "./media/icons/shirt.png";
-        this.description = "A heavily worn linen shirt. Standard article of clothing for citizens of the Altus Kingdom, or rather, whats left of them."
+        this.description = "A heavily worn linen shirt. Standard article of clothing for citizens of the Altus kingdom, or rather, whats left of them."
         this.level = 0;
         this.price = 20;
         this.bluntAttack = 0;
@@ -52,7 +52,7 @@ export class LinenPants {
         this.name = "linen pants";
         this.type = "legs";
         this.imageSrc = "./media/icons/trousers.png";
-        this.description = "A heavily worn pair of linen trousers. Standard article of clothing for citizens of the Altus Kingdom, or rather, whats left of them.";
+        this.description = "A heavily worn pair of linen trousers. Standard article of clothing for citizens of the Altus kingdom, or rather, whats left of them.";
         this.level = 0;
         this.price = 20;
         this.bluntAttack = 0;
@@ -126,7 +126,7 @@ export class BlacksmithHammer {
         this.name = "blacksmith hammer";
         this.type = "weapon";
         this.imageSrc = "./media/icons/blacksmith-hammer.png";
-        this.description = "A blacksmith's hammer. Since what many consider to be the fall of Altus Kingdom, quality weapons are hard to come by. Perhaps this explains the blood stains on this ordinary hammer";
+        this.description = "A blacksmith's hammer. Since what many consider to be the fall of Altus kingdom, quality weapons are hard to come by. Perhaps this explains the blood stains on this ordinary hammer";
         this.level = 0;
         this.price = 100;
         this.bluntAttack = 2;
@@ -348,7 +348,7 @@ export class FireStaff {
         this.name = "fire staff";
         this.type = "weapon";
         this.imageSrc = "./media/icons/staff.png";
-        this.description = `A wooden staff imbued with fire. Magic is a relatively new concept to the citizens of the Altus Kingdom since the discovery of the artifact, however some speculate it is as old as time`;
+        this.description = `A wooden staff imbued with fire. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time`;
         this.level = 0;
         this.price = 200;
         this.bluntAttack = 1;
@@ -385,7 +385,7 @@ export class LightningStaff {
         this.name = "lightning staff";
         this.type = "weapon";
         this.imageSrc = "./media/icons/staff.png";
-        this.description = `A wooden staff imbued with lightning. Magic is a relatively new concept to the citizens of the Altus Kingdom since the discovery of the artifact, however some speculate it is as old as time`;
+        this.description = `A wooden staff imbued with lightning. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time`;
         this.level = 0;
         this.price = 200;
         this.bluntAttack = 1;
@@ -422,7 +422,7 @@ export class IceStaff {
         this.name = "ice staff";
         this.type = "weapon";
         this.imageSrc = "./media/icons/staff.png";
-        this.description = `A wooden staff imbued with ice. Magic is a relatively new concept to the citizens of the Altus Kingdom since the discovery of the artifact, however some speculate it is as old as time`;
+        this.description = `A wooden staff imbued with ice. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time`;
         this.level = 0;
         this.price = 200;
         this.bluntAttack = 1;
@@ -459,7 +459,7 @@ export class ArcaneStaff {
         this.name = "arcane staff";
         this.type = "weapon";
         this.imageSrc = "./media/icons/staff.png";
-        this.description = `A wooden staff imbued with arcane. Magic is a relatively new concept to the citizens of the Altus Kingdom since the discovery of the artifact, however some speculate it is as old as time`;
+        this.description = `A wooden staff imbued with arcane. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time`;
         this.level = 0;
         this.price = 200;
         this.bluntAttack = 1;
@@ -496,7 +496,7 @@ export class LightStaff {
         this.name = "light staff";
         this.type = "weapon";
         this.imageSrc = "./media/icons/staff.png";
-        this.description = `A wooden staff imbued with light. Magic is a relatively new concept to the citizens of the Altus Kingdom since the discovery of the artifact, however some speculate it is as old as time`;
+        this.description = `A wooden staff imbued with light. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time`;
         this.level = 0;
         this.price = 200;
         this.bluntAttack = 0;
@@ -533,7 +533,7 @@ export class DarkStaff {
         this.name = "dark staff";
         this.type = "weapon";
         this.imageSrc = "./media/icons/staff.png";
-        this.description = `A wooden staff imbued with darkness. Magic is a relatively new concept to the citizens of the Altus Kingdom since the discovery of the artifact, however some speculate it is as old as time`;
+        this.description = `A wooden staff imbued with darkness. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time`;
         this.level = 0;
         this.price = 200;
         this.bluntAttack = 0;
@@ -644,7 +644,7 @@ export class LeatherGloves {
         this.name = "leather gloves";
         this.type = "arms";
         this.imageSrc = "./media/icons/gauntlet.png";
-        this.description = `leather gloves. A common article of clothing among worker of the Altus Kingdom. With the discovery of magic, many in the altus kingdom lost appreciation for common safety practices like hand protection`;
+        this.description = `leather gloves. A common article of clothing among worker of the Altus kingdom. With the discovery of magic, many in the altus kingdom lost appreciation for common safety practices like hand protection`;
         this.level = 0;
         this.price = 100;
         this.bluntAttack = 0;
@@ -755,7 +755,7 @@ export class LeatherBoots {
         this.name = "leather boots";
         this.type = "feet";
         this.imageSrc = "./media/icons/boots.png";
-        this.description = `reliable leather boots. With the discovery of magic, travelers from all over came to Altus Kingdom. Few ever left.`;
+        this.description = `reliable leather boots. With the discovery of magic, travelers from all over came to Altus kingdom. Few ever left.`;
         this.level = 0;
         this.price = 100;
         this.bluntAttack = 0;
@@ -1104,8 +1104,8 @@ export class Meteorite {
     constructor(){
         this.name = "meteorite";
         this.type = "consumable";
-        this.imageSrc = "./media/icons/asteriod.png";
-        this.description = `a meteroite emiting magicaly energy. Some say the artifact discovered by the Altus Kingdom is from the heavans, much like this meteorite`;
+        this.imageSrc = "./media/icons/asteroid.png";
+        this.description = `a meteroite emiting magicaly energy. Some say the artifact discovered by the Altus kingdom is from the heavans, much like this meteorite`;
         this.level = 0;
         this.price = 150;
         this.abilityArray = [new SmashMeteorite()];
