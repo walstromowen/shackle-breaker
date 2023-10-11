@@ -804,45 +804,6 @@ export default class Controller {
             }
             document.getElementById("current-gold").innerText = this.player.currentGold;
         }
-
-
-
-        /*
-        for(let i = -1; i < inventory.length; i++){
-            let oldSlot = document.getElementById('inventory').querySelector('p');
-            if(oldSlot !== null){
-                oldSlot.remove();
-            } 
-        }
-        for(let i = 0; i < inventory.length; i++){
-            let inventorySlot = document.createElement('p');
-            let inventorySlotMenu = document.createElement('div');
-            let slotMenuUseBtn = document.createElement('div');
-            inventorySlot.classList.add('inventory-slot');
-            inventorySlotMenu.classList.add('inventory-slot-menu');
-            slotMenuUseBtn.classList.add('slot-menu-btn');//equipment specific
-            if(this.player.isInBattle == true){
-                slotMenuUseBtn.style.visibility = "hidden";
-            }
-            inventorySlot.innerText = this.capitalizeFirstLetter(inventory[i].name);
-            inventorySlot.appendChild(inventorySlotMenu);
-            inventorySlotMenu.appendChild(slotMenuUseBtn);//equipment specific
-            document.getElementById('inventory').appendChild(inventorySlot);
-            if(inventory[i].type != "consumable"){
-                slotMenuUseBtn.innerText = "Equip";//equipment specific
-                slotMenuUseBtn.addEventListener('click', ()=>{ //equipment specific
-                    this.equip(i);
-                });
-            }
-            if(inventory[i].type == "consumable"){
-                slotMenuUseBtn.innerText = "Use";//equipment specific
-                slotMenuUseBtn.addEventListener('click', ()=>{ //equipment specific
-                    this.useConsumable(i);
-                });
-            }
-        }
-        document.getElementById("current-gold").innerText = this.player.currentGold;
-        */
     }
     updatePlayerStats(){
         document.getElementById('current-health-player').innerText = this.player.currentHP;
