@@ -103,6 +103,9 @@ p{
     justify-content: space-between;
     width: 48%;
 }
+.mini-menu-stats-container, .mini-menu-description, .mini-menu-actions{
+    margin-top: 10px;
+}
 #background-lore-header{
     background-color: var(--color-2);
 }
@@ -224,7 +227,7 @@ p{
 .action-button-disabled{
     filter: brightness(0.85);
 }
-.action-button:hover, .tab-label:hover, .unequip-btn:hover, .mini-menu-btn:hover, #character-creation-submit-btn:hover{
+.action-button:hover, .tab-label:hover, .unequip-btn:hover, .mini-menu-btn:hover, .mini-menu-close-btn:hover, #character-creation-submit-btn:hover{
     border: 2px solid var(--color-4);
     cursor: pointer;
 }
@@ -281,9 +284,12 @@ p{
     margin: 5px;
 }
 .inventory-slot{
-    width: calc(100%-10px);
-    display: flex;
-    justify-content: space-between;
+    width: 16%;
+    border: 3px solid black;
+    margin: 2px;
+}
+.inventory-slot:hover{
+    border: 3px solid transparent;
 }
 .equip-slots-row{
     display: flex;
@@ -345,7 +351,6 @@ p{
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    background-color:var(--color-2);
     padding: 5px;  
 }
 .mini-menu-col2{
@@ -359,9 +364,18 @@ p{
     border:solid 2px var(--color-2);
     text-align: center;
 }
+.mini-menu-close-btn{
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: var(--color-4);
+    border:solid 2px var(--color-2);
+    text-align: center;
+}
 .mini-menu-img{
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
+    margin-right: 5px;
 }
 #app{
     display: none;
@@ -404,6 +418,7 @@ p{
     width: 100%;
     margin: 10px 0 0 0;
     background-color:var(--color-2);
+    
 }
 #mini-map-container{
     background-color:var(--color-2);

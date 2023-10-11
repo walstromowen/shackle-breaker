@@ -38,7 +38,7 @@ export class Shielded extends StatusEffect{//curently has bug where if your next
         super();
         this.type = "end";
         this.name = "shielded";
-        this.iconSrc = "./media/icons/shield.png";
+        this.iconSrc = "./media/icons/shielded.png";
         this.holder = holder;
         this.maxCharges = 1;
         this.currentCharges = this.maxCharges;

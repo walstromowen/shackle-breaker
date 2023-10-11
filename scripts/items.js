@@ -17,7 +17,7 @@ export class LinenShirt {
         this.imageSrc = "./media/icons/shirt.png";
         this.description = "A heavily worn linen shirt. Standard article of clothing for citizens of the Altus Kingdom, or rather, whats left of them."
         this.level = 0;
-        this.price = 5;
+        this.price = 20;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -30,6 +30,22 @@ export class LinenShirt {
         this.evasion = 0;
         this.abilityArray = [];
     }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 1;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 1;
+        }
+    }
 }
 export class LinenPants {
     constructor(){
@@ -38,7 +54,7 @@ export class LinenPants {
         this.imageSrc = "./media/icons/trousers.png";
         this.description = "A heavily worn pair of linen trousers. Standard article of clothing for citizens of the Altus Kingdom, or rather, whats left of them.";
         this.level = 0;
-        this.price = 5;
+        this.price = 20;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -50,6 +66,22 @@ export class LinenPants {
         this.speed = 0;
         this.evasion = 0;
         this.abilityArray = [];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 1;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 1;
+        }
     }
 }
 export class Dagger {
@@ -72,6 +104,22 @@ export class Dagger {
         this.evasion = 0;
         this.abilityArray = [new Stab(), new Slash()];
     }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 1;
+            this.pierceAttack = this.pierceAttack + 2;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 0;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 0;
+            this.elementalDefense = this.elementalDefense + 0;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 1;
+        }
+    }
 }
 export class BlacksmithHammer {
     constructor(){
@@ -93,6 +141,22 @@ export class BlacksmithHammer {
         this.evasion = 0;
         this.abilityArray = [new Strike()];
     }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 2;
+            this.pierceAttack = this.pierceAttack + 1;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 0;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 0;
+            this.elementalDefense = this.elementalDefense + 0;
+            this.speed = this.speed + 1;
+            this.evasion = this.evasion + 0;
+        }
+    }
 }
 export class Spear {
     constructor(){
@@ -110,16 +174,32 @@ export class Spear {
         this.pierceDefense = 0;
         this.arcaneDefense = 0;
         this.elementalDefense = 0;
-        this.speed = 1;
+        this.speed = 0;
         this.evasion = 0;
         this.abilityArray = [new Stab()];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 1;
+            this.pierceAttack = this.pierceAttack + 2;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 0;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 0;
+            this.elementalDefense = this.elementalDefense + 0;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+        }
     }
 }
 export class Shortsword {
     constructor(){
         this.name = "shortsword";
         this.type = "weapon";
-        this.imageSrc = "./media/icons/spear.png";
+        this.imageSrc = "./media/icons/shortsword.png";
         this.description = `A standard shortsword. Standard issue shortsword of the Altus guard. "A shorter longsword is a faster longsword" - Commander Mentoras.`;
         this.level = 0;
         this.price = 100;
@@ -134,6 +214,22 @@ export class Shortsword {
         this.speed = 2;
         this.evasion = 0;
         this.abilityArray = [new Stab(), new Slash()];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 2;
+            this.pierceAttack = this.pierceAttack + 2;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 0;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 0;
+            this.elementalDefense = this.elementalDefense + 0;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+        }
     }
 }
 export class Longsword {
@@ -156,6 +252,22 @@ export class Longsword {
         this.evasion = 0;
         this.abilityArray = [new Stab(), new Slash()];
     }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 2;
+            this.pierceAttack = this.pierceAttack + 2;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 0;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 0;
+            this.elementalDefense = this.elementalDefense + 0;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+        }
+    }
 }
 export class Shiv {
     constructor(){
@@ -176,6 +288,22 @@ export class Shiv {
         this.speed = 1;
         this.evasion = 0;
         this.abilityArray = [new Eviscerate];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 1;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 0;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 0;
+            this.elementalDefense = this.elementalDefense + 0;
+            this.speed = this.speed + 1;
+            this.evasion = this.evasion + 1;
+        }
     }
 }
 export class Buckler {
@@ -198,6 +326,22 @@ export class Buckler {
         this.evasion = 0;
         this.abilityArray = [new Block()];
     }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 1;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 1;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+        }
+    }
 }
 export class FireStaff {
     constructor(){
@@ -218,6 +362,22 @@ export class FireStaff {
         this.speed = 0;
         this.evasion = 0;
         this.abilityArray = [new Fireball(), new Immolate(), new Strike(), new Meditate()];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 1;
+            this.pierceAttack = this.pierceAttack + 1;
+            this.arcaneAttack = this.arcaneAttack + 1;
+            this.elementalAttack = this.elementalAttack + 2;
+            this.bluntDefense = this.bluntDefense + 0;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 0;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+        }
     }
 }
 export class LightningStaff {
@@ -240,6 +400,22 @@ export class LightningStaff {
         this.evasion = 0;
         this.abilityArray = [new LightningBolt(), new Shockwave(), new Strike(), new Meditate()];
     }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 1;
+            this.pierceAttack = this.pierceAttack + 1;
+            this.arcaneAttack = this.arcaneAttack + 1;
+            this.elementalAttack = this.elementalAttack + 2;
+            this.bluntDefense = this.bluntDefense + 0;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 0;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+        }
+    }
 }
 export class IceStaff {
     constructor(){
@@ -260,6 +436,22 @@ export class IceStaff {
         this.speed = 0;
         this.evasion = 0;
         this.abilityArray = [new IceShard(), new IceBarrier(), new Strike(), new Meditate()];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 1;
+            this.pierceAttack = this.pierceAttack + 1;
+            this.arcaneAttack = this.arcaneAttack + 1;
+            this.elementalAttack = this.elementalAttack + 2;
+            this.bluntDefense = this.bluntDefense + 0;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 0;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+        }
     }
 }
 export class ArcaneStaff {
@@ -282,6 +474,22 @@ export class ArcaneStaff {
         this.evasion = 0;
         this.abilityArray = [new ArcaneDart(), new ArcaneBlast(), new Strike(), new Meditate()];
     }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 1;
+            this.pierceAttack = this.pierceAttack + 1;
+            this.arcaneAttack = this.arcaneAttack + 1;
+            this.elementalAttack = this.elementalAttack + 2;
+            this.bluntDefense = this.bluntDefense + 0;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 0;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+        }
+    }
 }
 export class LightStaff {
     constructor(){
@@ -302,6 +510,22 @@ export class LightStaff {
         this.speed = 0;
         this.evasion = 0;
         this.abilityArray = [new LightBeam(), new Cleanse(), new Strike(), new Meditate()];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 1;
+            this.pierceAttack = this.pierceAttack + 1;
+            this.arcaneAttack = this.arcaneAttack + 1;
+            this.elementalAttack = this.elementalAttack + 2;
+            this.bluntDefense = this.bluntDefense + 0;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 0;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+        }
     }
 }
 export class DarkStaff {
@@ -324,6 +548,22 @@ export class DarkStaff {
         this.evasion = 0;
         this.abilityArray = [new DrainLife(), new Siphon(), new Strike(), new Meditate()];
     }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 1;
+            this.pierceAttack = this.pierceAttack + 1;
+            this.arcaneAttack = this.arcaneAttack + 1;
+            this.elementalAttack = this.elementalAttack + 2;
+            this.bluntDefense = this.bluntDefense + 0;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 0;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+        }
+    }
 }
 export class LeatherHelmet {
     constructor(){
@@ -344,6 +584,22 @@ export class LeatherHelmet {
         this.speed = 1;
         this.evasion = 1;
         this.abilityArray = [];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 1;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 1;
+            this.evasion = this.evasion + 1;
+        }
     }
 }
 export class LeatherHood {
@@ -366,6 +622,22 @@ export class LeatherHood {
         this.evasion = 2;
         this.abilityArray = [];
     }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 1;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 1;
+            this.evasion = this.evasion + 1;
+        }
+    }
 }
 export class LeatherGloves {
     constructor(){
@@ -386,6 +658,22 @@ export class LeatherGloves {
         this.speed = 1;
         this.evasion = 1;
         this.abilityArray = [];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 1;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 1;
+            this.evasion = this.evasion + 1;
+        }
     }
 }
 export class LeatherChestplate {
@@ -408,6 +696,22 @@ export class LeatherChestplate {
         this.evasion = 1;
         this.abilityArray = [];
     }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 1;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 1;
+            this.evasion = this.evasion + 1;
+        }
+    }
 }
 export class LeatherGreaves {
     constructor(){
@@ -428,6 +732,22 @@ export class LeatherGreaves {
         this.speed = 1;
         this.evasion = 1;
         this.abilityArray = [];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 1;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 1;
+            this.evasion = this.evasion + 1;
+        }
     }
 }
 export class LeatherBoots {
@@ -450,6 +770,22 @@ export class LeatherBoots {
         this.evasion = 1;
         this.abilityArray = [new Recuperate()];
     }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 1;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 1;
+            this.evasion = this.evasion + 1;
+        }
+    }
 }
 export class KiteShield {
     constructor(){
@@ -471,6 +807,22 @@ export class KiteShield {
         this.evasion = -2;
         this.abilityArray = [new Block(), new ShieldBash()];
     }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 2;
+            this.pierceDefense = this.pierceDefense + 2;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+        }
+    }
 }
 export class IronHelmet {
     constructor(){
@@ -490,6 +842,22 @@ export class IronHelmet {
         this.speed = -1;
         this.evasion = -1;
         this.abilityArray = [];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 2;
+            this.pierceDefense = this.pierceDefense + 2;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+        }
     }
 }
 export class IronGuantlets {
@@ -512,6 +880,22 @@ export class IronGuantlets {
         this.evasion = -1;
         this.abilityArray = [];
     }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 2;
+            this.pierceDefense = this.pierceDefense + 2;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+        }
+    }
 }
 export class IronChainmail {
     constructor(){
@@ -532,6 +916,22 @@ export class IronChainmail {
         this.speed = -1;
         this.evasion = -1;
         this.abilityArray = [];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 2;
+            this.pierceDefense = this.pierceDefense + 2;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+        }
     }
 }
 export class IronGreaves {
@@ -554,6 +954,22 @@ export class IronGreaves {
         this.evasion = -1;
         this.abilityArray = [];
     }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 2;
+            this.pierceDefense = this.pierceDefense + 2;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+        }
+    }
 }
 export class IronBoots {
     constructor(){
@@ -575,6 +991,22 @@ export class IronBoots {
         this.evasion = -1;
         this.abilityArray = [];
     }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 2;
+            this.pierceDefense = this.pierceDefense + 2;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+        }
+    }
 }
 export class CrystalBall {
     constructor(){
@@ -595,6 +1027,22 @@ export class CrystalBall {
         this.speed = 0;
         this.evasion = 0;
         this.abilityArray = [new Channel()];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 1;
+            this.elementalAttack = this.elementalAttack + 1;
+            this.bluntDefense = this.bluntDefense + 0;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+        }
     }
 }
 export class HealthPotion {

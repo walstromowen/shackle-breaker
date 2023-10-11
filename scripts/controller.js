@@ -65,6 +65,7 @@ export default class Controller {
             this.enablePlayerMapControls();
             this.enableInventoryControls();
             this.enableLevelUpControls();
+            this.updatePlayerInventoryTab(this.player.inventory);
             this.toggleMap();
         });
         document.getElementById("apperance-selection").addEventListener("change", ()=>{
@@ -179,16 +180,13 @@ export default class Controller {
             case "assasians-belt":
                 inventoryArray.push(new PoisonedKnife, new SmokeBomb, new ThrowingKnife);
                 break;
-    }
-        for(let i = -1; i < this.characterCreationArray[3].length; i++){
-            let oldSlot = document.getElementById("character-creation-inventory").querySelector('p');
-            if(oldSlot !== null){
-                oldSlot.remove();
-            } 
         }
+        Array.from(document.getElementById("character-creation-inventory").getElementsByClassName("inventory-slot-long")).forEach(slot=>{
+            slot.remove();
+        });
         for(let i = 0; i < inventoryArray.length; i++){
-            let inventorySlot = document.createElement('p');
-            inventorySlot.classList.add('inventory-slot');
+            let inventorySlot = document.createElement('div');
+            inventorySlot.classList.add('inventory-slot-long');
             inventorySlot.innerText = this.capitalizeFirstLetter(inventoryArray[i].name);
             document.getElementById("character-creation-inventory").appendChild(inventorySlot);
         }
@@ -492,8 +490,9 @@ export default class Controller {
         this.miniMap.resizeCanvas();
         this.miniMap.draw(this.map.roomArray, this.player.currentRoom);
         this.player.isInBattle = false;
+        this.player.isInTrade = false;
         this.player.canMoveRoom = true;
-        this.updatePlayerInventoryTab(this.player.inventory);
+        //this.updatePlayerInventoryTab(this.player.inventory);
     }
     toggleBattle(enemy){
         this.battle = new Battle(this.player, enemy);
@@ -557,15 +556,25 @@ export default class Controller {
         Array.from(document.querySelector("body").getElementsByClassName("mini-menu")).forEach(miniMenu=>{
             miniMenu.remove();
         });
+        let currentRow = "";
         for(let i = 0; i < inventory.length; i++){
-            let slot = document.createElement("div");
-            slot.innerText = inventory[i].name;
+            if(i%5 == 0){
+                let slotsRow = document.createElement("div");
+                currentRow = slotsRow;
+                document.getElementById("inventory").appendChild(slotsRow);
+            }
+
+            let slot = document.createElement("img");
+            slot.src = inventory[i].imageSrc;
             slot.classList.add("inventory-slot");
-            document.getElementById("inventory").appendChild(slot);
+            currentRow.appendChild(slot);
     
             let miniMenu = document.createElement("div");
             let col1 = document.createElement("div");
             let col2 = document.createElement("div");
+            let statContainer = document.createElement("div");
+            let itemHeaderRow = document.createElement("div");
+            let row0 = document.createElement("div");
             let row1 = document.createElement("div");
             let row2 = document.createElement("div");
             let row3 = document.createElement("div");
@@ -590,8 +599,8 @@ export default class Controller {
             let name = document.createElement("p");
             let description = document.createElement("p");
     
-            let lvlLabel = document.createElement("p");
             let typeLabel = document.createElement("p");
+            let priceLabel = document.createElement("p");
             let speedLabel = document.createElement("p");
             let evasionLabel = document.createElement("p");
             let bluntAttackLabel = document.createElement("p");
@@ -603,8 +612,8 @@ export default class Controller {
             let elementalAttackLabel = document.createElement("p");
             let elementalDefenseLabel = document.createElement("p");
     
-            let itemLvl = document.createElement("p");
             let itemType = document.createElement("p");
+            let itemPrice = document.createElement("p");
             let itemSpeed = document.createElement("p");
             let itemEvasion = document.createElement("p");
             let itemBluntAttack = document.createElement("p");
@@ -616,21 +625,23 @@ export default class Controller {
             let itemElementalAttack = document.createElement("p");
             let itemElementalDefense = document.createElement("p");
     
-            let upgradeBtn = document.createElement("div");
             let useBtn = document.createElement("div");
-            let trashBtn = document.createElement("div"); 
+            let dropSellBtn = document.createElement("div"); 
     
             miniMenu.classList.add("mini-menu");
             col1.classList.add("mini-menu-col");
             col2.classList.add("mini-menu-col2");
-            row1.classList.add("stat-row");
-            row2.classList.add("stat-row");
+            statContainer.classList.add("mini-menu-stats-container");
+            itemHeaderRow.classList.add("flex");
+            row0.classList.add("flex");
+            row1.classList.add("flex");
+            row2.classList.add("flex");
             row3.classList.add("stat-row");
             row4.classList.add("stat-row");
             row5.classList.add("stat-row");
             row6.classList.add("stat-row");
             row7.classList.add("stat-row");
-            row8.classList.add("stat-row");
+            row8.classList.add("stat-row", "mini-menu-actions");
             statCell1.classList.add("stat-cell");
             statCell2.classList.add("stat-cell");
             statCell3.classList.add("stat-cell");
@@ -642,20 +653,18 @@ export default class Controller {
             statCell9.classList.add("stat-cell");
             statCell10.classList.add("stat-cell");
             img.classList.add("mini-menu-img");
-            upgradeBtn.classList.add("mini-menu-btn");
+            description.classList.add("mini-menu-description");
             useBtn.classList.add("mini-menu-btn");
-            trashBtn.classList.add("mini-menu-btn");
+            dropSellBtn.classList.add("mini-menu-btn");
             closeBtn.classList.add("mini-menu-close-btn");
     
             img.src= inventory[i].imageSrc;
-            upgradeBtn.innerText = "Upgrade";
 
-            trashBtn.innerText = "Trash";
             closeBtn.innerText = "x";
-            name.innerText = inventory[i].name;
-            description.innerText = inventory[i].description;
-            lvlLabel.innerText = "LVL:";
+            name.innerText = this.capitalizeFirstLetter(inventory[i].name);
+            description.innerText = this.capitalizeFirstLetter(inventory[i].description);
             typeLabel.innerText = "TYPE:";
+            priceLabel.innerText = "PRICE:";
             speedLabel.innerText = "SPD:";
             evasionLabel.innerText = "EVA:";
             bluntAttackLabel.innerText = "BLT ATK:";
@@ -667,8 +676,8 @@ export default class Controller {
             elementalAttackLabel.innerText = "ELM ATCK:";
             elementalDefenseLabel.innerText = "ELM DEF:";
     
-            itemLvl.innerText = inventory[i].level;
-            itemType.innerText = inventory[i].type;
+            itemType.innerText = this.capitalizeFirstLetter(inventory[i].type);
+            itemPrice.innerText = Math.floor(inventory[i].price/10) + " G";
             itemSpeed.innerText = inventory[i].speed;
             itemEvasion.innerText = inventory[i].evasion;
             itemBluntAttack.innerText = inventory[i].bluntAttack;
@@ -681,27 +690,29 @@ export default class Controller {
             itemElementalDefense.innerText = inventory[i].elementalDefense;
     
             miniMenu.appendChild(col1);
-            col1.appendChild(row1);
-            col1.appendChild(row2);
-            col1.appendChild(row3);
-            col1.appendChild(row4)
-            col1.appendChild(row5)
-            col1.appendChild(row6)
-            col1.appendChild(row7)
+            col1.appendChild(itemHeaderRow);
+            col1.appendChild(statContainer);
+            statContainer.appendChild(row3);
+            statContainer.appendChild(row4)
+            statContainer.appendChild(row5)
+            statContainer.appendChild(row6)
+            statContainer.appendChild(row7)
             col1.appendChild(description)
             col1.appendChild(row8)
     
-            row1.appendChild(img);
-            row1.appendChild(col2);
-            row1.appendChild(closeBtn);
+            itemHeaderRow.appendChild(img);
+            itemHeaderRow.appendChild(col2);
+            itemHeaderRow.appendChild(closeBtn);
     
             col2.appendChild(name);
-            col2.appendChild(row2);
+            col2.appendChild(row0);
+            col2.appendChild(row1);
     
-            row2.appendChild(lvlLabel);
-            row2.appendChild(itemLvl);
-            row2.appendChild(typeLabel);
-            row2.appendChild(itemType);
+            
+            row0.appendChild(typeLabel);
+            row0.appendChild(itemType);
+            row1.appendChild(priceLabel);
+            row1.appendChild(itemPrice);
     
             row3.appendChild(statCell1);
             row3.appendChild(statCell2);
@@ -739,8 +750,7 @@ export default class Controller {
             statCell10.appendChild(itemElementalDefense);
     
             row8.appendChild(useBtn);
-            row8.appendChild(upgradeBtn);
-            row8.appendChild(trashBtn);
+            row8.appendChild(dropSellBtn);
             document.querySelector("body").appendChild(miniMenu);
     
             slot.addEventListener("click", ()=>{
@@ -748,22 +758,48 @@ export default class Controller {
                     menu.style.display = "none";
                 });
                 miniMenu.style.display = "block";
-                miniMenu.style.left = document.getElementById("game-console").getBoundingClientRect().x  + "px";
-                miniMenu.style.top = document.getElementById("game-console").getBoundingClientRect().y + document.getElementById("game-console").getBoundingClientRect().height - miniMenu.getBoundingClientRect().height + "px";
+                miniMenu.style.left = document.getElementById("game-console").getBoundingClientRect().x  + document.getElementById("game-console").getBoundingClientRect().width - miniMenu.getBoundingClientRect().width - 5 + "px";
+                miniMenu.style.top = document.getElementById("game-console").getBoundingClientRect().y + document.getElementById("game-console").getBoundingClientRect().height - miniMenu.getBoundingClientRect().height - 5 + "px";
             });
             closeBtn.addEventListener("click", ()=>{
                 miniMenu.style.display = "none";
             });
-            if(inventory[i].type != "consumable"){
-                useBtn.innerText = "Equip";
-                useBtn.addEventListener('click', ()=>{
-                    this.equip(i);
+            if(this.player.isInTrade == true){
+                dropSellBtn.innerText = "Sell";
+                dropSellBtn.addEventListener('click', ()=>{
+                    this.sellItem(i);
+                });
+            }else{
+                dropSellBtn.innerText = "Drop";
+                dropSellBtn.addEventListener('click', ()=>{
+                    this.dropItem(i);
                 });
             }
             if(inventory[i].type == "consumable"){
                 useBtn.innerText = "Use";
                 useBtn.addEventListener('click', ()=>{
                     this.useConsumable(i);
+                });
+                statContainer.style.display = "none";
+            }
+            if(inventory[i].type != "consumable"){
+                let lvlLabel = document.createElement("p");
+                let itemLvl = document.createElement("p");
+                let upgradeBtn = document.createElement("div");
+                lvlLabel.innerText = "LVL:";
+                itemLvl.innerText = inventory[i].level;
+                upgradeBtn.innerText = "Upgrade";
+                row2.appendChild(lvlLabel);
+                row2.appendChild(itemLvl);
+                col2.appendChild(row2);
+                row8.appendChild(upgradeBtn);
+                upgradeBtn.classList.add("mini-menu-btn");
+                useBtn.innerText = "Equip";
+                useBtn.addEventListener('click', ()=>{
+                    this.equip(i);
+                });
+                upgradeBtn.addEventListener('click', ()=>{
+                    this.upgradeItem(i);
                 });
             }
             document.getElementById("current-gold").innerText = this.player.currentGold;
@@ -1036,6 +1072,36 @@ export default class Controller {
             this.printToGameConsole("Cannot unequip during combat!");
         }
     }
+    dropItem(inventoryIndex){
+        if(this.player.isInBattle == false){
+            this.printToGameConsole(`${this.player.name} dropped ${this.player.inventory[inventoryIndex].name}.`);
+            this.player.inventory.splice(inventoryIndex, 1);
+            this.updatePlayerInventoryTab(this.player.inventory);
+        }
+    }
+    sellItem(inventoryIndex){
+        if(this.player.isInBattle == false){
+            let price = Math.floor(this.player.inventory[inventoryIndex].price/10);
+            this.printToGameConsole(`${this.player.name} sold ${this.player.inventory[inventoryIndex].name} for ${price} gold.`);
+            this.player.currentGold = this.player.currentGold + price;
+            this.player.inventory.splice(inventoryIndex, 1);
+            this.updatePlayerInventoryTab(this.player.inventory);
+        }
+    }
+    upgradeItem(inventoryIndex){
+        if(this.player.isInBattle == false){
+            let upgradeCost = Math.floor(this.player.inventory[inventoryIndex].price * 1.5)
+            if(this.player.currentGold >= upgradeCost){
+                this.player.currentGold = this.player.currentGold - upgradeCost;
+                this.printToGameConsole(`${this.player.name} spends ${upgradeCost} to upgrade ${this.player.inventory[inventoryIndex].name}.`);
+                this.player.inventory[inventoryIndex].upgrade(1);
+                this.updatePlayerInventoryTab(this.player.inventory);
+            }
+            else{
+                this.printToGameConsole(`Not enough gold to upgrade ${this.player.inventory[inventoryIndex].name}.`);
+            }
+        }
+    }
     calcPlayerAbilitiesAndStats(){
         //reset stats and abilities
         this.player.currentBluntAttack = this.player.baseBluntAttack;
@@ -1186,6 +1252,8 @@ export default class Controller {
         }
     }
     toggleTrading(merchantInventory){
+        this.player.isInTrade = true;
+        this.updatePlayerInventoryTab(this.player.inventory);
          for(let i = -1; i < merchantInventory.length; i++){
                 let oldSlot = document.getElementById('inventory-merchant').querySelector('p');
                 if(oldSlot !== null){
@@ -1194,18 +1262,15 @@ export default class Controller {
             }
             for(let i = 0; i < merchantInventory.length; i++){
                 let inventorySlot = document.createElement('p');
-                let inventorySlotMenu = document.createElement('div');
-                let slotMenuBuyBtn = document.createElement('div');
-                inventorySlot.classList.add('inventory-slot');
-                inventorySlotMenu.classList.add('inventory-slot-menu');
-                slotMenuBuyBtn.classList.add('mini-menu-btn');
+                let slotBuyBtn = document.createElement('div');
+                inventorySlot.classList.add('inventory-slot-long');
+                slotBuyBtn.classList.add('mini-menu-btn');
                 
                 inventorySlot.innerText = `${merchantInventory[i].price} G: ${this.capitalizeFirstLetter(merchantInventory[i].name)}`;
-                inventorySlot.appendChild(inventorySlotMenu);
-                inventorySlotMenu.appendChild(slotMenuBuyBtn);
+                inventorySlot.appendChild(slotBuyBtn);
                 document.getElementById('inventory-merchant').appendChild(inventorySlot);
-                slotMenuBuyBtn.innerText = "Buy";
-                slotMenuBuyBtn.addEventListener('click', ()=>{ 
+                slotBuyBtn.innerText = "Buy";
+                slotBuyBtn.addEventListener('click', ()=>{ 
                     this.buyFromMerchant(merchantInventory, i);
                 });
             }

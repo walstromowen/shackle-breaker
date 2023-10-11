@@ -4,6 +4,8 @@ export default class MiniMap{
         this.ctx = this.miniMapCanvas.getContext("2d");
         this.tileWidth = 32;
         this.tileHeight = 32;
+        //this.characterSprite = new Image(this.tileWidth, this.tileHeight);
+        //this.characterSprite.src = "./media/kurty.jpg";
         this.width = 288;
         this.height = 288;
     }
@@ -14,7 +16,7 @@ export default class MiniMap{
     }
     draw(roomArray, playerCurrentRoom){
         this.ctx.clearRect(0, 0, 288, 288);
-        this.ctx.fillStyle= "black";
+        //this.ctx.fillStyle= "black";
         roomArray.forEach((room) => { 
             if(room.status === 'visited'){
                 this.ctx.fillStyle= "green";
@@ -27,6 +29,9 @@ export default class MiniMap{
         });
         this.ctx.fillStyle= "blue";
         this.ctx.fillRect(playerCurrentRoom.position[0]*this.tileWidth, playerCurrentRoom.position[1]*this.tileHeight, this.tileWidth, this.tileHeight); 
+        //this.ctx.drawImage(this.characterSprite, playerCurrentRoom.position[0]*this.tileWidth, playerCurrentRoom.position[1]*this.tileHeight);
          
     }
 }
+
+//ctx.drawImage(this.sprite, this.position[0], this.position[1], this.dimensions[0], this.dimensions[1]);
