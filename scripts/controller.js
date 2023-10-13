@@ -1266,9 +1266,9 @@ export default class Controller {
         document.getElementById('sound-effect-player').play();  
     }
     scaleAttributes(vigor, endurance, strength, dexterity, insight, focus){
-        let maxHP = (vigor * 5) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 1) + (focus * 1);
-        let maxStamina = (vigor * 1) + (endurance * 3) + (strength * 2) + (dexterity * 2) + (insight * 1) + (focus * 1);
-        let maxMagic = (vigor * 1) + (endurance * 3) + (strength * 1) + (dexterity * 1) + (insight * 2) + (focus * 2);
+        let maxHP = (vigor * 8) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 1) + (focus * 1);
+        let maxStamina = (vigor * 1) + (endurance * 6) + (strength * 2) + (dexterity * 2) + (insight * 1) + (focus * 1);
+        let maxMagic = (vigor * 1) + (endurance * 6) + (strength * 1) + (dexterity * 1) + (insight * 2) + (focus * 2);
         let baseBluntAttack = (vigor * 1) + (endurance * 1) + (strength * 3) + (dexterity * 1) + (insight * 1) + (focus * 1);
         let basePierceAttack = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 3) + (insight * 1) + (focus * 1);
         let baseArcaneAttack = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 3) + (focus * 1);
