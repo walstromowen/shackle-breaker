@@ -1,4 +1,4 @@
-import {LockedTreasureChest, AltusAmbushOpportunity, MysteriousDoor, TravelingMerchant, AbandonedCabin, SuspiciousSkeleton} from "./encounters.js";
+import {LockedTreasureChest, AltusAmbushOpportunity, MysteriousDoor, TravelingMerchant, AbandonedCabin, SuspiciousSkeleton, Robbery, Avalanche} from "./encounters.js";
 import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos, ShadowStrider, TerrorBear} from "./enemies.js";
 
 export default class MapEnviorment{
@@ -11,7 +11,7 @@ export default class MapEnviorment{
     generateBiome(biome){
         switch(biome){ 
             case "basic": 
-                switch(Math.floor(Math.random()*3)){ 
+                switch(Math.floor(Math.random()*4)){ 
                     case 0: 
                         this.biome = "cave";
                         this.imageSrc = "media/cave.jpg";
@@ -26,6 +26,11 @@ export default class MapEnviorment{
                         this.biome = "plains";
                         this.imageSrc = "media/plains.jpg";
                         this.backgroundMusicSrc = "./audio/the-epical-trailer-158083.mp3";
+                        break;
+                    case 3:
+                        this.biome = "mountain";
+                        this.imageSrc = "media/mountain.jpg";
+                        this.backgroundMusicSrc = "./audio/achievement-philip-anderson-main-version-01-31-13804.mp3";
                         break;
                     default:
                         break;
@@ -86,6 +91,17 @@ export default class MapEnviorment{
                     default:
                         return;
                 }
+            case "mountain":
+                switch(Math.floor(Math.random()*3)){ 
+                    case 0:
+                        return new Skeleton(playerLevel);
+                    case 1:
+                        return new Wolf(playerLevel);
+                    case 2:
+                        return new AltusMage(playerLevel);
+                    default:
+                        return;
+                }
             case "twilight realm":
                 switch(Math.floor(Math.random()*2)){ 
                     case 0:
@@ -122,22 +138,37 @@ export default class MapEnviorment{
                         return;
                 }
             case "forest":
-                switch(Math.floor(Math.random()*3)){ 
+                switch(Math.floor(Math.random()*4)){ 
                     case 0:
                         return new LockedTreasureChest();
                     case 1:
                         return new TravelingMerchant();
                     case 2:
                         return new AbandonedCabin();
+                    case 3:
+                        return new Robbery();
                     default:
                         return;
                 }
             case "plains":
-                switch(Math.floor(Math.random()*3)){ 
+                switch(Math.floor(Math.random()*4)){ 
                     case 0:
                         return new LockedTreasureChest();
                     case 1:
                         return new AltusAmbushOpportunity();
+                    case 2:
+                        return new TravelingMerchant();
+                    case 3:
+                        return new Robbery();
+                    default:
+                        return;
+                }
+            case "mountain":
+                switch(Math.floor(Math.random()*3)){ 
+                    case 0:
+                        return new Robbery();
+                    case 1:
+                        return new Avalanche();
                     case 2:
                         return new TravelingMerchant();
                     default:

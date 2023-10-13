@@ -922,8 +922,8 @@ export default class Controller {
             }
             this.player.currentRoom.status = "visited";
             this.player.currentRoom = nextRoom;
-            let stamina = Math.floor(this.player.maxStamina * 0.1);
-            let magic = Math.floor(this.player.maxMagic * 0.1);
+            let stamina = Math.floor(this.player.maxStamina * 0.2);
+            let magic = Math.floor(this.player.maxMagic * 0.2);
             if(this.player.currentStamina + stamina > this.player.maxStamina){stamina = this.player.maxStamina - this.player.currentStamina;}
             if(this.player.currentMagic + magic > this.player.maxMagic){magic = this.player.maxMagic - this.player.currentMagic;}
             this.player.currentStamina = this.player.currentStamina + stamina;
@@ -1051,7 +1051,7 @@ export default class Controller {
     }
     upgradeItem(inventoryIndex){
         if(this.player.isInBattle == false){
-            let upgradeCost = Math.floor(this.player.inventory[inventoryIndex].price * 1.5)
+            let upgradeCost = Math.floor(this.player.inventory[inventoryIndex].price * 1.25)
             if(this.player.currentGold >= upgradeCost){
                 this.player.currentGold = this.player.currentGold - upgradeCost;
                 this.printToGameConsole(`${this.player.name} spends ${upgradeCost} to upgrade ${this.player.inventory[inventoryIndex].name}.`);

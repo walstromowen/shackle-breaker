@@ -1,5 +1,5 @@
 import {Slash, Strike, Stab, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
-    ThrowNet, Immolate, LightningBolt, Channel, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Bite, SpitBile, LeechLife, Devour, Pounce, BlinkStrike} from "./abilities.js"
+    ThrowNet, Immolate, LightningBolt, Channel, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Bite, SpitBile, LeechLife, Devour, Pounce, BlinkStrike, ThrowSmokebomb} from "./abilities.js"
 import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword,
         Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, 
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
@@ -451,5 +451,51 @@ export class ShadowStrider extends Enemy{
         this.incrementStats(playerLevel, 2,3,1,2,2,1,1,1,1,1,1);
         this.gold = Math.floor(Math.random() * (20*playerLevel - 5*playerLevel + 1)) + 5*playerLevel;
         this.XP = 40;
+    }
+}
+export class Bandit extends Enemy{
+    constructor(playerLevel){
+        super();
+        this.name = "bandit";
+        this.imageSrc = "media/bandit.jpg"
+        this.maxHP = 32;
+        this.currentHP = this.maxHP;
+        this.maxStamina = 38;
+        this.currentStamina = this.maxStamina;
+        this.maxMagic = 30;
+        this.currentMagic = this.maxMagic;
+        this.baseBluntAttack = 45;
+        this.currentBluntAttack = this.baseBluntAttack;
+        this.basePierceAttack = 45;
+        this.currentPierceAttack = this.basePierceAttack;
+        this.baseArcaneAttack = 45; 
+        this.currentArcaneAttack = this.baseArcaneAttack;
+        this.baseElementalAttack = 45;
+        this.currentElementalAttack = this.baseElementalAttack;
+        this.baseBluntDefense = 35;
+        this.currentBluntDefense = this.baseBluntDefense;
+        this.basePierceDefense = 35;
+        this.currentPierceDefense = this.basePierceDefense;
+        this.baseArcaneDefense = 35;
+        this.currentArcaneDefense = this.baseArcaneDefense;
+        this.baseElementalDefense = 35;
+        this.currentElementalDefense = this.baseElementalDefense;
+        this.baseSpeed = 27;
+        this.currentSpeed = this.baseSpeed;
+        this.baseEvasion = 12;
+        this.currentEvasion = this.baseEvasion;
+        this.abilityArray = [new Slash, new Stab, new Eviscerate, new ThrowSmokebomb, new ThrowKnife];
+        this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootArray = [new Shortsword, new Longsword, new Dagger, new Shiv, new LeatherHelmet, new LeatherHood, 
+                          new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
+                          new LeatherBoots, new HealthPotion, new StaminaPotion, new ThrowingKnife, new SmokeBomb];
+        this.gold = 0;
+        this.XP = 0;             
+        this.levelUp(playerLevel);
+    }
+    levelUp(playerLevel){
+        this.incrementStats(playerLevel, 2,1,1,2,2,2,1,1,1,2,1,1);
+        this.gold = Math.floor(Math.random() * (20*playerLevel - 15*playerLevel + 1)) + 15*playerLevel;
+        this.XP = 35;
     }
 }

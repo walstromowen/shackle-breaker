@@ -6,15 +6,16 @@ Text adventure game based on the ShackleBreaker story
 # New Features
 * Parrying System
 * Attack Animations
-* Mew Mini Map
-* Shop/crafting/weapon level up / Town / Gold
+* Mew Mini Map/ map culling
+* Shop/crafting/weapon/town
 * interact with stairs / loot bodies
-* mini Menu for items and action buttons (with sell / trash btns)
 * Two Handing / Weapons equipable in either hand
 * Ability conflicts
-* Weapon Level Ups /crafting
 * Distance System in battle
 * Decision Success modifier
+* Bosses
+* Two attacks
+* Multiple enemies/ companions
 
 # Quality of Life
 * random enemy stats

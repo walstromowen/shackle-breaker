@@ -236,7 +236,7 @@ export class Longsword {
     constructor(){
         this.name = "longsword";
         this.type = "weapon";
-        this.imageSrc = "./media/icons/spear.png";
+        this.imageSrc = "./media/icons/longsword.png";
         this.description = `A standard longsword. Standard issue longsword of the Altus guard. "A longsword for you too huh? Well, can't say I blame you" - Commander Mentoras.`;
         this.level = 0;
         this.price = 150;
@@ -1013,7 +1013,7 @@ export class CrystalBall {
         this.name = "crystal ball";
         this.type = "offhand";
         this.imageSrc = "./media/icons/magic-ball.png";
-        this.description = `a magical crystal ball. While some saw magic as pure power, others saw it as a science. Still, the fundental law of magic is that energy must come from somewhere.`;
+        this.description = `a magical crystal ball. While some see magic as pure power, others see it as a science. Still, the fundental law of magic is that energy must come from somewhere.`;
         this.level = 0;
         this.price = 100;
         this.bluntAttack = 0;

@@ -1,6 +1,6 @@
 import {controller as theController} from "./main.js"
 import {Decision} from "./encounterDecision.js";
-import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian} from "./enemies.js";
+import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, Bandit} from "./enemies.js";
 import {Shielded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden} from "./statusEffects.js";
 import {getRandomItem} from "./items.js";
 import {regainHP, initiateTrade, leave, retry, removeDecision, toggleNewEncounter, toggleBattle, lootItems, takeDamage, recieveStatusEffect, changeMap} from "./encounterResults.js";
@@ -323,6 +323,124 @@ export class AbandonedCabin extends Encounter{
                 ],
                 [
                     ()=>{toggleBattle(`somethings lunges towards ${theController.player.name}!`, theController.map.mapEnviorment.generateEnemy(theController.player.level))}
+                ]
+            )
+        ];
+    }
+}
+export class Avalanche extends Encounter{
+    constructor(){
+        super();
+        this.name = "avalanche";
+        this.message = "A avalanche strikes!.";
+        this.imageSrc = "./media/abandoned-cabin.jpg";
+        this.decisionArray = [
+            new Decision(
+                "brace", 
+                `${theController.player.name} braces agains a nearby boulder!`,
+                "none",
+                [
+                    ()=>{leave(`The landside crashes upon the land! After what feels like an eternity, ${theController.player.name} emerges from the rubble unharmed.`)}
+                ],
+                [
+                    ()=>{takeDamage(`The landside crashes down upon ${theController.player.name}!`, 0.25, 0.50)},
+                ]
+            ),
+            new Decision(
+                "run away", 
+                `${theController.player.name} flees the avalanche with haste!`,
+                "none",
+                [
+                    ()=>{leave(`with great athleticism, ${theController.player.name} barely escapes the avalanche!`)}
+                ],
+                [
+                    ()=>{takeDamage(`The avalanche crashes down upon ${theController.player.name}!`, 0.25, 0.50)},
+                ]
+            )
+        ];
+    }
+}
+export class Robbery extends Encounter{
+    constructor(){
+        super();
+        this.name = "robbery";
+        this.message = "a bandit appears to be robbing a traveler up ahead.";
+        this.imageSrc = "./media/kurty.jpg";
+        this.decisionArray = [
+            new Decision(
+                "move on", 
+                `${theController.player.name} decides not to interfere.`,
+                "certain",
+                [
+                    ()=>{leave(`${theController.player.name} moves on.`)}
+                ],
+                [
+
+                ]
+            ),
+            new Decision(
+                "defend traveler", 
+                `${theController.player.name} steps in to aid the traveler.`,
+                "certain",
+                [
+                    ()=>{toggleNewEncounter(`the bandit turns to face ${theController.player.name}`, new DefendTraveler())}
+                ],
+                [
+                    
+                ]
+            ),
+            new Decision(
+                "join bandit", 
+                `${theController.player.name} joins the bandit in mugging the traveler.`,
+                "none",
+                [
+                    ()=>{lootItems(`${theController.player.name} assists the thug in looting the traveler. After splitting the reward, ${theController.player.name} walks away with a share of the loot.`, [getRandomItem()])}
+                ],
+                [
+                    ()=>{toggleBattle(`${theController.player.name} joins the thig in robbing the traveler. Not long after, the thug turns on ${theController.player.name} attempting to claim all the loot!`, new Bandit(theController.player.level))}
+                ]
+            )
+        ];
+    }
+}
+export class DefendTraveler extends Encounter{
+    constructor(){
+        super();
+        this.name = "robbery";
+        this.message = `"What do are you looking at?" The bandit asks angrily.`;
+        this.imageSrc = "./media/bandit.jpg";
+        this.decisionArray = [
+            new Decision(
+                "attack", 
+                `${theController.player.name} lunges at the bandit with weapon drawn!`,
+                "certain",
+                [
+                    ()=>{toggleBattle(`the bandit draws his weapon to meet ${theController.player.name}!`, new Bandit(theController.player.level))}
+                ],
+                [
+
+                ]
+            ),
+            new Decision(
+                "intimidate", 
+                `${theController.player.name} demands the bandit leave!`,
+                "strength",
+                [
+                    ()=>{lootItems(`the thug drops his loot and hastily retreats. As a token of good will, the traveler insists ${theController.player.name} keep the loot.`, [getRandomItem()])}
+                ],
+                [
+                    ()=>{removeDecision(`the bandit laughs at ${theController.player.name}`, "intimidate")},
+                ]
+            ),
+            new Decision(
+                "persuade", 
+                `${theController.player.name} attempts to reason with the thug.`,
+                "insight",
+                [
+                    ()=>{lootItems(`after a short exchange, ${theController.player.name} convinces the thug that the traveler is not worth the effort and the thug walks away. The traveler then thanks ${theController.player.name} and gives him a gift.`, [getRandomItem()])}
+                ],
+                [
+                    ()=>{removeDecision(`the scoffs at ${theController.player.name}`, "persuade")},
                 ]
             )
         ];
