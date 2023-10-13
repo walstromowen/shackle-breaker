@@ -333,17 +333,17 @@ export class Avalanche extends Encounter{
         super();
         this.name = "avalanche";
         this.message = "A avalanche strikes!.";
-        this.imageSrc = "./media/abandoned-cabin.jpg";
+        this.imageSrc = "./media/avalanche.jpg";
         this.decisionArray = [
             new Decision(
                 "brace", 
                 `${theController.player.name} braces agains a nearby boulder!`,
                 "none",
                 [
-                    ()=>{leave(`The landside crashes upon the land! After what feels like an eternity, ${theController.player.name} emerges from the rubble unharmed.`)}
+                    ()=>{leave(`The avalanche crashes upon the land! After what feels like an eternity, ${theController.player.name} emerges from the rubble unharmed.`)}
                 ],
                 [
-                    ()=>{takeDamage(`The landside crashes down upon ${theController.player.name}!`, 0.25, 0.50)},
+                    ()=>{takeDamage(`The avalanche crashes down upon ${theController.player.name}!`, 0.25, 0.50)},
                 ]
             ),
             new Decision(
@@ -365,7 +365,7 @@ export class Robbery extends Encounter{
         super();
         this.name = "robbery";
         this.message = "a bandit appears to be robbing a traveler up ahead.";
-        this.imageSrc = "./media/kurty.jpg";
+        this.imageSrc = "./media/bandit.jpg";
         this.decisionArray = [
             new Decision(
                 "move on", 
@@ -391,13 +391,13 @@ export class Robbery extends Encounter{
             ),
             new Decision(
                 "join bandit", 
-                `${theController.player.name} joins the bandit in mugging the traveler.`,
+                `${theController.player.name} joins the bandit in robbing the traveler.`,
                 "none",
                 [
                     ()=>{lootItems(`${theController.player.name} assists the thug in looting the traveler. After splitting the reward, ${theController.player.name} walks away with a share of the loot.`, [getRandomItem()])}
                 ],
                 [
-                    ()=>{toggleBattle(`${theController.player.name} joins the thig in robbing the traveler. Not long after, the thug turns on ${theController.player.name} attempting to claim all the loot!`, new Bandit(theController.player.level))}
+                    ()=>{toggleBattle(`${theController.player.name} joins the thug in robbing the traveler. Not long after, the thug turns on ${theController.player.name} attempting to claim all the loot!`, new Bandit(theController.player.level))}
                 ]
             )
         ];
