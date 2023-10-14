@@ -492,7 +492,7 @@ export default class Controller {
         this.player.isInBattle = false;
         this.player.isInTrade = false;
         this.player.canMoveRoom = true;
-        //this.updatePlayerInventoryTab(this.player.inventory);
+        this.updatePlayerInventoryTab(this.player.inventory);
     }
     toggleBattle(enemy){
         this.battle = new Battle(this.player, enemy);
@@ -1035,10 +1035,10 @@ export default class Controller {
                 this.calcPlayerAbilitiesAndStats();
                 this.updatePlayerStats();
             }else{
-                this.printToGameConsole("Nothing equipped!");
+                this.printToGameConsole("Nothing equipped.");
             }
         }else{
-            this.printToGameConsole("Cannot unequip during combat!");
+            this.printToGameConsole("Cannot unequip during combat.");
         }
     }
     dropItem(inventoryIndex){
@@ -1046,6 +1046,8 @@ export default class Controller {
             this.printToGameConsole(`${this.player.name} dropped ${this.player.inventory[inventoryIndex].name}.`);
             this.player.inventory.splice(inventoryIndex, 1);
             this.updatePlayerInventoryTab(this.player.inventory);
+        }else{
+            this.printToGameConsole(`Cannot drop ${this.player.inventory[inventoryIndex].name} during combat.`);
         }
     }
     sellItem(inventoryIndex){
@@ -1069,6 +1071,8 @@ export default class Controller {
             else{
                 this.printToGameConsole(`Not enough gold to upgrade ${this.player.inventory[inventoryIndex].name}.`);
             }
+        }else{
+            this.printToGameConsole(`Cannot upgrade ${this.player.inventory[inventoryIndex].name} during combat.`);
         }
     }
     calcPlayerAbilitiesAndStats(){

@@ -42,7 +42,7 @@ export function loot(message, itemArray, goldMin, goldMax){
         theController.player.currentGold += goldAmount;
         itemList = itemList + `${goldAmount} gold.`;
     }
-    theController.printToGameConsole(message + `${theController.player.name} finds the following items: ${itemList}.`);
+    theController.printToGameConsole(message + `${theController.player.name} finds the following items: ${itemList}`);
     theController.updatePlayerInventoryTab(theController.player.inventory);
     theController.endEncounter();
 }
