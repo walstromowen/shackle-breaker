@@ -757,7 +757,9 @@ export class IceBarrier extends Ability{
                     return;
                 }
             }
-            weilder.statusArray.push(new Shielded(weilder));
+            let status = new Shielded(weilder)
+            status.onApplied();
+            weilder.statusArray.push(status);
         }
     }
 }
