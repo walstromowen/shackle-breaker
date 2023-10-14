@@ -298,7 +298,7 @@ export class Stab extends Ability{
         }
     }
 }
-export class flurry extends Ability{
+export class Flurry extends Ability{
     constructor(){
         super();
         this.name = "flurry";

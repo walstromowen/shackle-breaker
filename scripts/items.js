@@ -1,5 +1,5 @@
-import {Slash, Strike, Stab, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
-        ThrowNet, Immolate, LightningBolt, Shockwave, Recuperate, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Channel, ThrowSmokebomb} from "./abilities.js"
+import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
+        ThrowNet, Immolate, LightningBolt, Shockwave, Recuperate, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Channel, ThrowSmokebomb, BlinkStrike} from "./abilities.js"
 
 export function getRandomItem(){
     let itemArray = [new LinenShirt, new LinenPants, new Dagger, new BlacksmithHammer, new Spear, new Shortsword, new Longsword,
@@ -167,7 +167,7 @@ export class Spear {
         this.description = `A standard spear. Standard issue spear of the Altus guard. "Keep your friends close and your enemies at spear's length" - Commander Mentoras.`;
         this.level = 1;
         this.price = 100;
-        this.bluntAttack = 2;
+        this.bluntAttack = 1;
         this.pierceAttack = 4;
         this.arcaneAttack = 0;
         this.elementalAttack = 0;
@@ -177,7 +177,7 @@ export class Spear {
         this.elementalDefense = 0;
         this.speed = 0;
         this.evasion = 0;
-        this.abilityArray = [new Stab()];
+        this.abilityArray = [new Stab(), new Strike()];
     }
     upgrade(levels){
         for(let i = 0; i < levels; i++){
@@ -231,6 +231,9 @@ export class Shortsword {
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
         }
+        if(this.level == 3){
+            this.abilityArray.push(new Flurry());
+        }
     }
 }
 export class Longsword {
@@ -267,6 +270,9 @@ export class Longsword {
             this.elementalDefense = this.elementalDefense + 0;
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
+        }
+        if(this.level == 3){
+            this.abilityArray.push(new Flurry());
         }
     }
 }
@@ -1118,6 +1124,46 @@ export class CrystalBall {
             this.elementalDefense = this.elementalDefense + 1;
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
+        }
+    }
+}
+export class NamuhSword {
+    constructor(){
+        this.name = "namuh sword";
+        this.type = "main";
+        this.imageSrc = "./media/icons/longsword.png";
+        this.description = `a Numuh longsword. The Namuh are a shadowy and mysterious people who mainly communicate through sign language. Much like this blade, they rarely make a sound.`;
+        this.level = 1;
+        this.price = 300;
+        this.bluntAttack = 1;
+        this.pierceAttack = 3;
+        this.arcaneAttack = 2;
+        this.elementalAttack = 0;
+        this.bluntDefense = 0;
+        this.pierceDefense = 0;
+        this.arcaneDefense = 0;
+        this.elementalDefense = 0;
+        this.speed = 1;
+        this.evasion = 1;
+        this.abilityArray = [new ArcaneDart(), new Slash, new BlinkStrike()];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = this.price * 1.5;
+            this.bluntAttack = this.bluntAttack + 1;
+            this.pierceAttack = this.pierceAttack + 2;
+            this.arcaneAttack = this.arcaneAttack + 2;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 0;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 0;
+            this.elementalDefense = this.elementalDefense + 0;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+        }
+        if(this.level == 3){
+            this.abilityArray.push(new Flurry());
         }
     }
 }
