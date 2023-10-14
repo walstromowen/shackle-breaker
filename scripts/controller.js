@@ -1,10 +1,10 @@
 import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword,
-        Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, 
-        LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
-        LeatherBoots, KiteShield, IronHelmet, IronGuantlets, IronChainmail, 
-        IronGreaves, IronBoots, CrystalBall, HealthPotion, StaminaPotion, MagicPotion, 
-        ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb
-} from "./items.js";
+    Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, 
+    LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
+    LeatherBoots, KiteShield, IronHelmet, IronGuantlets, IronChainmail, 
+    IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
+    ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb,
+    } from "./items.js";
 import {Recover, Punch, Retreat} from "./abilities.js"
 import Player from "./player.js";
 import Map from "./map.js";
@@ -137,7 +137,7 @@ export default class Controller {
                 this.characterCreationArray[6] = 100;
                 break;
             case "blacksmith":
-                inventoryArray.push(new BlacksmithHammer, new KiteShield, new LinenShirt, new LinenPants, new LeatherBoots);
+                inventoryArray.push(new BlacksmithHammer, new IronHelmet, new LinenShirt, new LinenPants, new LeatherBoots);
                 this.characterCreationArray[6] = 90;
                 break;
             case "ranger":
@@ -145,7 +145,7 @@ export default class Controller {
                 this.characterCreationArray[6] = 70;
                 break;
             case "scholar":
-                inventoryArray.push(new ArcaneStaff, new CrystalBall, new LinenShirt, new LinenPants, new LeatherBoots);
+                inventoryArray.push(new ArcaneStaff, new ClothHood, new LinenShirt, new LinenPants, new LeatherBoots);
                 this.characterCreationArray[6] = 80;
                 break;
             case "soldier":
@@ -157,7 +157,7 @@ export default class Controller {
                 this.characterCreationArray[6] = 90;
                 break;
             case "hermit":
-                inventoryArray.push(new FireStaff, new LeatherHood, new LinenShirt, new LinenPants, new LeatherBoots);
+                inventoryArray.push(new FireStaff, new ClothHood, new LinenShirt, new LinenPants, new LeatherBoots);
                 this.characterCreationArray[6] = 70;
                 break;
         }

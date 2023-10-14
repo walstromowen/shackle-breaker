@@ -298,6 +298,31 @@ export class Stab extends Ability{
         }
     }
 }
+export class flurry extends Ability{
+    constructor(){
+        super();
+        this.name = "flurry";
+        this.type = "pierce";
+        this.speedMultiplier = 0.25;
+        this.staminaCost = 16;
+        this.magicCost = 0;
+        this.damageModifier = 8;
+        this.accuracy = 60;
+        this.soundEffect = "./audio/soundEffects/Knife-Stab-A10-www.fesliyanstudios.com.mp3";
+    }
+    activate(weilder, target){
+        if(this.checkStamina(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentPierceAttack + this.damageModifier) - (weilder.currentPierceAttack + this.damageModifier/2) + 1)) + weilder.currentPierceAttack;
+            damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
+            target.currentHP = target.currentHP - damageOutput;
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
+        }
+    }
+}
 export class Bite extends Ability{
     constructor(){
         super();
@@ -369,7 +394,7 @@ export class Eviscerate extends Ability{
         this.magicCost = 0;
         this.damageModifier = 3;
         this.accuracy = 60;
-        this.soundEffect = "./audio/soundEffects/slash1.mp3";
+        this.soundEffect = "./audio/soundEffects/Knife-Stab-A10-www.fesliyanstudios.com.mp3";
     }
     activate(weilder, target){
         if(this.checkStamina(weilder) == true){
@@ -941,9 +966,9 @@ export class Devour extends Ability{
         this.name = "devour";
         this.type = "bluntPierce";
         this.speedMultiplier = 0.25;
-        this.staminaCost = 20;
+        this.staminaCost = 30;
         this.magicCost = 0;
-        this.accuracy = 80;
+        this.accuracy = 60;
         this.soundEffect = "./audio/soundEffects/chomp1.mp3";
     }
     activate(weilder, target){

@@ -4,7 +4,7 @@ import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Lon
         Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, 
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
         LeatherBoots, KiteShield, IronHelmet, IronGuantlets, IronChainmail, 
-        IronGreaves, IronBoots, CrystalBall, HealthPotion, StaminaPotion, MagicPotion, 
+        IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
         ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb,
         } from "./items.js";
 import { Channeled, Invigorated } from "./statusEffects.js";
@@ -219,8 +219,8 @@ export class AltusMage extends Enemy{
         this.baseEvasion = 10;
         this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new ArcaneDart, new ArcaneBlast, new Fireball, new Cleanse];
-        this.lootChanceMultiplier = 0; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new FireStaff, new LightningStaff, new IceStaff, new ArcaneStaff, new LightStaff, new DarkStaff, new CrystalBall, new MagicPotion];
+        this.lootChanceMultiplier = 1; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootArray = [new FireStaff, new LightningStaff, new IceStaff, new ArcaneStaff, new LightStaff, new DarkStaff, new CrystalBall, new MagicPotion, new ClothHood, new ClothRobe];
         this.gold = 0;
         this.XP = 0;
         this.levelUp(playerLevel);
@@ -484,7 +484,7 @@ export class Bandit extends Enemy{
         this.currentSpeed = this.baseSpeed;
         this.baseEvasion = 12;
         this.currentEvasion = this.baseEvasion;
-        this.abilityArray = [new Slash, new Stab, new Eviscerate, new ThrowSmokebomb, new ThrowKnife];
+        this.abilityArray = [new ThrowSmokebomb, new Slash, new Stab, new Eviscerate, new ThrowKnife];
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new Shortsword, new Longsword, new Dagger, new Shiv, new LeatherHelmet, new LeatherHood, 
                           new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 

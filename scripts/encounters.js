@@ -167,6 +167,17 @@ export class MysteriousDoor extends Encounter{
         characters.splice(characters.indexOf(rand3));
         this.decisionArray = [
             new Decision(
+                "move on", 
+                `${theController.player.name} decides not to open the chest.`,
+                "certain",
+                [
+                    ()=>{leave(`${theController.player.name} moves on.`)}
+                ],
+                [
+
+                ]
+            ),
+            new Decision(
                 rune1, 
                 `${theController.player.name} presses ${rune1}`,
                 "neutral",
@@ -226,7 +237,7 @@ export class SuspiciousSkeleton extends Encounter{
             new Decision(
                 "lure away", 
                 `${theController.player.name} throws a rock in the distance attempting to lure the skeleton away.`,
-                "focus",
+                "neutral",
                 [
                     ()=>{leave(`The skeleton leaves its post to investigates the sound leaving ${theController.player.name} a clear path forward.`)}
                 ],
