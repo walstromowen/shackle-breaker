@@ -35,4 +35,4 @@ Text adventure game based on the ShackleBreaker story
 - 0.5 (medium) 
 - 0.75 (fast)
 * Ability Attack formula
-- Math.floor(Math.random() * (max - min) + min)
+- Math.floor(Math.random() * (max - min+ 1) + min)

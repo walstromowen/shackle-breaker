@@ -678,7 +678,7 @@ export default class Controller {
             elementalDefenseLabel.innerText = "ELM DEF:";
     
             itemType.innerText = this.capitalizeFirstLetter(inventory[i].type);
-            itemPrice.innerText = Math.floor(inventory[i].price/10) + " G";
+            itemPrice.innerText = Math.floor(inventory[i].price/4) + " G";
             itemSpeed.innerText = inventory[i].speed;
             itemEvasion.innerText = inventory[i].evasion;
             itemBluntAttack.innerText = inventory[i].bluntAttack;

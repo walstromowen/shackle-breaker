@@ -39,6 +39,7 @@ export function loot(message, itemArray, goldMin, goldMax){
     }
     let goldAmount = Math.floor(Math.random() * (goldMax - goldMin) + goldMin);
     if(goldAmount > 0){
+        theController.player.currentGold += goldAmount;
         itemList = itemList + `${goldAmount} gold.`;
     }
     theController.printToGameConsole(message + `${theController.player.name} finds the following items: ${itemList}.`);

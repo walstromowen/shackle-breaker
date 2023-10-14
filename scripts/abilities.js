@@ -1278,7 +1278,7 @@ export class ThrowSmokebomb extends Ability{
         theController.printToGameConsole(`${weilder.name} thows a smokebomb!`);
         theController.playSoundEffect(this.soundEffect);
         for(let i = 0; i < weilder.statusArray.length; i++){
-            if(weilder.statusArray[i].name == "Hidden"){
+            if(weilder.statusArray[i].name == "hidden"){
                 weilder.statusArray[i].currentCharges = weilder.statusArray[i].maxCharges;
                 return;
             }
