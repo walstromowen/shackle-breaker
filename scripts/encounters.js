@@ -3,7 +3,7 @@ import {Decision} from "./encounterDecision.js";
 import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, Bandit} from "./enemies.js";
 import {Shielded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden} from "./statusEffects.js";
 import {getRandomItem} from "./items.js";
-import {regainHP, initiateTrade, leave, retry, removeDecision, toggleNewEncounter, toggleBattle, lootItems, takeDamage, recieveStatusEffect, changeMap} from "./encounterResults.js";
+import {regainHP, initiateTrade, leave, retry, removeDecision, toggleNewEncounter, toggleBattle, loot, takeDamage, recieveStatusEffect, changeMap} from "./encounterResults.js";
 
 
 class Encounter{}
@@ -89,9 +89,9 @@ export class UnlockedTreasureChest extends Encounter{
             new Decision(
                 "open chest", 
                 `${theController.player.name} opens the chest.`,
-                "none",
+                "likely",
                 [
-                    ()=>{lootItems("", [getRandomItem()])}
+                    ()=>{loot("", [getRandomItem()], 100, 10)}
                 ],
                 [
                     ()=>{takeDamage(`as ${theController.player.name} opens the chest, an arrow flies up from the chest and hits ${theController.player.name}!`, 0.15, 0.25)},
@@ -125,7 +125,7 @@ export class AltusAmbushOpportunity extends Encounter{
                 `${theController.player.name} sneaks up to the official and draws a knife.`,
                 "dexterity",
                 [
-                    ()=>{lootItems(`${theController.player.name} eliminates the offical without a sound. After searching the offical,`, getRandomItem())}
+                    ()=>{loot(`${theController.player.name} eliminates the offical without a sound. After searching the offical,`, [getRandomItem()], 40, 10)}
                 ],
                 [
                     ()=>{toggleBattle(`the altus official spots ${theController.player.name} and draws his weapon!`, new AltusMage(theController.player.level))}
@@ -169,7 +169,7 @@ export class MysteriousDoor extends Encounter{
             new Decision(
                 rune1, 
                 `${theController.player.name} presses ${rune1}`,
-                "none",
+                "neutral",
                 [
                     ()=>{changeMap(`the door swings open and pulls ${theController.player.name} in!`, "portal")}
                 ],
@@ -181,7 +181,7 @@ export class MysteriousDoor extends Encounter{
             new Decision(
                 rune2, 
                 `${theController.player.name} presses ${rune2}`,
-                "none",
+                "neutral",
                 [
                     ()=>{changeMap(`the door swings open and pulls ${theController.player.name} in!`, "portal")}
                 ],
@@ -193,7 +193,7 @@ export class MysteriousDoor extends Encounter{
             new Decision(
                 rune3, 
                 `${theController.player.name} presses ${rune3}`,
-                "none",
+                "neutral",
                 [
                     ()=>{changeMap(`the door swings open and pulls ${theController.player.name} in!`, "portal")}
                 ],
@@ -237,9 +237,9 @@ export class SuspiciousSkeleton extends Encounter{
             new Decision(
                 "talk to it", 
                 `${theController.player.name} attempts to talk to the skeleton.`,
-                "insight",
+                "unlikely",
                 [
-                    ()=>{lootItems(`${theController.player.name} and the skeleton have a pleasant discussion about the good old days. Then the skeleton gives ${theController.player.name} a parting gift,`, getRandomItem())},
+                    ()=>{loot(`${theController.player.name} and the skeleton have a pleasant discussion about the good old days. Then the skeleton gives ${theController.player.name} a parting gift,`, [getRandomItem()], 0, 0)},
                     ()=>{leave(`${theController.player.name} politely asks the skeleton for directions. The skeleton stares back in disbelief and then nods to the hallway ahead. ${theController.player.name} thanks the skeleton and proceeds.`)}
                 ],
                 [
@@ -306,9 +306,9 @@ export class AbandonedCabin extends Encounter{
             new Decision(
                 "search cabin", 
                 `${theController.player.name} searches the cabin for anything useful.`,
-                "none",
+                "neutral",
                 [
-                    ()=>{lootItems(`${theController.player.name} rumages through some cabinets.`, [getRandomItem()])}
+                    ()=>{loot(`${theController.player.name} rumages through some cabinets.`, [getRandomItem()], 50, 10)},
                 ],
                 [
                     ()=>{toggleBattle(`somethings lunges towards ${theController.player.name}!`, theController.map.mapEnviorment.generateEnemy(theController.player.level))}
@@ -317,7 +317,7 @@ export class AbandonedCabin extends Encounter{
             new Decision(
                 "take rest", 
                 `${theController.player.name} searches for a place to rest.`,
-                "none",
+                "likely",
                 [
                     ()=>{regainHP(`${theController.player.name} takes a short rest.`, 0.5)}
                 ],
@@ -333,12 +333,12 @@ export class Avalanche extends Encounter{
         super();
         this.name = "avalanche";
         this.message = "A avalanche strikes!.";
-        this.imageSrc = "./media/avalanche.jpg";
+        this.imageSrc = "./media/avalanche.jpeg";
         this.decisionArray = [
             new Decision(
                 "brace", 
                 `${theController.player.name} braces agains a nearby boulder!`,
-                "none",
+                "neutral",
                 [
                     ()=>{leave(`The avalanche crashes upon the land! After what feels like an eternity, ${theController.player.name} emerges from the rubble unharmed.`)}
                 ],
@@ -349,7 +349,7 @@ export class Avalanche extends Encounter{
             new Decision(
                 "run away", 
                 `${theController.player.name} flees the avalanche with haste!`,
-                "none",
+                "neutral",
                 [
                     ()=>{leave(`with great athleticism, ${theController.player.name} barely escapes the avalanche!`)}
                 ],
@@ -392,9 +392,9 @@ export class Robbery extends Encounter{
             new Decision(
                 "join bandit", 
                 `${theController.player.name} joins the bandit in robbing the traveler.`,
-                "none",
+                "neutral",
                 [
-                    ()=>{lootItems(`${theController.player.name} assists the thug in looting the traveler. After splitting the reward, ${theController.player.name} walks away with a share of the loot.`, [getRandomItem()])}
+                    ()=>{loot(`${theController.player.name} assists the thug in looting the traveler. After splitting the reward, ${theController.player.name} walks away with a share of the loot.`, [getRandomItem()], 20, 5)},
                 ],
                 [
                     ()=>{toggleBattle(`${theController.player.name} joins the thug in robbing the traveler. Not long after, the thug turns on ${theController.player.name} attempting to claim all the loot!`, new Bandit(theController.player.level))}
@@ -426,7 +426,7 @@ export class DefendTraveler extends Encounter{
                 `${theController.player.name} demands the bandit leave!`,
                 "strength",
                 [
-                    ()=>{lootItems(`the thug drops his loot and hastily retreats. As a token of good will, the traveler insists ${theController.player.name} keep the loot.`, [getRandomItem()])}
+                    ()=>{loot(`the thug drops his loot and hastily retreats. As a token of good will, the traveler insists ${theController.player.name} keep the loot.`, [getRandomItem()], 50, 10)},
                 ],
                 [
                     ()=>{removeDecision(`the bandit laughs at ${theController.player.name}`, "intimidate")},
@@ -437,7 +437,7 @@ export class DefendTraveler extends Encounter{
                 `${theController.player.name} attempts to reason with the thug.`,
                 "insight",
                 [
-                    ()=>{lootItems(`after a short exchange, ${theController.player.name} convinces the thug that the traveler is not worth the effort and the thug walks away. The traveler then thanks ${theController.player.name} and gives him a gift.`, [getRandomItem()])}
+                    ()=>{loot(`after a short exchange, ${theController.player.name} convinces the thug that the traveler is not worth the effort and the thug walks away. The traveler then thanks ${theController.player.name} and gives him a gift.`, [getRandomItem()], 50, 10)},
                 ],
                 [
                     ()=>{removeDecision(`the scoffs at ${theController.player.name}`, "persuade")},

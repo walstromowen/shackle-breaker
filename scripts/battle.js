@@ -5,6 +5,12 @@ export default class Battle{
         this.player = player;
         this.enemy = enemy;
         this.battlePhase = "firstTurn";
+        this.initialize();
+    }
+    initialize(){
+        for(let i = 0; i < this.player.statusArray.length; i++){
+            this.player.statusArray[i].onApplied();
+        }
     }
     determineFirstTurn(abilityIndex, inventoryIndex){
         this.battlePhase = "firstTurn";
@@ -93,9 +99,30 @@ export default class Battle{
                 if(weilder.nextMove.activate(weilder, target) == "retreat"){ 
                     this.battlePhase = "retreat";
                 }
+                let counter = 0;
+                for(let j = 0; j < target.statusArray.length; j++){
+                    if(target.statusArray[counter].currentCharges <= 0){
+                        target.statusArray[counter].onRemove();
+                        target.statusArray.splice(counter, 1);
+                    }else{
+                        counter ++;
+                    }
+                }
+                counter = 0;
+                for(let j = 0; j < weilder.statusArray.length; j++){
+                    if(weilder.statusArray[counter].currentCharges <= 0){
+                        weilder.statusArray[counter].onRemove();
+                        weilder.statusArray.splice(counter, 1);
+                    }else{
+                        counter ++;
+                    }
+                }
                 theController.updatePlayerStats();
                 theController.updateEnemyStats();
                 if(this.checkBattleStatus() == true){//false means battle is still on
+                    for(let i = 0; i < this.player.statusArray.length; i++){
+                        this.player.statusArray[i].onRemove();
+                    }
                     theController.endBattle();
                 }else{
                     resolve();
@@ -111,11 +138,21 @@ export default class Battle{
     }
     loot(){
         let loot = this.enemy.dropLoot();
-        if(loot != ""){
-            this.player.inventory.push(loot);
-            theController.updatePlayerInventoryTab(this.player.inventory);
+        let itemList = "";
+        if(loot != "" || this.enemy.gold > 0){
+            if(loot != ""){
+                this.player.inventory.push(loot);
+                itemList = itemList + `${loot.name}, `;
+                theController.updatePlayerInventoryTab(this.player.inventory);
+            }
+            if(this.enemy.gold > 0){
+                itemList = itemList + `${this.enemy.gold} gold.`;
+                this.player.currentGold = this.player.currentGold + this.enemy.gold;
+            }else{
+                itemList[itemList.length-2] = ".";
+            }
+            theController.printToGameConsole(`${this.enemy.name} drops: ${itemList}`);
         }
-        this.player.currentGold = this.player.currentGold + this.enemy.gold
-        this.player.currentXP = this.player.currentXP + this.enemy.XP
+        this.player.currentXP = this.player.currentXP + this.enemy.XP;
     }
 }

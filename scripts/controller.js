@@ -50,7 +50,7 @@ export default class Controller {
             this.characterCreationArray[1] = document.getElementById("apperance-selection").value;
             this.characterCreationArray[2] = document.getElementById("background-selection").value;
             this.player = new Player(this.characterCreationArray);
-            this.map = new Map(0, "basic");
+            this.map = new Map(this.player.level, "basic");
             this.miniMap = new MiniMap();
             this.player.initializeRooms(this.map);
             document.getElementById("app").style.display = "block";
@@ -157,7 +157,7 @@ export default class Controller {
                 this.characterCreationArray[6] = 90;
                 break;
             case "hermit":
-                inventoryArray.push(new LightningStaff, new LeatherHood, new LinenShirt, new LinenPants, new LeatherBoots);
+                inventoryArray.push(new FireStaff, new LeatherHood, new LinenShirt, new LinenPants, new LeatherBoots);
                 this.characterCreationArray[6] = 70;
                 break;
         }
@@ -166,7 +166,7 @@ export default class Controller {
             case "none":
                 break;
             case "hunters-tools":
-                inventoryArray.push(new ThrowingKnife, new ThrowingKnife, new Net);
+                inventoryArray.push(new ThrowingKnife, new Net, new Net);
                 break;
             case "bag-of-potions":
                 inventoryArray.push(new HealthPotion, new StaminaPotion , new MagicPotion);
@@ -175,7 +175,7 @@ export default class Controller {
                 inventoryArray.push(new Meteorite);
                 break;
             case "herbal-medicine":
-                inventoryArray.push(new Antidote, new AloeRemedy);
+                inventoryArray.push(new HealthPotion, new Antidote, new AloeRemedy);
                 break;
             case "assasians-belt":
                 inventoryArray.push(new PoisonedKnife, new SmokeBomb, new ThrowingKnife);
@@ -497,6 +497,7 @@ export default class Controller {
     toggleBattle(enemy){
         this.battle = new Battle(this.player, enemy);
         this.player.canMoveRoom = false;
+        this.updatePlayerStats();
         this.updateEnemyStats();
         setTimeout(()=>{
             document.getElementById('enemy-name').innerText = this.capitalizeFirstLetter(this.battle.enemy.name);
@@ -830,6 +831,7 @@ export default class Controller {
         document.getElementById('current-arcane-defense').innerText = this.player.currentArcaneDefense; 
         document.getElementById('current-element-defense').innerText = this.player.currentElementalDefense;
         document.getElementById('current-experience').innerText = this.player.currentXP + " / " + Math.floor(((this.player.level + 10)**2)*0.5);
+        document.getElementById('current-gold').innerText = this.player.currentGold;
         for(let i = -1; i < this.player.statusArray.length; i++){
             let oldIcon = document.getElementById('player-status-icon-container').querySelector('img');
             if(oldIcon !== null){
@@ -837,6 +839,7 @@ export default class Controller {
             } 
         }
         for(let i = 0; i < this.player.statusArray.length; i++){
+        
             if(this.player.statusArray[i].iconSrc != ""){
                 let statusIcon = document.createElement('img');
                 statusIcon.classList.add('status-icon');
@@ -1042,7 +1045,7 @@ export default class Controller {
     }
     sellItem(inventoryIndex){
         if(this.player.isInBattle == false){
-            let price = Math.floor(this.player.inventory[inventoryIndex].price/10);
+            let price = Math.floor(this.player.inventory[inventoryIndex].price/4);
             this.printToGameConsole(`${this.player.name} sold ${this.player.inventory[inventoryIndex].name} for ${price} gold.`);
             this.player.currentGold = this.player.currentGold + price;
             this.player.inventory.splice(inventoryIndex, 1);

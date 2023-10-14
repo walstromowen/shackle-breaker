@@ -22,8 +22,14 @@ export class Decision{
         switch(decisionAttribute){
             case "certain":
                 return true;
-            case "none":
+            case "likely":
+                decisionAttribute = 12;
+                break;
+            case "neutral":
                 decisionAttribute = 8;
+                break;
+            case "unlikely":
+                decisionAttribute = 6;
                 break;
             case "vigor":
                 decisionAttribute = player.vigor;

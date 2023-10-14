@@ -9,7 +9,7 @@ export default class Player{
         this.equippedArray = ["Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"]; //[name, apperanceSrc, origin, inventory, attributesArray, StatsArray, ]
         this.inventory = characterCreationArray[3];
         this.abilityArray = [new Punch, new Recover, new Retreat];
-        this.level = 0;
+        this.level = 1;
         this.currentGold = characterCreationArray[6];
         this.currentXP = 0;
         this.vigor = characterCreationArray[4][0];

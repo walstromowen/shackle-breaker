@@ -19,6 +19,15 @@ class StatusEffect{
     onRemove(){
         
     }
+    onRecieveDamage(){
+
+    }
+    onDeliverDamage(){
+        
+    }
+    onApplied(){
+
+    }
     checkDamage(damage, target){
         if(damage < 0){
             return 0;
@@ -33,35 +42,39 @@ class StatusEffect{
         }
     }
 }
-export class Shielded extends StatusEffect{//curently has bug where if your next attack is first the reinfored effect is still apllied but it acually makes and interesting game mechanic
+export class Shielded extends StatusEffect{
     constructor(holder){
         super();
-        this.type = "end";
+        this.type = "buff";
         this.name = "shielded";
         this.iconSrc = "./media/icons/shielded.png";
         this.holder = holder;
         this.maxCharges = 1;
         this.currentCharges = this.maxCharges;
     }
-    onEndTurn(){
-        this.holder.currentBluntDefense = this.holder.currentBluntDefense + 5;
-        this.holder.currentPierceDefense = this.holder.currentPierceDefense + 5;
-        this.holder.currentArcaneDefense = this.holder.currentArcaneDefense + 5;
-        this.holder.currentElementalDefense = this.holder.currentElementalDefense + 5;
-        theController.printToGameConsole(`${this.holder.name} is Shielded!`);
-        this.currentCharges = this.currentCharges - 1;
+    onApplied(){
+        this.holder.currentBluntDefense = this.holder.currentBluntDefense + 10;
+        this.holder.currentPierceDefense = this.holder.currentPierceDefense + 10;
+        this.holder.currentArcaneDefense = this.holder.currentArcaneDefense + 10;
+        this.holder.currentElementalDefense = this.holder.currentElementalDefense + 10;  
     }
-    onStartTurn(){
-        this.holder.currentBluntDefense = this.holder.currentBluntDefense - 5;
-        this.holder.currentPierceDefense = this.holder.currentPierceDefense - 5;
-        this.holder.currentArcaneDefense = this.holder.currentArcaneDefense - 5;
-        this.holder.currentElementalDefense = this.holder.currentElementalDefense - 5;
+    onRecieveDamage(){
+        this.currentCharges = 0;
+    }
+    onDeliverDamage(){
+        this.currentCharges = 0;
+    }
+    onRemove(){
+        this.holder.currentBluntDefense = this.holder.currentBluntDefense - 10;
+        this.holder.currentPierceDefense = this.holder.currentPierceDefense - 10;
+        this.holder.currentArcaneDefense = this.holder.currentArcaneDefense - 10;
+        this.holder.currentElementalDefense = this.holder.currentElementalDefense - 10;
     }
 }
 export class Bound extends StatusEffect{
     constructor(holder){
         super();
-        this.type = "start";
+        this.type = "end";
         this.name = "bound";
         this.iconSrc = "./media/icons/crossed-chains.png";
         this.holder = holder;
@@ -69,16 +82,20 @@ export class Bound extends StatusEffect{
         this.currentCharges = this.maxCharges;
     }
     onStartTurn(){
-        if(Math.random()*2 < 1){
-            this.holder.nextMove = new Struggle;
+        this.holder.nextMove = new Struggle;
+        if(Math.random()*3 > 1){
             this.currentCharges = this.currentCharges - 1;
-            theController.printToGameConsole(`${this.holder.name} is bound!`);
         }else{
             this.currentCharges = this.currentCharges = 0;
-            theController.printToGameConsole(`${this.holder.name} breaks free!`);
+        }
+    }
+    onEndTurn(){
+        if(this.currentCharges > 0){
+            theController.printToGameConsole(`${this.holder.name} struggles to break free!`);
         }
     }
 }
+
 
 export class Poisoned extends StatusEffect{
     constructor(holder){
@@ -135,12 +152,14 @@ export class Empowered extends StatusEffect{
         this.currentCharges = this.maxCharges;
     }
     onEndTurn(){
-        this.holder.currentArcaneAttack = this.holder.currentArcaneDefense + 3;
-        this.holder.currentElementalAttack = this.holder.currentElementalDefense + 3;
         theController.printToGameConsole(`${this.holder.name} is empowered!`);
         this.currentCharges = this.currentCharges - 1;
     }
-    onStartTurn(){
+    onApplied(){
+        this.holder.currentArcaneAttack = this.holder.currentArcaneDefense + 3;
+        this.holder.currentElementalAttack = this.holder.currentElementalDefense + 3;
+    }
+    onRemove(){
         this.holder.currentArcaneAttack = this.holder.currentArcaneAttack - 3;
         this.holder.currentElementalAttack = this.holder.currentElementalDefense - 3;
     }
@@ -233,27 +252,35 @@ export class Hidden extends StatusEffect{
         super();
         this.type = "end";
         this.name = "hidden";
-        this.iconSrc = "";
+        this.iconSrc = "./media/icons/hidden.png";
         this.holder = holder;
-        this.maxCharges = 1;
+        this.maxCharges = 2;
         this.currentCharges = this.maxCharges;
     }
     onEndTurn(){
-        if(this.holder === theController.player){
-            theController.toggleElementClass("player-image", "black-and-white");
-        }else{
-            theController.toggleElementClass("enemy-image", "black-and-white");
-        }
         theController.printToGameConsole(`${this.holder.name} is hidden!`);
         this.currentCharges = this.currentCharges - 1;
-        this.holder.currentEvasion = this.holder.currentEvasion + 100;
     }
-    onStartTurn(){
+    onRemove(){
         if(this.holder === theController.player){
             theController.toggleElementClass("player-image", "black-and-white");
         }else{
             theController.toggleElementClass("enemy-image", "black-and-white");
         }
         this.holder.currentEvasion = this.holder.currentEvasion - 100;
+    }
+    onApplied(){
+        if(this.holder === theController.player){
+            theController.toggleElementClass("player-image", "black-and-white");
+        }else{
+            theController.toggleElementClass("enemy-image", "black-and-white");
+        }
+        this.holder.currentEvasion = this.holder.currentEvasion + 100;
+    }
+    onDeliverDamage(){
+        this.currentCharges = 0;
+    }
+    onRecieveDamage(){
+        this.currentCharges = 0;
     }
 }

@@ -1,5 +1,5 @@
 import {LockedTreasureChest, AltusAmbushOpportunity, MysteriousDoor, TravelingMerchant, AbandonedCabin, SuspiciousSkeleton, Robbery, Avalanche} from "./encounters.js";
-import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos, ShadowStrider, TerrorBear} from "./enemies.js";
+import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos, ShadowStrider, TerrorBear, Bandit} from "./enemies.js";
 
 export default class MapEnviorment{
     constructor(biome){
@@ -70,24 +70,28 @@ export default class MapEnviorment{
                         return;
                 }
             case "forest":
-                switch(Math.floor(Math.random()*3)){ 
+                switch(Math.floor(Math.random()*4)){ 
                     case 0:
                         return new Bat(playerLevel);
                     case 1:
                         return new Wolf(playerLevel);
                     case 2:
                         return new Groveguardian(playerLevel);
+                    case 3:
+                        return new Bandit(playerLevel);
                     default:
                         return;
                 }
             case "plains":
-                switch(Math.floor(Math.random()*3)){ 
+                switch(Math.floor(Math.random()*4)){ 
                     case 0:
                         return new Skeleton(playerLevel);
                     case 1:
                         return new Wolf(playerLevel);
                     case 2:
                         return new AltusMage(playerLevel);
+                    case 3:
+                        return new Bandit(playerLevel);
                     default:
                         return;
                 }

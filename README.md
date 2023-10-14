@@ -24,6 +24,9 @@ Text adventure game based on the ShackleBreaker story
 
 # Bugs
 * Image Flashing
+* mini Menu appears on level up and transisiton screens
+* Mini Menu sell button still active on ending encounter
+
 
 # MISC notes
 * Enemy Level ups disstribute 16 points between stats
@@ -32,4 +35,4 @@ Text adventure game based on the ShackleBreaker story
 - 0.5 (medium) 
 - 0.75 (fast)
 * Ability Attack formula
-- Math.floor(Math.random() * (max - min + 1)) + min;
+- Math.floor(Math.random() * (max - min) + min)

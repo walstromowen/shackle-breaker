@@ -31,11 +31,15 @@ export function toggleBattle(message, enemy){
     theController.toggleBattle(enemy);
     theController.player.nextRoom.enemy = enemy;
 }
-export function lootItems(message, itemArray){
+export function loot(message, itemArray, goldMin, goldMax){
     let itemList = "\n";
     for(let i = 0; i < itemArray.length; i++){
         theController.player.inventory.push(itemArray[i]);
         itemList = itemList + itemArray[i].name + "\n";
+    }
+    let goldAmount = Math.floor(Math.random() * (goldMax - goldMin) + goldMin);
+    if(goldAmount > 0){
+        itemList = itemList + `${goldAmount} gold.`;
     }
     theController.printToGameConsole(message + `${theController.player.name} finds the following items: ${itemList}.`);
     theController.updatePlayerInventoryTab(theController.player.inventory);
