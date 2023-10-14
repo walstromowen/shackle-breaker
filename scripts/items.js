@@ -830,6 +830,7 @@ export class IronHelmet {
         this.type = "head";
         this.imageSrc = "./media/icons/iron-helm.png";
         this.description = `a heavy iron helmet. A standard issue helmet among soldeirs and guards of the Altus kingdom.`;
+        this.level = 1;
         this.price = 200;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
@@ -866,7 +867,7 @@ export class IronGuantlets {
         this.type = "arms";
         this.imageSrc = "./media/icons/gauntelt.png";
         this.description = `heavy iron guantlets. standard issue guantlets among soldeirs and guards of the Altus kingdom.`;
-        this.level = 1;;
+        this.level = 1;
         this.price = 200;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
