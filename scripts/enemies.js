@@ -172,7 +172,7 @@ export class Wolf extends Enemy{
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 30;
         this.currentSpeed = this.baseSpeed;
-        this.baseEvasion = 15;
+        this.baseEvasion = 12;
         this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Bite, new Pounce];
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
@@ -437,7 +437,7 @@ export class ShadowStrider extends Enemy{
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 35;
         this.currentSpeed = this.baseSpeed;
-        this.baseEvasion = 20;
+        this.baseEvasion = 15;
         this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Bite, new LightningBolt, new BlinkStrike];
         this.statusArray = [new Channeled(this), new Invigorated(this)]
