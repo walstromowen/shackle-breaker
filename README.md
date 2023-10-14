@@ -10,12 +10,12 @@ Text adventure game based on the ShackleBreaker story
 * Shop/crafting/weapon/town
 * interact with stairs / loot bodies
 * Two Handing / Weapons equipable in either hand
-* Ability conflicts
 * Distance System in battle
 * Decision Success modifier
 * Bosses
 * Two attacks
 * Multiple enemies/ companions
+* trinket and waist slots
 
 # Quality of Life
 * random enemy stats

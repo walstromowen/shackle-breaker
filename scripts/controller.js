@@ -275,8 +275,8 @@ export default class Controller {
         });
         document.getElementById('map-button-container').appendChild(moveNorthBtn);
         document.getElementById('map-button-container').appendChild(moveSouthBtn);
-        document.getElementById('map-button-container').appendChild(moveEastBtn);
         document.getElementById('map-button-container').appendChild(moveWestBtn);
+        document.getElementById('map-button-container').appendChild(moveEastBtn);
         this.mapBtnArray.push(moveNorthBtn, moveSouthBtn, moveEastBtn, moveWestBtn);
     }
     enableInventoryControls(){
@@ -804,6 +804,11 @@ export default class Controller {
                 });
             }
             document.getElementById("current-gold").innerText = this.player.currentGold;
+            Array.from(miniMenu.getElementsByClassName("mini-menu-btn")).forEach(btn=>{
+                if(this.player.isInBattle == true){
+                    btn.style.visibility = "hidden";
+                }
+            });
         }
     }
     updatePlayerStats(){
@@ -1102,7 +1107,17 @@ export default class Controller {
         for(let x = 0; x < this.player.equippedArray.length; x ++){
             if(this.player.equippedArray[x] != "Empty"){
                 for(let y = 0; y < this.player.equippedArray[x].abilityArray.length; y ++){
-                    this.player.abilityArray.push(this.player.equippedArray[x].abilityArray[y]);
+                    //check if this ability name is not already in current player ability array
+                    let flag = true;
+                    for(let z = 0; z < this.player.abilityArray.length; z++){
+                        if(this.player.abilityArray[z].name == this.player.equippedArray[x].abilityArray[y].name){
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if(flag == true){
+                        this.player.abilityArray.push(this.player.equippedArray[x].abilityArray[y]);
+                    }
                 }
             }
         }

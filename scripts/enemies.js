@@ -448,7 +448,7 @@ export class ShadowStrider extends Enemy{
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
-        this.incrementStats(playerLevel, 2,3,1,2,2,1,1,1,1,1,1);
+        this.incrementStats(playerLevel, 2,2,1,2,2,1,2,1,1,1,1);
         this.gold = Math.floor(Math.random() * (15*playerLevel - 5*playerLevel + 1) + 5*playerLevel);
         this.XP = 40;
     }
