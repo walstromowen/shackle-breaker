@@ -1,9 +1,9 @@
 # ShackleBreaker
-Text adventure game based on the ShackleBreaker story
+Text adventure game based on the Shackle Breaker story
 
 ## TODO
 
-# New Features
+# Planned Features
 * Parrying System
 * Attack Animations
 * Mew Mini Map/ map culling
@@ -17,7 +17,7 @@ Text adventure game based on the ShackleBreaker story
 * Multiple enemies/ companions
 * trinket and waist slots
 
-# Quality of Life
+# Planned Quality of Life Improvements
 * random enemy stats
 * Alphabetize CSS rules
 * scaling
@@ -25,7 +25,7 @@ Text adventure game based on the ShackleBreaker story
 # Bugs
 * Image Flashing
 * mini Menu appears on level up and transisiton screens
-* Mini Menu sell button still active on ending encounter
+* super stong enemies on unexplored tiles when farming a map
 
 
 # MISC notes
@@ -36,3 +36,5 @@ Text adventure game based on the ShackleBreaker story
 - 0.75 (fast)
 * Ability Attack formula
 - Math.floor(Math.random() * (max - min+ 1) + min)
+- Enemy stat increments 40pts = 20 player attribute, points resource stats double wieghted
+- player attribute increments 20 attribute Points, resource stats double wieghted

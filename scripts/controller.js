@@ -134,31 +134,31 @@ export default class Controller {
         switch(value){
             case "traveler":
                 inventoryArray.push(new Shortsword, new Buckler, new LinenShirt, new LinenPants, new LeatherBoots);
-                this.characterCreationArray[6] = 100;
+                this.characterCreationArray[6] = 150;
                 break;
             case "blacksmith":
                 inventoryArray.push(new BlacksmithHammer, new IronHelmet, new LinenShirt, new LinenPants, new LeatherBoots);
-                this.characterCreationArray[6] = 90;
+                this.characterCreationArray[6] = 120;
                 break;
             case "ranger":
                 inventoryArray.push(new Shortsword, new LeatherHood, new LinenShirt, new LinenPants, new LeatherBoots);
-                this.characterCreationArray[6] = 70;
+                this.characterCreationArray[6] = 120;
                 break;
             case "scholar":
                 inventoryArray.push(new ArcaneStaff, new ClothHood, new LinenShirt, new LinenPants, new LeatherBoots);
-                this.characterCreationArray[6] = 80;
+                this.characterCreationArray[6] = 100;
                 break;
             case "soldier":
                 inventoryArray.push(new Longsword, new LeatherChestplate, new LinenPants, new LeatherBoots);
-                this.characterCreationArray[6] = 80;
+                this.characterCreationArray[6] = 100;
                 break;
             case "theif":
                 inventoryArray.push(new Dagger, new Shiv, new LinenShirt, new LinenPants, new LeatherBoots);
-                this.characterCreationArray[6] = 90;
+                this.characterCreationArray[6] = 100;
                 break;
             case "hermit":
                 inventoryArray.push(new FireStaff, new ClothHood, new LinenShirt, new LinenPants, new LeatherBoots);
-                this.characterCreationArray[6] = 70;
+                this.characterCreationArray[6] = 100;
                 break;
         }
         let value2 = document.getElementById("keepsake-selection").value;
@@ -1064,7 +1064,7 @@ export default class Controller {
             let upgradeCost = Math.floor(this.player.inventory[inventoryIndex].price * 1.25)
             if(this.player.currentGold >= upgradeCost){
                 this.player.currentGold = this.player.currentGold - upgradeCost;
-                this.printToGameConsole(`${this.player.name} spends ${upgradeCost} to upgrade ${this.player.inventory[inventoryIndex].name}.`);
+                this.printToGameConsole(`${this.player.name} spends ${upgradeCost} gold to upgrade ${this.player.inventory[inventoryIndex].name}.`);
                 this.player.inventory[inventoryIndex].upgrade(1);
                 this.updatePlayerInventoryTab(this.player.inventory);
             }
@@ -1288,17 +1288,17 @@ export default class Controller {
         document.getElementById('sound-effect-player').play();  
     }
     scaleAttributes(vigor, endurance, strength, dexterity, insight, focus){
-        let maxHP = (vigor * 8) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 1) + (focus * 1);
-        let maxStamina = (vigor * 1) + (endurance * 6) + (strength * 2) + (dexterity * 2) + (insight * 1) + (focus * 1);
-        let maxMagic = (vigor * 1) + (endurance * 6) + (strength * 1) + (dexterity * 1) + (insight * 2) + (focus * 2);
-        let baseBluntAttack = (vigor * 1) + (endurance * 1) + (strength * 3) + (dexterity * 1) + (insight * 1) + (focus * 1);
-        let basePierceAttack = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 3) + (insight * 1) + (focus * 1);
-        let baseArcaneAttack = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 3) + (focus * 1);
-        let baseElementalAttack = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 1) + (focus * 3);
-        let baseBluntDefense = (vigor * 1) + (endurance * 1) + (strength * 2) + (dexterity * 1) + (insight * 1) + (focus * 1);
-        let basePierceDefense = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 2) + (insight * 1) + (focus * 1);
-        let baseArcaneDefense = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 2) + (focus * 1);
-        let baseElementalDefense = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 1) + (focus * 2);
+        let maxHP = (vigor * 12) + (endurance * 4) + (strength * 2) + (dexterity * 2) + (insight * 2) + (focus * 2);
+        let maxStamina = (vigor * 2) + (endurance * 6) + (strength * 4) + (dexterity * 4) + (insight * 2) + (focus * 2);
+        let maxMagic = (vigor * 2) + (endurance * 6) + (strength * 2) + (dexterity * 2) + (insight * 4) + (focus * 4);
+        let baseBluntAttack = (vigor * 1) + (endurance * 1) + (strength * 4) + (dexterity * 2) + (insight * 2) + (focus * 2);
+        let basePierceAttack = (vigor * 1) + (endurance * 1) + (strength * 2) + (dexterity * 4) + (insight * 2) + (focus * 2);
+        let baseArcaneAttack = (vigor * 1) + (endurance * 1) + (strength * 2) + (dexterity * 2) + (insight * 4) + (focus * 2);
+        let baseElementalAttack = (vigor * 1) + (endurance * 1) + (strength * 2) + (dexterity * 2) + (insight * 2) + (focus * 4);
+        let baseBluntDefense = (vigor * 2) + (endurance * 2) + (strength * 3) + (dexterity * 1) + (insight * 1) + (focus * 1);
+        let basePierceDefense = (vigor * 2) + (endurance * 2) + (strength * 1) + (dexterity * 3) + (insight * 1) + (focus * 1);
+        let baseArcaneDefense = (vigor * 2) + (endurance * 2) + (strength * 1) + (dexterity * 1) + (insight * 3) + (focus * 1);
+        let baseElementalDefense = (vigor * 2) + (endurance * 2) + (strength * 1) + (dexterity * 1) + (insight * 1) + (focus * 3);
         return [maxHP, maxStamina, maxMagic, baseBluntAttack, basePierceAttack, baseArcaneAttack, baseElementalAttack, baseBluntDefense, basePierceDefense, baseArcaneDefense, baseElementalDefense];
     }
 }

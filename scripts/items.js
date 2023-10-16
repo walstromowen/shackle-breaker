@@ -18,7 +18,7 @@ export class LinenShirt {
         this.imageSrc = "./media/icons/shirt.png";
         this.description = "A heavily worn linen shirt. Standard article of clothing for citizens of the Altus kingdom, or rather, whats left of them."
         this.level = 1;
-        this.price = 20;
+        this.price = 50;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -34,7 +34,7 @@ export class LinenShirt {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 0;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -55,7 +55,7 @@ export class LinenPants {
         this.imageSrc = "./media/icons/trousers.png";
         this.description = "A heavily worn pair of linen trousers. Standard article of clothing for citizens of the Altus kingdom, or rather, whats left of them.";
         this.level = 1;
-        this.price = 20;
+        this.price = 50;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -71,7 +71,7 @@ export class LinenPants {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 0;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -92,7 +92,7 @@ export class Dagger {
         this.imageSrc = "./media/icons/dagger.png";
         this.description = 'A simple dagger. "Often times, a duel is another way of saying who can draw their weapon fastest" - Commander Mentoras.';
         this.level = 1;
-        this.price = 50;
+        this.price = 200;
         this.bluntAttack = 1;
         this.pierceAttack = 2;
         this.arcaneAttack = 0;
@@ -108,7 +108,7 @@ export class Dagger {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 1;
             this.pierceAttack = this.pierceAttack + 2;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -117,8 +117,8 @@ export class Dagger {
             this.pierceDefense = this.pierceDefense + 0;
             this.arcaneDefense = this.arcaneDefense + 0;
             this.elementalDefense = this.elementalDefense + 0;
-            this.speed = this.speed + 0;
-            this.evasion = this.evasion + 1;
+            this.speed = this.speed + 1;
+            this.evasion = this.evasion + 0;
         }
     }
 }
@@ -129,7 +129,7 @@ export class BlacksmithHammer {
         this.imageSrc = "./media/icons/blacksmith-hammer.png";
         this.description = "A blacksmith's hammer. Since what many consider to be the fall of Altus kingdom, quality weapons are hard to come by. Perhaps this explains the blood stains on this ordinary hammer";
         this.level = 1;
-        this.price = 100;
+        this.price = 200;
         this.bluntAttack = 2;
         this.pierceAttack = 1;
         this.arcaneAttack = 0;
@@ -145,7 +145,7 @@ export class BlacksmithHammer {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 2;
             this.pierceAttack = this.pierceAttack + 1;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -166,9 +166,9 @@ export class Spear {
         this.imageSrc = "./media/icons/spear.png";
         this.description = `A standard spear. Standard issue spear of the Altus guard. "Keep your friends close and your enemies at spear's length" - Commander Mentoras.`;
         this.level = 1;
-        this.price = 100;
+        this.price = 200;
         this.bluntAttack = 1;
-        this.pierceAttack = 4;
+        this.pierceAttack = 5;
         this.arcaneAttack = 0;
         this.elementalAttack = 0;
         this.bluntDefense = 0;
@@ -182,9 +182,9 @@ export class Spear {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 1;
-            this.pierceAttack = this.pierceAttack + 2;
+            this.pierceAttack = this.pierceAttack + 3;
             this.arcaneAttack = this.arcaneAttack + 0;
             this.elementalAttack = this.elementalAttack + 0;
             this.bluntDefense = this.bluntDefense + 0;
@@ -203,7 +203,7 @@ export class Shortsword {
         this.imageSrc = "./media/icons/shortsword.png";
         this.description = `A standard shortsword. Standard issue shortsword of the Altus guard. "A shorter longsword is a faster longsword" - Commander Mentoras.`;
         this.level = 1;
-        this.price = 100;
+        this.price = 200;
         this.bluntAttack = 3;
         this.pierceAttack = 3;
         this.arcaneAttack = 0;
@@ -219,7 +219,7 @@ export class Shortsword {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 2;
             this.pierceAttack = this.pierceAttack + 2;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -243,25 +243,25 @@ export class Longsword {
         this.imageSrc = "./media/icons/longsword.png";
         this.description = `A standard longsword. Standard issue longsword of the Altus guard. "A longsword for you too huh? Well, can't say I blame you" - Commander Mentoras.`;
         this.level = 1;
-        this.price = 150;
+        this.price = 200;
         this.bluntAttack = 3;
-        this.pierceAttack = 5;
+        this.pierceAttack = 4;
         this.arcaneAttack = 0;
         this.elementalAttack = 0;
         this.bluntDefense = 0;
         this.pierceDefense = 0;
         this.arcaneDefense = 0;
         this.elementalDefense = 0;
-        this.speed = 1;
+        this.speed = 0;
         this.evasion = 0;
         this.abilityArray = [new Stab(), new Slash()];
     }
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 2;
-            this.pierceAttack = this.pierceAttack + 2;
+            this.pierceAttack = this.pierceAttack + 3;
             this.arcaneAttack = this.arcaneAttack + 0;
             this.elementalAttack = this.elementalAttack + 0;
             this.bluntDefense = this.bluntDefense + 0;
@@ -283,7 +283,7 @@ export class Shiv {
         this.imageSrc = "./media/icons/dagger.png";
         this.description = `A crude shiv. Weapons like these were often concealed prisioners enroute to Altus prisions. Ironically, prisoners were bound with chains preventing movement of any kind and many died with the shivs still in their garmets.`;
         this.level = 1;
-        this.price = 100;
+        this.price = 200;
         this.bluntAttack = 1;
         this.pierceAttack = 1;
         this.arcaneAttack = 0;
@@ -299,7 +299,7 @@ export class Shiv {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 0;
             this.pierceAttack = this.pierceAttack + 1;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -320,7 +320,7 @@ export class Buckler {
         this.imageSrc = "./media/icons/round-shield.png";
         this.description = `A wooden buckler. A buckler fashioned from hard wood. A blue and green symbol of unknown origin is painted on its front`;
         this.level = 1;
-        this.price = 100;
+        this.price = 200;
         this.bluntAttack = 1;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -336,7 +336,7 @@ export class Buckler {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 1;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -373,7 +373,7 @@ export class FireStaff {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 1;
             this.pierceAttack = this.pierceAttack + 1;
             this.arcaneAttack = this.arcaneAttack + 1;
@@ -410,7 +410,7 @@ export class LightningStaff {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 1;
             this.pierceAttack = this.pierceAttack + 1;
             this.arcaneAttack = this.arcaneAttack + 1;
@@ -447,7 +447,7 @@ export class IceStaff {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 1;
             this.pierceAttack = this.pierceAttack + 1;
             this.arcaneAttack = this.arcaneAttack + 1;
@@ -484,7 +484,7 @@ export class ArcaneStaff {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 1;
             this.pierceAttack = this.pierceAttack + 1;
             this.arcaneAttack = this.arcaneAttack + 1;
@@ -521,7 +521,7 @@ export class LightStaff {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 1;
             this.pierceAttack = this.pierceAttack + 1;
             this.arcaneAttack = this.arcaneAttack + 1;
@@ -558,7 +558,7 @@ export class DarkStaff {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 1;
             this.pierceAttack = this.pierceAttack + 1;
             this.arcaneAttack = this.arcaneAttack + 1;
@@ -579,7 +579,7 @@ export class LeatherHelmet {
         this.imageSrc = "./media/icons/light-helm.png";
         this.description = `a leather helmet. A standard issue helmet among scouts and archers of the Altus kingdom.`;
         this.level = 1;
-        this.price = 200;
+        this.price = 100;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -595,7 +595,7 @@ export class LeatherHelmet {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 0;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -616,7 +616,7 @@ export class LeatherHood {
         this.imageSrc = "./media/icons/hood.png";
         this.description = `A hood that obscures the face made of dark leather. Although most indulged in the discovery of magic, there were a few that found it ominous.`;
         this.level = 1;
-        this.price = 200;
+        this.price = 100;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -632,7 +632,7 @@ export class LeatherHood {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 0;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -653,7 +653,7 @@ export class LeatherGloves {
         this.imageSrc = "./media/icons/gauntlet.png";
         this.description = `leather gloves. A common article of clothing among worker of the Altus kingdom. With the discovery of magic, many in the altus kingdom lost appreciation for common safety practices like hand protection`;
         this.level = 1;
-        this.price = 200;
+        this.price = 100;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -669,7 +669,7 @@ export class LeatherGloves {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 0;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -690,7 +690,7 @@ export class LeatherChestplate {
         this.imageSrc = "./media/icons/leather-armor.png";
         this.description = `a leather chestplate.A standard issue chestplate among scouts and archers of the Altus kingdom.`;
         this.level = 1;
-        this.price = 200;
+        this.price = 100;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -706,7 +706,7 @@ export class LeatherChestplate {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 0;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -727,7 +727,7 @@ export class LeatherGreaves {
         this.imageSrc = "./media/icons/armored-pants.png";
         this.description = `leather greaves. Standard issue greaves among scouts and archers of the Altus kingdom.`;
         this.level = 1;
-        this.price = 200;
+        this.price = 100;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -743,7 +743,7 @@ export class LeatherGreaves {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 0;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -764,7 +764,7 @@ export class LeatherBoots {
         this.imageSrc = "./media/icons/boots.png";
         this.description = `reliable leather boots. With the discovery of magic, travelers from all over came to Altus kingdom. Few ever left.`;
         this.level = 1;
-        this.price = 200;
+        this.price = 100;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -780,7 +780,7 @@ export class LeatherBoots {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 0;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -817,7 +817,7 @@ export class KiteShield {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 0;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -838,7 +838,7 @@ export class IronHelmet {
         this.imageSrc = "./media/icons/iron-helm.png";
         this.description = `a heavy iron helmet. A standard issue helmet among soldeirs and guards of the Altus kingdom.`;
         this.level = 1;
-        this.price = 200;
+        this.price = 100;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -854,7 +854,7 @@ export class IronHelmet {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 0;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -875,7 +875,7 @@ export class IronGuantlets {
         this.imageSrc = "./media/icons/gauntelt.png";
         this.description = `heavy iron guantlets. standard issue guantlets among soldeirs and guards of the Altus kingdom.`;
         this.level = 1;
-        this.price = 200;
+        this.price = 100;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -891,7 +891,7 @@ export class IronGuantlets {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 0;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -912,7 +912,7 @@ export class IronChainmail {
         this.imageSrc = "./media/icons/chain-mail.png";
         this.description = `heavy iron chainmail. standard issue chainmail among soldeirs and guards of the Altus kingdom.`;
         this.level = 1;
-        this.price = 200;
+        this.price = 100;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -928,7 +928,7 @@ export class IronChainmail {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 0;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -949,7 +949,7 @@ export class IronGreaves {
         this.imageSrc = "./media/icons/armored-pants.png";
         this.description = `heavy iron greaves. standard issue greaves among soldeirs and guards of the Altus kingdom.`;
         this.level = 1;
-        this.price = 200;
+        this.price = 100;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -965,7 +965,7 @@ export class IronGreaves {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 0;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -986,7 +986,7 @@ export class IronBoots {
         this.imageSrc = "./media/icons/leg-armor.png";
         this.description = `heavy iron greaves. standard issue greaves among soldeirs and guards of the Altus kingdom.`;
         this.level = 1;
-        this.price = 200;
+        this.price = 100;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -1002,7 +1002,7 @@ export class IronBoots {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 0;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -1023,7 +1023,7 @@ export class ClothHood {
         this.imageSrc = "./media/icons/cowled.png";
         this.description = `a thick cloth hood. Garmets like this were common among the many seeking to gain quick riches from the discovery of magic in the Altus kingdom.`;
         this.level = 1;
-        this.price = 200;
+        this.price = 100;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -1039,7 +1039,7 @@ export class ClothHood {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 0;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -1060,7 +1060,7 @@ export class ClothRobe {
         this.imageSrc = "./media/icons/robe.png";
         this.description = `a thick cloth robe. Garmets like this were common among the many seeking to gain quick riches from the discovery of magic in the Altus kingdom.`;
         this.level = 1;
-        this.price = 200;
+        this.price = 100;
         this.bluntAttack = 0;
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
@@ -1076,7 +1076,7 @@ export class ClothRobe {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 0;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -1113,7 +1113,7 @@ export class CrystalBall {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
+            this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 0;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 1;
@@ -1135,8 +1135,8 @@ export class NamuhSword {
         this.description = `a Numuh longsword. The Namuh are a shadowy and mysterious people who mainly communicate through sign language. Much like this blade, they rarely make a sound.`;
         this.level = 1;
         this.price = 300;
-        this.bluntAttack = 1;
-        this.pierceAttack = 3;
+        this.bluntAttack = 2;
+        this.pierceAttack = 6;
         this.arcaneAttack = 2;
         this.elementalAttack = 0;
         this.bluntDefense = 0;
@@ -1150,17 +1150,17 @@ export class NamuhSword {
     upgrade(levels){
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
-            this.price = this.price * 1.5;
-            this.bluntAttack = this.bluntAttack + 1;
-            this.pierceAttack = this.pierceAttack + 2;
+            this.price = Math.floor(this.price * 1.5);
+            this.bluntAttack = this.bluntAttack + 2;
+            this.pierceAttack = this.pierceAttack + 3;
             this.arcaneAttack = this.arcaneAttack + 2;
             this.elementalAttack = this.elementalAttack + 0;
             this.bluntDefense = this.bluntDefense + 0;
             this.pierceDefense = this.pierceDefense + 0;
             this.arcaneDefense = this.arcaneDefense + 0;
             this.elementalDefense = this.elementalDefense + 0;
-            this.speed = this.speed + 0;
-            this.evasion = this.evasion + 0;
+            this.speed = this.speed + 1;
+            this.evasion = this.evasion + 1;
         }
         if(this.level == 3){
             this.abilityArray.push(new Flurry());

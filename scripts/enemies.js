@@ -11,6 +11,7 @@ import { Channeled, Invigorated } from "./statusEffects.js";
 
 class Enemy{
     constructor(){
+        this.level = 0;
         this.statusArray = [];
     }
     chooseAttack(){
@@ -23,31 +24,45 @@ class Enemy{
             return "";
         }
     }
-    incrementStats(playerLevel, maxHPInc, maxStaminaInc, maxMagicInc, 
-                    baseBluntAttackInc, basePierceAttackInc, baseArcaneAttackInc, baseElementalAttackInc, 
-                    baseBluntDefenseInc, basePierceDefenseInc, baseArcaneDefenseInc, baseElementalDefenseInc){
-        this.maxHP = this.maxHP + (playerLevel - 1) *maxHPInc; 
-        this.currentHP = this.currentHP + (playerLevel - 1) *maxHPInc;
-        this.maxStamina = this.maxStamina + (playerLevel - 1) *maxStaminaInc; 
-        this.currentStamina = this.currentStamina + (playerLevel - 1) *maxStaminaInc;
-        this.maxMagic = this.maxMagic + (playerLevel - 1) *maxMagicInc; 
-        this.currentMagic = this.currentMagic + (playerLevel - 1) *maxMagicInc;
-        this.baseBluntAttack = this.baseBluntAttack + (playerLevel - 1) *baseBluntAttackInc; 
-        this.currentBluntAttack = this.currentBluntAttack + (playerLevel - 1) *baseBluntAttackInc;
-        this.basePierceAttack = this.basePierceAttack + (playerLevel - 1) *basePierceAttackInc; 
-        this.currentPierceAttack = this.currentPierceAttack + (playerLevel - 1) *basePierceAttackInc;
-        this.baseArcaneAttack = this.baseArcaneAttack + (playerLevel - 1) *baseArcaneAttackInc; 
-        this.currentArcaneAttack = this.currentArcaneAttack + (playerLevel - 1) *baseArcaneAttackInc;
-        this.baseElementalAttack = this.baseElementalAttack + (playerLevel - 1) *baseElementalAttackInc; 
-        this.currentElementalAttack = this.currentElementalAttack + (playerLevel - 1) *baseElementalAttackInc;
-        this.baseBluntDefense = this.baseBluntDefense + (playerLevel - 1) *baseBluntDefenseInc; 
-        this.currentBluntDefense = this.currentBluntDefense + (playerLevel - 1) *baseBluntDefenseInc;
-        this.basePierceDefense = this.basePierceDefense + (playerLevel - 1) *basePierceDefenseInc; 
-        this.currentPierceDefense = this.currentPierceDefense + (playerLevel - 1) *basePierceDefenseInc;
-        this.baseArcaneDefense = this.baseArcaneDefense + (playerLevel - 1) *baseArcaneDefenseInc; 
-        this.currentArcaneDefense = this.currentArcaneDefense + (playerLevel - 1) *baseArcaneDefenseInc;
-        this.baseElementalDefense = this.baseElementalDefense + (playerLevel - 1) *baseElementalDefenseInc; 
-        this.currentElementalDefense = this.currentElementalDefense + (playerLevel - 1) *baseElementalDefenseInc;
+    incrementStats(playerLevel, maxHPRange, maxStaminaRange, maxMagicRange, 
+        baseBluntAttackRange, basePierceAttackRange, baseArcaneAttackRange, baseElementalAttackRange, 
+        baseBluntDefenseRange, basePierceDefenseRange, baseArcaneDefenseRange, baseElementalDefenseRange){
+        for(let i = 0; i < (playerLevel - this.level); i++){
+            let value = Math.floor(Math.random()*(maxHPRange[1] - maxHPRange[0] + 1) + maxHPRange[0]);
+            this.maxHP = this.maxHP + value; 
+            this.currentHP = this.currentHP + value;
+            value = Math.floor(Math.random()*(maxStaminaRange[1] - maxStaminaRange[0] + 1) + maxStaminaRange[0]);
+            this.maxStamina = this.maxStamina + value; 
+            this.currentStamina = this.currentStamina + value; 
+            value = Math.floor(Math.random()*(maxMagicRange[1] - maxMagicRange[0] + 1) + maxMagicRange[0]);
+            this.maxMagic = this.maxMagic + value; 
+            this.currentMagic = this.currentMagic + value; 
+            value = Math.floor(Math.random()*(baseBluntAttackRange[1] - baseBluntAttackRange[0] + 1) + baseBluntAttackRange[0]);
+            this.baseBluntAttack = this.baseBluntAttack + value; 
+            this.currentBluntAttack = this.currentBluntAttack + value; 
+            value = Math.floor(Math.random()*(basePierceAttackRange[1] - basePierceAttackRange[0] + 1) + basePierceAttackRange[0]);
+            this.basePierceAttack = this.basePierceAttack + value; 
+            this.currentPierceAttack = this.currentPierceAttack + value; 
+            value = Math.floor(Math.random()*(baseArcaneAttackRange[1] - baseArcaneAttackRange[0] + 1) + baseArcaneAttackRange[0]);
+            this.baseArcaneAttack = this.baseArcaneAttack + value; 
+            this.currentArcaneAttack = this.currentArcaneAttack + value; 
+            value = Math.floor(Math.random()*(baseElementalAttackRange[1] - baseElementalAttackRange[0] + 1) + baseElementalAttackRange[0]);
+            this.baseElementalAttack = this.baseElementalAttack + value; 
+            this.currentElementalAttack = this.currentElementalAttack + value; 
+            value = Math.floor(Math.random()*(baseBluntDefenseRange[1] - baseBluntDefenseRange[0] + 1) + baseBluntDefenseRange[0]);
+            this.baseBluntDefense = this.baseBluntDefense + value; 
+            this.currentBluntDefense = this.currentBluntDefense + value; 
+            value = Math.floor(Math.random()*(basePierceDefenseRange[1] - basePierceDefenseRange[0] + 1) + basePierceDefenseRange[0]);
+            this.basePierceDefense = this.basePierceDefense + value; 
+            this.currentPierceDefense = this.currentPierceDefense + value; 
+            value = Math.floor(Math.random()*(baseArcaneDefenseRange[1] - baseArcaneDefenseRange[0] + 1) + baseArcaneDefenseRange[0]);
+            this.baseArcaneDefense = this.baseArcaneDefense + value; 
+            this.currentArcaneDefense = this.currentArcaneDefense + value; 
+            value = Math.floor(Math.random()*(baseElementalDefenseRange[1] - baseElementalDefenseRange[0] + 1) + baseElementalDefenseRange[0]);
+            this.baseElementalDefense = this.baseElementalDefense + value; 
+            this.currentElementalDefense = this.currentElementalDefense + value;
+        }
+        this.level = playerLevel;
     }
 }
 export class Skeleton extends Enemy{
@@ -55,27 +70,27 @@ export class Skeleton extends Enemy{
         super();
         this.name = "skeleton";
         this.imageSrc = "media/skeleton.jpg"
-        this.maxHP = 35;
+        this.maxHP = 60;
         this.currentHP = this.maxHP;
-        this.maxStamina = 35;
+        this.maxStamina = 60;
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 35;
+        this.maxMagic = 60;
         this.currentMagic = this.maxMagic;
-        this.baseBluntAttack = 45;
+        this.baseBluntAttack = 60;
         this.currentBluntAttack = this.baseBluntAttack;
-        this.basePierceAttack = 45;
+        this.basePierceAttack = 60;
         this.currentPierceAttack = this.basePierceAttack;
-        this.baseArcaneAttack = 45; 
+        this.baseArcaneAttack = 60; 
         this.currentArcaneAttack = this.baseArcaneAttack;
-        this.baseElementalAttack = 45;
+        this.baseElementalAttack = 60;
         this.currentElementalAttack = this.baseElementalAttack;
-        this.baseBluntDefense = 35;
+        this.baseBluntDefense = 48;
         this.currentBluntDefense = this.baseBluntDefense;
-        this.basePierceDefense = 40;
+        this.basePierceDefense = 52;
         this.currentPierceDefense = this.basePierceDefense;
-        this.baseArcaneDefense = 35;
+        this.baseArcaneDefense = 50;
         this.currentArcaneDefense = this.baseArcaneDefense;
-        this.baseElementalDefense = 35;
+        this.baseElementalDefense = 50;
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 25;
         this.currentSpeed = this.baseSpeed;
@@ -94,8 +109,8 @@ export class Skeleton extends Enemy{
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
-        this.incrementStats(playerLevel, 2,1,1,2,2,2,1,1,1,2,1,1);
-        this.gold = Math.floor(Math.random() * (15*playerLevel - 5*playerLevel + 1) + 5*playerLevel);
+        this.incrementStats(playerLevel, [2,6], [2,6], [0,4], [2,3], [2,3], [0,2], [0,2], [1,2], [2,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + playerLevel/2));
         this.XP = 35;
     }
 }
@@ -104,27 +119,27 @@ export class Bat extends Enemy{
         super();
         this.name = "bat";
         this.imageSrc = "media/bat.jpg"
-        this.maxHP = 20;
+        this.maxHP = 40;
         this.currentHP = this.maxHP;
-        this.maxStamina = 20;
+        this.maxStamina = 30;
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 20;
+        this.maxMagic = 30;
         this.currentMagic = this.maxMagic;
-        this.baseBluntAttack = 45;
+        this.baseBluntAttack = 60;
         this.currentBluntAttack = this.baseBluntAttack;
-        this.basePierceAttack = 45;
+        this.basePierceAttack = 60;
         this.currentPierceAttack = this.basePierceAttack;
-        this.baseArcaneAttack = 45;
+        this.baseArcaneAttack = 60; 
         this.currentArcaneAttack = this.baseArcaneAttack;
-        this.baseElementalAttack = 45;
+        this.baseElementalAttack = 60;
         this.currentElementalAttack = this.baseElementalAttack;
-        this.baseBluntDefense = 35;
+        this.baseBluntDefense = 50;
         this.currentBluntDefense = this.baseBluntDefense;
-        this.basePierceDefense = 35;
+        this.basePierceDefense = 50;
         this.currentPierceDefense = this.basePierceDefense;
-        this.baseArcaneDefense = 35;
+        this.baseArcaneDefense = 50;
         this.currentArcaneDefense = this.baseArcaneDefense;
-        this.baseElementalDefense = 35;
+        this.baseElementalDefense = 50;
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 30;
         this.currentSpeed = this.baseSpeed;
@@ -138,8 +153,8 @@ export class Bat extends Enemy{
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
-        this.incrementStats(playerLevel, 2,2,1,2,2,2,1,1,1,1,1);
-        this.gold = Math.floor(Math.random() * (15*playerLevel - 5*playerLevel + 1) + 5*playerLevel);
+        this.incrementStats(playerLevel, [2,4], [2,6], [0,4], [1,3], [2,3], [1,2], [1,2], [1,3], [1,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (10 - 5 + 1) + 5) * (1 + playerLevel/5));
         this.XP = 20;
     }
 }
@@ -148,27 +163,27 @@ export class Wolf extends Enemy{
         super();
         this.name = "wolf";
         this.imageSrc = "media/wolf.jpg"
-        this.maxHP =  30;
+        this.maxHP =  50;
         this.currentHP = this.maxHP;
-        this.maxStamina = 30;
+        this.maxStamina = 50;
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 15;
+        this.maxMagic = 30;
         this.currentMagic = this.maxMagic;
-        this.baseBluntAttack = 45;
+        this.baseBluntAttack = 60;
         this.currentBluntAttack = this.baseBluntAttack;
-        this.basePierceAttack = 45;
+        this.basePierceAttack = 60;
         this.currentPierceAttack = this.basePierceAttack;
-        this.baseArcaneAttack = 45;
+        this.baseArcaneAttack = 60; 
         this.currentArcaneAttack = this.baseArcaneAttack;
-        this.baseElementalAttack = 45;
+        this.baseElementalAttack = 60;
         this.currentElementalAttack = this.baseElementalAttack;
-        this.baseBluntDefense = 35;
+        this.baseBluntDefense = 50;
         this.currentBluntDefense = this.baseBluntDefense;
-        this.basePierceDefense = 35;
+        this.basePierceDefense = 50;
         this.currentPierceDefense = this.basePierceDefense;
-        this.baseArcaneDefense = 35;
+        this.baseArcaneDefense = 50;
         this.currentArcaneDefense = this.baseArcaneDefense;
-        this.baseElementalDefense = 35;
+        this.baseElementalDefense = 50;
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 30;
         this.currentSpeed = this.baseSpeed;
@@ -182,8 +197,8 @@ export class Wolf extends Enemy{
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
-        this.incrementStats(playerLevel, 2,3,1,2,2,1,1,1,1,1,1);
-        this.gold = Math.floor(Math.random() * (15*playerLevel - 5*playerLevel + 1) + 5*playerLevel);
+        this.incrementStats(playerLevel, [2,6], [4,6], [0,4], [1,3], [2,3], [0,2], [0,2], [1,3], [1,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (10 - 5 + 1) + 5) * (1 + playerLevel/2));
         this.XP = 30;
     }
 }
@@ -192,27 +207,27 @@ export class AltusMage extends Enemy{
         super();
         this.name = "altus mage";
         this.imageSrc = "media/altus-mage.jpg"
-        this.maxHP = 45;
+        this.maxHP = 70;
         this.currentHP = this.maxHP;
-        this.maxStamina = 35;
+        this.maxStamina = 50;
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 45;
+        this.maxMagic = 70;
         this.currentMagic = this.maxMagic;
-        this.baseBluntAttack = 40;
+        this.baseBluntAttack = 60;
         this.currentBluntAttack = this.baseBluntAttack;
-        this.basePierceAttack = 40; 
+        this.basePierceAttack = 60;
         this.currentPierceAttack = this.basePierceAttack;
-        this.baseArcaneAttack = 45;
+        this.baseArcaneAttack = 60; 
         this.currentArcaneAttack = this.baseArcaneAttack;
-        this.baseElementalAttack = 45;
+        this.baseElementalAttack = 60;
         this.currentElementalAttack = this.baseElementalAttack;
-        this.baseBluntDefense = 35;
+        this.baseBluntDefense = 50;
         this.currentBluntDefense = this.baseBluntDefense;
-        this.basePierceDefense = 35;
+        this.basePierceDefense = 50;
         this.currentPierceDefense = this.basePierceDefense;
-        this.baseArcaneDefense = 35;
+        this.baseArcaneDefense = 50;
         this.currentArcaneDefense = this.baseArcaneDefense;
-        this.baseElementalDefense = 35;
+        this.baseElementalDefense = 50;
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 25;
         this.currentSpeed = this.baseSpeed;
@@ -226,8 +241,8 @@ export class AltusMage extends Enemy{
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
-        this.incrementStats(playerLevel, 2,1,2,1,1,2,2,1,1,2,1);
-        this.gold = Math.floor(Math.random() * (20*playerLevel - 5*playerLevel + 1) + 5*playerLevel);
+        this.incrementStats(playerLevel, [2,6], [0,2], [2,6], [1,3], [0,1], [2,3], [2,3], [1,3], [1,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (20 - 5 + 1) + 5) * (1 + playerLevel/5));
         this.XP = 50;
     }
 }
@@ -236,27 +251,27 @@ export class CaveSpider extends Enemy{
         super();
         this.name = "cave spider";
         this.imageSrc = "media/cave-spider.jpg"
-        this.maxHP = 20;
+        this.maxHP = 40;
         this.currentHP = this.maxHP;
-        this.maxStamina = 20;
+        this.maxStamina = 40;
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 20;
+        this.maxMagic = 30;
         this.currentMagic = this.maxMagic;
-        this.baseBluntAttack = 45;
+        this.baseBluntAttack = 60;
         this.currentBluntAttack = this.baseBluntAttack;
-        this.basePierceAttack = 45;
+        this.basePierceAttack = 60;
         this.currentPierceAttack = this.basePierceAttack;
-        this.baseArcaneAttack = 45;
+        this.baseArcaneAttack = 60; 
         this.currentArcaneAttack = this.baseArcaneAttack;
-        this.baseElementalAttack = 45;
+        this.baseElementalAttack = 60;
         this.currentElementalAttack = this.baseElementalAttack;
-        this.baseBluntDefense = 30;
+        this.baseBluntDefense = 50;
         this.currentBluntDefense = this.baseBluntDefense;
-        this.basePierceDefense = 35;
+        this.basePierceDefense = 50;
         this.currentPierceDefense = this.basePierceDefense;
-        this.baseArcaneDefense = 30;
+        this.baseArcaneDefense = 50;
         this.currentArcaneDefense = this.baseArcaneDefense;
-        this.baseElementalDefense = 30;
+        this.baseElementalDefense = 50;
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 30;
         this.currentSpeed = this.baseSpeed;
@@ -270,8 +285,8 @@ export class CaveSpider extends Enemy{
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
-        this.incrementStats(playerLevel, 1,2,2,1,2,1,1,1,1,2,1);
-        this.gold = Math.floor(Math.random() * (15*playerLevel - 5*playerLevel + 1) + 5*playerLevel);
+        this.incrementStats(playerLevel, [2,4], [2,6], [0,4], [1,3], [2,3], [1,2], [1,2], [1,3], [1,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (10 - 5 + 1) + 5) * (1 + playerLevel/5));
         this.XP = 20;
     }
 }
@@ -286,21 +301,21 @@ export class Groveguardian extends Enemy{
         this.currentStamina = this.maxStamina;
         this.maxMagic = 35;
         this.currentMagic = this.maxMagic;
-        this.baseBluntAttack = 50;
+        this.baseBluntAttack = 60;
         this.currentBluntAttack = this.baseBluntAttack;
-        this.basePierceAttack = 45;
+        this.basePierceAttack = 60;
         this.currentPierceAttack = this.basePierceAttack;
-        this.baseArcaneAttack = 45;
+        this.baseArcaneAttack = 60; 
         this.currentArcaneAttack = this.baseArcaneAttack;
-        this.baseElementalAttack = 50;
+        this.baseElementalAttack = 60;
         this.currentElementalAttack = this.baseElementalAttack;
-        this.baseBluntDefense = 45;
+        this.baseBluntDefense = 50;
         this.currentBluntDefense = this.baseBluntDefense;
-        this.basePierceDefense = 30;
+        this.basePierceDefense = 50;
         this.currentPierceDefense = this.basePierceDefense;
-        this.baseArcaneDefense = 35;
+        this.baseArcaneDefense = 50;
         this.currentArcaneDefense = this.baseArcaneDefense;
-        this.baseElementalDefense = 35;
+        this.baseElementalDefense = 50;
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 20;
         this.currentSpeed = this.baseSpeed;
@@ -314,8 +329,8 @@ export class Groveguardian extends Enemy{
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
-        this.incrementStats(playerLevel, 2,2,2,2,2,2,2,2,2,2,2);
-        this.gold = Math.floor(Math.random() * (20*playerLevel - 5*playerLevel + 1) + 5*playerLevel);
+        this.incrementStats(playerLevel, [4,8], [2,4], [0,2], [2,3], [2,3], [0,1], [1,2], [2,3], [1,2], [1,2], [1,3]);
+        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + playerLevel/5));
         this.XP = 50;
     }
 }
@@ -330,27 +345,27 @@ export class EmperorDolos extends Enemy{
         this.currentStamina = this.maxStamina;
         this.maxMagic = 150;
         this.currentMagic = this.maxMagic;
-        this.baseBluntAttack = 45;
+        this.baseBluntAttack = 60;
         this.currentBluntAttack = this.baseBluntAttack;
-        this.basePierceAttack = 45;
+        this.basePierceAttack = 60;
         this.currentPierceAttack = this.basePierceAttack;
-        this.baseArcaneAttack = 45;
+        this.baseArcaneAttack = 60; 
         this.currentArcaneAttack = this.baseArcaneAttack;
-        this.baseElementalAttack = 45;
+        this.baseElementalAttack = 60;
         this.currentElementalAttack = this.baseElementalAttack;
-        this.baseBluntDefense = 45;
+        this.baseBluntDefense = 50;
         this.currentBluntDefense = this.baseBluntDefense;
-        this.basePierceDefense = 45;
+        this.basePierceDefense = 50;
         this.currentPierceDefense = this.basePierceDefense;
-        this.baseArcaneDefense = 45;
+        this.baseArcaneDefense = 50;
         this.currentArcaneDefense = this.baseArcaneDefense;
-        this.baseElementalDefense = 45;
+        this.baseElementalDefense = 50;
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 30;
         this.currentSpeed = this.baseSpeed;
         this.baseEvasion = 15;
         this.currentEvasion = this.baseEvasion;
-        this.abilityArray = [new ArcaneDart, new DrainLife, new Siphon, new LightningBolt, new Channel, new Cleanse];
+        this.abilityArray = [new Flurry, new ArcaneDart, new DrainLife, new Siphon, new LightningBolt, new Channel, new Cleanse];
         this.lootChanceMultiplier = 0; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [];
         this.gold = 0;
@@ -358,7 +373,7 @@ export class EmperorDolos extends Enemy{
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
-        this.incrementStats(playerLevel, 2,2,2,2,2,2,2,2,2,2,2);
+        this.incrementStats(playerLevel, [8,16], [2,6], [1,3], [2,4], [2,4], [2,4], [2,4], [1,3], [1,3], [1,3], [1,3]);
         this.gold = 500;
         this.XP = 100;
     }
@@ -368,27 +383,27 @@ export class TerrorBear extends Enemy{
         super();
         this.name = "terror bear";
         this.imageSrc = "media/terror-bear.jpg"
-        this.maxHP = 60; 
+        this.maxHP = 100; 
         this.currentHP = this.maxHP;
-        this.maxStamina = 35;
+        this.maxStamina = 50;
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 35;
+        this.maxMagic = 50;
         this.currentMagic = this.maxMagic;
-        this.baseBluntAttack = 50;
+        this.baseBluntAttack = 60;
         this.currentBluntAttack = this.baseBluntAttack;
-        this.basePierceAttack = 45;
+        this.basePierceAttack = 60;
         this.currentPierceAttack = this.basePierceAttack;
-        this.baseArcaneAttack = 45;
+        this.baseArcaneAttack = 60; 
         this.currentArcaneAttack = this.baseArcaneAttack;
-        this.baseElementalAttack = 45;
+        this.baseElementalAttack = 60;
         this.currentElementalAttack = this.baseElementalAttack;
-        this.baseBluntDefense = 45;
+        this.baseBluntDefense = 50;
         this.currentBluntDefense = this.baseBluntDefense;
-        this.basePierceDefense = 35;
+        this.basePierceDefense = 50;
         this.currentPierceDefense = this.basePierceDefense;
-        this.baseArcaneDefense = 40;
+        this.baseArcaneDefense = 50;
         this.currentArcaneDefense = this.baseArcaneDefense;
-        this.baseElementalDefense = 40;
+        this.baseElementalDefense = 50;
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 25;
         this.currentSpeed = this.baseSpeed;
@@ -403,8 +418,8 @@ export class TerrorBear extends Enemy{
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
-        this.incrementStats(playerLevel, 2,2,2,2,2,2,2,2,2,2,2);
-        this.gold = Math.floor(Math.random() * (15*playerLevel - 10*playerLevel + 1) + 10*playerLevel);
+        this.incrementStats(playerLevel, [4,8], [2,4], [0,2], [2,3], [2,3], [0,1], [1,2], [2,3], [1,2], [1,2], [1,3]);
+        this.gold = Math.floor((Math.random() * (15 - 10 + 1) + 10) * (1 + playerLevel/5));
         this.XP = 75;
     }
 }
@@ -413,27 +428,27 @@ export class ShadowStrider extends Enemy{
         super();
         this.name = "shadow strider";
         this.imageSrc = "media/shadow-strider.jpg"
-        this.maxHP =  30;
+        this.maxHP =  60;
         this.currentHP = this.maxHP;
-        this.maxStamina = 30;
+        this.maxStamina = 60;
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 30;
+        this.maxMagic = 50;
         this.currentMagic = this.maxMagic;
-        this.baseBluntAttack = 45;
+        this.baseBluntAttack = 60;
         this.currentBluntAttack = this.baseBluntAttack;
-        this.basePierceAttack = 45;
+        this.basePierceAttack = 60;
         this.currentPierceAttack = this.basePierceAttack;
-        this.baseArcaneAttack = 45;
+        this.baseArcaneAttack = 60; 
         this.currentArcaneAttack = this.baseArcaneAttack;
-        this.baseElementalAttack = 45;
+        this.baseElementalAttack = 60;
         this.currentElementalAttack = this.baseElementalAttack;
-        this.baseBluntDefense = 35;
+        this.baseBluntDefense = 50;
         this.currentBluntDefense = this.baseBluntDefense;
-        this.basePierceDefense = 35;
+        this.basePierceDefense = 50;
         this.currentPierceDefense = this.basePierceDefense;
-        this.baseArcaneDefense = 35;
+        this.baseArcaneDefense = 50;
         this.currentArcaneDefense = this.baseArcaneDefense;
-        this.baseElementalDefense = 35;
+        this.baseElementalDefense = 50;
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 35;
         this.currentSpeed = this.baseSpeed;
@@ -448,8 +463,8 @@ export class ShadowStrider extends Enemy{
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
-        this.incrementStats(playerLevel, 2,2,1,2,2,1,2,1,1,1,1);
-        this.gold = Math.floor(Math.random() * (15*playerLevel - 5*playerLevel + 1) + 5*playerLevel);
+        this.incrementStats(playerLevel, [2,6], [2,6], [2,6], [1,3], [2,4], [2,4], [2,4], [1,3], [1,3], [2,4], [1,3]);
+        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + playerLevel/5));
         this.XP = 40;
     }
 }
@@ -458,27 +473,27 @@ export class Bandit extends Enemy{
         super();
         this.name = "bandit";
         this.imageSrc = "media/bandit.jpg"
-        this.maxHP = 32;
+        this.maxHP = 60;
         this.currentHP = this.maxHP;
-        this.maxStamina = 38;
+        this.maxStamina = 60;
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 30;
+        this.maxMagic = 40;
         this.currentMagic = this.maxMagic;
-        this.baseBluntAttack = 45;
+        this.baseBluntAttack = 60;
         this.currentBluntAttack = this.baseBluntAttack;
-        this.basePierceAttack = 45;
+        this.basePierceAttack = 60;
         this.currentPierceAttack = this.basePierceAttack;
-        this.baseArcaneAttack = 45; 
+        this.baseArcaneAttack = 60; 
         this.currentArcaneAttack = this.baseArcaneAttack;
-        this.baseElementalAttack = 45;
+        this.baseElementalAttack = 60;
         this.currentElementalAttack = this.baseElementalAttack;
-        this.baseBluntDefense = 35;
+        this.baseBluntDefense = 50;
         this.currentBluntDefense = this.baseBluntDefense;
-        this.basePierceDefense = 35;
+        this.basePierceDefense = 50;
         this.currentPierceDefense = this.basePierceDefense;
-        this.baseArcaneDefense = 35;
+        this.baseArcaneDefense = 50;
         this.currentArcaneDefense = this.baseArcaneDefense;
-        this.baseElementalDefense = 35;
+        this.baseElementalDefense = 50;
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 27;
         this.currentSpeed = this.baseSpeed;
@@ -494,8 +509,8 @@ export class Bandit extends Enemy{
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
-        this.incrementStats(playerLevel, 2,1,1,2,2,2,1,1,1,2,1,1);
-        this.gold = Math.floor(Math.random() * (20*playerLevel - 15*playerLevel + 1) + 15*playerLevel);
+        this.incrementStats(playerLevel, [2,6], [2,6], [0,4], [2,3], [2,3], [0,2], [0,2], [1,3], [1,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (20 - 15 + 1) + 15) * (1 + playerLevel/5));
         this.XP = 35;
     }
 }
