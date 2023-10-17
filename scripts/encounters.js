@@ -343,7 +343,7 @@ export class Avalanche extends Encounter{
     constructor(){
         super();
         this.name = "avalanche";
-        this.message = "A avalanche strikes!.";
+        this.message = "A avalanche strikes!";
         this.imageSrc = "./media/avalanche.jpeg";
         this.decisionArray = [
             new Decision(

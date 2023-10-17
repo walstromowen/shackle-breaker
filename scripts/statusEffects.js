@@ -53,10 +53,10 @@ export class Shielded extends StatusEffect{
         this.currentCharges = this.maxCharges;
     }
     onApplied(){
-        this.holder.currentBluntDefense = this.holder.currentBluntDefense + 10;
-        this.holder.currentPierceDefense = this.holder.currentPierceDefense + 10;
-        this.holder.currentArcaneDefense = this.holder.currentArcaneDefense + 10;
-        this.holder.currentElementalDefense = this.holder.currentElementalDefense + 10;  
+        this.holder.currentBluntDefense = this.holder.currentBluntDefense + Math.floor(this.holder.baseBluntDefense*0.5);
+        this.holder.currentPierceDefense = this.holder.currentPierceDefense + Math.floor(this.holder.basePierceDefense*0.5);
+        this.holder.currentArcaneDefense = this.holder.currentArcaneDefense + Math.floor(this.holder.baseArcaneDefense*0.5);
+        this.holder.currentElementalDefense = this.holder.currentElementalDefense + Math.floor(this.holder.baseElementalDefense*0.5);
     }
     onRecieveDamage(){
         this.currentCharges = 0;
@@ -65,10 +65,10 @@ export class Shielded extends StatusEffect{
         this.currentCharges = 0;
     }
     onRemove(){
-        this.holder.currentBluntDefense = this.holder.currentBluntDefense - 10;
-        this.holder.currentPierceDefense = this.holder.currentPierceDefense - 10;
-        this.holder.currentArcaneDefense = this.holder.currentArcaneDefense - 10;
-        this.holder.currentElementalDefense = this.holder.currentElementalDefense - 10;
+        this.holder.currentBluntDefense = this.holder.currentBluntDefense - Math.floor(this.holder.baseBluntDefense*0.5);
+        this.holder.currentPierceDefense = this.holder.currentPierceDefense - Math.floor(this.holder.basePierceDefense*0.5);
+        this.holder.currentArcaneDefense = this.holder.currentArcaneDefense - Math.floor(this.holder.baseArcaneDefense*0.5);
+        this.holder.currentElementalDefense = this.holder.currentElementalDefense - Math.floor(this.holder.baseElementalDefense*0.5);
     }
 }
 export class Bound extends StatusEffect{

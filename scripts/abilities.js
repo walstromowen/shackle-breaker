@@ -403,7 +403,7 @@ export class Eviscerate extends Ability{
                 return;
             }
             let damageOutput = Math.floor(Math.random() * ((weilder.currentPierceAttack + this.damageModifier) - weilder.currentPierceAttack + 1)) + weilder.currentPierceAttack;
-            if(target.currentHP >= target.maxHP * 0.5){
+            if(target.currentHP >= target.maxHP * 0.75){
                 damageOutput = Math.floor(damageOutput * 1.1);
             }
            damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
@@ -494,7 +494,7 @@ export class LeechLife extends Ability{
             let damageOutput = Math.floor(Math.random() * ((((weilder.currentArcaneAttack + weilder.currentPierceAttack)/2) + this.damageModifier) - ((weilder.currentArcaneAttack + weilder.currentPierceAttack)/2) + 1)) + Math.floor(((weilder.currentArcaneAttack + weilder.currentPierceAttack)/2));
            damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
-            let restoreAmount = damageOutput;
+            let restoreAmount = damageOutput/2;
             if(weilder.currentHP + damageOutput > weilder.maxHP){
                 restoreAmount = weilder.maxHP - weilder.currentHP 
             }
@@ -918,7 +918,7 @@ export class DrainLife extends Ability{
             let damageOutput = Math.floor(Math.random() * ((weilder.currentArcaneAttack + this.damageModifier) - weilder.currentArcaneAttack + 1)) + weilder.currentArcaneAttack;
            damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
-            let restoreAmount = damageOutput;
+            let restoreAmount = damageOutput/2;
             if(weilder.currentHP + damageOutput > weilder.maxHP){
                 restoreAmount = weilder.maxHP - weilder.currentHP 
             }

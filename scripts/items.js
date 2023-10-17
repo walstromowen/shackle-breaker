@@ -5,7 +5,7 @@ export function getRandomItem(){
     let itemArray = [new LinenShirt, new LinenPants, new Dagger, new BlacksmithHammer, new Spear, new Shortsword, new Longsword,
                 new Shiv, new Buckler, new FireStaff, new LightningStaff, new IceStaff, new ArcaneStaff, new LightStaff, new DarkStaff, new LeatherHelmet, 
                 new LeatherHood, new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
-                new LeatherBoots, new KiteShield, new IronHelmet, new IronGuantlets, new IronChainmail, 
+                new LeatherBoots, new KiteShield, new IronHelmet, new IronGauntlets, new IronChainmail, 
                 new IronGreaves, new IronBoots, new CrystalBall, new ClothHood, new ClothRobe,
                 new HealthPotion, new StaminaPotion, new MagicPotion, 
                 new ThrowingKnife, new PoisonedKnife, new Meteorite, new Antidote, new AloeRemedy, new Net, new SmokeBomb];
@@ -101,7 +101,7 @@ export class Dagger {
         this.pierceDefense = 0;
         this.arcaneDefense = 0;
         this.elementalDefense = 0;
-        this.speed = 4;
+        this.speed = 3;
         this.evasion = 0;
         this.abilityArray = [new Stab(), new Slash()];
     }
@@ -118,7 +118,7 @@ export class Dagger {
             this.arcaneDefense = this.arcaneDefense + 0;
             this.elementalDefense = this.elementalDefense + 0;
             this.speed = this.speed + 1;
-            this.evasion = this.evasion + 0;
+            this.evasion = this.evasion + 1;
         }
     }
 }
@@ -138,7 +138,7 @@ export class BlacksmithHammer {
         this.pierceDefense = 0;
         this.arcaneDefense = 0;
         this.elementalDefense = 0;
-        this.speed = 4;
+        this.speed = 3;
         this.evasion = 0;
         this.abilityArray = [new Strike()];
     }
@@ -688,7 +688,7 @@ export class LeatherChestplate {
         this.name = "leather chestplate";
         this.type = "torso";
         this.imageSrc = "./media/icons/leather-armor.png";
-        this.description = `a leather chestplate.A standard issue chestplate among scouts and archers of the Altus kingdom.`;
+        this.description = `a leather chestplate. A standard issue chestplate among scouts and archers of the Altus kingdom.`;
         this.level = 1;
         this.price = 100;
         this.bluntAttack = 0;
@@ -762,7 +762,7 @@ export class LeatherBoots {
         this.name = "leather boots";
         this.type = "feet";
         this.imageSrc = "./media/icons/boots.png";
-        this.description = `reliable leather boots. With the discovery of magic, travelers from all over came to Altus kingdom. Few ever left.`;
+        this.description = `reliable leather boots. After discovery of magic, travelers from all over came to Altus kingdom. Few ever left.`;
         this.level = 1;
         this.price = 100;
         this.bluntAttack = 0;
@@ -836,7 +836,7 @@ export class IronHelmet {
         this.name = "iron helmet";
         this.type = "head";
         this.imageSrc = "./media/icons/iron-helm.png";
-        this.description = `a heavy iron helmet. A standard issue helmet among soldeirs and guards of the Altus kingdom.`;
+        this.description = `a heavy iron helmet. A standard issue helmet among soldiers and guards of the Altus kingdom.`;
         this.level = 1;
         this.price = 100;
         this.bluntAttack = 0;
@@ -868,12 +868,12 @@ export class IronHelmet {
         }
     }
 }
-export class IronGuantlets {
+export class IronGauntlets {
     constructor(){
-        this.name = "iron guantlets";
+        this.name = "iron gauntlets";
         this.type = "arms";
-        this.imageSrc = "./media/icons/gauntelt.png";
-        this.description = `heavy iron guantlets. standard issue guantlets among soldeirs and guards of the Altus kingdom.`;
+        this.imageSrc = "./media/icons/gauntlet.png";
+        this.description = `heavy iron gauntlets. standard issue gauntlets among soldiers and guards of the Altus kingdom.`;
         this.level = 1;
         this.price = 100;
         this.bluntAttack = 0;
@@ -910,7 +910,7 @@ export class IronChainmail {
         this.name = "iron chainmail";
         this.type = "torso";
         this.imageSrc = "./media/icons/chain-mail.png";
-        this.description = `heavy iron chainmail. standard issue chainmail among soldeirs and guards of the Altus kingdom.`;
+        this.description = `heavy iron chainmail. standard issue chainmail among soldiers and guards of the Altus kingdom.`;
         this.level = 1;
         this.price = 100;
         this.bluntAttack = 0;
@@ -947,7 +947,7 @@ export class IronGreaves {
         this.name = "iron greaves";
         this.type = "legs";
         this.imageSrc = "./media/icons/armored-pants.png";
-        this.description = `heavy iron greaves. standard issue greaves among soldeirs and guards of the Altus kingdom.`;
+        this.description = `heavy iron greaves. standard issue greaves among soldiers and guards of the Altus kingdom.`;
         this.level = 1;
         this.price = 100;
         this.bluntAttack = 0;
@@ -984,7 +984,7 @@ export class IronBoots {
         this.name = "iron boots";
         this.type = "feet";
         this.imageSrc = "./media/icons/leg-armor.png";
-        this.description = `heavy iron greaves. standard issue greaves among soldeirs and guards of the Altus kingdom.`;
+        this.description = `heavy iron greaves. standard issue greaves among soldiers and guards of the Altus kingdom.`;
         this.level = 1;
         this.price = 100;
         this.bluntAttack = 0;
