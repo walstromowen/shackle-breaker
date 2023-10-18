@@ -14,18 +14,17 @@ Text adventure game based on the Shackle Breaker story
 * Decision Success modifier
 * Bosses
 * Two attacks
+* bonus actions
 * Multiple enemies/ companions
 * trinket and waist slots
 
 # Planned Quality of Life Improvements
-* random enemy stats
 * Alphabetize CSS rules
 * scaling
 
 # Bugs
 * Image Flashing
 * mini Menu appears on level up and transisiton screens
-* super stong enemies on unexplored tiles when farming a map
 
 
 # MISC notes
@@ -37,4 +36,4 @@ Text adventure game based on the Shackle Breaker story
 * Ability Attack formula
 - Math.floor(Math.random() * (max - min+ 1) + min)
 - Enemy stat increments 40pts = 20 player attribute, points resource stats double wieghted
-- player attribute increments 20 attribute Points, resource stats double wieghted
+- player attribute increments 20 attribute Points, 

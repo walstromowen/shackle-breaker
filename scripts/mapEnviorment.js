@@ -6,6 +6,8 @@ export default class MapEnviorment{
         this.biome = "";
         this.imageSrc = "";
         this.backgroundMusicSrc = "";
+        this.terrain = new Image();
+        this.terrain.src = "media/terrain.png";
         this.generateBiome(biome);
     }
     generateBiome(biome){

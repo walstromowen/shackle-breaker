@@ -26,7 +26,8 @@ export default class Map{
             //Room Specials
             switch(this.mapLayout.tileArray[i]){
                 case 0:
-                    let randomNumber = Math.floor(Math.random()*20)
+                    this.roomArray[i].type = "open";
+                    let randomNumber = Math.floor(Math.random()*30)
                     if(randomNumber <= 2){
                         this.roomArray[i].enemy = this.mapEnviorment.generateEnemy(playerLevel);
                     }
@@ -34,10 +35,15 @@ export default class Map{
                         this.roomArray[i].encounter = this.mapEnviorment.generateEncounter();
                     }
                     break;
+                case 1:
+                    this.roomArray[i].type = "wall";
+                    break;
                 case 2:
+                    this.roomArray[i].type = "entrance";
                     this.playerSpawnIndex = i;
                     break;
                 case 3:
+                    this.roomArray[i].type = "exit";
                     this.roomArray[i].isExit = true;
                 default:
                     break;

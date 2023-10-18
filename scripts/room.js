@@ -1,6 +1,7 @@
 export default class Room{
     constructor(){
         this.description = "";
+        this.type = "";
         this.roomNorth = "";
         this.roomSouth = "";
         this.roomEast = "";

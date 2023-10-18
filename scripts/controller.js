@@ -53,20 +53,22 @@ export default class Controller {
             this.map = new Map(this.player.level, "basic");
             this.miniMap = new MiniMap();
             this.player.initializeRooms(this.map);
-            document.getElementById("app").style.display = "block";
             document.getElementById('player-name').innerText = this.player.name;
             document.getElementById('player-image').src = this.player.apperance;
             document.getElementById('location-name').innerText = this.capitalizeFirstLetter(this.map.mapEnviorment.biome);
             document.getElementById('location-image').src = this.map.mapEnviorment.imageSrc;
-            document.getElementById("music-player").src = this.map.mapEnviorment.backgroundMusicSrc;
-            document.getElementById("music-player").play();
             this.updatePlayerStats();
             this.enableKeyControls();
             this.enablePlayerMapControls();
             this.enableInventoryControls();
             this.enableLevelUpControls();
             this.updatePlayerInventoryTab(this.player.inventory);
-            this.toggleMap();
+            setTimeout(()=>{
+                document.getElementById("music-player").src = this.map.mapEnviorment.backgroundMusicSrc;
+                document.getElementById("music-player").play();
+                document.getElementById("app").style.display = "block";
+                this.toggleMap();
+            }, 100);
         });
         document.getElementById("apperance-selection").addEventListener("change", ()=>{
             document.getElementById("character-creator-apperance-image").src = document.getElementById("apperance-selection").value; 
@@ -488,7 +490,7 @@ export default class Controller {
         document.getElementById("encounter-image-container").style.display = "none";
         document.getElementById("merchant-inventory-container").style.display = "none";
         this.miniMap.resizeCanvas();
-        this.miniMap.draw(this.map.roomArray, this.player.currentRoom);
+        this.miniMap.draw(this.map, this.player.currentRoom);
         this.player.isInBattle = false;
         this.player.isInTrade = false;
         this.player.canMoveRoom = true;
@@ -936,7 +938,7 @@ export default class Controller {
             if(this.player.currentMagic + magic > this.player.maxMagic){magic = this.player.maxMagic - this.player.currentMagic;}
             this.player.currentStamina = this.player.currentStamina + stamina;
             this.player.currentMagic = this.player.currentMagic + magic;
-            this.miniMap.draw(this.map.roomArray, this.player.currentRoom);
+            this.miniMap.draw(this.map, this.player.currentRoom);
             if(this.player.currentRoom.isExit == true){
                 this.printToGameConsole(`${this.player.name} finds an exit!`);
                 this.toggleMapTransitionScreen();
@@ -1140,7 +1142,7 @@ export default class Controller {
         this.player.currentRoom = this.player.nextRoom;
         this.player.currentRoom.enemy = "";
         this.player.currentRoom.encounter = "";
-        this.miniMap.draw(this.map.roomArray, this.player.currentRoom);
+        this.miniMap.draw(this.map, this.player.currentRoom);
     }
     useConsumable(inventoryIndex){
         if(this.player.isInBattle == true){
@@ -1176,7 +1178,7 @@ export default class Controller {
         this.player.nextRoom = this.player.currentRoom;
         document.getElementById('location-image').src = this.map.mapEnviorment.imageSrc;
         document.getElementById('location-name').innerText = this.capitalizeFirstLetter(this.map.mapEnviorment.biome);
-        this.miniMap.draw(this.map.roomArray, this.player.currentRoom);
+        this.miniMap.draw(this.map, this.player.currentRoom);
         document.getElementById("music-player").src = this.map.mapEnviorment.backgroundMusicSrc;
         document.getElementById('music-player').play();
     }
