@@ -495,7 +495,7 @@ export class LeechLife extends Ability{
            damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             let restoreAmount = damageOutput/2;
-            if(weilder.currentHP + damageOutput > weilder.maxHP){
+            if(weilder.currentHP + restoreAmount > weilder.maxHP){
                 restoreAmount = weilder.maxHP - weilder.currentHP 
             }
             weilder.currentHP = weilder.currentHP + restoreAmount;
@@ -919,7 +919,7 @@ export class DrainLife extends Ability{
            damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             let restoreAmount = damageOutput/2;
-            if(weilder.currentHP + damageOutput > weilder.maxHP){
+            if(weilder.currentHP + restoreAmount > weilder.maxHP){
                 restoreAmount = weilder.maxHP - weilder.currentHP 
             }
             weilder.currentHP = weilder.currentHP + restoreAmount;
