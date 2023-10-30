@@ -63,12 +63,10 @@ export default class Controller {
             this.enableInventoryControls();
             this.enableLevelUpControls();
             this.updatePlayerInventoryTab(this.player.inventory);
-            setTimeout(()=>{
-                document.getElementById("music-player").src = this.map.mapEnviorment.backgroundMusicSrc;
-                document.getElementById("music-player").play();
-                document.getElementById("app").style.display = "block";
-                this.toggleMap();
-            }, 100);
+            document.getElementById("music-player").src = this.map.mapEnviorment.backgroundMusicSrc;
+            document.getElementById("music-player").play();
+            document.getElementById("app").style.display = "block";
+            this.toggleMap();
         });
         document.getElementById("apperance-selection").addEventListener("change", ()=>{
             document.getElementById("character-creator-apperance-image").src = document.getElementById("apperance-selection").value; 

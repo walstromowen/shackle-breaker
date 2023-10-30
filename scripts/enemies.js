@@ -70,11 +70,11 @@ export class Skeleton extends Enemy{
         super();
         this.name = "skeleton";
         this.imageSrc = "media/skeleton.jpg"
-        this.maxHP = 50;
+        this.maxHP = 30;
         this.currentHP = this.maxHP;
-        this.maxStamina = 50;
+        this.maxStamina = 30;
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 50;
+        this.maxMagic = 30;
         this.currentMagic = this.maxMagic;
         this.baseBluntAttack = 55;
         this.currentBluntAttack = this.baseBluntAttack;
@@ -119,11 +119,11 @@ export class Bat extends Enemy{
         super();
         this.name = "bat";
         this.imageSrc = "media/bat.jpg"
-        this.maxHP = 40;
+        this.maxHP = 25;
         this.currentHP = this.maxHP;
-        this.maxStamina = 30;
+        this.maxStamina = 25;
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 30;
+        this.maxMagic = 25;
         this.currentMagic = this.maxMagic;
         this.baseBluntAttack = 50;
         this.currentBluntAttack = this.baseBluntAttack;
@@ -163,9 +163,9 @@ export class Wolf extends Enemy{
         super();
         this.name = "wolf";
         this.imageSrc = "media/wolf.jpg"
-        this.maxHP =  50;
+        this.maxHP =  30;
         this.currentHP = this.maxHP;
-        this.maxStamina = 50;
+        this.maxStamina = 40;
         this.currentStamina = this.maxStamina;
         this.maxMagic = 30;
         this.currentMagic = this.maxMagic;
@@ -207,11 +207,11 @@ export class AltusMage extends Enemy{
         super();
         this.name = "altus mage";
         this.imageSrc = "media/altus-mage.jpg"
-        this.maxHP = 50;
+        this.maxHP = 35;
         this.currentHP = this.maxHP;
-        this.maxStamina = 50;
+        this.maxStamina = 35;
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 70;
+        this.maxMagic = 40;
         this.currentMagic = this.maxMagic;
         this.baseBluntAttack = 55;
         this.currentBluntAttack = this.baseBluntAttack;
@@ -251,11 +251,11 @@ export class CaveSpider extends Enemy{
         super();
         this.name = "cave spider";
         this.imageSrc = "media/cave-spider.jpg"
-        this.maxHP = 40;
+        this.maxHP = 25;
         this.currentHP = this.maxHP;
-        this.maxStamina = 40;
+        this.maxStamina = 25;
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 30;
+        this.maxMagic = 25;
         this.currentMagic = this.maxMagic;
         this.baseBluntAttack = 55;
         this.currentBluntAttack = this.baseBluntAttack;
@@ -383,7 +383,7 @@ export class TerrorBear extends Enemy{
         super();
         this.name = "terror bear";
         this.imageSrc = "media/terror-bear.jpg"
-        this.maxHP = 80; 
+        this.maxHP = 60; 
         this.currentHP = this.maxHP;
         this.maxStamina = 50;
         this.currentStamina = this.maxStamina;
@@ -428,7 +428,7 @@ export class ShadowStrider extends Enemy{
         super();
         this.name = "shadow strider";
         this.imageSrc = "media/shadow-strider.jpg"
-        this.maxHP =  45;
+        this.maxHP =  35;
         this.currentHP = this.maxHP;
         this.maxStamina = 55;
         this.currentStamina = this.maxStamina;
@@ -473,11 +473,11 @@ export class Bandit extends Enemy{
         super();
         this.name = "bandit";
         this.imageSrc = "media/bandit.jpg"
-        this.maxHP = 55;
+        this.maxHP = 35;
         this.currentHP = this.maxHP;
-        this.maxStamina = 55;
+        this.maxStamina = 35;
         this.currentStamina = this.maxStamina;
-        this.maxMagic = 40;
+        this.maxMagic = 35;
         this.currentMagic = this.maxMagic;
         this.baseBluntAttack = 55;
         this.currentBluntAttack = this.baseBluntAttack;
