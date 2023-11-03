@@ -7,11 +7,11 @@ export default class MiniMap{
         this.width = 288;
         this.height = 288;
         this.heroIcon = new Image();
-        this.heroIcon.src = "media/icons/hero.png"
+        this.heroIcon.src = "media/icons/hero.png";
         this.entranceIcon = new Image();
-        this.entranceIcon.src = "media/icons/entry-door.png"
+        this.entranceIcon.src = "media/icons/entry-door.png";
         this.exitIcon = new Image();
-        this.exitIcon.src = "media/icons/exit-door.png"
+        this.exitIcon.src = "media/icons/exit-door.png";
     }
     resizeCanvas(){
         this.miniMapCanvas.width = this.width;
@@ -28,10 +28,10 @@ export default class MiniMap{
         map.roomArray.forEach((room) => {
             if(Math.floor(room.position[0] / viewportDimensions[0]) == gridCoordinates[0] && Math.floor(room.position[1] / viewportDimensions[1]) == gridCoordinates[1]){ //if selected room's gird coordinates is equal to player's current grid coordinates
                 if(room.type == 'open'){
-                    this.ctx.drawImage(map.mapEnviorment.terrain, 0, 0, 16, 16, room.position[0]%viewportDimensions[0]*this.tileWidth, room.position[1]%viewportDimensions[1]*this.tileHeight, this.tileWidth, this.tileHeight);
+                    this.ctx.drawImage(map.mapEnviorment.terrain, 0, 0, 32, 32, room.position[0]%viewportDimensions[0]*this.tileWidth, room.position[1]%viewportDimensions[1]*this.tileHeight, this.tileWidth, this.tileHeight);
                 }
                 if(room.type == 'wall'){
-                    this.ctx.drawImage(map.mapEnviorment.terrain, 16, 0, 16, 16, room.position[0]%viewportDimensions[0]*this.tileWidth, room.position[1]%viewportDimensions[1]*this.tileHeight, this.tileWidth, this.tileHeight);
+                    this.ctx.drawImage(map.mapEnviorment.terrain, 0, 32, 32, 32, room.position[0]%viewportDimensions[0]*this.tileWidth, room.position[1]%viewportDimensions[1]*this.tileHeight, this.tileWidth, this.tileHeight);
                 }
                 if(room.type == 'entrance'){
                     this.ctx.drawImage(this.entranceIcon, room.position[0]%viewportDimensions[0]*this.tileWidth, room.position[1]%viewportDimensions[1]*this.tileHeight, this.tileWidth, this.tileHeight);

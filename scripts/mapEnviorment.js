@@ -7,7 +7,8 @@ export default class MapEnviorment{
         this.imageSrc = "";
         this.backgroundMusicSrc = "";
         this.terrain = new Image();
-        this.terrain.src = "media/terrain.png";
+        this.terrain.src = "";
+        this.frameCoordinates = [[]];
         this.generateBiome(biome);
     }
     generateBiome(biome){
@@ -18,21 +19,41 @@ export default class MapEnviorment{
                         this.biome = "cave";
                         this.imageSrc = "media/cave.jpg";
                         this.backgroundMusicSrc = "./audio/gathering-darkness-kevin-macleod-main-version-04-22-8459.mp3";
+                        this.terrain.src = "media/terrain/cave-terrain.png";
+                        this.frameCoordinates = [
+                            [0],
+                            [0]
+                        ];
                         break;
                     case 1:
                         this.biome = "forest";
                         this.imageSrc = "media/forest.jpg";
                         this.backgroundMusicSrc = "./audio/deep-in-the-dell-126916.mp3";
+                        this.terrain.src = "media/terrain/forest-terrain.png";
+                        this.frameCoordinates = [
+                            [0,2],
+                            [0,1]
+                        ];
                         break;
                     case 2:
                         this.biome = "plains";
                         this.imageSrc = "media/plains.jpg";
                         this.backgroundMusicSrc = "./audio/the-epical-trailer-158083.mp3";
+                        this.terrain.src = "media/terrain/plains-terrain.png";
+                        this.frameCoordinates = [
+                            [0,2],
+                            [0,1,2]
+                        ];
                         break;
                     case 3:
                         this.biome = "mountain";
                         this.imageSrc = "media/mountain.jpg";
                         this.backgroundMusicSrc = "./audio/achievement-philip-anderson-main-version-01-31-13804.mp3";
+                        this.terrain.src = "media/terrain/mountain-terrain.png";
+                        this.frameCoordinates = [
+                            [0,2],
+                            [2]
+                        ];
                         break;
                     default:
                         break;
@@ -44,11 +65,13 @@ export default class MapEnviorment{
                         this.biome = "twilight realm";
                         this.imageSrc = "media/twilight-realm.jpg";
                         this.backgroundMusicSrc = "./audio/gathering-darkness-kevin-macleod-main-version-04-22-8459.mp3";
+                        this.terrain.src = "media/terrain/twilight-realm-terrain.png";
                         break;
                     case 1:
                         this.biome = "ancient altus ruins";
                         this.imageSrc = "media/ancient-altus-ruins.jpg";
                         this.backgroundMusicSrc = "./audio/gathering-darkness-kevin-macleod-main-version-04-22-8459.mp3";
+                        this.terrain.src = "media/terrain/ancient-altus-ruins-terrain.png";
                         break;
                     default:
                         break;

@@ -13,6 +13,7 @@
     -webkit-user-select: none;
     -ms-user-select: none;
     color: var(--color-5);
+    touch-action: manipulation;
 }
 body{
     background-color: var(--color-1);
@@ -428,7 +429,8 @@ p{
     display: none;
 }
 #mini-map-canvas{
-   background-color:black;
+   background-color:white;
+   image-rendering: crisp-edges;
  
 }
 #player-image-container{

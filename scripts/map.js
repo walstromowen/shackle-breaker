@@ -27,7 +27,7 @@ export default class Map{
             switch(this.mapLayout.tileArray[i]){
                 case 0:
                     this.roomArray[i].type = "open";
-                    let randomNumber = Math.floor(Math.random()*30)
+                    let randomNumber = Math.floor(Math.random()*300)
                     if(randomNumber <= 2){
                         this.roomArray[i].enemy = this.mapEnviorment.generateEnemy(playerLevel);
                     }

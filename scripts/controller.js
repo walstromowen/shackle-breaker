@@ -52,21 +52,23 @@ export default class Controller {
             this.player = new Player(this.characterCreationArray);
             this.map = new Map(this.player.level, "basic");
             this.miniMap = new MiniMap();
-            this.player.initializeRooms(this.map);
-            document.getElementById('player-name').innerText = this.player.name;
-            document.getElementById('player-image').src = this.player.apperance;
-            document.getElementById('location-name').innerText = this.capitalizeFirstLetter(this.map.mapEnviorment.biome);
-            document.getElementById('location-image').src = this.map.mapEnviorment.imageSrc;
-            this.updatePlayerStats();
-            this.enableKeyControls();
-            this.enablePlayerMapControls();
-            this.enableInventoryControls();
-            this.enableLevelUpControls();
-            this.updatePlayerInventoryTab(this.player.inventory);
-            document.getElementById("music-player").src = this.map.mapEnviorment.backgroundMusicSrc;
-            document.getElementById("music-player").play();
-            document.getElementById("app").style.display = "block";
-            this.toggleMap();
+            this.map.mapEnviorment.terrain.onload = ()=>{
+                this.player.initializeRooms(this.map);
+                document.getElementById('player-name').innerText = this.player.name;
+                document.getElementById('player-image').src = this.player.apperance;
+                document.getElementById('location-name').innerText = this.capitalizeFirstLetter(this.map.mapEnviorment.biome);
+                document.getElementById('location-image').src = this.map.mapEnviorment.imageSrc;
+                this.updatePlayerStats();
+                this.enableKeyControls();
+                this.enablePlayerMapControls();
+                this.enableInventoryControls();
+                this.enableLevelUpControls();
+                this.updatePlayerInventoryTab(this.player.inventory);
+                document.getElementById("music-player").src = this.map.mapEnviorment.backgroundMusicSrc;
+                document.getElementById("music-player").play();
+                document.getElementById("app").style.display = "block";
+                this.toggleMap();
+            }
         });
         document.getElementById("apperance-selection").addEventListener("change", ()=>{
             document.getElementById("character-creator-apperance-image").src = document.getElementById("apperance-selection").value; 
@@ -204,9 +206,12 @@ export default class Controller {
     enableMapTransitionControls(){
         document.getElementById('map-transition-continue-btn').addEventListener("click", ()=>{
             this.generateNewMap("basic");
-            document.getElementById('map-transition-screen').style.display = "none";
-            document.getElementById("app").style.display = "block";
             this.player.canMoveRoom = true;
+            this.map.mapEnviorment.terrain.onload = ()=>{
+                this.miniMap.draw(this.map, this.player.currentRoom);
+                document.getElementById('map-transition-screen').style.display = "none";
+                document.getElementById("app").style.display = "block";
+            }
         });
         document.getElementById('map-transition-town-btn').addEventListener("click", ()=>{
             //to town
