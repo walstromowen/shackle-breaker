@@ -6,13 +6,12 @@ Text adventure game based on the Shackle Breaker story
 # Planned Features
 * Parrying System
 * Attack Animations
-* Mew Mini Map/ map culling
+* map culling
 * Shop/crafting/weapon/town
 * interact with stairs / loot bodies
 * Two Handing / Weapons equipable in either hand
 * Distance System in battle
 * Decision Success modifier
-* Bosses
 * Two attacks
 * bonus actions
 * Multiple enemies/ companions
@@ -25,6 +24,7 @@ Text adventure game based on the Shackle Breaker story
 # Bugs
 * Image Flashing
 * mini Menu appears on level up and transisiton screens
+* canvas player icon not loading on start up.
 
 
 # MISC notes
