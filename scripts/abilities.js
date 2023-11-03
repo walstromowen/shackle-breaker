@@ -494,7 +494,7 @@ export class LeechLife extends Ability{
             let damageOutput = Math.floor(Math.random() * ((((weilder.currentArcaneAttack + weilder.currentPierceAttack)/2) + this.damageModifier) - ((weilder.currentArcaneAttack + weilder.currentPierceAttack)/2) + 1)) + Math.floor(((weilder.currentArcaneAttack + weilder.currentPierceAttack)/2));
            damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
-            let restoreAmount = damageOutput/2;
+            let restoreAmount = Math.floor(damageOutput/2);
             if(weilder.currentHP + restoreAmount > weilder.maxHP){
                 restoreAmount = weilder.maxHP - weilder.currentHP 
             }
@@ -694,6 +694,21 @@ export class Channel extends Ability{
                 }
             }
             weilder.statusArray.push(new Channeled(weilder));
+        }
+    }
+    canUseSpecialCondition(weilder, player){
+        if(weilder === player){
+            if(weilder.statusArray.length <= 0){
+                return true;
+            }
+        }else{
+            if(weilder.statusArray.length <= 0){
+                for(let i = 0; i < weilder.statusArray.length; i++){
+                    if(weilder.statusArray[i].name == "channeled"){
+                        return false;
+                    }
+                }
+            }
         }
     }
 }
@@ -918,7 +933,7 @@ export class DrainLife extends Ability{
             let damageOutput = Math.floor(Math.random() * ((weilder.currentArcaneAttack + this.damageModifier) - weilder.currentArcaneAttack + 1)) + weilder.currentArcaneAttack;
            damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
-            let restoreAmount = damageOutput/2;
+            let restoreAmount = Math.floor(damageOutput/2);
             if(weilder.currentHP + restoreAmount > weilder.maxHP){
                 restoreAmount = weilder.maxHP - weilder.currentHP 
             }

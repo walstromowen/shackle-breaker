@@ -50,7 +50,7 @@ export default class Controller {
             this.characterCreationArray[1] = document.getElementById("apperance-selection").value;
             this.characterCreationArray[2] = document.getElementById("background-selection").value;
             this.player = new Player(this.characterCreationArray);
-            this.map = new Map(this.player.level, "basic");
+            this.map = new Map(this.player.level, "basic", "random");
             this.miniMap = new MiniMap();
             this.map.mapEnviorment.terrain.onload = ()=>{
                 this.player.initializeRooms(this.map);
@@ -205,7 +205,11 @@ export default class Controller {
     }
     enableMapTransitionControls(){
         document.getElementById('map-transition-continue-btn').addEventListener("click", ()=>{
-            this.generateNewMap("basic");
+            if(this.player.level == 10){
+                this.generateNewMap("altas castle", "boss1");
+            }else{
+                this.generateNewMap("basic", "random");
+            }
             this.player.canMoveRoom = true;
             this.map.mapEnviorment.terrain.onload = ()=>{
                 this.miniMap.draw(this.map, this.player.currentRoom);
@@ -526,7 +530,11 @@ export default class Controller {
                 this.printToGameConsole(`${this.player.name} encounters a ${this.battle.enemy.name}!`);
             }
             document.getElementById('music-player').pause();
-            document.getElementById('music-player').src = "./audio/battle-of-the-dragons-8037.mp3";
+            if(enemy.isBoss == true){
+                document.getElementById('music-player').src = "./audio/Alex-Productions - Epic Cinematic Adventure Vlog _ Eglair.mp3"
+            }else{
+                document.getElementById('music-player').src = "./audio/battle-of-the-dragons-8037.mp3"
+            }
             document.getElementById('music-player').play();
             this.player.isInBattle = true;
         }, 2000);
@@ -928,7 +936,7 @@ export default class Controller {
                 if(Math.floor(Math.random()*20) <= 2){
                     this.player.nextRoom = nextRoom;
                     this.printToGameConsole("something approaches...");
-                    nextRoom.enemy = this.map.mapEnviorment.generateEnemy(this.player.level);
+                    nextRoom.enemy = this.map.mapEnviorment.generateEnemy(this.player.level, false);
                     this.toggleBattle(nextRoom.enemy);
                     return;
                 }
@@ -1175,8 +1183,8 @@ export default class Controller {
 
         this.player.canMoveRoom = false;
     }
-    generateNewMap(biome){
-        this.map = new Map(this.player.level, biome);
+    generateNewMap(biome, layoutType){
+        this.map = new Map(this.player.level, biome, layoutType);
         this.player.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
         this.player.nextRoom = this.player.currentRoom;
         document.getElementById('location-image').src = this.map.mapEnviorment.imageSrc;

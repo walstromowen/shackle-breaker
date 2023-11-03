@@ -105,7 +105,8 @@ export class Skeleton extends Enemy{
                           new IronChainmail, new IronGreaves, new IronBoots, 
                           new HealthPotion, new StaminaPotion, new ThrowingKnife, new SmokeBomb];
         this.gold = 0;
-        this.XP = 0;             
+        this.XP = 0;
+        this.isBoss = false;             
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
@@ -150,6 +151,7 @@ export class Bat extends Enemy{
         this.lootArray = [new HealthPotion, new Antidote];
         this.gold = 0;
         this.XP = 0;
+        this.isBoss = false;
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
@@ -194,6 +196,7 @@ export class Wolf extends Enemy{
         this.lootArray = [new StaminaPotion];
         this.gold = 0;
         this.XP = 0;
+        this.isBoss = false;
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
@@ -238,6 +241,7 @@ export class AltusMage extends Enemy{
         this.lootArray = [new FireStaff, new LightningStaff, new IceStaff, new ArcaneStaff, new LightStaff, new DarkStaff, new CrystalBall, new MagicPotion, new ClothHood, new ClothRobe];
         this.gold = 0;
         this.XP = 0;
+        this.isBoss = false;
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
@@ -282,6 +286,7 @@ export class CaveSpider extends Enemy{
         this.lootArray = [new StaminaPotion, new PoisonedKnife, new Antidote];
         this.gold = 0;
         this.XP = 0;
+        this.isBoss = false;
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
@@ -326,6 +331,7 @@ export class Groveguardian extends Enemy{
         this.lootArray = [new HealthPotion, new AloeRemedy, new Antidote];
         this.gold = 0;
         this.XP = 0;
+        this.isBoss = false;
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
@@ -370,6 +376,7 @@ export class EmperorDolos extends Enemy{
         this.lootArray = [];
         this.gold = 0;
         this.XP = 0;
+        this.isBoss = true;
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
@@ -415,6 +422,7 @@ export class TerrorBear extends Enemy{
         this.lootArray = [new HealthPotion, new LightningStaff, new Meteorite];
         this.gold = 0;
         this.XP = 0;
+        this.isBoss = false;
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
@@ -460,6 +468,7 @@ export class ShadowStrider extends Enemy{
         this.lootArray = [new StaminaPotion, new Meteorite];
         this.gold = 0;
         this.XP = 0;
+        this.isBoss = false;
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){
@@ -505,7 +514,8 @@ export class Bandit extends Enemy{
                           new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
                           new LeatherBoots, new HealthPotion, new StaminaPotion, new ThrowingKnife, new SmokeBomb];
         this.gold = 0;
-        this.XP = 0;             
+        this.XP = 0;
+        this.isBoss = false;             
         this.levelUp(playerLevel);
     }
     levelUp(playerLevel){

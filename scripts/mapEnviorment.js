@@ -7,7 +7,7 @@ export default class MapEnviorment{
         this.imageSrc = "";
         this.backgroundMusicSrc = "";
         this.terrain = new Image();
-        this.terrain.src = "";
+        this.terrain.src = "media/terrain/terrain.png";
         this.frameCoordinates = [[]];
         this.generateBiome(biome);
     }
@@ -19,19 +19,17 @@ export default class MapEnviorment{
                         this.biome = "cave";
                         this.imageSrc = "media/cave.jpg";
                         this.backgroundMusicSrc = "./audio/gathering-darkness-kevin-macleod-main-version-04-22-8459.mp3";
-                        this.terrain.src = "media/terrain/cave-terrain.png";
                         this.frameCoordinates = [
-                            [0],
-                            [0]
+                            [3],
+                            [3]
                         ];
                         break;
                     case 1:
                         this.biome = "forest";
                         this.imageSrc = "media/forest.jpg";
                         this.backgroundMusicSrc = "./audio/deep-in-the-dell-126916.mp3";
-                        this.terrain.src = "media/terrain/forest-terrain.png";
                         this.frameCoordinates = [
-                            [0,2],
+                            [0,1],
                             [0,1]
                         ];
                         break;
@@ -39,7 +37,6 @@ export default class MapEnviorment{
                         this.biome = "plains";
                         this.imageSrc = "media/plains.jpg";
                         this.backgroundMusicSrc = "./audio/the-epical-trailer-158083.mp3";
-                        this.terrain.src = "media/terrain/plains-terrain.png";
                         this.frameCoordinates = [
                             [0,2],
                             [0,1,2]
@@ -49,7 +46,6 @@ export default class MapEnviorment{
                         this.biome = "mountain";
                         this.imageSrc = "media/mountain.jpg";
                         this.backgroundMusicSrc = "./audio/achievement-philip-anderson-main-version-01-31-13804.mp3";
-                        this.terrain.src = "media/terrain/mountain-terrain.png";
                         this.frameCoordinates = [
                             [0,2],
                             [2]
@@ -65,23 +61,40 @@ export default class MapEnviorment{
                         this.biome = "twilight realm";
                         this.imageSrc = "media/twilight-realm.jpg";
                         this.backgroundMusicSrc = "./audio/gathering-darkness-kevin-macleod-main-version-04-22-8459.mp3";
-                        this.terrain.src = "media/terrain/twilight-realm-terrain.png";
+                        this.frameCoordinates = [
+                            [3],
+                            [3]
+                        ];
                         break;
                     case 1:
                         this.biome = "ancient altus ruins";
                         this.imageSrc = "media/ancient-altus-ruins.jpg";
                         this.backgroundMusicSrc = "./audio/gathering-darkness-kevin-macleod-main-version-04-22-8459.mp3";
-                        this.terrain.src = "media/terrain/ancient-altus-ruins-terrain.png";
+                        this.frameCoordinates = [
+                            [3],
+                            [3]
+                        ];
                         break;
                     default:
                         break;
                 }
                 break;
+            case "altas castle":
+                this.biome = "altas castle";
+                        this.imageSrc = "media/altas-castle-interior.jpg";
+                        this.backgroundMusicSrc = "./audio/gathering-darkness-kevin-macleod-main-version-04-22-8459.mp3";
+                        this.frameCoordinates = [
+                            [3],
+                            [3],
+                            [0],
+                            [0],
+                            [0]
+                        ];
             default:
                 break;
         }
     }
-    generateEnemy(playerLevel){
+    generateEnemy(playerLevel, isBoss){
         switch(this.biome){ 
             case "cave": 
                 switch(Math.floor(Math.random()*3)){ 
@@ -144,6 +157,18 @@ export default class MapEnviorment{
                 switch(Math.floor(Math.random()*2)){ 
                     case 0:
                         return new Skeleton(playerLevel);
+                    case 1:
+                        return new Bat(playerLevel);
+                    default:
+                        return;
+                }
+            case "altas castle":
+                if(isBoss == true){
+                    return new EmperorDolos(playerLevel);
+                }
+                switch(Math.floor(Math.random()*2)){ 
+                    case 0:
+                        return new AltusMage(playerLevel);
                     case 1:
                         return new Bat(playerLevel);
                     default:

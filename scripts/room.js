@@ -10,6 +10,7 @@ export default class Room{
         this.enemy = "";
         this.encounter = "";
         this.isExit = false;
+        this.frameXCoordinate = 0;//for different image versions of same room type
         this.position = [0, 0]; //tile position in 2D
     }
     setRooms(roomNorth, roomEast, roomSouth, roomWest){

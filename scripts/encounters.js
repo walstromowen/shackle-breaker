@@ -36,7 +36,7 @@ export class LockedTreasureChest extends Encounter{
                 [
                     ()=>{retry(`${theController.player.name} breaks a lockpick!`)},
                     ()=>{removeDecision(`${theController.player.name} jams the lock!`, "pick lock")},
-                    ()=>{toggleBattle(`as ${theController.player.name} reaches to pick the lock, something emerges from the shadows and races towards ${theController.player.name}!`, theController.map.mapEnviorment.generateEnemy(theController.player.level))}
+                    ()=>{toggleBattle(`as ${theController.player.name} reaches to pick the lock, something emerges from the shadows and races towards ${theController.player.name}!`, theController.map.mapEnviorment.generateEnemy(theController.player.level, false))}
                 ]
             ),
             new Decision(
@@ -49,7 +49,7 @@ export class LockedTreasureChest extends Encounter{
                 [
                     ()=>{retry(`the lock doesn't budge.`)},
                     ()=>{removeDecision(`${theController.player.name} cannot break the lock!`, "break lock")},
-                    ()=>{toggleBattle(`upon hearing the loud noise, something emerges from the shadows and races towards ${theController.player.name}!`, theController.map.mapEnviorment.generateEnemy(theController.player.level))}
+                    ()=>{toggleBattle(`upon hearing the loud noise, something emerges from the shadows and races towards ${theController.player.name}!`, theController.map.mapEnviorment.generateEnemy(theController.player.level, false))}
                 ]
             ),
             new Decision(
@@ -62,7 +62,7 @@ export class LockedTreasureChest extends Encounter{
                 [
                     ()=>{retry(`${theController.player.name} seaches in vain for the key.`)},
                     ()=>{removeDecision(`${theController.player.name} searches everywhere for the key`, "search for key")},
-                    ()=>{toggleBattle(`somethings lunges towards ${theController.player.name}!`, theController.map.mapEnviorment.generateEnemy(theController.player.level))}
+                    ()=>{toggleBattle(`somethings lunges towards ${theController.player.name}!`, theController.map.mapEnviorment.generateEnemy(theController.player.level, false))}
                 ]
             )
         ];
@@ -168,7 +168,7 @@ export class MysteriousDoor extends Encounter{
         this.decisionArray = [
             new Decision(
                 "move on", 
-                `${theController.player.name} decides not to open the chest.`,
+                `${theController.player.name} steps away from the door.`,
                 "certain",
                 [
                     ()=>{leave(`${theController.player.name} moves on.`)}
@@ -322,7 +322,7 @@ export class AbandonedCabin extends Encounter{
                     ()=>{loot(`${theController.player.name} rumages through some cabinets.`, [getRandomItem()], 50, 10)},
                 ],
                 [
-                    ()=>{toggleBattle(`somethings lunges towards ${theController.player.name}!`, theController.map.mapEnviorment.generateEnemy(theController.player.level))}
+                    ()=>{toggleBattle(`somethings lunges towards ${theController.player.name}!`, theController.map.mapEnviorment.generateEnemy(theController.player.level, false))}
                 ]
             ),
             new Decision(
@@ -333,7 +333,7 @@ export class AbandonedCabin extends Encounter{
                     ()=>{regainHP(`${theController.player.name} takes a short rest.`, 0.5)}
                 ],
                 [
-                    ()=>{toggleBattle(`somethings lunges towards ${theController.player.name}!`, theController.map.mapEnviorment.generateEnemy(theController.player.level))}
+                    ()=>{toggleBattle(`somethings lunges towards ${theController.player.name}!`, theController.map.mapEnviorment.generateEnemy(theController.player.level, false))}
                 ]
             )
         ];
