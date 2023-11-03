@@ -28,7 +28,7 @@ export default class Map{
                 case 0:
                     this.roomArray[i].type = "open";
                     this.roomArray[i].frameXCoordinate = this.mapEnviorment.frameCoordinates[0][Math.floor(Math.random()*this.mapEnviorment.frameCoordinates[0].length)];
-                    let randomNumber = Math.floor(Math.random()*500)
+                    let randomNumber = Math.floor(Math.random()*50)
                     if(randomNumber <= 2){
                         this.roomArray[i].enemy = this.mapEnviorment.generateEnemy(playerLevel, false);
                     }
