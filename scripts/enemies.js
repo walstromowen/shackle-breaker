@@ -1,6 +1,6 @@
 import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
     ThrowNet, Immolate, LightningBolt, Channel, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Bite, SpitBile, LeechLife, Devour, Pounce, BlinkStrike, ThrowSmokebomb} from "./abilities.js"
-import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword,
+import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer,
         Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, 
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
         LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, 
@@ -98,8 +98,8 @@ export class Skeleton extends Enemy{
         this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Slash, new Stab, new Strike, new Block];
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new Spear, new Shortsword, new Longsword, new Dagger, new Shiv, new BlacksmithHammer,
-                          new Buckler, new LeatherHelmet, new LeatherHood, 
+        this.lootArray = [new Spear, new Shortsword, new Longsword, new Handaxe, new Dagger, new Shiv, new BlacksmithHammer,
+                          new Buckler, new LeatherHelmet, new LeatherHood, new WarHammer, 
                           new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
                           new LeatherBoots, new KiteShield, new IronHelmet, new IronGauntlets, 
                           new IronChainmail, new IronGreaves, new IronBoots, 
@@ -510,7 +510,7 @@ export class Bandit extends Enemy{
         this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new ThrowSmokebomb, new Slash, new Stab, new Eviscerate, new ThrowKnife];
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new Shortsword, new Longsword, new Dagger, new Shiv, new LeatherHelmet, new LeatherHood, 
+        this.lootArray = [new Shortsword, new Longsword, new Dagger, new Shiv, new Handaxe, new LeatherHelmet, new LeatherHood, 
                           new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
                           new LeatherBoots, new HealthPotion, new StaminaPotion, new ThrowingKnife, new SmokeBomb];
         this.gold = 0;

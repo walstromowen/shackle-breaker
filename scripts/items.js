@@ -1,8 +1,8 @@
-import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
+import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, GuardBreak, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
         ThrowNet, Immolate, LightningBolt, Shockwave, Recuperate, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Channel, ThrowSmokebomb, BlinkStrike} from "./abilities.js"
 
 export function getRandomItem(){
-    let itemArray = [new LinenShirt, new LinenPants, new Dagger, new BlacksmithHammer, new Spear, new Shortsword, new Longsword,
+    let itemArray = [new LinenShirt, new LinenPants, new Dagger, new BlacksmithHammer, new Spear, new Shortsword, new Longsword, new Handaxe,
                 new Shiv, new Buckler, new FireStaff, new LightningStaff, new IceStaff, new ArcaneStaff, new LightStaff, new DarkStaff, new LeatherHelmet, 
                 new LeatherHood, new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
                 new LeatherBoots, new KiteShield, new IronHelmet, new IronGauntlets, new IronChainmail, 
@@ -88,7 +88,7 @@ export class LinenPants {
 export class Dagger {
     constructor(){
         this.name = "dagger";
-        this.type = "weapon";
+        this.type = "one hand";
         this.imageSrc = "./media/icons/dagger.png";
         this.description = 'A simple dagger. "Often times, a duel is another way of saying who can draw their weapon fastest" - Commander Mentoras.';
         this.level = 1;
@@ -120,16 +120,19 @@ export class Dagger {
             this.speed = this.speed + 1;
             this.evasion = this.evasion + 1;
         }
+        if(this.level == 3){
+            this.abilityArray.push(new Eviscerate());
+        }
     }
 }
 export class BlacksmithHammer {
     constructor(){
         this.name = "blacksmith hammer";
-        this.type = "weapon";
+        this.type = "one hand";
         this.imageSrc = "./media/icons/blacksmith-hammer.png";
         this.description = "A blacksmith's hammer. Since what many consider to be the fall of Altus kingdom, quality weapons are hard to come by. Perhaps this explains the blood stains on this ordinary hammer";
         this.level = 1;
-        this.price = 200;
+        this.price = 50;
         this.bluntAttack = 2;
         this.pierceAttack = 1;
         this.arcaneAttack = 0;
@@ -138,7 +141,7 @@ export class BlacksmithHammer {
         this.pierceDefense = 0;
         this.arcaneDefense = 0;
         this.elementalDefense = 0;
-        this.speed = 3;
+        this.speed = 2;
         this.evasion = 0;
         this.abilityArray = [new Strike()];
     }
@@ -154,7 +157,7 @@ export class BlacksmithHammer {
             this.pierceDefense = this.pierceDefense + 0;
             this.arcaneDefense = this.arcaneDefense + 0;
             this.elementalDefense = this.elementalDefense + 0;
-            this.speed = this.speed + 1;
+            this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
         }
     }
@@ -162,7 +165,7 @@ export class BlacksmithHammer {
 export class Spear {
     constructor(){
         this.name = "spear";
-        this.type = "weapon";
+        this.type = "one hand";
         this.imageSrc = "./media/icons/spear.png";
         this.description = `A standard spear. Standard issue spear of the Altus guard. "Keep your friends close and your enemies at spear's length" - Commander Mentoras.`;
         this.level = 1;
@@ -199,12 +202,12 @@ export class Spear {
 export class Shortsword {
     constructor(){
         this.name = "shortsword";
-        this.type = "weapon";
+        this.type = "one hand";
         this.imageSrc = "./media/icons/shortsword.png";
         this.description = `A standard shortsword. Standard issue shortsword of the Altus guard. "A shorter longsword is a faster longsword" - Commander Mentoras.`;
         this.level = 1;
         this.price = 200;
-        this.bluntAttack = 3;
+        this.bluntAttack = 2;
         this.pierceAttack = 3;
         this.arcaneAttack = 0;
         this.elementalAttack = 0;
@@ -220,8 +223,8 @@ export class Shortsword {
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
             this.price = Math.floor(this.price * 1.5);
-            this.bluntAttack = this.bluntAttack + 2;
-            this.pierceAttack = this.pierceAttack + 2;
+            this.bluntAttack = this.bluntAttack + 1;
+            this.pierceAttack = this.pierceAttack + 3;
             this.arcaneAttack = this.arcaneAttack + 0;
             this.elementalAttack = this.elementalAttack + 0;
             this.bluntDefense = this.bluntDefense + 0;
@@ -236,10 +239,47 @@ export class Shortsword {
         }
     }
 }
+export class Handaxe {
+    constructor(){
+        this.name = "handaxe";
+        this.type = "one hand";
+        this.imageSrc = "./media/icons/handaxe.png";
+        this.description = `A battered handaxe. After the fall of Altus kingdom, many common tools were repurposed as weapons much like this well worn axe. "An axe is a simple lever. The harder you pull the lever the quicker your work becomes." - Commander Mentoras.`;
+        this.level = 1; 
+        this.price = 200;
+        this.bluntAttack = 3;
+        this.pierceAttack = 2;
+        this.arcaneAttack = 0;
+        this.elementalAttack = 0;
+        this.bluntDefense = 0;
+        this.pierceDefense = 0;
+        this.arcaneDefense = 0;
+        this.elementalDefense = 0;
+        this.speed = 2;
+        this.evasion = 0;
+        this.abilityArray = [new Strike(), new Slash(), new GuardBreak()];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.bluntAttack = this.bluntAttack + 1;
+            this.pierceAttack = this.pierceAttack + 3;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 0;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 0;
+            this.elementalDefense = this.elementalDefense + 0;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+        }
+    }
+}
 export class Longsword {
     constructor(){
         this.name = "longsword";
-        this.type = "weapon";
+        this.type = "one hand";
         this.imageSrc = "./media/icons/longsword.png";
         this.description = `A standard longsword. Standard issue longsword of the Altus guard. "A longsword for you too huh? Well, can't say I blame you" - Commander Mentoras.`;
         this.level = 1;
@@ -276,14 +316,51 @@ export class Longsword {
         }
     }
 }
+export class WarHammer {
+    constructor(){
+        this.name = "warhammer";
+        this.type = "two hand";
+        this.imageSrc = "./media/icons/warhammer.png";
+        this.description = `A standard longsword. Standard issue longsword of the Altus guard. "A longsword for you too huh? Well, can't say I blame you" - Commander Mentoras.`;
+        this.level = 1;
+        this.price = 400;
+        this.bluntAttack = 6;
+        this.pierceAttack = 2;
+        this.arcaneAttack = 0;
+        this.elementalAttack = 0;
+        this.bluntDefense = 1;
+        this.pierceDefense = 1;
+        this.arcaneDefense = 0;
+        this.elementalDefense = 0;
+        this.speed = -1;
+        this.evasion = -1;
+        this.abilityArray = [new Strike(), new GuardBreak()];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.bluntAttack = this.bluntAttack + 4;
+            this.pierceAttack = this.pierceAttack + 1;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 0;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 0;
+            this.elementalDefense = this.elementalDefense + 0;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+        }
+    }
+}
 export class Shiv {
     constructor(){
         this.name = "shiv";
-        this.type = "offhand";
+        this.type = "one hand";
         this.imageSrc = "./media/icons/dagger.png";
         this.description = `A crude shiv. Weapons like these were often concealed prisioners enroute to Altus prisions. Ironically, prisoners were bound with chains preventing movement of any kind and many died with the shivs still in their garmets.`;
         this.level = 1;
-        this.price = 200;
+        this.price = 50;
         this.bluntAttack = 1;
         this.pierceAttack = 1;
         this.arcaneAttack = 0;
@@ -294,7 +371,7 @@ export class Shiv {
         this.elementalDefense = 0;
         this.speed = 1;
         this.evasion = 0;
-        this.abilityArray = [new Eviscerate];
+        this.abilityArray = [new Stab];
     }
     upgrade(levels){
         for(let i = 0; i < levels; i++){
@@ -308,15 +385,15 @@ export class Shiv {
             this.pierceDefense = this.pierceDefense + 0;
             this.arcaneDefense = this.arcaneDefense + 0;
             this.elementalDefense = this.elementalDefense + 0;
-            this.speed = this.speed + 1;
-            this.evasion = this.evasion + 1;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
         }
     }
 }
 export class Buckler {
     constructor(){
         this.name = "buckler";
-        this.type = "offhand";
+        this.type = "one hand";
         this.imageSrc = "./media/icons/round-shield.png";
         this.description = `A wooden buckler. A buckler fashioned from hard wood. A blue and green symbol of unknown origin is painted on its front`;
         this.level = 1;
@@ -353,7 +430,7 @@ export class Buckler {
 export class FireStaff {
     constructor(){
         this.name = "fire staff";
-        this.type = "weapon";
+        this.type = "one hand";
         this.imageSrc = "./media/icons/staff.png";
         this.description = `A wooden staff imbued with fire. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time`;
         this.level = 1;
@@ -390,7 +467,7 @@ export class FireStaff {
 export class LightningStaff {
     constructor(){
         this.name = "lightning staff";
-        this.type = "weapon";
+        this.type = "one hand";
         this.imageSrc = "./media/icons/staff.png";
         this.description = `A wooden staff imbued with lightning. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time`;
         this.level = 1;
@@ -427,7 +504,7 @@ export class LightningStaff {
 export class IceStaff {
     constructor(){
         this.name = "ice staff";
-        this.type = "weapon";
+        this.type = "one hand";
         this.imageSrc = "./media/icons/staff.png";
         this.description = `A wooden staff imbued with ice. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time`;
         this.level = 1;
@@ -464,7 +541,7 @@ export class IceStaff {
 export class ArcaneStaff {
     constructor(){
         this.name = "arcane staff";
-        this.type = "weapon";
+        this.type = "one hand";
         this.imageSrc = "./media/icons/staff.png";
         this.description = `A wooden staff imbued with arcane. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time`;
         this.level = 1;
@@ -501,7 +578,7 @@ export class ArcaneStaff {
 export class LightStaff {
     constructor(){
         this.name = "light staff";
-        this.type = "weapon";
+        this.type = "one hand";
         this.imageSrc = "./media/icons/staff.png";
         this.description = `A wooden staff imbued with light. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time`;
         this.level = 1;
@@ -538,7 +615,7 @@ export class LightStaff {
 export class DarkStaff {
     constructor(){
         this.name = "dark staff";
-        this.type = "weapon";
+        this.type = "one hand";
         this.imageSrc = "./media/icons/staff.png";
         this.description = `A wooden staff imbued with darkness. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time`;
         this.level = 1;
@@ -797,7 +874,7 @@ export class LeatherBoots {
 export class KiteShield {
     constructor(){
         this.name = "kite shield";
-        this.type = "offhand";
+        this.type = "one hand";
         this.imageSrc = "./media/icons/shield.png";
         this.description = `a kite shield with engraved with the Altus Sigil. "the best defense is a good ofense. So if you find yourself in a corner, bash em with your shield." - Commander Mentoras.`;
         this.level = 1;
@@ -1093,7 +1170,7 @@ export class ClothRobe {
 export class CrystalBall {
     constructor(){
         this.name = "crystal ball";
-        this.type = "offhand";
+        this.type = "one hand";
         this.imageSrc = "./media/icons/magic-ball.png";
         this.description = `a magical crystal ball. While some see magic as pure power, others see it as a science. Still, the fundental law of magic is that energy must come from somewhere.`;
         this.level = 1;
@@ -1130,7 +1207,7 @@ export class CrystalBall {
 export class NamuhSword {
     constructor(){
         this.name = "namuh sword";
-        this.type = "main";
+        this.type = "one hand";
         this.imageSrc = "./media/icons/longsword.png";
         this.description = `a Numuh longsword. The Namuh are a shadowy and mysterious people who mainly communicate through sign language. Much like this blade, they rarely make a sound.`;
         this.level = 1;

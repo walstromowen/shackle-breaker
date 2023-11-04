@@ -5,20 +5,19 @@ Text adventure game based on the Shackle Breaker story
 
 # Planned Features
 * Parrying System
+* Distance System in battle
 * Attack Animations
 * map culling
 * Shop/crafting/weapon/town
 * interact with stairs / loot bodies
-* Two Handing / Weapons equipable in either hand
-* Distance System in battle
-* Decision Success modifier
-* Two attacks
-* bonus actions
+* Two attacks/bonus actions
 * Multiple enemies/ companions
 * trinket and waist slots
+* Item stamina /magic consumption modifier
 
 # Planned Quality of Life Improvements
 * Alphabetize CSS rules
+* Change decision Success modifier to have both likeliness and attribute
 * scaling
 
 # Bugs
@@ -35,5 +34,5 @@ Text adventure game based on the Shackle Breaker story
 - 0.75 (fast)
 * Ability Attack formula
 - Math.floor(Math.random() * (max - min+ 1) + min)
-- Enemy stat increments 40pts = 20 player attribute, points resource stats double wieghted
-- player attribute increments 20 attribute Points, 
+* Enemy stat increments 40pts = 20 player attribute, points resource stats double wieghted
+* player attribute increments 15 attribute Points, 

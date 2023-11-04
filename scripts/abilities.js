@@ -223,6 +223,7 @@ export class Punch extends Ability{
         }
     }
 }
+
 export class Slash extends Ability{
     constructor(){
         super();
@@ -245,6 +246,42 @@ export class Slash extends Ability{
            damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
+        }
+    }
+}
+export class GuardBreak extends Ability{
+    constructor(){
+        super();
+        this.name = "guard break";
+        this.type = "blunt";
+        this.speedMultiplier = 0.5;
+        this.staminaCost = 10;
+        this.magicCost = 0;
+        this.damageModifier = 4;
+        this.accuracy = 80;
+        this.soundEffect = "./audio/soundEffects/crash-6711.wav";
+    }
+    activate(weilder, target){
+        if(this.checkStamina(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentBluntAttack + this.damageModifier) - weilder.currentBluntAttack + 1)) + weilder.currentBluntAttack;
+            for(let i = 0; i < target.statusArray.length; i++){
+                if(target.statusArray[i].name == "shielded"){
+                    target.statusArray[i].onRemove();
+                    target.statusArray.splice(i, 1);
+                    damageOutput = damageOutput + Math.floor(target.maxStamina/2);
+                    break;
+                }
+            }
+            damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
+            if(target.currentStamina - damageOutput < 0){
+                damageOutput = target.currentStamina;
+            }
+            target.currentStamina = target.currentStamina - damageOutput;
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} stamina damage!`);
         }
     }
 }

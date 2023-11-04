@@ -2,7 +2,7 @@ import {controller as theController} from "./main.js"
 import {Decision} from "./encounterDecision.js";
 import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, Bandit} from "./enemies.js";
 import {Shielded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden} from "./statusEffects.js";
-import {getRandomItem} from "./items.js";
+import {getRandomItem, HealthPotion} from "./items.js";
 import {regainHP, initiateTrade, leave, retry, removeDecision, toggleNewEncounter, toggleBattle, loot, takeDamage, recieveStatusEffect, changeMap} from "./encounterResults.js";
 
 
@@ -287,7 +287,7 @@ export class TravelingMerchant extends Encounter{
                 `${theController.player.name} approaches the merchant`,
                 "certain",
                 [
-                    ()=>{initiateTrade(`${theController.player.name} offers to trade`, [getRandomItem(), getRandomItem(), getRandomItem(), getRandomItem(), getRandomItem()], "trade")}
+                    ()=>{initiateTrade(`${theController.player.name} offers to trade`, [new HealthPotion, getRandomItem(), getRandomItem(), getRandomItem(), getRandomItem()], "trade")}
                 ],
                 [
                     
@@ -349,7 +349,7 @@ export class Avalanche extends Encounter{
             new Decision(
                 "brace", 
                 `${theController.player.name} braces agains a nearby boulder!`,
-                "neutral",
+                "strength",
                 [
                     ()=>{leave(`The avalanche crashes upon the land! After what feels like an eternity, ${theController.player.name} emerges from the rubble unharmed.`)}
                 ],
@@ -360,7 +360,7 @@ export class Avalanche extends Encounter{
             new Decision(
                 "run away", 
                 `${theController.player.name} flees the avalanche with haste!`,
-                "neutral",
+                "endurance",
                 [
                     ()=>{leave(`with great athleticism, ${theController.player.name} barely escapes the avalanche!`)}
                 ],
@@ -448,7 +448,7 @@ export class DefendTraveler extends Encounter{
                 `${theController.player.name} attempts to reason with the thug.`,
                 "insight",
                 [
-                    ()=>{loot(`after a short exchange, ${theController.player.name} convinces the thug that the traveler is not worth the effort and the thug walks away. The traveler then thanks ${theController.player.name} and gives him a gift.`, [getRandomItem()], 50, 10)},
+                    ()=>{loot(`${theController.player.name} convinces the thug to walks away. The traveler then thanks ${theController.player.name} and gives him a gift.`, [getRandomItem()], 50, 10)},
                 ],
                 [
                     ()=>{removeDecision(`the scoffs at ${theController.player.name}`, "persuade")},

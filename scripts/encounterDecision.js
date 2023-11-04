@@ -23,7 +23,7 @@ export class Decision{
             case "certain":
                 return true;
             case "likely":
-                decisionAttribute = 12;
+                decisionAttribute = 20;
                 break;
             case "neutral":
                 decisionAttribute = 8;

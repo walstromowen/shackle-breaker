@@ -1,4 +1,4 @@
-import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword,
+import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer,
     Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, 
     LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
     LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, 
@@ -139,7 +139,7 @@ export default class Controller {
                 this.characterCreationArray[6] = 200;
                 break;
             case "blacksmith":
-                inventoryArray.push(new BlacksmithHammer, new KiteShield, new LinenShirt, new LinenPants, new LeatherBoots);
+                inventoryArray.push(new BlacksmithHammer, new Buckler, new LinenShirt, new LinenPants, new LeatherBoots);
                 this.characterCreationArray[6] = 100;
                 break;
             case "ranger":
@@ -150,8 +150,8 @@ export default class Controller {
                 inventoryArray.push(new ArcaneStaff, new ClothHood, new LinenShirt, new LinenPants, new LeatherBoots);
                 this.characterCreationArray[6] = 100;
                 break;
-            case "soldier":
-                inventoryArray.push(new Longsword, new LeatherChestplate, new LinenPants, new LeatherBoots);
+            case "warrior":
+                inventoryArray.push(new Handaxe, new LeatherChestplate, new LinenPants, new LeatherBoots);
                 this.characterCreationArray[6] = 150;
                 break;
             case "theif":
@@ -943,8 +943,8 @@ export default class Controller {
             }
             this.player.currentRoom.status = "visited";
             this.player.currentRoom = nextRoom;
-            let stamina = Math.floor(this.player.maxStamina * 0.2);
-            let magic = Math.floor(this.player.maxMagic * 0.2);
+            let stamina = Math.floor(this.player.maxStamina * 0.1);
+            let magic = Math.floor(this.player.maxMagic * 0.1);
             if(this.player.currentStamina + stamina > this.player.maxStamina){stamina = this.player.maxStamina - this.player.currentStamina;}
             if(this.player.currentMagic + magic > this.player.maxMagic){magic = this.player.maxMagic - this.player.currentMagic;}
             this.player.currentStamina = this.player.currentStamina + stamina;
@@ -963,7 +963,38 @@ export default class Controller {
     equip(inventoryIndex){
         if(this.player.isInBattle == false){
             switch(this.player.inventory[inventoryIndex].type){
-                case "weapon":
+                case "one hand":
+                    if(this.player.equippedArray[0] !== "Empty"){
+                        if(this.player.equippedArray[1] !== "Empty"){
+                            this.player.inventory.push(this.player.equippedArray[0]);
+                            this.player.equippedArray[0] = this.player.inventory[inventoryIndex];
+                            this.updatePlayerEquippedTab(0);
+                        }else{
+                            this.player.equippedArray[1] = this.player.inventory[inventoryIndex];
+                            this.updatePlayerEquippedTab(1);
+                        }
+                    }else{
+                        this.player.equippedArray[0] = this.player.inventory[inventoryIndex];
+                        this.updatePlayerEquippedTab(0);
+                    }
+                    this.printToGameConsole(`${this.player.name} equips ${this.player.inventory[inventoryIndex].name}.`);
+                    this.player.inventory.splice(inventoryIndex, 1);
+                    break;
+                case "two hand":
+                    if(this.player.equippedArray[0] !== "Empty"){
+                        this.player.inventory.push(this.player.equippedArray[0]);
+                    }
+                    if(this.player.equippedArray[1] !== "Empty"){
+                        this.player.inventory.push(this.player.equippedArray[1]);
+                    }
+                    this.player.equippedArray[0] = this.player.inventory[inventoryIndex];
+                    this.player.equippedArray[1] = this.player.inventory[inventoryIndex];
+                    this.player.inventory.splice(inventoryIndex, 1);
+                    this.printToGameConsole(`${this.player.name} equips ${this.player.equippedArray[0].name}.`);
+                    this.updatePlayerEquippedTab(0);
+                    this.updatePlayerEquippedTab(1);
+                    break;
+                case "main":
                     if(this.player.equippedArray[0] !== "Empty"){
                         this.player.inventory.push(this.player.equippedArray[0]);
                     }
@@ -1040,6 +1071,15 @@ export default class Controller {
     unequip(equippedArrayIndex){
         if(this.player.isInBattle == false){
             if(this.player.equippedArray[equippedArrayIndex] != "Empty"){
+                if(this.player.equippedArray[equippedArrayIndex].type == "two hand"){
+                    if(equippedArrayIndex == 0){
+                        this.player.equippedArray[1] = "Empty";
+                        this.updatePlayerEquippedTab(1);
+                    }else{
+                        this.player.equippedArray[0] = "Empty";
+                        this.updatePlayerEquippedTab(0);
+                    }
+                }
                 this.printToGameConsole(`${this.player.name} unequips ${this.player.equippedArray[equippedArrayIndex].name}`);
                 this.player.inventory.push(this.player.equippedArray[equippedArrayIndex]);
                 this.player.equippedArray[equippedArrayIndex] = "Empty";
@@ -1104,16 +1144,18 @@ export default class Controller {
         //update stats
         for(let i = 0; i < this.player.equippedArray.length; i++){
             if(this.player.equippedArray[i] != "Empty"){
-                this.player.currentBluntAttack = this.player.currentBluntAttack + this.player.equippedArray[i].bluntAttack;
-                this.player.currentPierceAttack = this.player.currentPierceAttack + this.player.equippedArray[i].pierceAttack;
-                this.player.currentArcaneAttack = this.player.currentArcaneAttack + this.player.equippedArray[i].arcaneAttack;
-                this.player.currentElementalAttack = this.player.currentElementalAttack + this.player.equippedArray[i].elementalAttack;
-                this.player.currentBluntDefense = this.player.currentBluntDefense + this.player.equippedArray[i].bluntDefense;
-                this.player.currentPierceDefense = this.player.currentPierceDefense + this.player.equippedArray[i].pierceDefense;
-                this.player.currentArcaneDefense = this.player.currentArcaneDefense + this.player.equippedArray[i].arcaneDefense;
-                this.player.currentElementalDefense = this.player.currentElementalDefense + this.player.equippedArray[i].elementalDefense;
-                this.player.currentSpeed = this.player.currentSpeed + this.player.equippedArray[i].speed;
-                this.player.currentEvasion = this.player.currentEvasion + this.player.equippedArray[i].evasion;
+                if((this.player.equippedArray[i].type == "two hand" && i == 1) != true){
+                    this.player.currentBluntAttack = this.player.currentBluntAttack + this.player.equippedArray[i].bluntAttack;
+                    this.player.currentPierceAttack = this.player.currentPierceAttack + this.player.equippedArray[i].pierceAttack;
+                    this.player.currentArcaneAttack = this.player.currentArcaneAttack + this.player.equippedArray[i].arcaneAttack;
+                    this.player.currentElementalAttack = this.player.currentElementalAttack + this.player.equippedArray[i].elementalAttack;
+                    this.player.currentBluntDefense = this.player.currentBluntDefense + this.player.equippedArray[i].bluntDefense;
+                    this.player.currentPierceDefense = this.player.currentPierceDefense + this.player.equippedArray[i].pierceDefense;
+                    this.player.currentArcaneDefense = this.player.currentArcaneDefense + this.player.equippedArray[i].arcaneDefense;
+                    this.player.currentElementalDefense = this.player.currentElementalDefense + this.player.equippedArray[i].elementalDefense;
+                    this.player.currentSpeed = this.player.currentSpeed + this.player.equippedArray[i].speed;
+                    this.player.currentEvasion = this.player.currentEvasion + this.player.equippedArray[i].evasion;
+                }
             }
         }
         //punch check

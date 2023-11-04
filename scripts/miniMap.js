@@ -19,40 +19,41 @@ export default class MiniMap{
         
     }
     draw(map, playerCurrentRoom){
-        let viewportDimensions = [(this.width/this.tileWidth), (this.height/this.tileHeight)]
-        let gridCoordinates =   [
-                                    Math.floor(playerCurrentRoom.position[0] / viewportDimensions[0]), //current grid x coorinate
-                                    Math.floor(playerCurrentRoom.position[1] / viewportDimensions[1]) // current grid y coordinate
-                                ];
-        //this.ctx.clearRect(0, 0, 288, 288);
-        map.roomArray.forEach((room) => {
-            if(Math.floor(room.position[0] / viewportDimensions[0]) == gridCoordinates[0] && Math.floor(room.position[1] / viewportDimensions[1]) == gridCoordinates[1]){ //if selected room's gird coordinates is equal to player's current grid coordinates
-                if(room.type == 'open'){
-                    this.ctx.drawImage(map.mapEnviorment.terrain, 32*room.frameXCoordinate, 0, 32, 32, room.position[0]%viewportDimensions[0]*this.tileWidth, room.position[1]%viewportDimensions[1]*this.tileHeight, this.tileWidth, this.tileHeight);
-                }
-                if(room.type == 'wall'){
-                    this.ctx.drawImage(map.mapEnviorment.terrain, 32*room.frameXCoordinate, 32, 32, 32, room.position[0]%viewportDimensions[0]*this.tileWidth, room.position[1]%viewportDimensions[1]*this.tileHeight, this.tileWidth, this.tileHeight);
-                }
-                if(room.type == 'entrance'){
-                    this.ctx.drawImage(this.entranceIcon, room.position[0]%viewportDimensions[0]*this.tileWidth, room.position[1]%viewportDimensions[1]*this.tileHeight, this.tileWidth, this.tileHeight);
-                }
-                if(room.type == 'exit'){
-                    this.ctx.drawImage(this.exitIcon, room.position[0]%viewportDimensions[0]*this.tileWidth, room.position[1]%viewportDimensions[1]*this.tileHeight, this.tileWidth, this.tileHeight);
-                }
-                if(room.type == 'boss chamber'){
-                    this.ctx.drawImage(map.mapEnviorment.terrain, 32*room.frameXCoordinate, 128, 32, 32, room.position[0]%viewportDimensions[0]*this.tileWidth, room.position[1]%viewportDimensions[1]*this.tileHeight, this.tileWidth, this.tileHeight);
-                }
-                if(room.status == 'visited'){
-                    this.ctx.fillStyle= "rgba(255, 255, 255, 0.2)"; 
-                    this.ctx.fillRect(room.position[0]%viewportDimensions[0]*this.tileWidth, room.position[1]%viewportDimensions[1]*this.tileHeight, this.tileWidth-2, this.tileHeight-2);
-                }
-                if(room.status == 'retreated'){
-                    this.ctx.fillStyle= "rgba(255, 0, 0, 0.2)";
-                    this.ctx.fillRect(room.position[0]%viewportDimensions[0]*this.tileWidth, room.position[1]%viewportDimensions[1]*this.tileHeight, this.tileWidth-2, this.tileHeight-2);
+        this.heroIcon.onload = ()=>{
+            let viewportDimensions = [(this.width/this.tileWidth), (this.height/this.tileHeight)]
+            let gridCoordinates =   [
+                                        Math.floor(playerCurrentRoom.position[0] / viewportDimensions[0]), //current grid x coorinate
+                                        Math.floor(playerCurrentRoom.position[1] / viewportDimensions[1]) // current grid y coordinate
+                                    ];
+            //this.ctx.clearRect(0, 0, 288, 288);
+            map.roomArray.forEach((room) => {
+                if(Math.floor(room.position[0] / viewportDimensions[0]) == gridCoordinates[0] && Math.floor(room.position[1] / viewportDimensions[1]) == gridCoordinates[1]){ //if selected room's gird coordinates is equal to player's current grid coordinates
+                    if(room.type == 'open'){
+                        this.ctx.drawImage(map.mapEnviorment.terrain, 32*room.frameXCoordinate, 0, 32, 32, room.position[0]%viewportDimensions[0]*this.tileWidth, room.position[1]%viewportDimensions[1]*this.tileHeight, this.tileWidth, this.tileHeight);
+                    }
+                    if(room.type == 'wall'){
+                        this.ctx.drawImage(map.mapEnviorment.terrain, 32*room.frameXCoordinate, 32, 32, 32, room.position[0]%viewportDimensions[0]*this.tileWidth, room.position[1]%viewportDimensions[1]*this.tileHeight, this.tileWidth, this.tileHeight);
+                    }
+                    if(room.type == 'entrance'){
+                        this.ctx.drawImage(this.entranceIcon, room.position[0]%viewportDimensions[0]*this.tileWidth, room.position[1]%viewportDimensions[1]*this.tileHeight, this.tileWidth, this.tileHeight);
+                    }
+                    if(room.type == 'exit'){
+                        this.ctx.drawImage(this.exitIcon, room.position[0]%viewportDimensions[0]*this.tileWidth, room.position[1]%viewportDimensions[1]*this.tileHeight, this.tileWidth, this.tileHeight);
+                    }
+                    if(room.type == 'boss chamber'){
+                        this.ctx.drawImage(map.mapEnviorment.terrain, 32*room.frameXCoordinate, 128, 32, 32, room.position[0]%viewportDimensions[0]*this.tileWidth, room.position[1]%viewportDimensions[1]*this.tileHeight, this.tileWidth, this.tileHeight);
+                    }
+                    if(room.status == 'visited'){
+                        this.ctx.fillStyle= "rgba(255, 255, 255, 0.2)"; 
+                        this.ctx.fillRect(room.position[0]%viewportDimensions[0]*this.tileWidth, room.position[1]%viewportDimensions[1]*this.tileHeight, this.tileWidth-2, this.tileHeight-2);
+                    }
+                    if(room.status == 'retreated'){
+                        this.ctx.fillStyle= "rgba(255, 0, 0, 0.2)";
+                        this.ctx.fillRect(room.position[0]%viewportDimensions[0]*this.tileWidth, room.position[1]%viewportDimensions[1]*this.tileHeight, this.tileWidth-2, this.tileHeight-2);
+                    } 
                 } 
-            } 
-        });
-        this.ctx.drawImage(this.heroIcon, playerCurrentRoom.position[0]%(this.width/this.tileWidth)*this.tileWidth, playerCurrentRoom.position[1]%(this.width/this.tileWidth)*this.tileHeight, this.tileWidth, this.tileHeight); 
-        
+            });
+            this.ctx.drawImage(this.heroIcon, playerCurrentRoom.position[0]%(this.width/this.tileWidth)*this.tileWidth, playerCurrentRoom.position[1]%(this.width/this.tileWidth)*this.tileHeight, this.tileWidth, this.tileHeight); 
+        }
     }
 }
