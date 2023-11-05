@@ -5,7 +5,7 @@ import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Lon
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
         LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, 
         IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
-        ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb,
+        ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide
         } from "./items.js";
 import { Channeled, Invigorated } from "./statusEffects.js";
 
@@ -193,7 +193,7 @@ export class Wolf extends Enemy{
         this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Bite, new Pounce];
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new StaminaPotion];
+        this.lootArray = [new Hide];
         this.gold = 0;
         this.XP = 0;
         this.isBoss = false;

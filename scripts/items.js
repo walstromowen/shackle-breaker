@@ -1354,3 +1354,14 @@ export class SmokeBomb {
         this.abilityArray = [new ThrowSmokebomb()];
     }
 }
+export class Hide {
+    constructor(){
+        this.name = "hide";
+        this.type = "material";
+        this.imageSrc = "./media/icons/animal-hide.png";
+        this.description = `a valuable animal hide`;
+        this.level = "N/A";
+        this.price = 200;
+        this.abilityArray = [];
+    }
+}
