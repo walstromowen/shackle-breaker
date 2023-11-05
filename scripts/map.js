@@ -23,7 +23,7 @@ export default class Map{
             }
         }
         for(var i = 0; i < this.roomArray.length; i++){
-            //Room Assignments
+            //Room Assignments.
             switch(this.mapLayout.tileArray[i]){
                 case 0:
                     this.roomArray[i].type = "open";
