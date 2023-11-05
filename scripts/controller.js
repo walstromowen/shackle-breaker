@@ -135,7 +135,7 @@ export default class Controller {
         let value = document.getElementById("background-selection").value;
         switch(value){
             case "traveler":
-                inventoryArray.push(new Hide, new LinenShirt, new LinenPants, new LeatherBoots);
+                inventoryArray.push(new Shortsword, new LinenShirt, new LinenPants, new LeatherBoots);
                 this.characterCreationArray[6] = 200;
                 break;
             case "blacksmith":
