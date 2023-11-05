@@ -411,7 +411,6 @@ export class Pounce extends Ability{
                 if(Math.random()*2 < 1){
                     for(let i = 0; i < target.statusArray.length; i++){
                         if(target.statusArray[i].name == "bound"){
-                            target.statusArray[i].currentCharges = target.statusArray[i].maxCharges;
                             return;
                         }
                     }
@@ -565,7 +564,6 @@ export class SpitBile extends Ability{
             if(damageOutput > 0){
                 for(let i = 0; i < target.statusArray.length; i++){
                     if(target.statusArray[i].name == "poisoned"){
-                        target.statusArray[i].currentCharges = target.statusArray[i].maxCharges;
                         return;
                     }
                 }
@@ -601,7 +599,6 @@ export class Fireball extends Ability{
                 if(Math.random()*3 < 1){
                     for(let i = 0; i < target.statusArray.length; i++){
                         if(target.statusArray[i].name == "burned"){
-                            target.statusArray[i].currentCharges = target.statusArray[i].maxCharges;
                             return;
                         }
                     }
@@ -616,7 +613,7 @@ export class Immolate extends Ability{
         super();
         this.name = "immolate";
         this.type = "elemental";
-        this.speedMultiplier = 0.75;
+        this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 8;
         this.damageModifier = 2;
@@ -629,7 +626,7 @@ export class Immolate extends Ability{
             if(this.checkMiss(weilder, target, this.name) == true){
                 return;
             }
-            let damageOutput = Math.floor(Math.random() * ((weilder.currentElementalAttack + this.damageModifier) - weilder.currentElementalAttack + 1) + weilder.currentElementalAttack)
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentElementalAttack + this.damageModifier) - weilder.currentElementalAttack + 1)) + weilder.currentElementalAttack;
             let damageOutputEnemy = this.checkDamage(damageOutput, weilder, target, this.type);
             target.currentHP = target.currentHP - damageOutputEnemy;
             let damageOutputSelf = this.checkDamage(damageOutput, weilder, target, this.type);
@@ -673,7 +670,6 @@ export class LightningBolt extends Ability{
                 if(Math.random()*3 < 1){
                     for(let i = 0; i < target.statusArray.length; i++){
                         if(target.statusArray[i].name == "paralyzed"){
-                            target.statusArray[i].currentCharges = target.statusArray[i].maxCharges;
                             return;
                         }
                     }
@@ -701,10 +697,20 @@ export class Shockwave extends Ability{
             if(this.checkMiss(weilder, target, this.name) == true){
                 return;
             }
-            let damageOutput = Math.floor(Math.random() * ((weilder.currentElementalAttack + this.damageModifier) - weilder.currentElementalAttack + 1)) + weilder.currentElementalAttack;
-           damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
-            target.currentHP = target.currentHP - damageOutput;
-            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
+            for(let i = 0; i < target.statusArray.length; i++){
+                if(target.statusArray[i].name == "shielded"){
+                    target.statusArray[i].onRemove();
+                    target.statusArray.splice(i, 1);
+                    damageOutput = damageOutput + Math.floor(target.maxStamina/2);
+                    break;
+                }
+            }
+            damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
+            if(target.currentStamina - damageOutput < 0){
+                damageOutput = target.currentStamina;
+            }
+            target.currentStamina = target.currentStamina - damageOutput;
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} stamina damage!`);
         }
     } 
 }
@@ -802,7 +808,6 @@ export class IceShard extends Ability{
                 if(Math.random()*3 < 1){
                     for(let i = 0; i < target.statusArray.length; i++){
                         if(target.statusArray[i].name == "frostbite"){
-                            target.statusArray[i].currentCharges = target.statusArray[i].maxCharges;
                             return;
                         }
                     }
@@ -907,11 +912,19 @@ export class LightBeam extends Ability{
     activate(weilder, target){
         if(this.checkMagic(weilder) == true){
             theController.playSoundEffect(this.soundEffect);
+            for(let i = 0; i < target.statusArray.length; i++){
+                if(target.statusArray[i].name == "hidden"){
+                    target.statusArray[i].onRemove();
+                    target.statusArray.splice(i, 1);
+                    damageOutput = damageOutput + Math.floor(target.maxStamina/2);
+                    break;
+                }
+            }
             if(this.checkMiss(weilder, target, this.name) == true){
                 return;
             }
             let damageOutput = Math.floor(Math.random() * ((weilder.currentArcaneAttack + this.damageModifier) - weilder.currentArcaneAttack + 1)) + weilder.currentArcaneAttack;
-           damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
+            damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
         }

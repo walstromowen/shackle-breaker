@@ -533,6 +533,11 @@ p{
     justify-content: center;
     flex-wrap: wrap;
 }
+#direction-button-container{
+    margin: 5px;
+    display: grid;
+    justify-content: center;
+}
 #player-status-icon-container, #enemy-status-icon-container{
     position: relative;
     bottom: 38px;

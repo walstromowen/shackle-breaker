@@ -96,7 +96,7 @@ export default class Controller {
             case "scholar":
                 this.characterCreatorUpdateStats(5, 5, 3, 4, 8, 5);
                 break;
-            case "soldier":
+            case "warrior":
                 this.characterCreatorUpdateStats(5, 5, 8, 5, 3, 4);
                 break;
             case "theif":
@@ -245,7 +245,7 @@ export default class Controller {
     enablePlayerMapControls(){
         for(var i = 0; i < this.mapBtnArray.length; i++){
             let controls = document.getElementById('map-button-container');
-            let oldBtn = controls.querySelector('button');
+            let oldBtn = controls.querySelector('div');
                 oldBtn.remove();
         }
         this.mapBtnArray = [];
@@ -254,10 +254,25 @@ export default class Controller {
         let moveSouthBtn = document.createElement('button');
         let moveEastBtn = document.createElement('button');
         let moveWestBtn = document.createElement('button');
+        let directionBtnContainer = document.createElement('div'); 
+        directionBtnContainer.id = "direction-button-container";
         moveNorthBtn.classList.add('action-button');
         moveSouthBtn.classList.add('action-button');
         moveEastBtn.classList.add('action-button');
         moveWestBtn.classList.add('action-button');
+
+        moveNorthBtn.style.gridRowStart="1";
+        moveNorthBtn.style.gridRowEnd="1";
+        moveNorthBtn.style.gridColumnStart="2";
+        moveNorthBtn.style.gridColumnEnd="2";
+        moveNorthBtn.style.gridColumnEnd="2";
+        moveSouthBtn.style.gridRowStart="3";
+        moveSouthBtn.style.gridColumnStart="2";
+        moveEastBtn.style.gridRowStart="2";
+        moveEastBtn.style.gridColumnStart="3";
+        moveWestBtn.style.gridRowStart="2";
+        moveWestBtn.style.gridColumnStart="1";
+
         moveNorthBtn.innerText = "Move North";
         moveSouthBtn.innerText = "Move South";
         moveEastBtn.innerText = "Move East";
@@ -282,10 +297,11 @@ export default class Controller {
                 this.movePlayerWest();
             }
         });
-        document.getElementById('map-button-container').appendChild(moveNorthBtn);
-        document.getElementById('map-button-container').appendChild(moveSouthBtn);
-        document.getElementById('map-button-container').appendChild(moveWestBtn);
-        document.getElementById('map-button-container').appendChild(moveEastBtn);
+        directionBtnContainer.appendChild(moveNorthBtn);
+        directionBtnContainer.appendChild(moveSouthBtn);
+        directionBtnContainer.appendChild(moveWestBtn);
+        directionBtnContainer.appendChild(moveEastBtn);
+        document.getElementById('map-button-container').appendChild(directionBtnContainer);
         this.mapBtnArray.push(moveNorthBtn, moveSouthBtn, moveEastBtn, moveWestBtn);
     }
     enableInventoryControls(){
