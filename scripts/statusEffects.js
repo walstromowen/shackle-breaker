@@ -156,12 +156,12 @@ export class Empowered extends StatusEffect{
         this.currentCharges = this.currentCharges - 1;
     }
     onApplied(){
-        this.holder.currentArcaneAttack = this.holder.currentArcaneDefense + 3;
-        this.holder.currentElementalAttack = this.holder.currentElementalDefense + 3;
+        this.holder.currentArcaneAttack = this.holder.currentArcaneAttack + 3;
+        this.holder.currentElementalAttack = this.holder.currentElementalAttack + 3;
     }
     onRemove(){
         this.holder.currentArcaneAttack = this.holder.currentArcaneAttack - 3;
-        this.holder.currentElementalAttack = this.holder.currentElementalDefense - 3;
+        this.holder.currentElementalAttack = this.holder.currentElementalAttack - 3;
     }
 }
 export class Paralyzed extends StatusEffect{

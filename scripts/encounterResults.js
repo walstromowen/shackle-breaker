@@ -77,9 +77,9 @@ export function recieveStatusEffect(message, statusEffect){
     }
     theController.endEncounter();
 }
-export function changeMap(message, biome){
+export function changeMap(message, biome, layout){
     theController.printToGameConsole(message);
-    theController.generateNewMap(biome, theController.player.level);
+    theController.generateNewMap(biome, layout);
     theController.endEncounter();
 }
 export function initiateTrade(message, inventoryArray){

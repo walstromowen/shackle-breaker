@@ -182,7 +182,7 @@ export class MysteriousDoor extends Encounter{
                 `${theController.player.name} presses ${rune1}`,
                 "neutral",
                 [
-                    ()=>{changeMap(`the door swings open and pulls ${theController.player.name} in!`, "portal")}
+                    ()=>{changeMap(`the door swings open and pulls ${theController.player.name} in!`, "portal", "random")}
                 ],
                 [
                     ()=>{removeDecision(`${theController.player.name} the letters fade.`, rune1)},
@@ -194,7 +194,7 @@ export class MysteriousDoor extends Encounter{
                 `${theController.player.name} presses ${rune2}`,
                 "neutral",
                 [
-                    ()=>{changeMap(`the door swings open and pulls ${theController.player.name} in!`, "portal")}
+                    ()=>{changeMap(`the door swings open and pulls ${theController.player.name} in!`, "portal", "random")}
                 ],
                 [
                     ()=>{removeDecision(`${theController.player.name} the letters fade.`, rune2)},
@@ -206,7 +206,7 @@ export class MysteriousDoor extends Encounter{
                 `${theController.player.name} presses ${rune3}`,
                 "neutral",
                 [
-                    ()=>{changeMap(`the door swings open and pulls ${theController.player.name} in!`, "portal")}
+                    ()=>{changeMap(`the door swings open and pulls ${theController.player.name} in!`, "portal", "random")}
                 ],
                 [
                     ()=>{removeDecision(`${theController.player.name} the letters fade.`, rune3)},
