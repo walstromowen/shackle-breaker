@@ -3,7 +3,7 @@ import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Lon
     LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
     LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, 
     IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
-    ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb,
+    ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide
     } from "./items.js";
 import {Recover, Punch, Retreat} from "./abilities.js"
 import Player from "./player.js";
@@ -135,7 +135,7 @@ export default class Controller {
         let value = document.getElementById("background-selection").value;
         switch(value){
             case "traveler":
-                inventoryArray.push(new Shortsword, new LinenShirt, new LinenPants, new LeatherBoots);
+                inventoryArray.push(new Hide, new LinenShirt, new LinenPants, new LeatherBoots);
                 this.characterCreationArray[6] = 200;
                 break;
             case "blacksmith":
@@ -812,7 +812,11 @@ export default class Controller {
                 });
                 statContainer.style.display = "none";
             }
-            if(inventory[i].type != "consumable"){
+            if(inventory[i].type == "material"){
+                statContainer.style.display = "none";
+                useBtn.style.display = "none";
+            }
+            if(inventory[i].type != "consumable" && inventory[i].type != "material"){
                 let lvlLabel = document.createElement("p");
                 let itemLvl = document.createElement("p");
                 let upgradeBtn = document.createElement("div");
