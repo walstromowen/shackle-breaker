@@ -263,8 +263,8 @@ export class Handaxe {
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
             this.price = Math.floor(this.price * 1.5);
-            this.bluntAttack = this.bluntAttack + 1;
-            this.pierceAttack = this.pierceAttack + 3;
+            this.bluntAttack = this.bluntAttack + 3;
+            this.pierceAttack = this.pierceAttack + 1;
             this.arcaneAttack = this.arcaneAttack + 0;
             this.elementalAttack = this.elementalAttack + 0;
             this.bluntDefense = this.bluntDefense + 0;
