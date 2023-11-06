@@ -12,15 +12,15 @@ export class LockedTreasureChest extends Encounter{
     constructor(){
         super();
         this.name = "locked treasure chest";
-        this.message = `${theController.player.name} encounters a large chest all alone. It appears to be locked tight.`;
+        this.message = `${theController.currentCharacter.name} encounters a large chest all alone. It appears to be locked tight.`;
         this.imageSrc = "./media/treasureChestLocked.jpg";
         this.decisionArray = [
             new Decision(
                 "move on", 
-                `${theController.player.name} decides not to open the chest.`,
+                `${theController.currentCharacter.name} decides not to open the chest.`,
                 "certain",
                 [
-                    ()=>{leave(`${theController.player.name} moves on.`)}
+                    ()=>{leave(`${theController.currentCharacter.name} moves on.`)}
                 ],
                 [
                     
@@ -28,41 +28,41 @@ export class LockedTreasureChest extends Encounter{
             ),
             new Decision(
                 "pick lock", 
-                `${theController.player.name} attempts to pick the lock.`,
+                `${theController.currentCharacter.name} attempts to pick the lock.`,
                 "dexterity",
                 [
-                    ()=>{toggleNewEncounter(`${theController.player.name} sucessfully picks the lock!`, new UnlockedTreasureChest())}
+                    ()=>{toggleNewEncounter(`${theController.currentCharacter.name} sucessfully picks the lock!`, new UnlockedTreasureChest())}
                 ],
                 [
-                    ()=>{retry(`${theController.player.name} breaks a lockpick!`)},
-                    ()=>{removeDecision(`${theController.player.name} jams the lock!`, "pick lock")},
-                    ()=>{toggleBattle(`as ${theController.player.name} reaches to pick the lock, something emerges from the shadows and races towards ${theController.player.name}!`, theController.map.mapEnviorment.generateEnemy(theController.player.level, false))}
+                    ()=>{retry(`${theController.currentCharacter.name} breaks a lockpick!`)},
+                    ()=>{removeDecision(`${theController.currentCharacter.name} jams the lock!`, "pick lock")},
+                    ()=>{toggleBattle(`as ${theController.currentCharacter.name} reaches to pick the lock, something emerges from the shadows and races towards ${theController.currentCharacter.name}!`, theController.map.mapEnviorment.generateEnemy(theController.currentCharacter.level, false))}
                 ]
             ),
             new Decision(
                 "break lock", 
-                `${theController.player.name} attempts to break the lock`,
+                `${theController.currentCharacter.name} attempts to break the lock`,
                 "strength",
                 [
-                    ()=>{toggleNewEncounter(`${theController.player.name} sucessfully breaks the lock!`, new UnlockedTreasureChest())}
+                    ()=>{toggleNewEncounter(`${theController.currentCharacter.name} sucessfully breaks the lock!`, new UnlockedTreasureChest())}
                 ],
                 [
                     ()=>{retry(`the lock doesn't budge.`)},
-                    ()=>{removeDecision(`${theController.player.name} cannot break the lock!`, "break lock")},
-                    ()=>{toggleBattle(`upon hearing the loud noise, something emerges from the shadows and races towards ${theController.player.name}!`, theController.map.mapEnviorment.generateEnemy(theController.player.level, false))}
+                    ()=>{removeDecision(`${theController.currentCharacter.name} cannot break the lock!`, "break lock")},
+                    ()=>{toggleBattle(`upon hearing the loud noise, something emerges from the shadows and races towards ${theController.currentCharacter.name}!`, theController.map.mapEnviorment.generateEnemy(theController.currentCharacter.level, false))}
                 ]
             ),
             new Decision(
                 "search for key", 
-                `${theController.player.name} searches for the key`,
+                `${theController.currentCharacter.name} searches for the key`,
                 "insight",
                 [
-                    ()=>{toggleNewEncounter(`${theController.player.name} finds the key and unlocks the chest!`, new UnlockedTreasureChest())}
+                    ()=>{toggleNewEncounter(`${theController.currentCharacter.name} finds the key and unlocks the chest!`, new UnlockedTreasureChest())}
                 ],
                 [
-                    ()=>{retry(`${theController.player.name} seaches in vain for the key.`)},
-                    ()=>{removeDecision(`${theController.player.name} searches everywhere for the key`, "search for key")},
-                    ()=>{toggleBattle(`somethings lunges towards ${theController.player.name}!`, theController.map.mapEnviorment.generateEnemy(theController.player.level, false))}
+                    ()=>{retry(`${theController.currentCharacter.name} seaches in vain for the key.`)},
+                    ()=>{removeDecision(`${theController.currentCharacter.name} searches everywhere for the key`, "search for key")},
+                    ()=>{toggleBattle(`somethings lunges towards ${theController.currentCharacter.name}!`, theController.map.mapEnviorment.generateEnemy(theController.currentCharacter.level, false))}
                 ]
             )
         ];
@@ -77,10 +77,10 @@ export class UnlockedTreasureChest extends Encounter{
         this.decisionArray = [
             new Decision(
                 "move on", 
-                `${theController.player.name} decides not to open the chest.`,
+                `${theController.currentCharacter.name} decides not to open the chest.`,
                 "certain",
                 [
-                    ()=>{leave(`${theController.player.name} moves on.`)}
+                    ()=>{leave(`${theController.currentCharacter.name} moves on.`)}
                 ],
                 [
 
@@ -88,14 +88,14 @@ export class UnlockedTreasureChest extends Encounter{
             ),
             new Decision(
                 "open chest", 
-                `${theController.player.name} opens the chest.`,
+                `${theController.currentCharacter.name} opens the chest.`,
                 "likely",
                 [
                     ()=>{loot("", [getRandomItem()], 100, 10)}
                 ],
                 [
-                    ()=>{takeDamage(`as ${theController.player.name} opens the chest, an arrow flies up from the chest and hits ${theController.player.name}!`, 0.15, 0.25)},
-                    ()=>{recieveStatusEffect(`as ${theController.player.name} opens the chest, the chest explodes in an inferno of flames!`, new Burned(theController.player))}
+                    ()=>{takeDamage(`as ${theController.currentCharacter.name} opens the chest, an arrow flies up from the chest and hits ${theController.currentCharacter.name}!`, 0.15, 0.25)},
+                    ()=>{recieveStatusEffect(`as ${theController.currentCharacter.name} opens the chest, the chest explodes in an inferno of flames!`, new Burned(theController.currentCharacter))}
                 ]
             )
         ];
@@ -111,39 +111,39 @@ export class AltusAmbushOpportunity extends Encounter{
         this.decisionArray = [
             new Decision(
                 "go around", 
-                `${theController.player.name} attempts to sneak around the guard.`,
+                `${theController.currentCharacter.name} attempts to sneak around the guard.`,
                 "dexterity",
                 [
-                    ()=>{leave(`${theController.player.name} slips away quietly.`)}
+                    ()=>{leave(`${theController.currentCharacter.name} slips away quietly.`)}
                 ],
                 [
-                    ()=>{toggleBattle(`the altus official spots ${theController.player.name} and draws his weapon!`, new AltusMage(theController.player.level))}
+                    ()=>{toggleBattle(`the altus official spots ${theController.currentCharacter.name} and draws his weapon!`, new AltusMage(theController.currentCharacter.level))}
                 ]
             ),
             new Decision(
                 "back stab", 
-                `${theController.player.name} sneaks up to the official and draws a knife.`,
+                `${theController.currentCharacter.name} sneaks up to the official and draws a knife.`,
                 "dexterity",
                 [
-                    ()=>{loot(`${theController.player.name} eliminates the offical without a sound. After searching the offical,`, [getRandomItem()], 40, 10)}
+                    ()=>{loot(`${theController.currentCharacter.name} eliminates the offical without a sound. After searching the offical,`, [getRandomItem()], 40, 10)}
                 ],
                 [
-                    ()=>{toggleBattle(`the altus official spots ${theController.player.name} and draws his weapon!`, new AltusMage(theController.player.level))}
+                    ()=>{toggleBattle(`the altus official spots ${theController.currentCharacter.name} and draws his weapon!`, new AltusMage(theController.currentCharacter.level))}
                 ]
             ),
             new Decision(
                 "set trap", 
-                `${theController.player.name} sets a pit trap for the official and whistles for the guard.`,
+                `${theController.currentCharacter.name} sets a pit trap for the official and whistles for the guard.`,
                 "focus",
                 [
                     ()=>{
-                        let enemy = new AltusMage(theController.player.level);
+                        let enemy = new AltusMage(theController.currentCharacter.level);
                         enemy.statusArray.push(new Bound(enemy));
-                        toggleBattle(`the official clumsly falls into ${theController.player.name}'s trap and struggles to break free!`, enemy);
+                        toggleBattle(`the official clumsly falls into ${theController.currentCharacter.name}'s trap and struggles to break free!`, enemy);
                     }
                 ],
                 [
-                    ()=>{toggleBattle(`the altus official effortlessly evades the trap and attacks ${theController.player.name}!`, new AltusMage(theController.player.level))}
+                    ()=>{toggleBattle(`the altus official effortlessly evades the trap and attacks ${theController.currentCharacter.name}!`, new AltusMage(theController.currentCharacter.level))}
                 ]
             )
         ];
@@ -153,7 +153,7 @@ export class MysteriousDoor extends Encounter{
     constructor(){
         super();
         this.name = "a mysterious door";
-        this.message = `A mysterious door stands at the end of the passage. Glowing letters appear on the door, beckoning ${theController.player.name} to press them.`;
+        this.message = `A mysterious door stands at the end of the passage. Glowing letters appear on the door, beckoning ${theController.currentCharacter.name} to press them.`;
         this.imageSrc = "./media/mysterious-door.jpg";
         let characters =["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
         let rand1 = Math.floor(Math.random()*26);
@@ -168,10 +168,10 @@ export class MysteriousDoor extends Encounter{
         this.decisionArray = [
             new Decision(
                 "move on", 
-                `${theController.player.name} steps away from the door.`,
+                `${theController.currentCharacter.name} steps away from the door.`,
                 "certain",
                 [
-                    ()=>{leave(`${theController.player.name} moves on.`)}
+                    ()=>{leave(`${theController.currentCharacter.name} moves on.`)}
                 ],
                 [
 
@@ -179,37 +179,37 @@ export class MysteriousDoor extends Encounter{
             ),
             new Decision(
                 rune1, 
-                `${theController.player.name} presses ${rune1}`,
+                `${theController.currentCharacter.name} presses ${rune1}`,
                 "neutral",
                 [
-                    ()=>{changeMap(`the door swings open and pulls ${theController.player.name} in!`, "portal", "random")}
+                    ()=>{changeMap(`the door swings open and pulls ${theController.currentCharacter.name} in!`, "portal", "random")}
                 ],
                 [
-                    ()=>{removeDecision(`${theController.player.name} the letters fade.`, rune1)},
+                    ()=>{removeDecision(`${theController.currentCharacter.name} the letters fade.`, rune1)},
                     ()=>{leave(`the door shudders and crumbles, leaving nothing but a pile of rocks.`)}
                 ]
             ),
             new Decision(
                 rune2, 
-                `${theController.player.name} presses ${rune2}`,
+                `${theController.currentCharacter.name} presses ${rune2}`,
                 "neutral",
                 [
-                    ()=>{changeMap(`the door swings open and pulls ${theController.player.name} in!`, "portal", "random")}
+                    ()=>{changeMap(`the door swings open and pulls ${theController.currentCharacter.name} in!`, "portal", "random")}
                 ],
                 [
-                    ()=>{removeDecision(`${theController.player.name} the letters fade.`, rune2)},
+                    ()=>{removeDecision(`${theController.currentCharacter.name} the letters fade.`, rune2)},
                     ()=>{leave(`the door shudders and crumbles, leaving nothing but a pile of rocks.`)}
                 ]
             ),
             new Decision(
                 rune3, 
-                `${theController.player.name} presses ${rune3}`,
+                `${theController.currentCharacter.name} presses ${rune3}`,
                 "neutral",
                 [
-                    ()=>{changeMap(`the door swings open and pulls ${theController.player.name} in!`, "portal", "random")}
+                    ()=>{changeMap(`the door swings open and pulls ${theController.currentCharacter.name} in!`, "portal", "random")}
                 ],
                 [
-                    ()=>{removeDecision(`${theController.player.name} the letters fade.`, rune3)},
+                    ()=>{removeDecision(`${theController.currentCharacter.name} the letters fade.`, rune3)},
                     ()=>{leave(`the door shudders and crumbles, leaving nothing but a pile of rocks.`)}
                 ]
             )
@@ -225,39 +225,39 @@ export class SuspiciousSkeleton extends Encounter{
         this.decisionArray = [
             new Decision(
                 "go around", 
-                `${theController.player.name} attempts to sneak around the skeleton.`,
+                `${theController.currentCharacter.name} attempts to sneak around the skeleton.`,
                 "dexterity",
                 [
-                    ()=>{leave(`${theController.player.name} slips away quietly.`)}
+                    ()=>{leave(`${theController.currentCharacter.name} slips away quietly.`)}
                 ],
                 [
-                    ()=>{toggleBattle(`the skeleton spots ${theController.player.name} and draws his weapon!`, new Skeleton(theController.player.level))}
+                    ()=>{toggleBattle(`the skeleton spots ${theController.currentCharacter.name} and draws his weapon!`, new Skeleton(theController.currentCharacter.level))}
                 ]
             ),
             new Decision(
                 "lure away", 
-                `${theController.player.name} throws a rock in the distance attempting to lure the skeleton away.`,
+                `${theController.currentCharacter.name} throws a rock in the distance attempting to lure the skeleton away.`,
                 "neutral",
                 [
-                    ()=>{leave(`The skeleton leaves its post to investigates the sound leaving ${theController.player.name} a clear path forward.`)}
+                    ()=>{leave(`The skeleton leaves its post to investigates the sound leaving ${theController.currentCharacter.name} a clear path forward.`)}
                 ],
                 [
-                    ()=>{toggleBattle(`the skeleton spots ${theController.player.name} and draws his weapon!`, new Skeleton(theController.player.level))}
+                    ()=>{toggleBattle(`the skeleton spots ${theController.currentCharacter.name} and draws his weapon!`, new Skeleton(theController.currentCharacter.level))}
                 ]
             ),
             new Decision(
                 "talk to it", 
-                `${theController.player.name} attempts to talk to the skeleton.`,
+                `${theController.currentCharacter.name} attempts to talk to the skeleton.`,
                 "unlikely",
                 [
-                    ()=>{loot(`${theController.player.name} and the skeleton have a pleasant discussion about the good old days. Then the skeleton gives ${theController.player.name} a parting gift,`, [getRandomItem()], 0, 0)},
-                    ()=>{leave(`${theController.player.name} politely asks the skeleton for directions. The skeleton stares back in disbelief and then nods to the hallway ahead. ${theController.player.name} thanks the skeleton and proceeds.`)}
+                    ()=>{loot(`${theController.currentCharacter.name} and the skeleton have a pleasant discussion about the good old days. Then the skeleton gives ${theController.currentCharacter.name} a parting gift,`, [getRandomItem()], 0, 0)},
+                    ()=>{leave(`${theController.currentCharacter.name} politely asks the skeleton for directions. The skeleton stares back in disbelief and then nods to the hallway ahead. ${theController.currentCharacter.name} thanks the skeleton and proceeds.`)}
                 ],
                 [
-                    ()=>{toggleBattle(`the skeleton fixes its gaze upon ${theController.player.name} and draws its weapon!`, new Skeleton(theController.player.level))},
+                    ()=>{toggleBattle(`the skeleton fixes its gaze upon ${theController.currentCharacter.name} and draws its weapon!`, new Skeleton(theController.currentCharacter.level))},
                     ()=>{
-                        theController.player.statusArray.push(new Bound(theController.player));
-                        toggleBattle(`the skeleton grabs onto ${theController.player.name}!`, new Skeleton(theController.player.level))
+                        theController.currentCharacter.statusArray.push(new Bound(theController.currentCharacter));
+                        toggleBattle(`the skeleton grabs onto ${theController.currentCharacter.name}!`, new Skeleton(theController.currentCharacter.level))
                     }
                 ]
             )
@@ -276,7 +276,7 @@ export class TravelingMerchant extends Encounter{
                 `the merchant packs up his things`,
                 "certain",
                 [
-                    ()=>{leave(`${theController.player.name} moves on`)}
+                    ()=>{leave(`${theController.currentCharacter.name} moves on`)}
                 ],
                 [
                     
@@ -284,10 +284,10 @@ export class TravelingMerchant extends Encounter{
             ),
             new Decision(
                 "trade", 
-                `${theController.player.name} approaches the merchant`,
+                `${theController.currentCharacter.name} approaches the merchant`,
                 "certain",
                 [
-                    ()=>{initiateTrade(`${theController.player.name} offers to trade`, [new HealthPotion, getRandomItem(), getRandomItem(), getRandomItem(), getRandomItem()], "trade")}
+                    ()=>{initiateTrade(`${theController.currentCharacter.name} offers to trade`, [new HealthPotion, getRandomItem(), getRandomItem(), getRandomItem(), getRandomItem()], "trade")}
                 ],
                 [
                     
@@ -305,10 +305,10 @@ export class AbandonedCabin extends Encounter{
         this.decisionArray = [
             new Decision(
                 "move on", 
-                `${theController.player.name} avoids the cabin.`,
+                `${theController.currentCharacter.name} avoids the cabin.`,
                 "certain",
                 [
-                    ()=>{leave(`${theController.player.name} moves on.`)}
+                    ()=>{leave(`${theController.currentCharacter.name} moves on.`)}
                 ],
                 [
 
@@ -316,24 +316,24 @@ export class AbandonedCabin extends Encounter{
             ),
             new Decision(
                 "search cabin", 
-                `${theController.player.name} searches the cabin for anything useful.`,
+                `${theController.currentCharacter.name} searches the cabin for anything useful.`,
                 "neutral",
                 [
-                    ()=>{loot(`${theController.player.name} rumages through some cabinets.`, [getRandomItem()], 50, 10)},
+                    ()=>{loot(`${theController.currentCharacter.name} rumages through some cabinets.`, [getRandomItem()], 50, 10)},
                 ],
                 [
-                    ()=>{toggleBattle(`somethings lunges towards ${theController.player.name}!`, theController.map.mapEnviorment.generateEnemy(theController.player.level, false))}
+                    ()=>{toggleBattle(`somethings lunges towards ${theController.currentCharacter.name}!`, theController.map.mapEnviorment.generateEnemy(theController.currentCharacter.level, false))}
                 ]
             ),
             new Decision(
                 "take rest", 
-                `${theController.player.name} searches for a place to rest.`,
+                `${theController.currentCharacter.name} searches for a place to rest.`,
                 "likely",
                 [
-                    ()=>{regainHP(`${theController.player.name} takes a short rest.`, 0.5)}
+                    ()=>{regainHP(`${theController.currentCharacter.name} takes a short rest.`, 0.5)}
                 ],
                 [
-                    ()=>{toggleBattle(`somethings lunges towards ${theController.player.name}!`, theController.map.mapEnviorment.generateEnemy(theController.player.level, false))}
+                    ()=>{toggleBattle(`somethings lunges towards ${theController.currentCharacter.name}!`, theController.map.mapEnviorment.generateEnemy(theController.currentCharacter.level, false))}
                 ]
             )
         ];
@@ -348,24 +348,24 @@ export class Avalanche extends Encounter{
         this.decisionArray = [
             new Decision(
                 "brace", 
-                `${theController.player.name} braces agains a nearby boulder!`,
+                `${theController.currentCharacter.name} braces agains a nearby boulder!`,
                 "strength",
                 [
-                    ()=>{leave(`The avalanche crashes upon the land! After what feels like an eternity, ${theController.player.name} emerges from the rubble unharmed.`)}
+                    ()=>{leave(`The avalanche crashes upon the land! After what feels like an eternity, ${theController.currentCharacter.name} emerges from the rubble unharmed.`)}
                 ],
                 [
-                    ()=>{takeDamage(`The avalanche crashes down upon ${theController.player.name}!`, 0.25, 0.50)},
+                    ()=>{takeDamage(`The avalanche crashes down upon ${theController.currentCharacter.name}!`, 0.25, 0.50)},
                 ]
             ),
             new Decision(
                 "run away", 
-                `${theController.player.name} flees the avalanche with haste!`,
+                `${theController.currentCharacter.name} flees the avalanche with haste!`,
                 "endurance",
                 [
-                    ()=>{leave(`with great athleticism, ${theController.player.name} barely escapes the avalanche!`)}
+                    ()=>{leave(`with great athleticism, ${theController.currentCharacter.name} barely escapes the avalanche!`)}
                 ],
                 [
-                    ()=>{takeDamage(`The avalanche crashes down upon ${theController.player.name}!`, 0.25, 0.50)},
+                    ()=>{takeDamage(`The avalanche crashes down upon ${theController.currentCharacter.name}!`, 0.25, 0.50)},
                 ]
             )
         ];
@@ -380,10 +380,10 @@ export class Robbery extends Encounter{
         this.decisionArray = [
             new Decision(
                 "move on", 
-                `${theController.player.name} decides not to interfere.`,
+                `${theController.currentCharacter.name} decides not to interfere.`,
                 "certain",
                 [
-                    ()=>{leave(`${theController.player.name} moves on.`)}
+                    ()=>{leave(`${theController.currentCharacter.name} moves on.`)}
                 ],
                 [
 
@@ -391,10 +391,10 @@ export class Robbery extends Encounter{
             ),
             new Decision(
                 "defend traveler", 
-                `${theController.player.name} steps in to aid the traveler.`,
+                `${theController.currentCharacter.name} steps in to aid the traveler.`,
                 "certain",
                 [
-                    ()=>{toggleNewEncounter(`the bandit turns to face ${theController.player.name}`, new DefendTraveler())}
+                    ()=>{toggleNewEncounter(`the bandit turns to face ${theController.currentCharacter.name}`, new DefendTraveler())}
                 ],
                 [
                     
@@ -402,13 +402,13 @@ export class Robbery extends Encounter{
             ),
             new Decision(
                 "join bandit", 
-                `${theController.player.name} joins the bandit in robbing the traveler.`,
+                `${theController.currentCharacter.name} joins the bandit in robbing the traveler.`,
                 "neutral",
                 [
-                    ()=>{loot(`${theController.player.name} assists the thug in looting the traveler. After splitting the reward, ${theController.player.name} walks away with a share of the loot.`, [getRandomItem()], 20, 5)},
+                    ()=>{loot(`${theController.currentCharacter.name} assists the thug in looting the traveler. After splitting the reward, ${theController.currentCharacter.name} walks away with a share of the loot.`, [getRandomItem()], 20, 5)},
                 ],
                 [
-                    ()=>{toggleBattle(`${theController.player.name} joins the thug in robbing the traveler. Not long after, the thug turns on ${theController.player.name} attempting to claim all the loot!`, new Bandit(theController.player.level))}
+                    ()=>{toggleBattle(`${theController.currentCharacter.name} joins the thug in robbing the traveler. Not long after, the thug turns on ${theController.currentCharacter.name} attempting to claim all the loot!`, new Bandit(theController.currentCharacter.level))}
                 ]
             )
         ];
@@ -423,10 +423,10 @@ export class DefendTraveler extends Encounter{
         this.decisionArray = [
             new Decision(
                 "attack", 
-                `${theController.player.name} lunges at the bandit with weapon drawn!`,
+                `${theController.currentCharacter.name} lunges at the bandit with weapon drawn!`,
                 "certain",
                 [
-                    ()=>{toggleBattle(`the bandit draws his weapon to meet ${theController.player.name}!`, new Bandit(theController.player.level))}
+                    ()=>{toggleBattle(`the bandit draws his weapon to meet ${theController.currentCharacter.name}!`, new Bandit(theController.currentCharacter.level))}
                 ],
                 [
 
@@ -434,24 +434,24 @@ export class DefendTraveler extends Encounter{
             ),
             new Decision(
                 "intimidate", 
-                `${theController.player.name} demands the bandit leave!`,
+                `${theController.currentCharacter.name} demands the bandit leave!`,
                 "strength",
                 [
-                    ()=>{loot(`the thug drops his loot and hastily retreats. As a token of good will, the traveler insists ${theController.player.name} keep the loot.`, [getRandomItem()], 50, 10)},
+                    ()=>{loot(`the thug drops his loot and hastily retreats. As a token of good will, the traveler insists ${theController.currentCharacter.name} keep the loot.`, [getRandomItem()], 50, 10)},
                 ],
                 [
-                    ()=>{removeDecision(`the bandit laughs at ${theController.player.name}`, "intimidate")},
+                    ()=>{removeDecision(`the bandit laughs at ${theController.currentCharacter.name}`, "intimidate")},
                 ]
             ),
             new Decision(
                 "persuade", 
-                `${theController.player.name} attempts to reason with the thug.`,
+                `${theController.currentCharacter.name} attempts to reason with the thug.`,
                 "insight",
                 [
-                    ()=>{loot(`${theController.player.name} convinces the thug to walks away. The traveler then thanks ${theController.player.name} and gives him a gift.`, [getRandomItem()], 50, 10)},
+                    ()=>{loot(`${theController.currentCharacter.name} convinces the thug to walks away. The traveler then thanks ${theController.currentCharacter.name} and gives him a gift.`, [getRandomItem()], 50, 10)},
                 ],
                 [
-                    ()=>{removeDecision(`the scoffs at ${theController.player.name}`, "persuade")},
+                    ()=>{removeDecision(`the scoffs at ${theController.currentCharacter.name}`, "persuade")},
                 ]
             )
         ];

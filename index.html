@@ -205,38 +205,38 @@
         <div id='app'>
             <div class='app-row'>
                 <div class='app-column' id='app-column-1'>
-                    <div id='player-name-container'>
-                        <h5 id='player-name'>Player Name</h5>
-                        <h5 id='player-level-label'>★ 0</h5>
+                    <div id='current-character-name-container'>
+                        <h5 id='current-character-name'>Player Name</h5>
+                        <h5 id='current-character-level-label'>★ 0</h5>
                     </div>
                     <div id='mini-map-container'>   <!--Toggle during encounters-->
                         <canvas id='mini-map-canvas'></canvas>
                     </div>
-                    <div id='player-image-container'> <!--Toggle during encounters-->
-                        <image id='player-image' src='./media/knight-1.jpg'></image>
-                        <div id ='player-status-icon-container'></div>
+                    <div id='current-character-image-container'> <!--Toggle during encounters-->
+                        <image id='current-character-image' src='./media/knight-1.jpg'></image>
+                        <div id ='current-character-status-icon-container'></div>
                     </div>
-                    <div id='player-main-stats-container'>
+                    <div id='current-character-main-stats-container'>
                         <div class='vital-bar-container'>
                             <h5 class = 'vital-label'>Health</h5>
-                            <div class='vital-bar' id='health-bar-player'>
-                                <div class='vital-bar-progress' id='health-bar-player-progress'></div>
+                            <div class='vital-bar' id='health-bar-current-character'>
+                                <div class='vital-bar-progress' id='health-bar-current-character-progress'></div>
                             </div>
-                            <p><span class ='current-vital-label' id='current-health-player'>100</span></p>
+                            <p><span class ='current-vital-label' id='current-health-current-character'>100</span></p>
                         </div>
                         <div class='vital-bar-container'>
                             <h5 class = 'vital-label'>Stamina</h5>
-                            <div class='vital-bar' id='stamina-bar-player'>
-                                <div class='vital-bar-progress' id='stamina-bar-player-progress'></div>
+                            <div class='vital-bar' id='stamina-bar-current-character'>
+                                <div class='vital-bar-progress' id='stamina-bar-current-character-progress'></div>
                             </div>
-                            <p><span class ='current-vital-label' id='current-stamina-player'>100</span></p>
+                            <p><span class ='current-vital-label' id='current-stamina-current-character'>100</span></p>
                         </div>
                         <div class='vital-bar-container'>
                             <h5 class='vital-label'>Magic</h5>
-                            <div class='vital-bar' id='magic-bar-player'>
-                                <div class='vital-bar-progress' id='magic-bar-player-progress'></div>
+                            <div class='vital-bar' id='magic-bar-current-character'>
+                                <div class='vital-bar-progress' id='magic-bar-current-character-progress'></div>
                             </div>
-                            <p><span class ='current-vital-label' id='current-magic-player'>100</span></p>
+                            <p><span class ='current-vital-label' id='current-magic-current-character'>100</span></p>
                         </div>
                     </div>
                     <div class='tabs-label-container'>
@@ -468,10 +468,10 @@
         </div>
 
         <div id='map-transition-screen'>
-            <h1>Victory</h1>
-            <div id='gameover-screen-btn-container'>
+            <h1>Level Cleared</h1>
+            <div>
                 <div class='title-screen-button' id='map-transition-continue-btn'><h4 class='title-screen-button-header'>Continue</h4></div>
-                <div class='title-screen-button' id='map-transition-town-btn'><h4 class='title-screen-button-header'>Town</h4></div>
+                <div class='title-screen-button' id='map-transition-town-btn'><h4 class='title-screen-button-header'>Camp</h4></div>
             </div>
         </div>
 

@@ -6,8 +6,8 @@ export class Decision{
         this.rewardArray = rewardArray;
         this.consequenceArray = consequenceArray;
     }
-    activate(player){
-        if(this.checkSuccess(player, this.decisionAttribute) == true){ 
+    activate(currentCharacter){
+        if(this.checkSuccess(currentCharacter, this.decisionAttribute) == true){ 
             setTimeout(()=>{
                 this.rewardArray[Math.floor(Math.random()*this.rewardArray.length)]();
             }, 2000);
@@ -17,7 +17,7 @@ export class Decision{
             }, 2000);
         }
     }
-    checkSuccess(player, decisionAttribute){
+    checkSuccess(currentCharacter, decisionAttribute){
         let multiplier = 0;
         switch(decisionAttribute){
             case "certain":
@@ -32,22 +32,22 @@ export class Decision{
                 decisionAttribute = 6;
                 break;
             case "vigor":
-                decisionAttribute = player.vigor;
+                decisionAttribute = currentCharacter.vigor;
                 break;
             case "endurance":
-                decisionAttribute = player.endurance;
+                decisionAttribute = currentCharacter.endurance;
                 break;
             case "strength":
-                decisionAttribute = player.strength;
+                decisionAttribute = currentCharacter.strength;
                 break;
             case "dexterity":
-                decisionAttribute = player.dexterity;
+                decisionAttribute = currentCharacter.dexterity;
                 break;
             case "insight":
-                decisionAttribute = player.insight;
+                decisionAttribute = currentCharacter.insight;
                 break;
             case "focus":
-                decisionAttribute = player.focus;
+                decisionAttribute = currentCharacter.focus;
                 break;
         }
         if(decisionAttribute < 8){

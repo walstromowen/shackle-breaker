@@ -3,16 +3,16 @@ import MapLayout from "./mapLayout.js";
 import MapEnviorment from "./mapEnviorment.js";
 
 export default class Map{
-    constructor(playerLevel, biome, layoutType){
+    constructor(currentCharacterLevel, biome, layoutType){
         this.roomArray = []; //Room array is 1 Dimensional
         this.mapLayout = new MapLayout(layoutType);
         this.mapEnviorment = new MapEnviorment(biome);
         this.mapWidth = this.mapLayout.width; //in tiles  
         this.mapHeight = this.mapLayout.height; //in tiles
-        this.playerSpawnIndex = "";
-        this.generateMap(playerLevel);  
+        this.currentCharacterSpawnIndex = "";
+        this.generateMap(currentCharacterLevel);  
     }
-    generateMap(playerLevel){
+    generateMap(currentCharacterLevel){
         for(var y = 0; y < this.mapHeight; y++){
             for(var x = 0; x < this.mapWidth; x++){
                 let newRoom = new Room();
@@ -30,9 +30,9 @@ export default class Map{
                     this.roomArray[i].frameXCoordinate = this.mapEnviorment.frameCoordinates[0][Math.floor(Math.random()*this.mapEnviorment.frameCoordinates[0].length)];
                     let randomNumber = Math.floor(Math.random()*50)
                     if(randomNumber <= 2){
-                        this.roomArray[i].enemy = this.mapEnviorment.generateEnemy(playerLevel, false);
+                        this.roomArray[i].enemy = this.mapEnviorment.generateEnemy(currentCharacterLevel, false);
                     }
-                    if(randomNumber >= 3 && randomNumber <= 5){
+                    if(randomNumber >= 3 || randomNumber <= 5){
                         this.roomArray[i].encounter = this.mapEnviorment.generateEncounter();
                     }
                     break;
@@ -42,7 +42,7 @@ export default class Map{
                     break;
                 case 2:
                     this.roomArray[i].type = "entrance";
-                    this.playerSpawnIndex = i;
+                    this.currentCharacterSpawnIndex = i;
                     break;
                 case 3:
                     this.roomArray[i].type = "exit";
@@ -59,7 +59,7 @@ export default class Map{
                     break;
                 case 5:
                     this.roomArray[i].type = "boss chamber";
-                    this.roomArray[i].enemy = this.mapEnviorment.generateEnemy(playerLevel, true);
+                    this.roomArray[i].enemy = this.mapEnviorment.generateEnemy(currentCharacterLevel, true);
                     break;
                 default:
                     break;
@@ -93,10 +93,10 @@ export default class Map{
             }
         }  
     }
-    increaseAllEnemyLevels(playerLevel){
+    increaseAllEnemyLevels(currentCharacterLevel){
         for(let i = 0; i < this.roomArray.length; i++ ){
             if(this.roomArray[i].enemy != ""){
-                this.roomArray[i].enemy.levelUp(playerLevel);
+                this.roomArray[i].enemy.levelUp(currentCharacterLevel);
             }
         }
     }

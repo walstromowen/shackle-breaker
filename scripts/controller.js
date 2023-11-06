@@ -6,22 +6,31 @@ import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Lon
     ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide
     } from "./items.js";
 import {Recover, Punch, Retreat} from "./abilities.js"
-import Player from "./player.js";
+import Character from "./character.js";
 import Map from "./map.js";
 import MiniMap from "./miniMap.js";
 import Battle from "./battle.js";
 
 export default class Controller {
     constructor(){
-        this.characterCreationArray = ["name", "apperance", "background", "inventoryArray", "attributesArray", "statsArray", "gold"];
+        this.characterCreationArray = ["name", "apperance", "background", "attributesArray", "statsArray", "gold"];
         this.map = "";
         this.miniMap = "";
-        this.player = "";
+        this.currentCharacter = "";
         this.battle = "";
+        this.partInventory = [];
+        this.partyGold = 0;
         this.encounter = "";
         this.mapBtnArray = [];
         this.battleBtnArray = [];
         this.encounterBtnArray = [];
+
+        this.isInBattle = false;
+        this.isInTrade = false;
+        this.canMoveRoom = true;
+        this.currentRoom = "";
+        this.nextRoom = "";
+
         this.initialize();
     }
     initialize(){
@@ -49,21 +58,21 @@ export default class Controller {
             this.characterCreationArray[0] = document.getElementById("name-selection").value;
             this.characterCreationArray[1] = document.getElementById("apperance-selection").value;
             this.characterCreationArray[2] = document.getElementById("background-selection").value;
-            this.player = new Player(this.characterCreationArray);
-            this.map = new Map(this.player.level, "basic", "random");
+            this.currentCharacter = new Character(this.characterCreationArray);
+            this.map = new Map(this.currentCharacter.level, "basic", "random");
             this.miniMap = new MiniMap();
             this.map.mapEnviorment.terrain.onload = ()=>{
-                this.player.initializeRooms(this.map);
-                document.getElementById('player-name').innerText = this.player.name;
-                document.getElementById('player-image').src = this.player.apperance;
+                this.initializeRooms(this.map);
+                document.getElementById('current-character-name').innerText = this.currentCharacter.name;
+                document.getElementById('current-character-image').src = this.currentCharacter.apperance;
                 document.getElementById('location-name').innerText = this.capitalizeFirstLetter(this.map.mapEnviorment.biome);
                 document.getElementById('location-image').src = this.map.mapEnviorment.imageSrc;
-                this.updatePlayerStats();
+                this.updateCharacterStats();
                 this.enableKeyControls();
-                this.enablePlayerMapControls();
+                this.enablePartyMapControls();
                 this.enableInventoryControls();
                 this.enableLevelUpControls();
-                this.updatePlayerInventoryTab(this.player.inventory);
+                this.updatePartyInventoryTab(this.partyInventory);
                 document.getElementById("music-player").src = this.map.mapEnviorment.backgroundMusicSrc;
                 document.getElementById("music-player").play();
                 document.getElementById("app").style.display = "block";
@@ -108,25 +117,25 @@ export default class Controller {
         }
     }
     characterCreatorUpdateStats(vigor, endurance, strength, dexterity, insight, focus){
-        this.characterCreationArray[4] = [vigor, endurance, strength, dexterity, insight, focus];
-        this.characterCreationArray[5] = this.scaleAttributes(vigor, endurance, strength, dexterity, insight, focus);
-        document.getElementById("character-creation-vigor").innerText = this.characterCreationArray[4][0];
-        document.getElementById("character-creation-endurance").innerText = this.characterCreationArray[4][1];
-        document.getElementById("character-creation-strength").innerText = this.characterCreationArray[4][2];
-        document.getElementById("character-creation-dexterity").innerText = this.characterCreationArray[4][3];
-        document.getElementById("character-creation-insight").innerText = this.characterCreationArray[4][4];
-        document.getElementById("character-creation-focus").innerText = this.characterCreationArray[4][5];
-        document.getElementById("character-creation-health").innerText = this.characterCreationArray[5][0];
-        document.getElementById("character-creation-stamina").innerText = this.characterCreationArray[5][1];
-        document.getElementById("character-creation-magic").innerText = this.characterCreationArray[5][2];
-        document.getElementById("character-creation-blunt-attack").innerText = this.characterCreationArray[5][3];
-        document.getElementById("character-creation-pierce-attack").innerText = this.characterCreationArray[5][4];
-        document.getElementById("character-creation-arcane-attack").innerText = this.characterCreationArray[5][5];
-        document.getElementById("character-creation-element-attack").innerText = this.characterCreationArray[5][6];
-        document.getElementById("character-creation-blunt-defense").innerText = this.characterCreationArray[5][7];
-        document.getElementById("character-creation-pierce-defense").innerText = this.characterCreationArray[5][8];
-        document.getElementById("character-creation-arcane-defense").innerText = this.characterCreationArray[5][9];
-        document.getElementById("character-creation-element-defense").innerText = this.characterCreationArray[5][10];
+        this.characterCreationArray[3] = [vigor, endurance, strength, dexterity, insight, focus];
+        this.characterCreationArray[4] = this.scaleAttributes(vigor, endurance, strength, dexterity, insight, focus);
+        document.getElementById("character-creation-vigor").innerText = this.characterCreationArray[3][0];
+        document.getElementById("character-creation-endurance").innerText = this.characterCreationArray[3][1];
+        document.getElementById("character-creation-strength").innerText = this.characterCreationArray[3][2];
+        document.getElementById("character-creation-dexterity").innerText = this.characterCreationArray[3][3];
+        document.getElementById("character-creation-insight").innerText = this.characterCreationArray[3][4];
+        document.getElementById("character-creation-focus").innerText = this.characterCreationArray[3][5];
+        document.getElementById("character-creation-health").innerText = this.characterCreationArray[4][0];
+        document.getElementById("character-creation-stamina").innerText = this.characterCreationArray[4][1];
+        document.getElementById("character-creation-magic").innerText = this.characterCreationArray[4][2];
+        document.getElementById("character-creation-blunt-attack").innerText = this.characterCreationArray[4][3];
+        document.getElementById("character-creation-pierce-attack").innerText = this.characterCreationArray[4][4];
+        document.getElementById("character-creation-arcane-attack").innerText = this.characterCreationArray[4][5];
+        document.getElementById("character-creation-element-attack").innerText = this.characterCreationArray[4][6];
+        document.getElementById("character-creation-blunt-defense").innerText = this.characterCreationArray[4][7];
+        document.getElementById("character-creation-pierce-defense").innerText = this.characterCreationArray[4][8];
+        document.getElementById("character-creation-arcane-defense").innerText = this.characterCreationArray[4][9];
+        document.getElementById("character-creation-element-defense").innerText = this.characterCreationArray[4][10];
         document.getElementById("character-creation-speed").innerText = 25;
         document.getElementById("character-creation-evasion").innerText = 10;
     }
@@ -136,31 +145,31 @@ export default class Controller {
         switch(value){
             case "traveler":
                 inventoryArray.push(new Shortsword, new LinenShirt, new LinenPants, new LeatherBoots);
-                this.characterCreationArray[6] = 200;
+                this.partyGold = 200;
                 break;
             case "blacksmith":
                 inventoryArray.push(new BlacksmithHammer, new Buckler, new LinenShirt, new LinenPants, new LeatherBoots);
-                this.characterCreationArray[6] = 100;
+                this.partyGold = 100;
                 break;
             case "ranger":
                 inventoryArray.push(new Shortsword, new LeatherHood, new LinenShirt, new LinenPants, new LeatherBoots);
-                this.characterCreationArray[6] = 150;
+                this.partyGold = 150;
                 break;
             case "scholar":
                 inventoryArray.push(new ArcaneStaff, new ClothHood, new LinenShirt, new LinenPants, new LeatherBoots);
-                this.characterCreationArray[6] = 100;
+                this.partyGold = 100;
                 break;
             case "warrior":
                 inventoryArray.push(new Handaxe, new LeatherChestplate, new LinenPants, new LeatherBoots);
-                this.characterCreationArray[6] = 150;
+                this.partyGold = 150;
                 break;
             case "theif":
                 inventoryArray.push(new Dagger, new Shiv, new LinenShirt, new LinenPants, new LeatherBoots);
-                this.characterCreationArray[6] = 150;
+                this.partyGold = 150;
                 break;
             case "hermit":
                 inventoryArray.push(new FireStaff, new ClothHood, new LinenShirt, new LinenPants, new LeatherBoots);
-                this.characterCreationArray[6] = 100;
+                this.partyGold = 100;
                 break;
         }
         let value2 = document.getElementById("keepsake-selection").value;
@@ -192,8 +201,8 @@ export default class Controller {
             inventorySlot.innerText = this.capitalizeFirstLetter(inventoryArray[i].name);
             document.getElementById("character-creation-inventory").appendChild(inventorySlot);
         }
-        document.getElementById("character-creation-gold").innerText = this.characterCreationArray[6];
-        this.characterCreationArray[3] = inventoryArray;
+        document.getElementById("character-creation-gold").innerText = this.partyGold;
+        this.partyInventory = inventoryArray;
     }
     enableGameOverScreenControls(){
         document.getElementById('gameover-to-menu-btn').addEventListener("click", ()=>{
@@ -205,14 +214,14 @@ export default class Controller {
     }
     enableMapTransitionControls(){
         document.getElementById('map-transition-continue-btn').addEventListener("click", ()=>{
-            if(this.player.level == 10){
+            if(this.currentCharacter.level == 10){
                 this.generateNewMap("altas castle", "boss1");
             }else{
                 this.generateNewMap("basic", "random");
             }
-            this.player.canMoveRoom = true;
+            this.canMoveRoom = true;
             this.map.mapEnviorment.terrain.onload = ()=>{
-                this.miniMap.draw(this.map, this.player.currentRoom);
+                this.miniMap.draw(this.map, this.currentRoom);
                 document.getElementById('map-transition-screen').style.display = "none";
                 document.getElementById("app").style.display = "block";
             }
@@ -224,25 +233,25 @@ export default class Controller {
     }
     enableKeyControls(){
         window.addEventListener("keydown", (e) => {
-            if(this.player.canMoveRoom == true){
+            if(this.canMoveRoom == true){
                 switch(e.key){
                     case 'w':
-                        this.movePlayerNorth();
+                        this.movePartyNorth();
                         break;
                     case 'a':
-                        this.movePlayerWest();
+                        this.movePartyWest();
                         break;
                     case 's':
-                        this.movePlayerSouth();
+                        this.movePartySouth();
                         break;
                     case 'd':
-                        this.movePlayerEast();
+                        this.movePartyEast();
                         break;
                 }
             }
         });
     }
-    enablePlayerMapControls(){
+    enablePartyMapControls(){
         for(var i = 0; i < this.mapBtnArray.length; i++){
             let controls = document.getElementById('map-button-container');
             let oldBtn = controls.querySelector('div');
@@ -278,23 +287,23 @@ export default class Controller {
         moveEastBtn.innerText = "Move East";
         moveWestBtn.innerText = "Move West";
         moveNorthBtn.addEventListener('click',()=>{
-            if(this.player.canMoveRoom == true){
-                this.movePlayerNorth();
+            if(this.canMoveRoom == true){
+                this.movePartyNorth();
             }
         });
         moveSouthBtn.addEventListener('click',()=>{
-            if(this.player.canMoveRoom == true){
-                this.movePlayerSouth();
+            if(this.canMoveRoom == true){
+                this.movePartySouth();
             }
         });
         moveEastBtn.addEventListener('click',()=>{
-            if(this.player.canMoveRoom == true){
-                this.movePlayerEast();
+            if(this.canMoveRoom == true){
+                this.movePartyEast();
             }
         });
         moveWestBtn.addEventListener('click',()=>{
-            if(this.player.canMoveRoom == true){
-                this.movePlayerWest();
+            if(this.canMoveRoom == true){
+                this.movePartyWest();
             }
         });
         directionBtnContainer.appendChild(moveNorthBtn);
@@ -320,7 +329,7 @@ export default class Controller {
             document.getElementById('inventory-tab').style.display = "none";
             document.getElementById('secondary-stats-tab').style.display = "block";
         });
-        for(let i = 0; i < this.player.equippedArray.length; i++){
+        for(let i = 0; i < this.currentCharacter.equippedArray.length; i++){
             document.getElementById('unequip-btn-' + i).addEventListener('click', ()=>{
                 this.unequip(i);
             });
@@ -393,48 +402,48 @@ export default class Controller {
             if(levelCheck == true){
                 switch(selectedStat){
                     case "vigor":
-                        this.player.vigor = this.player.vigor + 1;
+                        this.currentCharacter.vigor = this.currentCharacter.vigor + 1;
                         break;
                     case "endurance":
-                        this.player.endurance = this.player.endurance + 1;
+                        this.currentCharacter.endurance = this.currentCharacter.endurance + 1;
                         break;
                     case "strength":
-                        this.player.strength = this.player.strength + 1;
+                        this.currentCharacter.strength = this.currentCharacter.strength + 1;
                         break;
                     case "dexterity":
-                        this.player.dexterity = this.player.dexterity + 1;
+                        this.currentCharacter.dexterity = this.currentCharacter.dexterity + 1;
                         break;
                     case "insight":
-                        this.player.insight = this.player.insight + 1;
+                        this.currentCharacter.insight = this.currentCharacter.insight + 1;
                         break;
                     case "focus":
-                        this.player.focus = this.player.focus + 1;
+                        this.currentCharacter.focus = this.currentCharacter.focus + 1;
                         break;
                 }
-                let newStats = this.scaleAttributes(this.player.vigor, this.player.endurance, this.player.strength, this.player.dexterity, this.player.insight, this.player.focus);
-                this.player.maxHP = newStats[0];
-                this.player.maxStamina = newStats[1];
-                this.player.maxMagic = newStats[2];
-                this.player.baseBluntAttack = newStats[3];
-                this.player.basePierceAttack = newStats[4];
-                this.player.baseArcaneAttack = newStats[5];
-                this.player.baseElementalAttack = newStats[6];
-                this.player.baseBluntDefense = newStats[7];
-                this.player.basePierceDefense = newStats[8];
-                this.player.baseArcaneDefense = newStats[9];
-                this.player.baseElementalDefense = newStats[10];
-                this.player.currentHP = this.player.maxHP;
-                this.player.currentStamina = this.player.maxStamina;
-                this.player.currentMagic = this.player.maxMagic;
-                this.calcPlayerAbilitiesAndStats();
-                this.updatePlayerStats();
+                let newStats = this.scaleAttributes(this.currentCharacter.vigor, this.currentCharacter.endurance, this.currentCharacter.strength, this.currentCharacter.dexterity, this.currentCharacter.insight, this.currentCharacter.focus);
+                this.currentCharacter.maxHP = newStats[0];
+                this.currentCharacter.maxStamina = newStats[1];
+                this.currentCharacter.maxMagic = newStats[2];
+                this.currentCharacter.baseBluntAttack = newStats[3];
+                this.currentCharacter.basePierceAttack = newStats[4];
+                this.currentCharacter.baseArcaneAttack = newStats[5];
+                this.currentCharacter.baseElementalAttack = newStats[6];
+                this.currentCharacter.baseBluntDefense = newStats[7];
+                this.currentCharacter.basePierceDefense = newStats[8];
+                this.currentCharacter.baseArcaneDefense = newStats[9];
+                this.currentCharacter.baseElementalDefense = newStats[10];
+                this.currentCharacter.currentHP = this.currentCharacter.maxHP;
+                this.currentCharacter.currentStamina = this.currentCharacter.maxStamina;
+                this.currentCharacter.currentMagic = this.currentCharacter.maxMagic;
+                this.calcCharacterAbilitiesAndStats();
+                this.updateCharacterStats();
                 document.getElementById("app").style.display = "block";
                 document.getElementById('level-up-screen').style.display = "none";
-                this.player.canMoveRoom = true;
+                this.canMoveRoom = true;
             }
         });
     }
-    enablePlayerBattleControls(){
+    enableCharacterBattleControls(){
         //remove old buttons
         for(let i = 0; i < this.battleBtnArray.length; i++){
             let oldBtn = document.getElementById('battle-button-container').querySelector('button');
@@ -442,10 +451,10 @@ export default class Controller {
         }
         this.battleBtnArray = [];
         //Add New Ability Buttons
-        for(let x = 0; x < this.player.abilityArray.length; x++){
+        for(let x = 0; x < this.currentCharacter.abilityArray.length; x++){
             let abilityBtn = document.createElement('button');
             abilityBtn.classList.add('action-button');
-            abilityBtn.innerText = this.capitalizeFirstLetter(this.player.abilityArray[x].name);
+            abilityBtn.innerText = this.capitalizeFirstLetter(this.currentCharacter.abilityArray[x].name);
             abilityBtn.addEventListener('click', ()=>{
                 this.battle.determineFirstTurn(x);
             });
@@ -459,14 +468,14 @@ export default class Controller {
             btn.style.visibility = "visible";
         });
     }
-    disablePlayerBattleControls(){
+    disableCharacterBattleControls(){
         document.getElementById('battle-button-container').style.visibility = "hidden";
         //Array.from used to convert HTML collection to regular array so forEach can be used -> hides use btns on items
         Array.from(document.getElementsByClassName('mini-menu-btn')).forEach(btn=>{
             btn.style.visibility = "hidden";
         });
     }
-    enablePlayerEncounterControls(){
+    enableCharacterEncounterControls(){
         for(let i = 0; i < this.encounterBtnArray.length; i++){
             let oldBtn = document.getElementById('encounter-button-container').querySelector('button');
                 oldBtn.remove();
@@ -477,9 +486,9 @@ export default class Controller {
             decisionBtn.classList.add('action-button');
             decisionBtn.innerText = this.capitalizeFirstLetter(this.encounter.decisionArray[x].name);
             decisionBtn.addEventListener('click', ()=>{
-                this.disablePlayerEncounterControls();
+                this.disableCharacterEncounterControls();
                 this.printToGameConsole(this.encounter.decisionArray[x].message);
-                this.encounter.decisionArray[x].activate(this.player);
+                this.encounter.decisionArray[x].activate(this.currentCharacter);
             });
             document.getElementById('encounter-button-container').appendChild(decisionBtn);
             this.encounterBtnArray.push(decisionBtn);
@@ -491,7 +500,7 @@ export default class Controller {
              btn.style.visibility = "visible";
          });
     }
-    disablePlayerEncounterControls(){
+    disableCharacterEncounterControls(){
         document.getElementById('encounter-button-container').style.visibility = "hidden";
         //Array.from used to convert HTML collection to regular array so forEach can be used -> hides use btns on items
         Array.from(document.getElementsByClassName('mini-menu-btn')).forEach(btn=>{
@@ -506,23 +515,23 @@ export default class Controller {
         document.getElementById("enemy-name-container").style.display = "none";
         document.getElementById("encounter-name-container").style.display = "none";
         document.getElementById("mini-map-container").style.display = "block";
-        document.getElementById("player-image-container").style.display = "none";
+        document.getElementById("current-character-image-container").style.display = "none";
         document.getElementById("enemy-image-container").style.display = "none";
         document.getElementById("location-image-container").style.display = "block";
         document.getElementById("enemy-main-stats-container").style.display = "none";
         document.getElementById("encounter-image-container").style.display = "none";
         document.getElementById("merchant-inventory-container").style.display = "none";
         this.miniMap.resizeCanvas();
-        this.miniMap.draw(this.map, this.player.currentRoom);
-        this.player.isInBattle = false;
-        this.player.isInTrade = false;
-        this.player.canMoveRoom = true;
-        this.updatePlayerInventoryTab(this.player.inventory);
+        this.miniMap.draw(this.map, this.currentRoom);
+        this.isInBattle = false;
+        this.isInTrade = false;
+        this.canMoveRoom = true;
+        this.updatePartyInventoryTab(this.partyInventory);
     }
     toggleBattle(enemy){
-        this.battle = new Battle(this.player, enemy);
-        this.player.canMoveRoom = false;
-        this.updatePlayerStats();
+        this.battle = new Battle(this.currentCharacter, enemy);
+        this.canMoveRoom = false;
+        this.updateCharacterStats();
         this.updateEnemyStats();
         setTimeout(()=>{
             document.getElementById('enemy-name').innerText = this.capitalizeFirstLetter(this.battle.enemy.name);
@@ -534,16 +543,16 @@ export default class Controller {
             document.getElementById("enemy-name-container").style.display = "block";
             document.getElementById("encounter-name-container").style.display = "none";
             document.getElementById("mini-map-container").style.display = "none";
-            document.getElementById("player-image-container").style.display = "block";
+            document.getElementById("current-character-image-container").style.display = "block";
             document.getElementById("enemy-image-container").style.display = "block";
             document.getElementById("location-image-container").style.display = "none";
             document.getElementById("enemy-main-stats-container").style.display = "block";
             document.getElementById("encounter-image-container").style.display = "none";
-            this.enablePlayerBattleControls();
+            this.enableCharacterBattleControls();
             if(this.battle.enemy.name.charAt(0) == "a" || this.battle.enemy.name.charAt(0) == "e" || this.battle.enemy.name.charAt(0) == "i" || this.battle.enemy.name.charAt(0) == "o" || this.battle.enemy.name.charAt(0) == "u"){
-                this.printToGameConsole(`${this.player.name} encounters an ${this.battle.enemy.name}!`);
+                this.printToGameConsole(`${this.currentCharacter.name} encounters an ${this.battle.enemy.name}!`);
             }else{
-                this.printToGameConsole(`${this.player.name} encounters a ${this.battle.enemy.name}!`);
+                this.printToGameConsole(`${this.currentCharacter.name} encounters a ${this.battle.enemy.name}!`);
             }
             document.getElementById('music-player').pause();
             if(enemy.isBoss == true){
@@ -552,34 +561,34 @@ export default class Controller {
                 document.getElementById('music-player').src = "./audio/battle-of-the-dragons-8037.mp3"
             }
             document.getElementById('music-player').play();
-            this.player.isInBattle = true;
+            this.isInBattle = true;
         }, 2000);
     }
     toggleEncounter(encounter){
         this.encounter = encounter;
-        this.player.canMoveRoom = false;
+        this.canMoveRoom = false;
         setTimeout(()=>{
             document.getElementById('encounter-name').innerText = this.capitalizeFirstLetter(this.encounter.name);
             document.getElementById('encounter-image').src = this.encounter.imageSrc;
             document.getElementById("location-name-container").style.display = "none";
             document.getElementById("encounter-name-container").style.display = "block";
             document.getElementById("mini-map-container").style.display = "none";
-            document.getElementById("player-image-container").style.display = "block";
+            document.getElementById("current-character-image-container").style.display = "block";
             document.getElementById("location-image-container").style.display = "none";
             document.getElementById("encounter-image-container").style.display = "block";
-            this.enablePlayerEncounterControls();
+            this.enableCharacterEncounterControls();
             this.printToGameConsole(this.encounter.message);
         }, 2000);
     }
     toggleMapTransitionScreen(){
-        this.player.canMoveRoom = false;
+        this.canMoveRoom = false;
         setTimeout(()=>{
             document.getElementById('music-player').pause();
             document.getElementById('map-transition-screen').style.display = "block";
             document.getElementById("app").style.display = "none";
         }, 2000);
     }
-    updatePlayerInventoryTab(inventory){
+    updatePartyInventoryTab(inventory){
         Array.from(document.getElementById("inventory").getElementsByClassName("inventory-slot")).forEach(slot=>{
             slot.remove();
         });
@@ -794,7 +803,7 @@ export default class Controller {
             closeBtn.addEventListener("click", ()=>{
                 miniMenu.style.display = "none";
             });
-            if(this.player.isInTrade == true){
+            if(this.isInTrade == true){
                 dropSellBtn.innerText = "Sell";
                 dropSellBtn.addEventListener('click', ()=>{
                     this.sellItem(i);
@@ -836,58 +845,58 @@ export default class Controller {
                     this.upgradeItem(i);
                 });
             }
-            document.getElementById("current-gold").innerText = this.player.currentGold;
             Array.from(miniMenu.getElementsByClassName("mini-menu-btn")).forEach(btn=>{
-                if(this.player.isInBattle == true){
+                if(this.isInBattle == true){
                     btn.style.visibility = "hidden";
                 }
             });
         }
+        document.getElementById("current-gold").innerText = this.partyGold;
     }
-    updatePlayerStats(){
-        document.getElementById('current-health-player').innerText = this.player.currentHP;
-        document.getElementById('current-stamina-player').innerText = this.player.currentStamina;
-        document.getElementById('current-magic-player').innerText = this.player.currentMagic;
-        document.getElementById('health-bar-player-progress').style.width = Math.floor(this.player.currentHP/this.player.maxHP*100) + "%";
-        document.getElementById('stamina-bar-player-progress').style.width = Math.floor(this.player.currentStamina/this.player.maxStamina*100) + "%";
-        document.getElementById('magic-bar-player-progress').style.width = Math.floor(this.player.currentMagic/this.player.maxMagic*100) + "%";
-        document.getElementById('player-level-label').innerText = "★ " + this.player.level;
-        document.getElementById('current-vigor').innerText = this.player.vigor;
-        document.getElementById('current-endurance').innerText = this.player.endurance;
-        document.getElementById('current-strength').innerText = this.player.strength;
-        document.getElementById('current-dexterity').innerText = this.player.dexterity;
-        document.getElementById('current-insight').innerText = this.player.insight;
-        document.getElementById('current-focus').innerText = this.player.focus;
-        document.getElementById('current-speed').innerText = this.player.currentSpeed;
-        document.getElementById('current-evasion').innerText = this.player.currentEvasion;
-        document.getElementById('current-blunt-attack').innerText = this.player.currentBluntAttack; 
-        document.getElementById('current-pierce-attack').innerText = this.player.currentPierceAttack;
-        document.getElementById('current-arcane-attack').innerText = this.player.currentArcaneAttack; 
-        document.getElementById('current-element-attack').innerText = this.player.currentElementalAttack;
-        document.getElementById('current-blunt-defense').innerText = this.player.currentBluntDefense; 
-        document.getElementById('current-pierce-defense').innerText = this.player.currentPierceDefense;
-        document.getElementById('current-arcane-defense').innerText = this.player.currentArcaneDefense; 
-        document.getElementById('current-element-defense').innerText = this.player.currentElementalDefense;
-        document.getElementById('current-experience').innerText = this.player.currentXP + " / " + Math.floor(((this.player.level + 10)**2)*0.5);
-        document.getElementById('current-gold').innerText = this.player.currentGold;
-        for(let i = -1; i < this.player.statusArray.length; i++){
-            let oldIcon = document.getElementById('player-status-icon-container').querySelector('img');
+    updateCharacterStats(){
+        document.getElementById('current-health-current-character').innerText = this.currentCharacter.currentHP;
+        document.getElementById('current-stamina-current-character').innerText = this.currentCharacter.currentStamina;
+        document.getElementById('current-magic-current-character').innerText = this.currentCharacter.currentMagic;
+        document.getElementById('health-bar-current-character-progress').style.width = Math.floor(this.currentCharacter.currentHP/this.currentCharacter.maxHP*100) + "%";
+        document.getElementById('stamina-bar-current-character-progress').style.width = Math.floor(this.currentCharacter.currentStamina/this.currentCharacter.maxStamina*100) + "%";
+        document.getElementById('magic-bar-current-character-progress').style.width = Math.floor(this.currentCharacter.currentMagic/this.currentCharacter.maxMagic*100) + "%";
+        document.getElementById('current-character-level-label').innerText = "★ " + this.currentCharacter.level;
+        document.getElementById('current-vigor').innerText = this.currentCharacter.vigor;
+        document.getElementById('current-endurance').innerText = this.currentCharacter.endurance;
+        document.getElementById('current-strength').innerText = this.currentCharacter.strength;
+        document.getElementById('current-dexterity').innerText = this.currentCharacter.dexterity;
+        document.getElementById('current-insight').innerText = this.currentCharacter.insight;
+        document.getElementById('current-focus').innerText = this.currentCharacter.focus;
+        document.getElementById('current-speed').innerText = this.currentCharacter.currentSpeed;
+        document.getElementById('current-evasion').innerText = this.currentCharacter.currentEvasion;
+        document.getElementById('current-blunt-attack').innerText = this.currentCharacter.currentBluntAttack; 
+        document.getElementById('current-pierce-attack').innerText = this.currentCharacter.currentPierceAttack;
+        document.getElementById('current-arcane-attack').innerText = this.currentCharacter.currentArcaneAttack; 
+        document.getElementById('current-element-attack').innerText = this.currentCharacter.currentElementalAttack;
+        document.getElementById('current-blunt-defense').innerText = this.currentCharacter.currentBluntDefense; 
+        document.getElementById('current-pierce-defense').innerText = this.currentCharacter.currentPierceDefense;
+        document.getElementById('current-arcane-defense').innerText = this.currentCharacter.currentArcaneDefense; 
+        document.getElementById('current-element-defense').innerText = this.currentCharacter.currentElementalDefense;
+        document.getElementById('current-experience').innerText = this.currentCharacter.currentXP + " / " + Math.floor(((this.currentCharacter.level + 10)**2)*0.5);
+        document.getElementById('current-gold').innerText = this.partyGold;
+        for(let i = -1; i < this.currentCharacter.statusArray.length; i++){
+            let oldIcon = document.getElementById('current-character-status-icon-container').querySelector('img');
             if(oldIcon !== null){
                 oldIcon.remove();
             } 
         }
-        for(let i = 0; i < this.player.statusArray.length; i++){
+        for(let i = 0; i < this.currentCharacter.statusArray.length; i++){
         
-            if(this.player.statusArray[i].iconSrc != ""){
+            if(this.currentCharacter.statusArray[i].iconSrc != ""){
                 let statusIcon = document.createElement('img');
                 statusIcon.classList.add('status-icon');
-                statusIcon.src = this.player.statusArray[i].iconSrc;
-                document.getElementById('player-status-icon-container').appendChild(statusIcon);
+                statusIcon.src = this.currentCharacter.statusArray[i].iconSrc;
+                document.getElementById('current-character-status-icon-container').appendChild(statusIcon);
             }
         }
-        if(this.player.currentXP >= Math.floor(((this.player.level + 10)**2)*0.5)){
-            this.player.currentXP = this.player.currentXP - Math.floor(((this.player.level + 10)**2)*0.5);
-            this.levelPlayerUp();
+        if(this.currentCharacter.currentXP >= Math.floor(((this.currentCharacter.level + 10)**2)*0.5)){
+            this.currentCharacter.currentXP = this.currentCharacter.currentXP - Math.floor(((this.currentCharacter.level + 10)**2)*0.5);
+            this.levelCharacterUp();
         }
     }
     updateEnemyStats(){
@@ -913,10 +922,10 @@ export default class Controller {
         }
     }
     animateVitalBar(entity, vitalBarType){
-        if(entity === this.player){
-            document.getElementById(`${vitalBarType}-bar-player-progress`).classList.toggle("is-flashing");
+        if(entity === this.currentCharacter){
+            document.getElementById(`${vitalBarType}-bar-current-character-progress`).classList.toggle("is-flashing");
             setTimeout(()=>{
-                document.getElementById(`${vitalBarType}-bar-player-progress`).classList.toggle("is-flashing");
+                document.getElementById(`${vitalBarType}-bar-current-character-progress`).classList.toggle("is-flashing");
             }, 500);
         }
         else{
@@ -926,187 +935,187 @@ export default class Controller {
             }, 500);
         }
     }
-    movePlayerNorth(){
-        this.movePlayerRoom(this.player.currentRoom.roomNorth);
+    movePartyNorth(){
+        this.movePartyRoom(this.currentRoom.roomNorth);
     }
-    movePlayerEast(){
-        this.movePlayerRoom(this.player.currentRoom.roomEast);
+    movePartyEast(){
+        this.movePartyRoom(this.currentRoom.roomEast);
     }
-    movePlayerSouth(){
-        this.movePlayerRoom(this.player.currentRoom.roomSouth);
+    movePartySouth(){
+        this.movePartyRoom(this.currentRoom.roomSouth);
     }
-    movePlayerWest(){
-        this.movePlayerRoom(this.player.currentRoom.roomWest);
+    movePartyWest(){
+        this.movePartyRoom(this.currentRoom.roomWest);
     }
-    movePlayerRoom(nextRoom){
+    movePartyRoom(nextRoom){
         if(nextRoom !== ""){
             if(nextRoom.enemy !== ""){
-                this.player.nextRoom = nextRoom;
+                this.nextRoom = nextRoom;
                 this.printToGameConsole("something approaches...");
                 this.toggleBattle(nextRoom.enemy);
                 return; 
             }
             if(nextRoom.encounter !== ""){
-                this.player.nextRoom = nextRoom;
+                this.nextRoom = nextRoom;
                 this.printToGameConsole("something is ahead...");
                 this.toggleEncounter(nextRoom.encounter);
                 return; 
             }
             if(nextRoom.status == "visited"){
                 if(Math.floor(Math.random()*20) <= 2){
-                    this.player.nextRoom = nextRoom;
+                    this.nextRoom = nextRoom;
                     this.printToGameConsole("something approaches...");
-                    nextRoom.enemy = this.map.mapEnviorment.generateEnemy(this.player.level, false);
+                    nextRoom.enemy = this.map.mapEnviorment.generateEnemy(this.currentCharacter.level, false);
                     this.toggleBattle(nextRoom.enemy);
                     return;
                 }
             }
-            this.player.currentRoom.status = "visited";
-            this.player.currentRoom = nextRoom;
-            let stamina = Math.floor(this.player.maxStamina * 0.1);
-            let magic = Math.floor(this.player.maxMagic * 0.1);
-            if(this.player.currentStamina + stamina > this.player.maxStamina){stamina = this.player.maxStamina - this.player.currentStamina;}
-            if(this.player.currentMagic + magic > this.player.maxMagic){magic = this.player.maxMagic - this.player.currentMagic;}
-            this.player.currentStamina = this.player.currentStamina + stamina;
-            this.player.currentMagic = this.player.currentMagic + magic;
-            this.miniMap.draw(this.map, this.player.currentRoom);
-            if(this.player.currentRoom.isExit == true){
-                this.printToGameConsole(`${this.player.name} finds an exit!`);
+            this.currentRoom.status = "visited";
+            this.currentRoom = nextRoom;
+            let stamina = Math.floor(this.currentCharacter.maxStamina * 0.1);
+            let magic = Math.floor(this.currentCharacter.maxMagic * 0.1);
+            if(this.currentCharacter.currentStamina + stamina > this.currentCharacter.maxStamina){stamina = this.currentCharacter.maxStamina - this.currentCharacter.currentStamina;}
+            if(this.currentCharacter.currentMagic + magic > this.currentCharacter.maxMagic){magic = this.currentCharacter.maxMagic - this.currentCharacter.currentMagic;}
+            this.currentCharacter.currentStamina = this.currentCharacter.currentStamina + stamina;
+            this.currentCharacter.currentMagic = this.currentCharacter.currentMagic + magic;
+            this.miniMap.draw(this.map, this.currentRoom);
+            if(this.currentRoom.isExit == true){
+                this.printToGameConsole(`${this.currentCharacter.name} finds an exit!`);
                 this.toggleMapTransitionScreen();
             }
         }
         else{
             this.printToGameConsole("cannot go this way");
         }
-        this.updatePlayerStats();           
+        this.updateCharacterStats();           
     }
     equip(inventoryIndex){
-        if(this.player.isInBattle == false){
-            switch(this.player.inventory[inventoryIndex].type){
+        if(this.isInBattle == false){
+            switch(this.partyInventory[inventoryIndex].type){
                 case "one hand":
-                    if(this.player.equippedArray[0] !== "Empty"){
-                        if(this.player.equippedArray[1] !== "Empty"){
-                            this.player.inventory.push(this.player.equippedArray[0]);
-                            this.player.equippedArray[0] = this.player.inventory[inventoryIndex];
-                            this.updatePlayerEquippedTab(0);
+                    if(this.currentCharacter.equippedArray[0] !== "Empty"){
+                        if(this.currentCharacter.equippedArray[1] !== "Empty"){
+                            this.partyInventory.push(this.currentCharacter.equippedArray[0]);
+                            this.currentCharacter.equippedArray[0] = this.partyInventory[inventoryIndex];
+                            this.updateCharacterEquippedTab(0);
                         }else{
-                            this.player.equippedArray[1] = this.player.inventory[inventoryIndex];
-                            this.updatePlayerEquippedTab(1);
+                            this.currentCharacter.equippedArray[1] = this.partyInventory[inventoryIndex];
+                            this.updateCharacterEquippedTab(1);
                         }
                     }else{
-                        this.player.equippedArray[0] = this.player.inventory[inventoryIndex];
-                        this.updatePlayerEquippedTab(0);
+                        this.currentCharacter.equippedArray[0] = this.partyInventory[inventoryIndex];
+                        this.updateCharacterEquippedTab(0);
                     }
-                    this.printToGameConsole(`${this.player.name} equips ${this.player.inventory[inventoryIndex].name}.`);
-                    this.player.inventory.splice(inventoryIndex, 1);
+                    this.printToGameConsole(`${this.currentCharacter.name} equips ${this.partyInventory[inventoryIndex].name}.`);
+                    this.partyInventory.splice(inventoryIndex, 1);
                     break;
                 case "two hand":
-                    if(this.player.equippedArray[0] !== "Empty"){
-                        this.player.inventory.push(this.player.equippedArray[0]);
+                    if(this.currentCharacter.equippedArray[0] !== "Empty"){
+                        this.partyInventory.push(this.currentCharacter.equippedArray[0]);
                     }
-                    if(this.player.equippedArray[1] !== "Empty"){
-                        this.player.inventory.push(this.player.equippedArray[1]);
+                    if(this.currentCharacter.equippedArray[1] !== "Empty"){
+                        this.partyInventory.push(this.currentCharacter.equippedArray[1]);
                     }
-                    this.player.equippedArray[0] = this.player.inventory[inventoryIndex];
-                    this.player.equippedArray[1] = this.player.inventory[inventoryIndex];
-                    this.player.inventory.splice(inventoryIndex, 1);
-                    this.printToGameConsole(`${this.player.name} equips ${this.player.equippedArray[0].name}.`);
-                    this.updatePlayerEquippedTab(0);
-                    this.updatePlayerEquippedTab(1);
+                    this.currentCharacter.equippedArray[0] = this.partyInventory[inventoryIndex];
+                    this.currentCharacter.equippedArray[1] = this.partyInventory[inventoryIndex];
+                    this.partyInventory.splice(inventoryIndex, 1);
+                    this.printToGameConsole(`${this.currentCharacter.name} equips ${this.currentCharacter.equippedArray[0].name}.`);
+                    this.updateCharacterEquippedTab(0);
+                    this.updateCharacterEquippedTab(1);
                     break;
                 case "main":
-                    if(this.player.equippedArray[0] !== "Empty"){
-                        this.player.inventory.push(this.player.equippedArray[0]);
+                    if(this.currentCharacter.equippedArray[0] !== "Empty"){
+                        this.partyInventory.push(this.currentCharacter.equippedArray[0]);
                     }
-                    this.player.equippedArray[0] = this.player.inventory[inventoryIndex];
-                    this.player.inventory.splice(inventoryIndex, 1);
-                    this.printToGameConsole(`${this.player.name} equips ${this.player.equippedArray[0].name}.`);
-                    this.updatePlayerEquippedTab(0);
+                    this.currentCharacter.equippedArray[0] = this.partyInventory[inventoryIndex];
+                    this.partyInventory.splice(inventoryIndex, 1);
+                    this.printToGameConsole(`${this.currentCharacter.name} equips ${this.currentCharacter.equippedArray[0].name}.`);
+                    this.updateCharacterEquippedTab(0);
                     break;
                 case "offhand":
-                    if(this.player.equippedArray[1] !== "Empty"){
-                        this.player.inventory.push(this.player.equippedArray[1]);
+                    if(this.currentCharacter.equippedArray[1] !== "Empty"){
+                        this.partyInventory.push(this.currentCharacter.equippedArray[1]);
                     }
-                    this.player.equippedArray[1] = this.player.inventory[inventoryIndex];
-                    this.player.inventory.splice(inventoryIndex, 1);
-                    this.printToGameConsole(`${this.player.name} equips ${this.player.equippedArray[1].name}.`);
-                    this.updatePlayerEquippedTab(1);
+                    this.currentCharacter.equippedArray[1] = this.partyInventory[inventoryIndex];
+                    this.partyInventory.splice(inventoryIndex, 1);
+                    this.printToGameConsole(`${this.currentCharacter.name} equips ${this.currentCharacter.equippedArray[1].name}.`);
+                    this.updateCharacterEquippedTab(1);
                     break;
                 case "head":
-                    if(this.player.equippedArray[2] !== "Empty"){
-                        this.player.inventory.push(this.player.equippedArray[2]);
+                    if(this.currentCharacter.equippedArray[2] !== "Empty"){
+                        this.partyInventory.push(this.currentCharacter.equippedArray[2]);
                     } 
-                    this.player.equippedArray[2] = this.player.inventory[inventoryIndex];
-                    this.player.inventory.splice(inventoryIndex, 1); 
-                    this.printToGameConsole(`${this.player.name} equips ${this.player.equippedArray[2].name}.`);
-                    this.updatePlayerEquippedTab(2);
+                    this.currentCharacter.equippedArray[2] = this.partyInventory[inventoryIndex];
+                    this.partyInventory.splice(inventoryIndex, 1); 
+                    this.printToGameConsole(`${this.currentCharacter.name} equips ${this.currentCharacter.equippedArray[2].name}.`);
+                    this.updateCharacterEquippedTab(2);
                     break;
                 case "torso":
-                    if(this.player.equippedArray[3] !== "Empty"){
-                        this.player.inventory.push(this.player.equippedArray[3]);
+                    if(this.currentCharacter.equippedArray[3] !== "Empty"){
+                        this.partyInventory.push(this.currentCharacter.equippedArray[3]);
                     } 
-                    this.player.equippedArray[3] = this.player.inventory[inventoryIndex];
-                    this.player.inventory.splice(inventoryIndex, 1); 
-                    this.printToGameConsole(`${this.player.name} equips ${this.player.equippedArray[3].name}.`);
-                    this.updatePlayerEquippedTab(3);
+                    this.currentCharacter.equippedArray[3] = this.partyInventory[inventoryIndex];
+                    this.partyInventory.splice(inventoryIndex, 1); 
+                    this.printToGameConsole(`${this.currentCharacter.name} equips ${this.currentCharacter.equippedArray[3].name}.`);
+                    this.updateCharacterEquippedTab(3);
                     break;
                 case "arms":
-                    if(this.player.equippedArray[4] !== "Empty"){
-                        this.player.inventory.push(this.player.equippedArray[4]);
+                    if(this.currentCharacter.equippedArray[4] !== "Empty"){
+                        this.partyInventory.push(this.currentCharacter.equippedArray[4]);
                     } 
-                    this.player.equippedArray[4] = this.player.inventory[inventoryIndex];
-                    this.player.inventory.splice(inventoryIndex, 1); 
-                    this.printToGameConsole(`${this.player.name} equips ${this.player.equippedArray[4].name}.`);
-                    this.updatePlayerEquippedTab(4);
+                    this.currentCharacter.equippedArray[4] = this.partyInventory[inventoryIndex];
+                    this.partyInventory.splice(inventoryIndex, 1); 
+                    this.printToGameConsole(`${this.currentCharacter.name} equips ${this.currentCharacter.equippedArray[4].name}.`);
+                    this.updateCharacterEquippedTab(4);
                     break;
                 case "legs":
-                    if(this.player.equippedArray[5] !== "Empty"){
-                        this.player.inventory.push(this.player.equippedArray[5]);
+                    if(this.currentCharacter.equippedArray[5] !== "Empty"){
+                        this.partyInventory.push(this.currentCharacter.equippedArray[5]);
                     } 
-                    this.player.equippedArray[5] = this.player.inventory[inventoryIndex];
-                    this.player.inventory.splice(inventoryIndex, 1); 
-                    this.printToGameConsole(`${this.player.name} equips ${this.player.equippedArray[5].name}.`);
-                    this.updatePlayerEquippedTab(5);
+                    this.currentCharacter.equippedArray[5] = this.partyInventory[inventoryIndex];
+                    this.partyInventory.splice(inventoryIndex, 1); 
+                    this.printToGameConsole(`${this.currentCharacter.name} equips ${this.currentCharacter.equippedArray[5].name}.`);
+                    this.updateCharacterEquippedTab(5);
                     break;
                 case "feet":
-                    if(this.player.equippedArray[6] !== "Empty"){
-                        this.player.inventory.push(this.player.equippedArray[6]);
+                    if(this.currentCharacter.equippedArray[6] !== "Empty"){
+                        this.partyInventory.push(this.currentCharacter.equippedArray[6]);
                     } 
-                    this.player.equippedArray[6] = this.player.inventory[inventoryIndex];
-                    this.player.inventory.splice(inventoryIndex, 1); 
-                    this.printToGameConsole(`${this.player.name} equips ${this.player.equippedArray[6].name}.`);
-                    this.updatePlayerEquippedTab(6);
+                    this.currentCharacter.equippedArray[6] = this.partyInventory[inventoryIndex];
+                    this.partyInventory.splice(inventoryIndex, 1); 
+                    this.printToGameConsole(`${this.currentCharacter.name} equips ${this.currentCharacter.equippedArray[6].name}.`);
+                    this.updateCharacterEquippedTab(6);
                     break;
                 default:
                     break;
             }
             this.playSoundEffect("./audio/soundEffects/anvil-hit-2-14845.mp3");
-            this.calcPlayerAbilitiesAndStats();
-            this.updatePlayerInventoryTab(this.player.inventory);
-            this.updatePlayerStats();
+            this.calcCharacterAbilitiesAndStats();
+            this.updatePartyInventoryTab(this.partyInventory);
+            this.updateCharacterStats();
         }else{
             this.printToGameConsole("Cannot equip during combat!");
         }
     }
     unequip(equippedArrayIndex){
-        if(this.player.isInBattle == false){
-            if(this.player.equippedArray[equippedArrayIndex] != "Empty"){
-                if(this.player.equippedArray[equippedArrayIndex].type == "two hand"){
+        if(this.isInBattle == false){
+            if(this.currentCharacter.equippedArray[equippedArrayIndex] != "Empty"){
+                if(this.currentCharacter.equippedArray[equippedArrayIndex].type == "two hand"){
                     if(equippedArrayIndex == 0){
-                        this.player.equippedArray[1] = "Empty";
-                        this.updatePlayerEquippedTab(1);
+                        this.currentCharacter.equippedArray[1] = "Empty";
+                        this.updateCharacterEquippedTab(1);
                     }else{
-                        this.player.equippedArray[0] = "Empty";
-                        this.updatePlayerEquippedTab(0);
+                        this.currentCharacter.equippedArray[0] = "Empty";
+                        this.updateCharacterEquippedTab(0);
                     }
                 }
-                this.printToGameConsole(`${this.player.name} unequips ${this.player.equippedArray[equippedArrayIndex].name}`);
-                this.player.inventory.push(this.player.equippedArray[equippedArrayIndex]);
-                this.player.equippedArray[equippedArrayIndex] = "Empty";
-                this.updatePlayerInventoryTab(this.player.inventory);
-                this.updatePlayerEquippedTab(equippedArrayIndex);
-                this.calcPlayerAbilitiesAndStats();
-                this.updatePlayerStats();
+                this.printToGameConsole(`${this.currentCharacter.name} unequips ${this.currentCharacter.equippedArray[equippedArrayIndex].name}`);
+                this.partyInventory.push(this.currentCharacter.equippedArray[equippedArrayIndex]);
+                this.currentCharacter.equippedArray[equippedArrayIndex] = "Empty";
+                this.updatePartyInventoryTab(this.partyInventory);
+                this.updateCharacterEquippedTab(equippedArrayIndex);
+                this.calcCharacterAbilitiesAndStats();
+                this.updateCharacterStats();
             }else{
                 this.printToGameConsole("Nothing equipped.");
             }
@@ -1115,149 +1124,153 @@ export default class Controller {
         }
     }
     dropItem(inventoryIndex){
-        if(this.player.isInBattle == false){
-            this.printToGameConsole(`${this.player.name} dropped ${this.player.inventory[inventoryIndex].name}.`);
-            this.player.inventory.splice(inventoryIndex, 1);
-            this.updatePlayerInventoryTab(this.player.inventory);
+        if(this.isInBattle == false){
+            this.printToGameConsole(`${this.currentCharacter.name} dropped ${this.partyInventory[inventoryIndex].name}.`);
+            this.partyInventory.splice(inventoryIndex, 1);
+            this.updatePartyInventoryTab(this.partyInventory);
         }else{
-            this.printToGameConsole(`Cannot drop ${this.player.inventory[inventoryIndex].name} during combat.`);
+            this.printToGameConsole(`Cannot drop ${this.partyInventory[inventoryIndex].name} during combat.`);
         }
     }
     sellItem(inventoryIndex){
-        if(this.player.isInBattle == false){
-            let price = Math.floor(this.player.inventory[inventoryIndex].price/4);
-            this.printToGameConsole(`${this.player.name} sold ${this.player.inventory[inventoryIndex].name} for ${price} gold.`);
-            this.player.currentGold = this.player.currentGold + price;
-            this.player.inventory.splice(inventoryIndex, 1);
-            this.updatePlayerInventoryTab(this.player.inventory);
+        if(this.isInBattle == false){
+            let price = Math.floor(this.partyInventory[inventoryIndex].price/4);
+            this.printToGameConsole(`${this.currentCharacter.name} sold ${this.partyInventory[inventoryIndex].name} for ${price} gold.`);
+            this.partyGold = this.partyGold + price;
+            this.partyInventory.splice(inventoryIndex, 1);
+            this.updatePartyInventoryTab(this.partyInventory);
         }
     }
     upgradeItem(inventoryIndex){
-        if(this.player.isInBattle == false){
-            let upgradeCost = Math.floor(this.player.inventory[inventoryIndex].price * 1.25)
-            if(this.player.currentGold >= upgradeCost){
-                this.player.currentGold = this.player.currentGold - upgradeCost;
-                this.printToGameConsole(`${this.player.name} spends ${upgradeCost} gold to upgrade ${this.player.inventory[inventoryIndex].name}.`);
-                this.player.inventory[inventoryIndex].upgrade(1);
-                this.updatePlayerInventoryTab(this.player.inventory);
+        if(this.isInBattle == false){
+            let upgradeCost = Math.floor(this.partyInventory[inventoryIndex].price * 1.25)
+            if(this.partyGold >= upgradeCost){
+                this.partyGold = this.partyGold - upgradeCost;
+                this.printToGameConsole(`${this.currentCharacter.name} spends ${upgradeCost} gold to upgrade ${this.partyInventory[inventoryIndex].name}.`);
+                this.partyInventory[inventoryIndex].upgrade(1);
+                this.updatePartyInventoryTab(this.partyInventory);
             }
             else{
-                this.printToGameConsole(`Not enough gold to upgrade ${this.player.inventory[inventoryIndex].name}.`);
+                this.printToGameConsole(`Not enough gold to upgrade ${this.partyInventory[inventoryIndex].name}.`);
             }
         }else{
-            this.printToGameConsole(`Cannot upgrade ${this.player.inventory[inventoryIndex].name} during combat.`);
+            this.printToGameConsole(`Cannot upgrade ${this.partyInventory[inventoryIndex].name} during combat.`);
         }
     }
-    calcPlayerAbilitiesAndStats(){
+    calcCharacterAbilitiesAndStats(){
         //reset stats and abilities
-        this.player.currentBluntAttack = this.player.baseBluntAttack;
-        this.player.currentPierceAttack = this.player.basePierceAttack;
-        this.player.currentArcaneAttack = this.player.baseArcaneAttack;
-        this.player.currentElementalAttack = this.player.baseElementalAttack;
-        this.player.currentBluntDefense = this.player.baseBluntDefense;
-        this.player.currentPierceDefense = this.player.basePierceDefense;
-        this.player.currentArcaneDefense = this.player.baseArcaneDefense;
-        this.player.currentElementalDefense = this.player.baseElementalDefense;
-        this.player.currentSpeed = this.player.baseSpeed;
-        this.player.currentEvasion = this.player.baseEvasion;
-        this.player.abilityArray = [];
+        this.currentCharacter.currentBluntAttack = this.currentCharacter.baseBluntAttack;
+        this.currentCharacter.currentPierceAttack = this.currentCharacter.basePierceAttack;
+        this.currentCharacter.currentArcaneAttack = this.currentCharacter.baseArcaneAttack;
+        this.currentCharacter.currentElementalAttack = this.currentCharacter.baseElementalAttack;
+        this.currentCharacter.currentBluntDefense = this.currentCharacter.baseBluntDefense;
+        this.currentCharacter.currentPierceDefense = this.currentCharacter.basePierceDefense;
+        this.currentCharacter.currentArcaneDefense = this.currentCharacter.baseArcaneDefense;
+        this.currentCharacter.currentElementalDefense = this.currentCharacter.baseElementalDefense;
+        this.currentCharacter.currentSpeed = this.currentCharacter.baseSpeed;
+        this.currentCharacter.currentEvasion = this.currentCharacter.baseEvasion;
+        this.currentCharacter.abilityArray = [];
         //update stats
-        for(let i = 0; i < this.player.equippedArray.length; i++){
-            if(this.player.equippedArray[i] != "Empty"){
-                if((this.player.equippedArray[i].type == "two hand" && i == 1) != true){
-                    this.player.currentBluntAttack = this.player.currentBluntAttack + this.player.equippedArray[i].bluntAttack;
-                    this.player.currentPierceAttack = this.player.currentPierceAttack + this.player.equippedArray[i].pierceAttack;
-                    this.player.currentArcaneAttack = this.player.currentArcaneAttack + this.player.equippedArray[i].arcaneAttack;
-                    this.player.currentElementalAttack = this.player.currentElementalAttack + this.player.equippedArray[i].elementalAttack;
-                    this.player.currentBluntDefense = this.player.currentBluntDefense + this.player.equippedArray[i].bluntDefense;
-                    this.player.currentPierceDefense = this.player.currentPierceDefense + this.player.equippedArray[i].pierceDefense;
-                    this.player.currentArcaneDefense = this.player.currentArcaneDefense + this.player.equippedArray[i].arcaneDefense;
-                    this.player.currentElementalDefense = this.player.currentElementalDefense + this.player.equippedArray[i].elementalDefense;
-                    this.player.currentSpeed = this.player.currentSpeed + this.player.equippedArray[i].speed;
-                    this.player.currentEvasion = this.player.currentEvasion + this.player.equippedArray[i].evasion;
+        for(let i = 0; i < this.currentCharacter.equippedArray.length; i++){
+            if(this.currentCharacter.equippedArray[i] != "Empty"){
+                if((this.currentCharacter.equippedArray[i].type == "two hand" && i == 1) != true){
+                    this.currentCharacter.currentBluntAttack = this.currentCharacter.currentBluntAttack + this.currentCharacter.equippedArray[i].bluntAttack;
+                    this.currentCharacter.currentPierceAttack = this.currentCharacter.currentPierceAttack + this.currentCharacter.equippedArray[i].pierceAttack;
+                    this.currentCharacter.currentArcaneAttack = this.currentCharacter.currentArcaneAttack + this.currentCharacter.equippedArray[i].arcaneAttack;
+                    this.currentCharacter.currentElementalAttack = this.currentCharacter.currentElementalAttack + this.currentCharacter.equippedArray[i].elementalAttack;
+                    this.currentCharacter.currentBluntDefense = this.currentCharacter.currentBluntDefense + this.currentCharacter.equippedArray[i].bluntDefense;
+                    this.currentCharacter.currentPierceDefense = this.currentCharacter.currentPierceDefense + this.currentCharacter.equippedArray[i].pierceDefense;
+                    this.currentCharacter.currentArcaneDefense = this.currentCharacter.currentArcaneDefense + this.currentCharacter.equippedArray[i].arcaneDefense;
+                    this.currentCharacter.currentElementalDefense = this.currentCharacter.currentElementalDefense + this.currentCharacter.equippedArray[i].elementalDefense;
+                    this.currentCharacter.currentSpeed = this.currentCharacter.currentSpeed + this.currentCharacter.equippedArray[i].speed;
+                    this.currentCharacter.currentEvasion = this.currentCharacter.currentEvasion + this.currentCharacter.equippedArray[i].evasion;
                 }
             }
         }
         //punch check
-        if(this.player.equippedArray[0] == "Empty"){
-            this.player.abilityArray.push(new Punch);
+        if(this.currentCharacter.equippedArray[0] == "Empty"){
+            this.currentCharacter.abilityArray.push(new Punch);
         }
         //update abilities
-        for(let x = 0; x < this.player.equippedArray.length; x ++){
-            if(this.player.equippedArray[x] != "Empty"){
-                for(let y = 0; y < this.player.equippedArray[x].abilityArray.length; y ++){
-                    //check if this ability name is not already in current player ability array
+        for(let x = 0; x < this.currentCharacter.equippedArray.length; x ++){
+            if(this.currentCharacter.equippedArray[x] != "Empty"){
+                for(let y = 0; y < this.currentCharacter.equippedArray[x].abilityArray.length; y ++){
+                    //check if this ability name is not already in current currentCharacter ability array
                     let flag = true;
-                    for(let z = 0; z < this.player.abilityArray.length; z++){
-                        if(this.player.abilityArray[z].name == this.player.equippedArray[x].abilityArray[y].name){
+                    for(let z = 0; z < this.currentCharacter.abilityArray.length; z++){
+                        if(this.currentCharacter.abilityArray[z].name == this.currentCharacter.equippedArray[x].abilityArray[y].name){
                             flag = false;
                             break;
                         }
                     }
                     if(flag == true){
-                        this.player.abilityArray.push(this.player.equippedArray[x].abilityArray[y]);
+                        this.currentCharacter.abilityArray.push(this.currentCharacter.equippedArray[x].abilityArray[y]);
                     }
                 }
             }
         }
-        this.player.abilityArray.push(new Recover);
-        this.player.abilityArray.push(new Retreat);
+        this.currentCharacter.abilityArray.push(new Recover);
+        this.currentCharacter.abilityArray.push(new Retreat);
       }
-    updatePlayerEquippedTab(equippedArrayIndex){
-        if(this.player.equippedArray[equippedArrayIndex] =="Empty"){
+    updateCharacterEquippedTab(equippedArrayIndex){
+        if(this.currentCharacter.equippedArray[equippedArrayIndex] =="Empty"){
             document.getElementById('equip-slot-' + equippedArrayIndex).innerText = "Empty";
         }else{
-            document.getElementById('equip-slot-' + equippedArrayIndex).innerText = this.capitalizeFirstLetter(this.player.equippedArray[equippedArrayIndex].name);
+            document.getElementById('equip-slot-' + equippedArrayIndex).innerText = this.capitalizeFirstLetter(this.currentCharacter.equippedArray[equippedArrayIndex].name);
         } 
     }
     completeRoom(){
-        this.player.currentRoom.status = "visited";
-        this.player.currentRoom = this.player.nextRoom;
-        this.player.currentRoom.enemy = "";
-        this.player.currentRoom.encounter = "";
-        this.miniMap.draw(this.map, this.player.currentRoom);
+        this.currentRoom.status = "visited";
+        this.currentRoom = this.nextRoom;
+        this.currentRoom.enemy = "";
+        this.currentRoom.encounter = "";
+        this.miniMap.draw(this.map, this.currentRoom);
     }
     useConsumable(inventoryIndex){
-        if(this.player.isInBattle == true){
-            if(this.player.inventory[inventoryIndex].abilityArray[0].canUse(this.player) != false){
+        if(this.isInBattle == true){
+            if(this.partyInventory[inventoryIndex].abilityArray[0].canUse(this.currentCharacter) != false){
                 this.battle.determineFirstTurn(0, inventoryIndex);
-                this.player.inventory.splice(inventoryIndex, 1);
-                this.updatePlayerInventoryTab(this.player.inventory);
+                this.partyInventory.splice(inventoryIndex, 1);
+                this.updatePartyInventoryTab(this.partyInventory);
             }
         }else{
-            if(this.player.inventory[inventoryIndex].abilityArray[0].canUse(this.player) != false){
-                this.player.inventory[inventoryIndex].abilityArray[0].activate(this.player)
-                this.player.inventory.splice(inventoryIndex, 1);
-                this.updatePlayerInventoryTab(this.player.inventory);
-                this.updatePlayerStats();
+            if(this.partyInventory[inventoryIndex].abilityArray[0].canUse(this.currentCharacter) != false){
+                this.partyInventory[inventoryIndex].abilityArray[0].activate(this.currentCharacter)
+                this.partyInventory.splice(inventoryIndex, 1);
+                this.updatePartyInventoryTab(this.partyInventory);
+                this.updateCharacterStats();
             }
         }
     }
-    levelPlayerUp(){
-        this.player.level = this.player.level + 1;
-        this.map.increaseAllEnemyLevels(this.player.level);
-        this.printToGameConsole(`Level up! New level: ${this.player.level}.`);
+    levelCharacterUp(){
+        this.currentCharacter.level = this.currentCharacter.level + 1;
+        this.map.increaseAllEnemyLevels(this.currentCharacter.level);
+        this.printToGameConsole(`Level up! New level: ${this.currentCharacter.level}.`);
         this.displayLevelUpScreen();
     }
     displayLevelUpScreen(){
         document.getElementById('level-up-screen').style.display = "block";
         document.getElementById("app").style.display = "none";
 
-        this.player.canMoveRoom = false;
+        this.canMoveRoom = false;
     }
     generateNewMap(biome, layoutType){
-        this.map = new Map(this.player.level, biome, layoutType);
-        this.player.currentRoom = this.map.roomArray[this.map.playerSpawnIndex];
-        this.player.nextRoom = this.player.currentRoom;
+        this.map = new Map(this.currentCharacter.level, biome, layoutType);
+        this.currentRoom = this.map.roomArray[this.map.currentCharacterSpawnIndex];
+        this.nextRoom = this.currentRoom;
         document.getElementById('location-image').src = this.map.mapEnviorment.imageSrc;
         document.getElementById('location-name').innerText = this.capitalizeFirstLetter(this.map.mapEnviorment.biome);
-        this.miniMap.draw(this.map, this.player.currentRoom);
+        this.miniMap.draw(this.map, this.currentRoom);
         document.getElementById("music-player").src = this.map.mapEnviorment.backgroundMusicSrc;
         document.getElementById('music-player').play();
     }
+    initializeRooms(map){
+        this.currentRoom = map.roomArray[map.currentCharacterSpawnIndex];
+        this.nextRoom = this.currentRoom;
+    }
     endBattle(){
-        if(this.player.currentHP <= 0){
-            this.disablePlayerBattleControls();
+        if(this.currentCharacter.currentHP <= 0){
+            this.disableCharacterBattleControls();
             setTimeout(()=>{
                 document.getElementById('music-player').pause();
                 document.getElementById('gameover-screen').style.display = "block";
@@ -1272,20 +1285,20 @@ export default class Controller {
                     this.battle.loot();
                     this.completeRoom();
                 }else{
-                    this.player.nextRoom.status = "retreated";
+                    this.nextRoom.status = "retreated";
                 }
                 document.getElementById("music-player").src = this.map.mapEnviorment.backgroundMusicSrc;
                 document.getElementById("music-player").play();
                 this.toggleMap();
                 this.updateEnemyStats();
-                this.updatePlayerStats();
+                this.updateCharacterStats();
              }, 2000);
         }
     }
     endEncounter(battleFlag){
-        this.updatePlayerStats();
-        this.disablePlayerEncounterControls();
-        if(this.player.currentHP <= 0){
+        this.updateCharacterStats();
+        this.disableCharacterEncounterControls();
+        if(this.currentCharacter.currentHP <= 0){
             setTimeout(()=>{
                 document.getElementById('music-player').pause();
                 document.getElementById('gameover-screen').style.display = "block";
@@ -1293,7 +1306,7 @@ export default class Controller {
              }, 2000);
         }else{
             if(battleFlag == true){
-                this.player.nextRoom.encounter = "";
+                this.nextRoom.encounter = "";
                 return;
             }
             else{
@@ -1304,14 +1317,14 @@ export default class Controller {
                     this.toggleMap();
                     this.completeRoom();
                     //this.updateEnemyStats();   MAYBE ADD?
-                    this.updatePlayerStats();
+                    this.updateCharacterStats();
                 }, 2000);
             }
         }
     }
     toggleTrading(merchantInventory){
-        this.player.isInTrade = true;
-        this.updatePlayerInventoryTab(this.player.inventory);
+        this.isInTrade = true;
+        this.updatePartyInventoryTab(this.partyInventory);
          for(let i = -1; i < merchantInventory.length; i++){
                 let oldSlot = document.getElementById('inventory-merchant').querySelector('p');
                 if(oldSlot !== null){
@@ -1334,12 +1347,12 @@ export default class Controller {
             }
     }
     buyFromMerchant(remainingInventory, index){
-        if(this.player.currentGold >= remainingInventory[index].price){
-            this.player.inventory.push(remainingInventory[index]);
-            this.player.currentGold -= remainingInventory[index].price;
-            this.printToGameConsole(`${this.player.name} buys ${this.capitalizeFirstLetter(remainingInventory[index].name)}`)
+        if(this.partyGold >= remainingInventory[index].price){
+            this.partyInventory.push(remainingInventory[index]);
+            this.partyGold -= remainingInventory[index].price;
+            this.printToGameConsole(`${this.currentCharacter.name} buys ${this.capitalizeFirstLetter(remainingInventory[index].name)}`)
             remainingInventory.splice(index, 1);
-            this.updatePlayerInventoryTab(this.player.inventory);
+            this.updatePartyInventoryTab(this.partyInventory);
             this.toggleTrading(remainingInventory);
         }else{
             this.printToGameConsole(`Not enough gold to buy ${this.capitalizeFirstLetter(remainingInventory[index].name)}`)

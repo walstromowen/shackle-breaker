@@ -24,10 +24,10 @@ class Enemy{
             return "";
         }
     }
-    incrementStats(playerLevel, maxHPRange, maxStaminaRange, maxMagicRange, 
+    incrementStats(currentCharacterLevel, maxHPRange, maxStaminaRange, maxMagicRange, 
         baseBluntAttackRange, basePierceAttackRange, baseArcaneAttackRange, baseElementalAttackRange, 
         baseBluntDefenseRange, basePierceDefenseRange, baseArcaneDefenseRange, baseElementalDefenseRange){
-        for(let i = 0; i < (playerLevel - this.level); i++){
+        for(let i = 0; i < (currentCharacterLevel - this.level); i++){
             let value = Math.floor(Math.random()*(maxHPRange[1] - maxHPRange[0] + 1) + maxHPRange[0]);
             this.maxHP = this.maxHP + value; 
             this.currentHP = this.currentHP + value;
@@ -62,11 +62,11 @@ class Enemy{
             this.baseElementalDefense = this.baseElementalDefense + value; 
             this.currentElementalDefense = this.currentElementalDefense + value;
         }
-        this.level = playerLevel;
+        this.level = currentCharacterLevel;
     }
 }
 export class Skeleton extends Enemy{
-    constructor(playerLevel){
+    constructor(currentCharacterLevel){
         super();
         this.name = "skeleton";
         this.imageSrc = "media/skeleton.jpg"
@@ -107,16 +107,16 @@ export class Skeleton extends Enemy{
         this.gold = 0;
         this.XP = 0;
         this.isBoss = false;             
-        this.levelUp(playerLevel);
+        this.levelUp(currentCharacterLevel);
     }
-    levelUp(playerLevel){
-        this.incrementStats(playerLevel, [2,6], [2,6], [0,4], [2,3], [2,3], [0,2], [0,2], [1,2], [2,3], [1,3], [1,3]);
-        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + playerLevel/2));
+    levelUp(currentCharacterLevel){
+        this.incrementStats(currentCharacterLevel, [2,6], [2,6], [0,4], [2,3], [2,3], [0,2], [0,2], [1,2], [2,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + currentCharacterLevel/2));
         this.XP = 35;
     }
 }
 export class Bat extends Enemy{
-    constructor(playerLevel){
+    constructor(currentCharacterLevel){
         super();
         this.name = "bat";
         this.imageSrc = "media/bat.jpg"
@@ -152,16 +152,16 @@ export class Bat extends Enemy{
         this.gold = 0;
         this.XP = 0;
         this.isBoss = false;
-        this.levelUp(playerLevel);
+        this.levelUp(currentCharacterLevel);
     }
-    levelUp(playerLevel){
-        this.incrementStats(playerLevel, [2,4], [2,6], [0,4], [1,3], [2,3], [1,2], [1,2], [1,3], [1,3], [1,3], [1,3]);
-        this.gold = Math.floor((Math.random() * (10 - 5 + 1) + 5) * (1 + playerLevel/5));
+    levelUp(currentCharacterLevel){
+        this.incrementStats(currentCharacterLevel, [2,4], [2,6], [0,4], [1,3], [2,3], [1,2], [1,2], [1,3], [1,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (10 - 5 + 1) + 5) * (1 + currentCharacterLevel/5));
         this.XP = 20;
     }
 }
 export class Wolf extends Enemy{
-    constructor(playerLevel){
+    constructor(currentCharacterLevel){
         super();
         this.name = "wolf";
         this.imageSrc = "media/wolf.jpg"
@@ -197,16 +197,16 @@ export class Wolf extends Enemy{
         this.gold = 0;
         this.XP = 0;
         this.isBoss = false;
-        this.levelUp(playerLevel);
+        this.levelUp(currentCharacterLevel);
     }
-    levelUp(playerLevel){
-        this.incrementStats(playerLevel, [2,6], [4,6], [0,4], [1,3], [2,3], [0,2], [0,2], [1,3], [1,3], [1,3], [1,3]);
-        this.gold = Math.floor((Math.random() * (10 - 5 + 1) + 5) * (1 + playerLevel/2));
+    levelUp(currentCharacterLevel){
+        this.incrementStats(currentCharacterLevel, [2,6], [4,6], [0,4], [1,3], [2,3], [0,2], [0,2], [1,3], [1,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (10 - 5 + 1) + 5) * (1 + currentCharacterLevel/2));
         this.XP = 30;
     }
 }
 export class AltusMage extends Enemy{
-    constructor(playerLevel){
+    constructor(currentCharacterLevel){
         super();
         this.name = "altus mage";
         this.imageSrc = "media/altus-mage.jpg"
@@ -242,16 +242,16 @@ export class AltusMage extends Enemy{
         this.gold = 0;
         this.XP = 0;
         this.isBoss = false;
-        this.levelUp(playerLevel);
+        this.levelUp(currentCharacterLevel);
     }
-    levelUp(playerLevel){
-        this.incrementStats(playerLevel, [2,6], [0,2], [2,6], [1,3], [0,1], [2,3], [2,3], [1,3], [1,3], [1,3], [1,3]);
-        this.gold = Math.floor((Math.random() * (20 - 5 + 1) + 5) * (1 + playerLevel/5));
+    levelUp(currentCharacterLevel){
+        this.incrementStats(currentCharacterLevel, [2,6], [0,2], [2,6], [1,3], [0,1], [2,3], [2,3], [1,3], [1,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (20 - 5 + 1) + 5) * (1 + currentCharacterLevel/5));
         this.XP = 50;
     }
 }
 export class CaveSpider extends Enemy{
-    constructor(playerLevel){
+    constructor(currentCharacterLevel){
         super();
         this.name = "cave spider";
         this.imageSrc = "media/cave-spider.jpg"
@@ -287,16 +287,16 @@ export class CaveSpider extends Enemy{
         this.gold = 0;
         this.XP = 0;
         this.isBoss = false;
-        this.levelUp(playerLevel);
+        this.levelUp(currentCharacterLevel);
     }
-    levelUp(playerLevel){
-        this.incrementStats(playerLevel, [2,4], [2,6], [0,4], [1,3], [2,3], [1,2], [1,2], [1,3], [1,3], [1,3], [1,3]);
-        this.gold = Math.floor((Math.random() * (10 - 5 + 1) + 5) * (1 + playerLevel/5));
+    levelUp(currentCharacterLevel){
+        this.incrementStats(currentCharacterLevel, [2,4], [2,6], [0,4], [1,3], [2,3], [1,2], [1,2], [1,3], [1,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (10 - 5 + 1) + 5) * (1 + currentCharacterLevel/5));
         this.XP = 20;
     }
 }
 export class Groveguardian extends Enemy{
-    constructor(playerLevel){
+    constructor(currentCharacterLevel){
         super();
         this.name = "grove guardian";
         this.imageSrc = "media/grove-guardian.jpg"
@@ -332,16 +332,16 @@ export class Groveguardian extends Enemy{
         this.gold = 0;
         this.XP = 0;
         this.isBoss = false;
-        this.levelUp(playerLevel);
+        this.levelUp(currentCharacterLevel);
     }
-    levelUp(playerLevel){
-        this.incrementStats(playerLevel, [4,8], [2,4], [0,2], [2,3], [2,3], [0,1], [1,2], [2,3], [1,2], [1,2], [1,3]);
-        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + playerLevel/5));
+    levelUp(currentCharacterLevel){
+        this.incrementStats(currentCharacterLevel, [4,8], [2,4], [0,2], [2,3], [2,3], [0,1], [1,2], [2,3], [1,2], [1,2], [1,3]);
+        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + currentCharacterLevel/5));
         this.XP = 50;
     }
 }
 export class EmperorDolos extends Enemy{
-    constructor(playerLevel){
+    constructor(currentCharacterLevel){
         super();
         this.name = "emperor dolos";
         this.imageSrc = "media/emperor-dolos.jpg"
@@ -377,16 +377,16 @@ export class EmperorDolos extends Enemy{
         this.gold = 0;
         this.XP = 0;
         this.isBoss = true;
-        this.levelUp(playerLevel);
+        this.levelUp(currentCharacterLevel);
     }
-    levelUp(playerLevel){
-        this.incrementStats(playerLevel, [8,16], [2,6], [1,3], [2,4], [2,4], [2,4], [2,4], [1,3], [1,3], [1,3], [1,3]);
+    levelUp(currentCharacterLevel){
+        this.incrementStats(currentCharacterLevel, [8,16], [2,6], [1,3], [2,4], [2,4], [2,4], [2,4], [1,3], [1,3], [1,3], [1,3]);
         this.gold = 500;
         this.XP = 100;
     }
 }
 export class TerrorBear extends Enemy{
-    constructor(playerLevel){
+    constructor(currentCharacterLevel){
         super();
         this.name = "terror bear";
         this.imageSrc = "media/terror-bear.jpg"
@@ -423,16 +423,16 @@ export class TerrorBear extends Enemy{
         this.gold = 0;
         this.XP = 0;
         this.isBoss = false;
-        this.levelUp(playerLevel);
+        this.levelUp(currentCharacterLevel);
     }
-    levelUp(playerLevel){
-        this.incrementStats(playerLevel, [4,8], [2,4], [0,2], [2,3], [2,3], [0,1], [1,2], [2,3], [1,2], [1,2], [1,3]);
-        this.gold = Math.floor((Math.random() * (15 - 10 + 1) + 10) * (1 + playerLevel/5));
+    levelUp(currentCharacterLevel){
+        this.incrementStats(currentCharacterLevel, [4,8], [2,4], [0,2], [2,3], [2,3], [0,1], [1,2], [2,3], [1,2], [1,2], [1,3]);
+        this.gold = Math.floor((Math.random() * (15 - 10 + 1) + 10) * (1 + currentCharacterLevel/5));
         this.XP = 75;
     }
 }
 export class ShadowStrider extends Enemy{
-    constructor(playerLevel){
+    constructor(currentCharacterLevel){
         super();
         this.name = "shadow strider";
         this.imageSrc = "media/shadow-strider.jpg"
@@ -469,16 +469,16 @@ export class ShadowStrider extends Enemy{
         this.gold = 0;
         this.XP = 0;
         this.isBoss = false;
-        this.levelUp(playerLevel);
+        this.levelUp(currentCharacterLevel);
     }
-    levelUp(playerLevel){
-        this.incrementStats(playerLevel, [2,6], [2,6], [2,6], [1,3], [2,4], [2,4], [2,4], [1,3], [1,3], [2,4], [1,3]);
-        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + playerLevel/5));
+    levelUp(currentCharacterLevel){
+        this.incrementStats(currentCharacterLevel, [2,6], [2,6], [2,6], [1,3], [2,4], [2,4], [2,4], [1,3], [1,3], [2,4], [1,3]);
+        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + currentCharacterLevel/5));
         this.XP = 40;
     }
 }
 export class Bandit extends Enemy{
-    constructor(playerLevel){
+    constructor(currentCharacterLevel){
         super();
         this.name = "bandit";
         this.imageSrc = "media/bandit.jpg"
@@ -516,11 +516,11 @@ export class Bandit extends Enemy{
         this.gold = 0;
         this.XP = 0;
         this.isBoss = false;             
-        this.levelUp(playerLevel);
+        this.levelUp(currentCharacterLevel);
     }
-    levelUp(playerLevel){
-        this.incrementStats(playerLevel, [2,6], [2,6], [0,4], [2,3], [2,3], [0,2], [0,2], [1,3], [1,3], [1,3], [1,3]);
-        this.gold = Math.floor((Math.random() * (20 - 15 + 1) + 15) * (1 + playerLevel/5));
+    levelUp(currentCharacterLevel){
+        this.incrementStats(currentCharacterLevel, [2,6], [2,6], [0,4], [2,3], [2,3], [0,2], [0,2], [1,3], [1,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (20 - 15 + 1) + 15) * (1 + currentCharacterLevel/5));
         this.XP = 35;
     }
 }

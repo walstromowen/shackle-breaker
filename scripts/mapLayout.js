@@ -4,7 +4,7 @@ export default class MapLayout{
         this.height = 0;
         this.width = 0;
         this.tileArray = [];
-        this.generate(layoutType); //0: open-area, 1: wall, 2: player-spawn, 3: exit, 4: optional wall 
+        this.generate(layoutType); //0: open-area, 1: wall, 2: current character-spawn, 3: exit, 4: optional wall 
     }
     generate(layoutType){
         switch(layoutType){

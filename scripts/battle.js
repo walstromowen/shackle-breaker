@@ -1,37 +1,37 @@
 import {controller as theController} from "./main.js"
 
 export default class Battle{
-    constructor(player, enemy){
-        this.player = player;
+    constructor(currentCharacter, enemy){
+        this.currentCharacter = currentCharacter;
         this.enemy = enemy;
         this.battlePhase = "firstTurn";
         this.initialize();
     }
     initialize(){
-        for(let i = 0; i < this.player.statusArray.length; i++){
-            this.player.statusArray[i].onApplied();
+        for(let i = 0; i < this.currentCharacter.statusArray.length; i++){
+            this.currentCharacter.statusArray[i].onApplied();
         }
     }
     determineFirstTurn(abilityIndex, inventoryIndex){
         this.battlePhase = "firstTurn";
         if(inventoryIndex === undefined){
-            this.player.nextMove = this.player.abilityArray[abilityIndex];
+            this.currentCharacter.nextMove = this.currentCharacter.abilityArray[abilityIndex];
         }else{
-            this.player.nextMove = this.player.inventory[inventoryIndex].abilityArray[abilityIndex];
+            this.currentCharacter.nextMove = theController.partyInventory[inventoryIndex].abilityArray[abilityIndex];
         }
-        if(this.player.nextMove.canUse(this.player, this.player) == false){
+        if(this.currentCharacter.nextMove.canUse(this.currentCharacter, this.currentCharacter) == false){
             return;
         }
         this.enemy.nextMove = this.enemy.chooseAttack();
-        if(this.enemy.nextMove.canUse(this.enemy, this.player) == false){
+        if(this.enemy.nextMove.canUse(this.enemy, this.currentCharacter) == false){
             this.determineFirstTurn(abilityIndex, inventoryIndex);
             return;
         };
-        theController.disablePlayerBattleControls();
-        if(this.player.nextMove.speedMultiplier * this.player.currentSpeed >= this.enemy.currentSpeed * this.enemy.nextMove.speedMultiplier){
-            this.takeTurn(this.player, this.enemy);
+        theController.disableCharacterBattleControls();
+        if(this.currentCharacter.nextMove.speedMultiplier * this.currentCharacter.currentSpeed >= this.enemy.currentSpeed * this.enemy.nextMove.speedMultiplier){
+            this.takeTurn(this.currentCharacter, this.enemy);
         }else{
-            this.takeTurn(this.enemy, this.player);
+            this.takeTurn(this.enemy, this.currentCharacter);
         }
     }
    
@@ -45,7 +45,7 @@ export default class Battle{
         })
         .then(()=>{
             if(this.battlePhase == "secondTurn"){
-                theController.enablePlayerBattleControls();
+                theController.enableCharacterBattleControls();
             }else{
                 this.battlePhase = "secondTurn";
                 this.takeTurn(target, weilder);
@@ -80,7 +80,7 @@ export default class Battle{
         return new Promise((resolve)=>{
             setTimeout(()=>{
                 status.update(type);
-                theController.updatePlayerStats();
+                theController.updateCharacterStats();
                 theController.updateEnemyStats();
                 if(theController.battle.checkBattleStatus() == true){
                     theController.endBattle();
@@ -95,7 +95,7 @@ export default class Battle{
     activateAbility(weilder, target){
         return new Promise((resolve)=>{
             setTimeout(()=>{
-                weilder.nextMove.canUse(weilder, this.player);
+                weilder.nextMove.canUse(weilder, this.currentCharacter);
                 if(weilder.nextMove.activate(weilder, target) == "retreat"){ 
                     this.battlePhase = "retreat";
                 }
@@ -117,11 +117,11 @@ export default class Battle{
                         counter ++;
                     }
                 }
-                theController.updatePlayerStats();
+                theController.updateCharacterStats();
                 theController.updateEnemyStats();
                 if(this.checkBattleStatus() == true){//false means battle is still on
-                    for(let i = 0; i < this.player.statusArray.length; i++){
-                        this.player.statusArray[i].onRemove();
+                    for(let i = 0; i < this.currentCharacter.statusArray.length; i++){
+                        this.currentCharacter.statusArray[i].onRemove();
                     }
                     theController.endBattle();
                 }else{
@@ -131,7 +131,7 @@ export default class Battle{
          });
     }
     checkBattleStatus(){
-        if(this.player.currentHP <= 0 || this.enemy.currentHP <= 0 || this.battlePhase == "retreat"){
+        if(this.currentCharacter.currentHP <= 0 || this.enemy.currentHP <= 0 || this.battlePhase == "retreat"){
             return true;  
         } 
         return false;
@@ -141,18 +141,18 @@ export default class Battle{
         let itemList = "";
         if(loot != "" || this.enemy.gold > 0){
             if(loot != ""){
-                this.player.inventory.push(loot);
+                theController.partyInventory.push(loot);
                 itemList = itemList + `${loot.name}, `;
-                theController.updatePlayerInventoryTab(this.player.inventory);
+                theController.updatePartyInventoryTab(theController.partyInventory);
             }
             if(this.enemy.gold > 0){
                 itemList = itemList + `${this.enemy.gold} gold.`;
-                this.player.currentGold = this.player.currentGold + this.enemy.gold;
+                this.currentCharacter.currentGold = this.currentCharacter.currentGold + this.enemy.gold;
             }else{
                 itemList[itemList.length-2] = ".";
             }
             theController.printToGameConsole(`${this.enemy.name} drops: ${itemList}`);
         }
-        this.player.currentXP = this.player.currentXP + this.enemy.XP;
+        this.currentCharacter.currentXP = this.currentCharacter.currentXP + this.enemy.XP;
     }
 }

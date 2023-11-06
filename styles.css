@@ -397,16 +397,16 @@ p{
     width: 288px;
     flex-shrink: 0;
 }
-#player-name-container{
+#current-character-name-container{
     background-color: var(--color-2);
     margin-bottom: 10px;
     display:flex;
     justify-content:space-between;
 }
-#player-name, #player-level-label{
+#current-character-name, #current-character-level-label{
    margin: 0px 5px;
 }
-#player-main-stats-container{
+#current-character-main-stats-container{
     background-color: var(--color-2);
     margin: 10px 0px;
     padding: 5px;
@@ -433,13 +433,13 @@ p{
    image-rendering: crisp-edges;
  
 }
-#player-image-container{
+#current-character-image-container{
     background-color:var(--color-2);
     width: 288px;
     height: 288px;
     display: none;
 }
-#player-image{
+#current-character-image{
     width: 288px;
     height: 288px;
     object-fit: cover;
@@ -500,15 +500,15 @@ p{
     height: 288px;
     object-fit: cover; 
 }
-#health-bar-player-progress{
+#health-bar-current-character-progress{
     background-color: darkred;
     margin-left: auto;
 }
-#stamina-bar-player-progress{
+#stamina-bar-current-character-progress{
     background-color: darkgreen;
     margin-left: auto;
 }
-#magic-bar-player-progress{
+#magic-bar-current-character-progress{
     background-color: darkblue;
     margin-left: auto;
 }
@@ -538,7 +538,7 @@ p{
     display: grid;
     justify-content: center;
 }
-#player-status-icon-container, #enemy-status-icon-container{
+#current-character-status-icon-container, #enemy-status-icon-container{
     position: relative;
     bottom: 38px;
     background-color: rbga(255, 255, 255, 0.5);

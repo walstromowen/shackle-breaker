@@ -2,8 +2,8 @@ import {controller as theController} from "./main.js"
 import {Shielded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden} from "./statusEffects.js";
 
 class Ability{
-    canUse(weilder, player){
-        if(weilder === player){
+    canUse(weilder, currentCharacter){
+        if(weilder === currentCharacter){
             if(weilder.currentStamina - this.staminaCost < 0){
                 theController.printToGameConsole("Not enough stamina!");
                 return false;
@@ -12,7 +12,7 @@ class Ability{
                 theController.printToGameConsole("Not enough magic!");
                 return false;
             }
-            if(this.canUseSpecialCondition(weilder, player) == false){
+            if(this.canUseSpecialCondition(weilder, currentCharacter) == false){
                 return false;
             }
         }else{
@@ -22,12 +22,12 @@ class Ability{
             if(weilder.currentMagic - this.magicCost < 0){
                 weilder.nextMove = new Meditate;
             }
-            if(this.canUseSpecialCondition(weilder, player) == false){
+            if(this.canUseSpecialCondition(weilder, currentCharacter) == false){
                 return false;
             }
         }
     }
-    canUseSpecialCondition(weilder, player){
+    canUseSpecialCondition(weilder, currentCharacter){
         return true;
     }
     checkStamina(weilder){
@@ -739,8 +739,8 @@ export class Channel extends Ability{
             weilder.statusArray.push(new Channeled(weilder));
         }
     }
-    canUseSpecialCondition(weilder, player){
-        if(weilder === player){
+    canUseSpecialCondition(weilder, currentCharacter){
+        if(weilder === currentCharacter){
             if(weilder.statusArray.length <= 0){
                 return true;
             }
@@ -949,8 +949,8 @@ export class Cleanse extends Ability{
             return;
         } 
     }
-    canUseSpecialCondition(weilder, player){
-        if(weilder === player){
+    canUseSpecialCondition(weilder, currentCharacter){
+        if(weilder === currentCharacter){
             if(weilder.statusArray.length <= 0){
                 theController.printToGameConsole(`${weilder.name} has no status condition to cleanse.`);
                 return false;
@@ -1202,7 +1202,7 @@ export class ThrowKnife extends Ability{
         theController.playSoundEffect(this.soundEffect);
     }
     canUse(weilder){
-        if(weilder.isInBattle == false){
+        if(theController.isInBattle == false){
             theController.printToGameConsole("cannot use outside of combat.");
             return false;
         }
@@ -1238,7 +1238,7 @@ export class ThrowPoisonedKnife extends Ability{
         theController.playSoundEffect(this.soundEffect);
     }
     canUse(weilder){
-        if(weilder.isInBattle == false){
+        if(theController.isInBattle == false){
             theController.printToGameConsole("cannot use outside of combat.");
             return false;
         }
@@ -1252,12 +1252,12 @@ export class SmashMeteorite extends Ability{
     }
     activate(weilder, target){
         theController.printToGameConsole(`${weilder.name} smashes a meteorite!`);
-        theController.levelPlayerUp();
+        theController.levelCharacterUp();
         theController.playSoundEffect(this.soundEffect);
         return true;
     }
     canUse(weilder){
-        if(weilder.isInBattle == true){
+        if(theController.isInBattle == true){
             theController.printToGameConsole("cannot use in combat!");
             return false;
         }
@@ -1348,7 +1348,7 @@ export class ThrowNet extends Ability{
         target.statusArray.push(new Bound(target));
     }
     canUse(weilder){
-        if(weilder.isInBattle == false){
+        if(theController.isInBattle == false){
             theController.printToGameConsole("cannot use outside of combat.");
             return false;
         }
@@ -1380,7 +1380,7 @@ export class ThrowSmokebomb extends Ability{
         weilder.statusArray.push(status);
     }
     canUse(weilder){
-        if(weilder.isInBattle == false){
+        if(theController.isInBattle == false){
             theController.printToGameConsole("cannot use outside of combat.");
             return false;
         }

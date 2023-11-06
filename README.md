@@ -24,6 +24,7 @@ Text adventure game based on the Shackle Breaker story
 * Image Flashing
 * mini Menu appears on level up and transisiton screens
 * canvas player icon not loading on start up.
+* Enemy Status Icons still appear on next enemies ocasionally
 
 
 # MISC notes

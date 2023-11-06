@@ -94,83 +94,83 @@ export default class MapEnviorment{
                 break;
         }
     }
-    generateEnemy(playerLevel, isBoss){
+    generateEnemy(currentCharacterLevel, isBoss){
         switch(this.biome){ 
             case "cave": 
                 switch(Math.floor(Math.random()*3)){ 
                     case 0:
-                        return new CaveSpider(playerLevel);
+                        return new CaveSpider(currentCharacterLevel);
                     case 1:
-                        return new Bat(playerLevel);
+                        return new Bat(currentCharacterLevel);
                     case 2:
-                        return new Skeleton(playerLevel);
+                        return new Skeleton(currentCharacterLevel);
                     default:
                         return;
                 }
             case "forest":
                 switch(Math.floor(Math.random()*4)){ 
                     case 0:
-                        return new Bat(playerLevel);
+                        return new Bat(currentCharacterLevel);
                     case 1:
-                        return new Wolf(playerLevel);
+                        return new Wolf(currentCharacterLevel);
                     case 2:
-                        return new Groveguardian(playerLevel);
+                        return new Groveguardian(currentCharacterLevel);
                     case 3:
-                        return new Bandit(playerLevel);
+                        return new Bandit(currentCharacterLevel);
                     default:
                         return;
                 }
             case "plains":
                 switch(Math.floor(Math.random()*4)){ 
                     case 0:
-                        return new Skeleton(playerLevel);
+                        return new Skeleton(currentCharacterLevel);
                     case 1:
-                        return new Wolf(playerLevel);
+                        return new Wolf(currentCharacterLevel);
                     case 2:
-                        return new AltusMage(playerLevel);
+                        return new AltusMage(currentCharacterLevel);
                     case 3:
-                        return new Bandit(playerLevel);
+                        return new Bandit(currentCharacterLevel);
                     default:
                         return;
                 }
             case "mountain":
                 switch(Math.floor(Math.random()*3)){ 
                     case 0:
-                        return new Skeleton(playerLevel);
+                        return new Skeleton(currentCharacterLevel);
                     case 1:
-                        return new Wolf(playerLevel);
+                        return new Wolf(currentCharacterLevel);
                     case 2:
-                        return new AltusMage(playerLevel);
+                        return new AltusMage(currentCharacterLevel);
                     default:
                         return;
                 }
             case "twilight realm":
                 switch(Math.floor(Math.random()*2)){ 
                     case 0:
-                        return new ShadowStrider(playerLevel);
+                        return new ShadowStrider(currentCharacterLevel);
                     case 1:
-                        return new TerrorBear(playerLevel);
+                        return new TerrorBear(currentCharacterLevel);
                     default:
                         return;
                 }
             case "ancient altus ruins":
                 switch(Math.floor(Math.random()*2)){ 
                     case 0:
-                        return new Skeleton(playerLevel);
+                        return new Skeleton(currentCharacterLevel);
                     case 1:
-                        return new Bat(playerLevel);
+                        return new Bat(currentCharacterLevel);
                     default:
                         return;
                 }
             case "altas castle":
                 if(isBoss == true){
-                    return new EmperorDolos(playerLevel);
+                    return new EmperorDolos(currentCharacterLevel);
                 }
                 switch(Math.floor(Math.random()*2)){ 
                     case 0:
-                        return new AltusMage(playerLevel);
+                        return new AltusMage(currentCharacterLevel);
                     case 1:
-                        return new Bat(playerLevel);
+                        return new Bat(currentCharacterLevel);
                     default:
                         return;
                 }
