@@ -32,17 +32,20 @@ export function toggleBattle(message, enemyArray){
     theController.nextRoom.enemyArray = enemyArray;
 }
 export function loot(message, itemArray, goldMin, goldMax){
-    let itemList = "\n";
-    for(let i = 0; i < itemArray.length; i++){
-        theController.partyInventory.push(itemArray[i]);
-        itemList = itemList + itemArray[i].name + "\n";
-    }
     let goldAmount = Math.floor(Math.random() * (goldMax - goldMin) + goldMin);
-    if(goldAmount > 0){
-        theController.currentCharacter.currentGold += goldAmount;
-        itemList = itemList + `${goldAmount} gold.`;
+    if(itemArray.length != 0 || goldAmount > 0){
+        theController.printToGameConsole(message);
+        if(itemArray.length != 0){
+            for(let i = 0; i < itemArray.length; i++){
+                theController.partyInventory.push(itemArray[i]);
+                theController.printToGameConsole(`${itemArray[i].name}.`);
+            }
+        }
+        if(goldAmount > 0){
+            theController.partyGold = theController.partyGold + goldAmount;
+            theController.printToGameConsole(`${goldAmount} gold.`);
+        }
     }
-    theController.printToGameConsole(message + ` ${theController.currentCharacter.name} finds the following items: ${itemList}`);
     theController.updatePartyInventoryTab(theController.partyInventory);
     theController.endEncounter();
 }

@@ -92,7 +92,7 @@ export class UnlockedTreasureChest extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.currentCharacter.name} opens the chest.`)},
                 "likely",
                 [
-                    ()=>{loot("", [getRandomItem()], 100, 10)}
+                    ()=>{loot(`${theController.currentCharacter.name} finds the following items`, [getRandomItem()], 100, 10)}
                 ],
                 [
                     ()=>{takeDamage(`as ${theController.currentCharacter.name} opens the chest, an arrow flies up from the chest and hits ${theController.currentCharacter.name}!`, 0.15, 0.25)},
@@ -126,7 +126,7 @@ export class AltusAmbushOpportunity extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.currentCharacter.name} sneaks up to the official and draws a knife.`)},
                 "dexterity",
                 [
-                    ()=>{loot(`${theController.currentCharacter.name} eliminates the offical without a sound. After searching the offical,`, [getRandomItem()], 40, 10)}
+                    ()=>{loot(`${theController.currentCharacter.name} eliminates the offical without a sound. After searching the offical, ${theController.currentCharacter.name} finds:`, [getRandomItem()], 40, 10)}
                 ],
                 [
                     ()=>{toggleBattle(`the altus official spots ${theController.currentCharacter.name} and draws his weapon!`, [new AltusMage(theController.calculateAveragePartyLevel())])}
@@ -251,7 +251,7 @@ export class SuspiciousSkeleton extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.currentCharacter.name} attempts to talk to the skeleton.`)},
                 "unlikely",
                 [
-                    ()=>{loot(`${theController.currentCharacter.name} and the skeleton have a pleasant discussion about the good old days. Then the skeleton gives ${theController.currentCharacter.name} a parting gift,`, [getRandomItem()], 0, 0)},
+                    ()=>{loot(`${theController.currentCharacter.name} and the skeleton have a pleasant discussion about the good old days. Then the skeleton gives ${theController.currentCharacter.name}:`, [getRandomItem()], 0, 0)},
                     ()=>{leave(`${theController.currentCharacter.name} politely asks the skeleton for directions. The skeleton stares back in disbelief and then nods to the hallway ahead. ${theController.currentCharacter.name} thanks the skeleton and proceeds.`)}
                 ],
                 [
@@ -320,7 +320,7 @@ export class AbandonedCabin extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.currentCharacter.name} searches the cabin for anything useful.`)},
                 "neutral",
                 [
-                    ()=>{loot(`${theController.currentCharacter.name} rumages through some cabinets.`, [getRandomItem()], 50, 10)},
+                    ()=>{loot(`${theController.currentCharacter.name} finds:.`, [getRandomItem()], 50, 10)},
                 ],
                 [
                     ()=>{toggleBattle(`somethings lunges towards ${theController.currentCharacter.name}!`, theController.map.mapEnviorment.generateEnemies(theController.calculateAveragePartyLevel(), false, Math.ceil(Math.random()*3)))}
@@ -406,7 +406,7 @@ export class Robbery extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.currentCharacter.name} joins the bandit in robbing the traveler.`)},
                 "neutral",
                 [
-                    ()=>{loot(`${theController.currentCharacter.name} assists the thug in looting the traveler. After splitting the reward, ${theController.currentCharacter.name} walks away with a share of the loot.`, [getRandomItem()], 20, 5)},
+                    ()=>{loot(`${theController.currentCharacter.name} and the thug rob the traveler of:`, [getRandomItem()], 20, 5)},
                 ],
                 [
                     ()=>{toggleBattle(`${theController.currentCharacter.name} joins the thug in robbing the traveler. Not long after, the thug turns on ${theController.currentCharacter.name}!`, [new Bandit(theController.calculateAveragePartyLevel())])}
@@ -470,7 +470,7 @@ export class AssistVictim extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.currentCharacter.name} accepts the traveler's reward`)},
                 "certain",
                 [
-                    ()=>{loot(`${theController.currentCharacter.name} says farewll and moves on.`, [getRandomItem()], 50, 10)},
+                    ()=>{loot(`${theController.currentCharacter.name} is rewarded with.`, [getRandomItem()], 50, 10)},
                 ],
                 [
 

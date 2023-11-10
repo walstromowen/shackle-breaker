@@ -250,11 +250,12 @@ export default class Battle{
             if(this.loot.length != 0){
                 for(let i = 0; i < this.loot.length; i++){
                     theController.partyInventory.push(this.loot[i]);
-                    theController.printToGameConsole(`${this.loot[i].name}`);
+                    theController.printToGameConsole(`${this.loot[i].name}.`);
                 }
             }
             if(this.gold > 0){
                 theController.partyGold = theController.partyGold + this.gold;
+                theController.printToGameConsole(`${this.gold} gold.`);
             }
         }
         theController.updatePartyInventoryTab(theController.partyInventory);
