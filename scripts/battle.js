@@ -254,7 +254,7 @@ export default class Battle{
                 }
             }
             if(this.gold > 0){
-                this.friendlyParty[0].currentGold = this.friendlyParty[0].currentGold + this.gold;
+                theController.partyGold = theController.partyGold + this.gold;
             }
         }
         theController.updatePartyInventoryTab(theController.partyInventory);
