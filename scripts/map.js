@@ -32,7 +32,7 @@ export default class Map{
                     if(randomNumber <= 2){
                         this.roomArray[i].enemyArray = this.mapEnviorment.generateEnemies(averagePartyLevel, false, Math.ceil(Math.random()*3));
                     }
-                    if(randomNumber >= 3 || randomNumber <= 5){
+                    if(randomNumber >= 3 && randomNumber <= 5){
                         this.roomArray[i].encounter = this.mapEnviorment.generateEncounter();
                     }
                     break;
