@@ -94,89 +94,109 @@ export default class MapEnviorment{
                 break;
         }
     }
-    generateEnemy(currentCharacterLevel, isBoss){
-        switch(this.biome){ 
-            case "cave": 
-                switch(Math.floor(Math.random()*3)){ 
-                    case 0:
-                        return new CaveSpider(currentCharacterLevel);
-                    case 1:
-                        return new Bat(currentCharacterLevel);
-                    case 2:
-                        return new Skeleton(currentCharacterLevel);
-                    default:
-                        return;
-                }
-            case "forest":
-                switch(Math.floor(Math.random()*4)){ 
-                    case 0:
-                        return new Bat(currentCharacterLevel);
-                    case 1:
-                        return new Wolf(currentCharacterLevel);
-                    case 2:
-                        return new Groveguardian(currentCharacterLevel);
-                    case 3:
-                        return new Bandit(currentCharacterLevel);
-                    default:
-                        return;
-                }
-            case "plains":
-                switch(Math.floor(Math.random()*4)){ 
-                    case 0:
-                        return new Skeleton(currentCharacterLevel);
-                    case 1:
-                        return new Wolf(currentCharacterLevel);
-                    case 2:
-                        return new AltusMage(currentCharacterLevel);
-                    case 3:
-                        return new Bandit(currentCharacterLevel);
-                    default:
-                        return;
-                }
-            case "mountain":
-                switch(Math.floor(Math.random()*3)){ 
-                    case 0:
-                        return new Skeleton(currentCharacterLevel);
-                    case 1:
-                        return new Wolf(currentCharacterLevel);
-                    case 2:
-                        return new AltusMage(currentCharacterLevel);
-                    default:
-                        return;
-                }
-            case "twilight realm":
-                switch(Math.floor(Math.random()*2)){ 
-                    case 0:
-                        return new ShadowStrider(currentCharacterLevel);
-                    case 1:
-                        return new TerrorBear(currentCharacterLevel);
-                    default:
-                        return;
-                }
-            case "ancient altus ruins":
-                switch(Math.floor(Math.random()*2)){ 
-                    case 0:
-                        return new Skeleton(currentCharacterLevel);
-                    case 1:
-                        return new Bat(currentCharacterLevel);
-                    default:
-                        return;
-                }
-            case "altas castle":
-                if(isBoss == true){
-                    return new EmperorDolos(currentCharacterLevel);
-                }
-                switch(Math.floor(Math.random()*2)){ 
-                    case 0:
-                        return new AltusMage(currentCharacterLevel);
-                    case 1:
-                        return new Bat(currentCharacterLevel);
-                    default:
-                        return;
-                }
-            default:
-                break;
+    generateEnemies(currentCharacterLevel, isBoss, count){
+        let enemyArray = [];
+        for(let i = 0; i < count; i ++){
+            switch(this.biome){ 
+                case "cave": 
+                    switch(Math.floor(Math.random()*3)){ 
+                        case 0:
+                            enemyArray.push(new CaveSpider(currentCharacterLevel));
+                            break;
+                        case 1:
+                            enemyArray.push(new Bat(currentCharacterLevel));
+                            break;
+                        case 2:
+                            enemyArray.push(new Skeleton(currentCharacterLevel));
+                            break;
+                    }
+                    break;
+                case "forest":
+                    switch(Math.floor(Math.random()*4)){ 
+                        case 0:
+                            enemyArray.push(new Bat(currentCharacterLevel));
+                            break;
+                        case 1:
+                            enemyArray.push(new Wolf(currentCharacterLevel));
+                            break;
+                        case 2:
+                            enemyArray.push(new Groveguardian(currentCharacterLevel));
+                            break;
+                        case 3:
+                            enemyArray.push(new Bandit(currentCharacterLevel));
+                            break;
+                    }
+                    break;
+                case "plains":
+                    switch(Math.floor(Math.random()*4)){ 
+                        case 0:
+                            enemyArray.push(new Skeleton(currentCharacterLevel));
+                            break;
+                        case 1:
+                            enemyArray.push(new Wolf(currentCharacterLevel));
+                            break;
+                        case 2:
+                            enemyArray.push(new AltusMage(currentCharacterLevel));
+                            break;
+                        case 3:
+                            enemyArray.push(new Bandit(currentCharacterLevel));
+                            break;
+                    }
+                    break;
+                case "mountain":
+                    switch(Math.floor(Math.random()*3)){ 
+                        case 0:
+                            enemyArray.push(new Skeleton(currentCharacterLevel));
+                            break;
+                        case 1:
+                            enemyArray.push(new Wolf(currentCharacterLevel));
+                            break;
+                        case 2:
+                            enemyArray.push(new AltusMage(currentCharacterLevel));
+                            break;
+                    }
+                    break;
+                case "twilight realm":
+                    switch(Math.floor(Math.random()*2)){ 
+                        case 0:
+                            enemyArray.push(new ShadowStrider(currentCharacterLevel));
+                            break;
+                        case 1:
+                            enemyArray.push(new TerrorBear(currentCharacterLevel));
+                            break;
+                        default:
+                            return;
+                    }
+                    break;
+                case "ancient altus ruins":
+                    switch(Math.floor(Math.random()*2)){ 
+                        case 0:
+                            enemyArray.push(new Skeleton(currentCharacterLevel));
+                            break;
+                        case 1:
+                            enemyArray.push(new Bat(currentCharacterLevel));
+                            break;
+                        default:
+                            return;
+                    }
+                    break;
+                case "altas castle":
+                    if(isBoss == true){
+                        enemyArray.push(new EmperorDolos(currentCharacterLevel));
+                        break;
+                    }
+                    switch(Math.floor(Math.random()*2)){ 
+                        case 0:
+                            enemyArray.push(new AltusMage(currentCharacterLevel));
+                            break;
+                        case 1:
+                            enemyArray.push(new Bat(currentCharacterLevel));
+                            break;
+                    }
+                    break;
+            }
         }
+        return enemyArray;
     }
     generateEncounter(){
         switch(this.biome){ 

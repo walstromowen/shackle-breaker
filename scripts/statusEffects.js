@@ -262,7 +262,7 @@ export class Hidden extends StatusEffect{
         this.currentCharges = this.currentCharges - 1;
     }
     onRemove(){
-        if(this.holder === theController.current-character){
+        if(this.holder === theController.currentCharacter){
             theController.toggleElementClass("current-character-image", "black-and-white");
         }else{
             theController.toggleElementClass("enemy-image", "black-and-white");
@@ -270,7 +270,7 @@ export class Hidden extends StatusEffect{
         this.holder.currentEvasion = this.holder.currentEvasion - 100;
     }
     onApplied(){
-        if(this.holder === theController.current-character){
+        if(this.holder === theController.currentCharacter){
             theController.toggleElementClass("current-character-image", "black-and-white");
         }else{
             theController.toggleElementClass("enemy-image", "black-and-white");

@@ -229,7 +229,7 @@ p{
 .action-button-disabled{
     filter: brightness(0.85);
 }
-.action-button:hover, .tab-label:hover, .unequip-btn:hover, .mini-menu-btn:hover, .mini-menu-close-btn:hover, #character-creation-submit-btn:hover{
+.action-button:hover, .tab-label:hover, .unequip-btn:hover, .mini-menu-btn:hover, .mini-menu-close-btn:hover, #character-creation-submit-btn:hover, .party-direction-btn:hover{
     border: 2px solid var(--color-4);
     cursor: pointer;
 }
@@ -249,7 +249,7 @@ p{
     overflow-y: auto;
     height: 100%;
     background-color: var(--color-2);
-    padding: 0px 5px;
+    padding: 5px;
 }
 .vital-bar-container{
     display:flex;
@@ -366,7 +366,7 @@ p{
     border:solid 2px var(--color-2);
     text-align: center;
 }
-.mini-menu-close-btn{
+.mini-menu-close-btn, .party-direction-btn{
     width: 20px;
     height: 20px;
     border-radius: 10px;
@@ -378,6 +378,9 @@ p{
     width: 80px;
     height: 80px;
     margin-right: 5px;
+}
+.party-take-control-btn{
+    width: 60px;
 }
 #app{
     display: none;
@@ -524,7 +527,7 @@ p{
     background-color: darkblue;
     margin-left: auto;
 }
-#equipped-tab, #secondary-stats-tab, #merchant-inventory-sell-tab{
+#equipped-tab, #secondary-stats-tab, #merchant-inventory-sell-tab, #party-tab{
     display: none;
 }
 #battle-button-container, #map-button-container, #encounter-button-container{

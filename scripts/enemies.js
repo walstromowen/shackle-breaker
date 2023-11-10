@@ -24,10 +24,10 @@ class Enemy{
             return "";
         }
     }
-    incrementStats(currentCharacterLevel, maxHPRange, maxStaminaRange, maxMagicRange, 
+    incrementStats(averagePartyLevel, maxHPRange, maxStaminaRange, maxMagicRange, 
         baseBluntAttackRange, basePierceAttackRange, baseArcaneAttackRange, baseElementalAttackRange, 
         baseBluntDefenseRange, basePierceDefenseRange, baseArcaneDefenseRange, baseElementalDefenseRange){
-        for(let i = 0; i < (currentCharacterLevel - this.level); i++){
+        for(let i = 0; i < (averagePartyLevel - this.level); i++){
             let value = Math.floor(Math.random()*(maxHPRange[1] - maxHPRange[0] + 1) + maxHPRange[0]);
             this.maxHP = this.maxHP + value; 
             this.currentHP = this.currentHP + value;
@@ -62,11 +62,11 @@ class Enemy{
             this.baseElementalDefense = this.baseElementalDefense + value; 
             this.currentElementalDefense = this.currentElementalDefense + value;
         }
-        this.level = currentCharacterLevel;
+        this.level = averagePartyLevel;
     }
 }
 export class Skeleton extends Enemy{
-    constructor(currentCharacterLevel){
+    constructor(averagePartyLevel){
         super();
         this.name = "skeleton";
         this.imageSrc = "media/skeleton.jpg"
@@ -105,18 +105,18 @@ export class Skeleton extends Enemy{
                           new IronChainmail, new IronGreaves, new IronBoots, 
                           new HealthPotion, new StaminaPotion, new ThrowingKnife, new SmokeBomb];
         this.gold = 0;
-        this.XP = 0;
+        this.xp = 0;
         this.isBoss = false;             
-        this.levelUp(currentCharacterLevel);
+        this.levelUp(averagePartyLevel);
     }
-    levelUp(currentCharacterLevel){
-        this.incrementStats(currentCharacterLevel, [2,6], [2,6], [0,4], [2,3], [2,3], [0,2], [0,2], [1,2], [2,3], [1,3], [1,3]);
-        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + currentCharacterLevel/2));
-        this.XP = 35;
+    levelUp(averagePartyLevel){
+        this.incrementStats(averagePartyLevel, [2,6], [2,6], [0,4], [2,3], [2,3], [0,2], [0,2], [1,2], [2,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/2));
+        this.xp = 35;
     }
 }
 export class Bat extends Enemy{
-    constructor(currentCharacterLevel){
+    constructor(averagePartyLevel){
         super();
         this.name = "bat";
         this.imageSrc = "media/bat.jpg"
@@ -150,18 +150,18 @@ export class Bat extends Enemy{
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new HealthPotion, new Antidote];
         this.gold = 0;
-        this.XP = 0;
+        this.xp = 0;
         this.isBoss = false;
-        this.levelUp(currentCharacterLevel);
+        this.levelUp(averagePartyLevel);
     }
-    levelUp(currentCharacterLevel){
-        this.incrementStats(currentCharacterLevel, [2,4], [2,6], [0,4], [1,3], [2,3], [1,2], [1,2], [1,3], [1,3], [1,3], [1,3]);
-        this.gold = Math.floor((Math.random() * (10 - 5 + 1) + 5) * (1 + currentCharacterLevel/5));
-        this.XP = 20;
+    levelUp(averagePartyLevel){
+        this.incrementStats(averagePartyLevel, [2,4], [2,6], [0,4], [1,3], [2,3], [1,2], [1,2], [1,3], [1,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (10 - 5 + 1) + 5) * (1 + averagePartyLevel/5));
+        this.xp = 20;
     }
 }
 export class Wolf extends Enemy{
-    constructor(currentCharacterLevel){
+    constructor(averagePartyLevel){
         super();
         this.name = "wolf";
         this.imageSrc = "media/wolf.jpg"
@@ -195,18 +195,18 @@ export class Wolf extends Enemy{
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new Hide];
         this.gold = 0;
-        this.XP = 0;
+        this.xp = 0;
         this.isBoss = false;
-        this.levelUp(currentCharacterLevel);
+        this.levelUp(averagePartyLevel);
     }
-    levelUp(currentCharacterLevel){
-        this.incrementStats(currentCharacterLevel, [2,6], [4,6], [0,4], [1,3], [2,3], [0,2], [0,2], [1,3], [1,3], [1,3], [1,3]);
-        this.gold = Math.floor((Math.random() * (10 - 5 + 1) + 5) * (1 + currentCharacterLevel/2));
-        this.XP = 30;
+    levelUp(averagePartyLevel){
+        this.incrementStats(averagePartyLevel, [2,6], [4,6], [0,4], [1,3], [2,3], [0,2], [0,2], [1,3], [1,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (10 - 5 + 1) + 5) * (1 + averagePartyLevel/2));
+        this.xp = 30;
     }
 }
 export class AltusMage extends Enemy{
-    constructor(currentCharacterLevel){
+    constructor(averagePartyLevel){
         super();
         this.name = "altus mage";
         this.imageSrc = "media/altus-mage.jpg"
@@ -240,18 +240,18 @@ export class AltusMage extends Enemy{
         this.lootChanceMultiplier = 1; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new FireStaff, new LightningStaff, new IceStaff, new ArcaneStaff, new LightStaff, new DarkStaff, new CrystalBall, new MagicPotion, new ClothHood, new ClothRobe];
         this.gold = 0;
-        this.XP = 0;
+        this.xp = 0;
         this.isBoss = false;
-        this.levelUp(currentCharacterLevel);
+        this.levelUp(averagePartyLevel);
     }
-    levelUp(currentCharacterLevel){
-        this.incrementStats(currentCharacterLevel, [2,6], [0,2], [2,6], [1,3], [0,1], [2,3], [2,3], [1,3], [1,3], [1,3], [1,3]);
-        this.gold = Math.floor((Math.random() * (20 - 5 + 1) + 5) * (1 + currentCharacterLevel/5));
-        this.XP = 50;
+    levelUp(averagePartyLevel){
+        this.incrementStats(averagePartyLevel, [2,6], [0,2], [2,6], [1,3], [0,1], [2,3], [2,3], [1,3], [1,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (20 - 5 + 1) + 5) * (1 + averagePartyLevel/5));
+        this.xp = 50;
     }
 }
 export class CaveSpider extends Enemy{
-    constructor(currentCharacterLevel){
+    constructor(averagePartyLevel){
         super();
         this.name = "cave spider";
         this.imageSrc = "media/cave-spider.jpg"
@@ -285,18 +285,18 @@ export class CaveSpider extends Enemy{
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new StaminaPotion, new PoisonedKnife, new Antidote];
         this.gold = 0;
-        this.XP = 0;
+        this.xp = 0;
         this.isBoss = false;
-        this.levelUp(currentCharacterLevel);
+        this.levelUp(averagePartyLevel);
     }
-    levelUp(currentCharacterLevel){
-        this.incrementStats(currentCharacterLevel, [2,4], [2,6], [0,4], [1,3], [2,3], [1,2], [1,2], [1,3], [1,3], [1,3], [1,3]);
-        this.gold = Math.floor((Math.random() * (10 - 5 + 1) + 5) * (1 + currentCharacterLevel/5));
-        this.XP = 20;
+    levelUp(averagePartyLevel){
+        this.incrementStats(averagePartyLevel, [2,4], [2,6], [0,4], [1,3], [2,3], [1,2], [1,2], [1,3], [1,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (10 - 5 + 1) + 5) * (1 + averagePartyLevel/5));
+        this.xp = 20;
     }
 }
 export class Groveguardian extends Enemy{
-    constructor(currentCharacterLevel){
+    constructor(averagePartyLevel){
         super();
         this.name = "grove guardian";
         this.imageSrc = "media/grove-guardian.jpg"
@@ -330,18 +330,18 @@ export class Groveguardian extends Enemy{
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new HealthPotion, new AloeRemedy, new Antidote];
         this.gold = 0;
-        this.XP = 0;
+        this.xp = 0;
         this.isBoss = false;
-        this.levelUp(currentCharacterLevel);
+        this.levelUp(averagePartyLevel);
     }
-    levelUp(currentCharacterLevel){
-        this.incrementStats(currentCharacterLevel, [4,8], [2,4], [0,2], [2,3], [2,3], [0,1], [1,2], [2,3], [1,2], [1,2], [1,3]);
-        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + currentCharacterLevel/5));
-        this.XP = 50;
+    levelUp(averagePartyLevel){
+        this.incrementStats(averagePartyLevel, [4,8], [2,4], [0,2], [2,3], [2,3], [0,1], [1,2], [2,3], [1,2], [1,2], [1,3]);
+        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/5));
+        this.xp = 50;
     }
 }
 export class EmperorDolos extends Enemy{
-    constructor(currentCharacterLevel){
+    constructor(averagePartyLevel){
         super();
         this.name = "emperor dolos";
         this.imageSrc = "media/emperor-dolos.jpg"
@@ -375,18 +375,18 @@ export class EmperorDolos extends Enemy{
         this.lootChanceMultiplier = 0; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [];
         this.gold = 0;
-        this.XP = 0;
+        this.xp = 0;
         this.isBoss = true;
-        this.levelUp(currentCharacterLevel);
+        this.levelUp(averagePartyLevel);
     }
-    levelUp(currentCharacterLevel){
-        this.incrementStats(currentCharacterLevel, [8,16], [2,6], [1,3], [2,4], [2,4], [2,4], [2,4], [1,3], [1,3], [1,3], [1,3]);
+    levelUp(averagePartyLevel){
+        this.incrementStats(averagePartyLevel, [8,16], [2,6], [1,3], [2,4], [2,4], [2,4], [2,4], [1,3], [1,3], [1,3], [1,3]);
         this.gold = 500;
-        this.XP = 100;
+        this.xp = 100;
     }
 }
 export class TerrorBear extends Enemy{
-    constructor(currentCharacterLevel){
+    constructor(averagePartyLevel){
         super();
         this.name = "terror bear";
         this.imageSrc = "media/terror-bear.jpg"
@@ -421,18 +421,18 @@ export class TerrorBear extends Enemy{
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new HealthPotion, new LightningStaff, new Meteorite];
         this.gold = 0;
-        this.XP = 0;
+        this.xp = 0;
         this.isBoss = false;
-        this.levelUp(currentCharacterLevel);
+        this.levelUp(averagePartyLevel);
     }
-    levelUp(currentCharacterLevel){
-        this.incrementStats(currentCharacterLevel, [4,8], [2,4], [0,2], [2,3], [2,3], [0,1], [1,2], [2,3], [1,2], [1,2], [1,3]);
-        this.gold = Math.floor((Math.random() * (15 - 10 + 1) + 10) * (1 + currentCharacterLevel/5));
-        this.XP = 75;
+    levelUp(averagePartyLevel){
+        this.incrementStats(averagePartyLevel, [4,8], [2,4], [0,2], [2,3], [2,3], [0,1], [1,2], [2,3], [1,2], [1,2], [1,3]);
+        this.gold = Math.floor((Math.random() * (15 - 10 + 1) + 10) * (1 + averagePartyLevel/5));
+        this.xp = 75;
     }
 }
 export class ShadowStrider extends Enemy{
-    constructor(currentCharacterLevel){
+    constructor(averagePartyLevel){
         super();
         this.name = "shadow strider";
         this.imageSrc = "media/shadow-strider.jpg"
@@ -467,18 +467,18 @@ export class ShadowStrider extends Enemy{
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new StaminaPotion, new Meteorite];
         this.gold = 0;
-        this.XP = 0;
+        this.xp = 0;
         this.isBoss = false;
-        this.levelUp(currentCharacterLevel);
+        this.levelUp(averagePartyLevel);
     }
-    levelUp(currentCharacterLevel){
-        this.incrementStats(currentCharacterLevel, [2,6], [2,6], [2,6], [1,3], [2,4], [2,4], [2,4], [1,3], [1,3], [2,4], [1,3]);
-        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + currentCharacterLevel/5));
-        this.XP = 40;
+    levelUp(averagePartyLevel){
+        this.incrementStats(averagePartyLevel, [2,6], [2,6], [2,6], [1,3], [2,4], [2,4], [2,4], [1,3], [1,3], [2,4], [1,3]);
+        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/5));
+        this.xp = 40;
     }
 }
 export class Bandit extends Enemy{
-    constructor(currentCharacterLevel){
+    constructor(averagePartyLevel){
         super();
         this.name = "bandit";
         this.imageSrc = "media/bandit.jpg"
@@ -514,13 +514,13 @@ export class Bandit extends Enemy{
                           new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
                           new LeatherBoots, new HealthPotion, new StaminaPotion, new ThrowingKnife, new SmokeBomb];
         this.gold = 0;
-        this.XP = 0;
+        this.xp = 0;
         this.isBoss = false;             
-        this.levelUp(currentCharacterLevel);
+        this.levelUp(averagePartyLevel);
     }
-    levelUp(currentCharacterLevel){
-        this.incrementStats(currentCharacterLevel, [2,6], [2,6], [0,4], [2,3], [2,3], [0,2], [0,2], [1,3], [1,3], [1,3], [1,3]);
-        this.gold = Math.floor((Math.random() * (20 - 15 + 1) + 15) * (1 + currentCharacterLevel/5));
-        this.XP = 35;
+    levelUp(averagePartyLevel){
+        this.incrementStats(averagePartyLevel, [2,6], [2,6], [0,4], [2,3], [2,3], [0,2], [0,2], [1,3], [1,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (20 - 15 + 1) + 15) * (1 + averagePartyLevel/5));
+        this.xp = 35;
     }
 }

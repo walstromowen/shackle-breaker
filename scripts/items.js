@@ -244,7 +244,7 @@ export class Handaxe {
         this.name = "handaxe";
         this.type = "one hand";
         this.imageSrc = "./media/icons/handaxe.png";
-        this.description = `A battered handaxe. After the fall of Altus kingdom, many common tools were repurposed as weapons much like this well worn axe. "An axe is a simple lever. The harder you pull the lever the quicker your work becomes." - Commander Mentoras.`;
+        this.description = `A battered handaxe. After the fall of Altus kingdom, many common tools were repurposed as weapons much like this well worn axe. "An axe is a simple lever. The harder you pull the lever, the quicker your work becomes." - Commander Mentoras.`;
         this.level = 1; 
         this.price = 200;
         this.bluntAttack = 3;
@@ -321,7 +321,7 @@ export class WarHammer {
         this.name = "warhammer";
         this.type = "two hand";
         this.imageSrc = "./media/icons/warhammer.png";
-        this.description = `A standard longsword. Standard issue longsword of the Altus guard. "A longsword for you too huh? Well, can't say I blame you" - Commander Mentoras.`;
+        this.description = `A heavy warhammer. This warhammer appears to have once belonged to a captain of the altus guard. "It's not elegant, but sometimes we require non-elegant solutions" - Commander Mentoras.`;
         this.level = 1;
         this.price = 400;
         this.bluntAttack = 6;
@@ -876,7 +876,7 @@ export class KiteShield {
         this.name = "kite shield";
         this.type = "one hand";
         this.imageSrc = "./media/icons/shield.png";
-        this.description = `a kite shield with engraved with the Altus Sigil. "the best defense is a good ofense. So if you find yourself in a corner, bash em with your shield." - Commander Mentoras.`;
+        this.description = `a kite shield with engraved with the Altus Sigil. "The best defense is a good offense. So if you find yourself in a corner, bash em with your shield." - Commander Mentoras.`;
         this.level = 1;
         this.price = 200;
         this.bluntAttack = 0;
@@ -1172,7 +1172,7 @@ export class CrystalBall {
         this.name = "crystal ball";
         this.type = "one hand";
         this.imageSrc = "./media/icons/magic-ball.png";
-        this.description = `a magical crystal ball. While some see magic as pure power, others see it as a science. Still, the fundental law of magic is that energy must come from somewhere.`;
+        this.description = `a magical crystal ball. While some see magic as pure power, others see it as a science. Still, the fundental law of magic is that all energy must come from somewhere.`;
         this.level = 1;
         this.price = 200;
         this.bluntAttack = 0;

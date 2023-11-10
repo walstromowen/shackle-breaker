@@ -1,12 +1,14 @@
 export class Decision{
-    constructor(name, message, decisionAttribute, rewardArray, consequenceArray){
+    constructor(name, messageFunction, decisionAttribute, rewardArray, consequenceArray){
         this.name = name;
-        this.message = message;
+        this.messageFunction = messageFunction;
         this.decisionAttribute = decisionAttribute;
         this.rewardArray = rewardArray;
         this.consequenceArray = consequenceArray;
+        this.message = "";
     }
     activate(currentCharacter){
+        this.messageFunction();
         if(this.checkSuccess(currentCharacter, this.decisionAttribute) == true){ 
             setTimeout(()=>{
                 this.rewardArray[Math.floor(Math.random()*this.rewardArray.length)]();

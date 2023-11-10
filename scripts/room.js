@@ -7,7 +7,7 @@ export default class Room{
         this.roomEast = "";
         this.roomWest = "";
         this.status = "notVisited";
-        this.enemy = "";
+        this.enemyArray = [];
         this.encounter = "";
         this.isExit = false;
         this.frameXCoordinate = 0;//for different image versions of same room type

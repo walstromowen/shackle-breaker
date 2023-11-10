@@ -25,16 +25,16 @@ export function toggleNewEncounter(message, nextEncounter){
        theController.disableCharacterEncounterControls();
        theController.toggleEncounter(nextEncounter);
 }
-export function toggleBattle(message, enemy){
+export function toggleBattle(message, enemyArray){
     theController.printToGameConsole(message);
     theController.endEncounter(true);
-    theController.toggleBattle(enemy);
-    theController.nextRoom.enemy = enemy;
+    theController.toggleBattle(enemyArray);
+    theController.nextRoom.enemyArray = enemyArray;
 }
 export function loot(message, itemArray, goldMin, goldMax){
     let itemList = "\n";
     for(let i = 0; i < itemArray.length; i++){
-        theController.currentCharacter.inventory.push(itemArray[i]);
+        theController.partyInventory.push(itemArray[i]);
         itemList = itemList + itemArray[i].name + "\n";
     }
     let goldAmount = Math.floor(Math.random() * (goldMax - goldMin) + goldMin);
@@ -42,8 +42,8 @@ export function loot(message, itemArray, goldMin, goldMax){
         theController.currentCharacter.currentGold += goldAmount;
         itemList = itemList + `${goldAmount} gold.`;
     }
-    theController.printToGameConsole(message + `${theController.currentCharacter.name} finds the following items: ${itemList}`);
-    theController.updatePartyInventoryTab(theController.currentCharacter.inventory);
+    theController.printToGameConsole(message + ` ${theController.currentCharacter.name} finds the following items: ${itemList}`);
+    theController.updatePartyInventoryTab(theController.partyInventory);
     theController.endEncounter();
 }
 export function takeDamage(message, minPercentage, maxPercentage){
@@ -90,6 +90,12 @@ export function initiateTrade(message, inventoryArray){
         document.getElementById("merchant-inventory-container").style.display = "block";
         theController.enableCharacterEncounterControls();
     }, 2000);
+}
+export function recruit(message, newCompanion){
+    theController.printToGameConsole(message);
+    theController.party.push(newCompanion);
+    theController.updateParty();
+    theController.endEncounter();
 }
 function checkDamage(damageOutput, target){
     if(damageOutput < 0){

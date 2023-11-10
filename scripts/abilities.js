@@ -110,6 +110,27 @@ class Ability{
         }
     }
 }
+export class SwitchCombatant extends Ability{
+    constructor(partyIndex){
+        super();
+        this.partyIndex = partyIndex;
+        this.name = "switch combatant";
+        this.type = "";
+        this.speedMultiplier = 0.1;
+        this.staminaCost = 0;
+        this.magicCost = 0;
+        this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
+    }
+    activate(weilder, target){
+        let temp = theController.party[0];
+        theController.party[0] = theController.party[this.partyIndex];
+        theController.party[this.partyIndex] = temp;
+        //theController.battle.friendlyParty[0] = theController.party[0];
+        
+        theController.playSoundEffect(this.soundEffect);
+        theController.updateParty();
+    }
+}
 export class Recover extends Ability{
     constructor(){
         super();

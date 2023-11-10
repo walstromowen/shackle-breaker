@@ -13,24 +13,23 @@ import Battle from "./battle.js";
 
 export default class Controller {
     constructor(){
-        this.characterCreationArray = ["name", "apperance", "background", "attributesArray", "statsArray", "gold"];
+        this.characterCreationArray = ["name", "apperance", "background", "attributesArray", "statsArray"];
         this.map = "";
         this.miniMap = "";
         this.currentCharacter = "";
         this.battle = "";
+        this.party = []
         this.partInventory = [];
         this.partyGold = 0;
         this.encounter = "";
         this.mapBtnArray = [];
         this.battleBtnArray = [];
         this.encounterBtnArray = [];
-
         this.isInBattle = false;
         this.isInTrade = false;
         this.canMoveRoom = true;
         this.currentRoom = "";
         this.nextRoom = "";
-
         this.initialize();
     }
     initialize(){
@@ -56,18 +55,23 @@ export default class Controller {
         document.getElementById('character-creation-submit-btn').addEventListener("click", ()=>{//start game code
             document.getElementById("character-creation-screen").style.display = "none";
             this.characterCreationArray[0] = document.getElementById("name-selection").value;
+            if(document.getElementById("name-selection").value == ""){
+                this.characterCreationArray[0] = "Shackle Breaker";
+            }
             this.characterCreationArray[1] = document.getElementById("apperance-selection").value;
             this.characterCreationArray[2] = document.getElementById("background-selection").value;
             this.currentCharacter = new Character(this.characterCreationArray);
-            this.map = new Map(this.currentCharacter.level, "basic", "random");
+            this.party.push(this.currentCharacter);
+            //this.party.push(new Character(["kurtus", "media/kurty.jpg", "traveler", [1,1,1,1,1,1], this.scaleAttributes(1,1,1,1,1,1)]));
+            //this.party.push(new Character(["Shimdy", "media/mage-2.jpg", "traveler", [1,1,1,1,1,1], this.scaleAttributes(1,1,1,1,1,1)]));
+            this.map = new Map(this.calculateAveragePartyLevel(), "basic", "random");
             this.miniMap = new MiniMap();
             this.map.mapEnviorment.terrain.onload = ()=>{
                 this.initializeRooms(this.map);
-                document.getElementById('current-character-name').innerText = this.currentCharacter.name;
-                document.getElementById('current-character-image').src = this.currentCharacter.apperance;
                 document.getElementById('location-name').innerText = this.capitalizeFirstLetter(this.map.mapEnviorment.biome);
                 document.getElementById('location-image').src = this.map.mapEnviorment.imageSrc;
                 this.updateCharacterStats();
+                this.updateParty();
                 this.enableKeyControls();
                 this.enablePartyMapControls();
                 this.enableInventoryControls();
@@ -214,7 +218,7 @@ export default class Controller {
     }
     enableMapTransitionControls(){
         document.getElementById('map-transition-continue-btn').addEventListener("click", ()=>{
-            if(this.currentCharacter.level == 10){
+            if(this.calculateAveragePartyLevel() >= 10){
                 this.generateNewMap("altas castle", "boss1");
             }else{
                 this.generateNewMap("basic", "random");
@@ -318,16 +322,25 @@ export default class Controller {
             document.getElementById('inventory-tab').style.display = "none";
             document.getElementById('equipped-tab').style.display = "block";
             document.getElementById('secondary-stats-tab').style.display = "none";
+            document.getElementById('party-tab').style.display = "none";
         });
         document.getElementById('inventory-tab-button').addEventListener('click',()=>{
             document.getElementById('equipped-tab').style.display = "none";
             document.getElementById('inventory-tab').style.display = "block";
             document.getElementById('secondary-stats-tab').style.display = "none";
+            document.getElementById('party-tab').style.display = "none";
         });
         document.getElementById('secondary-stats-tab-button').addEventListener('click',()=>{
             document.getElementById('equipped-tab').style.display = "none";
             document.getElementById('inventory-tab').style.display = "none";
             document.getElementById('secondary-stats-tab').style.display = "block";
+            document.getElementById('party-tab').style.display = "none";
+        });
+        document.getElementById('party-tab-button').addEventListener('click',()=>{
+            document.getElementById('equipped-tab').style.display = "none";
+            document.getElementById('inventory-tab').style.display = "none";
+            document.getElementById('secondary-stats-tab').style.display = "none";
+            document.getElementById('party-tab').style.display = "block";
         });
         for(let i = 0; i < this.currentCharacter.equippedArray.length; i++){
             document.getElementById('unequip-btn-' + i).addEventListener('click', ()=>{
@@ -460,7 +473,7 @@ export default class Controller {
             });
             document.getElementById('battle-button-container').appendChild(abilityBtn);
             this.battleBtnArray.push(abilityBtn);
-         }
+        }
         document.getElementById('map-button-container').style.display = "none";
         document.getElementById('battle-button-container').style.display = "flex";
         document.getElementById('battle-button-container').style.visibility = "visible";// can remove?
@@ -487,23 +500,28 @@ export default class Controller {
             decisionBtn.innerText = this.capitalizeFirstLetter(this.encounter.decisionArray[x].name);
             decisionBtn.addEventListener('click', ()=>{
                 this.disableCharacterEncounterControls();
-                this.printToGameConsole(this.encounter.decisionArray[x].message);
                 this.encounter.decisionArray[x].activate(this.currentCharacter);
             });
             document.getElementById('encounter-button-container').appendChild(decisionBtn);
             this.encounterBtnArray.push(decisionBtn);
-         }
-         document.getElementById('map-button-container').style.display = "none";
-         document.getElementById('encounter-button-container').style.display = "flex";
-         document.getElementById('encounter-button-container').style.visibility = "visible";// can remove?
-         Array.from(document.getElementsByClassName('mini-menu-btn')).forEach(btn=>{
-             btn.style.visibility = "visible";
-         });
+        }
+        document.getElementById('map-button-container').style.display = "none";
+        document.getElementById('encounter-button-container').style.display = "flex";
+        document.getElementById('encounter-button-container').style.visibility = "visible";// can remove?
+        Array.from(document.getElementsByClassName('mini-menu-btn')).forEach(btn=>{
+            btn.style.visibility = "visible";
+        });
+        Array.from(document.getElementsByClassName('party-direction-btn')).forEach(btn=>{
+            btn.style.visibility = "visible";
+        });
     }
     disableCharacterEncounterControls(){
         document.getElementById('encounter-button-container').style.visibility = "hidden";
         //Array.from used to convert HTML collection to regular array so forEach can be used -> hides use btns on items
         Array.from(document.getElementsByClassName('mini-menu-btn')).forEach(btn=>{
+            btn.style.visibility = "hidden";
+        });
+        Array.from(document.getElementsByClassName('party-direction-btn')).forEach(btn=>{
             btn.style.visibility = "hidden";
         });
     }
@@ -528,14 +546,18 @@ export default class Controller {
         this.canMoveRoom = true;
         this.updatePartyInventoryTab(this.partyInventory);
     }
-    toggleBattle(enemy){
-        this.battle = new Battle(this.currentCharacter, enemy);
+    toggleBattle(enemyArray){
+        this.battle = new Battle(this.party, enemyArray);
         this.canMoveRoom = false;
+        this.disableCharacterBattleControls();
+        Array.from(document.getElementsByClassName('party-direction-btn')).forEach(btn=>{
+            btn.style.visibility = "hidden";
+        });
         this.updateCharacterStats();
         this.updateEnemyStats();
         setTimeout(()=>{
-            document.getElementById('enemy-name').innerText = this.capitalizeFirstLetter(this.battle.enemy.name);
-            document.getElementById('enemy-image').src = this.battle.enemy.imageSrc;
+            document.getElementById('enemy-name').innerText = this.capitalizeFirstLetter(this.battle.hostileParty[0].name);
+            document.getElementById('enemy-image').src = this.battle.hostileParty[0].imageSrc;
             document.getElementById('map-button-container').style.display = "none";
             document.getElementById('battle-button-container').style.display = "flex";
             document.getElementById('encounter-button-container').style.display = "none";
@@ -549,13 +571,13 @@ export default class Controller {
             document.getElementById("enemy-main-stats-container").style.display = "block";
             document.getElementById("encounter-image-container").style.display = "none";
             this.enableCharacterBattleControls();
-            if(this.battle.enemy.name.charAt(0) == "a" || this.battle.enemy.name.charAt(0) == "e" || this.battle.enemy.name.charAt(0) == "i" || this.battle.enemy.name.charAt(0) == "o" || this.battle.enemy.name.charAt(0) == "u"){
-                this.printToGameConsole(`${this.currentCharacter.name} encounters an ${this.battle.enemy.name}!`);
+            if(this.battle.hostileParty[0].name.charAt(0) == "a" || this.battle.hostileParty[0].name.charAt(0) == "e" || this.battle.hostileParty[0].name.charAt(0) == "i" || this.battle.hostileParty[0].name.charAt(0) == "o" || this.battle.hostileParty[0].name.charAt(0) == "u"){
+                this.printToGameConsole(`${this.currentCharacter.name} encounters an ${this.battle.hostileParty[0].name}!`);
             }else{
-                this.printToGameConsole(`${this.currentCharacter.name} encounters a ${this.battle.enemy.name}!`);
+                this.printToGameConsole(`${this.currentCharacter.name} encounters a ${this.battle.hostileParty[0].name}!`);
             }
             document.getElementById('music-player').pause();
-            if(enemy.isBoss == true){
+            if(enemyArray[0].isBoss == true){
                 document.getElementById('music-player').src = "./audio/Alex-Productions - Epic Cinematic Adventure Vlog _ Eglair.mp3"
             }else{
                 document.getElementById('music-player').src = "./audio/battle-of-the-dragons-8037.mp3"
@@ -567,6 +589,10 @@ export default class Controller {
     toggleEncounter(encounter){
         this.encounter = encounter;
         this.canMoveRoom = false;
+        this.disableCharacterEncounterControls();
+        Array.from(document.getElementsByClassName('party-direction-btn')).forEach(btn=>{
+            btn.style.visibility = "hidden";
+        });
         setTimeout(()=>{
             document.getElementById('encounter-name').innerText = this.capitalizeFirstLetter(this.encounter.name);
             document.getElementById('encounter-image').src = this.encounter.imageSrc;
@@ -577,7 +603,7 @@ export default class Controller {
             document.getElementById("location-image-container").style.display = "none";
             document.getElementById("encounter-image-container").style.display = "block";
             this.enableCharacterEncounterControls();
-            this.printToGameConsole(this.encounter.message);
+            this.encounter.messageFunction();
         }, 2000);
     }
     toggleMapTransitionScreen(){
@@ -854,6 +880,8 @@ export default class Controller {
         document.getElementById("current-gold").innerText = this.partyGold;
     }
     updateCharacterStats(){
+        document.getElementById('current-character-name').innerText = this.currentCharacter.name;
+        document.getElementById('current-character-image').src = this.currentCharacter.apperance;
         document.getElementById('current-health-current-character').innerText = this.currentCharacter.currentHP;
         document.getElementById('current-stamina-current-character').innerText = this.currentCharacter.currentStamina;
         document.getElementById('current-magic-current-character').innerText = this.currentCharacter.currentMagic;
@@ -896,27 +924,31 @@ export default class Controller {
         }
         if(this.currentCharacter.currentXP >= Math.floor(((this.currentCharacter.level + 10)**2)*0.5)){
             this.currentCharacter.currentXP = this.currentCharacter.currentXP - Math.floor(((this.currentCharacter.level + 10)**2)*0.5);
-            this.levelCharacterUp();
+            if(this.isInBattle == false){
+                this.levelCharacterUp();
+            }
         }
     }
     updateEnemyStats(){
-        document.getElementById('current-health-enemy').innerText = this.battle.enemy.currentHP;
-        document.getElementById('current-stamina-enemy').innerText = this.battle.enemy.currentStamina;
-        document.getElementById('current-magic-enemy').innerText = this.battle.enemy.currentMagic;
-        document.getElementById('health-bar-enemy-progress').style.width = Math.floor(this.battle.enemy.currentHP/this.battle.enemy.maxHP*100) + "%";
-        document.getElementById('stamina-bar-enemy-progress').style.width = Math.floor(this.battle.enemy.currentStamina/this.battle.enemy.maxStamina*100) + "%";
-        document.getElementById('magic-bar-enemy-progress').style.width = Math.floor(this.battle.enemy.currentMagic/this.battle.enemy.maxMagic*100) + "%";
-        for(let i = -1; i < this.battle.enemy.statusArray.length; i++){
+        document.getElementById('enemy-name').innerText = this.battle.hostileParty[0].name;
+        document.getElementById('enemy-image').src = this.battle.hostileParty[0].imageSrc;
+        document.getElementById('current-health-enemy').innerText = this.battle.hostileParty[0].currentHP;
+        document.getElementById('current-stamina-enemy').innerText = this.battle.hostileParty[0].currentStamina;
+        document.getElementById('current-magic-enemy').innerText = this.battle.hostileParty[0].currentMagic;
+        document.getElementById('health-bar-enemy-progress').style.width = Math.floor(this.battle.hostileParty[0].currentHP/this.battle.hostileParty[0].maxHP*100) + "%";
+        document.getElementById('stamina-bar-enemy-progress').style.width = Math.floor(this.battle.hostileParty[0].currentStamina/this.battle.hostileParty[0].maxStamina*100) + "%";
+        document.getElementById('magic-bar-enemy-progress').style.width = Math.floor(this.battle.hostileParty[0].currentMagic/this.battle.hostileParty[0].maxMagic*100) + "%";
+        for(let i = -1; i < this.battle.hostileParty[0].statusArray.length; i++){
             let oldIcon = document.getElementById('enemy-status-icon-container').querySelector('img');
             if(oldIcon !== null){
                 oldIcon.remove();
             } 
         }
-        for(let i = 0; i < this.battle.enemy.statusArray.length; i++){
-            if(this.battle.enemy.statusArray[i].iconSrc != ""){
+        for(let i = 0; i < this.battle.hostileParty[0].statusArray.length; i++){
+            if(this.battle.hostileParty[0].statusArray[i].iconSrc != ""){
                 let statusIcon = document.createElement('img');
                 statusIcon.classList.add('status-icon');
-                statusIcon.src = this.battle.enemy.statusArray[i].iconSrc;
+                statusIcon.src = this.battle.hostileParty[0].statusArray[i].iconSrc;
                 document.getElementById('enemy-status-icon-container').appendChild(statusIcon);
             }
         }
@@ -935,6 +967,71 @@ export default class Controller {
             }, 500);
         }
     }
+    updateParty(){
+        this.currentCharacter = this.party[0];
+        Array.from(document.getElementById("party-tab").getElementsByClassName("character-slot")).forEach(slot=>{
+            slot.remove();
+        });
+        for(let i = 0; i < this.party.length; i++){
+            let characterSlot = document.createElement("div");
+            let characterName = document.createElement("p");
+            let characterOrderContainer = document.createElement("div");
+            let characterTakeControlBtn = document.createElement("div");
+            let characterRaiseBtn = document.createElement("div");
+            let characterLowerBtn = document.createElement("div");
+
+            characterSlot.classList.add("character-slot");
+            characterSlot.classList.add("flex");
+            characterTakeControlBtn.classList.add("mini-menu-btn");
+            characterTakeControlBtn.classList.add("party-take-control-btn");
+            characterRaiseBtn.classList.add("party-direction-btn");
+            characterLowerBtn.classList.add("party-direction-btn");
+            characterOrderContainer.classList.add("flex");
+            characterName.innerText = `${this.party[i].name}`;
+            characterTakeControlBtn.innerText = "Select";
+            characterRaiseBtn.innerText = "↑";
+            characterLowerBtn.innerText = "↓";
+
+            characterOrderContainer.appendChild(characterRaiseBtn);
+            characterOrderContainer.appendChild(characterLowerBtn);
+            characterOrderContainer.appendChild(characterTakeControlBtn);
+            characterSlot.appendChild(characterName);
+            characterSlot.appendChild( characterOrderContainer);
+
+            document.getElementById("party-tab").appendChild(characterSlot);
+            characterTakeControlBtn.addEventListener("click", ()=>{
+                if(this.isInBattle == false){
+                    let temp = this.party[0];
+                    this.party[0] = this.party[i];
+                    this.party[i] = temp;
+                    this.updateParty();
+                }else{
+                    this.battle.determineFirstTurn("switch", i);
+                }
+            });
+            characterRaiseBtn.addEventListener("click", ()=>{
+                let temp = this.party[i-1];
+                this.party[i-1] = this.party[i];
+                this.party[i] = temp;
+                this.updateParty();
+            });
+            characterLowerBtn.addEventListener("click", ()=>{
+                let temp = this.party[i+1];
+                this.party[i+1] = this.party[i];
+                this.party[i] = temp;
+                this.updateParty();
+            });
+            if(this.isInBattle == true){
+                characterRaiseBtn.style.visibility = "hidden";
+                characterLowerBtn.style.visibility = "hidden";
+            }
+        }
+        for(let j = 0; j < this.currentCharacter.equippedArray.length; j ++){
+            this.updateCharacterEquippedTab(j);
+        }
+        this.calcCharacterAbilitiesAndStats();
+        this.updateCharacterStats();
+    }
     movePartyNorth(){
         this.movePartyRoom(this.currentRoom.roomNorth);
     }
@@ -949,10 +1046,10 @@ export default class Controller {
     }
     movePartyRoom(nextRoom){
         if(nextRoom !== ""){
-            if(nextRoom.enemy !== ""){
+            if(nextRoom.enemyArray.length != 0){
                 this.nextRoom = nextRoom;
                 this.printToGameConsole("something approaches...");
-                this.toggleBattle(nextRoom.enemy);
+                this.toggleBattle(nextRoom.enemyArray);
                 return; 
             }
             if(nextRoom.encounter !== ""){
@@ -965,8 +1062,8 @@ export default class Controller {
                 if(Math.floor(Math.random()*20) <= 2){
                     this.nextRoom = nextRoom;
                     this.printToGameConsole("something approaches...");
-                    nextRoom.enemy = this.map.mapEnviorment.generateEnemy(this.currentCharacter.level, false);
-                    this.toggleBattle(nextRoom.enemy);
+                    nextRoom.enemyArray = this.map.mapEnviorment.generateEnemies(this.calculateAveragePartyLevel(), false, Math.ceil(Math.random()*3));
+                    this.toggleBattle(nextRoom.enemyArray);
                     return;
                 }
             }
@@ -1187,6 +1284,8 @@ export default class Controller {
                 }
             }
         }
+        this.currentCharacter.abilityArray.push(new Recover);
+        this.currentCharacter.abilityArray.push(new Retreat);
         //punch check
         if(this.currentCharacter.equippedArray[0] == "Empty"){
             this.currentCharacter.abilityArray.push(new Punch);
@@ -1209,9 +1308,7 @@ export default class Controller {
                 }
             }
         }
-        this.currentCharacter.abilityArray.push(new Recover);
-        this.currentCharacter.abilityArray.push(new Retreat);
-      }
+    }
     updateCharacterEquippedTab(equippedArrayIndex){
         if(this.currentCharacter.equippedArray[equippedArrayIndex] =="Empty"){
             document.getElementById('equip-slot-' + equippedArrayIndex).innerText = "Empty";
@@ -1222,7 +1319,7 @@ export default class Controller {
     completeRoom(){
         this.currentRoom.status = "visited";
         this.currentRoom = this.nextRoom;
-        this.currentRoom.enemy = "";
+        this.currentRoom.enemyArray = [];
         this.currentRoom.encounter = "";
         this.miniMap.draw(this.map, this.currentRoom);
     }
@@ -1244,7 +1341,7 @@ export default class Controller {
     }
     levelCharacterUp(){
         this.currentCharacter.level = this.currentCharacter.level + 1;
-        this.map.increaseAllEnemyLevels(this.currentCharacter.level);
+        this.map.increaseAllEnemyLevels(this.calculateAveragePartyLevel());
         this.printToGameConsole(`Level up! New level: ${this.currentCharacter.level}.`);
         this.displayLevelUpScreen();
     }
@@ -1255,7 +1352,7 @@ export default class Controller {
         this.canMoveRoom = false;
     }
     generateNewMap(biome, layoutType){
-        this.map = new Map(this.currentCharacter.level, biome, layoutType);
+        this.map = new Map(this.calculateAveragePartyLevel(), biome, layoutType);
         this.currentRoom = this.map.roomArray[this.map.currentCharacterSpawnIndex];
         this.nextRoom = this.currentRoom;
         document.getElementById('location-image').src = this.map.mapEnviorment.imageSrc;
@@ -1281,8 +1378,11 @@ export default class Controller {
                 Array.from(document.getElementsByClassName('mini-menu-btn')).forEach(btn=>{
                     btn.style.visibility = "visible";
                 });
+                Array.from(document.getElementsByClassName('party-direction-btn')).forEach(btn=>{
+                    btn.style.visibility = "visible";
+                });
                 if(this.battle.battlePhase != "retreat"){
-                    this.battle.loot();
+                    this.battle.lootEnemies();
                     this.completeRoom();
                 }else{
                     this.nextRoom.status = "retreated";
@@ -1290,7 +1390,6 @@ export default class Controller {
                 document.getElementById("music-player").src = this.map.mapEnviorment.backgroundMusicSrc;
                 document.getElementById("music-player").play();
                 this.toggleMap();
-                this.updateEnemyStats();
                 this.updateCharacterStats();
              }, 2000);
         }
@@ -1312,6 +1411,9 @@ export default class Controller {
             else{
                 setTimeout(()=>{
                     Array.from(document.getElementsByClassName('mini-menu-btn')).forEach(btn=>{
+                        btn.style.visibility = "visible";
+                    });
+                    Array.from(document.getElementsByClassName('party-direction-btn')).forEach(btn=>{
                         btn.style.visibility = "visible";
                     });
                     this.toggleMap();
@@ -1388,6 +1490,13 @@ export default class Controller {
         let baseArcaneDefense = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 2) + (focus * 1);
         let baseElementalDefense = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 1) + (focus * 2);
         return [maxHP, maxStamina, maxMagic, baseBluntAttack, basePierceAttack, baseArcaneAttack, baseElementalAttack, baseBluntDefense, basePierceDefense, baseArcaneDefense, baseElementalDefense];
+    }
+    calculateAveragePartyLevel(){
+        let sum = 0;
+        for(let i = 0; i < this.party.length; i++){
+            sum = sum + this.party[i].level;
+        }
+        return Math.ceil(sum / this.party.length);
     }
 }
 

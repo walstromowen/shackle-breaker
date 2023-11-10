@@ -1,54 +1,75 @@
 import {controller as theController} from "./main.js"
+import { SwitchCombatant } from "./abilities.js";
 
 export default class Battle{
-    constructor(currentCharacter, enemy){
-        this.currentCharacter = currentCharacter;
-        this.enemy = enemy;
+    constructor(friendlyParty, hostileParty){
+        this.friendlyParty = friendlyParty;
+        this.hostileParty = hostileParty;
         this.battlePhase = "firstTurn";
+        this.loot = [];
+        this.gold  = 0;
+        this.xp = 0;
         this.initialize();
     }
     initialize(){
-        for(let i = 0; i < this.currentCharacter.statusArray.length; i++){
-            this.currentCharacter.statusArray[i].onApplied();
+        for(let x = 0; x < this.friendlyParty.length; x++){
+            for(let y = 0; y < this.friendlyParty[x].statusArray.length; y++){
+                this.friendlyParty[x].statusArray[y].onApplied();
+            }   
+        }
+        for(let x = 0; x < this.hostileParty.length; x++){
+            for(let y = 0; y < this.hostileParty[x].statusArray.length; y++){
+                this.hostileParty[x].statusArray[y].onApplied();
+            }   
+        }
+        for(let x = 0; x < this.hostileParty.length; x++){
+            this.gold = this.gold + this.hostileParty[x].gold;
+        }
+        for(let x = 0; x < this.hostileParty.length; x++){
+            this.xp = this.xp + this.hostileParty[x].xp;
         }
     }
-    determineFirstTurn(abilityIndex, inventoryIndex){
+    determineFirstTurn(abilityIndex, inventoryOrPartyIndex){
         this.battlePhase = "firstTurn";
-        if(inventoryIndex === undefined){
-            this.currentCharacter.nextMove = this.currentCharacter.abilityArray[abilityIndex];
+        if(abilityIndex == "switch"){
+            this.friendlyParty[0].nextMove = new SwitchCombatant(inventoryOrPartyIndex);
         }else{
-            this.currentCharacter.nextMove = theController.partyInventory[inventoryIndex].abilityArray[abilityIndex];
+            if(inventoryOrPartyIndex === undefined){
+                this.friendlyParty[0].nextMove = this.friendlyParty[0].abilityArray[abilityIndex];
+            }else{
+                this.friendlyParty[0].nextMove = theController.partyInventory[inventoryOrPartyIndex].abilityArray[abilityIndex];
+            }
         }
-        if(this.currentCharacter.nextMove.canUse(this.currentCharacter, this.currentCharacter) == false){
+        if(this.friendlyParty[0].nextMove.canUse(this.friendlyParty[0], this.friendlyParty[0]) == false){
             return;
         }
-        this.enemy.nextMove = this.enemy.chooseAttack();
-        if(this.enemy.nextMove.canUse(this.enemy, this.currentCharacter) == false){
-            this.determineFirstTurn(abilityIndex, inventoryIndex);
+        this.hostileParty[0].nextMove = this.hostileParty[0].chooseAttack();
+        if(this.hostileParty[0].nextMove.canUse(this.hostileParty[0], this.friendlyParty[0]) == false){
+            this.determineFirstTurn(abilityIndex, inventoryOrPartyIndex);
             return;
         };
         theController.disableCharacterBattleControls();
-        if(this.currentCharacter.nextMove.speedMultiplier * this.currentCharacter.currentSpeed >= this.enemy.currentSpeed * this.enemy.nextMove.speedMultiplier){
-            this.takeTurn(this.currentCharacter, this.enemy);
+        if(this.friendlyParty[0].nextMove.speedMultiplier * this.friendlyParty[0].currentSpeed >= this.hostileParty[0].currentSpeed * this.hostileParty[0].nextMove.speedMultiplier){
+            this.takeTurn(this.friendlyParty, this.hostileParty) 
         }else{
-            this.takeTurn(this.enemy, this.currentCharacter);
+            this.takeTurn(this.hostileParty, this.friendlyParty);
         }
     }
    
-    takeTurn(weilder, target){
-        this.cycleStatusEffects(this.updateStatusEffect, weilder.statusArray, "start")
+    takeTurn(attackingParty, defendingParty){
+        this.cycleStatusEffects(this.updateStatusEffect, attackingParty[0].statusArray, "start")
         .then(()=>{
-            return this.activateAbility(weilder, target);
+            return this.activateAbility(attackingParty, defendingParty);
         })
         .then(()=>{
-            return this.cycleStatusEffects(this.updateStatusEffect, weilder.statusArray, "end");
+            return this.cycleStatusEffects(this.updateStatusEffect, attackingParty[0].statusArray, "end");
         })
         .then(()=>{
             if(this.battlePhase == "secondTurn"){
                 theController.enableCharacterBattleControls();
             }else{
                 this.battlePhase = "secondTurn";
-                this.takeTurn(target, weilder);
+                this.takeTurn(defendingParty, attackingParty);
             }
         }) 
     }
@@ -82,77 +103,160 @@ export default class Battle{
                 status.update(type);
                 theController.updateCharacterStats();
                 theController.updateEnemyStats();
-                if(theController.battle.checkBattleStatus() == true){
-                    theController.endBattle();
-                    //reject here?
-                }else{
-                    resolve();
+                let casualties = [];
+                let casualtyTypes = [];
+                if(theController.battle.friendlyParty[0].currentHP <= 0){
+                    casualtyTypes.push("friendly");
+                    casualties.push(this.friendlyParty[0]);
+                    theController.battle.friendlyParty.splice(0, 1);//this also makes "current player" next character in line
+                    if(theController.battle.friendlyParty.length <= 0){
+                        theController.battle.endBattle();
+                        return;
+                    }
                 }
+                if(theController.battle.hostileParty[0].currentHP <= 0){
+                    let drop = theController.battle[0].dropLoot();
+                    if(drop != ""){
+                        theController.battle.loot.push(drop);
+                    }
+                    theController.battle.friendlyParty[0].currentXP = theController.battle.friendlyParty[0].currentXP + theController.battle.hostileParty[0].xp;
+                    casualtyTypes.push("hostile");
+                    casualties.push(this.hostileParty[0]);
+                    theController.battle.hostileParty.splice(0, 1);
+                    if(theController.battle.hostileParty.length <= 0){
+                        theController.battle.endBattle();
+                        return;
+                    }
+                }
+                if(theController.battle.battlePhase == "retreat"){
+                    theController.battle.endBattle();
+                    return;
+                }
+                if(casualties.length != 0){
+                    theController.battle.displayCasualties(casualties, casualtyTypes);
+                    return;
+                }
+                resolve();
             }, 2000 * (1 + counter));
         });
     }
 
-    activateAbility(weilder, target){
+    activateAbility(attackingParty, defendingParty){
         return new Promise((resolve)=>{
             setTimeout(()=>{
-                weilder.nextMove.canUse(weilder, this.currentCharacter);
-                if(weilder.nextMove.activate(weilder, target) == "retreat"){ 
+                attackingParty[0].nextMove.canUse(attackingParty[0], this.friendlyParty[0]);
+                if(attackingParty[0].nextMove.activate(attackingParty[0], defendingParty[0]) == "retreat"){ 
                     this.battlePhase = "retreat";
                 }
                 let counter = 0;
-                for(let j = 0; j < target.statusArray.length; j++){
-                    if(target.statusArray[counter].currentCharges <= 0){
-                        target.statusArray[counter].onRemove();
-                        target.statusArray.splice(counter, 1);
+                for(let j = 0; j < defendingParty[0].statusArray.length; j++){
+                    if(defendingParty[0].statusArray[counter].currentCharges <= 0){
+                        defendingParty[0].statusArray[counter].onRemove();
+                        defendingParty[0].statusArray.splice(counter, 1);
                     }else{
                         counter ++;
                     }
                 }
                 counter = 0;
-                for(let j = 0; j < weilder.statusArray.length; j++){
-                    if(weilder.statusArray[counter].currentCharges <= 0){
-                        weilder.statusArray[counter].onRemove();
-                        weilder.statusArray.splice(counter, 1);
+                for(let j = 0; j < attackingParty[0].statusArray.length; j++){
+                    if(attackingParty[0].statusArray[counter].currentCharges <= 0){
+                        attackingParty[0].statusArray[counter].onRemove();
+                        attackingParty[0].statusArray.splice(counter, 1);
                     }else{
                         counter ++;
                     }
                 }
                 theController.updateCharacterStats();
                 theController.updateEnemyStats();
-                if(this.checkBattleStatus() == true){//false means battle is still on
-                    for(let i = 0; i < this.currentCharacter.statusArray.length; i++){
-                        this.currentCharacter.statusArray[i].onRemove();
+                let casualtyTypes = [];
+                let casualties = [];
+                if(this.friendlyParty[0].currentHP <= 0){
+                    casualtyTypes.push("friendly");
+                    casualties.push(this.friendlyParty[0]);
+                    this.friendlyParty.splice(0, 1);//this also makes "current player" next character in line
+                    if(this.friendlyParty.length <= 0){
+                        this.endBattle();
+                        return;
                     }
-                    theController.endBattle();
-                }else{
-                    resolve();
                 }
+                if(this.hostileParty[0].currentHP <= 0){
+                    casualtyTypes.push("hostile");
+                    casualties.push(this.hostileParty[0]);
+                    let drop = this.hostileParty[0].dropLoot();
+                    if(drop != ""){
+                        this.loot.push(drop);
+                    }
+                    this.friendlyParty[0].currentXP = this.friendlyParty[0].currentXP + this.hostileParty[0].xp;
+                    this.hostileParty.splice(0, 1);
+                    if(this.hostileParty.length <= 0){
+                        this.endBattle();
+                        return;
+                    }
+                }
+                if(this.battlePhase == "retreat"){
+                    this.endBattle();
+                    return;
+                }
+                if(casualties.length != 0){
+                    this.displayCasualties(casualties, casualtyTypes);
+                    return;
+                }
+                resolve();
             }, 2000); 
          });
     }
-    checkBattleStatus(){
-        if(this.currentCharacter.currentHP <= 0 || this.enemy.currentHP <= 0 || this.battlePhase == "retreat"){
-            return true;  
-        } 
-        return false;
-    }
-    loot(){
-        let loot = this.enemy.dropLoot();
-        let itemList = "";
-        if(loot != "" || this.enemy.gold > 0){
-            if(loot != ""){
-                theController.partyInventory.push(loot);
-                itemList = itemList + `${loot.name}, `;
-                theController.updatePartyInventoryTab(theController.partyInventory);
-            }
-            if(this.enemy.gold > 0){
-                itemList = itemList + `${this.enemy.gold} gold.`;
-                this.currentCharacter.currentGold = this.currentCharacter.currentGold + this.enemy.gold;
-            }else{
-                itemList[itemList.length-2] = ".";
-            }
-            theController.printToGameConsole(`${this.enemy.name} drops: ${itemList}`);
+    endBattle(){
+        for(let x = 0; x < this.friendlyParty.length; x++){
+            for(let y = 0; y < this.friendlyParty[x].statusArray.length; y++){
+                this.friendlyParty[0].statusArray[y].onRemove();
+            }   
         }
-        this.currentCharacter.currentXP = this.currentCharacter.currentXP + this.enemy.XP;
+        for(let x = 0; x < this.hostileParty.length; x++){
+            for(let y = 0; y < this.hostileParty[x].statusArray.length; y++){
+                this.hostileParty[0].statusArray[y].onRemove();
+            }   
+        }    
+        theController.endBattle();
+    }
+    displayCasualties(casualties, casualtyTypes){
+        setTimeout(()=>{
+            if(casualties.length == 1){
+                theController.printToGameConsole(`${casualties[0].name} has been slain!`)
+            }
+            if(casualties.length == 2){
+                theController.printToGameConsole(`${casualties[0].name} and ${casualties[1].name} have been slain!`)
+            }
+            this.updateParties(casualties, casualtyTypes);
+        }, 2000)
+    }
+    updateParties(casualties, casualtyTypes){
+        setTimeout(()=>{
+            for(let i = 0; i < casualties.length; i ++){
+                if(casualtyTypes[i]=="friendly"){
+                    theController.updateParty();
+                    theController.printToGameConsole(`${this.friendlyParty[0].name} joins the fight!`)
+                }
+                if(casualtyTypes[i]=="hostile"){
+                    theController.updateEnemyStats();
+                    theController.printToGameConsole(`${this.hostileParty[0].name} joins the fight!`)
+                }
+            }
+            theController.enableCharacterBattleControls();
+        }, 2000);
+    }
+    lootEnemies(){
+        if(this.loot.length != 0 || this.gold > 0){
+            theController.printToGameConsole(`${this.friendlyParty[0].name} loots:`);
+            if(this.loot.length != 0){
+                for(let i = 0; i < this.loot.length; i++){
+                    theController.partyInventory.push(this.loot[i]);
+                    theController.printToGameConsole(`${this.loot[i].name}`);
+                }
+            }
+            if(this.gold > 0){
+                this.friendlyParty[0].currentGold = this.friendlyParty[0].currentGold + this.gold;
+            }
+        }
+        theController.updatePartyInventoryTab(theController.partyInventory);
     }
 }

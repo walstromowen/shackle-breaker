@@ -3,16 +3,16 @@ import MapLayout from "./mapLayout.js";
 import MapEnviorment from "./mapEnviorment.js";
 
 export default class Map{
-    constructor(currentCharacterLevel, biome, layoutType){
+    constructor(averagePartyLevel, biome, layoutType){
         this.roomArray = []; //Room array is 1 Dimensional
         this.mapLayout = new MapLayout(layoutType);
         this.mapEnviorment = new MapEnviorment(biome);
         this.mapWidth = this.mapLayout.width; //in tiles  
         this.mapHeight = this.mapLayout.height; //in tiles
         this.currentCharacterSpawnIndex = "";
-        this.generateMap(currentCharacterLevel);  
+        this.generateMap(averagePartyLevel);  
     }
-    generateMap(currentCharacterLevel){
+    generateMap(averagePartyLevel){
         for(var y = 0; y < this.mapHeight; y++){
             for(var x = 0; x < this.mapWidth; x++){
                 let newRoom = new Room();
@@ -30,7 +30,7 @@ export default class Map{
                     this.roomArray[i].frameXCoordinate = this.mapEnviorment.frameCoordinates[0][Math.floor(Math.random()*this.mapEnviorment.frameCoordinates[0].length)];
                     let randomNumber = Math.floor(Math.random()*50)
                     if(randomNumber <= 2){
-                        this.roomArray[i].enemy = this.mapEnviorment.generateEnemy(currentCharacterLevel, false);
+                        this.roomArray[i].enemyArray = this.mapEnviorment.generateEnemies(averagePartyLevel, false, Math.ceil(Math.random()*3));
                     }
                     if(randomNumber >= 3 || randomNumber <= 5){
                         this.roomArray[i].encounter = this.mapEnviorment.generateEncounter();
@@ -59,7 +59,7 @@ export default class Map{
                     break;
                 case 5:
                     this.roomArray[i].type = "boss chamber";
-                    this.roomArray[i].enemy = this.mapEnviorment.generateEnemy(currentCharacterLevel, true);
+                    this.roomArray[i].enemyArray = this.mapEnviorment.generateEnemies(averagePartyLevel, true, 1);
                     break;
                 default:
                     break;
@@ -93,10 +93,12 @@ export default class Map{
             }
         }  
     }
-    increaseAllEnemyLevels(currentCharacterLevel){
+    increaseAllEnemyLevels(averagePartyLevel){
         for(let i = 0; i < this.roomArray.length; i++ ){
-            if(this.roomArray[i].enemy != ""){
-                this.roomArray[i].enemy.levelUp(currentCharacterLevel);
+            if(this.roomArray[i].enemyArray[0] != ""){
+                for(let j = 0; j < this.roomArray[i].enemyArray.length; j++){
+                    this.roomArray[i].enemyArray[j].levelUp(averagePartyLevel);
+                }
             }
         }
     }
