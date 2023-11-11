@@ -165,11 +165,11 @@ export default class Controller {
                 this.partyGold = 100;
                 break;
             case "warrior":
-                equippedArray.push(new Handaxe, "Empty", new LeatherChestplate, new LinenPants, "Empty", new LeatherBoots);
+                equippedArray.push(new Handaxe, "Empty", "Empty", new LeatherChestplate, new LinenPants, "Empty", new LeatherBoots);
                 this.partyGold = 150;
                 break;
             case "theif":
-                equippedArray.push(new Dagger, new Shiv, new LinenShirt, new LinenPants, "Empty", new LeatherBoots);
+                equippedArray.push(new Dagger, new Shiv, "Empty", new LinenShirt, new LinenPants, "Empty", new LeatherBoots);
                 this.partyGold = 150;
                 break;
             case "hermit":
