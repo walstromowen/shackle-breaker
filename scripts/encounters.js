@@ -487,10 +487,49 @@ export class AssistVictim extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.currentCharacter.name} asks the traveler for his services in battle.`)},
                 "neutral",
                 [
-                    ()=>{recruit(`"Perhaps traveling will be safer. Give me a moment to gather my things!"`, new Character(["Traveler", "./media/mage-1.jpg", "traveler", [5,5,5,5,5,5], theController.scaleAttributes(5,5,5,5,5,5)], [new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]))},
+                    ()=>{recruit(`"Perhaps traveling will be safer. Give me a moment to gather my things!"`, new Character(["Traveler", "./media/mage-1.jpg", "traveler", [5,5,5,5,5,5], theController.scaleAttributes(5,5,5,5,5,5), [new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]))},
                 ],
                 [
                     ()=>{removeDecision(`"I am afraid I am no use to you in battle."`, "recruit")},
+                ]
+            )
+        ];
+    }
+}
+export class MercenaryForHire extends Encounter{
+    constructor(){
+        super();
+        this.name = "mercenary for hire";
+        this.messageFunction = ()=>{theController.printToGameConsole(`A mercenary stands up ahead looking for work.`)};
+        this.imageSrc = "./media/knight-2.jpg";
+        this.decisionArray = [
+            new Decision(
+                "move on", 
+                ()=>{theController.printToGameConsole(`${theController.currentCharacter.name} passes by the mercenary.`)},
+                "certain",
+                [
+                    ()=>{leave(`${theController.currentCharacter.name} moves on.`)}
+                ],
+                [
+
+                ]
+            ),
+            new Decision(
+                "hire (400 gold)", 
+                ()=>{theController.printToGameConsole(`${theController.currentCharacter.name} hires the mercenary for 400 gold.`)},
+                "certain",
+                [
+                    ()=>{
+                        if(theController.partyGold >= 400){
+                            theController.partyGold = theController.partyGold - 400;
+                            recruit(`the mercenary joins ${theController.currentCharacter.name}'s party`, new Character(["Mercenary", "./media/knight-2.jpg", "mercenary", [6,5,6,6,3,4], theController.scaleAttributes(6,5,6,6,3,4), [new Shortsword, new Buckler, new LeatherHelmet, new LeatherChestplate, "Empty", new LinenPants, new LeatherBoots]]))
+                        }else{
+                            ()=>{retry(`not enough gold.`)}
+                        }
+                    },
+                ],
+                [
+                    
                 ]
             )
         ];

@@ -1,5 +1,5 @@
-import {LockedTreasureChest, UnlockedTreasureChest, AltusAmbushOpportunity, MysteriousDoor, TravelingMerchant, AbandonedCabin, SuspiciousSkeleton, Robbery, Avalanche} from "./encounters.js";
-import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos, ShadowStrider, TerrorBear, Bandit} from "./enemies.js";
+import {LockedTreasureChest, UnlockedTreasureChest, AltusAmbushOpportunity, MysteriousDoor, TravelingMerchant, AbandonedCabin, SuspiciousSkeleton, Robbery, Avalanche, MercenaryForHire} from "./encounters.js";
+import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos, ShadowStrider, TerrorBear, Bandit, Ghost, SkeletonMage} from "./enemies.js";
 
 export default class MapEnviorment{
     constructor(biome){
@@ -99,7 +99,7 @@ export default class MapEnviorment{
         for(let i = 0; i < count; i ++){
             switch(this.biome){ 
                 case "cave": 
-                    switch(Math.floor(Math.random()*3)){ 
+                    switch(Math.floor(Math.random()*4)){ 
                         case 0:
                             enemyArray.push(new CaveSpider(currentCharacterLevel));
                             break;
@@ -108,6 +108,9 @@ export default class MapEnviorment{
                             break;
                         case 2:
                             enemyArray.push(new Skeleton(currentCharacterLevel));
+                            break;
+                        case 3:
+                            enemyArray.push(new SkeletonMage(currentCharacterLevel));
                             break;
                     }
                     break;
@@ -169,12 +172,18 @@ export default class MapEnviorment{
                     }
                     break;
                 case "ancient altus ruins":
-                    switch(Math.floor(Math.random()*2)){ 
+                    switch(Math.floor(Math.random()*4)){ 
                         case 0:
                             enemyArray.push(new Skeleton(currentCharacterLevel));
                             break;
                         case 1:
                             enemyArray.push(new Bat(currentCharacterLevel));
+                            break;
+                        case 2:
+                            enemyArray.push(new SkeletonMage(currentCharacterLevel));
+                            break;
+                        case 3:
+                            enemyArray.push(new Ghost(currentCharacterLevel));
                             break;
                         default:
                             return;
@@ -225,7 +234,7 @@ export default class MapEnviorment{
                         return;
                 }
             case "plains":
-                switch(Math.floor(Math.random()*4)){ 
+                switch(Math.floor(Math.random()*5)){ 
                     case 0:
                         return new LockedTreasureChest();
                     case 1:
@@ -234,6 +243,8 @@ export default class MapEnviorment{
                         return new TravelingMerchant();
                     case 3:
                         return new Robbery();
+                    case 4:
+                        return new MercenaryForHire();
                     default:
                         return;
                 }

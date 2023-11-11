@@ -1,5 +1,5 @@
 import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
-    ThrowNet, Immolate, LightningBolt, Channel, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Bite, SpitBile, LeechLife, Devour, Pounce, BlinkStrike, ThrowSmokebomb} from "./abilities.js"
+    ThrowNet, Immolate, LightningBolt, Channel, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Bite, SpitBile, LeechLife, Devour, Pounce, BlinkStrike, ThrowSmokebomb, Shockwave} from "./abilities.js"
 import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer,
         Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, 
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
@@ -192,7 +192,7 @@ export class Wolf extends Enemy{
         this.baseEvasion = 12;
         this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Bite, new Pounce];
-        this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new Hide];
         this.gold = 0;
         this.xp = 0;
@@ -373,7 +373,7 @@ export class EmperorDolos extends Enemy{
         this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Flurry, new ArcaneDart, new DrainLife, new Siphon, new LightningBolt, new Channel, new Cleanse];
         this.lootChanceMultiplier = 0; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [];
+        this.lootArray = [new HealthPotion];
         this.gold = 0;
         this.xp = 0;
         this.isBoss = true;
@@ -524,3 +524,94 @@ export class Bandit extends Enemy{
         this.xp = 35;
     }
 }
+export class SkeletonMage extends Enemy{
+    constructor(averagePartyLevel){
+        super();
+        this.name = "skeleton mage";
+        this.imageSrc = "media/skeleton-mage.jpg"
+        this.maxHP = 35;
+        this.currentHP = this.maxHP;
+        this.maxStamina = 35;
+        this.currentStamina = this.maxStamina;
+        this.maxMagic = 35;
+        this.currentMagic = this.maxMagic;
+        this.baseBluntAttack = 55;
+        this.currentBluntAttack = this.baseBluntAttack;
+        this.basePierceAttack = 55;
+        this.currentPierceAttack = this.basePierceAttack;
+        this.baseArcaneAttack = 55; 
+        this.currentArcaneAttack = this.baseArcaneAttack;
+        this.baseElementalAttack = 55;
+        this.currentElementalAttack = this.baseElementalAttack;
+        this.baseBluntDefense = 35;
+        this.currentBluntDefense = this.baseBluntDefense;
+        this.basePierceDefense = 35;
+        this.currentPierceDefense = this.basePierceDefense;
+        this.baseArcaneDefense = 35;
+        this.currentArcaneDefense = this.baseArcaneDefense;
+        this.baseElementalDefense = 35;
+        this.currentElementalDefense = this.baseElementalDefense;
+        this.baseSpeed = 27;
+        this.currentSpeed = this.baseSpeed;
+        this.baseEvasion = 12;
+        this.currentEvasion = this.baseEvasion;
+        this.abilityArray = [new IceShard, new Shockwave, new Channel];
+        this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootArray = [new ClothHood, new ClothRobe, new LinenShirt, new LinenPants, new HealthPotion, new MagicPotion, new IceStaff];
+        this.gold = 0;
+        this.xp = 0;
+        this.isBoss = false;             
+        this.levelUp(averagePartyLevel);
+    }
+    levelUp(averagePartyLevel){
+        this.incrementStats(averagePartyLevel, [2,6], [0, 4], [2,6], [0,2], [0,2], [2,3], [2,3], [1,3], [1,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (20 - 15 + 1) + 15) * (1 + averagePartyLevel/5));
+        this.xp = 35;
+    }
+}
+export class Ghost extends Enemy{
+    constructor(averagePartyLevel){
+        super();
+        this.name = "ghost";
+        this.imageSrc = "media/shost.jpg"
+        this.maxHP = 35;
+        this.currentHP = this.maxHP;
+        this.maxStamina = 35;
+        this.currentStamina = this.maxStamina;
+        this.maxMagic = 35;
+        this.currentMagic = this.maxMagic;
+        this.baseBluntAttack = 55;
+        this.currentBluntAttack = this.baseBluntAttack;
+        this.basePierceAttack = 55;
+        this.currentPierceAttack = this.basePierceAttack;
+        this.baseArcaneAttack = 55; 
+        this.currentArcaneAttack = this.baseArcaneAttack;
+        this.baseElementalAttack = 55;
+        this.currentElementalAttack = this.baseElementalAttack;
+        this.baseBluntDefense = 200;
+        this.currentBluntDefense = this.baseBluntDefense;
+        this.basePierceDefense = 200;
+        this.currentPierceDefense = this.basePierceDefense;
+        this.baseArcaneDefense = 35;
+        this.currentArcaneDefense = this.baseArcaneDefense;
+        this.baseElementalDefense = 35;
+        this.currentElementalDefense = this.baseElementalDefense;
+        this.baseSpeed = 25;
+        this.currentSpeed = this.baseSpeed;
+        this.baseEvasion = 15;
+        this.currentEvasion = this.baseEvasion;
+        this.abilityArray = [new DrainLife, new Siphon, new Slash];
+        this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootArray = [new HealthPotion, new MagicPotion];
+        this.gold = 0;
+        this.xp = 0;
+        this.isBoss = false;             
+        this.levelUp(averagePartyLevel);
+    }
+    levelUp(averagePartyLevel){
+        this.incrementStats(averagePartyLevel, [2,6], [0,4], [2,6], [0,2], [2,3], [2,3], [0,2], [1,3], [1,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (20 - 15 + 1) + 15) * (1 + averagePartyLevel/5));
+        this.xp = 50;
+    }
+}
+
