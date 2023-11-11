@@ -545,7 +545,7 @@ export class SkeletonMage extends Enemy{
         this.currentElementalAttack = this.baseElementalAttack;
         this.baseBluntDefense = 35;
         this.currentBluntDefense = this.baseBluntDefense;
-        this.basePierceDefense = 35;
+        this.basePierceDefense = 30;
         this.currentPierceDefense = this.basePierceDefense;
         this.baseArcaneDefense = 35;
         this.currentArcaneDefense = this.baseArcaneDefense;
@@ -564,7 +564,7 @@ export class SkeletonMage extends Enemy{
         this.levelUp(averagePartyLevel);
     }
     levelUp(averagePartyLevel){
-        this.incrementStats(averagePartyLevel, [2,6], [0, 4], [2,6], [0,2], [0,2], [2,3], [2,3], [1,3], [1,3], [1,3], [1,3]);
+        this.incrementStats(averagePartyLevel, [2,6], [0,4], [2,6], [0,2], [0,2], [2,3], [2,3], [1,2], [2,3], [1,3], [1,3]);
         this.gold = Math.floor((Math.random() * (20 - 15 + 1) + 15) * (1 + averagePartyLevel/5));
         this.xp = 35;
     }

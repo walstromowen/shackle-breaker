@@ -723,7 +723,7 @@ export class Shockwave extends Ability{
                     break;
                 }
             }
-            damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
+            let damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
             if(target.currentStamina - damageOutput < 0){
                 damageOutput = target.currentStamina;
             }
