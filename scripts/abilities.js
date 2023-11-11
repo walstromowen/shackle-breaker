@@ -681,7 +681,7 @@ export class LightningBolt extends Ability{
                 return;
             }
             let damageOutput = Math.floor(Math.random() * ((weilder.currentElementalAttack + this.damageModifier) - weilder.currentElementalAttack + 1)) + weilder.currentElementalAttack;
-           damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
+            damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
             if(damageOutput > 0){
@@ -704,7 +704,7 @@ export class Shockwave extends Ability{
         this.type = "bluntElemental";
         this.speedMultiplier = 0.75;
         this.staminaCost = 0;
-        this.magicCost = 8;
+        this.magicCost = 12;
         this.damageModifier = 4;
         this.accuracy = 100;
         this.soundEffect = "./audio/soundEffects/075681_electric-shock-33018.wav";
@@ -715,20 +715,25 @@ export class Shockwave extends Ability{
             if(this.checkMiss(weilder, target, this.name) == true){
                 return;
             }
+            let damageOutput = Math.floor(Math.random() * ((((weilder.currentBluntAttack + weilder.currentElementalAttack)/2) + this.damageModifier) - ((weilder.currentBluntAttack + weilder.currentElementalAttack)/2) + 1)) + Math.floor(((weilder.currentBluntAttack + weilder.currentElementalAttack)/2));
             for(let i = 0; i < target.statusArray.length; i++){
                 if(target.statusArray[i].name == "shielded"){
                     target.statusArray[i].onRemove();
                     target.statusArray.splice(i, 1);
-                    damageOutput = damageOutput + Math.floor(target.maxStamina/2);
+                    damageOutput = damageOutput + Math.floor(target.maxStamina);
                     break;
                 }
             }
-            let damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
-            if(target.currentStamina - damageOutput < 0){
-                damageOutput = target.currentStamina;
+            let damageOutput1 = this.checkDamage(damageOutput, weilder, target, this.type);
+            damageOutput1 = Math.floor(damageOutput1/2)
+            let damageOutput2 = damageOutput - Math.floor((target.currentBluntDefense + target.currentElementalDefense)/2);
+            if(target.currentStamina - damageOutput2 < 0){
+                damageOutput2 = target.currentStamina;
             }
-            target.currentStamina = target.currentStamina - damageOutput;
-            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} stamina damage!`);
+            theController.animateVitalBar(target, "stamina");
+            target.currentHP = target.currentHP - damageOutput1;
+            target.currentStamina = target.currentStamina - damageOutput2;
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput1} damage and ${damageOutput2} stamina damage!`);
         }
     } 
 }
@@ -805,7 +810,7 @@ export class Recuperate extends Ability{
 export class IceShard extends Ability{
     constructor(){
         super();
-        this.name = "frost shard";
+        this.name = "ice shard";
         this.type = "elemental";
         this.speedMultiplier = 0.5;
         this.staminaCost = 0;
