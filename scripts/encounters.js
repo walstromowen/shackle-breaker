@@ -3,8 +3,14 @@ import Character from "./character.js";
 import {Decision} from "./encounterDecision.js";
 import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, Bandit} from "./enemies.js";
 import {Shielded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden} from "./statusEffects.js";
-import {getRandomItem, HealthPotion} from "./items.js";
 import {regainHP, initiateTrade, leave, retry, removeDecision, toggleNewEncounter, toggleBattle, loot, takeDamage, recieveStatusEffect, changeMap, recruit} from "./encounterResults.js";
+import {getRandomItem, LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer,
+    Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, 
+    LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
+    LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, 
+    IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
+    ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide
+    } from "./items.js";
 
 
 class Encounter{}
@@ -37,7 +43,7 @@ export class LockedTreasureChest extends Encounter{
                 [
                     ()=>{retry(`${theController.currentCharacter.name} breaks a lockpick!`)},
                     ()=>{removeDecision(`${theController.currentCharacter.name} jams the lock!`, "pick lock")},
-                    ()=>{toggleBattle(`as ${theController.currentCharacter.name} reaches to pick the lock, something emerges from the shadows and races towards ${theController.currentCharacter.name}!`, theController.map.mapEnviorment.generateEnemies(theController.calculateAveragePartyLevel(), false, Math.ceil(Math.random()*3)))}
+                    ()=>{toggleBattle(`as ${theController.currentCharacter.name} reaches to pick the lock, something emerges from the shadows and races towards ${theController.currentCharacter.name}!`, theController.map.mapEnviorment.generateEnemies(theController.calculateAveragePartyLevel(), false, theController.calculateMaxEnemyCount()))}
                 ]
             ),
             new Decision(
@@ -50,7 +56,7 @@ export class LockedTreasureChest extends Encounter{
                 [
                     ()=>{retry(`the lock doesn't budge.`)},
                     ()=>{removeDecision(`${theController.currentCharacter.name} cannot break the lock!`, "break lock")},
-                    ()=>{toggleBattle(`upon hearing the loud noise, something emerges from the shadows and races towards ${theController.currentCharacter.name}!`, theController.map.mapEnviorment.generateEnemies(theController.calculateAveragePartyLevel(), false, Math.ceil(Math.random()*3)))}
+                    ()=>{toggleBattle(`upon hearing the loud noise, something emerges from the shadows and races towards ${theController.currentCharacter.name}!`, theController.map.mapEnviorment.generateEnemies(theController.calculateAveragePartyLevel(), false, theController.calculateMaxEnemyCount()))}
                 ]
             ),
             new Decision(
@@ -63,7 +69,7 @@ export class LockedTreasureChest extends Encounter{
                 [
                     ()=>{retry(`${theController.currentCharacter.name} seaches in vain for the key.`)},
                     ()=>{removeDecision(`${theController.currentCharacter.name} searches everywhere for the key`, "search for key")},
-                    ()=>{toggleBattle(`somethings lunges towards ${theController.currentCharacter.name}!`, theController.map.mapEnviorment.generateEnemies(theController.calculateAveragePartyLevel(), false, Math.ceil(Math.random()*3)))}
+                    ()=>{toggleBattle(`somethings lunges towards ${theController.currentCharacter.name}!`, theController.map.mapEnviorment.generateEnemies(theController.calculateAveragePartyLevel(), false, theController.calculateMaxEnemyCount()))}
                 ]
             )
         ];
@@ -320,10 +326,10 @@ export class AbandonedCabin extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.currentCharacter.name} searches the cabin for anything useful.`)},
                 "neutral",
                 [
-                    ()=>{loot(`${theController.currentCharacter.name} finds:.`, [getRandomItem()], 50, 10)},
+                    ()=>{loot(`${theController.currentCharacter.name} finds: `, [getRandomItem()], 50, 10)},
                 ],
                 [
-                    ()=>{toggleBattle(`somethings lunges towards ${theController.currentCharacter.name}!`, theController.map.mapEnviorment.generateEnemies(theController.calculateAveragePartyLevel(), false, Math.ceil(Math.random()*3)))}
+                    ()=>{toggleBattle(`somethings lunges towards ${theController.currentCharacter.name}!`, theController.map.mapEnviorment.generateEnemies(theController.calculateAveragePartyLevel(), false, theController.calculateMaxEnemyCount()))}
                 ]
             ),
             new Decision(
@@ -334,7 +340,7 @@ export class AbandonedCabin extends Encounter{
                     ()=>{regainHP(`${theController.currentCharacter.name} takes a short rest.`, 0.5)}
                 ],
                 [
-                    ()=>{toggleBattle(`somethings lunges towards ${theController.currentCharacter.name}!`, theController.map.mapEnviorment.generateEnemies(theController.calculateAveragePartyLevel(), false, Math.ceil(Math.random()*3)))}
+                    ()=>{toggleBattle(`somethings lunges towards ${theController.currentCharacter.name}!`, theController.map.mapEnviorment.generateEnemies(theController.calculateAveragePartyLevel(), false, theController.calculateMaxEnemyCount()))}
                 ]
             )
         ];
@@ -481,7 +487,7 @@ export class AssistVictim extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.currentCharacter.name} asks the traveler for his services in battle.`)},
                 "neutral",
                 [
-                    ()=>{recruit(`{"Perhaps traveling will be safer. Give me a moment to gather my things!"`, new Character(["traveler", "./media/mage-1.jpg", "traveler", [5,5,5,5,5,5], theController.scaleAttributes(5,5,5,5,5,5)]))},
+                    ()=>{recruit(`"Perhaps traveling will be safer. Give me a moment to gather my things!"`, new Character(["Traveler", "./media/mage-1.jpg", "traveler", [5,5,5,5,5,5], theController.scaleAttributes(5,5,5,5,5,5)], [new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]))},
                 ],
                 [
                     ()=>{removeDecision(`"I am afraid I am no use to you in battle."`, "recruit")},

@@ -78,12 +78,12 @@ export class Bound extends StatusEffect{
         this.name = "bound";
         this.iconSrc = "./media/icons/crossed-chains.png";
         this.holder = holder;
-        this.maxCharges = 3;
+        this.maxCharges = 2;
         this.currentCharges = this.maxCharges;
     }
     onStartTurn(){
         this.holder.nextMove = new Struggle;
-        if(Math.random()*3 > 1){
+        if(Math.random()*3 > 2){
             this.currentCharges = this.currentCharges - 1;
         }else{
             this.currentCharges = this.currentCharges = 0;

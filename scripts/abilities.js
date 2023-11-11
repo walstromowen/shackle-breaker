@@ -12,9 +12,6 @@ class Ability{
                 theController.printToGameConsole("Not enough magic!");
                 return false;
             }
-            if(this.canUseSpecialCondition(weilder, currentCharacter) == false){
-                return false;
-            }
         }else{
             if(weilder.currentStamina - this.staminaCost < 0){
                 weilder.nextMove = new Recover;
@@ -22,9 +19,9 @@ class Ability{
             if(weilder.currentMagic - this.magicCost < 0){
                 weilder.nextMove = new Meditate;
             }
-            if(this.canUseSpecialCondition(weilder, currentCharacter) == false){
-                return false;
-            }
+        }
+        if(this.canUseSpecialCondition(weilder, currentCharacter) == false){
+            return false;
         }
     }
     canUseSpecialCondition(weilder, currentCharacter){
@@ -761,16 +758,10 @@ export class Channel extends Ability{
         }
     }
     canUseSpecialCondition(weilder, currentCharacter){
-        if(weilder === currentCharacter){
-            if(weilder.statusArray.length <= 0){
-                return true;
-            }
-        }else{
-            if(weilder.statusArray.length <= 0){
-                for(let i = 0; i < weilder.statusArray.length; i++){
-                    if(weilder.statusArray[i].name == "channeled"){
-                        return false;
-                    }
+        if(weilder !== currentCharacter){
+            for(let i = 0; i < weilder.statusArray.length; i++){
+                if(weilder.statusArray[i].name == "channeled"){
+                    return false;
                 }
             }
         }
@@ -799,6 +790,15 @@ export class Recuperate extends Ability{
                 }
             }
             weilder.statusArray.push(new Invigorated(weilder));
+        }
+    }
+    canUseSpecialCondition(weilder, currentCharacter){
+        if(weilder !== currentCharacter){
+            for(let i = 0; i < weilder.statusArray.length; i++){
+                if(weilder.statusArray[i].name == "invigorated"){
+                    return false;
+                }
+            }
         }
     }
 }
@@ -1404,6 +1404,15 @@ export class ThrowSmokebomb extends Ability{
         if(theController.isInBattle == false){
             theController.printToGameConsole("cannot use outside of combat.");
             return false;
+        }
+    }
+    canUseSpecialCondition(weilder, currentCharacter){
+        if(weilder !== currentCharacter){
+            for(let i = 0; i < weilder.statusArray.length; i++){
+                if(weilder.statusArray[i].name == "hidden"){
+                    return false;
+                }
+            }
         }
     }
 }

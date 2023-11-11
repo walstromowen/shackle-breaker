@@ -2,11 +2,11 @@ import {Recover, Punch, Retreat} from "./abilities.js";
 import {Poisoned, Burned, Frostbite, Paralyzed, Shielded, Channeled, Empowered, Bound} from "./statusEffects.js";
 
 export default class Character{
-    constructor(characterCreationArray){ //[name, apperanceSrc, origin, attributesArray, StatsArray]
+    constructor(characterCreationArray){ //[name, apperanceSrc, origin, attributesArray, StatsArray, equippedArray]
         this.name = characterCreationArray[0];
         this.apperance = characterCreationArray[1]
         this.origin = characterCreationArray[2]
-        this.equippedArray = ["Empty", "Empty", "Empty", "Empty", "Empty", "Empty" , "Empty"]; 
+        this.equippedArray = [characterCreationArray[5][0], characterCreationArray[5][1], characterCreationArray[5][2], characterCreationArray[5][3], characterCreationArray[5][4], characterCreationArray[5][5] , characterCreationArray[5][6]]; 
         this.abilityArray = [new Punch, new Recover, new Retreat];
         this.level = 1;
         this.currentXP = 0;

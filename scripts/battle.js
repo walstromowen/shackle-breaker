@@ -107,7 +107,7 @@ export default class Battle{
                 let casualtyTypes = [];
                 if(theController.battle.friendlyParty[0].currentHP <= 0){
                     casualtyTypes.push("friendly");
-                    casualties.push(this.friendlyParty[0]);
+                    casualties.push(theController.battle.friendlyParty[0]);
                     theController.battle.friendlyParty.splice(0, 1);//this also makes "current player" next character in line
                     if(theController.battle.friendlyParty.length <= 0){
                         theController.battle.endBattle();
@@ -115,7 +115,7 @@ export default class Battle{
                     }
                 }
                 if(theController.battle.hostileParty[0].currentHP <= 0){
-                    let drop = theController.battle[0].dropLoot();
+                    let drop = theController.battle.hostileParty[0].dropLoot();
                     if(drop != ""){
                         theController.battle.loot.push(drop);
                     }

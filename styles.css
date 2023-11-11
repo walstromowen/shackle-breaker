@@ -583,7 +583,7 @@ p{
     display:none;
 }
 
-#gameover-screen-btn-container{
+#gameover-screen-btn-container, #transisiton-screen-btn-container{
     display:flex;
     justify-content: center;
     flex-direction: column;	

@@ -13,7 +13,7 @@ import Battle from "./battle.js";
 
 export default class Controller {
     constructor(){
-        this.characterCreationArray = ["name", "apperance", "background", "attributesArray", "statsArray"];
+        this.characterCreationArray = ["name", "apperance", "background", "attributesArray", "statsArray", "equippedArray"];
         this.map = "";
         this.miniMap = "";
         this.currentCharacter = "";
@@ -62,9 +62,9 @@ export default class Controller {
             this.characterCreationArray[2] = document.getElementById("background-selection").value;
             this.currentCharacter = new Character(this.characterCreationArray);
             this.party.push(this.currentCharacter);
-            //this.party.push(new Character(["kurtus", "media/kurty.jpg", "traveler", [1,1,1,1,1,1], this.scaleAttributes(1,1,1,1,1,1)]));
+            this.party.push(new Character(["kurtus", "media/kurty.jpg", "traveler", [1,1,1,1,1,1], this.scaleAttributes(1,1,1,1,1,1), [new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]));
             //this.party.push(new Character(["Shimdy", "media/mage-2.jpg", "traveler", [1,1,1,1,1,1], this.scaleAttributes(1,1,1,1,1,1)]));
-            this.map = new Map(this.calculateAveragePartyLevel(), "basic", "random");
+            this.map = new Map("basic", "random");
             this.miniMap = new MiniMap();
             this.map.mapEnviorment.terrain.onload = ()=>{
                 this.initializeRooms(this.map);
@@ -144,35 +144,36 @@ export default class Controller {
         document.getElementById("character-creation-evasion").innerText = 10;
     }
     characterCreatorUpdateInventory(){
+        let equippedArray = [];
         let inventoryArray = [];
         let value = document.getElementById("background-selection").value;
         switch(value){
             case "traveler":
-                inventoryArray.push(new Shortsword, new LinenShirt, new LinenPants, new LeatherBoots);
+                equippedArray.push(new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
                 this.partyGold = 200;
                 break;
             case "blacksmith":
-                inventoryArray.push(new BlacksmithHammer, new Buckler, new LinenShirt, new LinenPants, new LeatherBoots);
+                equippedArray.push(new BlacksmithHammer, "Empty", new Buckler, new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
                 this.partyGold = 100;
                 break;
             case "ranger":
-                inventoryArray.push(new Shortsword, new LeatherHood, new LinenShirt, new LinenPants, new LeatherBoots);
+                equippedArray.push(new Shortsword, "Empty", new LeatherHood, new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
                 this.partyGold = 150;
                 break;
             case "scholar":
-                inventoryArray.push(new ArcaneStaff, new ClothHood, new LinenShirt, new LinenPants, new LeatherBoots);
+                equippedArray.push(new ArcaneStaff, "Empty", new ClothHood, new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
                 this.partyGold = 100;
                 break;
             case "warrior":
-                inventoryArray.push(new Handaxe, new LeatherChestplate, new LinenPants, new LeatherBoots);
+                equippedArray.push(new Handaxe, "Empty", new LeatherChestplate, new LinenPants, "Empty", new LeatherBoots);
                 this.partyGold = 150;
                 break;
             case "theif":
-                inventoryArray.push(new Dagger, new Shiv, new LinenShirt, new LinenPants, new LeatherBoots);
+                equippedArray.push(new Dagger, new Shiv, new LinenShirt, new LinenPants, "Empty", new LeatherBoots);
                 this.partyGold = 150;
                 break;
             case "hermit":
-                inventoryArray.push(new FireStaff, new ClothHood, new LinenShirt, new LinenPants, new LeatherBoots);
+                equippedArray.push(new FireStaff, "Empty", new ClothHood, new LinenShirt, "Empty",  new LinenPants, new LeatherBoots);
                 this.partyGold = 100;
                 break;
         }
@@ -199,6 +200,14 @@ export default class Controller {
         Array.from(document.getElementById("character-creation-inventory").getElementsByClassName("inventory-slot-long")).forEach(slot=>{
             slot.remove();
         });
+        for(let i = 0; i < equippedArray.length; i++){
+            if(equippedArray[i] != "Empty"){
+                let inventorySlot = document.createElement('div');
+                inventorySlot.classList.add('inventory-slot-long');
+                inventorySlot.innerText = this.capitalizeFirstLetter(equippedArray[i].name);
+                document.getElementById("character-creation-inventory").appendChild(inventorySlot);
+            }
+        }
         for(let i = 0; i < inventoryArray.length; i++){
             let inventorySlot = document.createElement('div');
             inventorySlot.classList.add('inventory-slot-long');
@@ -206,6 +215,7 @@ export default class Controller {
             document.getElementById("character-creation-inventory").appendChild(inventorySlot);
         }
         document.getElementById("character-creation-gold").innerText = this.partyGold;
+        this.characterCreationArray[5] = equippedArray;
         this.partyInventory = inventoryArray;
     }
     enableGameOverScreenControls(){
@@ -923,14 +933,14 @@ export default class Controller {
             }
         }
         if(this.currentCharacter.currentXP >= Math.floor(((this.currentCharacter.level + 10)**2)*0.5)){
-            this.currentCharacter.currentXP = this.currentCharacter.currentXP - Math.floor(((this.currentCharacter.level + 10)**2)*0.5);
             if(this.isInBattle == false){
+                this.currentCharacter.currentXP = this.currentCharacter.currentXP - Math.floor(((this.currentCharacter.level + 10)**2)*0.5);
                 this.levelCharacterUp();
             }
         }
     }
     updateEnemyStats(){
-        document.getElementById('enemy-name').innerText = this.battle.hostileParty[0].name;
+        document.getElementById('enemy-name').innerText = this.capitalizeFirstLetter(this.battle.hostileParty[0].name);
         document.getElementById('enemy-image').src = this.battle.hostileParty[0].imageSrc;
         document.getElementById('current-health-enemy').innerText = this.battle.hostileParty[0].currentHP;
         document.getElementById('current-stamina-enemy').innerText = this.battle.hostileParty[0].currentStamina;
@@ -1046,6 +1056,14 @@ export default class Controller {
     }
     movePartyRoom(nextRoom){
         if(nextRoom !== ""){
+            if(nextRoom.type == "enemySpawn"){
+                nextRoom.enemyArray = this.map.mapEnviorment.generateEnemies(this.calculateAveragePartyLevel(), false, this.calculateMaxEnemyCount());
+                nextRoom.type = "";
+            }
+            if(nextRoom.type == "encounterSpawn"){
+                nextRoom.encounter = this.map.mapEnviorment.generateEncounter();
+                nextRoom.type = "";
+            }
             if(nextRoom.enemyArray.length != 0){
                 this.nextRoom = nextRoom;
                 this.printToGameConsole("something approaches...");
@@ -1062,7 +1080,7 @@ export default class Controller {
                 if(Math.floor(Math.random()*20) <= 2){
                     this.nextRoom = nextRoom;
                     this.printToGameConsole("something approaches...");
-                    nextRoom.enemyArray = this.map.mapEnviorment.generateEnemies(this.calculateAveragePartyLevel(), false, Math.ceil(Math.random()*3));
+                    nextRoom.enemyArray = this.map.mapEnviorment.generateEnemies(this.calculateAveragePartyLevel(), false, this.calculateMaxEnemyCount());
                     this.toggleBattle(nextRoom.enemyArray);
                     return;
                 }
@@ -1341,7 +1359,6 @@ export default class Controller {
     }
     levelCharacterUp(){
         this.currentCharacter.level = this.currentCharacter.level + 1;
-        this.map.increaseAllEnemyLevels(this.calculateAveragePartyLevel());
         this.printToGameConsole(`Level up! New level: ${this.currentCharacter.level}.`);
         this.displayLevelUpScreen();
     }
@@ -1352,7 +1369,7 @@ export default class Controller {
         this.canMoveRoom = false;
     }
     generateNewMap(biome, layoutType){
-        this.map = new Map(this.calculateAveragePartyLevel(), biome, layoutType);
+        this.map = new Map(biome, layoutType);
         this.currentRoom = this.map.roomArray[this.map.currentCharacterSpawnIndex];
         this.nextRoom = this.currentRoom;
         document.getElementById('location-image').src = this.map.mapEnviorment.imageSrc;
@@ -1497,6 +1514,19 @@ export default class Controller {
             sum = sum + this.party[i].level;
         }
         return Math.ceil(sum / this.party.length);
+    }
+    calculateMaxEnemyCount(){
+        let enemyCount = 0;
+        enemyCount = Math.floor(Math.random() * (this.party.length + Math.floor(this.party.length/2) - 1 + 1) + 1);
+        if(enemyCount == 1 && this.party.length == 1){
+            if(Math.random()*2 > 1){
+                enemyCount = 2;
+            }
+        }
+        if(enemyCount > 6){
+            enemyCount = 6;
+        }
+        return enemyCount;
     }
 }
 

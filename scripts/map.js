@@ -3,16 +3,16 @@ import MapLayout from "./mapLayout.js";
 import MapEnviorment from "./mapEnviorment.js";
 
 export default class Map{
-    constructor(averagePartyLevel, biome, layoutType){
+    constructor(biome, layoutType){
         this.roomArray = []; //Room array is 1 Dimensional
         this.mapLayout = new MapLayout(layoutType);
         this.mapEnviorment = new MapEnviorment(biome);
         this.mapWidth = this.mapLayout.width; //in tiles  
         this.mapHeight = this.mapLayout.height; //in tiles
         this.currentCharacterSpawnIndex = "";
-        this.generateMap(averagePartyLevel);  
+        this.generateMap();  
     }
-    generateMap(averagePartyLevel){
+    generateMap(){
         for(var y = 0; y < this.mapHeight; y++){
             for(var x = 0; x < this.mapWidth; x++){
                 let newRoom = new Room();
@@ -26,14 +26,13 @@ export default class Map{
             //Room Assignments.
             switch(this.mapLayout.tileArray[i]){
                 case 0:
-                    this.roomArray[i].type = "open";
                     this.roomArray[i].frameXCoordinate = this.mapEnviorment.frameCoordinates[0][Math.floor(Math.random()*this.mapEnviorment.frameCoordinates[0].length)];
                     let randomNumber = Math.floor(Math.random()*50)
                     if(randomNumber <= 2){
-                        this.roomArray[i].enemyArray = this.mapEnviorment.generateEnemies(averagePartyLevel, false, Math.ceil(Math.random()*3));
+                        this.roomArray[i].type = "enemySpawn";
                     }
                     if(randomNumber >= 3 && randomNumber <= 5){
-                        this.roomArray[i].encounter = this.mapEnviorment.generateEncounter();
+                        this.roomArray[i].type = "encounterSpawn";
                     }
                     break;
                 case 1:
@@ -50,7 +49,6 @@ export default class Map{
                     break;
                 case 4:
                     if(Math.floor(Math.random()*2) == 0){
-                        this.roomArray[i].type = "open";
                         this.roomArray[i].frameXCoordinate = this.mapEnviorment.frameCoordinates[0][Math.floor(Math.random()*this.mapEnviorment.frameCoordinates[0].length)];
                     }else{
                         this.roomArray[i].type = "wall";
@@ -59,7 +57,6 @@ export default class Map{
                     break;
                 case 5:
                     this.roomArray[i].type = "boss chamber";
-                    this.roomArray[i].enemyArray = this.mapEnviorment.generateEnemies(averagePartyLevel, true, 1);
                     break;
                 default:
                     break;
@@ -92,14 +89,5 @@ export default class Map{
                 }
             }
         }  
-    }
-    increaseAllEnemyLevels(averagePartyLevel){
-        for(let i = 0; i < this.roomArray.length; i++ ){
-            if(this.roomArray[i].enemyArray[0] != ""){
-                for(let j = 0; j < this.roomArray[i].enemyArray.length; j++){
-                    this.roomArray[i].enemyArray[j].levelUp(averagePartyLevel);
-                }
-            }
-        }
     }
 }

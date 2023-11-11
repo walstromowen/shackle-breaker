@@ -5,7 +5,7 @@ Text adventure game based on the Shackle Breaker story
 
 # Planned Features
 * Parrying System
-* Distance System in battle
+* Distance System in battle (would rewuire change to mini Map)
 * Attack Animations
 * map culling
 * Shop/crafting/weapon/town
