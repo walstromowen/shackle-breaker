@@ -62,7 +62,7 @@ export default class Controller {
             this.characterCreationArray[2] = document.getElementById("background-selection").value;
             this.currentCharacter = new Character(this.characterCreationArray);
             this.party.push(this.currentCharacter);
-            this.party.push(new Character(["kurtus", "media/kurty.jpg", "traveler", [1,1,1,1,1,1], this.scaleAttributes(1,1,1,1,1,1), [new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]));
+            //this.party.push(new Character(["kurtus", "media/kurty.jpg", "traveler", [1,1,1,1,1,1], this.scaleAttributes(1,1,1,1,1,1), [new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]));
             //this.party.push(new Character(["Shimdy", "media/mage-2.jpg", "traveler", [1,1,1,1,1,1], this.scaleAttributes(1,1,1,1,1,1)]));
             this.map = new Map("basic", "random");
             this.miniMap = new MiniMap();
