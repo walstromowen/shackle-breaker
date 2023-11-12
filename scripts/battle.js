@@ -108,7 +108,7 @@ export default class Battle{
                 if(theController.battle.friendlyParty[0].currentHP <= 0){
                     casualtyTypes.push("friendly");
                     casualties.push(theController.battle.friendlyParty[0]);
-                    theController.wanderingCompanions.push(this.friendlyParty[0]);
+                    theController.wanderingCompanions.push(theController.battle.friendlyParty[0]);
                     theController.battle.friendlyParty.splice(0, 1);//this also makes "current player" next character in line
                     if(theController.battle.friendlyParty.length <= 0){
                         theController.battle.endBattle();
@@ -124,7 +124,7 @@ export default class Battle{
                         theController.battle.friendlyParty[i].currentXP = theController.battle.friendlyParty[i].currentXP + Math.floor(theController.battle.hostileParty[i].xp/2);
                     }
                     casualtyTypes.push("hostile");
-                    casualties.push(this.hostileParty[0]);
+                    casualties.push(theController.battle.hostileParty[0]);
                     theController.battle.hostileParty.splice(0, 1);
                     if(theController.battle.hostileParty.length <= 0){
                         theController.battle.endBattle();
