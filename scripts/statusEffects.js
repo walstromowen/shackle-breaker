@@ -284,3 +284,24 @@ export class Hidden extends StatusEffect{
         this.currentCharges = 0;
     }
 }
+export class Bleeding extends StatusEffect{
+    constructor(holder){
+        super();
+        this.type = "end";
+        this.name = "bleeding";
+        this.iconSrc = "./media/icons/up-card-green.png";
+        this.holder = holder;
+        this.maxCharges = 6;
+        this.currentCharges = this.maxCharges;
+    }
+    onEndTurn(){
+        let damageOutput = Math.floor(this.holder.maxStamina*0.15);
+        theController.animateVitalBar(holder, "health");
+        if(damageOutput == 0){
+            damageOutput = 1;
+        }
+        this.holder.currentHP = this.holder.currentHP - damageOutput;
+        theController.printToGameConsole(`${this.holder.name} suffers ${damageOutput} burn damage!`);
+        this.currentCharges = this.currentCharges - 1;
+    }
+}

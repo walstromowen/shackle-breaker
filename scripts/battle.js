@@ -121,7 +121,7 @@ export default class Battle{
                         theController.battle.loot.push(drop);
                     }
                     for(let i = 0; i < theController.battle.friendlyParty.length; i++){
-                        theController.battle.friendlyParty[i].currentXP = theController.battle.friendlyParty[i].currentXP + Math.floor(theController.battle.hostileParty[i].xp/2);
+                        theController.battle.friendlyParty[i].currentXP = theController.battle.friendlyParty[i].currentXP + Math.floor(theController.battle.hostileParty[0].xp/2);
                     }
                     casualtyTypes.push("hostile");
                     casualties.push(theController.battle.hostileParty[0]);
@@ -191,7 +191,7 @@ export default class Battle{
                         this.loot.push(drop);
                     }
                     for(let i = 0; i < this.friendlyParty.length; i++){
-                        this.friendlyParty[i].currentXP = this.friendlyParty[i].currentXP + Math.floor(this.hostileParty[i].xp/2);
+                        this.friendlyParty[i].currentXP = this.friendlyParty[i].currentXP + Math.floor(this.hostileParty[0].xp/2);
                     }
                     this.hostileParty.splice(0, 1);
                     if(this.hostileParty.length <= 0){
