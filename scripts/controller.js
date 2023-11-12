@@ -1079,6 +1079,11 @@ export default class Controller {
     }
     movePartyRoom(nextRoom){
         if(nextRoom !== ""){
+            if(nextRoom.type == "boss chamber"){
+                if(nextRoom.status == "notVisited"){
+                    nextRoom.enemyArray = this.map.mapEnviorment.generateEnemies(this.calculateAveragePartyLevel(), true, 1);
+                }
+            }
             if(nextRoom.type == "enemySpawn"){
                 nextRoom.enemyArray = this.map.mapEnviorment.generateEnemies(this.calculateAveragePartyLevel(), false, this.calculateMaxEnemyCount());
                 nextRoom.type = "";

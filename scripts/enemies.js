@@ -371,7 +371,7 @@ export class EmperorDolos extends Enemy{
         this.currentSpeed = this.baseSpeed;
         this.baseEvasion = 15;
         this.currentEvasion = this.baseEvasion;
-        this.abilityArray = [new Flurry, new ArcaneDart, new DrainLife, new Siphon, new LightningBolt, new Channel, new Cleanse];
+        this.abilityArray = [new Flurry, new ArcaneDart, new Shockwave, new DrainLife, new Siphon, new LightningBolt, new Channel, new Cleanse];
         this.lootChanceMultiplier = 0; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new HealthPotion];
         this.gold = 0;
@@ -382,7 +382,7 @@ export class EmperorDolos extends Enemy{
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [8,16], [2,6], [1,3], [2,4], [2,4], [2,4], [2,4], [1,3], [1,3], [1,3], [1,3]);
         this.gold = 500;
-        this.xp = Math.floor(100 * (1 + this.level/10 ));
+        this.xp = 500;
     }
 }
 export class TerrorBear extends Enemy{

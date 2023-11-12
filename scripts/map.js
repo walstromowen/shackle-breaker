@@ -58,6 +58,9 @@ export default class Map{
                 case 5:
                     this.roomArray[i].type = "boss chamber";
                     break;
+                case 6:
+                    this.roomArray[i].frameXCoordinate = this.mapEnviorment.frameCoordinates[0][Math.floor(Math.random()*this.mapEnviorment.frameCoordinates[0].length)];
+                    break;
                 default:
                     break;
             }
