@@ -108,6 +108,7 @@ export default class Battle{
                 if(theController.battle.friendlyParty[0].currentHP <= 0){
                     casualtyTypes.push("friendly");
                     casualties.push(theController.battle.friendlyParty[0]);
+                    theController.wanderingCompanions.push(this.friendlyParty[0]);
                     theController.battle.friendlyParty.splice(0, 1);//this also makes "current player" next character in line
                     if(theController.battle.friendlyParty.length <= 0){
                         theController.battle.endBattle();
@@ -119,7 +120,9 @@ export default class Battle{
                     if(drop != ""){
                         theController.battle.loot.push(drop);
                     }
-                    theController.battle.friendlyParty[0].currentXP = theController.battle.friendlyParty[0].currentXP + theController.battle.hostileParty[0].xp;
+                    for(let i = 0; i < theController.battle.friendlyParty.length; i++){
+                        theController.battle.friendlyParty[i].currentXP = theController.battle.friendlyParty[i].currentXP + Math.floor(theController.battle.hostileParty[i].xp/2);
+                    }
                     casualtyTypes.push("hostile");
                     casualties.push(this.hostileParty[0]);
                     theController.battle.hostileParty.splice(0, 1);
@@ -173,6 +176,7 @@ export default class Battle{
                 if(this.friendlyParty[0].currentHP <= 0){
                     casualtyTypes.push("friendly");
                     casualties.push(this.friendlyParty[0]);
+                    theController.wanderingCompanions.push(this.friendlyParty[0]);
                     this.friendlyParty.splice(0, 1);//this also makes "current player" next character in line
                     if(this.friendlyParty.length <= 0){
                         this.endBattle();
@@ -186,7 +190,9 @@ export default class Battle{
                     if(drop != ""){
                         this.loot.push(drop);
                     }
-                    this.friendlyParty[0].currentXP = this.friendlyParty[0].currentXP + this.hostileParty[0].xp;
+                    for(let i = 0; i < this.friendlyParty.length; i++){
+                        this.friendlyParty[i].currentXP = this.friendlyParty[i].currentXP + Math.floor(this.hostileParty[i].xp/2);
+                    }
                     this.hostileParty.splice(0, 1);
                     if(this.hostileParty.length <= 0){
                         this.endBattle();

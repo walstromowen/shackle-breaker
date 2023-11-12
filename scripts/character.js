@@ -44,5 +44,30 @@ export default class Character{
         this.currentEvasion = this.baseEvasion;
         this.statusArray = [];//new Poisoned(this), new Burned(this), new Frostbite(this), new Paralyzed(this), new Shielded(this), new Energized(this), new Empowered(this), new Bound(this)
         this.nextMove = "";
-    } 
+    }
+    autoLevelUp(level){
+        this.level = level;
+        for(let i = 1; i < level; i ++){
+            switch(Math.floor(Math.random*6)){
+                case 0:
+                    this.vigor = this.vigor + 1;
+                    break;
+                case 1:
+                    this.endurance = this.endurance + 1;
+                    break;
+                case 2:
+                    this.strength = this.strength + 1;
+                    break;
+                case 3:
+                    this.dexterity = this.dexterity + 1;
+                    break;
+                case 4:
+                    this.insight = this.insight + 1;
+                    break;
+                case 5:
+                    this.focus = this.focus + 1;
+                    break;
+            }
+        }
+    }
 }

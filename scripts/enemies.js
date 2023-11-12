@@ -112,7 +112,7 @@ export class Skeleton extends Enemy{
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [2,6], [2,6], [0,4], [2,3], [2,3], [0,2], [0,2], [1,2], [2,3], [1,3], [1,3]);
         this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/2));
-        this.xp = 35;
+        this.xp = Math.floor(35 * (1 + this.level/10));
     }
 }
 export class Bat extends Enemy{
@@ -157,7 +157,7 @@ export class Bat extends Enemy{
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [2,4], [2,6], [0,4], [1,3], [2,3], [1,2], [1,2], [1,3], [1,3], [1,3], [1,3]);
         this.gold = Math.floor((Math.random() * (10 - 5 + 1) + 5) * (1 + averagePartyLevel/5));
-        this.xp = 20;
+        this.xp = Math.floor(20 * (1 + this.level/10 ));
     }
 }
 export class Wolf extends Enemy{
@@ -202,7 +202,7 @@ export class Wolf extends Enemy{
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [2,6], [4,6], [0,4], [1,3], [2,3], [0,2], [0,2], [1,3], [1,3], [1,3], [1,3]);
         this.gold = Math.floor((Math.random() * (10 - 5 + 1) + 5) * (1 + averagePartyLevel/2));
-        this.xp = 30;
+        this.xp = Math.floor(30 * (1 + this.level/10 ));
     }
 }
 export class AltusMage extends Enemy{
@@ -247,7 +247,7 @@ export class AltusMage extends Enemy{
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [2,6], [0,2], [2,6], [1,3], [0,1], [2,3], [2,3], [1,3], [1,3], [1,3], [1,3]);
         this.gold = Math.floor((Math.random() * (20 - 5 + 1) + 5) * (1 + averagePartyLevel/5));
-        this.xp = 50;
+        this.xp = Math.floor(50 * (1 + this.level/10 ));
     }
 }
 export class CaveSpider extends Enemy{
@@ -292,7 +292,7 @@ export class CaveSpider extends Enemy{
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [2,4], [2,6], [0,4], [1,3], [2,3], [1,2], [1,2], [1,3], [1,3], [1,3], [1,3]);
         this.gold = Math.floor((Math.random() * (10 - 5 + 1) + 5) * (1 + averagePartyLevel/5));
-        this.xp = 20;
+        this.xp = Math.floor(20 * (1 + this.level/10 ));
     }
 }
 export class Groveguardian extends Enemy{
@@ -337,7 +337,7 @@ export class Groveguardian extends Enemy{
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [4,8], [2,4], [0,2], [2,3], [2,3], [0,1], [1,2], [2,3], [1,2], [1,2], [1,3]);
         this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/5));
-        this.xp = 50;
+        this.xp = Math.floor(50 * (1 + this.level/10 ));
     }
 }
 export class EmperorDolos extends Enemy{
@@ -382,7 +382,7 @@ export class EmperorDolos extends Enemy{
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [8,16], [2,6], [1,3], [2,4], [2,4], [2,4], [2,4], [1,3], [1,3], [1,3], [1,3]);
         this.gold = 500;
-        this.xp = 100;
+        this.xp = Math.floor(100 * (1 + this.level/10 ));
     }
 }
 export class TerrorBear extends Enemy{
@@ -428,7 +428,7 @@ export class TerrorBear extends Enemy{
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [4,8], [2,4], [0,2], [2,3], [2,3], [0,1], [1,2], [2,3], [1,2], [1,2], [1,3]);
         this.gold = Math.floor((Math.random() * (15 - 10 + 1) + 10) * (1 + averagePartyLevel/5));
-        this.xp = 75;
+        this.xp = Math.floor(75 * (1 + this.level/10 ));
     }
 }
 export class ShadowStrider extends Enemy{
@@ -474,7 +474,7 @@ export class ShadowStrider extends Enemy{
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [2,6], [2,6], [2,6], [1,3], [2,4], [2,4], [2,4], [1,3], [1,3], [2,4], [1,3]);
         this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/5));
-        this.xp = 40;
+        this.xp = Math.floor(40 * (1 + this.level/10 ));
     }
 }
 export class Bandit extends Enemy{
@@ -521,7 +521,7 @@ export class Bandit extends Enemy{
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [2,6], [2,6], [0,4], [2,3], [2,3], [0,2], [0,2], [1,3], [1,3], [1,3], [1,3]);
         this.gold = Math.floor((Math.random() * (20 - 15 + 1) + 15) * (1 + averagePartyLevel/5));
-        this.xp = 35;
+        this.xp = Math.floor(35 * (1 + this.level/10 ));
     }
 }
 export class SkeletonMage extends Enemy{
@@ -566,7 +566,7 @@ export class SkeletonMage extends Enemy{
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [2,6], [0,4], [2,6], [0,2], [0,2], [2,3], [2,3], [1,2], [2,3], [1,3], [1,3]);
         this.gold = Math.floor((Math.random() * (20 - 15 + 1) + 15) * (1 + averagePartyLevel/5));
-        this.xp = 35;
+        this.xp = Math.floor(35 * (1 + this.level/10 ));
     }
 }
 export class Ghost extends Enemy{
@@ -611,7 +611,7 @@ export class Ghost extends Enemy{
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [2,6], [0,4], [2,6], [0,2], [2,3], [2,3], [0,2], [1,3], [1,3], [1,3], [1,3]);
         this.gold = Math.floor((Math.random() * (20 - 15 + 1) + 15) * (1 + averagePartyLevel/5));
-        this.xp = 50;
+        this.xp = Math.floor(50 * (1 + this.level/10 ));
     }
 }
 

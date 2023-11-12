@@ -13,6 +13,18 @@ import Battle from "./battle.js";
 
 export default class Controller {
     constructor(){
+        this.wanderingCompanions = [
+            new Character(["Gadrum Glorysun", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], this.scaleAttributes(5,5,5,5,5,5), [new Shortsword, new Buckler, "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["William Stillstar", "./media/knight-2.jpg", "mercenary", [5,5,5,5,5,5], this.scaleAttributes(5,5,5,5,5,5), [new Longsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Solair Sulabras", "./media/rogue-1.jpg", "mercenary", [5,5,5,5,5,5], this.scaleAttributes(5,5,5,5,5,5), [new Shortsword, new KiteShield, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Julian Memira", "./media/rogue-2.jpg", "mercenary", [5,5,5,5,5,5], this.scaleAttributes(5,5,5,5,5,5), [new Shortsword, new Buckler, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Nicholi Ninarsk", "./media/mage-1.jpg", "mercenary", [5,5,5,5,5,5], this.scaleAttributes(5,5,5,5,5,5), [new Handaxe, new Handaxe, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Ragnar Ninarsk", "./media/mage-2.jpg", "mercenary", [5,5,5,5,5,5], this.scaleAttributes(5,5,5,5,5,5), [new IceStaff, "Empty", new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Revan Sekrav", "./media/mage-1.jpg", "mercenary", [5,5,5,5,5,5], this.scaleAttributes(5,5,5,5,5,5), [new Dagger, new Shiv, new LeatherHood, new LinenShirt, new LeatherGloves, new LinenPants, new LeatherBoots]]),
+            new Character(["Alina Sulabras", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], this.scaleAttributes(5,5,5,5,5,5), [new Shortsword, new KiteShield, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Ariannel Memira", "./media/knight-2.jpg", "mercenary", [5,5,5,5,5,5], this.scaleAttributes(5,5,5,5,5,5), [new LightStaff, "Empty", new ClothHood, new ClothRobe, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Gwen Swallowtail", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], this.scaleAttributes(5,5,5,5,5,5), [new DarkStaff, "Empty", new ClothHood, new ClothRobe, "Empty", new LinenPants, new LeatherBoots]])
+        ];
         this.characterCreationArray = ["name", "apperance", "background", "attributesArray", "statsArray", "equippedArray"];
         this.map = "";
         this.miniMap = "";
@@ -150,31 +162,31 @@ export default class Controller {
         switch(value){
             case "traveler":
                 equippedArray.push(new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
-                this.partyGold = 200;
+                this.partyGold = 250;
                 break;
             case "blacksmith":
                 equippedArray.push(new BlacksmithHammer, "Empty", new Buckler, new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
-                this.partyGold = 100;
+                this.partyGold = 200;
                 break;
             case "ranger":
                 equippedArray.push(new Shortsword, "Empty", new LeatherHood, new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
-                this.partyGold = 150;
+                this.partyGold = 200;
                 break;
             case "scholar":
                 equippedArray.push(new ArcaneStaff, "Empty", new ClothHood, new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
-                this.partyGold = 100;
+                this.partyGold = 150;
                 break;
             case "warrior":
                 equippedArray.push(new Handaxe, "Empty", "Empty", new LeatherChestplate, new LinenPants, "Empty", new LeatherBoots);
-                this.partyGold = 150;
+                this.partyGold = 200;
                 break;
             case "theif":
                 equippedArray.push(new Dagger, new Shiv, "Empty", new LinenShirt, new LinenPants, "Empty", new LeatherBoots);
-                this.partyGold = 150;
+                this.partyGold = 200;
                 break;
             case "hermit":
                 equippedArray.push(new FireStaff, "Empty", new ClothHood, new LinenShirt, "Empty",  new LinenPants, new LeatherBoots);
-                this.partyGold = 100;
+                this.partyGold = 150;
                 break;
         }
         let value2 = document.getElementById("keepsake-selection").value;
@@ -619,6 +631,17 @@ export default class Controller {
     toggleMapTransitionScreen(){
         this.canMoveRoom = false;
         setTimeout(()=>{
+            for(let i = 0; i < this.party.length; i++){
+                this.party[i].currentHP =  this.party[0].maxHP;
+                this.party[i].currentHP =  this.party[0].maxHP;
+                this.party[i].currentHP =  this.party[0].maxHP;
+                let statusLength = this.party[i].statusArray.length
+                for(let j = 0; j < statusLength; j++){
+                    this.party[i].statusArray[0].onRemove();
+                    this.party[i].statusArray.splice(0,1);
+                }
+            }
+            this.updateCharacterStats();
             document.getElementById('music-player').pause();
             document.getElementById('map-transition-screen').style.display = "block";
             document.getElementById("app").style.display = "none";
@@ -1476,6 +1499,12 @@ export default class Controller {
         }else{
             this.printToGameConsole(`Not enough gold to buy ${this.capitalizeFirstLetter(remainingInventory[index].name)}`)
         }
+    }
+    getWanderingCompanion(){
+        let index = Math.floor(Math.random()*this.wanderingCompanions.length);
+        let companion = this.wanderingCompanions[index];
+        this.wanderingCompanions.splice(index, 1);
+        return companion;
     }
     toggleElementClass(elementId, cssClass){
         document.getElementById(elementId).classList.toggle(cssClass);
