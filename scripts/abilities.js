@@ -265,7 +265,7 @@ export class Slash extends Ability{
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
             if(damageOutput > 0){
-                if(Math.random()*1 < 1){
+                if(Math.random()*10 < 1){
                     for(let i = 0; i < target.statusArray.length; i++){
                         if(target.statusArray[i].name == "bleeding"){
                             return;
