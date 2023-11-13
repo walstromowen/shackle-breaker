@@ -46,6 +46,7 @@ export class Shielded extends StatusEffect{
     constructor(holder){
         super();
         this.type = "buff";
+        this.isCleansable = false;
         this.name = "shielded";
         this.iconSrc = "./media/icons/shielded.png";
         this.holder = holder;
@@ -53,10 +54,10 @@ export class Shielded extends StatusEffect{
         this.currentCharges = this.maxCharges;
     }
     onApplied(){
-        this.holder.currentBluntDefense = this.holder.currentBluntDefense + Math.floor(this.holder.baseBluntDefense*0.5);
-        this.holder.currentPierceDefense = this.holder.currentPierceDefense + Math.floor(this.holder.basePierceDefense*0.5);
-        this.holder.currentArcaneDefense = this.holder.currentArcaneDefense + Math.floor(this.holder.baseArcaneDefense*0.5);
-        this.holder.currentElementalDefense = this.holder.currentElementalDefense + Math.floor(this.holder.baseElementalDefense*0.5);
+        this.holder.currentBluntDefense = this.holder.currentBluntDefense + Math.floor(this.holder.baseBluntDefense*0.75);
+        this.holder.currentPierceDefense = this.holder.currentPierceDefense + Math.floor(this.holder.basePierceDefense*0.75);
+        this.holder.currentArcaneDefense = this.holder.currentArcaneDefense + Math.floor(this.holder.baseArcaneDefense*0.75);
+        this.holder.currentElementalDefense = this.holder.currentElementalDefense + Math.floor(this.holder.baseElementalDefense*0.75);
     }
     onRecieveDamage(){
         this.currentCharges = 0;
@@ -65,20 +66,21 @@ export class Shielded extends StatusEffect{
         this.currentCharges = 0;
     }
     onRemove(){
-        this.holder.currentBluntDefense = this.holder.currentBluntDefense - Math.floor(this.holder.baseBluntDefense*0.5);
-        this.holder.currentPierceDefense = this.holder.currentPierceDefense - Math.floor(this.holder.basePierceDefense*0.5);
-        this.holder.currentArcaneDefense = this.holder.currentArcaneDefense - Math.floor(this.holder.baseArcaneDefense*0.5);
-        this.holder.currentElementalDefense = this.holder.currentElementalDefense - Math.floor(this.holder.baseElementalDefense*0.5);
+        this.holder.currentBluntDefense = this.holder.currentBluntDefense - Math.floor(this.holder.baseBluntDefense*0.75);
+        this.holder.currentPierceDefense = this.holder.currentPierceDefense - Math.floor(this.holder.basePierceDefense*0.75);
+        this.holder.currentArcaneDefense = this.holder.currentArcaneDefense - Math.floor(this.holder.baseArcaneDefense*0.75);
+        this.holder.currentElementalDefense = this.holder.currentElementalDefense - Math.floor(this.holder.baseElementalDefense*0.75);
     }
 }
 export class Bound extends StatusEffect{
     constructor(holder){
         super();
         this.type = "end";
+        this.isCleansable = true;
         this.name = "bound";
         this.iconSrc = "./media/icons/crossed-chains.png";
         this.holder = holder;
-        this.maxCharges = 2;
+        this.maxCharges = 3;
         this.currentCharges = this.maxCharges;
     }
     onStartTurn(){
@@ -101,12 +103,13 @@ export class Poisoned extends StatusEffect{
     constructor(holder){
         super();
         this.type = "end";
+        this.isCleansable = true;
         this.name = "poisoned";
         this.iconSrc = "./media/icons/poison.png";
         this.holder = holder;
-        this.maxCharges = 10;
+        this.maxCharges = 8;
         this.currentCharges = this.maxCharges;
-        this.serverityMultiplier = 0.05;
+        this.serverityMultiplier = 0.08;
     }
     onEndTurn(){
         let damageOutput = Math.floor(this.holder.maxHP*this.serverityMultiplier);
@@ -122,6 +125,7 @@ export class Burned extends StatusEffect{
     constructor(holder){
         super();
         this.type = "end";
+        this.isCleansable = true;
         this.name = "burned";
         this.iconSrc = "./media/icons/flame.png";
         this.holder = holder;
@@ -145,6 +149,7 @@ export class Empowered extends StatusEffect{
     constructor(holder){
         super();
         this.type = "end";
+        this.isCleansable = false;
         this.name = "empowered";
         this.iconSrc = "./media/icons/crystal-ball.png";
         this.holder = holder;
@@ -156,18 +161,19 @@ export class Empowered extends StatusEffect{
         this.currentCharges = this.currentCharges - 1;
     }
     onApplied(){
-        this.holder.currentArcaneAttack = this.holder.currentArcaneAttack + 3;
-        this.holder.currentElementalAttack = this.holder.currentElementalAttack + 3;
+        this.holder.currentArcaneAttack = this.holder.currentArcaneAttack + 6;
+        this.holder.currentElementalAttack = this.holder.currentElementalAttack + 6;
     }
     onRemove(){
-        this.holder.currentArcaneAttack = this.holder.currentArcaneAttack - 3;
-        this.holder.currentElementalAttack = this.holder.currentElementalAttack - 3;
+        this.holder.currentArcaneAttack = this.holder.currentArcaneAttack - 6;
+        this.holder.currentElementalAttack = this.holder.currentElementalAttack - 6;
     }
 }
 export class Paralyzed extends StatusEffect{
     constructor(holder){
         super();
         this.type = "start";
+        this.isCleansable = true;
         this.name = "paralyzed";
         this.iconSrc = "./media/icons/electric.png";
         this.holder = holder;
@@ -184,6 +190,7 @@ export class Channeled extends StatusEffect{
     constructor(holder){
         super();
         this.type = "end";
+        this.isCleansable = false;
         this.name = "channeled";
         this.iconSrc = "./media/icons/up-card-blue.png";
         this.holder = holder;
@@ -204,6 +211,7 @@ export class Invigorated extends StatusEffect{
     constructor(holder){
         super();
         this.type = "end";
+        this.isCleansable = false;
         this.name = "invigorated";
         this.iconSrc = "./media/icons/up-card-green.png";
         this.holder = holder;
@@ -224,10 +232,11 @@ export class Frostbite extends StatusEffect{
     constructor(holder){
         super();
         this.type = "start";
+        this.isCleansable = true;
         this.name = "frostbite";
         this.iconSrc = "./media/icons/frozen-block.png";
         this.holder = holder;
-        this.maxCharges = 5;
+        this.maxCharges = 4;
         this.currentCharges = this.maxCharges;
         this.serverityMultiplier = 0.05;
     }
@@ -251,10 +260,11 @@ export class Hidden extends StatusEffect{
     constructor(holder){
         super();
         this.type = "end";
+        this.isCleansable = false;
         this.name = "hidden";
         this.iconSrc = "./media/icons/hidden.png";
         this.holder = holder;
-        this.maxCharges = 2;
+        this.maxCharges = 3;
         this.currentCharges = this.maxCharges;
     }
     onEndTurn(){
@@ -288,20 +298,28 @@ export class Bleeding extends StatusEffect{
     constructor(holder){
         super();
         this.type = "end";
+        this.isCleansable = true;
         this.name = "bleeding";
-        this.iconSrc = "./media/icons/up-card-green.png";
+        this.iconSrc = "./media/icons/ragged-wound.png";
         this.holder = holder;
         this.maxCharges = 6;
         this.currentCharges = this.maxCharges;
+        this.serverityMultiplier = 0.06;
     }
     onEndTurn(){
-        let damageOutput = Math.floor(this.holder.maxStamina*0.15);
-        theController.animateVitalBar(holder, "health");
-        if(damageOutput == 0){
-            damageOutput = 1;
+        let damageOutput = Math.floor(this.holder.maxHP*this.serverityMultiplier);
+        this.serverityMultiplier = this.serverityMultiplier + 0.04;
+        if(this.holder.currentStamina <= 0){
+            damageOutput = this.checkDamage(damageOutput, this.holder);
+            this.holder.currentHP = this.holder.currentHP - damageOutput;
+            theController.printToGameConsole(`${this.holder.name} bleeds for ${damageOutput} damage!`);
+        }else{
+            if(this.holder.currentStamina - damageOutput < 0){
+                damageOutput = this.holder.currentStamina
+            }
+            theController.animateVitalBar(this.holder, "stamina");
+            theController.printToGameConsole(`${this.holder.name} bleeds for ${damageOutput} stamina damage!`);
         }
-        this.holder.currentHP = this.holder.currentHP - damageOutput;
-        theController.printToGameConsole(`${this.holder.name} suffers ${damageOutput} burn damage!`);
         this.currentCharges = this.currentCharges - 1;
     }
 }

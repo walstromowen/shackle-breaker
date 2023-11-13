@@ -2,7 +2,7 @@ import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Clea
         ThrowNet, Immolate, LightningBolt, Shockwave, Recuperate, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Channel, ThrowSmokebomb, BlinkStrike} from "./abilities.js"
 
 export function getRandomItem(){
-    let itemArray = [new LinenShirt, new LinenPants, new Dagger, new BlacksmithHammer, new Spear, new Shortsword, new Longsword, new Handaxe,
+    let itemArray = [new LinenShirt, new LinenPants, new Dagger, new BlacksmithHammer, new Spear, new Shortsword, new Longsword, new Handaxe, new NamuhSword,
                 new Shiv, new Buckler, new FireStaff, new LightningStaff, new IceStaff, new ArcaneStaff, new LightStaff, new DarkStaff, new LeatherHelmet, 
                 new LeatherHood, new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
                 new LeatherBoots, new KiteShield, new IronHelmet, new IronGauntlets, new IronChainmail, 
@@ -44,7 +44,7 @@ export class LinenShirt {
             this.arcaneDefense = this.arcaneDefense + 1;
             this.elementalDefense = this.elementalDefense + 1;
             this.speed = this.speed + 0;
-            this.evasion = this.evasion + 1;
+            this.evasion = this.evasion + 0;
         }
     }
 }
@@ -81,7 +81,7 @@ export class LinenPants {
             this.arcaneDefense = this.arcaneDefense + 1;
             this.elementalDefense = this.elementalDefense + 1;
             this.speed = this.speed + 0;
-            this.evasion = this.evasion + 1;
+            this.evasion = this.evasion + 0;
         }
     }
 }
@@ -101,8 +101,8 @@ export class Dagger {
         this.pierceDefense = 0;
         this.arcaneDefense = 0;
         this.elementalDefense = 0;
-        this.speed = 3;
-        this.evasion = 0;
+        this.speed = 1;
+        this.evasion = 1;
         this.abilityArray = [new Stab(), new Slash()];
     }
     upgrade(levels){
@@ -231,7 +231,7 @@ export class Shortsword {
             this.pierceDefense = this.pierceDefense + 0;
             this.arcaneDefense = this.arcaneDefense + 0;
             this.elementalDefense = this.elementalDefense + 0;
-            this.speed = this.speed + 0;
+            this.speed = this.speed + 1;
             this.evasion = this.evasion + 0;
         }
         if(this.level == 3){
@@ -340,11 +340,11 @@ export class WarHammer {
         for(let i = 0; i < levels; i++){
             this.level = this.level + 1;
             this.price = Math.floor(this.price * 1.5);
-            this.bluntAttack = this.bluntAttack + 4;
-            this.pierceAttack = this.pierceAttack + 1;
+            this.bluntAttack = this.bluntAttack + 5;
+            this.pierceAttack = this.pierceAttack + 2;
             this.arcaneAttack = this.arcaneAttack + 0;
             this.elementalAttack = this.elementalAttack + 0;
-            this.bluntDefense = this.bluntDefense + 0;
+            this.bluntDefense = this.bluntDefense + 1;
             this.pierceDefense = this.pierceDefense + 0;
             this.arcaneDefense = this.arcaneDefense + 0;
             this.elementalDefense = this.elementalDefense + 0;
@@ -378,7 +378,7 @@ export class Shiv {
             this.level = this.level + 1;
             this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 0;
-            this.pierceAttack = this.pierceAttack + 1;
+            this.pierceAttack = this.pierceAttack + 2;
             this.arcaneAttack = this.arcaneAttack + 0;
             this.elementalAttack = this.elementalAttack + 0;
             this.bluntDefense = this.bluntDefense + 0;
@@ -437,7 +437,7 @@ export class FireStaff {
         this.price = 200;
         this.bluntAttack = 1;
         this.pierceAttack = 0;
-        this.arcaneAttack = 1;
+        this.arcaneAttack = 0;
         this.elementalAttack = 3;
         this.bluntDefense = 0;
         this.pierceDefense = 0;
@@ -452,9 +452,9 @@ export class FireStaff {
             this.level = this.level + 1;
             this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 1;
-            this.pierceAttack = this.pierceAttack + 1;
-            this.arcaneAttack = this.arcaneAttack + 1;
-            this.elementalAttack = this.elementalAttack + 2;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 3;
             this.bluntDefense = this.bluntDefense + 0;
             this.pierceDefense = this.pierceDefense + 0;
             this.arcaneDefense = this.arcaneDefense + 0;
@@ -474,7 +474,7 @@ export class LightningStaff {
         this.price = 200;
         this.bluntAttack = 1;
         this.pierceAttack = 0;
-        this.arcaneAttack = 1;
+        this.arcaneAttack = 0;
         this.elementalAttack = 3;
         this.bluntDefense = 0;
         this.pierceDefense = 0;
@@ -489,9 +489,9 @@ export class LightningStaff {
             this.level = this.level + 1;
             this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 1;
-            this.pierceAttack = this.pierceAttack + 1;
-            this.arcaneAttack = this.arcaneAttack + 1;
-            this.elementalAttack = this.elementalAttack + 2;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 3;
             this.bluntDefense = this.bluntDefense + 0;
             this.pierceDefense = this.pierceDefense + 0;
             this.arcaneDefense = this.arcaneDefense + 0;
@@ -526,9 +526,9 @@ export class IceStaff {
             this.level = this.level + 1;
             this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 1;
-            this.pierceAttack = this.pierceAttack + 1;
-            this.arcaneAttack = this.arcaneAttack + 1;
-            this.elementalAttack = this.elementalAttack + 2;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 3;
             this.bluntDefense = this.bluntDefense + 0;
             this.pierceDefense = this.pierceDefense + 0;
             this.arcaneDefense = this.arcaneDefense + 0;
@@ -549,7 +549,7 @@ export class ArcaneStaff {
         this.bluntAttack = 1;
         this.pierceAttack = 0;
         this.arcaneAttack = 3;
-        this.elementalAttack = 1;
+        this.elementalAttack = 0;
         this.bluntDefense = 0;
         this.pierceDefense = 0;
         this.arcaneDefense = 1;
@@ -563,9 +563,9 @@ export class ArcaneStaff {
             this.level = this.level + 1;
             this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 1;
-            this.pierceAttack = this.pierceAttack + 1;
-            this.arcaneAttack = this.arcaneAttack + 1;
-            this.elementalAttack = this.elementalAttack + 2;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 3;
+            this.elementalAttack = this.elementalAttack + 0;
             this.bluntDefense = this.bluntDefense + 0;
             this.pierceDefense = this.pierceDefense + 0;
             this.arcaneDefense = this.arcaneDefense + 1;
@@ -583,10 +583,10 @@ export class LightStaff {
         this.description = `A wooden staff imbued with light. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time`;
         this.level = 1;
         this.price = 200;
-        this.bluntAttack = 0;
+        this.bluntAttack = 1;
         this.pierceAttack = 0;
-        this.arcaneAttack = 2;
-        this.elementalAttack = 2;
+        this.arcaneAttack = 3;
+        this.elementalAttack = 0;
         this.bluntDefense = 0;
         this.pierceDefense = 0;
         this.arcaneDefense = 1;
@@ -600,9 +600,9 @@ export class LightStaff {
             this.level = this.level + 1;
             this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 1;
-            this.pierceAttack = this.pierceAttack + 1;
-            this.arcaneAttack = this.arcaneAttack + 1;
-            this.elementalAttack = this.elementalAttack + 2;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 3;
             this.bluntDefense = this.bluntDefense + 0;
             this.pierceDefense = this.pierceDefense + 0;
             this.arcaneDefense = this.arcaneDefense + 1;
@@ -620,10 +620,10 @@ export class DarkStaff {
         this.description = `A wooden staff imbued with darkness. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time`;
         this.level = 1;
         this.price = 200;
-        this.bluntAttack = 0;
+        this.bluntAttack = 1;
         this.pierceAttack = 0;
         this.arcaneAttack = 3;
-        this.elementalAttack = 1;
+        this.elementalAttack = 0;
         this.bluntDefense = 0;
         this.pierceDefense = 0;
         this.arcaneDefense = 1;
@@ -637,9 +637,9 @@ export class DarkStaff {
             this.level = this.level + 1;
             this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 1;
-            this.pierceAttack = this.pierceAttack + 1;
-            this.arcaneAttack = this.arcaneAttack + 1;
-            this.elementalAttack = this.elementalAttack + 2;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 3;
+            this.elementalAttack = this.elementalAttack + 0;
             this.bluntDefense = this.bluntDefense + 0;
             this.pierceDefense = this.pierceDefense + 0;
             this.arcaneDefense = this.arcaneDefense + 1;
@@ -1200,7 +1200,7 @@ export class CrystalBall {
             this.arcaneDefense = this.arcaneDefense + 1;
             this.elementalDefense = this.elementalDefense + 1;
             this.speed = this.speed + 0;
-            this.evasion = this.evasion + 0;
+            this.evasion = this.evasion + 1;
         }
     }
 }

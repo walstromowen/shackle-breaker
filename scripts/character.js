@@ -48,7 +48,7 @@ export default class Character{
     autoLevelUp(level){
         this.level = level;
         for(let i = 1; i < level; i ++){
-            switch(Math.floor(Math.random*6)){
+            switch(Math.floor(Math.random()*6)){
                 case 0:
                     this.vigor = this.vigor + 1;
                     break;

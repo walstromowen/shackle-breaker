@@ -633,8 +633,8 @@ export default class Controller {
         setTimeout(()=>{
             for(let i = 0; i < this.party.length; i++){
                 this.party[i].currentHP =  this.party[0].maxHP;
-                this.party[i].currentHP =  this.party[0].maxHP;
-                this.party[i].currentHP =  this.party[0].maxHP;
+                this.party[i].currentStamina =  this.party[0].maxStamina;
+                this.party[i].currentMagic =  this.party[0].maxMagic;
                 let statusLength = this.party[i].statusArray.length
                 for(let j = 0; j < statusLength; j++){
                     this.party[i].statusArray[0].onRemove();

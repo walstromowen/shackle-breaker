@@ -144,7 +144,7 @@ export class Bat extends Enemy{
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 30;
         this.currentSpeed = this.baseSpeed;
-        this.baseEvasion = 20;
+        this.baseEvasion = 18;
         this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Bite, new LeechLife];
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot

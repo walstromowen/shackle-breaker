@@ -467,8 +467,8 @@ export class DefendTraveler extends Encounter{
 export class AssistVictim extends Encounter{
     constructor(){
         super();
-        this.name = "assist victim";
         this.companion = theController.getWanderingCompanion();
+        this.name = this.companion.name;
         this.messageFunction = ()=>{theController.printToGameConsole(`"you saved me! If there is anything I can do for you just ask!`)};
         this.imageSrc = this.companion.apperance;
         this.decisionArray = [
@@ -504,7 +504,7 @@ export class MercenaryForHire extends Encounter{
     constructor(){
         super();
         this.companion = theController.getWanderingCompanion();
-        this.name = `mercenary for hire`;
+        this.name = this.companion.name;
         this.messageFunction = ()=>{theController.printToGameConsole(`"The name's ${this.companion.name}. I'm always willing to help ... for a price`)};
         this.imageSrc = this.companion.apperance;
         this.decisionArray = [
