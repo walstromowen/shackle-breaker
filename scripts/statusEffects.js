@@ -318,6 +318,7 @@ export class Bleeding extends StatusEffect{
                 damageOutput = this.holder.currentStamina
             }
             theController.animateVitalBar(this.holder, "stamina");
+            this.holder.currentStamina = this.holder.currentStamina - damageOutput;
             theController.printToGameConsole(`${this.holder.name} bleeds for ${damageOutput} stamina damage!`);
         }
         this.currentCharges = this.currentCharges - 1;
