@@ -573,7 +573,7 @@ export class Ghost extends Enemy{
     constructor(averagePartyLevel){
         super();
         this.name = "ghost";
-        this.imageSrc = "media/shost.jpg"
+        this.imageSrc = "media/ghost.jpg"
         this.maxHP = 35;
         this.currentHP = this.maxHP;
         this.maxStamina = 35;

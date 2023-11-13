@@ -306,7 +306,7 @@ export class GuardBreak extends Ability{
             }
             let damageOutput1 = this.checkDamage(damageOutput, weilder, target, this.type);
             damageOutput1 = Math.floor(damageOutput1/2)
-            let damageOutput2 = damageOutput - target.currentBluntDefense + target.currentElementalDefense;
+            let damageOutput2 = damageOutput - (target.currentBluntDefense + target.currentElementalDefense);
             if(target.currentStamina - damageOutput2 < 0){
                 damageOutput2 = target.currentStamina;
             }
@@ -777,7 +777,7 @@ export class Shockwave extends Ability{
             }
             let damageOutput1 = this.checkDamage(damageOutput, weilder, target, this.type);
             damageOutput1 = Math.floor(damageOutput1/2)
-            let damageOutput2 = damageOutput - target.currentBluntDefense + target.currentElementalDefense;
+            let damageOutput2 = damageOutput - (target.currentBluntDefense + target.currentElementalDefense);
             if(target.currentStamina - damageOutput2 < 0){
                 damageOutput2 = target.currentStamina;
             }
