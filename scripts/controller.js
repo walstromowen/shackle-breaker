@@ -1421,7 +1421,7 @@ export default class Controller {
         this.nextRoom = this.currentRoom;
     }
     endBattle(){
-        if(this.party[0].currentHP <= 0){
+        if(this.party.length <= 0){
             this.disableCharacterBattleControls();
             setTimeout(()=>{
                 document.getElementById('music-player').pause();
