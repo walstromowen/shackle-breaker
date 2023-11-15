@@ -1,5 +1,5 @@
 import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, GuardBreak, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
-        ThrowNet, Immolate, LightningBolt, Shockwave, Recuperate, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Channel, ThrowSmokebomb, CastShadow, BlinkStrike} from "./abilities.js"
+        ThrowNet, Immolate, LightningBolt, Shockwave, Recuperate, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Channel, ThrowSmokebomb, CastShadow, BlinkStrike, Empower} from "./abilities.js"
 
 export function getRandomItem(){
     let itemArray = [new LinenShirt, new LinenPants, new Dagger, new BlacksmithHammer, new Spear, new Shortsword, new Longsword, new Handaxe, new NamuhSword,
@@ -257,7 +257,7 @@ export class Handaxe {
         this.elementalDefense = 0;
         this.speed = 2;
         this.evasion = 0;
-        this.abilityArray = [new Strike(), new Slash(), new GuardBreak()];
+        this.abilityArray = [new Strike(), new Slash()];
     }
     upgrade(levels){
         for(let i = 0; i < levels; i++){
@@ -273,6 +273,9 @@ export class Handaxe {
             this.elementalDefense = this.elementalDefense + 0;
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
+        }
+        if(this.level == 3){
+            this.abilityArray.push(new GuardBreak());
         }
     }
 }
@@ -667,7 +670,7 @@ export class LeatherHelmet {
         this.elementalDefense = 2;
         this.speed = 1;
         this.evasion = 1;
-        this.abilityArray = [];
+        this.abilityArray = [new Recuperate()];
     }
     upgrade(levels){
         for(let i = 0; i < levels; i++){
@@ -741,7 +744,7 @@ export class LeatherGloves {
         this.elementalDefense = 2;
         this.speed = 1;
         this.evasion = 1;
-        this.abilityArray = [];
+        this.abilityArray = [new Recuperate()];
     }
     upgrade(levels){
         for(let i = 0; i < levels; i++){
@@ -778,7 +781,7 @@ export class LeatherChestplate {
         this.elementalDefense = 2;
         this.speed = 1;
         this.evasion = 1;
-        this.abilityArray = [];
+        this.abilityArray = [new Recuperate()];
     }
     upgrade(levels){
         for(let i = 0; i < levels; i++){
@@ -815,7 +818,7 @@ export class LeatherGreaves {
         this.elementalDefense = 2;
         this.speed = 1;
         this.evasion = 1;
-        this.abilityArray = [];
+        this.abilityArray = [new Recuperate()];
     }
     upgrade(levels){
         for(let i = 0; i < levels; i++){
@@ -852,7 +855,7 @@ export class LeatherBoots {
         this.elementalDefense = 2;
         this.speed = 1;
         this.evasion = 1;
-        this.abilityArray = [];
+        this.abilityArray = [new Recuperate()];
     }
     upgrade(levels){
         for(let i = 0; i < levels; i++){
@@ -1148,7 +1151,7 @@ export class ClothRobe {
         this.elementalDefense = 4;
         this.speed = -1;
         this.evasion = -1;
-        this.abilityArray = [];
+        this.abilityArray = [new Channel()];
     }
     upgrade(levels){
         for(let i = 0; i < levels; i++){
@@ -1185,7 +1188,7 @@ export class CrystalBall {
         this.elementalDefense = 2;
         this.speed = -2;
         this.evasion = 2;
-        this.abilityArray = [new Channel()];
+        this.abilityArray = [new Empower];
     }
     upgrade(levels){
         for(let i = 0; i < levels; i++){

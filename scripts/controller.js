@@ -28,10 +28,9 @@ export default class Controller {
         this.characterCreationArray = ["name", "apperance", "background", "attributesArray", "statsArray", "equippedArray"];
         this.map = "";
         this.miniMap = "";
-        this.currentCharacter = "";
         this.battle = "";
         this.party = []
-        this.partInventory = [];
+        this.partyInventory = [];
         this.partyGold = 0;
         this.encounter = "";
         this.mapBtnArray = [];
@@ -72,8 +71,7 @@ export default class Controller {
             }
             this.characterCreationArray[1] = document.getElementById("apperance-selection").value;
             this.characterCreationArray[2] = document.getElementById("background-selection").value;
-            this.currentCharacter = new Character(this.characterCreationArray);
-            this.party.push(this.currentCharacter);
+            this.party[0] = new Character(this.characterCreationArray);
             this.party.push(new Character(["kurtus", "media/kurty.jpg", "traveler", [100, 100, 100, 100, 100, 100], this.scaleAttributes(100, 100, 100, 100, 100, 100), [new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]));
            
             this.map = new Map("basic", "random");
@@ -364,7 +362,7 @@ export default class Controller {
             document.getElementById('secondary-stats-tab').style.display = "none";
             document.getElementById('party-tab').style.display = "block";
         });
-        for(let i = 0; i < this.currentCharacter.equippedArray.length; i++){
+        for(let i = 0; i < this.party[0].equippedArray.length; i++){
             document.getElementById('unequip-btn-' + i).addEventListener('click', ()=>{
                 this.unequip(i);
             });
@@ -437,40 +435,40 @@ export default class Controller {
             if(levelCheck == true){
                 switch(selectedStat){
                     case "vigor":
-                        this.currentCharacter.vigor = this.currentCharacter.vigor + 1;
+                        this.party[0].vigor = this.party[0].vigor + 1;
                         break;
                     case "endurance":
-                        this.currentCharacter.endurance = this.currentCharacter.endurance + 1;
+                        this.party[0].endurance = this.party[0].endurance + 1;
                         break;
                     case "strength":
-                        this.currentCharacter.strength = this.currentCharacter.strength + 1;
+                        this.party[0].strength = this.party[0].strength + 1;
                         break;
                     case "dexterity":
-                        this.currentCharacter.dexterity = this.currentCharacter.dexterity + 1;
+                        this.party[0].dexterity = this.party[0].dexterity + 1;
                         break;
                     case "insight":
-                        this.currentCharacter.insight = this.currentCharacter.insight + 1;
+                        this.party[0].insight = this.party[0].insight + 1;
                         break;
                     case "focus":
-                        this.currentCharacter.focus = this.currentCharacter.focus + 1;
+                        this.party[0].focus = this.party[0].focus + 1;
                         break;
                 }
-                let newStats = this.scaleAttributes(this.currentCharacter.vigor, this.currentCharacter.endurance, this.currentCharacter.strength, this.currentCharacter.dexterity, this.currentCharacter.insight, this.currentCharacter.focus);
-                this.currentCharacter.maxHP = newStats[0];
-                this.currentCharacter.maxStamina = newStats[1];
-                this.currentCharacter.maxMagic = newStats[2];
-                this.currentCharacter.baseBluntAttack = newStats[3];
-                this.currentCharacter.basePierceAttack = newStats[4];
-                this.currentCharacter.baseArcaneAttack = newStats[5];
-                this.currentCharacter.baseElementalAttack = newStats[6];
-                this.currentCharacter.baseBluntDefense = newStats[7];
-                this.currentCharacter.basePierceDefense = newStats[8];
-                this.currentCharacter.baseArcaneDefense = newStats[9];
-                this.currentCharacter.baseElementalDefense = newStats[10];
-                this.currentCharacter.currentHP = this.currentCharacter.maxHP;
-                this.currentCharacter.currentStamina = this.currentCharacter.maxStamina;
-                this.currentCharacter.currentMagic = this.currentCharacter.maxMagic;
-                this.calcCharacterAbilitiesAndStats();
+                let newStats = this.scaleAttributes(this.party[0].vigor, this.party[0].endurance, this.party[0].strength, this.party[0].dexterity, this.party[0].insight, this.party[0].focus);
+                this.party[0].maxHP = newStats[0];
+                this.party[0].maxStamina = newStats[1];
+                this.party[0].maxMagic = newStats[2];
+                this.party[0].baseBluntAttack = newStats[3];
+                this.party[0].basePierceAttack = newStats[4];
+                this.party[0].baseArcaneAttack = newStats[5];
+                this.party[0].baseElementalAttack = newStats[6];
+                this.party[0].baseBluntDefense = newStats[7];
+                this.party[0].basePierceDefense = newStats[8];
+                this.party[0].baseArcaneDefense = newStats[9];
+                this.party[0].baseElementalDefense = newStats[10];
+                this.party[0].currentHP = this.party[0].maxHP;
+                this.party[0].currentStamina = this.party[0].maxStamina;
+                this.party[0].currentMagic = this.party[0].maxMagic;
+                this.calcCharacterAbilitiesAndStats(0);
                 this.updateCharacterStats();
                 document.getElementById("app").style.display = "block";
                 document.getElementById('level-up-screen').style.display = "none";
@@ -486,10 +484,10 @@ export default class Controller {
         }
         this.battleBtnArray = [];
         //Add New Ability Buttons
-        for(let x = 0; x < this.currentCharacter.abilityArray.length; x++){
+        for(let x = 0; x < this.party[0].abilityArray.length; x++){
             let abilityBtn = document.createElement('button');
             abilityBtn.classList.add('action-button');
-            abilityBtn.innerText = this.capitalizeFirstLetter(this.currentCharacter.abilityArray[x].name);
+            abilityBtn.innerText = this.capitalizeFirstLetter(this.party[0].abilityArray[x].name);
             abilityBtn.addEventListener('click', ()=>{
                 this.battle.determineFirstTurn(x);
             });
@@ -522,7 +520,7 @@ export default class Controller {
             decisionBtn.innerText = this.capitalizeFirstLetter(this.encounter.decisionArray[x].name);
             decisionBtn.addEventListener('click', ()=>{
                 this.disableCharacterEncounterControls();
-                this.encounter.decisionArray[x].activate(this.currentCharacter);
+                this.encounter.decisionArray[x].activate(this.party[0]);
             });
             document.getElementById('encounter-button-container').appendChild(decisionBtn);
             this.encounterBtnArray.push(decisionBtn);
@@ -594,9 +592,9 @@ export default class Controller {
             document.getElementById("encounter-image-container").style.display = "none";
             this.enableCharacterBattleControls();
             if(this.battle.hostileParty[0].name.charAt(0) == "a" || this.battle.hostileParty[0].name.charAt(0) == "e" || this.battle.hostileParty[0].name.charAt(0) == "i" || this.battle.hostileParty[0].name.charAt(0) == "o" || this.battle.hostileParty[0].name.charAt(0) == "u"){
-                this.printToGameConsole(`${this.currentCharacter.name} encounters an ${this.battle.hostileParty[0].name}!`);
+                this.printToGameConsole(`${this.party[0].name} encounters an ${this.battle.hostileParty[0].name}!`);
             }else{
-                this.printToGameConsole(`${this.currentCharacter.name} encounters a ${this.battle.hostileParty[0].name}!`);
+                this.printToGameConsole(`${this.party[0].name} encounters a ${this.battle.hostileParty[0].name}!`);
             }
             document.getElementById('music-player').pause();
             if(enemyArray[0].isBoss == true){
@@ -913,51 +911,51 @@ export default class Controller {
         document.getElementById("current-gold").innerText = this.partyGold;
     }
     updateCharacterStats(){
-        document.getElementById('current-character-name').innerText = this.currentCharacter.name;
-        document.getElementById('current-character-image').src = this.currentCharacter.apperance;
-        document.getElementById('current-health-current-character').innerText = this.currentCharacter.currentHP;
-        document.getElementById('current-stamina-current-character').innerText = this.currentCharacter.currentStamina;
-        document.getElementById('current-magic-current-character').innerText = this.currentCharacter.currentMagic;
-        document.getElementById('health-bar-current-character-progress').style.width = Math.floor(this.currentCharacter.currentHP/this.currentCharacter.maxHP*100) + "%";
-        document.getElementById('stamina-bar-current-character-progress').style.width = Math.floor(this.currentCharacter.currentStamina/this.currentCharacter.maxStamina*100) + "%";
-        document.getElementById('magic-bar-current-character-progress').style.width = Math.floor(this.currentCharacter.currentMagic/this.currentCharacter.maxMagic*100) + "%";
-        document.getElementById('current-character-level-label').innerText = "★ " + this.currentCharacter.level;
-        document.getElementById('current-vigor').innerText = this.currentCharacter.vigor;
-        document.getElementById('current-endurance').innerText = this.currentCharacter.endurance;
-        document.getElementById('current-strength').innerText = this.currentCharacter.strength;
-        document.getElementById('current-dexterity').innerText = this.currentCharacter.dexterity;
-        document.getElementById('current-insight').innerText = this.currentCharacter.insight;
-        document.getElementById('current-focus').innerText = this.currentCharacter.focus;
-        document.getElementById('current-speed').innerText = this.currentCharacter.currentSpeed;
-        document.getElementById('current-evasion').innerText = this.currentCharacter.currentEvasion;
-        document.getElementById('current-blunt-attack').innerText = this.currentCharacter.currentBluntAttack; 
-        document.getElementById('current-pierce-attack').innerText = this.currentCharacter.currentPierceAttack;
-        document.getElementById('current-arcane-attack').innerText = this.currentCharacter.currentArcaneAttack; 
-        document.getElementById('current-element-attack').innerText = this.currentCharacter.currentElementalAttack;
-        document.getElementById('current-blunt-defense').innerText = this.currentCharacter.currentBluntDefense; 
-        document.getElementById('current-pierce-defense').innerText = this.currentCharacter.currentPierceDefense;
-        document.getElementById('current-arcane-defense').innerText = this.currentCharacter.currentArcaneDefense; 
-        document.getElementById('current-element-defense').innerText = this.currentCharacter.currentElementalDefense;
-        document.getElementById('current-experience').innerText = this.currentCharacter.currentXP + " / " + Math.floor(((this.currentCharacter.level + 10)**2)*0.5);
+        document.getElementById('current-character-name').innerText = this.party[0].name;
+        document.getElementById('current-character-image').src = this.party[0].apperance;
+        document.getElementById('current-health-current-character').innerText = this.party[0].currentHP;
+        document.getElementById('current-stamina-current-character').innerText = this.party[0].currentStamina;
+        document.getElementById('current-magic-current-character').innerText = this.party[0].currentMagic;
+        document.getElementById('health-bar-current-character-progress').style.width = Math.floor(this.party[0].currentHP/this.party[0].maxHP*100) + "%";
+        document.getElementById('stamina-bar-current-character-progress').style.width = Math.floor(this.party[0].currentStamina/this.party[0].maxStamina*100) + "%";
+        document.getElementById('magic-bar-current-character-progress').style.width = Math.floor(this.party[0].currentMagic/this.party[0].maxMagic*100) + "%";
+        document.getElementById('current-character-level-label').innerText = "★ " + this.party[0].level;
+        document.getElementById('current-vigor').innerText = this.party[0].vigor;
+        document.getElementById('current-endurance').innerText = this.party[0].endurance;
+        document.getElementById('current-strength').innerText = this.party[0].strength;
+        document.getElementById('current-dexterity').innerText = this.party[0].dexterity;
+        document.getElementById('current-insight').innerText = this.party[0].insight;
+        document.getElementById('current-focus').innerText = this.party[0].focus;
+        document.getElementById('current-speed').innerText = this.party[0].currentSpeed;
+        document.getElementById('current-evasion').innerText = this.party[0].currentEvasion;
+        document.getElementById('current-blunt-attack').innerText = this.party[0].currentBluntAttack; 
+        document.getElementById('current-pierce-attack').innerText = this.party[0].currentPierceAttack;
+        document.getElementById('current-arcane-attack').innerText = this.party[0].currentArcaneAttack; 
+        document.getElementById('current-element-attack').innerText = this.party[0].currentElementalAttack;
+        document.getElementById('current-blunt-defense').innerText = this.party[0].currentBluntDefense; 
+        document.getElementById('current-pierce-defense').innerText = this.party[0].currentPierceDefense;
+        document.getElementById('current-arcane-defense').innerText = this.party[0].currentArcaneDefense; 
+        document.getElementById('current-element-defense').innerText = this.party[0].currentElementalDefense;
+        document.getElementById('current-experience').innerText = this.party[0].currentXP + " / " + Math.floor(((this.party[0].level + 10)**2)*0.5);
         document.getElementById('current-gold').innerText = this.partyGold;
-        for(let i = -1; i < this.currentCharacter.statusArray.length; i++){
+        for(let i = -1; i < this.party[0].statusArray.length; i++){
             let oldIcon = document.getElementById('current-character-status-icon-container').querySelector('img');
             if(oldIcon !== null){
                 oldIcon.remove();
             } 
         }
-        for(let i = 0; i < this.currentCharacter.statusArray.length; i++){
+        for(let i = 0; i < this.party[0].statusArray.length; i++){
         
-            if(this.currentCharacter.statusArray[i].iconSrc != ""){
+            if(this.party[0].statusArray[i].iconSrc != ""){
                 let statusIcon = document.createElement('img');
                 statusIcon.classList.add('status-icon');
-                statusIcon.src = this.currentCharacter.statusArray[i].iconSrc;
+                statusIcon.src = this.party[0].statusArray[i].iconSrc;
                 document.getElementById('current-character-status-icon-container').appendChild(statusIcon);
             }
         }
-        if(this.currentCharacter.currentXP >= Math.floor(((this.currentCharacter.level + 10)**2)*0.5)){
+        if(this.party[0].currentXP >= Math.floor(((this.party[0].level + 10)**2)*0.5)){
             if(this.isInBattle == false){
-                this.currentCharacter.currentXP = this.currentCharacter.currentXP - Math.floor(((this.currentCharacter.level + 10)**2)*0.5);
+                this.party[0].currentXP = this.party[0].currentXP - Math.floor(((this.party[0].level + 10)**2)*0.5);
                 this.levelCharacterUp();
             }
         }
@@ -987,7 +985,7 @@ export default class Controller {
         }
     }
     animateVitalBar(entity, vitalBarType){
-        if(entity === this.currentCharacter){
+        if(entity === this.party[0]){
             document.getElementById(`${vitalBarType}-bar-current-character-progress`).classList.toggle("is-flashing");
             setTimeout(()=>{
                 document.getElementById(`${vitalBarType}-bar-current-character-progress`).classList.toggle("is-flashing");
@@ -1001,7 +999,7 @@ export default class Controller {
         }
     }
     updateParty(){
-        this.currentCharacter = this.party[0];
+        this.party[0] = this.party[0];
         Array.from(document.getElementById("party-tab").getElementsByClassName("character-slot")).forEach(slot=>{
             slot.remove();
         });
@@ -1071,10 +1069,10 @@ export default class Controller {
                 characterLowerBtn.style.visibility = "hidden";
             }
         }
-        for(let j = 0; j < this.currentCharacter.equippedArray.length; j ++){
+        for(let j = 0; j < this.party[0].equippedArray.length; j ++){
             this.updateCharacterEquippedTab(j);
         }
-        this.calcCharacterAbilitiesAndStats();
+        this.calcCharacterAbilitiesAndStats(0);
         this.updateCharacterStats();
     }
     movePartyNorth(){
@@ -1127,15 +1125,15 @@ export default class Controller {
             }
             this.currentRoom.status = "visited";
             this.currentRoom = nextRoom;
-            let stamina = Math.floor(this.currentCharacter.maxStamina * 0.1);
-            let magic = Math.floor(this.currentCharacter.maxMagic * 0.1);
-            if(this.currentCharacter.currentStamina + stamina > this.currentCharacter.maxStamina){stamina = this.currentCharacter.maxStamina - this.currentCharacter.currentStamina;}
-            if(this.currentCharacter.currentMagic + magic > this.currentCharacter.maxMagic){magic = this.currentCharacter.maxMagic - this.currentCharacter.currentMagic;}
-            this.currentCharacter.currentStamina = this.currentCharacter.currentStamina + stamina;
-            this.currentCharacter.currentMagic = this.currentCharacter.currentMagic + magic;
+            let stamina = Math.floor(this.party[0].maxStamina * 0.1);
+            let magic = Math.floor(this.party[0].maxMagic * 0.1);
+            if(this.party[0].currentStamina + stamina > this.party[0].maxStamina){stamina = this.party[0].maxStamina - this.party[0].currentStamina;}
+            if(this.party[0].currentMagic + magic > this.party[0].maxMagic){magic = this.party[0].maxMagic - this.party[0].currentMagic;}
+            this.party[0].currentStamina = this.party[0].currentStamina + stamina;
+            this.party[0].currentMagic = this.party[0].currentMagic + magic;
             this.miniMap.draw(this.map, this.currentRoom);
             if(this.currentRoom.isExit == true){
-                this.printToGameConsole(`${this.currentCharacter.name} finds an exit!`);
+                this.printToGameConsole(`${this.party[0].name} finds an exit!`);
                 this.toggleMapTransitionScreen();
             }
         }
@@ -1148,104 +1146,104 @@ export default class Controller {
         if(this.isInBattle == false){
             switch(this.partyInventory[inventoryIndex].type){
                 case "one hand":
-                    if(this.currentCharacter.equippedArray[0] !== "Empty"){
-                        if(this.currentCharacter.equippedArray[1] !== "Empty"){
-                            this.partyInventory.push(this.currentCharacter.equippedArray[0]);
-                            this.currentCharacter.equippedArray[0] = this.partyInventory[inventoryIndex];
+                    if(this.party[0].equippedArray[0] !== "Empty"){
+                        if(this.party[0].equippedArray[1] !== "Empty"){
+                            this.partyInventory.push(this.party[0].equippedArray[0]);
+                            this.party[0].equippedArray[0] = this.partyInventory[inventoryIndex];
                             this.updateCharacterEquippedTab(0);
                         }else{
-                            this.currentCharacter.equippedArray[1] = this.partyInventory[inventoryIndex];
+                            this.party[0].equippedArray[1] = this.partyInventory[inventoryIndex];
                             this.updateCharacterEquippedTab(1);
                         }
                     }else{
-                        this.currentCharacter.equippedArray[0] = this.partyInventory[inventoryIndex];
+                        this.party[0].equippedArray[0] = this.partyInventory[inventoryIndex];
                         this.updateCharacterEquippedTab(0);
                     }
-                    this.printToGameConsole(`${this.currentCharacter.name} equips ${this.partyInventory[inventoryIndex].name}.`);
+                    this.printToGameConsole(`${this.party[0].name} equips ${this.partyInventory[inventoryIndex].name}.`);
                     this.partyInventory.splice(inventoryIndex, 1);
                     break;
                 case "two hand":
-                    if(this.currentCharacter.equippedArray[0] !== "Empty"){
-                        this.partyInventory.push(this.currentCharacter.equippedArray[0]);
+                    if(this.party[0].equippedArray[0] !== "Empty"){
+                        this.partyInventory.push(this.party[0].equippedArray[0]);
                     }
-                    if(this.currentCharacter.equippedArray[1] !== "Empty"){
-                        this.partyInventory.push(this.currentCharacter.equippedArray[1]);
+                    if(this.party[0].equippedArray[1] !== "Empty"){
+                        this.partyInventory.push(this.party[0].equippedArray[1]);
                     }
-                    this.currentCharacter.equippedArray[0] = this.partyInventory[inventoryIndex];
-                    this.currentCharacter.equippedArray[1] = this.partyInventory[inventoryIndex];
+                    this.party[0].equippedArray[0] = this.partyInventory[inventoryIndex];
+                    this.party[0].equippedArray[1] = this.partyInventory[inventoryIndex];
                     this.partyInventory.splice(inventoryIndex, 1);
-                    this.printToGameConsole(`${this.currentCharacter.name} equips ${this.currentCharacter.equippedArray[0].name}.`);
+                    this.printToGameConsole(`${this.party[0].name} equips ${this.party[0].equippedArray[0].name}.`);
                     this.updateCharacterEquippedTab(0);
                     this.updateCharacterEquippedTab(1);
                     break;
                 case "main":
-                    if(this.currentCharacter.equippedArray[0] !== "Empty"){
-                        this.partyInventory.push(this.currentCharacter.equippedArray[0]);
+                    if(this.party[0].equippedArray[0] !== "Empty"){
+                        this.partyInventory.push(this.party[0].equippedArray[0]);
                     }
-                    this.currentCharacter.equippedArray[0] = this.partyInventory[inventoryIndex];
+                    this.party[0].equippedArray[0] = this.partyInventory[inventoryIndex];
                     this.partyInventory.splice(inventoryIndex, 1);
-                    this.printToGameConsole(`${this.currentCharacter.name} equips ${this.currentCharacter.equippedArray[0].name}.`);
+                    this.printToGameConsole(`${this.party[0].name} equips ${this.party[0].equippedArray[0].name}.`);
                     this.updateCharacterEquippedTab(0);
                     break;
                 case "offhand":
-                    if(this.currentCharacter.equippedArray[1] !== "Empty"){
-                        this.partyInventory.push(this.currentCharacter.equippedArray[1]);
+                    if(this.party[0].equippedArray[1] !== "Empty"){
+                        this.partyInventory.push(this.party[0].equippedArray[1]);
                     }
-                    this.currentCharacter.equippedArray[1] = this.partyInventory[inventoryIndex];
+                    this.party[0].equippedArray[1] = this.partyInventory[inventoryIndex];
                     this.partyInventory.splice(inventoryIndex, 1);
-                    this.printToGameConsole(`${this.currentCharacter.name} equips ${this.currentCharacter.equippedArray[1].name}.`);
+                    this.printToGameConsole(`${this.party[0].name} equips ${this.party[0].equippedArray[1].name}.`);
                     this.updateCharacterEquippedTab(1);
                     break;
                 case "head":
-                    if(this.currentCharacter.equippedArray[2] !== "Empty"){
-                        this.partyInventory.push(this.currentCharacter.equippedArray[2]);
+                    if(this.party[0].equippedArray[2] !== "Empty"){
+                        this.partyInventory.push(this.party[0].equippedArray[2]);
                     } 
-                    this.currentCharacter.equippedArray[2] = this.partyInventory[inventoryIndex];
+                    this.party[0].equippedArray[2] = this.partyInventory[inventoryIndex];
                     this.partyInventory.splice(inventoryIndex, 1); 
-                    this.printToGameConsole(`${this.currentCharacter.name} equips ${this.currentCharacter.equippedArray[2].name}.`);
+                    this.printToGameConsole(`${this.party[0].name} equips ${this.party[0].equippedArray[2].name}.`);
                     this.updateCharacterEquippedTab(2);
                     break;
                 case "torso":
-                    if(this.currentCharacter.equippedArray[3] !== "Empty"){
-                        this.partyInventory.push(this.currentCharacter.equippedArray[3]);
+                    if(this.party[0].equippedArray[3] !== "Empty"){
+                        this.partyInventory.push(this.party[0].equippedArray[3]);
                     } 
-                    this.currentCharacter.equippedArray[3] = this.partyInventory[inventoryIndex];
+                    this.party[0].equippedArray[3] = this.partyInventory[inventoryIndex];
                     this.partyInventory.splice(inventoryIndex, 1); 
-                    this.printToGameConsole(`${this.currentCharacter.name} equips ${this.currentCharacter.equippedArray[3].name}.`);
+                    this.printToGameConsole(`${this.party[0].name} equips ${this.party[0].equippedArray[3].name}.`);
                     this.updateCharacterEquippedTab(3);
                     break;
                 case "arms":
-                    if(this.currentCharacter.equippedArray[4] !== "Empty"){
-                        this.partyInventory.push(this.currentCharacter.equippedArray[4]);
+                    if(this.party[0].equippedArray[4] !== "Empty"){
+                        this.partyInventory.push(this.party[0].equippedArray[4]);
                     } 
-                    this.currentCharacter.equippedArray[4] = this.partyInventory[inventoryIndex];
+                    this.party[0].equippedArray[4] = this.partyInventory[inventoryIndex];
                     this.partyInventory.splice(inventoryIndex, 1); 
-                    this.printToGameConsole(`${this.currentCharacter.name} equips ${this.currentCharacter.equippedArray[4].name}.`);
+                    this.printToGameConsole(`${this.party[0].name} equips ${this.party[0].equippedArray[4].name}.`);
                     this.updateCharacterEquippedTab(4);
                     break;
                 case "legs":
-                    if(this.currentCharacter.equippedArray[5] !== "Empty"){
-                        this.partyInventory.push(this.currentCharacter.equippedArray[5]);
+                    if(this.party[0].equippedArray[5] !== "Empty"){
+                        this.partyInventory.push(this.party[0].equippedArray[5]);
                     } 
-                    this.currentCharacter.equippedArray[5] = this.partyInventory[inventoryIndex];
+                    this.party[0].equippedArray[5] = this.partyInventory[inventoryIndex];
                     this.partyInventory.splice(inventoryIndex, 1); 
-                    this.printToGameConsole(`${this.currentCharacter.name} equips ${this.currentCharacter.equippedArray[5].name}.`);
+                    this.printToGameConsole(`${this.party[0].name} equips ${this.party[0].equippedArray[5].name}.`);
                     this.updateCharacterEquippedTab(5);
                     break;
                 case "feet":
-                    if(this.currentCharacter.equippedArray[6] !== "Empty"){
-                        this.partyInventory.push(this.currentCharacter.equippedArray[6]);
+                    if(this.party[0].equippedArray[6] !== "Empty"){
+                        this.partyInventory.push(this.party[0].equippedArray[6]);
                     } 
-                    this.currentCharacter.equippedArray[6] = this.partyInventory[inventoryIndex];
+                    this.party[0].equippedArray[6] = this.partyInventory[inventoryIndex];
                     this.partyInventory.splice(inventoryIndex, 1); 
-                    this.printToGameConsole(`${this.currentCharacter.name} equips ${this.currentCharacter.equippedArray[6].name}.`);
+                    this.printToGameConsole(`${this.party[0].name} equips ${this.party[0].equippedArray[6].name}.`);
                     this.updateCharacterEquippedTab(6);
                     break;
                 default:
                     break;
             }
             this.playSoundEffect("./audio/soundEffects/anvil-hit-2-14845.mp3");
-            this.calcCharacterAbilitiesAndStats();
+            this.calcCharacterAbilitiesAndStats(0);
             this.updatePartyInventoryTab(this.partyInventory);
             this.updateCharacterStats();
         }else{
@@ -1254,22 +1252,22 @@ export default class Controller {
     }
     unequip(equippedArrayIndex){
         if(this.isInBattle == false){
-            if(this.currentCharacter.equippedArray[equippedArrayIndex] != "Empty"){
-                if(this.currentCharacter.equippedArray[equippedArrayIndex].type == "two hand"){
+            if(this.party[0].equippedArray[equippedArrayIndex] != "Empty"){
+                if(this.party[0].equippedArray[equippedArrayIndex].type == "two hand"){
                     if(equippedArrayIndex == 0){
-                        this.currentCharacter.equippedArray[1] = "Empty";
+                        this.party[0].equippedArray[1] = "Empty";
                         this.updateCharacterEquippedTab(1);
                     }else{
-                        this.currentCharacter.equippedArray[0] = "Empty";
+                        this.party[0].equippedArray[0] = "Empty";
                         this.updateCharacterEquippedTab(0);
                     }
                 }
-                this.printToGameConsole(`${this.currentCharacter.name} unequips ${this.currentCharacter.equippedArray[equippedArrayIndex].name}`);
-                this.partyInventory.push(this.currentCharacter.equippedArray[equippedArrayIndex]);
-                this.currentCharacter.equippedArray[equippedArrayIndex] = "Empty";
+                this.printToGameConsole(`${this.party[0].name} unequips ${this.party[0].equippedArray[equippedArrayIndex].name}`);
+                this.partyInventory.push(this.party[0].equippedArray[equippedArrayIndex]);
+                this.party[0].equippedArray[equippedArrayIndex] = "Empty";
                 this.updatePartyInventoryTab(this.partyInventory);
                 this.updateCharacterEquippedTab(equippedArrayIndex);
-                this.calcCharacterAbilitiesAndStats();
+                this.calcCharacterAbilitiesAndStats(0);
                 this.updateCharacterStats();
             }else{
                 this.printToGameConsole("Nothing equipped.");
@@ -1280,7 +1278,7 @@ export default class Controller {
     }
     dropItem(inventoryIndex){
         if(this.isInBattle == false){
-            this.printToGameConsole(`${this.currentCharacter.name} dropped ${this.partyInventory[inventoryIndex].name}.`);
+            this.printToGameConsole(`${this.party[0].name} dropped ${this.partyInventory[inventoryIndex].name}.`);
             this.partyInventory.splice(inventoryIndex, 1);
             this.updatePartyInventoryTab(this.partyInventory);
         }else{
@@ -1290,7 +1288,7 @@ export default class Controller {
     sellItem(inventoryIndex){
         if(this.isInBattle == false){
             let price = Math.floor(this.partyInventory[inventoryIndex].price/4);
-            this.printToGameConsole(`${this.currentCharacter.name} sold ${this.partyInventory[inventoryIndex].name} for ${price} gold.`);
+            this.printToGameConsole(`${this.party[0].name} sold ${this.partyInventory[inventoryIndex].name} for ${price} gold.`);
             this.partyGold = this.partyGold + price;
             this.partyInventory.splice(inventoryIndex, 1);
             this.updatePartyInventoryTab(this.partyInventory);
@@ -1301,7 +1299,7 @@ export default class Controller {
             let upgradeCost = Math.floor(this.partyInventory[inventoryIndex].price * 1.25)
             if(this.partyGold >= upgradeCost){
                 this.partyGold = this.partyGold - upgradeCost;
-                this.printToGameConsole(`${this.currentCharacter.name} spends ${upgradeCost} gold to upgrade ${this.partyInventory[inventoryIndex].name}.`);
+                this.printToGameConsole(`${this.party[0].name} spends ${upgradeCost} gold to upgrade ${this.partyInventory[inventoryIndex].name}.`);
                 this.partyInventory[inventoryIndex].upgrade(1);
                 this.updatePartyInventoryTab(this.partyInventory);
             }
@@ -1312,66 +1310,66 @@ export default class Controller {
             this.printToGameConsole(`Cannot upgrade ${this.partyInventory[inventoryIndex].name} during combat.`);
         }
     }
-    calcCharacterAbilitiesAndStats(){
+    calcCharacterAbilitiesAndStats(partyIndex){
         //reset stats and abilities
-        this.currentCharacter.currentBluntAttack = this.currentCharacter.baseBluntAttack;
-        this.currentCharacter.currentPierceAttack = this.currentCharacter.basePierceAttack;
-        this.currentCharacter.currentArcaneAttack = this.currentCharacter.baseArcaneAttack;
-        this.currentCharacter.currentElementalAttack = this.currentCharacter.baseElementalAttack;
-        this.currentCharacter.currentBluntDefense = this.currentCharacter.baseBluntDefense;
-        this.currentCharacter.currentPierceDefense = this.currentCharacter.basePierceDefense;
-        this.currentCharacter.currentArcaneDefense = this.currentCharacter.baseArcaneDefense;
-        this.currentCharacter.currentElementalDefense = this.currentCharacter.baseElementalDefense;
-        this.currentCharacter.currentSpeed = this.currentCharacter.baseSpeed;
-        this.currentCharacter.currentEvasion = this.currentCharacter.baseEvasion;
-        this.currentCharacter.abilityArray = [];
+        this.party[partyIndex].currentBluntAttack = this.party[partyIndex].baseBluntAttack;
+        this.party[partyIndex].currentPierceAttack = this.party[partyIndex].basePierceAttack;
+        this.party[partyIndex].currentArcaneAttack = this.party[partyIndex].baseArcaneAttack;
+        this.party[partyIndex].currentElementalAttack = this.party[partyIndex].baseElementalAttack;
+        this.party[partyIndex].currentBluntDefense = this.party[partyIndex].baseBluntDefense;
+        this.party[partyIndex].currentPierceDefense = this.party[partyIndex].basePierceDefense;
+        this.party[partyIndex].currentArcaneDefense = this.party[partyIndex].baseArcaneDefense;
+        this.party[partyIndex].currentElementalDefense = this.party[partyIndex].baseElementalDefense;
+        this.party[partyIndex].currentSpeed = this.party[partyIndex].baseSpeed;
+        this.party[partyIndex].currentEvasion = this.party[partyIndex].baseEvasion;
+        this.party[partyIndex].abilityArray = [];
         //update stats
-        for(let i = 0; i < this.currentCharacter.equippedArray.length; i++){
-            if(this.currentCharacter.equippedArray[i] != "Empty"){
-                if((this.currentCharacter.equippedArray[i].type == "two hand" && i == 1) != true){
-                    this.currentCharacter.currentBluntAttack = this.currentCharacter.currentBluntAttack + this.currentCharacter.equippedArray[i].bluntAttack;
-                    this.currentCharacter.currentPierceAttack = this.currentCharacter.currentPierceAttack + this.currentCharacter.equippedArray[i].pierceAttack;
-                    this.currentCharacter.currentArcaneAttack = this.currentCharacter.currentArcaneAttack + this.currentCharacter.equippedArray[i].arcaneAttack;
-                    this.currentCharacter.currentElementalAttack = this.currentCharacter.currentElementalAttack + this.currentCharacter.equippedArray[i].elementalAttack;
-                    this.currentCharacter.currentBluntDefense = this.currentCharacter.currentBluntDefense + this.currentCharacter.equippedArray[i].bluntDefense;
-                    this.currentCharacter.currentPierceDefense = this.currentCharacter.currentPierceDefense + this.currentCharacter.equippedArray[i].pierceDefense;
-                    this.currentCharacter.currentArcaneDefense = this.currentCharacter.currentArcaneDefense + this.currentCharacter.equippedArray[i].arcaneDefense;
-                    this.currentCharacter.currentElementalDefense = this.currentCharacter.currentElementalDefense + this.currentCharacter.equippedArray[i].elementalDefense;
-                    this.currentCharacter.currentSpeed = this.currentCharacter.currentSpeed + this.currentCharacter.equippedArray[i].speed;
-                    this.currentCharacter.currentEvasion = this.currentCharacter.currentEvasion + this.currentCharacter.equippedArray[i].evasion;
+        for(let i = 0; i < this.party[partyIndex].equippedArray.length; i++){
+            if(this.party[partyIndex].equippedArray[i] != "Empty"){
+                if((this.party[partyIndex].equippedArray[i].type == "two hand" && i == 1) != true){
+                    this.party[partyIndex].currentBluntAttack = this.party[partyIndex].currentBluntAttack + this.party[partyIndex].equippedArray[i].bluntAttack;
+                    this.party[partyIndex].currentPierceAttack = this.party[partyIndex].currentPierceAttack + this.party[partyIndex].equippedArray[i].pierceAttack;
+                    this.party[partyIndex].currentArcaneAttack = this.party[partyIndex].currentArcaneAttack + this.party[partyIndex].equippedArray[i].arcaneAttack;
+                    this.party[partyIndex].currentElementalAttack = this.party[partyIndex].currentElementalAttack + this.party[partyIndex].equippedArray[i].elementalAttack;
+                    this.party[partyIndex].currentBluntDefense = this.party[partyIndex].currentBluntDefense + this.party[partyIndex].equippedArray[i].bluntDefense;
+                    this.party[partyIndex].currentPierceDefense = this.party[partyIndex].currentPierceDefense + this.party[partyIndex].equippedArray[i].pierceDefense;
+                    this.party[partyIndex].currentArcaneDefense = this.party[partyIndex].currentArcaneDefense + this.party[partyIndex].equippedArray[i].arcaneDefense;
+                    this.party[partyIndex].currentElementalDefense = this.party[partyIndex].currentElementalDefense + this.party[partyIndex].equippedArray[i].elementalDefense;
+                    this.party[partyIndex].currentSpeed = this.party[partyIndex].currentSpeed + this.party[partyIndex].equippedArray[i].speed;
+                    this.party[partyIndex].currentEvasion = this.party[partyIndex].currentEvasion + this.party[partyIndex].equippedArray[i].evasion;
                 }
             }
         }
-        this.currentCharacter.abilityArray.push(new Recover);
-        this.currentCharacter.abilityArray.push(new Retreat);
+        this.party[partyIndex].abilityArray.push(new Recover);
+        this.party[partyIndex].abilityArray.push(new Retreat);
         //punch check
-        if(this.currentCharacter.equippedArray[0] == "Empty"){
-            this.currentCharacter.abilityArray.push(new Punch);
+        if(this.party[partyIndex].equippedArray[0] == "Empty"){
+            this.party[partyIndex].abilityArray.push(new Punch);
         }
         //update abilities
-        for(let x = 0; x < this.currentCharacter.equippedArray.length; x ++){
-            if(this.currentCharacter.equippedArray[x] != "Empty"){
-                for(let y = 0; y < this.currentCharacter.equippedArray[x].abilityArray.length; y ++){
-                    //check if this ability name is not already in current currentCharacter ability array
+        for(let x = 0; x < this.party[partyIndex].equippedArray.length; x ++){
+            if(this.party[partyIndex].equippedArray[x] != "Empty"){
+                for(let y = 0; y < this.party[partyIndex].equippedArray[x].abilityArray.length; y ++){
+                    //check if this ability name is not already in current party[partyIndex] ability array
                     let flag = true;
-                    for(let z = 0; z < this.currentCharacter.abilityArray.length; z++){
-                        if(this.currentCharacter.abilityArray[z].name == this.currentCharacter.equippedArray[x].abilityArray[y].name){
+                    for(let z = 0; z < this.party[partyIndex].abilityArray.length; z++){
+                        if(this.party[partyIndex].abilityArray[z].name == this.party[partyIndex].equippedArray[x].abilityArray[y].name){
                             flag = false;
                             break;
                         }
                     }
                     if(flag == true){
-                        this.currentCharacter.abilityArray.push(this.currentCharacter.equippedArray[x].abilityArray[y]);
+                        this.party[partyIndex].abilityArray.push(this.party[partyIndex].equippedArray[x].abilityArray[y]);
                     }
                 }
             }
         }
     }
     updateCharacterEquippedTab(equippedArrayIndex){
-        if(this.currentCharacter.equippedArray[equippedArrayIndex] =="Empty"){
+        if(this.party[0].equippedArray[equippedArrayIndex] =="Empty"){
             document.getElementById('equip-slot-' + equippedArrayIndex).innerText = "Empty";
         }else{
-            document.getElementById('equip-slot-' + equippedArrayIndex).innerText = this.capitalizeFirstLetter(this.currentCharacter.equippedArray[equippedArrayIndex].name);
+            document.getElementById('equip-slot-' + equippedArrayIndex).innerText = this.capitalizeFirstLetter(this.party[0].equippedArray[equippedArrayIndex].name);
         } 
     }
     completeRoom(){
@@ -1383,14 +1381,14 @@ export default class Controller {
     }
     useConsumable(inventoryIndex){
         if(this.isInBattle == true){
-            if(this.partyInventory[inventoryIndex].abilityArray[0].canUse(this.currentCharacter) != false){
+            if(this.partyInventory[inventoryIndex].abilityArray[0].canUse(this.party[0]) != false){
                 this.battle.determineFirstTurn(0, inventoryIndex);
                 this.partyInventory.splice(inventoryIndex, 1);
                 this.updatePartyInventoryTab(this.partyInventory);
             }
         }else{
-            if(this.partyInventory[inventoryIndex].abilityArray[0].canUse(this.currentCharacter) != false){
-                this.partyInventory[inventoryIndex].abilityArray[0].activate(this.currentCharacter)
+            if(this.partyInventory[inventoryIndex].abilityArray[0].canUse(this.party[0]) != false){
+                this.partyInventory[inventoryIndex].abilityArray[0].activate(this.party[0])
                 this.partyInventory.splice(inventoryIndex, 1);
                 this.updatePartyInventoryTab(this.partyInventory);
                 this.updateCharacterStats();
@@ -1398,8 +1396,8 @@ export default class Controller {
         }
     }
     levelCharacterUp(){
-        this.currentCharacter.level = this.currentCharacter.level + 1;
-        this.printToGameConsole(`Level up! New level: ${this.currentCharacter.level}.`);
+        this.party[0].level = this.party[0].level + 1;
+        this.printToGameConsole(`Level up! New level: ${this.party[0].level}.`);
         this.displayLevelUpScreen();
     }
     displayLevelUpScreen(){
@@ -1423,7 +1421,7 @@ export default class Controller {
         this.nextRoom = this.currentRoom;
     }
     endBattle(){
-        if(this.currentCharacter.currentHP <= 0){
+        if(this.party[0].currentHP <= 0){
             this.disableCharacterBattleControls();
             setTimeout(()=>{
                 document.getElementById('music-player').pause();
@@ -1447,6 +1445,7 @@ export default class Controller {
                 document.getElementById("music-player").src = this.map.mapEnviorment.backgroundMusicSrc;
                 document.getElementById("music-player").play();
                 this.toggleMap();
+                
                 this.updateCharacterStats();
              }, 2000);
         }
@@ -1454,7 +1453,7 @@ export default class Controller {
     endEncounter(battleFlag){
         this.updateCharacterStats();
         this.disableCharacterEncounterControls();
-        if(this.currentCharacter.currentHP <= 0){
+        if(this.party[0].currentHP <= 0){
             setTimeout(()=>{
                 document.getElementById('music-player').pause();
                 document.getElementById('gameover-screen').style.display = "block";
@@ -1509,7 +1508,7 @@ export default class Controller {
         if(this.partyGold >= remainingInventory[index].price){
             this.partyInventory.push(remainingInventory[index]);
             this.partyGold -= remainingInventory[index].price;
-            this.printToGameConsole(`${this.currentCharacter.name} buys ${this.capitalizeFirstLetter(remainingInventory[index].name)}`)
+            this.printToGameConsole(`${this.party[0].name} buys ${this.capitalizeFirstLetter(remainingInventory[index].name)}`)
             remainingInventory.splice(index, 1);
             this.updatePartyInventoryTab(this.partyInventory);
             this.toggleTrading(remainingInventory);

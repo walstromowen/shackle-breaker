@@ -50,33 +50,33 @@ export function loot(message, itemArray, goldMin, goldMax){
     theController.endEncounter();
 }
 export function takeDamage(message, minPercentage, maxPercentage){
-    let damageOutput = Math.floor(Math.random() * ((theController.currentCharacter.currentHP * maxPercentage) - (theController.currentCharacter.currentHP * minPercentage) + 1) + (theController.currentCharacter.currentHP * minPercentage));
-    damageOutput = checkDamage(damageOutput, theController.currentCharacter);
-    theController.currentCharacter.currentHP = theController.currentCharacter.currentHP - damageOutput;
-    theController.printToGameConsole(message + ` ${theController.currentCharacter.name} takes ${damageOutput} damage.`);
+    let damageOutput = Math.floor(Math.random() * ((theController.party[0].currentHP * maxPercentage) - (theController.party[0].currentHP * minPercentage) + 1) + (theController.party[0].currentHP * minPercentage));
+    damageOutput = checkDamage(damageOutput, theController.party[0]);
+    theController.party[0].currentHP = theController.party[0].currentHP - damageOutput;
+    theController.printToGameConsole(message + ` ${theController.party[0].name} takes ${damageOutput} damage.`);
     theController.endEncounter();
 }
 export function regainHP(message, percentage){
-    let hp = Math.floor(theController.currentCharacter.maxHP * percentage);
-    if(theController.currentCharacter.currentHP + hp > theController.currentCharacter.maxHP){
-        hp = theController.currentCharacter.maxHP - theController.currentCharacter.currentHP;
+    let hp = Math.floor(theController.party[0].maxHP * percentage);
+    if(theController.party[0].currentHP + hp > theController.party[0].maxHP){
+        hp = theController.party[0].maxHP - theController.party[0].currentHP;
     }
-    theController.currentCharacter.currentHP = theController.currentCharacter.currentHP + hp;
-    theController.printToGameConsole(`${message}` + ` ${theController.currentCharacter.name} restores ${hp} health`);
+    theController.party[0].currentHP = theController.party[0].currentHP + hp;
+    theController.printToGameConsole(`${message}` + ` ${theController.party[0].name} restores ${hp} health`);
     theController.endEncounter();
 }
 export function recieveStatusEffect(message, statusEffect){
-    theController.printToGameConsole(message + ` ${theController.currentCharacter.name} is ${statusEffect.name}.`);
+    theController.printToGameConsole(message + ` ${theController.party[0].name} is ${statusEffect.name}.`);
     let flag = true;
-    for(let i = 0; i < theController.currentCharacter.statusArray.length; i++){
-        if(theController.currentCharacter.statusArray[i].name == statusEffect.name){
-            theController.currentCharacter.statusArray[i].currentCharges = theController.currentCharacter.statusArray[i].maxCharges;
+    for(let i = 0; i < theController.party[0].statusArray.length; i++){
+        if(theController.party[0].statusArray[i].name == statusEffect.name){
+            theController.party[0].statusArray[i].currentCharges = theController.party[0].statusArray[i].maxCharges;
             flag = false;
             break;
         }
     }
     if(flag == true){
-        theController.currentCharacter.statusArray.push(statusEffect);
+        theController.party[0].statusArray.push(statusEffect);
     }
     theController.endEncounter();
 }
@@ -95,7 +95,7 @@ export function initiateTrade(message, inventoryArray){
     }, 2000);
 }
 export function recruit(message, newCompanion){
-    newCompanion.autoLevelUp(theController.currentCharacter.level);
+    newCompanion.autoLevelUp(theController.party[0].level);
     theController.printToGameConsole(message);
     theController.party.push(newCompanion);
     theController.updateParty();

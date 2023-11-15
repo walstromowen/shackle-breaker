@@ -1211,6 +1211,43 @@ export class BlinkStrike extends Ability{
         }
     }
 }
+export class Empower extends Ability{
+    constructor(){
+        super();
+        this.name = "empower";
+        this.type = "arcaneElemental";
+        this.speedMultiplier = 0.5;
+        this.staminaCost = 0;
+        this.magicCost = 8;
+        this.damageModifier = 2;
+        this.accuracy = "";
+        this.soundEffect = "./audio/soundEffects/short-fireball-woosh-6146.mp3";
+    }
+     activate(weilder, target){
+        if(this.checkMagic(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            theController.printToGameConsole(`${weilder.name} uses empower!`);
+            for(let i = 0; i < weilder.statusArray.length; i++){
+                if(weilder.statusArray[i].name == "empowered"){
+                    weilder.statusArray[i].currentCharges = weilder.statusArray[i].maxCharges;
+                    return;
+                }
+            }
+            let status = new Empowered(weilder);
+            status.onApplied();
+            weilder.statusArray.push(status);
+        }
+    }
+    canUseSpecialCondition(weilder, currentCharacter){
+        if(weilder !== currentCharacter){
+            for(let i = 0; i < weilder.statusArray.length; i++){
+                if(weilder.statusArray[i].name == "empowered"){
+                    return false;
+                }
+            }
+        }
+    }
+}
 /*
 export class SummonMeteor extends Ability{
 
@@ -1506,7 +1543,7 @@ export class ThrowSmokebomb extends Ability{
         this.soundEffect = "./audio/soundEffects/supernatural-explosion-104295.wav";
     }
     activate(weilder, target){
-        theController.printToGameConsole(`${weilder.name} thows a smokebomb!`);
+        theController.printToGameConsole(`${weilder.name} throws a smokebomb!`);
         theController.playSoundEffect(this.soundEffect);
         for(let i = 0; i < weilder.statusArray.length; i++){
             if(weilder.statusArray[i].name == "hidden"){

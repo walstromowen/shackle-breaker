@@ -64,6 +64,18 @@ class Enemy{
         }
         this.level = averagePartyLevel;
     }
+    resetStats(){
+        this.currentBluntAttack = this.baseBluntAttack;
+        this.currentPierceAttack = this.basePierceAttack; 
+        this.currentArcaneAttack = this.baseArcaneAttack;
+        this.currentElementalAttack = this.baseElementalAttack;
+        this.currentBluntDefense = this.baseBluntDefense;
+        this.currentPierceDefense = this.basePierceDefense; 
+        this.currentArcaneDefense = this.baseArcaneDefense;
+        this.currentElementalDefense = this.baseElementalDefense;
+        this.currentSpeed = this.baseSpeed;
+        this.currentEvasion = this.baseEvasion;
+    }
 }
 export class Skeleton extends Enemy{
     constructor(averagePartyLevel){

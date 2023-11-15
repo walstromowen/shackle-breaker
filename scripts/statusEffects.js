@@ -161,12 +161,12 @@ export class Empowered extends StatusEffect{
         this.currentCharges = this.currentCharges - 1;
     }
     onApplied(){
-        this.holder.currentArcaneAttack = this.holder.currentArcaneAttack + 6;
-        this.holder.currentElementalAttack = this.holder.currentElementalAttack + 6;
+        this.holder.currentArcaneAttack = this.holder.currentArcaneAttack + 10;
+        this.holder.currentElementalAttack = this.holder.currentElementalAttack + 10;
     }
     onRemove(){
-        this.holder.currentArcaneAttack = this.holder.currentArcaneAttack - 6;
-        this.holder.currentElementalAttack = this.holder.currentElementalAttack - 6;
+        this.holder.currentArcaneAttack = this.holder.currentArcaneAttack - 10;
+        this.holder.currentElementalAttack = this.holder.currentElementalAttack - 10;
     }
 }
 export class Paralyzed extends StatusEffect{
@@ -272,7 +272,7 @@ export class Hidden extends StatusEffect{
         this.currentCharges = this.currentCharges - 1;
     }
     onRemove(){
-        if(this.holder === theController.currentCharacter){
+        if(this.holder === theController.party[0]){
             theController.toggleElementClass("current-character-image", "black-and-white");
         }else{
             theController.toggleElementClass("enemy-image", "black-and-white");
@@ -280,7 +280,7 @@ export class Hidden extends StatusEffect{
         this.holder.currentEvasion = this.holder.currentEvasion - 100;
     }
     onApplied(){
-        if(this.holder === theController.currentCharacter){
+        if(this.holder === theController.party[0]){
             theController.toggleElementClass("current-character-image", "black-and-white");
         }else{
             theController.toggleElementClass("enemy-image", "black-and-white");
