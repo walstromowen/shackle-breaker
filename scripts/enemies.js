@@ -1,5 +1,5 @@
 import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
-    ThrowNet, Immolate, LightningBolt, Channel, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Bite, SpitBile, LeechLife, Devour, Pounce, BlinkStrike, ThrowSmokebomb, Shockwave, GuardBreak} from "./abilities.js"
+    ThrowNet, Immolate, LightningBolt, Channel, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Bite, SpitBile, LeechLife, Devour, Pounce, CastShadow, ThrowSmokebomb, Shockwave, GuardBreak, BlinkStrike} from "./abilities.js"
 import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer,
         Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, 
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
@@ -416,7 +416,7 @@ export class TerrorBear extends Enemy{
         this.currentSpeed = this.baseSpeed;
         this.baseEvasion = 5;
         this.currentEvasion = this.baseEvasion;
-        this.abilityArray = [new Bite, new Devour, new LightningBolt];
+        this.abilityArray = [new Bite, new Devour, new LightningBolt, new CastShadow];
         this.statusArray = [new Channeled(this), new Invigorated(this)]
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new HealthPotion, new LightningStaff, new Meteorite];

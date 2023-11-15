@@ -122,7 +122,6 @@ export class SwitchCombatant extends Ability{
         let temp = theController.party[0];
         theController.party[0] = theController.party[this.partyIndex];
         theController.party[this.partyIndex] = temp;
-        //theController.battle.friendlyParty[0] = theController.party[0];
         
         theController.playSoundEffect(this.soundEffect);
         theController.updateParty();
@@ -877,7 +876,7 @@ export class IceShard extends Ability{
                 return;
             }
             let damageOutput = Math.floor(Math.random() * ((weilder.currentElementalAttack + this.damageModifier) - weilder.currentElementalAttack + 1)) + weilder.currentElementalAttack;
-           damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
+            damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
             theController.playSoundEffect(this.soundEffect);
@@ -1125,10 +1124,10 @@ export class Devour extends Ability{
         }
     }
 }
-export class BlinkStrike extends Ability{
+export class CastShadow extends Ability{
     constructor(){
         super();
-        this.name = "blink strike";
+        this.name = "cast shadow";
         this.type = "pierceArcane";
         this.speedMultiplier = 0.5;
         this.staminaCost = 8;
@@ -1165,6 +1164,70 @@ export class BlinkStrike extends Ability{
         }
     }
 }
+export class BlinkStrike extends Ability{
+    constructor(){
+        super();
+        this.name = "blink strike";
+        this.type = "pierceArcane";
+        this.speedMultiplier = 0.75;
+        this.staminaCost = 8;
+        this.magicCost = 10;
+        this.damageModifier = 2;
+        this.accuracy = 100;
+        this.soundEffect = "./audio/soundEffects/mixkit-deep-air-woosh-2604.wav";
+    }
+    activate(weilder, target){
+        if(this.checkStamina(weilder) == true && this.checkMagic(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
+            let damageOutput = Math.floor(Math.random() * ((((weilder.currentPierceAttack + weilder.currentArcaneAttack)/2) + this.damageModifier) - ((weilder.currentPierceAttack + weilder.currentArcaneAttack)/2) + 1)) + Math.floor(((weilder.currentPierceAttack + weilder.currentArcaneAttack)/2));
+            damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
+            target.currentHP = target.currentHP - Math.floor(damageOutput/2);
+            let switchFlag = false;
+            if(weilder === theController.party[0]){
+                if(theController.party.length > 1){
+                    let temp = theController.party[0];
+                    theController.party[0] = theController.party[1];
+                    theController.party[1] = temp;
+                    switchFlag = true;
+                    theController.updateParty();
+                }
+            }else{
+                if(theController.battle.hostileParty.length > 1){
+                    let temp = theController.battle.hostileParty[0];
+                    theController.battle.hostileParty[0] = theController.battle.hostileParty[1];
+                    theController.battle.hostileParty[1] = temp;
+                    switchFlag = true;
+                    theController.updateEnemyStats();
+                }
+            }
+            if(switchFlag == true){
+                theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage and teleports away!`);
+            }else{
+                theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
+            }
+        }
+    }
+}
+/*
+export class SummonMeteor extends Ability{
+
+}
+export class ShapeShift extends Ability{
+
+}
+export class WildSwing extends Ability{
+
+}
+export class ThrowWeapon extends Ability{
+
+}
+export class Darkpact extends Ability{
+
+}
+*/
 export class DrinkHealthPotion extends Ability{
     constructor(){
         super();

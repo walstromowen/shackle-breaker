@@ -1,5 +1,5 @@
 import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, GuardBreak, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
-        ThrowNet, Immolate, LightningBolt, Shockwave, Recuperate, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Channel, ThrowSmokebomb, BlinkStrike} from "./abilities.js"
+        ThrowNet, Immolate, LightningBolt, Shockwave, Recuperate, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Channel, ThrowSmokebomb, CastShadow, BlinkStrike} from "./abilities.js"
 
 export function getRandomItem(){
     let itemArray = [new LinenShirt, new LinenPants, new Dagger, new BlacksmithHammer, new Spear, new Shortsword, new Longsword, new Handaxe, new NamuhSword,
@@ -1222,7 +1222,7 @@ export class NamuhSword {
         this.elementalDefense = 0;
         this.speed = 1;
         this.evasion = 1;
-        this.abilityArray = [new ArcaneDart(), new Slash, new BlinkStrike()];
+        this.abilityArray = [new ArcaneDart, new Slash, new BlinkStrike];
     }
     upgrade(levels){
         for(let i = 0; i < levels; i++){
@@ -1240,7 +1240,7 @@ export class NamuhSword {
             this.evasion = this.evasion + 1;
         }
         if(this.level == 3){
-            this.abilityArray.push(new Flurry());
+            this.abilityArray.push(new CastShadow());
         }
     }
 }

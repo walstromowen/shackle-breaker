@@ -1,4 +1,4 @@
-import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer,
+import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer, NamuhSword,
     Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, 
     LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
     LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, 
@@ -74,8 +74,8 @@ export default class Controller {
             this.characterCreationArray[2] = document.getElementById("background-selection").value;
             this.currentCharacter = new Character(this.characterCreationArray);
             this.party.push(this.currentCharacter);
-            //this.party.push(new Character(["kurtus", "media/kurty.jpg", "traveler", [100, 100, 100, 100, 100, 100], this.scaleAttributes(100, 100, 100, 100, 100, 100), [new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]));
-            //this.party.push(new Character(["Shimdy", "media/mage-2.jpg", "traveler", [1,1,1,1,1,1], this.scaleAttributes(1,1,1,1,1,1)]));
+            this.party.push(new Character(["kurtus", "media/kurty.jpg", "traveler", [100, 100, 100, 100, 100, 100], this.scaleAttributes(100, 100, 100, 100, 100, 100), [new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]));
+           
             this.map = new Map("basic", "random");
             this.miniMap = new MiniMap();
             this.map.mapEnviorment.terrain.onload = ()=>{
@@ -1043,14 +1043,26 @@ export default class Controller {
                 }
             });
             characterRaiseBtn.addEventListener("click", ()=>{
-                let temp = this.party[i-1];
-                this.party[i-1] = this.party[i];
+                let temp = 0;
+                if(i == 0){
+                    temp = this.party[this.party.length -1];
+                    this.party[this.party.length-1] = this.party[i];
+                }else{
+                    temp = this.party[i-1];
+                    this.party[i-1] = this.party[i];
+                }
                 this.party[i] = temp;
                 this.updateParty();
             });
             characterLowerBtn.addEventListener("click", ()=>{
-                let temp = this.party[i+1];
-                this.party[i+1] = this.party[i];
+                let temp = 0;
+                if(i == this.party.length-1){
+                    temp = this.party[0];
+                    this.party[0] = this.party[this.party.length-1]
+                }else{
+                    temp = this.party[i+1];
+                    this.party[i+1] = this.party[i];
+                }
                 this.party[i] = temp;
                 this.updateParty();
             });
