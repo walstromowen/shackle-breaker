@@ -14,18 +14,18 @@ import Battle from "./battle.js";
 export default class Controller {
     constructor(){
         this.wanderingCompanions = [
-            new Character(["Gadrum Glorysun", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], this.scaleAttributes(5,5,5,5,5,5), [new Shortsword, new Buckler, "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["William Stillstar", "./media/knight-2.jpg", "mercenary", [5,5,5,5,5,5], this.scaleAttributes(5,5,5,5,5,5), [new Longsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["Solair Sulabras", "./media/rogue-1.jpg", "mercenary", [5,5,5,5,5,5], this.scaleAttributes(5,5,5,5,5,5), [new Shortsword, new KiteShield, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["Julian Memira", "./media/rogue-2.jpg", "mercenary", [5,5,5,5,5,5], this.scaleAttributes(5,5,5,5,5,5), [new Shortsword, new Buckler, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["Nicholi Ninarsk", "./media/mage-1.jpg", "mercenary", [5,5,5,5,5,5], this.scaleAttributes(5,5,5,5,5,5), [new Handaxe, new Handaxe, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["Ragnar Ninarsk", "./media/mage-2.jpg", "mercenary", [5,5,5,5,5,5], this.scaleAttributes(5,5,5,5,5,5), [new IceStaff, "Empty", new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["Revan Sekrav", "./media/mage-1.jpg", "mercenary", [5,5,5,5,5,5], this.scaleAttributes(5,5,5,5,5,5), [new Dagger, new Shiv, new LeatherHood, new LinenShirt, new LeatherGloves, new LinenPants, new LeatherBoots]]),
-            new Character(["Alina Sulabras", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], this.scaleAttributes(5,5,5,5,5,5), [new Shortsword, new KiteShield, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["Ariannel Memira", "./media/knight-2.jpg", "mercenary", [5,5,5,5,5,5], this.scaleAttributes(5,5,5,5,5,5), [new LightStaff, "Empty", new ClothHood, new ClothRobe, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["Gwen Swallowtail", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], this.scaleAttributes(5,5,5,5,5,5), [new DarkStaff, "Empty", new ClothHood, new ClothRobe, "Empty", new LinenPants, new LeatherBoots]])
+            new Character(["Gadrum Glorysun", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], [new Shortsword, new Buckler, "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["William Stillstar", "./media/knight-2.jpg", "mercenary", [5,5,5,5,5,5],  [new Longsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Solair Sulabras", "./media/rogue-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Shortsword, new KiteShield, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Julian Memira", "./media/rogue-2.jpg", "mercenary", [5,5,5,5,5,5],  [new Shortsword, new Buckler, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Nicholi Ninarsk", "./media/mage-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Handaxe, new Handaxe, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Ragnar Ninarsk", "./media/mage-2.jpg", "mercenary", [5,5,5,5,5,5],  [new IceStaff, "Empty", new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Revan Sekrav", "./media/mage-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Dagger, new Shiv, new LeatherHood, new LinenShirt, new LeatherGloves, new LinenPants, new LeatherBoots]]),
+            new Character(["Alina Sulabras", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], [new Shortsword, new KiteShield, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Ariannel Memira", "./media/knight-2.jpg", "mercenary", [5,5,5,5,5,5], [new LightStaff, "Empty", new ClothHood, new ClothRobe, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Gwen Swallowtail", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], [new DarkStaff, "Empty", new ClothHood, new ClothRobe, "Empty", new LinenPants, new LeatherBoots]])
         ];
-        this.characterCreationArray = ["name", "apperance", "background", "attributesArray", "statsArray", "equippedArray"];
+        this.characterCreationArray = ["name", "apperance", "background", "attributesArray", "equippedArray"];
         this.map = "";
         this.miniMap = "";
         this.battle = "";
@@ -72,7 +72,7 @@ export default class Controller {
             this.characterCreationArray[1] = document.getElementById("apperance-selection").value;
             this.characterCreationArray[2] = document.getElementById("background-selection").value;
             this.party[0] = new Character(this.characterCreationArray);
-            //this.party.push(new Character(["kurtus", "media/kurty.jpg", "traveler", [100, 100, 100, 100, 100, 100], this.scaleAttributes(100, 100, 100, 100, 100, 100), [new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]));
+            //this.party.push(new Character(["kurtus", "media/kurty.jpg", "traveler", [100, 100, 100, 100, 100, 100], [new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]));
            
             this.map = new Map("basic", "random");
             this.miniMap = new MiniMap();
@@ -130,26 +130,38 @@ export default class Controller {
                 break;
         }
     }
+    /*
+    this.maxHP = (this.vigor * 10) + (this.endurance * 2) + (this.strength * 2) + (this.dexterity * 2) + (this.insight * 2) + (this.focus * 2);
+        this.maxStamina = (this.vigor * 1) + (this.endurance * 5) + (this.strength * 3) + (this.dexterity * 3) + (this.insight * 1) + (this.focus * 1);
+        this.maxMagic = (this.vigor * 1) + (this.endurance * 5) + (this.strength * 1) + (this.dexterity * 1) + (this.insight * 3) + (this.focus * 3);
+        this.baseBluntAttack = (this.vigor * 1) + (this.endurance * 1) + (this.strength * 3) + (this.dexterity * 2) + (this.insight * 2) + (this.focus * 2);
+        this.basePierceAttack = (this.vigor * 1) + (this.endurance * 1) + (this.strength * 2) + (this.dexterity * 3) + (this.insight * 2) + (this.focus * 2);
+        this.baseArcaneAttack = (this.vigor * 1) + (this.endurance * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.insight * 3) + (this.focus * 2);
+        this.baseElementalAttack = (this.vigor * 1) + (this.endurance * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.insight * 2) + (this.focus * 3);
+        this.baseBluntDefense = (this.vigor * 1) + (this.endurance * 1) + (this.strength * 2) + (this.dexterity * 1) + (this.insight * 1) + (this.focus * 1);
+        this.basePierceDefense = (this.vigor * 1) + (this.endurance * 1) + (this.strength * 1) + (this.dexterity * 2) + (this.insight * 1) + (this.focus * 1);
+        this.baseArcaneDefense = (this.vigor * 1) + (this.endurance * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.insight * 2) + (this.focus * 1);
+        this.baseElementalDefense = (this.vigor * 1) + (this.endurance * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.insight * 1) + (this.focus * 2);
+        */
     characterCreatorUpdateStats(vigor, endurance, strength, dexterity, insight, focus){
         this.characterCreationArray[3] = [vigor, endurance, strength, dexterity, insight, focus];
-        this.characterCreationArray[4] = this.scaleAttributes(vigor, endurance, strength, dexterity, insight, focus);
         document.getElementById("character-creation-vigor").innerText = this.characterCreationArray[3][0];
         document.getElementById("character-creation-endurance").innerText = this.characterCreationArray[3][1];
         document.getElementById("character-creation-strength").innerText = this.characterCreationArray[3][2];
         document.getElementById("character-creation-dexterity").innerText = this.characterCreationArray[3][3];
         document.getElementById("character-creation-insight").innerText = this.characterCreationArray[3][4];
         document.getElementById("character-creation-focus").innerText = this.characterCreationArray[3][5];
-        document.getElementById("character-creation-health").innerText = this.characterCreationArray[4][0];
-        document.getElementById("character-creation-stamina").innerText = this.characterCreationArray[4][1];
-        document.getElementById("character-creation-magic").innerText = this.characterCreationArray[4][2];
-        document.getElementById("character-creation-blunt-attack").innerText = this.characterCreationArray[4][3];
-        document.getElementById("character-creation-pierce-attack").innerText = this.characterCreationArray[4][4];
-        document.getElementById("character-creation-arcane-attack").innerText = this.characterCreationArray[4][5];
-        document.getElementById("character-creation-element-attack").innerText = this.characterCreationArray[4][6];
-        document.getElementById("character-creation-blunt-defense").innerText = this.characterCreationArray[4][7];
-        document.getElementById("character-creation-pierce-defense").innerText = this.characterCreationArray[4][8];
-        document.getElementById("character-creation-arcane-defense").innerText = this.characterCreationArray[4][9];
-        document.getElementById("character-creation-element-defense").innerText = this.characterCreationArray[4][10];
+        document.getElementById("character-creation-health").innerText = (vigor * 10) + (endurance * 2) + (strength * 2) + (dexterity * 2) + (insight * 2) + (focus * 2);
+        document.getElementById("character-creation-stamina").innerText = (vigor * 1) + (endurance * 5) + (strength * 3) + (dexterity * 3) + (insight * 1) + (focus * 1);
+        document.getElementById("character-creation-magic").innerText = (vigor * 1) + (endurance * 5) + (strength * 1) + (dexterity * 1) + (insight * 3) + (focus * 3);
+        document.getElementById("character-creation-blunt-attack").innerText = (vigor * 1) + (endurance * 1) + (strength * 3) + (dexterity * 2) + (insight * 2) + (focus * 2);
+        document.getElementById("character-creation-pierce-attack").innerText = (vigor * 1) + (endurance * 1) + (strength * 2) + (dexterity * 3) + (insight * 2) + (focus * 2);
+        document.getElementById("character-creation-arcane-attack").innerText = (vigor * 1) + (endurance * 1) + (strength * 2) + (dexterity * 2) + (insight * 3) + (focus * 2);
+        document.getElementById("character-creation-element-attack").innerText = (vigor * 1) + (endurance * 1) + (strength * 2) + (dexterity * 2) + (insight * 2) + (focus * 3);
+        document.getElementById("character-creation-blunt-defense").innerText = (vigor * 1) + (endurance * 1) + (strength * 2) + (dexterity * 1) + (insight * 1) + (focus * 1);
+        document.getElementById("character-creation-pierce-defense").innerText = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 2) + (insight * 1) + (focus * 1);
+        document.getElementById("character-creation-arcane-defense").innerText = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 2) + (focus * 1);
+        document.getElementById("character-creation-element-defense").innerText = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 1) + (focus * 2);
         document.getElementById("character-creation-speed").innerText = 25;
         document.getElementById("character-creation-evasion").innerText = 10;
     }
@@ -163,7 +175,7 @@ export default class Controller {
                 this.partyGold = 250;
                 break;
             case "blacksmith":
-                equippedArray.push(new BlacksmithHammer, "Empty", new Buckler, new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
+                equippedArray.push(new BlacksmithHammer, new Buckler, "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
                 this.partyGold = 200;
                 break;
             case "ranger":
@@ -225,7 +237,7 @@ export default class Controller {
             document.getElementById("character-creation-inventory").appendChild(inventorySlot);
         }
         document.getElementById("character-creation-gold").innerText = this.partyGold;
-        this.characterCreationArray[5] = equippedArray;
+        this.characterCreationArray[4] = equippedArray;
         this.partyInventory = inventoryArray;
     }
     enableGameOverScreenControls(){
@@ -453,18 +465,7 @@ export default class Controller {
                         this.party[0].focus = this.party[0].focus + 1;
                         break;
                 }
-                let newStats = this.scaleAttributes(this.party[0].vigor, this.party[0].endurance, this.party[0].strength, this.party[0].dexterity, this.party[0].insight, this.party[0].focus);
-                this.party[0].maxHP = newStats[0];
-                this.party[0].maxStamina = newStats[1];
-                this.party[0].maxMagic = newStats[2];
-                this.party[0].baseBluntAttack = newStats[3];
-                this.party[0].basePierceAttack = newStats[4];
-                this.party[0].baseArcaneAttack = newStats[5];
-                this.party[0].baseElementalAttack = newStats[6];
-                this.party[0].baseBluntDefense = newStats[7];
-                this.party[0].basePierceDefense = newStats[8];
-                this.party[0].baseArcaneDefense = newStats[9];
-                this.party[0].baseElementalDefense = newStats[10];
+                this.party[0].scaleAttributes();
                 this.party[0].currentHP = this.party[0].maxHP;
                 this.party[0].currentStamina = this.party[0].maxStamina;
                 this.party[0].currentMagic = this.party[0].maxMagic;
@@ -1538,20 +1539,6 @@ export default class Controller {
     playSoundEffect(soundEffectPath){
         document.getElementById('sound-effect-player').src = soundEffectPath;
         document.getElementById('sound-effect-player').play();  
-    }
-    scaleAttributes(vigor, endurance, strength, dexterity, insight, focus){
-        let maxHP = (vigor * 10) + (endurance * 2) + (strength * 2) + (dexterity * 2) + (insight * 2) + (focus * 2);
-        let maxStamina = (vigor * 1) + (endurance * 5) + (strength * 3) + (dexterity * 3) + (insight * 1) + (focus * 1);
-        let maxMagic = (vigor * 1) + (endurance * 5) + (strength * 1) + (dexterity * 1) + (insight * 3) + (focus * 3);
-        let baseBluntAttack = (vigor * 1) + (endurance * 1) + (strength * 3) + (dexterity * 2) + (insight * 2) + (focus * 2);
-        let basePierceAttack = (vigor * 1) + (endurance * 1) + (strength * 2) + (dexterity * 3) + (insight * 2) + (focus * 2);
-        let baseArcaneAttack = (vigor * 1) + (endurance * 1) + (strength * 2) + (dexterity * 2) + (insight * 3) + (focus * 2);
-        let baseElementalAttack = (vigor * 1) + (endurance * 1) + (strength * 2) + (dexterity * 2) + (insight * 2) + (focus * 3);
-        let baseBluntDefense = (vigor * 1) + (endurance * 1) + (strength * 2) + (dexterity * 1) + (insight * 1) + (focus * 1);
-        let basePierceDefense = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 2) + (insight * 1) + (focus * 1);
-        let baseArcaneDefense = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 2) + (focus * 1);
-        let baseElementalDefense = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 1) + (focus * 2);
-        return [maxHP, maxStamina, maxMagic, baseBluntAttack, basePierceAttack, baseArcaneAttack, baseElementalAttack, baseBluntDefense, basePierceDefense, baseArcaneDefense, baseElementalDefense];
     }
     calculateAveragePartyLevel(){
         let sum = 0;

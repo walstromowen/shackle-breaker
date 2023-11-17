@@ -562,6 +562,7 @@ export class ShieldBash extends Ability{
                 return;
             }
             let damageOutput = Math.floor(Math.random() * (weilder.currentBluntAttack - (weilder.currentBluntAttack - this.damageModifier) + 1)) + (weilder.currentBluntAttack - this.damageModifier);
+            damageOutput = Math.floor(damageOutput/2)
             let messageAddon = "";
             if(target.currentBluntDefense >= (target.baseBluntDefense - 6)){
                 target.currentBluntDefense = target.currentBluntDefense - 2;

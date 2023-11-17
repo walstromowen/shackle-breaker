@@ -96,6 +96,7 @@ export function initiateTrade(message, inventoryArray){
 }
 export function recruit(message, newCompanion){
     newCompanion.autoLevelUp(theController.party[0].level);
+    newCompanion.scaleAttributes();
     theController.printToGameConsole(message);
     theController.party.push(newCompanion);
     theController.updateParty();
