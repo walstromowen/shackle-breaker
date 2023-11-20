@@ -614,10 +614,10 @@ export class SpitBile extends Ability{
         this.name = "spit bile";
         this.type = "elemental";
         this.speedMultiplier = 0.5;
-        this.staminaCost = 10;
+        this.staminaCost = 12;
         this.magicCost = 0;
         this.damageModifier = 3;
-        this.accuracy = 60;
+        this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/platzender-kopf_nachschlag-91637.mp3";
     }
     activate(weilder, target){
@@ -631,12 +631,14 @@ export class SpitBile extends Ability{
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
             if(damageOutput > 0){
-                for(let i = 0; i < target.statusArray.length; i++){
-                    if(target.statusArray[i].name == "poisoned"){
-                        return;
+                if(Math.random()*3 < 1){
+                    for(let i = 0; i < target.statusArray.length; i++){
+                        if(target.statusArray[i].name == "poisoned"){
+                            return;
+                        }
                     }
+                    target.statusArray.push(new Poisoned(target));
                 }
-                target.statusArray.push(new Poisoned(target));
             }
         }
     }  
