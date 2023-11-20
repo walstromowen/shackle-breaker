@@ -2,9 +2,9 @@ import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Clea
         ThrowNet, Immolate, LightningBolt, Shockwave, Recuperate, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Channel, ThrowSmokebomb, CastShadow, BlinkStrike, Empower} from "./abilities.js"
 
 export function getRandomItem(){
-    let itemArray = [new LinenShirt, new LinenPants, new Dagger, new BlacksmithHammer, new Spear, new Shortsword, new Longsword, new Handaxe, new NamuhSword,
+    let itemArray = [new LinenShirt, new LinenPants, new Dagger, new BlacksmithHammer, new Spear, new Shortsword, new Longsword, new Handaxe, new NightbladeSword,
                 new Shiv, new Buckler, new FireStaff, new LightningStaff, new IceStaff, new ArcaneStaff, new LightStaff, new DarkStaff, new LeatherHelmet, 
-                new LeatherHood, new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
+                new LeatherHood, new LeatherGloves, new LeatherChestplate, new LeatherGreaves, new NightbladeHelm, new NightbladeChestplate,
                 new LeatherBoots, new KiteShield, new IronHelmet, new IronGauntlets, new IronChainmail, 
                 new IronGreaves, new IronBoots, new CrystalBall, new ClothHood, new ClothRobe,
                 new HealthPotion, new StaminaPotion, new MagicPotion, 
@@ -191,7 +191,7 @@ export class Spear {
             this.arcaneAttack = this.arcaneAttack + 0;
             this.elementalAttack = this.elementalAttack + 0;
             this.bluntDefense = this.bluntDefense + 0;
-            this.pierceDefense = this.pierceDefense + 0;
+            this.pierceDefense = this.pierceDefense + 1;
             this.arcaneDefense = this.arcaneDefense + 0;
             this.elementalDefense = this.elementalDefense + 0;
             this.speed = this.speed + 0;
@@ -1207,12 +1207,12 @@ export class CrystalBall {
         }
     }
 }
-export class NamuhSword {
+export class NightbladeSword {
     constructor(){
-        this.name = "namuh sword";
+        this.name = "nightblade sword";
         this.type = "one hand";
         this.imageSrc = "./media/icons/longsword.png";
-        this.description = `a Numuh longsword. The Namuh are a shadowy and mysterious people who mainly communicate through sign language. Much like this blade, they rarely make a sound.`;
+        this.description = `a gleaming silver longsword. Legend speaks of elite warriors called Nightblades whose shadows were able to materialize into physical form. Much like this blade, they rarely made a sound.`;
         this.level = 1;
         this.price = 300;
         this.bluntAttack = 2;
@@ -1247,6 +1247,229 @@ export class NamuhSword {
         }
     }
 }
+export class NightbladeHelm {
+    constructor(){
+        this.name = "nightblade helm";
+        this.type = "head";
+        this.imageSrc = "./media/icons/light-helm.png";
+        this.description = `a dark helm with a silver emblem. Legend speaks of elite warriors called Nightblades whose shadows were able to materialize into physical form. Such legends were thought to be a myth, this helm would say otherwise.`;
+        this.level = 1;
+        this.price = 150;
+        this.bluntAttack = 0;
+        this.pierceAttack = 0;
+        this.arcaneAttack = 0;
+        this.elementalAttack = 0;
+        this.bluntDefense = 2;
+        this.pierceDefense = 2;
+        this.arcaneDefense = 2;
+        this.elementalDefense = 1;
+        this.speed = 1;
+        this.evasion = 1;
+        this.abilityArray = [new Recuperate()];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 2;
+            this.pierceDefense = this.pierceDefense + 2;
+            this.arcaneDefense = this.arcaneDefense + 2;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 1;
+        }
+    }
+}
+export class NightbladeChestplate {
+    constructor(){
+        this.name = "nightblade chestplate";
+        this.type = "torso";
+        this.imageSrc = "./media/icons/leather-armor.png";
+        this.description = `dark scaled armor with a silver emblem. Legend speaks of elite warriors called Nightblades whose shadows were able to materialize into physical form. Such legends were thought to be a myth, this chestplate would say otherwise.`;
+        this.level = 1;
+        this.price = 150;
+        this.bluntAttack = 0;
+        this.pierceAttack = 0;
+        this.arcaneAttack = 0;
+        this.elementalAttack = 0;
+        this.bluntDefense = 3;
+        this.pierceDefense = 3;
+        this.arcaneDefense = 2;
+        this.elementalDefense = 1;
+        this.speed = 1;
+        this.evasion = 1;
+        this.abilityArray = [new Recuperate()];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 2;
+            this.pierceDefense = this.pierceDefense + 2;
+            this.arcaneDefense = this.arcaneDefense + 2;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 1;
+        }
+    }
+}
+/*
+export class NamuhShirt {
+    constructor(){
+        this.name = "namuh shirt";
+        this.type = "torso";
+        this.imageSrc = "./media/icons/leather-armor.png";
+        this.level = 1;
+        this.price = 100;
+        this.bluntAttack = 0;
+        this.pierceAttack = 0;
+        this.arcaneAttack = 0;
+        this.elementalAttack = 0;
+        this.bluntDefense = 2;
+        this.pierceDefense = 2;
+        this.arcaneDefense = 2;
+        this.elementalDefense = 1;
+        this.speed = 1;
+        this.evasion = 1;
+        this.abilityArray = [new Recuperate()];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 2;
+            this.arcaneDefense = this.arcaneDefense + 2;
+            this.elementalDefense = this.elementalDefense + 0;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 1;
+        }
+    }
+}
+export class NamuhGloves {
+    constructor(){
+        this.name = "namuh gloves";
+        this.type = "arms";
+        this.imageSrc = "./media/icons/gauntlet.png";
+        this.description = `dark leather gloves with silver streaks. The Namuh are a shadowy and mysterious people who mainly communicate through sign language. Attire like this helps one keep a low profile much, like the Namuh people.`
+        this.level = 1;
+        this.price = 100;
+        this.bluntAttack = 0;
+        this.pierceAttack = 0;
+        this.arcaneAttack = 0;
+        this.elementalAttack = 0;
+        this.bluntDefense = 2;
+        this.pierceDefense = 2;
+        this.arcaneDefense = 1;
+        this.elementalDefense = 2;
+        this.speed = 1;
+        this.evasion = 1;
+        this.abilityArray = [new Recuperate()];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 1;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 1;
+            this.evasion = this.evasion + 1;
+        }
+    }
+}
+export class NamuhPants {
+    constructor(){
+        this.name = "namuh greaves";
+        this.type = "legs";
+        this.imageSrc = "./media/icons/armored-pants.png";
+        this.description = `dark leather pants with silver streaks. The Namuh are a shadowy and mysterious people who mainly communicate through sign language. Attire like this helps one keep a low profile, much like the Namuh people.`;
+        this.level = 1;
+        this.price = 100;
+        this.bluntAttack = 0;
+        this.pierceAttack = 0;
+        this.arcaneAttack = 0;
+        this.elementalAttack = 0;
+        this.bluntDefense = 2;
+        this.pierceDefense = 2;
+        this.arcaneDefense = 1;
+        this.elementalDefense = 2;
+        this.speed = 1;
+        this.evasion = 1;
+        this.abilityArray = [new Recuperate()];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 1;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 1;
+            this.evasion = this.evasion + 1;
+        }
+    }
+}
+export class NamuhBoots {
+    constructor(){
+        this.name = "namuh boots";
+        this.type = "feet";
+        this.imageSrc = "./media/icons/boots.png";
+        this.description = `dark leather boots with silver laces. The Namuh are a shadowy and mysterious people who mainly communicate through sign language. Attire like this helps one keep a low profile, much like the Namuh people.`;
+        this.level = 1;
+        this.price = 100;
+        this.bluntAttack = 0;
+        this.pierceAttack = 0;
+        this.arcaneAttack = 0;
+        this.elementalAttack = 0;
+        this.bluntDefense = 2;
+        this.pierceDefense = 2;
+        this.arcaneDefense = 1;
+        this.elementalDefense = 2;
+        this.speed = 1;
+        this.evasion = 1;
+        this.abilityArray = [new Recuperate()];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 1;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 1;
+            this.evasion = this.evasion + 1;
+        }
+    }
+}
+*/
 export class HealthPotion {
     constructor(){
         this.name = "healing potion";

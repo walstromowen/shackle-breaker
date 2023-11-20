@@ -1,4 +1,4 @@
-import {LockedTreasureChest, UnlockedTreasureChest, AltusAmbushOpportunity, MysteriousDoor, TravelingMerchant, AbandonedCabin, SuspiciousSkeleton, Robbery, Avalanche, MercenaryForHire} from "./encounters.js";
+import {LockedTreasureChest, UnlockedTreasureChest, AltusAmbushOpportunity, MysteriousDoor, TravelingMerchant, AbandonedCabin, SuspiciousSkeleton, Robbery, Avalanche, MercenaryForHire, AncientTombstone} from "./encounters.js";
 import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos, ShadowStrider, TerrorBear, Bandit, Ghost, SkeletonMage} from "./enemies.js";
 
 export default class MapEnviorment{
@@ -60,7 +60,7 @@ export default class MapEnviorment{
                     case 0: 
                         this.biome = "twilight realm";
                         this.imageSrc = "media/twilight-realm.jpg";
-                        this.backgroundMusicSrc = "./audio/gathering-darkness-kevin-macleod-main-version-04-22-8459.mp3";
+                        this.backgroundMusicSrc = "./audio/mixkit-evil-storm-atmosphere-2404.wav";
                         this.frameCoordinates = [
                             [3],
                             [3]
@@ -82,7 +82,7 @@ export default class MapEnviorment{
             case "altas castle":
                 this.biome = "altas castle";
                         this.imageSrc = "media/altas-castle-interior.jpg";
-                        this.backgroundMusicSrc = "./audio/gathering-darkness-kevin-macleod-main-version-04-22-8459.mp3";
+                        this.backgroundMusicSrc = "./audio/mixkit-evil-storm-atmosphere-2404.wav";
                         this.frameCoordinates = [
                             [3],
                             [3],
@@ -234,7 +234,7 @@ export default class MapEnviorment{
                         return;
                 }
             case "plains":
-                switch(Math.floor(Math.random()*5)){ 
+                switch(Math.floor(Math.random()*6)){ 
                     case 0:
                         return new LockedTreasureChest();
                     case 1:
@@ -245,11 +245,13 @@ export default class MapEnviorment{
                         return new Robbery();
                     case 4:
                         return new MercenaryForHire();
+                    case 5:
+                        return new AncientTombstone();
                     default:
                         return;
                 }
             case "mountain":
-                switch(Math.floor(Math.random()*4)){ 
+                switch(Math.floor(Math.random()*5)){ 
                     case 0:
                         return new Robbery();
                     case 1:
@@ -258,6 +260,8 @@ export default class MapEnviorment{
                         return new TravelingMerchant();
                     case 3:
                         return new MysteriousDoor();
+                    case 4:
+                        return new AncientTombstone();
                     default:
                         return;
                 }
@@ -271,11 +275,13 @@ export default class MapEnviorment{
                         return;
                 }
             case "ancient altus ruins":
-                switch(Math.floor(Math.random()*2)){ 
+                switch(Math.floor(Math.random()*3)){ 
                     case 0:
                         return new LockedTreasureChest();
                     case 1:
                         return new SuspiciousSkeleton();
+                    case 2:
+                        return new AncientTombstone();
                     default:
                         return;
                 }

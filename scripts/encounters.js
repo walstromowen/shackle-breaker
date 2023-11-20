@@ -1,11 +1,11 @@
 import {controller as theController} from "./main.js"
 import Character from "./character.js";
 import {Decision} from "./encounterDecision.js";
-import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, Bandit} from "./enemies.js";
+import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, Bandit, SkeletonMage, Ghost} from "./enemies.js";
 import {Shielded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden} from "./statusEffects.js";
 import {regainHP, initiateTrade, leave, retry, removeDecision, toggleNewEncounter, toggleBattle, loot, takeDamage, recieveStatusEffect, changeMap, recruit} from "./encounterResults.js";
-import {getRandomItem, LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer,
-    Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, 
+import {getRandomItem, LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer, NightbladeSword,
+    Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, NightbladeHelm, NightbladeChestplate,
     LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
     LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, 
     IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
@@ -119,7 +119,7 @@ export class AltusAmbushOpportunity extends Encounter{
             new Decision(
                 "go around", 
                 ()=>{theController.printToGameConsole(`${theController.party[0].name} attempts to sneak around the guard.`)},
-                "dexterity",
+                "likely",
                 [
                     ()=>{leave(`${theController.party[0].name} slips away quietly.`)}
                 ],
@@ -233,23 +233,27 @@ export class SuspiciousSkeleton extends Encounter{
             new Decision(
                 "go around", 
                 ()=>{theController.printToGameConsole(`${theController.party[0].name} attempts to sneak around the skeleton.`)},
-                "dexterity",
+                "neutral",
                 [
                     ()=>{leave(`${theController.party[0].name} slips away quietly.`)}
                 ],
                 [
-                    ()=>{toggleBattle(`the skeleton spots ${theController.party[0].name} and draws his weapon!`, [new Skeleton(theController.calculateAveragePartyLevel())])}
+                    ()=>{toggleBattle(`the skeleton spots ${theController.party[0].name} and draws his weapon!`, [new Skeleton(theController.calculateAveragePartyLevel())])},
+                    ()=>{toggleBattle(`the skeleton spots ${theController.party[0].name} and draws his weapon!`, [new SkeletonMage(theController.calculateAveragePartyLevel())])}
+               
                 ]
             ),
             new Decision(
                 "lure away", 
                 `${theController.party[0].name} throws a rock in the distance attempting to lure the skeleton away.`,
-                "neutral",
+                "dexterity",
                 [
                     ()=>{leave(`The skeleton leaves its post to investigates the sound leaving ${theController.party[0].name} a clear path forward.`)}
                 ],
                 [
-                    ()=>{toggleBattle(`the skeleton spots ${theController.party[0].name} and draws his weapon!`, [new Skeleton(theController.calculateAveragePartyLevel())])}
+                    ()=>{toggleBattle(`the skeleton spots ${theController.party[0].name} and draws his weapon!`, [new Skeleton(theController.calculateAveragePartyLevel())])},
+                    ()=>{toggleBattle(`the skeleton spots ${theController.party[0].name} and draws his weapon!`, [new SkeletonMage(theController.calculateAveragePartyLevel())])}
+               
                 ]
             ),
             new Decision(
@@ -258,10 +262,12 @@ export class SuspiciousSkeleton extends Encounter{
                 "unlikely",
                 [
                     ()=>{loot(`${theController.party[0].name} and the skeleton have a pleasant discussion about the good old days. Then the skeleton gives ${theController.party[0].name}:`, [getRandomItem()], 0, 0)},
-                    ()=>{leave(`${theController.party[0].name} politely asks the skeleton for directions. The skeleton stares back in disbelief and then nods to the hallway ahead. ${theController.party[0].name} thanks the skeleton and proceeds.`)}
+                    ()=>{leave(`${theController.party[0].name} asks the skeleton for directions. The skeleton stares back in disbelief and then nods to the hallway ahead.`)}
                 ],
                 [
                     ()=>{toggleBattle(`the skeleton fixes its gaze upon ${theController.party[0].name} and draws its weapon!`, [new Skeleton(theController.calculateAveragePartyLevel())])},
+                    ()=>{toggleBattle(`the skeleton fixes its gaze upon ${theController.party[0].name} and draws its weapon!`, [new SkeletonMage(theController.calculateAveragePartyLevel())])},
+                    
                     ()=>{
                         theController.party[0].statusArray.push(new Bound(theController.party[0]));
                         toggleBattle(`the skeleton grabs onto ${theController.party[0].name}!`, [new Skeleton(theController.calculateAveragePartyLevel())])
@@ -538,6 +544,72 @@ export class MercenaryForHire extends Encounter{
                 ],
                 [
                     
+                ]
+            )
+        ];
+    }
+}
+export class AncientTombstone extends Encounter{
+    constructor(){
+        super();
+        this.name = "an ancient tombstone";
+        this.messageFunction = ()=>{theController.printToGameConsole("an ancient tombstone lies ahead. It's text is barely legible.")};
+        this.imageSrc = "./media/tombstone.jpg";
+        this.decisionArray = [
+            new Decision(
+                "move on", 
+                ()=>{theController.printToGameConsole(`${theController.party[0].name} walks past the tombstone.`)},
+                "certain",
+                [
+                    ()=>{leave(`${theController.party[0].name} moves on.`)}
+                ],
+                [
+
+                ]
+            ),
+            new Decision(
+                "Loot grave", 
+                ()=>{theController.printToGameConsole(`${theController.party[0].name} starts digging around the tombstone, looking for anything useful.`)},
+                "neutral",
+                [
+                    ()=>{loot(`${theController.party[0].name} finds: `, [getRandomItem()], 30, 10)},
+                ],
+                [
+                    ()=>{toggleNewEncounter(`${theController.party[0].name} notices something in the grave.`, new UnearthedReamins())}
+                ]
+            )
+        ];
+    }
+}
+export class UnearthedReamins extends Encounter{
+    constructor(){
+        super();
+        this.name = "unearthed remains";
+        this.messageFunction = ()=>{theController.printToGameConsole(`${theController.party[0].name} digs up an skeleton. It appears to be holding something.`)};
+        this.imageSrc = "./media/tombstone.jpg";
+        this.decisionArray = [
+            new Decision(
+                "move on", 
+                ()=>{theController.printToGameConsole(`${theController.party[0].name} steps away from the skeleton.`)},
+                "certain",
+                [
+                    ()=>{leave(`${theController.party[0].name} moves on.`)}
+                ],
+                [
+
+                ]
+            ),
+            new Decision(
+                "distrub remains", 
+                ()=>{theController.printToGameConsole(`${theController.party[0].name} reaches for the skeleton.`)},
+                "neutral",
+                [
+                    ()=>{loot(`${theController.party[0].name} finds: `, [getRandomItem()], 50, 10)},
+                ],
+                [
+                    ()=>{toggleBattle(`the skeleton magically animates and walks towards ${theController.party[0].name}!`, [new Skeleton(theController.calculateAveragePartyLevel())])},
+                    ()=>{toggleBattle(`the skeleton magically animates and walks towards ${theController.party[0].name}!`, [new SkeletonMage(theController.calculateAveragePartyLevel())])},
+                    ()=>{toggleBattle(`an ominous precence approaches ${theController.party[0].name}!`, [new Ghost(theController.calculateAveragePartyLevel())])}
                 ]
             )
         ];

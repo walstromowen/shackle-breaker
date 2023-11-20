@@ -1,7 +1,7 @@
 import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
     ThrowNet, Immolate, LightningBolt, Channel, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Bite, SpitBile, LeechLife, Devour, Pounce, CastShadow, ThrowSmokebomb, Shockwave, GuardBreak, BlinkStrike} from "./abilities.js"
-import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer,
-        Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, 
+    import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer, NightbladeSword,
+        Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, NightbladeHelm, NightbladeChestplate,
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
         LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, 
         IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
@@ -201,7 +201,7 @@ export class Wolf extends Enemy{
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 30;
         this.currentSpeed = this.baseSpeed;
-        this.baseEvasion = 12;
+        this.baseEvasion = 10;
         this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Bite, new Pounce];
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
@@ -357,7 +357,7 @@ export class EmperorDolos extends Enemy{
         super();
         this.name = "emperor dolos";
         this.imageSrc = "media/emperor-dolos.jpg"
-        this.maxHP = 150;
+        this.maxHP = 200;
         this.currentHP = this.maxHP;
         this.maxStamina = 150;
         this.currentStamina = this.maxStamina;
@@ -431,7 +431,7 @@ export class TerrorBear extends Enemy{
         this.abilityArray = [new Bite, new Devour, new LightningBolt, new CastShadow];
         this.statusArray = [new Channeled(this), new Invigorated(this)]
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new HealthPotion, new LightningStaff, new Meteorite];
+        this.lootArray = [new HealthPotion, new Meteorite];
         this.gold = 0;
         this.xp = 0;
         this.isBoss = false;

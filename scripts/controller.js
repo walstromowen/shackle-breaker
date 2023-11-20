@@ -1,5 +1,5 @@
-import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer, NamuhSword,
-    Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, 
+import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer, NightbladeSword,
+    Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, NightbladeHelm, NightbladeChestplate,
     LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
     LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, 
     IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
@@ -130,19 +130,6 @@ export default class Controller {
                 break;
         }
     }
-    /*
-    this.maxHP = (this.vigor * 10) + (this.endurance * 2) + (this.strength * 2) + (this.dexterity * 2) + (this.insight * 2) + (this.focus * 2);
-        this.maxStamina = (this.vigor * 1) + (this.endurance * 5) + (this.strength * 3) + (this.dexterity * 3) + (this.insight * 1) + (this.focus * 1);
-        this.maxMagic = (this.vigor * 1) + (this.endurance * 5) + (this.strength * 1) + (this.dexterity * 1) + (this.insight * 3) + (this.focus * 3);
-        this.baseBluntAttack = (this.vigor * 1) + (this.endurance * 1) + (this.strength * 3) + (this.dexterity * 2) + (this.insight * 2) + (this.focus * 2);
-        this.basePierceAttack = (this.vigor * 1) + (this.endurance * 1) + (this.strength * 2) + (this.dexterity * 3) + (this.insight * 2) + (this.focus * 2);
-        this.baseArcaneAttack = (this.vigor * 1) + (this.endurance * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.insight * 3) + (this.focus * 2);
-        this.baseElementalAttack = (this.vigor * 1) + (this.endurance * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.insight * 2) + (this.focus * 3);
-        this.baseBluntDefense = (this.vigor * 1) + (this.endurance * 1) + (this.strength * 2) + (this.dexterity * 1) + (this.insight * 1) + (this.focus * 1);
-        this.basePierceDefense = (this.vigor * 1) + (this.endurance * 1) + (this.strength * 1) + (this.dexterity * 2) + (this.insight * 1) + (this.focus * 1);
-        this.baseArcaneDefense = (this.vigor * 1) + (this.endurance * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.insight * 2) + (this.focus * 1);
-        this.baseElementalDefense = (this.vigor * 1) + (this.endurance * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.insight * 1) + (this.focus * 2);
-        */
     characterCreatorUpdateStats(vigor, endurance, strength, dexterity, insight, focus){
         this.characterCreationArray[3] = [vigor, endurance, strength, dexterity, insight, focus];
         document.getElementById("character-creation-vigor").innerText = this.characterCreationArray[3][0];
@@ -172,31 +159,31 @@ export default class Controller {
         switch(value){
             case "traveler":
                 equippedArray.push(new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
-                this.partyGold = 250;
+                this.partyGold = 300;
                 break;
             case "blacksmith":
                 equippedArray.push(new BlacksmithHammer, new Buckler, "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
-                this.partyGold = 200;
+                this.partyGold = 250;
                 break;
             case "ranger":
                 equippedArray.push(new Shortsword, "Empty", new LeatherHood, new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
-                this.partyGold = 200;
+                this.partyGold = 250;
                 break;
             case "scholar":
                 equippedArray.push(new ArcaneStaff, "Empty", new ClothHood, new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
-                this.partyGold = 150;
+                this.partyGold = 200;
                 break;
             case "warrior":
                 equippedArray.push(new Handaxe, "Empty", "Empty", new LeatherChestplate, new LinenPants, "Empty", new LeatherBoots);
-                this.partyGold = 200;
+                this.partyGold = 250;
                 break;
             case "theif":
                 equippedArray.push(new Dagger, new Shiv, "Empty", new LinenShirt, new LinenPants, "Empty", new LeatherBoots);
-                this.partyGold = 200;
+                this.partyGold = 250;
                 break;
             case "hermit":
                 equippedArray.push(new FireStaff, "Empty", new ClothHood, new LinenShirt, "Empty",  new LinenPants, new LeatherBoots);
-                this.partyGold = 150;
+                this.partyGold = 200;
                 break;
         }
         let value2 = document.getElementById("keepsake-selection").value;
@@ -1303,6 +1290,7 @@ export default class Controller {
                 this.printToGameConsole(`${this.party[0].name} spends ${upgradeCost} gold to upgrade ${this.partyInventory[inventoryIndex].name}.`);
                 this.partyInventory[inventoryIndex].upgrade(1);
                 this.updatePartyInventoryTab(this.partyInventory);
+                this.playSoundEffect("./audio/soundEffects/mixkit-metal-medieval-construction-818.wav");
             }
             else{
                 this.printToGameConsole(`Not enough gold to upgrade ${this.partyInventory[inventoryIndex].name}.`);

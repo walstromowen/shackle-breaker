@@ -251,7 +251,7 @@ export class Slash extends Ability{
         this.magicCost = 0;
         this.damageModifier = 4;
         this.accuracy = 80;
-        this.soundEffect = "./audio/soundEffects/sword-sound-2-36274.mp3";
+        this.soundEffect = "./audio/soundEffects/mixkit-metal-hit-woosh-1485.wav";
     }
     activate(weilder, target){
         if(this.checkStamina(weilder) == true){
@@ -286,7 +286,7 @@ export class GuardBreak extends Ability{
         this.magicCost = 0;
         this.damageModifier = 4;
         this.accuracy = 80;
-        this.soundEffect = "./audio/soundEffects/crash-6711.wav";
+        this.soundEffect = "./audio/soundEffects/mixkit-metallic-sword-strike-2160.wav";
     }
     activate(weilder, target){
         if(this.checkStamina(weilder) == true){
@@ -326,7 +326,7 @@ export class Strike extends Ability{
         this.magicCost = 0;
         this.damageModifier = 4;
         this.accuracy = 80;
-        this.soundEffect = "./audio/soundEffects/crash-6711.wav";
+        this.soundEffect = "./audio/soundEffects/mixkit-metallic-sword-strike-2160.wav";
     }
     activate(weilder, target){
         if(this.checkStamina(weilder) == true){
@@ -346,11 +346,11 @@ export class Stab extends Ability{
         super();
         this.name = "stab";
         this.type = "pierce";
-        this.speedMultiplier = 0.5;
-        this.staminaCost = 10;
+        this.speedMultiplier = 0.75;
+        this.staminaCost = 8;
         this.magicCost = 0;
-        this.damageModifier = 6;
-        this.accuracy = 60;
+        this.damageModifier = 4;
+        this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/Knife-Stab-A10-www.fesliyanstudios.com.mp3";
     }
     activate(weilder, target){
@@ -385,7 +385,7 @@ export class Flurry extends Ability{
         this.staminaCost = 16;
         this.magicCost = 0;
         this.damageModifier = 8;
-        this.accuracy = 60;
+        this.accuracy = 70;
         this.soundEffect = "./audio/soundEffects/Knife-Stab-A10-www.fesliyanstudios.com.mp3";
     }
     activate(weilder, target){
@@ -416,10 +416,10 @@ export class Bite extends Ability{
         super();
         this.name = "bite";
         this.type = "bluntPierce";
-        this.speedMultiplier = 0.75;
-        this.staminaCost = 8;
+        this.speedMultiplier = 0.5;
+        this.staminaCost = 6;
         this.magicCost = 0;
-        this.damageModifier = 4;
+        this.damageModifier = 2;
         this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/chomp1.mp3";
     }
@@ -561,7 +561,8 @@ export class ShieldBash extends Ability{
             if(this.checkMiss(weilder, target, this.name) == true){
                 return;
             }
-            let damageOutput = Math.floor(Math.random() * (weilder.currentBluntAttack - (weilder.currentBluntAttack - this.damageModifier) + 1)) + (weilder.currentBluntAttack - this.damageModifier);
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentBluntAttack + this.damageModifier) - weilder.currentBluntAttack + 1)) + weilder.currentBluntAttack;
+            damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
             damageOutput = Math.floor(damageOutput/2)
             let messageAddon = "";
             if(target.currentBluntDefense >= (target.baseBluntDefense - 6)){
@@ -572,7 +573,6 @@ export class ShieldBash extends Ability{
                 target.currentPierceDefense = target.currentPierceDefense - 2;
                 messageAddon = ", lowering physical defense, and";
             }
-           damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name}` + messageAddon + ` dealing ${damageOutput} damage!`);
         }
@@ -613,8 +613,8 @@ export class SpitBile extends Ability{
         super();
         this.name = "spit bile";
         this.type = "elemental";
-        this.speedMultiplier = 0.25;
-        this.staminaCost = 12;
+        this.speedMultiplier = 0.5;
+        this.staminaCost = 10;
         this.magicCost = 0;
         this.damageModifier = 3;
         this.accuracy = 60;
@@ -993,7 +993,6 @@ export class LightBeam extends Ability{
                 if(target.statusArray[i].name == "hidden"){
                     target.statusArray[i].onRemove();
                     target.statusArray.splice(i, 1);
-                    damageOutput = damageOutput + Math.floor(target.maxStamina/2);
                     break;
                 }
             }
@@ -1016,7 +1015,7 @@ export class Cleanse extends Ability{
         this.staminaCost = 0;
         this.magicCost = 25;
         this.accuracy = "";
-        this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
+        this.soundEffect = "./audio/soundEffects/mixkit-light-spell-873.wav";
     }
     activate(weilder, target){ 
         if(this.checkMagic(weilder) == true){  

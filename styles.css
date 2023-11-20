@@ -287,11 +287,11 @@ p{
 }
 .inventory-slot{
     width: 16%;
-    border: 3px solid black;
+    border: 3px solid transparent;
     margin: 2px;
 }
 .inventory-slot:hover{
-    border: 3px solid transparent;
+    border: 3px solid black;
 }
 .equip-slots-row{
     display: flex;

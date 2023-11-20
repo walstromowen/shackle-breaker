@@ -214,13 +214,13 @@ export default class Battle{
     endBattle(){
         for(let x = 0; x < this.friendlyParty.length; x++){
             for(let y = 0; y < this.friendlyParty[x].statusArray.length; y++){
-                this.friendlyParty[0].statusArray[y].onRemove();
+                this.friendlyParty[x].statusArray[y].onRemove();
             }
             theController.calcCharacterAbilitiesAndStats(x)   
         }
         for(let x = 0; x < this.hostileParty.length; x++){
             for(let y = 0; y < this.hostileParty[x].statusArray.length; y++){
-                this.hostileParty[0].statusArray[y].onRemove();
+                this.hostileParty[x].statusArray[y].onRemove();
             }
             this.hostileParty[x].resetStats();   
         }    
