@@ -234,7 +234,7 @@ export default class MapEnviorment{
                         return;
                 }
             case "plains":
-                switch(Math.floor(Math.random()*6)){ 
+                switch(Math.floor(Math.random()*7)){ 
                     case 0:
                         return new LockedTreasureChest();
                     case 1:
@@ -247,6 +247,8 @@ export default class MapEnviorment{
                         return new MercenaryForHire();
                     case 5:
                         return new AncientTombstone();
+                    case 6:
+                        return new UnlockedTreasureChest();
                     default:
                         return;
                 }

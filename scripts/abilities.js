@@ -1502,6 +1502,36 @@ export class UseAloeRemedy extends Ability{
         return false;
     }
 }
+export class UseBandage extends Ability{
+    constructor(){
+        super();
+        this.name = "use bandage";
+        this.type = "";
+        this.speedMultiplier = 0.5;
+        this.staminaCost = 0;
+        this.magicCost = 0;
+        this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
+    }
+    activate(weilder, target){
+        for(let i = 0; i < weilder.statusArray.length; i++){
+            if(weilder.statusArray[i].name == "bleedng"){
+                weilder.statusArray.splice(i, 1);
+                theController.printToGameConsole(`${weilder.name} was treated for bleeding!`);
+                theController.playSoundEffect(this.soundEffect);
+                return;
+            }
+        }
+    }
+    canUse(weilder){
+        for(let i = 0; i < weilder.statusArray.length; i++){
+            if(weilder.statusArray[i].name == "bleeding"){
+                return true;
+            }
+        }
+        theController.printToGameConsole(`${weilder.name} is not bleeding.`);
+        return false;
+    }
+}
 export class ThrowNet extends Ability{
     constructor(){
         super();

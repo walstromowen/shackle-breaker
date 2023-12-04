@@ -5,7 +5,7 @@ import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Clea
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
         LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, 
         IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
-        ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide
+        ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide, Bandage, PineWood
         } from "./items.js";
 import { Channeled, Invigorated } from "./statusEffects.js";
 
@@ -340,7 +340,7 @@ export class Groveguardian extends Enemy{
         this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Bite, new Devour, new GuardBreak];
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new HealthPotion, new AloeRemedy, new Antidote];
+        this.lootArray = [new HealthPotion, new AloeRemedy, new Antidote, new PineWood];
         this.gold = 0;
         this.xp = 0;
         this.isBoss = false;
@@ -524,7 +524,7 @@ export class Bandit extends Enemy{
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new Shortsword, new Longsword, new Dagger, new Shiv, new Handaxe, new LeatherHelmet, new LeatherHood, 
                           new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
-                          new LeatherBoots, new HealthPotion, new StaminaPotion, new ThrowingKnife, new SmokeBomb];
+                          new LeatherBoots, new HealthPotion, new StaminaPotion, new ThrowingKnife, new SmokeBomb, new Bandage];
         this.gold = 0;
         this.xp = 0;
         this.isBoss = false;             

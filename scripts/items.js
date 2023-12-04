@@ -1,4 +1,4 @@
-import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, GuardBreak, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
+import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, GuardBreak, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy, UseBandage,
         ThrowNet, Immolate, LightningBolt, Shockwave, Recuperate, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Channel, ThrowSmokebomb, CastShadow, BlinkStrike, Empower} from "./abilities.js"
 
 export function getRandomItem(){
@@ -8,7 +8,7 @@ export function getRandomItem(){
                 new LeatherBoots, new KiteShield, new IronHelmet, new IronGauntlets, new IronChainmail, 
                 new IronGreaves, new IronBoots, new CrystalBall, new ClothHood, new ClothRobe,
                 new HealthPotion, new StaminaPotion, new MagicPotion, 
-                new ThrowingKnife, new PoisonedKnife, new Meteorite, new Antidote, new AloeRemedy, new Net, new SmokeBomb];
+                new ThrowingKnife, new PoisonedKnife, new Meteorite, new Antidote, new AloeRemedy, new Net, new SmokeBomb, new Bandage];
                 return itemArray[Math.floor(Math.random() * itemArray.length)];
     }
 export class LinenShirt {
@@ -1321,155 +1321,6 @@ export class NightbladeChestplate {
         }
     }
 }
-/*
-export class NamuhShirt {
-    constructor(){
-        this.name = "namuh shirt";
-        this.type = "torso";
-        this.imageSrc = "./media/icons/leather-armor.png";
-        this.level = 1;
-        this.price = 100;
-        this.bluntAttack = 0;
-        this.pierceAttack = 0;
-        this.arcaneAttack = 0;
-        this.elementalAttack = 0;
-        this.bluntDefense = 2;
-        this.pierceDefense = 2;
-        this.arcaneDefense = 2;
-        this.elementalDefense = 1;
-        this.speed = 1;
-        this.evasion = 1;
-        this.abilityArray = [new Recuperate()];
-    }
-    upgrade(levels){
-        for(let i = 0; i < levels; i++){
-            this.level = this.level + 1;
-            this.price = Math.floor(this.price * 1.5);
-            this.bluntAttack = this.bluntAttack + 0;
-            this.pierceAttack = this.pierceAttack + 0;
-            this.arcaneAttack = this.arcaneAttack + 0;
-            this.elementalAttack = this.elementalAttack + 0;
-            this.bluntDefense = this.bluntDefense + 1;
-            this.pierceDefense = this.pierceDefense + 2;
-            this.arcaneDefense = this.arcaneDefense + 2;
-            this.elementalDefense = this.elementalDefense + 0;
-            this.speed = this.speed + 0;
-            this.evasion = this.evasion + 1;
-        }
-    }
-}
-export class NamuhGloves {
-    constructor(){
-        this.name = "namuh gloves";
-        this.type = "arms";
-        this.imageSrc = "./media/icons/gauntlet.png";
-        this.description = `dark leather gloves with silver streaks. The Namuh are a shadowy and mysterious people who mainly communicate through sign language. Attire like this helps one keep a low profile much, like the Namuh people.`
-        this.level = 1;
-        this.price = 100;
-        this.bluntAttack = 0;
-        this.pierceAttack = 0;
-        this.arcaneAttack = 0;
-        this.elementalAttack = 0;
-        this.bluntDefense = 2;
-        this.pierceDefense = 2;
-        this.arcaneDefense = 1;
-        this.elementalDefense = 2;
-        this.speed = 1;
-        this.evasion = 1;
-        this.abilityArray = [new Recuperate()];
-    }
-    upgrade(levels){
-        for(let i = 0; i < levels; i++){
-            this.level = this.level + 1;
-            this.price = Math.floor(this.price * 1.5);
-            this.bluntAttack = this.bluntAttack + 0;
-            this.pierceAttack = this.pierceAttack + 0;
-            this.arcaneAttack = this.arcaneAttack + 0;
-            this.elementalAttack = this.elementalAttack + 0;
-            this.bluntDefense = this.bluntDefense + 1;
-            this.pierceDefense = this.pierceDefense + 1;
-            this.arcaneDefense = this.arcaneDefense + 1;
-            this.elementalDefense = this.elementalDefense + 1;
-            this.speed = this.speed + 1;
-            this.evasion = this.evasion + 1;
-        }
-    }
-}
-export class NamuhPants {
-    constructor(){
-        this.name = "namuh greaves";
-        this.type = "legs";
-        this.imageSrc = "./media/icons/armored-pants.png";
-        this.description = `dark leather pants with silver streaks. The Namuh are a shadowy and mysterious people who mainly communicate through sign language. Attire like this helps one keep a low profile, much like the Namuh people.`;
-        this.level = 1;
-        this.price = 100;
-        this.bluntAttack = 0;
-        this.pierceAttack = 0;
-        this.arcaneAttack = 0;
-        this.elementalAttack = 0;
-        this.bluntDefense = 2;
-        this.pierceDefense = 2;
-        this.arcaneDefense = 1;
-        this.elementalDefense = 2;
-        this.speed = 1;
-        this.evasion = 1;
-        this.abilityArray = [new Recuperate()];
-    }
-    upgrade(levels){
-        for(let i = 0; i < levels; i++){
-            this.level = this.level + 1;
-            this.price = Math.floor(this.price * 1.5);
-            this.bluntAttack = this.bluntAttack + 0;
-            this.pierceAttack = this.pierceAttack + 0;
-            this.arcaneAttack = this.arcaneAttack + 0;
-            this.elementalAttack = this.elementalAttack + 0;
-            this.bluntDefense = this.bluntDefense + 1;
-            this.pierceDefense = this.pierceDefense + 1;
-            this.arcaneDefense = this.arcaneDefense + 1;
-            this.elementalDefense = this.elementalDefense + 1;
-            this.speed = this.speed + 1;
-            this.evasion = this.evasion + 1;
-        }
-    }
-}
-export class NamuhBoots {
-    constructor(){
-        this.name = "namuh boots";
-        this.type = "feet";
-        this.imageSrc = "./media/icons/boots.png";
-        this.description = `dark leather boots with silver laces. The Namuh are a shadowy and mysterious people who mainly communicate through sign language. Attire like this helps one keep a low profile, much like the Namuh people.`;
-        this.level = 1;
-        this.price = 100;
-        this.bluntAttack = 0;
-        this.pierceAttack = 0;
-        this.arcaneAttack = 0;
-        this.elementalAttack = 0;
-        this.bluntDefense = 2;
-        this.pierceDefense = 2;
-        this.arcaneDefense = 1;
-        this.elementalDefense = 2;
-        this.speed = 1;
-        this.evasion = 1;
-        this.abilityArray = [new Recuperate()];
-    }
-    upgrade(levels){
-        for(let i = 0; i < levels; i++){
-            this.level = this.level + 1;
-            this.price = Math.floor(this.price * 1.5);
-            this.bluntAttack = this.bluntAttack + 0;
-            this.pierceAttack = this.pierceAttack + 0;
-            this.arcaneAttack = this.arcaneAttack + 0;
-            this.elementalAttack = this.elementalAttack + 0;
-            this.bluntDefense = this.bluntDefense + 1;
-            this.pierceDefense = this.pierceDefense + 1;
-            this.arcaneDefense = this.arcaneDefense + 1;
-            this.elementalDefense = this.elementalDefense + 1;
-            this.speed = this.speed + 1;
-            this.evasion = this.evasion + 1;
-        }
-    }
-}
-*/
 export class HealthPotion {
     constructor(){
         this.name = "healing potion";
@@ -1558,6 +1409,17 @@ export class AloeRemedy {
         this.abilityArray = [new UseAloeRemedy()];
     }
 }
+export class Bandage {
+    constructor(){
+        this.name = "bandage";
+        this.type = "consumable";
+        this.imageSrc = "./media/icons/bandage-roll.png";
+        this.description = `a bandage used to treat bleeding`;
+        this.level = 1;
+        this.price = 30;
+        this.abilityArray = [new UseBanage()];
+    }
+}
 export class Net {
     constructor(){
         this.name = "net";
@@ -1588,6 +1450,17 @@ export class Hide {
         this.description = `a valuable animal hide`;
         this.level = "N/A";
         this.price = 200;
+        this.abilityArray = [];
+    }
+}
+export class PineWood {
+    constructor(){
+        this.name = "pine Wood";
+        this.type = "material";
+        this.imageSrc = "./media/icons/wood-beam.png";
+        this.description = `a pine wood board`;
+        this.level = "N/A";
+        this.price = 100;
         this.abilityArray = [];
     }
 }
