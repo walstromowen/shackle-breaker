@@ -306,9 +306,9 @@ export default class MapEnviorment{
                     case 0:
                         return new LockedTreasureChest();
                     case 1:
-                        return new MysteriousDoor();
+                        return new TravelingMerchant();
                     case 2:
-                        return new SuspiciousSkeleton();
+                        return new AncientTombstone();
                     default:
                         return;
                 }
