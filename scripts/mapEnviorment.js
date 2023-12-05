@@ -1,11 +1,12 @@
 import {LockedTreasureChest, UnlockedTreasureChest, AltusAmbushOpportunity, MysteriousDoor, TravelingMerchant, AbandonedCabin, SuspiciousSkeleton, Robbery, Avalanche, MercenaryForHire, AncientTombstone} from "./encounters.js";
-import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos, ShadowStrider, TerrorBear, Bandit, Ghost, SkeletonMage} from "./enemies.js";
+import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos, ShadowStrider, TerrorBear, Bandit, Ghost, SkeletonMage, AltusGuard} from "./enemies.js";
 
 export default class MapEnviorment{
     constructor(biome){
         this.biome = "";
         this.imageSrc = "";
         this.backgroundMusicSrc = "";
+        this.battleMusicSrc = "";
         this.terrain = new Image();
         this.terrain.src = "media/terrain/terrain.png";
         this.frameCoordinates = [[]];
@@ -14,11 +15,12 @@ export default class MapEnviorment{
     generateBiome(biome){
         switch(biome){ 
             case "basic": 
-                switch(Math.floor(Math.random()*4)){ 
+                switch(Math.floor(Math.random()*5)){ 
                     case 0: 
                         this.biome = "cave";
                         this.imageSrc = "media/cave.jpg";
                         this.backgroundMusicSrc = "./audio/gathering-darkness-kevin-macleod-main-version-04-22-8459.mp3";
+                        this.battleMusicSrc = "./audio/battle-of-the-dragons-8037.mp3";
                         this.frameCoordinates = [
                             [3],
                             [3]
@@ -28,6 +30,7 @@ export default class MapEnviorment{
                         this.biome = "forest";
                         this.imageSrc = "media/forest.jpg";
                         this.backgroundMusicSrc = "./audio/deep-in-the-dell-126916.mp3";
+                        this.battleMusicSrc = "./audio/battle-of-the-dragons-8037.mp3";
                         this.frameCoordinates = [
                             [0,1],
                             [0,1]
@@ -37,6 +40,7 @@ export default class MapEnviorment{
                         this.biome = "plains";
                         this.imageSrc = "media/plains.jpg";
                         this.backgroundMusicSrc = "./audio/the-epical-trailer-158083.mp3";
+                        this.battleMusicSrc = "./audio/battle-sword-139313.mp3";
                         this.frameCoordinates = [
                             [0,2],
                             [0,1,2]
@@ -46,9 +50,20 @@ export default class MapEnviorment{
                         this.biome = "mountain";
                         this.imageSrc = "media/mountain.jpg";
                         this.backgroundMusicSrc = "./audio/achievement-philip-anderson-main-version-01-31-13804.mp3";
+                        this.battleMusicSrc = "./audio/battle-sword-139313.mp3";
                         this.frameCoordinates = [
                             [0,2],
                             [2]
+                        ];
+                        break;
+                    case 4: 
+                        this.biome = "desert";
+                        this.imageSrc = "media/desert.jpg";
+                        this.backgroundMusicSrc = "./audio/TimTaj - Desert Prince.mp3";
+                        this.battleMusicSrc = "./audio/TimTaj - Desert Hunt.mp3";
+                        this.frameCoordinates = [
+                            [4],
+                            [4]
                         ];
                         break;
                     default:
@@ -61,6 +76,7 @@ export default class MapEnviorment{
                         this.biome = "twilight realm";
                         this.imageSrc = "media/twilight-realm.jpg";
                         this.backgroundMusicSrc = "./audio/mixkit-evil-storm-atmosphere-2404.wav";
+                        this.battleMusicSrc = "./audio/battle-sword-139313.mp3";
                         this.frameCoordinates = [
                             [3],
                             [3]
@@ -70,6 +86,7 @@ export default class MapEnviorment{
                         this.biome = "ancient altus ruins";
                         this.imageSrc = "media/ancient-altus-ruins.jpg";
                         this.backgroundMusicSrc = "./audio/gathering-darkness-kevin-macleod-main-version-04-22-8459.mp3";
+                        this.battleMusicSrc = "./audio/battle-sword-139313.mp3";
                         this.frameCoordinates = [
                             [3],
                             [3]
@@ -83,6 +100,7 @@ export default class MapEnviorment{
                 this.biome = "altas castle";
                         this.imageSrc = "media/altas-castle-interior.jpg";
                         this.backgroundMusicSrc = "./audio/mixkit-evil-storm-atmosphere-2404.wav";
+                        this.battleMusicSrc = "./audio/battle-sword-139313.mp3";
                         this.frameCoordinates = [
                             [3],
                             [3],
@@ -131,7 +149,7 @@ export default class MapEnviorment{
                     }
                     break;
                 case "plains":
-                    switch(Math.floor(Math.random()*4)){ 
+                    switch(Math.floor(Math.random()*5)){ 
                         case 0:
                             enemyArray.push(new Skeleton(currentCharacterLevel));
                             break;
@@ -144,10 +162,13 @@ export default class MapEnviorment{
                         case 3:
                             enemyArray.push(new Bandit(currentCharacterLevel));
                             break;
+                        case 4:
+                            enemyArray.push(new AltusGuard(currentCharacterLevel));
+                            break;
                     }
                     break;
                 case "mountain":
-                    switch(Math.floor(Math.random()*3)){ 
+                    switch(Math.floor(Math.random()*4)){ 
                         case 0:
                             enemyArray.push(new Skeleton(currentCharacterLevel));
                             break;
@@ -157,8 +178,21 @@ export default class MapEnviorment{
                         case 2:
                             enemyArray.push(new AltusMage(currentCharacterLevel));
                             break;
+                        case 3:
+                            enemyArray.push(new AltusGuard(currentCharacterLevel));
+                            break;
                     }
                     break;
+                case "desert": 
+                    switch(Math.floor(Math.random()*2)){ 
+                        case 0:
+                            enemyArray.push(new Skeleton(currentCharacterLevel));
+                            break;
+                        case 1:
+                            enemyArray.push(new SkeletonMage(currentCharacterLevel));
+                            break;
+                    }
+                    break;   
                 case "twilight realm":
                     switch(Math.floor(Math.random()*2)){ 
                         case 0:
@@ -199,7 +233,7 @@ export default class MapEnviorment{
                             enemyArray.push(new AltusMage(currentCharacterLevel));
                             break;
                         case 1:
-                            enemyArray.push(new Bat(currentCharacterLevel));
+                            enemyArray.push(new AltusGuard(currentCharacterLevel));
                             break;
                     }
                     break;
@@ -264,6 +298,17 @@ export default class MapEnviorment{
                         return new MysteriousDoor();
                     case 4:
                         return new AncientTombstone();
+                    default:
+                        return;
+                }
+            case "desert": 
+                switch(Math.floor(Math.random()*3)){ 
+                    case 0:
+                        return new LockedTreasureChest();
+                    case 1:
+                        return new MysteriousDoor();
+                    case 2:
+                        return new SuspiciousSkeleton();
                     default:
                         return;
                 }

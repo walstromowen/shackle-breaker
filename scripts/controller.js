@@ -588,7 +588,7 @@ export default class Controller {
             if(enemyArray[0].isBoss == true){
                 document.getElementById('music-player').src = "./audio/Alex-Productions - Epic Cinematic Adventure Vlog _ Eglair.mp3"
             }else{
-                document.getElementById('music-player').src = "./audio/battle-of-the-dragons-8037.mp3"
+                document.getElementById('music-player').src = this.map.mapEnviorment.battleMusicSrc;
             }
             document.getElementById('music-player').play();
             this.isInBattle = true;

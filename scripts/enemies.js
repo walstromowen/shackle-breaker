@@ -115,7 +115,7 @@ export class Skeleton extends Enemy{
                           new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
                           new LeatherBoots, new KiteShield, new IronHelmet, new IronGauntlets, 
                           new IronChainmail, new IronGreaves, new IronBoots, 
-                          new HealthPotion, new StaminaPotion, new ThrowingKnife, new SmokeBomb];
+                          new HealthPotion, new StaminaPotion, new ThrowingKnife, new SmokeBomb, new Bandage];
         this.gold = 0;
         this.xp = 0;
         this.isBoss = false;             
@@ -626,4 +626,53 @@ export class Ghost extends Enemy{
         this.xp = Math.floor(50 * (1 + this.level/10 ));
     }
 }
-
+export class AltusGuard extends Enemy{
+    constructor(averagePartyLevel){
+        super();
+        this.name = "altus guard";
+        this.imageSrc = "media/altus-guard.jpg"
+        this.maxHP = 40;
+        this.currentHP = this.maxHP;
+        this.maxStamina = 35;
+        this.currentStamina = this.maxStamina;
+        this.maxMagic = 25;
+        this.currentMagic = this.maxMagic;
+        this.baseBluntAttack = 55;
+        this.currentBluntAttack = this.baseBluntAttack;
+        this.basePierceAttack = 55;
+        this.currentPierceAttack = this.basePierceAttack;
+        this.baseArcaneAttack = 55; 
+        this.currentArcaneAttack = this.baseArcaneAttack;
+        this.baseElementalAttack = 55;
+        this.currentElementalAttack = this.baseElementalAttack;
+        this.baseBluntDefense = 35;
+        this.currentBluntDefense = this.baseBluntDefense;
+        this.basePierceDefense = 35;
+        this.currentPierceDefense = this.basePierceDefense;
+        this.baseArcaneDefense = 35;
+        this.currentArcaneDefense = this.baseArcaneDefense;
+        this.baseElementalDefense = 35;
+        this.currentElementalDefense = this.baseElementalDefense;
+        this.baseSpeed = 25;
+        this.currentSpeed = this.baseSpeed;
+        this.baseEvasion = 10;
+        this.currentEvasion = this.baseEvasion;
+        this.abilityArray = [new Slash, new Stab, new Strike, new Flurry, new Block, new GuardBreak];
+        this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootArray = [new Spear, new Shortsword, new Longsword, new Handaxe, new Dagger, new Shiv, new BlacksmithHammer,
+            new Buckler, new LeatherHelmet, new LeatherHood, new WarHammer, 
+            new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
+            new LeatherBoots, new KiteShield, new IronHelmet, new IronGauntlets, 
+            new IronChainmail, new IronGreaves, new IronBoots, 
+            new HealthPotion, new StaminaPotion, new ThrowingKnife, new Bandage];
+        this.gold = 0;
+        this.xp = 0;
+        this.isBoss = false;             
+        this.levelUp(averagePartyLevel);
+    }
+    levelUp(averagePartyLevel){
+        this.incrementStats(averagePartyLevel, [2,6], [2,6], [0,4], [2,3], [2,3], [0,2], [0,2], [1,3], [1,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (20 - 15 + 1) + 15) * (1 + averagePartyLevel/5));
+        this.xp = Math.floor(35 * (1 + this.level/10 ));
+    }
+}

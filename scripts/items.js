@@ -1381,7 +1381,7 @@ export class Meteorite {
         this.name = "meteorite";
         this.type = "consumable";
         this.imageSrc = "./media/icons/asteroid.png";
-        this.description = `a meteroite emiting magicaly energy. Some say the artifact discovered by the Altus kingdom is from the heavans, much like this meteorite`;
+        this.description = `a meteroite emiting magicaly energy. Some say the artifact discovered by the Altus kingdom is from the heavans, much like this meteorite.`;
         this.level = 1;
         this.price = 150;
         this.abilityArray = [new SmashMeteorite()];
@@ -1392,7 +1392,7 @@ export class Antidote {
         this.name = "antidote";
         this.type = "consumable";
         this.imageSrc = "./media/icons/corked-tube.png";
-        this.description = `an antidote used to treat most poisons`;
+        this.description = `an antidote used to treat most poisons.`;
         this.level = 1;
         this.price = 30;
         this.abilityArray = [new UseAntidote()];
@@ -1403,7 +1403,7 @@ export class AloeRemedy {
         this.name = "aloe remedy";
         this.type = "consumable";
         this.imageSrc = "./media/icons/curled-leaf.png";
-        this.description = `a remedy used to treat burns`;
+        this.description = `a remedy used to treat burns.`;
         this.level = 1;
         this.price = 30;
         this.abilityArray = [new UseAloeRemedy()];
@@ -1414,10 +1414,10 @@ export class Bandage {
         this.name = "bandage";
         this.type = "consumable";
         this.imageSrc = "./media/icons/bandage-roll.png";
-        this.description = `a bandage used to treat bleeding`;
+        this.description = `a bandage used to treat bleeding.`;
         this.level = 1;
         this.price = 30;
-        this.abilityArray = [new UseBanage()];
+        this.abilityArray = [new UseBandage()];
     }
 }
 export class Net {
@@ -1425,7 +1425,7 @@ export class Net {
         this.name = "net";
         this.type = "consumable";
         this.imageSrc = "./media/icons/net.png";
-        this.description = `a net used to trap animals or foes`;
+        this.description = `a net used to trap animals or foes.`;
         this.level = 1;
         this.price = 50;
         this.abilityArray = [new ThrowNet()];
@@ -1436,7 +1436,7 @@ export class SmokeBomb {
         this.name = "smoke bomb";
         this.type = "consumable";
         this.imageSrc = "./media/icons/smoke-bomb.png";
-        this.description = `a smokebomb for hasty escapes or dramatic entrances`;
+        this.description = `a smokebomb for hasty escapes or dramatic entrances.`;
         this.level = 1;
         this.price = 50;
         this.abilityArray = [new ThrowSmokebomb()];
@@ -1447,7 +1447,7 @@ export class Hide {
         this.name = "hide";
         this.type = "material";
         this.imageSrc = "./media/icons/animal-hide.png";
-        this.description = `a valuable animal hide`;
+        this.description = `a valuable animal hide.`;
         this.level = "N/A";
         this.price = 200;
         this.abilityArray = [];
@@ -1458,7 +1458,7 @@ export class PineWood {
         this.name = "pine Wood";
         this.type = "material";
         this.imageSrc = "./media/icons/wood-beam.png";
-        this.description = `a pine wood board`;
+        this.description = `a pine wood board.`;
         this.level = "N/A";
         this.price = 100;
         this.abilityArray = [];

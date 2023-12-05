@@ -1,7 +1,7 @@
 import {controller as theController} from "./main.js"
 import Character from "./character.js";
 import {Decision} from "./encounterDecision.js";
-import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, Bandit, SkeletonMage, Ghost} from "./enemies.js";
+import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, Bandit, SkeletonMage, Ghost, AltusGuard} from "./enemies.js";
 import {Shielded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden} from "./statusEffects.js";
 import {regainHP, initiateTrade, leave, retry, removeDecision, toggleNewEncounter, toggleBattle, loot, takeDamage, recieveStatusEffect, changeMap, recruit} from "./encounterResults.js";
 import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer, NightbladeSword,
@@ -124,7 +124,8 @@ export class AltusAmbushOpportunity extends Encounter{
                     ()=>{leave(`${theController.party[0].name} slips away quietly.`)}
                 ],
                 [
-                    ()=>{toggleBattle(`the altus official spots ${theController.party[0].name} and draws his weapon!`, [new AltusMage(theController.calculateAveragePartyLevel())])}
+                    ()=>{toggleBattle(`the altus official spots ${theController.party[0].name} and draws his weapon!`, [new AltusMage(theController.calculateAveragePartyLevel())])},
+                    ()=>{toggleBattle(`the altus official spots ${theController.party[0].name} and draws his weapon!`, [new AltusGuard(theController.calculateAveragePartyLevel())])}
                 ]
             ),
             new Decision(
@@ -615,3 +616,48 @@ export class UnearthedReamins extends Encounter{
         ];
     }
 }
+/*
+export class Quicksand extends Encounter{
+    constructor(){
+        super();
+        this.name = "quicksand";
+        this.messageFunction = ()=>{theController.printToGameConsole(`the ground begins to sink, and soon ${theController.party[0].name} falls into quicksand`)};
+        this.imageSrc = "./media/avalanche.jpeg";
+        this.decisionArray = [
+            new Decision(
+                "crawl out", 
+                ()=>{theController.printToGameConsole(``)},
+                "strength",
+                [
+                    ()=>{leave(`${theController.party[0].name} begins to crawl desperately.`)}
+                ],
+                [
+                    ()=>{takeDamage(`The avalanche crashes down upon ${theController.party[0].name}!`, 0.25, 0.50)},
+                ]
+            ),
+            new Decision(
+                "grab onto something", 
+                ()=>{theController.printToGameConsole(`${theController.party[0].name} flees the avalanche with haste!`)},
+                "endurance",
+                [
+                    ()=>{leave(`with great athleticism, ${theController.party[0].name} barely escapes the avalanche!`)}
+                ],
+                [
+                    ()=>{takeDamage(`The avalanche crashes down upon ${theController.party[0].name}!`, 0.25, 0.50)},
+                ]
+            ),
+            new Decision(
+                "call for help", 
+                ()=>{theController.printToGameConsole(`${theController.party[0].name} flees the avalanche with haste!`)},
+                "endurance",
+                [
+                    ()=>{leave(`with great athleticism, ${theController.party[0].name} barely escapes the avalanche!`)}
+                ],
+                [
+                    ()=>{takeDamage(`The avalanche crashes down upon ${theController.party[0].name}!`, 0.25, 0.50)},
+                ]
+            )
+        ];
+    }
+}
+*/
