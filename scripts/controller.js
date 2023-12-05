@@ -237,7 +237,7 @@ export default class Controller {
     }
     enableMapTransitionControls(){
         document.getElementById('map-transition-continue-btn').addEventListener("click", ()=>{
-            if(this.calculateAveragePartyLevel() >= 10){
+            if(this.calculateAveragePartyLevel() == 10){
                 this.generateNewMap("altas castle", "boss1");
             }else{
                 this.generateNewMap("basic", "random");
