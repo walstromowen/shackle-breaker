@@ -72,7 +72,7 @@ export default class Controller {
             this.characterCreationArray[1] = document.getElementById("apperance-selection").value;
             this.characterCreationArray[2] = document.getElementById("background-selection").value;
             this.party[0] = new Character(this.characterCreationArray);
-            //this.party.push(new Character(["kurtus", "media/kurty.jpg", "traveler", [100, 100, 100, 100, 100, 100], [new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]));
+            this.party.push(new Character(["kurtus", "media/kurty.jpg", "traveler", [100, 100, 100, 100, 100, 100], [new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]));
            
             this.map = new Map("basic", "random");
             this.miniMap = new MiniMap();

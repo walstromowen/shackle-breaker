@@ -1,4 +1,4 @@
-import {LockedTreasureChest, UnlockedTreasureChest, AltusAmbushOpportunity, MysteriousDoor, TravelingMerchant, AbandonedCabin, SuspiciousSkeleton, Robbery, Avalanche, MercenaryForHire, AncientTombstone} from "./encounters.js";
+import {LockedTreasureChest, UnlockedTreasureChest, AltusAmbushOpportunity, MysteriousDoor, TravelingMerchant, AbandonedCabin, SuspiciousSkeleton, Robbery, Avalanche, MercenaryForHire, AncientTombstone, Quicksand} from "./encounters.js";
 import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos, ShadowStrider, TerrorBear, Bandit, Ghost, SkeletonMage, AltusGuard} from "./enemies.js";
 
 export default class MapEnviorment{
@@ -302,13 +302,15 @@ export default class MapEnviorment{
                         return;
                 }
             case "desert": 
-                switch(Math.floor(Math.random()*3)){ 
+                switch(Math.floor(Math.random()*4)){ 
                     case 0:
                         return new LockedTreasureChest();
                     case 1:
                         return new TravelingMerchant();
                     case 2:
                         return new AncientTombstone();
+                    case 3:
+                        return new Quicksand();
                     default:
                         return;
                 }

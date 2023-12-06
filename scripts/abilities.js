@@ -1514,7 +1514,7 @@ export class UseBandage extends Ability{
     }
     activate(weilder, target){
         for(let i = 0; i < weilder.statusArray.length; i++){
-            if(weilder.statusArray[i].name == "bleedng"){
+            if(weilder.statusArray[i].name == "bleeding"){
                 weilder.statusArray.splice(i, 1);
                 theController.printToGameConsole(`${weilder.name} was treated for bleeding!`);
                 theController.playSoundEffect(this.soundEffect);

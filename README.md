@@ -5,7 +5,7 @@ Text adventure game based on the Shackle Breaker story
 
 # Planned Features
 * Parrying System
-* Distance System in battle (would rewuire change to mini Map)
+* Distance System in battle (would require change to mini Map)
 * Attack Animations
 * map culling
 * Shop/crafting/weapon/town
@@ -23,7 +23,8 @@ Text adventure game based on the Shackle Breaker story
 * mini Menu appears on level up and transisiton screens
 * canvas player icon not loading on start up.
 * Enemy Status Icons still appear on next enemies ocasionally
-
+* Items are used up upon choosing move not upon using item.
+* Prevent Party switching during certain encounters
 
 # MISC notes
 * Enemy Level ups disstribute 16 points between stats

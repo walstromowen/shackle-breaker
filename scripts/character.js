@@ -1,4 +1,5 @@
 import {Recover, Punch, Retreat} from "./abilities.js";
+import { Bleeding } from "./statusEffects.js";
 
 export default class Character{
     constructor(characterCreationArray){ //[name, apperanceSrc, origin, attributesArray, equippedArray]

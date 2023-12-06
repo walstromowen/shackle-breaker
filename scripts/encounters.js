@@ -616,48 +616,50 @@ export class UnearthedReamins extends Encounter{
         ];
     }
 }
-/*
 export class Quicksand extends Encounter{
     constructor(){
         super();
         this.name = "quicksand";
         this.messageFunction = ()=>{theController.printToGameConsole(`the ground begins to sink, and soon ${theController.party[0].name} falls into quicksand`)};
-        this.imageSrc = "./media/avalanche.jpeg";
+        this.imageSrc = "./media/sand-pit.jpg";
         this.decisionArray = [
             new Decision(
                 "crawl out", 
-                ()=>{theController.printToGameConsole(``)},
-                "strength",
+                ()=>{theController.printToGameConsole(`${theController.party[0].name} begins to crawl desperately.`)},
+                "endurance",
                 [
-                    ()=>{leave(`${theController.party[0].name} begins to crawl desperately.`)}
+                    ()=>{leave(`${theController.party[0].name} escapes!`)}
                 ],
                 [
-                    ()=>{takeDamage(`The avalanche crashes down upon ${theController.party[0].name}!`, 0.25, 0.50)},
+                    ()=>{takeDamage(`The quicksand engulfs ${theController.party[0].name}!`, 1.00, 1.00)},
                 ]
             ),
             new Decision(
                 "grab onto something", 
-                ()=>{theController.printToGameConsole(`${theController.party[0].name} flees the avalanche with haste!`)},
-                "endurance",
+                ()=>{theController.printToGameConsole(`${theController.party[0].name} grabs onto a nearby object!`)},
+                "strength",
                 [
-                    ()=>{leave(`with great athleticism, ${theController.party[0].name} barely escapes the avalanche!`)}
+                    ()=>{leave(`${theController.party[0].name} escapes!`)}
                 ],
                 [
-                    ()=>{takeDamage(`The avalanche crashes down upon ${theController.party[0].name}!`, 0.25, 0.50)},
-                ]
-            ),
-            new Decision(
-                "call for help", 
-                ()=>{theController.printToGameConsole(`${theController.party[0].name} flees the avalanche with haste!`)},
-                "endurance",
-                [
-                    ()=>{leave(`with great athleticism, ${theController.party[0].name} barely escapes the avalanche!`)}
-                ],
-                [
-                    ()=>{takeDamage(`The avalanche crashes down upon ${theController.party[0].name}!`, 0.25, 0.50)},
+                    ()=>{takeDamage(`The quicksand engulfs ${theController.party[0].name}!`, 1.00, 1.00)},
                 ]
             )
         ];
+        if(theController.party.length > 1){
+            this.decisionArray.push(
+                new Decision(
+                    "call for help", 
+                    ()=>{theController.printToGameConsole(`${theController.party[0].name} calls for help!`)},
+                    "likely",
+                    [
+                        ()=>{leave(`${theController.party[1].name} pulls ${theController.party[0].name} to safe ground with great strength.`)}
+                    ],
+                    [
+                        ()=>{takeDamage(`The quicksand engulfs ${theController.party[0].name}!`, 1.00, 1.00)},
+                    ]
+                )
+            )
+        }
     }
 }
-*/
