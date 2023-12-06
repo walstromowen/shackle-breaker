@@ -958,7 +958,7 @@ export class ArcaneBlast extends Ability{
         this.speedMultiplier = 0.25;
         this.staminaCost = 0;
         this.magicCost = 16;
-        this.damageModifier = 8;
+        this.damageModifier = 12;
         this.accuracy = 60;
         this.soundEffect = "./audio/soundEffects/supernatural-explosion-104295.wav";
     }

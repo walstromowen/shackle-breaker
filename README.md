@@ -17,6 +17,7 @@ Text adventure game based on the Shackle Breaker story
 * Alphabetize CSS rules
 * Change decision Success modifier to have both likeliness and attribute
 * scaling
+* convert enemies and characters to shared entitiy class
 
 # Bugs
 * Image Flashing

@@ -156,7 +156,7 @@ export class Bat extends Enemy{
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 30;
         this.currentSpeed = this.baseSpeed;
-        this.baseEvasion = 18;
+        this.baseEvasion = 15;
         this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Bite, new LeechLife];
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
@@ -563,9 +563,9 @@ export class SkeletonMage extends Enemy{
         this.currentArcaneDefense = this.baseArcaneDefense;
         this.baseElementalDefense = 35;
         this.currentElementalDefense = this.baseElementalDefense;
-        this.baseSpeed = 27;
+        this.baseSpeed = 25;
         this.currentSpeed = this.baseSpeed;
-        this.baseEvasion = 12;
+        this.baseEvasion = 10;
         this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new IceShard, new Shockwave, new Channel];
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
@@ -645,13 +645,13 @@ export class AltusGuard extends Enemy{
         this.currentArcaneAttack = this.baseArcaneAttack;
         this.baseElementalAttack = 55;
         this.currentElementalAttack = this.baseElementalAttack;
-        this.baseBluntDefense = 35;
+        this.baseBluntDefense = 40;
         this.currentBluntDefense = this.baseBluntDefense;
-        this.basePierceDefense = 35;
+        this.basePierceDefense = 40;
         this.currentPierceDefense = this.basePierceDefense;
-        this.baseArcaneDefense = 35;
+        this.baseArcaneDefense = 40;
         this.currentArcaneDefense = this.baseArcaneDefense;
-        this.baseElementalDefense = 35;
+        this.baseElementalDefense = 40;
         this.currentElementalDefense = this.baseElementalDefense;
         this.baseSpeed = 25;
         this.currentSpeed = this.baseSpeed;
