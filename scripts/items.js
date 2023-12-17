@@ -228,7 +228,7 @@ export class Shortsword {
             this.arcaneAttack = this.arcaneAttack + 0;
             this.elementalAttack = this.elementalAttack + 0;
             this.bluntDefense = this.bluntDefense + 0;
-            this.pierceDefense = this.pierceDefense + 0;
+            this.pierceDefense = this.pierceDefense + 1;
             this.arcaneDefense = this.arcaneDefense + 0;
             this.elementalDefense = this.elementalDefense + 0;
             this.speed = this.speed + 1;
@@ -267,7 +267,7 @@ export class Handaxe {
             this.pierceAttack = this.pierceAttack + 1;
             this.arcaneAttack = this.arcaneAttack + 0;
             this.elementalAttack = this.elementalAttack + 0;
-            this.bluntDefense = this.bluntDefense + 0;
+            this.bluntDefense = this.bluntDefense + 1;
             this.pierceDefense = this.pierceDefense + 0;
             this.arcaneDefense = this.arcaneDefense + 0;
             this.elementalDefense = this.elementalDefense + 0;
@@ -308,7 +308,7 @@ export class Longsword {
             this.arcaneAttack = this.arcaneAttack + 0;
             this.elementalAttack = this.elementalAttack + 0;
             this.bluntDefense = this.bluntDefense + 0;
-            this.pierceDefense = this.pierceDefense + 0;
+            this.pierceDefense = this.pierceDefense + 1;
             this.arcaneDefense = this.arcaneDefense + 0;
             this.elementalDefense = this.elementalDefense + 0;
             this.speed = this.speed + 0;
@@ -347,10 +347,10 @@ export class WarHammer {
             this.pierceAttack = this.pierceAttack + 2;
             this.arcaneAttack = this.arcaneAttack + 0;
             this.elementalAttack = this.elementalAttack + 0;
-            this.bluntDefense = this.bluntDefense + 1;
-            this.pierceDefense = this.pierceDefense + 0;
-            this.arcaneDefense = this.arcaneDefense + 0;
-            this.elementalDefense = this.elementalDefense + 0;
+            this.bluntDefense = this.bluntDefense + 2;
+            this.pierceDefense = this.pierceDefense + 1;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
         }
@@ -422,7 +422,7 @@ export class Buckler {
             this.arcaneAttack = this.arcaneAttack + 0;
             this.elementalAttack = this.elementalAttack + 0;
             this.bluntDefense = this.bluntDefense + 1;
-            this.pierceDefense = this.pierceDefense + 1;
+            this.pierceDefense = this.pierceDefense + 3;
             this.arcaneDefense = this.arcaneDefense + 1;
             this.elementalDefense = this.elementalDefense + 1;
             this.speed = this.speed + 0;
@@ -442,9 +442,9 @@ export class FireStaff {
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
         this.elementalAttack = 3;
-        this.bluntDefense = 0;
-        this.pierceDefense = 0;
-        this.arcaneDefense = 0;
+        this.bluntDefense = 1;
+        this.pierceDefense = 1;
+        this.arcaneDefense = 1;
         this.elementalDefense = 1;
         this.speed = 0;
         this.evasion = 0;
@@ -458,7 +458,7 @@ export class FireStaff {
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
             this.elementalAttack = this.elementalAttack + 3;
-            this.bluntDefense = this.bluntDefense + 0;
+            this.bluntDefense = this.bluntDefense + 1;
             this.pierceDefense = this.pierceDefense + 0;
             this.arcaneDefense = this.arcaneDefense + 0;
             this.elementalDefense = this.elementalDefense + 1;
@@ -479,9 +479,9 @@ export class LightningStaff {
         this.pierceAttack = 0;
         this.arcaneAttack = 0;
         this.elementalAttack = 3;
-        this.bluntDefense = 0;
-        this.pierceDefense = 0;
-        this.arcaneDefense = 0;
+        this.bluntDefense = 1;
+        this.pierceDefense = 1;
+        this.arcaneDefense = 1;
         this.elementalDefense = 1;
         this.speed = 0;
         this.evasion = 0;
@@ -495,7 +495,7 @@ export class LightningStaff {
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
             this.elementalAttack = this.elementalAttack + 3;
-            this.bluntDefense = this.bluntDefense + 0;
+            this.bluntDefense = this.bluntDefense + 1;
             this.pierceDefense = this.pierceDefense + 0;
             this.arcaneDefense = this.arcaneDefense + 0;
             this.elementalDefense = this.elementalDefense + 1;
@@ -516,9 +516,9 @@ export class IceStaff {
         this.pierceAttack = 0;
         this.arcaneAttack = 1;
         this.elementalAttack = 3;
-        this.bluntDefense = 0;
-        this.pierceDefense = 0;
-        this.arcaneDefense = 0;
+        this.bluntDefense = 1;
+        this.pierceDefense = 1;
+        this.arcaneDefense = 1;
         this.elementalDefense = 1;
         this.speed = 0;
         this.evasion = 0;
@@ -532,7 +532,7 @@ export class IceStaff {
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
             this.elementalAttack = this.elementalAttack + 3;
-            this.bluntDefense = this.bluntDefense + 0;
+            this.bluntDefense = this.bluntDefense + 1;
             this.pierceDefense = this.pierceDefense + 0;
             this.arcaneDefense = this.arcaneDefense + 0;
             this.elementalDefense = this.elementalDefense + 1;
@@ -553,10 +553,10 @@ export class ArcaneStaff {
         this.pierceAttack = 0;
         this.arcaneAttack = 3;
         this.elementalAttack = 0;
-        this.bluntDefense = 0;
-        this.pierceDefense = 0;
+        this.bluntDefense = 1;
+        this.pierceDefense = 1;
         this.arcaneDefense = 1;
-        this.elementalDefense = 0;
+        this.elementalDefense = 1;
         this.speed = 0;
         this.evasion = 0;
         this.abilityArray = [new ArcaneDart(), new ArcaneBlast(), new Strike(), new Meditate()];
@@ -568,8 +568,8 @@ export class ArcaneStaff {
             this.bluntAttack = this.bluntAttack + 1;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 3;
-            this.elementalAttack = this.elementalAttack + 0;
-            this.bluntDefense = this.bluntDefense + 0;
+            this.elementalAttack = this.elementalAttack + 1;
+            this.bluntDefense = this.bluntDefense + 1;
             this.pierceDefense = this.pierceDefense + 0;
             this.arcaneDefense = this.arcaneDefense + 1;
             this.elementalDefense = this.elementalDefense + 0;
@@ -590,10 +590,10 @@ export class LightStaff {
         this.pierceAttack = 0;
         this.arcaneAttack = 3;
         this.elementalAttack = 0;
-        this.bluntDefense = 0;
-        this.pierceDefense = 0;
+        this.bluntDefense = 1;
+        this.pierceDefense = 1;
         this.arcaneDefense = 1;
-        this.elementalDefense = 0;
+        this.elementalDefense = 1;
         this.speed = 0;
         this.evasion = 0;
         this.abilityArray = [new LightBeam(), new Cleanse(), new Strike(), new Meditate()];
@@ -604,9 +604,9 @@ export class LightStaff {
             this.price = Math.floor(this.price * 1.5);
             this.bluntAttack = this.bluntAttack + 1;
             this.pierceAttack = this.pierceAttack + 0;
-            this.arcaneAttack = this.arcaneAttack + 0;
-            this.elementalAttack = this.elementalAttack + 3;
-            this.bluntDefense = this.bluntDefense + 0;
+            this.arcaneAttack = this.arcaneAttack + 3;
+            this.elementalAttack = this.elementalAttack + 1;
+            this.bluntDefense = this.bluntDefense + 1;
             this.pierceDefense = this.pierceDefense + 0;
             this.arcaneDefense = this.arcaneDefense + 1;
             this.elementalDefense = this.elementalDefense + 0;
@@ -627,10 +627,10 @@ export class DarkStaff {
         this.pierceAttack = 0;
         this.arcaneAttack = 3;
         this.elementalAttack = 0;
-        this.bluntDefense = 0;
-        this.pierceDefense = 0;
+        this.bluntDefense = 1;
+        this.pierceDefense = 1;
         this.arcaneDefense = 1;
-        this.elementalDefense = 0;
+        this.elementalDefense = 1;
         this.speed = 0;
         this.evasion = 0;
         this.abilityArray = [new DrainLife(), new Siphon(), new Strike(), new Meditate()];
@@ -642,8 +642,8 @@ export class DarkStaff {
             this.bluntAttack = this.bluntAttack + 1;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 3;
-            this.elementalAttack = this.elementalAttack + 0;
-            this.bluntDefense = this.bluntDefense + 0;
+            this.elementalAttack = this.elementalAttack + 1;
+            this.bluntDefense = this.bluntDefense + 1;
             this.pierceDefense = this.pierceDefense + 0;
             this.arcaneDefense = this.arcaneDefense + 1;
             this.elementalDefense = this.elementalDefense + 0;
@@ -721,7 +721,7 @@ export class LeatherHood {
             this.pierceDefense = this.pierceDefense + 1;
             this.arcaneDefense = this.arcaneDefense + 1;
             this.elementalDefense = this.elementalDefense + 1;
-            this.speed = this.speed + 1;
+            this.speed = this.speed + 0;
             this.evasion = this.evasion + 1;
         }
     }
@@ -758,7 +758,7 @@ export class LeatherGloves {
             this.pierceDefense = this.pierceDefense + 1;
             this.arcaneDefense = this.arcaneDefense + 1;
             this.elementalDefense = this.elementalDefense + 1;
-            this.speed = this.speed + 1;
+            this.speed = this.speed + 0;
             this.evasion = this.evasion + 1;
         }
     }
@@ -795,7 +795,7 @@ export class LeatherChestplate {
             this.pierceDefense = this.pierceDefense + 1;
             this.arcaneDefense = this.arcaneDefense + 1;
             this.elementalDefense = this.elementalDefense + 1;
-            this.speed = this.speed + 1;
+            this.speed = this.speed + 0;
             this.evasion = this.evasion + 1;
         }
     }
@@ -832,7 +832,7 @@ export class LeatherGreaves {
             this.pierceDefense = this.pierceDefense + 1;
             this.arcaneDefense = this.arcaneDefense + 1;
             this.elementalDefense = this.elementalDefense + 1;
-            this.speed = this.speed + 1;
+            this.speed = this.speed + 0;
             this.evasion = this.evasion + 1;
         }
     }
@@ -869,7 +869,7 @@ export class LeatherBoots {
             this.pierceDefense = this.pierceDefense + 1;
             this.arcaneDefense = this.arcaneDefense + 1;
             this.elementalDefense = this.elementalDefense + 1;
-            this.speed = this.speed + 1;
+            this.speed = this.speed + 0;
             this.evasion = this.evasion + 1;
         }
     }
