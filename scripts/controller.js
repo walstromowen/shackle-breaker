@@ -453,6 +453,10 @@ export default class Controller {
                         break;
                 }
                 this.party[0].scaleAttributes();
+                for(let j = 0; j < this.party[0].length; j++){
+                    this.party[0].statusArray[0].onRemove();
+                    this.party[0].statusArray.splice(0,1);
+                }
                 this.party[0].currentHP = this.party[0].maxHP;
                 this.party[0].currentStamina = this.party[0].maxStamina;
                 this.party[0].currentMagic = this.party[0].maxMagic;

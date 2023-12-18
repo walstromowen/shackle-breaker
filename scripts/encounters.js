@@ -190,7 +190,8 @@ export class MysteriousDoor extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.party[0].name} presses ${rune1}`)},
                 "neutral",
                 [
-                    ()=>{changeMap(`the door swings open and pulls ${theController.party[0].name} in!`, "portal", "random")}
+                    ()=>{changeMap(`the door swings open and pulls ${theController.party[0].name} in!`, "portal", "random")},
+                    ()=>{regainHP(`the door swings open and showers${theController.party[0].name} will a soothing light.`, 0.5)}
                 ],
                 [
                     ()=>{removeDecision(`${theController.party[0].name} the letters fade.`, rune1)},
@@ -202,7 +203,8 @@ export class MysteriousDoor extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.party[0].name} presses ${rune2}`)},
                 "neutral",
                 [
-                    ()=>{changeMap(`the door swings open and pulls ${theController.party[0].name} in!`, "portal", "random")}
+                    ()=>{changeMap(`the door swings open and pulls ${theController.party[0].name} in!`, "portal", "random")},
+                    ()=>{regainHP(`the door swings open and showers${theController.party[0].name} will a soothing light.`, 0.5)}
                 ],
                 [
                     ()=>{removeDecision(`${theController.party[0].name} the letters fade.`, rune2)},
@@ -214,7 +216,8 @@ export class MysteriousDoor extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.party[0].name} presses ${rune3}`)},
                 "neutral",
                 [
-                    ()=>{changeMap(`the door swings open and pulls ${theController.party[0].name} in!`, "portal", "random")}
+                    ()=>{changeMap(`the door swings open and pulls ${theController.party[0].name} in!`, "portal", "random")},
+                    ()=>{regainHP(`the door swings open and showers${theController.party[0].name} will a soothing light.`, 0.5)}
                 ],
                 [
                     ()=>{removeDecision(`${theController.party[0].name} the letters fade.`, rune3)},
