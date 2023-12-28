@@ -15,7 +15,7 @@ export default class MapEnviorment{
     generateBiome(biome){
         switch(biome){ 
             case "basic": 
-                switch(Math.floor(Math.random()*5)){ 
+                switch(Math.floor(Math.random()*6)){
                     case 0: 
                         this.biome = "cave";
                         this.imageSrc = "media/cave.jpg";
@@ -64,6 +64,16 @@ export default class MapEnviorment{
                         this.frameCoordinates = [
                             [4],
                             [4]
+                        ];
+                        break;
+                    case 5: 
+                        this.biome = "tundra";
+                        this.imageSrc = "media/tundra.jpg";
+                        this.backgroundMusicSrc = "./audio/nocturne-roman-main-version-16841-01-45.mp3";
+                        this.battleMusicSrc = "./audio/battle-sword-139313.mp3";
+                        this.frameCoordinates = [
+                            [5],
+                            [5]
                         ];
                         break;
                     default:
@@ -192,7 +202,19 @@ export default class MapEnviorment{
                             enemyArray.push(new SkeletonMage(currentCharacterLevel));
                             break;
                     }
-                    break;   
+                    break;  
+                case "tundra":
+                    switch(Math.floor(Math.random() * 3)){ 
+                        case 0:
+                            enemyArray.push(new Ghost(currentCharacterLevel));
+                            break;
+                        case 1:
+                            enemyArray.push(new Wolf(currentCharacterLevel));
+                            break;
+                        case 2:
+                            enemyArray.push(new SkeletonMage(currentCharacterLevel));
+                            break;
+                    } 
                 case "twilight realm":
                     switch(Math.floor(Math.random()*2)){ 
                         case 0:
@@ -311,6 +333,17 @@ export default class MapEnviorment{
                         return new AncientTombstone();
                     case 3:
                         return new Quicksand();
+                    default:
+                        return;
+                }
+            case "tundra":
+                switch(Math.floor(Math.random() * 3)){ 
+                    case 0:
+                        return new AbandonedCabin();
+                    case 1:
+                        return new Avalanche();
+                    case 2:
+                        return new MercenaryForHire();
                     default:
                         return;
                 }

@@ -174,7 +174,7 @@ export default class Controller {
                 this.partyGold = 200;
                 break;
             case "warrior":
-                equippedArray.push(new Handaxe, "Empty", "Empty", new LeatherChestplate, new LinenPants, "Empty", new LeatherBoots);
+                equippedArray.push(new Handaxe, "Empty", "Empty", new LeatherChestplate, "Empty", new LinenPants, new LeatherBoots);
                 this.partyGold = 250;
                 break;
             case "theif":

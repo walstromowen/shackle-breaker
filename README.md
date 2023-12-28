@@ -18,6 +18,7 @@ Text adventure game based on the Shackle Breaker story
 * Change decision Success modifier to have both likeliness and attribute
 * scaling
 * convert enemies and characters to shared entitiy class
+* Prevent Party switching during certain encounters
 
 # Bugs
 * Image Flashing
@@ -25,7 +26,9 @@ Text adventure game based on the Shackle Breaker story
 * canvas player icon not loading on start up.
 * Enemy Status Icons still appear on next enemies ocasionally
 * Items are used up upon choosing move not upon using item.
-* Prevent Party switching during certain encounters
+* Recurperate and channel acasionally giving going over max limit
+* Shiphon not doing damage
+
 
 # MISC notes
 * Enemy Level ups disstribute 16 points between stats
