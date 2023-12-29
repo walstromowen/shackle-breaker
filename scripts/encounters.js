@@ -689,6 +689,7 @@ export class AnimalTracks extends Encounter{
                         this.hunter = new Bandit(theController.calculateAveragePartyLevel());
                         break;
                 }
+                break;
             case "forest":
                 switch(Math.floor(Math.random()*1)){
                     case 0:
@@ -703,6 +704,7 @@ export class AnimalTracks extends Encounter{
                         this.hunter = new Bandit(theController.calculateAveragePartyLevel());
                         break;
                 }
+                break;
             case "moutain":
                 switch(Math.floor(Math.random()*1)){
                     case 0:
@@ -717,12 +719,13 @@ export class AnimalTracks extends Encounter{
                         this.hunter = new Bandit(theController.calculateAveragePartyLevel());
                         break;
                 }
+                break;
             case "tundra":
                 switch(Math.floor(Math.random()*1)){
                     case 0:
                         this.trackedEntity = new Character(["Tiger", "./media/tiger.jpg", "animal", [6,6,6,5,5,5], [new TigerClaw, new TigerClaw, "N/A", "N/A", "N/A", "N/A", "N/A"], [25, 10]]);
                         break;
-                } 
+                }
                 switch(Math.floor(Math.random()*3)){
                     case 0:
                         this.hunter = new Wolf(theController.calculateAveragePartyLevel());
@@ -733,7 +736,8 @@ export class AnimalTracks extends Encounter{
                     case 2:
                         this.hunter = new Yeti(theController.calculateAveragePartyLevel());
                         break;
-                } 
+                }
+                break;
         }
         this.name = "animal tracks";
         this.messageFunction = ()=>{theController.printToGameConsole("animal tracks lie on the ground.")};
@@ -795,7 +799,7 @@ export class WoundedAnimal extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.party[0].name} attempts to bandage the wounded ${theController.encounter.trackedEntity.name}.`)},
                 "neutral",
                 [
-                    ()=>{recruit(`the ${theController.encounter.trackedEntity.name} stands tp its feet and nuzzles ${theController.party[0].name}`, theController.encounter.trackedEntity)}
+                    ()=>{recruit(`the ${theController.encounter.trackedEntity.name} stands to its feet and nuzzles ${theController.party[0].name}`, theController.encounter.trackedEntity)}
                 ],
                 [
                     ()=>{

@@ -1302,7 +1302,6 @@ export class Roar extends Ability{
                 target.currentPierceAttack = target.currentPierceAttack - 3;
                 messageAddon = ", lowering physical attack";
             }
-            target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name}` + messageAddon);
         }
     }

@@ -19,7 +19,7 @@ Text adventure game based on the Shackle Breaker story
 * scaling
 * convert enemies and characters to shared entitiy class
 * Prevent Party switching during certain encounters
-* Character Specific decision during encounters
+* Character Specific decisions during encounters
 
 # Bugs
 * Image Flashing
@@ -29,6 +29,7 @@ Text adventure game based on the Shackle Breaker story
 * Items are used up upon choosing move not upon using item.
 * Recurperate and channel acasionally giving going over max limit
 * Shiphon not doing damage
+* Switching combatants cause bug when switching occurs first
 
 
 # MISC notes

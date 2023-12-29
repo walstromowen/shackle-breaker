@@ -1491,7 +1491,7 @@ export class FrostbiteTonic {
     constructor(){
         this.name = "frostbite tonic";
         this.type = "consumable";
-        this.imageSrc = "./media/icons/bandage-roll.png";
+        this.imageSrc = "./media/icons/round-bottom-flask.png";
         this.description = `a tonic used to treat frostbite. Although the power of the artifact drove many mad, a select few used its power for good resulting in major breakthroughs in medicine.`;
         this.level = 1;
         this.price = 30;
@@ -1502,7 +1502,7 @@ export class ParalysisTonic {
     constructor(){
         this.name = "paralysis tonic";
         this.type = "consumable";
-        this.imageSrc = "./media/icons/bandage-roll.png";
+        this.imageSrc = "./media/icons/round-bottom-flask.png";
         this.description = `a tonic used to treat paralysis. Although the power of the artifact drove many mad, a select few used its power for good resulting in major breakthroughs in medicine.`;
         this.level = 1;
         this.price = 30;
