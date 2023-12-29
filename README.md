@@ -19,6 +19,7 @@ Text adventure game based on the Shackle Breaker story
 * scaling
 * convert enemies and characters to shared entitiy class
 * Prevent Party switching during certain encounters
+* Character Specific decision during encounters
 
 # Bugs
 * Image Flashing

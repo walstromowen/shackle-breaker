@@ -33,7 +33,7 @@
                                 <option id='knight-1' value='media/knight-1.jpg'>Knight 1</option>
                                 <option id='knight-2' value='media/knight-2.jpg'>Knight 2</option>
                                 <option id='rogue-1' value='media/rogue-1.jpg'>Rogue 1</option>
-                                <option id='rogue-2' value='media/rogue-2.jpg'>Rouge 2</option>
+                                <option id='rogue-2' value='media/rogue-2.jpg'>Rogue 2</option>
                                 <option id='mage-1' value='media/mage-1.jpg'>Mage 1</option>
                                 <option id='mage-2' value='media/mage-2.jpg'>Mage 2</option>
                             </select>
@@ -46,7 +46,7 @@
                                 <option value='ranger'>Ranger</option>
                                 <option value='scholar'>Scholar</option>
                                 <option value='warrior'>Warrior</option>
-                                <option value='theif'>Theif</option>
+                                <option value='thief'>Thief</option>
                                 <option value='hermit'>Hermit</option>
                             </select>
                         </div>
@@ -59,6 +59,14 @@
                                 <option value='meteorite'>Meteorite</option>
                                 <option value='herbal-medicine'>Herbal Medicine</option>
                                 <option value='assasians-belt'>Assasian's Belt</option>
+                            </select>
+                        </div>
+                        <div class='character-creation-input-row' id='character-creation-companion-row'>
+                            <h5>Companion</h5>
+                            <select id='companion-selection' class='character-creation-input'>
+                                <option value='none'>None</option>
+                                <option value='dog'>Dog</option>
+                                <option value='hawk'>Hawk</option>
                             </select>
                         </div>
                     </div>
@@ -189,7 +197,14 @@
                     </div>
                     <div id='character-creation-image-submit-btn-container'>
                         <div id='character-creator-image-container'>
-                            <image id='character-creator-apperance-image' src='./media/knight-1.jpg'></image>
+                            <div>
+                                <h3>Apperance</h3>
+                                <image id='character-creator-apperance-image' class='character-creator-image' src='./media/knight-1.jpg'></image>
+                            </div>
+                            <div>
+                                <h3>Companion</h3>
+                                <image id='character-creator-companion-image' class='character-creator-image' src='./media/icons/cancel.png'></image>
+                            </div>
                         </div>
                             <div id='character-creation-submit-btn'><h4 class='title-screen-button-header'>Submit</h4></div>
                     </div>

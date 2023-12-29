@@ -3,7 +3,7 @@ import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Lon
     LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
     LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, 
     IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
-    ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide, Bandage, PineWood
+    ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide, Bandage, FrostbiteTonic, ParalysisTonic, PineWood, TigerClaw, DogPaw, HawkTalons
     } from "./items.js";
 import {Recover, Punch, Retreat} from "./abilities.js"
 import Character from "./character.js";
@@ -14,18 +14,19 @@ import Battle from "./battle.js";
 export default class Controller {
     constructor(){
         this.wanderingCompanions = [
-            new Character(["Gadrum Glorysun", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], [new Shortsword, new Buckler, "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["William Stillstar", "./media/mage-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Longsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["Solair Sulabras", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Shortsword, new KiteShield, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["Julian Memira", "./media/rogue-2.jpg", "mercenary", [5,5,5,5,5,5],  [new Shortsword, new Buckler, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["Nicholi Ninarsk", "./media/rogue-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Handaxe, new Handaxe, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["Ragnar Ninarsk", "./media/mage-2.jpg", "mercenary", [5,5,5,5,5,5],  [new IceStaff, "Empty", new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["Revan Sekrav", "./media/rogue-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Dagger, new Shiv, new LeatherHood, new LinenShirt, new LeatherGloves, new LinenPants, new LeatherBoots]]),
-            new Character(["Alina Sulabras", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], [new Shortsword, new KiteShield, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["Ariannel Memira", "./media/knight-2.jpg", "mercenary", [5,5,5,5,5,5], [new LightStaff, "Empty", new ClothHood, new ClothRobe, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["Gwen Swallowtail", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], [new DarkStaff, "Empty", new ClothHood, new ClothRobe, "Empty", new LinenPants, new LeatherBoots]])
+            new Character(["Gadrum Glorysun", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], [new Shortsword, new Buckler, "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots], [25, 5]]),
+            new Character(["William Stillstar", "./media/mage-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Longsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots], [25, 5]]),
+            new Character(["Solair Sulabras", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Shortsword, new KiteShield, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots], [25, 5]]),
+            new Character(["Julian Memira", "./media/rogue-2.jpg", "mercenary", [5,5,5,5,5,5],  [new Shortsword, new Buckler, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots], [25, 5]]),
+            new Character(["Nicholi Ninarsk", "./media/rogue-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Handaxe, new Handaxe, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots], [25, 5]]),
+            new Character(["Ragnar Ninarsk", "./media/mage-2.jpg", "mercenary", [5,5,5,5,5,5],  [new IceStaff, "Empty", new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots], [25, 5]]),
+            new Character(["Revan Sekrav", "./media/rogue-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Dagger, new Shiv, new LeatherHood, new LinenShirt, new LeatherGloves, new LinenPants, new LeatherBoots], [25, 5]]),
+            new Character(["Alina Sulabras", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], [new Shortsword, new KiteShield, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots], [25, 5]]),
+            new Character(["Ariannel Memira", "./media/knight-2.jpg", "mercenary", [5,5,5,5,5,5], [new LightStaff, "Empty", new ClothHood, new ClothRobe, "Empty", new LinenPants, new LeatherBoots], [25, 5]]),
+            new Character(["Gwen Swallowtail", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], [new DarkStaff, "Empty", new ClothHood, new ClothRobe, "Empty", new LinenPants, new LeatherBoots], [25, 5]])
         ];
-        this.characterCreationArray = ["name", "apperance", "background", "attributesArray", "equippedArray"];
+        this.characterCreationArray = ["name", "apperance", "background", "attributesArray", "equippedArray", "miscStatsArray"];
+        this.tempCompanionValue = "none";
         this.map = "";
         this.miniMap = "";
         this.battle = "";
@@ -71,9 +72,13 @@ export default class Controller {
             }
             this.characterCreationArray[1] = document.getElementById("apperance-selection").value;
             this.characterCreationArray[2] = document.getElementById("background-selection").value;
+            this.characterCreationArray[5] = [25, 5];
             this.party[0] = new Character(this.characterCreationArray);
-            //this.party.push(new Character(["kurtus", "media/kurty.jpg", "traveler", [100, 100, 100, 100, 100, 100], [new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]));
-           
+            if(this.tempCompanionValue != "none"){
+                this.party.push(this.tempCompanionValue);
+            }
+            //this.party.push(new Character(["kurtus", "media/kurty.jpg", "traveler", [100, 100, 100, 100, 100, 100], [new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots], [25, 5]]));
+            
             this.map = new Map("basic", "random");
             this.miniMap = new MiniMap();
             this.map.mapEnviorment.terrain.onload = ()=>{
@@ -103,6 +108,9 @@ export default class Controller {
         document.getElementById("keepsake-selection").addEventListener("change", ()=>{
             this.characterCreatorUpdateInventory();
         });
+        document.getElementById("companion-selection").addEventListener("change", ()=>{
+            this.characterCreatorUpdateCompanion();
+        });
     }
     characterCreatorDetermineUpdateStats(){
         let value = document.getElementById("background-selection").value;
@@ -122,7 +130,7 @@ export default class Controller {
             case "warrior":
                 this.characterCreatorUpdateStats(5, 5, 8, 5, 3, 4);
                 break;
-            case "theif":
+            case "thief":
                 this.characterCreatorUpdateStats(5, 5, 4, 8, 5, 3);
                 break;
             case "hermit":
@@ -177,7 +185,7 @@ export default class Controller {
                 equippedArray.push(new Handaxe, "Empty", "Empty", new LeatherChestplate, "Empty", new LinenPants, new LeatherBoots);
                 this.partyGold = 250;
                 break;
-            case "theif":
+            case "thief":
                 equippedArray.push(new Dagger, new Shiv, "Empty", new LinenShirt, new LinenPants, "Empty", new LeatherBoots);
                 this.partyGold = 250;
                 break;
@@ -191,7 +199,7 @@ export default class Controller {
             case "none":
                 break;
             case "hunters-tools":
-                inventoryArray.push(new ThrowingKnife, new Net, new Net);
+                inventoryArray.push(new ThrowingKnife, new Net, new Bandage);
                 break;
             case "bag-of-potions":
                 inventoryArray.push(new HealthPotion, new StaminaPotion , new MagicPotion);
@@ -203,7 +211,7 @@ export default class Controller {
                 inventoryArray.push(new Bandage, new Antidote, new AloeRemedy);
                 break;
             case "assasians-belt":
-                inventoryArray.push(new PoisonedKnife, new SmokeBomb, new ThrowingKnife);
+                inventoryArray.push(new PoisonedKnife, new SmokeBomb, new Antidote);
                 break;
         }
         Array.from(document.getElementById("character-creation-inventory").getElementsByClassName("inventory-slot-long")).forEach(slot=>{
@@ -226,6 +234,23 @@ export default class Controller {
         document.getElementById("character-creation-gold").innerText = this.partyGold;
         this.characterCreationArray[4] = equippedArray;
         this.partyInventory = inventoryArray;
+    }
+    characterCreatorUpdateCompanion(){
+        let value = document.getElementById("companion-selection").value;
+        switch(value){
+            case "none":
+                this.tempCompanionValue = "none";
+                document.getElementById("character-creator-companion-image").src = "./media/icons/cancel.png";
+                break;
+            case "dog":
+                this.tempCompanionValue = new Character(["Dog", "./media/dog.jpg", "animal", [1,10,5,5,5,5], [new DogPaw, new DogPaw, "N/A", "N/A", "N/A", "N/A", "N/A"], [28, 12]]);
+                document.getElementById("character-creator-companion-image").src = this.tempCompanionValue.apperance; 
+                break;
+            case "hawk":
+                this.tempCompanionValue = new Character(["Hawk", "./media/hawk.jpg", "animal", [2,6,5,5,5,5], [new HawkTalons, new HawkTalons, "N/A", "N/A", "N/A", "N/A", "N/A"], [35, 18]]);
+                document.getElementById("character-creator-companion-image").src = this.tempCompanionValue.apperance; 
+                break;
+        }
     }
     enableGameOverScreenControls(){
         document.getElementById('gameover-to-menu-btn').addEventListener("click", ()=>{
@@ -569,7 +594,7 @@ export default class Controller {
         this.updateEnemyStats();
         setTimeout(()=>{
             document.getElementById('enemy-name').innerText = this.capitalizeFirstLetter(this.battle.hostileParty[0].name);
-            document.getElementById('enemy-image').src = this.battle.hostileParty[0].imageSrc;
+            document.getElementById('enemy-image').src = this.battle.hostileParty[0].apperance;
             document.getElementById('map-button-container').style.display = "none";
             document.getElementById('battle-button-container').style.display = "flex";
             document.getElementById('encounter-button-container').style.display = "none";
@@ -954,7 +979,7 @@ export default class Controller {
     }
     updateEnemyStats(){
         document.getElementById('enemy-name').innerText = this.capitalizeFirstLetter(this.battle.hostileParty[0].name);
-        document.getElementById('enemy-image').src = this.battle.hostileParty[0].imageSrc;
+        document.getElementById('enemy-image').src = this.battle.hostileParty[0].apperance;
         document.getElementById('current-health-enemy').innerText = this.battle.hostileParty[0].currentHP;
         document.getElementById('current-stamina-enemy').innerText = this.battle.hostileParty[0].currentStamina;
         document.getElementById('current-magic-enemy').innerText = this.battle.hostileParty[0].currentMagic;
@@ -1138,6 +1163,10 @@ export default class Controller {
         if(this.isInBattle == false){
             switch(this.partyInventory[inventoryIndex].type){
                 case "one hand":
+                    if((this.party[0].equippedArray[0] == "N/A" && this.party[0].equippedArray[1] == "N/A") || (this.party[0].equippedArray[0].type == "bound" && this.party[0].equippedArray[1].type == "bound")){
+                        this.printToGameConsole(`${this.partyInventory[inventoryIndex].name} cannot be equipped to ${this.party[0].name}.`);
+                        return;
+                    }
                     if(this.party[0].equippedArray[0] !== "Empty"){
                         if(this.party[0].equippedArray[1] !== "Empty"){
                             this.partyInventory.push(this.party[0].equippedArray[0]);
@@ -1155,6 +1184,10 @@ export default class Controller {
                     this.partyInventory.splice(inventoryIndex, 1);
                     break;
                 case "two hand":
+                    if(this.party[0].equippedArray[0] == "N/A" || this.party[0].equippedArray[1] == "N/A" || this.party[0].equippedArray[0].type == "bound" || this.party[0].equippedArray[1].type == "bound"){
+                        this.printToGameConsole(`${this.partyInventory[inventoryIndex].name} cannot be equipped to ${this.party[0].name} !`);
+                        return
+                    }
                     if(this.party[0].equippedArray[0] !== "Empty"){
                         this.partyInventory.push(this.party[0].equippedArray[0]);
                     }
@@ -1169,6 +1202,10 @@ export default class Controller {
                     this.updateCharacterEquippedTab(1);
                     break;
                 case "main":
+                    if(this.party[0].equippedArray[0] == "N/A" || this.party[0].equippedArray[0].type == "bound"){
+                        this.printToGameConsole(`${this.partyInventory[inventoryIndex].name} cannot be equipped to ${this.party[0].name} !`);
+                        return
+                    }
                     if(this.party[0].equippedArray[0] !== "Empty"){
                         this.partyInventory.push(this.party[0].equippedArray[0]);
                     }
@@ -1178,6 +1215,10 @@ export default class Controller {
                     this.updateCharacterEquippedTab(0);
                     break;
                 case "offhand":
+                    if(this.party[0].equippedArray[1] == "N/A" || this.party[0].equippedArray[1].type == "bound"){
+                        this.printToGameConsole(`${this.partyInventory[inventoryIndex].name} cannot be equipped to ${this.party[0].name} !`);
+                        return
+                    }
                     if(this.party[0].equippedArray[1] !== "Empty"){
                         this.partyInventory.push(this.party[0].equippedArray[1]);
                     }
@@ -1187,6 +1228,10 @@ export default class Controller {
                     this.updateCharacterEquippedTab(1);
                     break;
                 case "head":
+                    if(this.party[0].equippedArray[2] == "N/A" || this.party[0].equippedArray[2].type == "bound"){
+                        this.printToGameConsole(`${this.partyInventory[inventoryIndex].name} cannot be equipped to ${this.party[0].name} !`);
+                        return
+                    }
                     if(this.party[0].equippedArray[2] !== "Empty"){
                         this.partyInventory.push(this.party[0].equippedArray[2]);
                     } 
@@ -1196,7 +1241,11 @@ export default class Controller {
                     this.updateCharacterEquippedTab(2);
                     break;
                 case "torso":
-                    if(this.party[0].equippedArray[3] !== "Empty"){
+                    if(this.party[0].equippedArray[3] == "N/A" || this.party[0].equippedArray[3].type == "bound"){
+                        this.printToGameConsole(`${this.partyInventory[inventoryIndex].name} cannot be equipped to ${this.party[0].name} !`);
+                        return
+                    }
+                    if(this.party[0].equippedArray[3] !== "Empty" || this.party[0].equippedArray[4].type == "bound"){
                         this.partyInventory.push(this.party[0].equippedArray[3]);
                     } 
                     this.party[0].equippedArray[3] = this.partyInventory[inventoryIndex];
@@ -1205,6 +1254,10 @@ export default class Controller {
                     this.updateCharacterEquippedTab(3);
                     break;
                 case "arms":
+                    if(this.party[0].equippedArray[4] == "N/A" || this.party[0].equippedArray[4].type == "bound"){
+                        this.printToGameConsole(`${this.partyInventory[inventoryIndex].name} cannot be equipped to ${this.party[0].name} !`);
+                        return
+                    }
                     if(this.party[0].equippedArray[4] !== "Empty"){
                         this.partyInventory.push(this.party[0].equippedArray[4]);
                     } 
@@ -1214,6 +1267,10 @@ export default class Controller {
                     this.updateCharacterEquippedTab(4);
                     break;
                 case "legs":
+                    if(this.party[0].equippedArray[5] == "N/A" || this.party[0].equippedArray[5].type == "bound"){
+                        this.printToGameConsole(`${this.partyInventory[inventoryIndex].name} cannot be equipped to ${this.party[0].name} !`);
+                        return
+                    }
                     if(this.party[0].equippedArray[5] !== "Empty"){
                         this.partyInventory.push(this.party[0].equippedArray[5]);
                     } 
@@ -1223,6 +1280,10 @@ export default class Controller {
                     this.updateCharacterEquippedTab(5);
                     break;
                 case "feet":
+                    if(this.party[0].equippedArray[6] == "N/A" || this.party[0].equippedArray[6].type == "bound"){
+                        this.printToGameConsole(`${this.partyInventory[inventoryIndex].name} cannot be equipped to ${this.party[0].name} !`);
+                        return
+                    }
                     if(this.party[0].equippedArray[6] !== "Empty"){
                         this.partyInventory.push(this.party[0].equippedArray[6]);
                     } 
@@ -1244,7 +1305,11 @@ export default class Controller {
     }
     unequip(equippedArrayIndex){
         if(this.isInBattle == false){
-            if(this.party[0].equippedArray[equippedArrayIndex] != "Empty"){
+            if(this.party[0].equippedArray[equippedArrayIndex] != "Empty" && this.party[0].equippedArray[equippedArrayIndex] != "N/A"){
+                if(this.party[0].equippedArray[equippedArrayIndex].type == "bound"){
+                    this.printToGameConsole(`Cannot unequip ${this.party[0].equippedArray[equippedArrayIndex].name}.`);
+                    return;
+                }
                 if(this.party[0].equippedArray[equippedArrayIndex].type == "two hand"){
                     if(equippedArrayIndex == 0){
                         this.party[0].equippedArray[1] = "Empty";
@@ -1318,7 +1383,7 @@ export default class Controller {
         this.party[partyIndex].abilityArray = [];
         //update stats
         for(let i = 0; i < this.party[partyIndex].equippedArray.length; i++){
-            if(this.party[partyIndex].equippedArray[i] != "Empty"){
+            if(this.party[partyIndex].equippedArray[i] != "Empty" && this.party[partyIndex].equippedArray[i] != "N/A"){
                 if((this.party[partyIndex].equippedArray[i].type == "two hand" && i == 1) != true){
                     this.party[partyIndex].currentBluntAttack = this.party[partyIndex].currentBluntAttack + this.party[partyIndex].equippedArray[i].bluntAttack;
                     this.party[partyIndex].currentPierceAttack = this.party[partyIndex].currentPierceAttack + this.party[partyIndex].equippedArray[i].pierceAttack;
@@ -1341,7 +1406,7 @@ export default class Controller {
         }
         //update abilities
         for(let x = 0; x < this.party[partyIndex].equippedArray.length; x ++){
-            if(this.party[partyIndex].equippedArray[x] != "Empty"){
+            if(this.party[partyIndex].equippedArray[x] != "Empty" && this.party[partyIndex].equippedArray[x] != "N/A"){
                 for(let y = 0; y < this.party[partyIndex].equippedArray[x].abilityArray.length; y ++){
                     //check if this ability name is not already in current party[partyIndex] ability array
                     let flag = true;
@@ -1362,7 +1427,11 @@ export default class Controller {
         if(this.party[0].equippedArray[equippedArrayIndex] =="Empty"){
             document.getElementById('equip-slot-' + equippedArrayIndex).innerText = "Empty";
         }else{
-            document.getElementById('equip-slot-' + equippedArrayIndex).innerText = this.capitalizeFirstLetter(this.party[0].equippedArray[equippedArrayIndex].name);
+            if(this.party[0].equippedArray[equippedArrayIndex] !=="N/A"){
+                document.getElementById('equip-slot-' + equippedArrayIndex).innerText = this.capitalizeFirstLetter(this.party[0].equippedArray[equippedArrayIndex].name);
+            }else{
+                document.getElementById('equip-slot-' + equippedArrayIndex).innerText = "N/A";
+            }
         } 
     }
     completeRoom(){

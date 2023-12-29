@@ -1,11 +1,12 @@
 import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
-    ThrowNet, Immolate, LightningBolt, Channel, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Bite, SpitBile, LeechLife, Devour, Pounce, CastShadow, ThrowSmokebomb, Shockwave, GuardBreak, BlinkStrike} from "./abilities.js"
+    ThrowNet, Immolate, LightningBolt, Channel, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Bite, SpitBile, LeechLife, Devour, Pounce, CastShadow, ThrowSmokebomb, Shockwave, GuardBreak, BlinkStrike, Punch, WildSwing,
+    Roar} from "./abilities.js"
     import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer, NightbladeSword,
         Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, NightbladeHelm, NightbladeChestplate,
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
         LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, 
         IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
-        ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide, Bandage, PineWood
+        ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide, Bandage, PineWood, FrostbiteTonic, ParalysisTonic
         } from "./items.js";
 import { Channeled, Invigorated } from "./statusEffects.js";
 
@@ -81,7 +82,7 @@ export class Skeleton extends Enemy{
     constructor(averagePartyLevel){
         super();
         this.name = "skeleton";
-        this.imageSrc = "media/skeleton.jpg"
+        this.apperance = "media/skeleton.jpg"
         this.maxHP = 30;
         this.currentHP = this.maxHP;
         this.maxStamina = 30;
@@ -131,7 +132,7 @@ export class Bat extends Enemy{
     constructor(averagePartyLevel){
         super();
         this.name = "bat";
-        this.imageSrc = "media/bat.jpg"
+        this.apperance = "media/bat.jpg"
         this.maxHP = 25;
         this.currentHP = this.maxHP;
         this.maxStamina = 25;
@@ -176,7 +177,7 @@ export class Wolf extends Enemy{
     constructor(averagePartyLevel){
         super();
         this.name = "wolf";
-        this.imageSrc = "media/wolf.jpg"
+        this.apperance = "media/wolf.jpg"
         this.maxHP =  30;
         this.currentHP = this.maxHP;
         this.maxStamina = 40;
@@ -221,7 +222,7 @@ export class AltusMage extends Enemy{
     constructor(averagePartyLevel){
         super();
         this.name = "altus mage";
-        this.imageSrc = "media/altus-mage.jpg"
+        this.apperance = "media/altus-mage.jpg"
         this.maxHP = 35;
         this.currentHP = this.maxHP;
         this.maxStamina = 35;
@@ -266,7 +267,7 @@ export class CaveSpider extends Enemy{
     constructor(averagePartyLevel){
         super();
         this.name = "cave spider";
-        this.imageSrc = "media/cave-spider.jpg"
+        this.apperance = "media/cave-spider.jpg"
         this.maxHP = 25;
         this.currentHP = this.maxHP;
         this.maxStamina = 25;
@@ -311,7 +312,7 @@ export class Groveguardian extends Enemy{
     constructor(averagePartyLevel){
         super();
         this.name = "grove guardian";
-        this.imageSrc = "media/grove-guardian.jpg"
+        this.apperance = "media/grove-guardian.jpg"
         this.maxHP = 60;
         this.currentHP = this.maxHP;
         this.maxStamina = 40;
@@ -356,7 +357,7 @@ export class EmperorDolos extends Enemy{
     constructor(averagePartyLevel){
         super();
         this.name = "emperor dolos";
-        this.imageSrc = "media/emperor-dolos.jpg"
+        this.apperance = "media/emperor-dolos.jpg"
         this.maxHP = 200;
         this.currentHP = this.maxHP;
         this.maxStamina = 150;
@@ -401,7 +402,7 @@ export class TerrorBear extends Enemy{
     constructor(averagePartyLevel){
         super();
         this.name = "terror bear";
-        this.imageSrc = "media/terror-bear.jpg"
+        this.apperance = "media/terror-bear.jpg"
         this.maxHP = 60; 
         this.currentHP = this.maxHP;
         this.maxStamina = 50;
@@ -447,7 +448,7 @@ export class ShadowStrider extends Enemy{
     constructor(averagePartyLevel){
         super();
         this.name = "shadow strider";
-        this.imageSrc = "media/shadow-strider.jpg"
+        this.apperance = "media/shadow-strider.jpg"
         this.maxHP =  35;
         this.currentHP = this.maxHP;
         this.maxStamina = 55;
@@ -493,7 +494,7 @@ export class Bandit extends Enemy{
     constructor(averagePartyLevel){
         super();
         this.name = "bandit";
-        this.imageSrc = "media/bandit.jpg"
+        this.apperance = "media/bandit.jpg"
         this.maxHP = 35;
         this.currentHP = this.maxHP;
         this.maxStamina = 35;
@@ -540,7 +541,7 @@ export class SkeletonMage extends Enemy{
     constructor(averagePartyLevel){
         super();
         this.name = "skeleton mage";
-        this.imageSrc = "media/skeleton-mage.jpg"
+        this.apperance = "media/skeleton-mage.jpg"
         this.maxHP = 35;
         this.currentHP = this.maxHP;
         this.maxStamina = 35;
@@ -569,7 +570,7 @@ export class SkeletonMage extends Enemy{
         this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new IceShard, new Shockwave, new Channel];
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new ClothHood, new ClothRobe, new LinenShirt, new LinenPants, new HealthPotion, new MagicPotion, new IceStaff];
+        this.lootArray = [new ClothHood, new ClothRobe, new LinenShirt, new LinenPants, new HealthPotion, new MagicPotion, new IceStaff, new FrostbiteTonic, new ParalysisTonic];
         this.gold = 0;
         this.xp = 0;
         this.isBoss = false;             
@@ -585,7 +586,7 @@ export class Ghost extends Enemy{
     constructor(averagePartyLevel){
         super();
         this.name = "ghost";
-        this.imageSrc = "media/ghost.jpg"
+        this.apperance = "media/ghost.jpg"
         this.maxHP = 35;
         this.currentHP = this.maxHP;
         this.maxStamina = 35;
@@ -630,7 +631,7 @@ export class AltusGuard extends Enemy{
     constructor(averagePartyLevel){
         super();
         this.name = "altus guard";
-        this.imageSrc = "media/altus-guard.jpg"
+        this.apperance = "media/altus-guard.jpg"
         this.maxHP = 40;
         this.currentHP = this.maxHP;
         this.maxStamina = 35;
@@ -674,5 +675,95 @@ export class AltusGuard extends Enemy{
         this.incrementStats(averagePartyLevel, [2,6], [2,6], [0,4], [2,3], [2,3], [0,2], [0,2], [1,3], [1,3], [1,3], [1,3]);
         this.gold = Math.floor((Math.random() * (20 - 15 + 1) + 15) * (1 + averagePartyLevel/5));
         this.xp = Math.floor(35 * (1 + this.level/10 ));
+    }
+}
+export class Yeti extends Enemy{
+    constructor(averagePartyLevel){
+        super();
+        this.name = "yeti";
+        this.apperance = "media/yeti.jpg"
+        this.maxHP = 50;
+        this.currentHP = this.maxHP;
+        this.maxStamina = 50;
+        this.currentStamina = this.maxStamina;
+        this.maxMagic = 40;
+        this.currentMagic = this.maxMagic;
+        this.baseBluntAttack = 60;
+        this.currentBluntAttack = this.baseBluntAttack;
+        this.basePierceAttack = 50;
+        this.currentPierceAttack = this.basePierceAttack;
+        this.baseArcaneAttack = 55; 
+        this.currentArcaneAttack = this.baseArcaneAttack;
+        this.baseElementalAttack = 55;
+        this.currentElementalAttack = this.baseElementalAttack;
+        this.baseBluntDefense = 35;
+        this.currentBluntDefense = this.baseBluntDefense;
+        this.basePierceDefense = 35;
+        this.currentPierceDefense = this.basePierceDefense;
+        this.baseArcaneDefense = 35;
+        this.currentArcaneDefense = this.baseArcaneDefense;
+        this.baseElementalDefense = 35;
+        this.currentElementalDefense = this.baseElementalDefense;
+        this.baseSpeed = 20;
+        this.currentSpeed = this.baseSpeed;
+        this.baseEvasion = 5;
+        this.currentEvasion = this.baseEvasion;
+        this.abilityArray = [new Strike, new GuardBreak, new Punch, new IceBarrier, new WildSwing, new Roar];
+        this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootArray = [new HealthPotion, new FrostbiteTonic];
+        this.gold = 0;
+        this.xp = 0;
+        this.isBoss = false;
+        this.levelUp(averagePartyLevel);
+    }
+    levelUp(averagePartyLevel){
+        this.incrementStats(averagePartyLevel, [4,8], [2,4], [0,2], [3,4], [1,2], [0,1], [1,2], [2,3], [2,3], [2,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/5));
+        this.xp = Math.floor(50 * (1 + this.level/10 ));
+    }
+}
+export class Tiger extends Enemy{
+    constructor(averagePartyLevel){
+        super();
+        this.name = "tiger";
+        this.apperance = "media/tiger.jpg"
+        this.maxHP =  50;
+        this.currentHP = this.maxHP;
+        this.maxStamina = 50;
+        this.currentStamina = this.maxStamina;
+        this.maxMagic = 30;
+        this.currentMagic = this.maxMagic;
+        this.baseBluntAttack = 50;
+        this.currentBluntAttack = this.baseBluntAttack;
+        this.basePierceAttack = 60;
+        this.currentPierceAttack = this.basePierceAttack;
+        this.baseArcaneAttack = 55; 
+        this.currentArcaneAttack = this.baseArcaneAttack;
+        this.baseElementalAttack = 55;
+        this.currentElementalAttack = this.baseElementalAttack;
+        this.baseBluntDefense = 35;
+        this.currentBluntDefense = this.baseBluntDefense;
+        this.basePierceDefense = 35;
+        this.currentPierceDefense = this.basePierceDefense;
+        this.baseArcaneDefense = 35;
+        this.currentArcaneDefense = this.baseArcaneDefense;
+        this.baseElementalDefense = 35;
+        this.currentElementalDefense = this.baseElementalDefense;
+        this.baseSpeed = 32;
+        this.currentSpeed = this.baseSpeed;
+        this.baseEvasion = 8;
+        this.currentEvasion = this.baseEvasion;
+        this.abilityArray = [new Bite, new Slash, new Pounce];
+        this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootArray = [new Hide];
+        this.gold = 0;
+        this.xp = 0;
+        this.isBoss = false;
+        this.levelUp(averagePartyLevel);
+    }
+    levelUp(averagePartyLevel){
+        this.incrementStats(averagePartyLevel, [2,6], [4,6], [0,4], [1,3], [2,3], [0,2], [0,2], [1,3], [1,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (10 - 5 + 1) + 5) * (1 + averagePartyLevel/2));
+        this.xp = Math.floor(30 * (1 + this.level/10 ));
     }
 }

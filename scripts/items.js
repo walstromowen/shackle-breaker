@@ -1,5 +1,6 @@
 import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, GuardBreak, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy, UseBandage,
-        ThrowNet, Immolate, LightningBolt, Shockwave, Recuperate, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Channel, ThrowSmokebomb, CastShadow, BlinkStrike, Empower} from "./abilities.js"
+        ThrowNet, Immolate, LightningBolt, Shockwave, Recuperate, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Channel, ThrowSmokebomb, CastShadow, BlinkStrike, Empower, WildSwing, Pounce, Bite,
+        Roar, UseFrostbiteTonic, UseParalysisTonic} from "./abilities.js"
 
 export function getRandomItem(){
     let itemArray = [new LinenShirt, new LinenPants, new Dagger, new BlacksmithHammer, new Spear, new Shortsword, new Longsword, new Handaxe, new NightbladeSword,
@@ -8,7 +9,7 @@ export function getRandomItem(){
                 new LeatherBoots, new KiteShield, new IronHelmet, new IronGauntlets, new IronChainmail, 
                 new IronGreaves, new IronBoots, new CrystalBall, new ClothHood, new ClothRobe,
                 new HealthPotion, new StaminaPotion, new MagicPotion, 
-                new ThrowingKnife, new PoisonedKnife, new Meteorite, new Antidote, new AloeRemedy, new Net, new SmokeBomb, new Bandage];
+                new ThrowingKnife, new PoisonedKnife, new Meteorite, new Antidote, new AloeRemedy, new Net, new SmokeBomb, new Bandage, new FrostbiteTonic, new ParalysisTonic];
                 return itemArray[Math.floor(Math.random() * itemArray.length)];
     }
 export class LinenShirt {
@@ -324,7 +325,7 @@ export class WarHammer {
         this.name = "warhammer";
         this.type = "two hand";
         this.imageSrc = "./media/icons/warhammer.png";
-        this.description = `A heavy warhammer. This warhammer appears to have once belonged to a captain of the altus guard. "It's not elegant, but sometimes we require non-elegant solutions" - Commander Mentoras.`;
+        this.description = `A heavy warhammer. This warhammer appears to have once belonged to a captain of the altus guard. "It's not elegant, but sometimes problems require non-elegant solutions" - Commander Mentoras.`;
         this.level = 1;
         this.price = 400;
         this.bluntAttack = 6;
@@ -353,6 +354,9 @@ export class WarHammer {
             this.elementalDefense = this.elementalDefense + 1;
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
+        }
+        if(this.level == 3){
+            this.abilityArray.push(new WildSwing());
         }
     }
 }
@@ -1321,6 +1325,69 @@ export class NightbladeChestplate {
         }
     }
 }
+export class TigerClaw {
+    constructor(){
+        this.name = "tiger claw";
+        this.type = "bound";
+        this.imageSrc = "";
+        this.description = ``;
+        this.level = 1;
+        this.price = 0;
+        this.bluntAttack = 1;
+        this.pierceAttack = 2;
+        this.arcaneAttack = 0;
+        this.elementalAttack = 0;
+        this.bluntDefense = 0;
+        this.pierceDefense = 0;
+        this.arcaneDefense = 0;
+        this.elementalDefense = 0;
+        this.speed = 0;
+        this.evasion = 0;
+        this.abilityArray = [new Slash, new Roar, new Pounce];
+    }
+}
+export class HawkTalons {
+    constructor(){
+        this.name = "hawk talons";
+        this.type = "bound";
+        this.imageSrc = "";
+        this.description = ``;
+        this.level = 1;
+        this.price = 0;
+        this.bluntAttack = 0;
+        this.pierceAttack = 3;
+        this.arcaneAttack = 0;
+        this.elementalAttack = 0;
+        this.bluntDefense = 0;
+        this.pierceDefense = 0;
+        this.arcaneDefense = 0;
+        this.elementalDefense = 0;
+        this.speed = 0;
+        this.evasion = 0;
+        this.abilityArray = [new Slash];
+    }
+}
+export class DogPaw {
+    constructor(){
+        this.name = "dog paw ";
+        this.type = "bound";
+        this.imageSrc = "";
+        this.description = ``;
+        this.level = 1;
+        this.price = 0;
+        this.bluntAttack = 1;
+        this.pierceAttack = 2;
+        this.arcaneAttack = 0;
+        this.elementalAttack = 0;
+        this.bluntDefense = 0;
+        this.pierceDefense = 0;
+        this.arcaneDefense = 0;
+        this.elementalDefense = 0;
+        this.speed = 0;
+        this.evasion = 0;
+        this.abilityArray = [new Bite, new Pounce];
+    }
+}
 export class HealthPotion {
     constructor(){
         this.name = "healing potion";
@@ -1418,6 +1485,28 @@ export class Bandage {
         this.level = 1;
         this.price = 30;
         this.abilityArray = [new UseBandage()];
+    }
+}
+export class FrostbiteTonic {
+    constructor(){
+        this.name = "frostbite tonic";
+        this.type = "consumable";
+        this.imageSrc = "./media/icons/bandage-roll.png";
+        this.description = `a tonic used to treat frostbite. Although the power of the artifact drove many mad, a select few used its power for good resulting in major breakthroughs in medicine.`;
+        this.level = 1;
+        this.price = 30;
+        this.abilityArray = [new UseFrostbiteTonic()];
+    }
+}
+export class ParalysisTonic {
+    constructor(){
+        this.name = "paralysis tonic";
+        this.type = "consumable";
+        this.imageSrc = "./media/icons/bandage-roll.png";
+        this.description = `a tonic used to treat paralysis. Although the power of the artifact drove many mad, a select few used its power for good resulting in major breakthroughs in medicine.`;
+        this.level = 1;
+        this.price = 30;
+        this.abilityArray = [new UseParalysisTonic()];
     }
 }
 export class Net {

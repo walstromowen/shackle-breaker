@@ -2,7 +2,7 @@ import {Recover, Punch, Retreat} from "./abilities.js";
 import { Bleeding } from "./statusEffects.js";
 
 export default class Character{
-    constructor(characterCreationArray){ //[name, apperanceSrc, origin, attributesArray, equippedArray]
+    constructor(characterCreationArray){ //[name, apperanceSrc, origin, attributesArray, equippedArray, miscStatsArray[speed, evasion]]
         this.name = characterCreationArray[0];
         this.apperance = characterCreationArray[1]
         this.origin = characterCreationArray[2]
@@ -27,8 +27,8 @@ export default class Character{
         this.basePierceDefense = 0;
         this.baseArcaneDefense = 0;
         this.baseElementalDefense = 0;
-        this.baseSpeed = 25;
-        this.baseEvasion = 5;
+        this.baseSpeed = characterCreationArray[5][0];
+        this.baseEvasion = characterCreationArray[5][1];
         this.statusArray = [];//new Poisoned(this), new Burned(this), new Frostbite(this), new Paralyzed(this), new Shielded(this), new Energized(this), new Empowered(this), new Bound(this)
         this.nextMove = "";
         this.scaleAttributes()

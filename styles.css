@@ -108,6 +108,12 @@ p{
 .mini-menu-stats-container, .mini-menu-description, .mini-menu-actions{
     margin-top: 10px;
 }
+.character-creator-image{
+    min-width: 200px;
+    width: 50%;
+    margin-top: 10px;
+    
+}
 #background-lore-header{
     background-color: var(--color-2);
 }
@@ -147,11 +153,6 @@ p{
     justify-content: space-between;
     
 }
-#character-creator-apperance-image{
-    width: 300px;
-    margin-top: 10px;
-    
-}
 #character-creation-inventory-stats-attributes-container{
     display: flex;
     margin-top: 10px;
@@ -182,8 +183,11 @@ p{
     background-color: var(--color-2);
 }
 #character-creator-image-container{
-    text-align: center;
+    display:flex;
+    justify-content: space-around;
     width: 100%;
+    margin-top: 10px;
+    text-align:center;
 }
 #character-creation-submit-btn{
     margin: auto;

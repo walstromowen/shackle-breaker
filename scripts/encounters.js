@@ -1,14 +1,14 @@
 import {controller as theController} from "./main.js"
 import Character from "./character.js";
 import {Decision} from "./encounterDecision.js";
-import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, Bandit, SkeletonMage, Ghost, AltusGuard} from "./enemies.js";
+import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, Bandit, SkeletonMage, Ghost, AltusGuard, Yeti, Tiger} from "./enemies.js";
 import {Shielded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden} from "./statusEffects.js";
 import {regainHP, initiateTrade, leave, retry, removeDecision, toggleNewEncounter, toggleBattle, loot, takeDamage, recieveStatusEffect, changeMap, recruit} from "./encounterResults.js";
 import {getRandomItem, LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer, NightbladeSword,
     Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, NightbladeHelm, NightbladeChestplate,
     LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
     LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, 
-    IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
+    IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, TigerClaw, DogPaw, HawkTalons, HealthPotion, StaminaPotion, MagicPotion, 
     ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide, Bandage, PineWood
     } from "./items.js";
 
@@ -664,5 +664,163 @@ export class Quicksand extends Encounter{
                 )
             )
         }
+    }
+}
+export class AnimalTracks extends Encounter{
+    constructor(){
+        super();
+        this.trackedEntity = '';
+        this.hunter = '';
+        switch(theController.map.mapEnviorment.biome){
+            case "plains":
+                switch(Math.floor(Math.random()*2)){
+                    case 0:
+                        this.trackedEntity = new Character(["Dog", "./media/dog.jpg", "animal", [2,6,5,5,5,5], [new DogPaw, new DogPaw, "N/A", "N/A", "N/A", "N/A", "N/A"], [28, 12]]);
+                        break;
+                    case 1:
+                        this.trackedEntity = new Character(["Hawk", "./media/hawk.jpg", "animal", [2,6,5,5,5,5], [new HawkTalons, new HawkTalons, "N/A", "N/A", "N/A", "N/A", "N/A"], [35, 18]]);
+                        break;
+                }
+                switch(Math.floor(Math.random()*2)){
+                    case 0:
+                        this.hunter = new Wolf(theController.calculateAveragePartyLevel());
+                        break;
+                    case 1:
+                        this.hunter = new Bandit(theController.calculateAveragePartyLevel());
+                        break;
+                }
+            case "forest":
+                switch(Math.floor(Math.random()*1)){
+                    case 0:
+                        this.trackedEntity = new Character(["Dog", "./media/dog.jpg", "animal", [2,6,5,5,5,5], [new DogPaw, new DogPaw, "N/A", "N/A", "N/A", "N/A", "N/A"], [28, 12]]);
+                        break;
+                    }
+                switch(Math.floor(Math.random()*2)){
+                    case 0:
+                        this.hunter = new Wolf(theController.calculateAveragePartyLevel());
+                        break;
+                    case 1:
+                        this.hunter = new Bandit(theController.calculateAveragePartyLevel());
+                        break;
+                }
+            case "moutain":
+                switch(Math.floor(Math.random()*1)){
+                    case 0:
+                        this.trackedEntity = new Character(["Hawk", "./media/hawk.jpg", "animal", [2,6,5,5,5,5], [new HawkTalons, new HawkTalons, "N/A", "N/A", "N/A", "N/A", "N/A"], [35, 18]]);
+                        break;
+                }
+                switch(Math.floor(Math.random()*2)){
+                    case 0:
+                        this.hunter = new Wolf(theController.calculateAveragePartyLevel());
+                        break;
+                    case 1:
+                        this.hunter = new Bandit(theController.calculateAveragePartyLevel());
+                        break;
+                }
+            case "tundra":
+                switch(Math.floor(Math.random()*1)){
+                    case 0:
+                        this.trackedEntity = new Character(["Tiger", "./media/tiger.jpg", "animal", [6,6,6,5,5,5], [new TigerClaw, new TigerClaw, "N/A", "N/A", "N/A", "N/A", "N/A"], [25, 10]]);
+                        break;
+                } 
+                switch(Math.floor(Math.random()*3)){
+                    case 0:
+                        this.hunter = new Wolf(theController.calculateAveragePartyLevel());
+                        break;
+                    case 1:
+                        this.hunter = new Tiger(theController.calculateAveragePartyLevel());
+                        break;
+                    case 2:
+                        this.hunter = new Yeti(theController.calculateAveragePartyLevel());
+                        break;
+                } 
+        }
+        this.name = "animal tracks";
+        this.messageFunction = ()=>{theController.printToGameConsole("animal tracks lie on the ground.")};
+        this.imageSrc = "./media/animal-tracks.jpg";
+        this.decisionArray = [
+            new Decision(
+                "move on", 
+                ()=>{theController.printToGameConsole(`${theController.party[0].name} ignores the tracks.`)},
+                "likely",
+                [
+                    ()=>{leave(`${theController.party[0].name} moves on.`)}
+                ],
+                [
+                    ()=>{
+                        theController.party[0].statusArray.push(new Bound(theController.party[0]));
+                        toggleBattle(`A nearby ${theController.encounter.hunter.name} ambushes ${theController.party[0].name}!`, [theController.encounter.hunter]);
+                    }
+                ]
+            ),
+            new Decision(
+                "follow", 
+                ()=>{theController.printToGameConsole(`${theController.party[0].name} decides to follow the tracks.`)},
+                "endurance",
+                [
+                    ()=>{toggleNewEncounter(`${theController.party[0].name} notices something ahead.`, new WoundedAnimal(theController.encounter.trackedEntity, theController.encounter.hunter))}
+                ],
+                [
+                    ()=>{toggleBattle(`A nearby ${theController.encounter.hunter.name} moves in to attack ${theController.party[0].name}!`, [theController.encounter.hunter])},
+                    ()=>{leave(`after much tracking, ${theController.party[0].name} loses the tracks.`)}
+                ]
+            )
+        ];
+    }
+}
+export class WoundedAnimal extends Encounter{
+    constructor(trackedEntity, hunter){
+        super();
+        this.trackedEntity = trackedEntity;
+        this.hunter = hunter;
+        this.name = `wounded ${this.trackedEntity.name}`;
+        this.messageFunction = ()=>{theController.printToGameConsole(`A wounded ${this.trackedEntity.name} lies on the ground`)};
+        this.imageSrc = this.trackedEntity.apperance;
+        this.decisionArray = [
+            new Decision(
+                "move on", 
+                ()=>{theController.printToGameConsole(`${theController.party[0].name} ignores the wounded ${theController.encounter.trackedEntity.name}.`)},
+                "certain",
+                [
+                    ()=>{
+                        leave(`${theController.party[0].name} moves on.`)
+                    }
+                ],
+                [
+
+                ]
+            ),
+            new Decision(
+                "help animal", 
+                ()=>{theController.printToGameConsole(`${theController.party[0].name} attempts to bandage the wounded ${theController.encounter.trackedEntity.name}.`)},
+                "neutral",
+                [
+                    ()=>{recruit(`the ${theController.encounter.trackedEntity.name} stands tp its feet and nuzzles ${theController.party[0].name}`, theController.encounter.trackedEntity)}
+                ],
+                [
+                    ()=>{
+                        theController.encounter.trackedEntity.currentHP = Math.floor(theController.encounter.trackedEntity.currentHP/3);
+                        toggleBattle(`the ${theController.encounter.trackedEntity.name} stands to its feet and prepares to fight!`, [theController.encounter.trackedEntity]);
+                    },
+                    ()=>{toggleBattle(`a ${theController.encounter.hunter.name} advances towards ${theController.party[0].name} giving ${theController.encounter.trackedEntity.name} enough time to escape! `, [theController.encounter.hunter])}
+                ]
+            ),
+            new Decision(
+                "put down animal", 
+                ()=>{theController.printToGameConsole(`not wanting to see the amimal struggle, ${theController.party[0].name} puts down the ${theController.encounter.trackedEntity.name}.`)},
+                "likely",
+                [
+                    ()=>{
+                        leave(`${theController.party[0].name} moves on.`)
+                    }
+                ],
+                [
+                    ()=>{
+                        theController.encounter.trackedEntity.currentHP = Math.floor(enemy.currentHP/3);
+                        toggleBattle(`the ${theController.encounter.trackedEntity.name} stands to its feet and prepares to fight!`, [theController.encounter.trackedEntity]);
+                    }
+                ]
+            ),
+        ];
     }
 }

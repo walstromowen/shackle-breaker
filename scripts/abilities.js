@@ -220,7 +220,7 @@ export class Punch extends Ability{
         super();
         this.name = "punch";
         this.type = "blunt";
-        this.speedMultiplier = 0.75;
+        this.speedMultiplier = 1;
         this.staminaCost = 4;
         this.magicCost = 0;
         this.damageModifier = 2;
@@ -1088,7 +1088,7 @@ export class Siphon extends Ability{
                 return;
             }
             let damageOutput = Math.floor(Math.random() * ((weilder.currentArcaneAttack + this.damageModifier) - weilder.currentArcaneAttack + 1)) + weilder.currentArcaneAttack;
-           damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
+            damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
             if(target.currentMagic - damageOutput < 0){
                 damageOutput = target.currentMagic;
             }
@@ -1247,6 +1247,63 @@ export class Empower extends Ability{
                     return false;
                 }
             }
+        }
+    }
+}
+export class WildSwing extends Ability{
+    constructor(){
+        super();
+        this.name = "wild swing";
+        this.type = "blunt";
+        this.speedMultiplier = 0.75;
+        this.staminaCost = 12;
+        this.magicCost = 0;
+        this.damageModifier = 10;
+        this.accuracy = 80;
+        this.soundEffect = "./audio/soundEffects/mixkit-metallic-sword-strike-2160.wav";
+    }
+    activate(weilder, target){
+        if(this.checkStamina(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentBluntAttack + this.damageModifier) - (weilder.currentBluntAttack + Math.floor(this.damageModifier/2)) + 1)) + (weilder.currentBluntAttack + Math.floor(this.damageModifier/2));
+            damageOutput = this.checkDamage(damageOutput, weilder, target, this.type);
+            target.currentHP = target.currentHP - damageOutput;
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
+        }
+    }
+}
+export class Roar extends Ability{
+    constructor(){
+        super();
+        this.name = "roar";
+        this.type = "blunt";
+        this.speedMultiplier = 1.0;
+        this.staminaCost = 4;
+        this.magicCost = 0;
+        this.damageModifier = 0;
+        this.accuracy = 100;
+        this.soundEffect = "./audio/soundEffects/tiger-creature-roar-fantasy-monster-sfx-201129_0081-95599.wav";
+    }
+    activate(weilder, target){
+        if(this.checkStamina(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
+            let messageAddon = "lowering physical attack as low as possible!";
+            if(target.currentBluntAttack >= (target.baseBluntAttack - 9)){
+                target.currentBluntAttack = target.currentBluntAttack - 3;
+                messageAddon = ", lowering physical attack";
+            }
+            if(target.currentPierceAttack >= (target.basePierceAttack - 9)){
+                target.currentPierceAttack = target.currentPierceAttack - 3;
+                messageAddon = ", lowering physical attack";
+            }
+            target.currentHP = target.currentHP - damageOutput;
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name}` + messageAddon);
         }
     }
 }
@@ -1529,6 +1586,66 @@ export class UseBandage extends Ability{
             }
         }
         theController.printToGameConsole(`${weilder.name} is not bleeding.`);
+        return false;
+    }
+}
+export class UseFrostbiteTonic extends Ability{
+    constructor(){
+        super();
+        this.name = "use frostbite tonic";
+        this.type = "";
+        this.speedMultiplier = 0.5;
+        this.staminaCost = 0;
+        this.magicCost = 0;
+        this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
+    }
+    activate(weilder, target){
+        for(let i = 0; i < weilder.statusArray.length; i++){
+            if(weilder.statusArray[i].name == "frostbite"){
+                weilder.statusArray.splice(i, 1);
+                theController.printToGameConsole(`${weilder.name} was treated for frostbite!`);
+                theController.playSoundEffect(this.soundEffect);
+                return;
+            }
+        }
+    }
+    canUse(weilder){
+        for(let i = 0; i < weilder.statusArray.length; i++){
+            if(weilder.statusArray[i].name == "bleeding"){
+                return true;
+            }
+        }
+        theController.printToGameConsole(`${weilder.name} does not have frostbite.`);
+        return false;
+    }
+}
+export class UseParalysisTonic extends Ability{
+    constructor(){
+        super();
+        this.name = "use paralysis tonic";
+        this.type = "";
+        this.speedMultiplier = 0.5;
+        this.staminaCost = 0;
+        this.magicCost = 0;
+        this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
+    }
+    activate(weilder, target){
+        for(let i = 0; i < weilder.statusArray.length; i++){
+            if(weilder.statusArray[i].name == "paralysis"){
+                weilder.statusArray.splice(i, 1);
+                theController.printToGameConsole(`${weilder.name} was treated for paraylsis!`);
+                theController.playSoundEffect(this.soundEffect);
+                return;
+            }
+        }
+    }
+    canUse(weilder){
+        for(let i = 0; i < weilder.statusArray.length; i++){
+            if(weilder.statusArray[i].name == "paralysis"){
+                return true;
+            }
+        }
+        theController.printToGameConsole(`${weilder.name} is not paralyzed.`);
         return false;
     }
 }

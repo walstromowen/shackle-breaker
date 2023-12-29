@@ -1,5 +1,5 @@
-import {LockedTreasureChest, UnlockedTreasureChest, AltusAmbushOpportunity, MysteriousDoor, TravelingMerchant, AbandonedCabin, SuspiciousSkeleton, Robbery, Avalanche, MercenaryForHire, AncientTombstone, Quicksand} from "./encounters.js";
-import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos, ShadowStrider, TerrorBear, Bandit, Ghost, SkeletonMage, AltusGuard} from "./enemies.js";
+import {LockedTreasureChest, UnlockedTreasureChest, AltusAmbushOpportunity, MysteriousDoor, TravelingMerchant, AbandonedCabin, SuspiciousSkeleton, Robbery, Avalanche, MercenaryForHire, AncientTombstone, Quicksand, AnimalTracks} from "./encounters.js";
+import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos, ShadowStrider, TerrorBear, Bandit, Ghost, SkeletonMage, AltusGuard, Yeti, Tiger} from "./enemies.js";
 
 export default class MapEnviorment{
     constructor(biome){
@@ -204,9 +204,9 @@ export default class MapEnviorment{
                     }
                     break;  
                 case "tundra":
-                    switch(Math.floor(Math.random() * 3)){ 
+                    switch(Math.floor(Math.random() * 4)){ 
                         case 0:
-                            enemyArray.push(new Ghost(currentCharacterLevel));
+                            enemyArray.push(new Tiger(currentCharacterLevel));
                             break;
                         case 1:
                             enemyArray.push(new Wolf(currentCharacterLevel));
@@ -214,7 +214,11 @@ export default class MapEnviorment{
                         case 2:
                             enemyArray.push(new SkeletonMage(currentCharacterLevel));
                             break;
-                    } 
+                        case 3:
+                            enemyArray.push(new Yeti(currentCharacterLevel));
+                            break;
+                    }
+                    break;
                 case "twilight realm":
                     switch(Math.floor(Math.random()*2)){ 
                         case 0:
@@ -223,8 +227,6 @@ export default class MapEnviorment{
                         case 1:
                             enemyArray.push(new TerrorBear(currentCharacterLevel));
                             break;
-                        default:
-                            return;
                     }
                     break;
                 case "ancient altus ruins":
@@ -241,8 +243,6 @@ export default class MapEnviorment{
                         case 3:
                             enemyArray.push(new Ghost(currentCharacterLevel));
                             break;
-                        default:
-                            return;
                     }
                     break;
                 case "altas castle":
@@ -277,7 +277,7 @@ export default class MapEnviorment{
                         return;
                 }
             case "forest":
-                switch(Math.floor(Math.random()*4)){ 
+                switch(Math.floor(Math.random()*5)){ 
                     case 0:
                         return new LockedTreasureChest();
                     case 1:
@@ -286,11 +286,13 @@ export default class MapEnviorment{
                         return new AbandonedCabin();
                     case 3:
                         return new Robbery();
+                    case 4:
+                        return new AnimalTracks();
                     default:
                         return;
                 }
             case "plains":
-                switch(Math.floor(Math.random()*7)){ 
+                switch(Math.floor(Math.random()*8)){ 
                     case 0:
                         return new LockedTreasureChest();
                     case 1:
@@ -305,11 +307,13 @@ export default class MapEnviorment{
                         return new AncientTombstone();
                     case 6:
                         return new UnlockedTreasureChest();
+                    case 7:
+                        return new AnimalTracks();
                     default:
                         return;
                 }
             case "mountain":
-                switch(Math.floor(Math.random()*5)){ 
+                switch(Math.floor(Math.random()*6)){ 
                     case 0:
                         return new Robbery();
                     case 1:
@@ -320,11 +324,13 @@ export default class MapEnviorment{
                         return new MysteriousDoor();
                     case 4:
                         return new AncientTombstone();
+                    case 5:
+                        return new AnimalTracks();
                     default:
                         return;
                 }
             case "desert": 
-                switch(Math.floor(Math.random()*4)){ 
+                switch(Math.floor(Math.random()*6)){ 
                     case 0:
                         return new LockedTreasureChest();
                     case 1:
@@ -333,13 +339,17 @@ export default class MapEnviorment{
                         return new AncientTombstone();
                     case 3:
                         return new Quicksand();
+                    case 4:
+                        return new Robbery();
+                    case 5:
+                        return new MercenaryForHire();
                     default:
                         return;
                 }
             case "tundra":
                 switch(Math.floor(Math.random() * 3)){ 
                     case 0:
-                        return new AbandonedCabin();
+                        return new AnimalTracks();
                     case 1:
                         return new Avalanche();
                     case 2:
