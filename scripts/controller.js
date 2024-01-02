@@ -1,11 +1,11 @@
 import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer, NightbladeSword,
     Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, NightbladeHelm, NightbladeChestplate,
     LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
-    LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, 
+    LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, Shortbow,
     IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
     ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide, Bandage, FrostbiteTonic, ParalysisTonic, PineWood, TigerClaw, DogPaw, HawkTalons
     } from "./items.js";
-import {Recover, Punch, Retreat} from "./abilities.js"
+import {Recover, Punch, Retreat, WildSwing} from "./abilities.js"
 import Character from "./character.js";
 import Map from "./map.js";
 import MiniMap from "./miniMap.js";
@@ -166,15 +166,15 @@ export default class Controller {
         let value = document.getElementById("background-selection").value;
         switch(value){
             case "traveler":
-                equippedArray.push(new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
+                equippedArray.push(new Shortsword, "Empty", new LeatherHood, new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
                 this.partyGold = 300;
                 break;
             case "blacksmith":
-                equippedArray.push(new BlacksmithHammer, new Buckler, "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
+                equippedArray.push(new BlacksmithHammer, "Empty", new IronHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
                 this.partyGold = 250;
                 break;
             case "ranger":
-                equippedArray.push(new Shortsword, "Empty", new LeatherHood, new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
+                equippedArray.push(new Shortbow, "Empty", new LeatherHood, new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
                 this.partyGold = 250;
                 break;
             case "scholar":
@@ -182,11 +182,11 @@ export default class Controller {
                 this.partyGold = 200;
                 break;
             case "warrior":
-                equippedArray.push(new Handaxe, "Empty", "Empty", new LeatherChestplate, "Empty", new LinenPants, new LeatherBoots);
+                equippedArray.push(new Handaxe, "Empty", new LeatherHelmet, new LeatherChestplate, "Empty", new LinenPants, new LeatherBoots);
                 this.partyGold = 250;
                 break;
             case "thief":
-                equippedArray.push(new Dagger, new Shiv, "Empty", new LinenShirt, new LinenPants, "Empty", new LeatherBoots);
+                equippedArray.push(new Dagger, new Shiv, new LeatherHood, new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
                 this.partyGold = 250;
                 break;
             case "hermit":
@@ -243,11 +243,11 @@ export default class Controller {
                 document.getElementById("character-creator-companion-image").src = "./media/icons/cancel.png";
                 break;
             case "dog":
-                this.tempCompanionValue = new Character(["Dog", "./media/dog.jpg", "animal", [1,10,5,5,5,5], [new DogPaw, new DogPaw, "N/A", "N/A", "N/A", "N/A", "N/A"], [28, 12]]);
+                this.tempCompanionValue = new Character(["Dog", "./media/dog.jpg", "animal", [0,5,5,5,5,5], [new DogPaw, new DogPaw, "N/A", "N/A", "N/A", "N/A", "N/A"], [28, 12]]);
                 document.getElementById("character-creator-companion-image").src = this.tempCompanionValue.apperance; 
                 break;
             case "hawk":
-                this.tempCompanionValue = new Character(["Hawk", "./media/hawk.jpg", "animal", [2,6,5,5,5,5], [new HawkTalons, new HawkTalons, "N/A", "N/A", "N/A", "N/A", "N/A"], [35, 18]]);
+                this.tempCompanionValue = new Character(["Hawk", "./media/hawk.jpg", "animal", [0,6,5,5,5,4], [new HawkTalons, new HawkTalons, "N/A", "N/A", "N/A", "N/A", "N/A"], [35, 18]]);
                 document.getElementById("character-creator-companion-image").src = this.tempCompanionValue.apperance; 
                 break;
         }
@@ -1048,6 +1048,10 @@ export default class Controller {
 
             document.getElementById("party-tab").appendChild(characterSlot);
             characterTakeControlBtn.addEventListener("click", ()=>{
+                if(i == 0){
+                    this.printToGameConsole(`${this.party[0].name} is already selected.`);
+                    return
+                }
                 if(this.isInBattle == false){
                     let temp = this.party[0];
                     this.party[0] = this.party[i];
@@ -1084,6 +1088,7 @@ export default class Controller {
             if(this.isInBattle == true){
                 characterRaiseBtn.style.visibility = "hidden";
                 characterLowerBtn.style.visibility = "hidden";
+                characterTakeControlBtn.style.visibility = "hidden";
             }
         }
         for(let j = 0; j < this.party[0].equippedArray.length; j ++){
@@ -1609,15 +1614,17 @@ export default class Controller {
         return Math.ceil(sum / this.party.length);
     }
     calculateMaxEnemyCount(){
-        let enemyCount = 0;
-        enemyCount = Math.floor(Math.random() * (this.party.length + Math.floor(this.party.length/2) - 1 + 1) + 1);
-        if(enemyCount == 1 && this.party.length == 1){
-            if(Math.random()*2 > 1){
-                enemyCount = 2;
-            }
-        }
+        let enemyCount = Math.floor(Math.random() * this.party.length);
         if(enemyCount > 6){
             enemyCount = 6;
+        }
+        if(enemyCount < 1){
+            enemyCount = 1;
+        }
+        if(enemyCount == 1 && this.party.length == 1){
+            if(Math.random()*3 < 1){
+                enemyCount = 2;
+            }
         }
         return enemyCount;
     }

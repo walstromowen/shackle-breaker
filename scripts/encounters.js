@@ -7,9 +7,9 @@ import {regainHP, initiateTrade, leave, retry, removeDecision, toggleNewEncounte
 import {getRandomItem, LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer, NightbladeSword,
     Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, NightbladeHelm, NightbladeChestplate,
     LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
-    LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, 
-    IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, TigerClaw, DogPaw, HawkTalons, HealthPotion, StaminaPotion, MagicPotion, 
-    ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide, Bandage, PineWood
+    LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, Shortbow,
+    IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
+    ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide, Bandage, FrostbiteTonic, ParalysisTonic, PineWood, TigerClaw, DogPaw, HawkTalons
     } from "./items.js";
 
 
@@ -675,10 +675,10 @@ export class AnimalTracks extends Encounter{
             case "plains":
                 switch(Math.floor(Math.random()*2)){
                     case 0:
-                        this.trackedEntity = new Character(["Dog", "./media/dog.jpg", "animal", [2,6,5,5,5,5], [new DogPaw, new DogPaw, "N/A", "N/A", "N/A", "N/A", "N/A"], [28, 12]]);
+                        this.trackedEntity = new Character(["Dog", "./media/dog.jpg", "animal", [0,5,5,5,5,5], [new DogPaw, new DogPaw, "N/A", "N/A", "N/A", "N/A", "N/A"], [28, 12]]);
                         break;
                     case 1:
-                        this.trackedEntity = new Character(["Hawk", "./media/hawk.jpg", "animal", [2,6,5,5,5,5], [new HawkTalons, new HawkTalons, "N/A", "N/A", "N/A", "N/A", "N/A"], [35, 18]]);
+                        this.tempCompanionValue = new Character(["Hawk", "./media/hawk.jpg", "animal", [0,6,5,5,5,4], [new HawkTalons, new HawkTalons, "N/A", "N/A", "N/A", "N/A", "N/A"], [35, 18]]);
                         break;
                 }
                 switch(Math.floor(Math.random()*2)){
@@ -693,7 +693,7 @@ export class AnimalTracks extends Encounter{
             case "forest":
                 switch(Math.floor(Math.random()*1)){
                     case 0:
-                        this.trackedEntity = new Character(["Dog", "./media/dog.jpg", "animal", [2,6,5,5,5,5], [new DogPaw, new DogPaw, "N/A", "N/A", "N/A", "N/A", "N/A"], [28, 12]]);
+                        this.trackedEntity = new Character(["Dog", "./media/dog.jpg", "animal", [0,5,5,5,5,5], [new DogPaw, new DogPaw, "N/A", "N/A", "N/A", "N/A", "N/A"], [28, 12]]);
                         break;
                     }
                 switch(Math.floor(Math.random()*2)){
@@ -705,10 +705,10 @@ export class AnimalTracks extends Encounter{
                         break;
                 }
                 break;
-            case "moutain":
+            case "mountain":
                 switch(Math.floor(Math.random()*1)){
                     case 0:
-                        this.trackedEntity = new Character(["Hawk", "./media/hawk.jpg", "animal", [2,6,5,5,5,5], [new HawkTalons, new HawkTalons, "N/A", "N/A", "N/A", "N/A", "N/A"], [35, 18]]);
+                        this.tempCompanionValue = new Character(["Hawk", "./media/hawk.jpg", "animal", [0,6,5,5,5,4], [new HawkTalons, new HawkTalons, "N/A", "N/A", "N/A", "N/A", "N/A"], [35, 18]]);
                         break;
                 }
                 switch(Math.floor(Math.random()*2)){
@@ -802,10 +802,6 @@ export class WoundedAnimal extends Encounter{
                     ()=>{recruit(`the ${theController.encounter.trackedEntity.name} stands to its feet and nuzzles ${theController.party[0].name}`, theController.encounter.trackedEntity)}
                 ],
                 [
-                    ()=>{
-                        theController.encounter.trackedEntity.currentHP = Math.floor(theController.encounter.trackedEntity.currentHP/3);
-                        toggleBattle(`the ${theController.encounter.trackedEntity.name} stands to its feet and prepares to fight!`, [theController.encounter.trackedEntity]);
-                    },
                     ()=>{toggleBattle(`a ${theController.encounter.hunter.name} advances towards ${theController.party[0].name} giving ${theController.encounter.trackedEntity.name} enough time to escape! `, [theController.encounter.hunter])}
                 ]
             ),
@@ -820,8 +816,7 @@ export class WoundedAnimal extends Encounter{
                 ],
                 [
                     ()=>{
-                        theController.encounter.trackedEntity.currentHP = Math.floor(enemy.currentHP/3);
-                        toggleBattle(`the ${theController.encounter.trackedEntity.name} stands to its feet and prepares to fight!`, [theController.encounter.trackedEntity]);
+                        ()=>{toggleBattle(`a ${theController.encounter.hunter.name} advances towards ${theController.party[0].name} giving ${theController.encounter.trackedEntity.name} enough time to escape! `, [theController.encounter.hunter])}
                     }
                 ]
             ),

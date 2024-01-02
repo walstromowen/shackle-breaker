@@ -84,11 +84,13 @@ export class Bound extends StatusEffect{
         this.currentCharges = this.maxCharges;
     }
     onStartTurn(){
-        this.holder.nextMove = new Struggle;
-        if(Math.random()*3 > 2){
-            this.currentCharges = this.currentCharges - 1;
-        }else{
-            this.currentCharges = this.currentCharges = 0;
+        if(this.holder.nextMove.name != 'switch combatant'){
+            this.holder.nextMove = new Struggle;
+            if(Math.random()*3 > 2){
+                this.currentCharges = this.currentCharges - 1;
+            }else{
+                this.currentCharges = this.currentCharges = 0;
+            }
         }
     }
     onEndTurn(){
@@ -241,7 +243,7 @@ export class Frostbite extends StatusEffect{
         this.serverityMultiplier = 0.05;
     }
     onStartTurn(){
-        if(Math.random()*2 < 1){
+        if(Math.random()*2 < 1 && this.holder.nextMove.name != 'switch combatant'){
             theController.printToGameConsole(`${this.holder.name} is frozen!`);
             this.holder.nextMove = new Struggle();
         }else{

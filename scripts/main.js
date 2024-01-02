@@ -6,32 +6,24 @@ export let controller = new Controller();
 let count = [0,0,0,0,0,0]
 for(let a = 0; a < 100; a++){
     let p = 5;
-    let enemyCount = 0;
-    enemyCount = Math.floor(Math.random() * (p + Math.floor(p/2) - 1 + 1) + 1);
-    if(enemyCount > 6){
-        enemyCount = 6;
-    }
-    if(enemyCount == 1 && p == 1){
-        if(Math.random()*2 > 1){
-            enemyCount = 2;
-        }
-    }
-    if(enemyCount == 1){
+    let enemyCount = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + p/2));
+ 
+    if(enemyCount >= 0 && enemyCount < 20){
         count[0]++;
     }
-    if(enemyCount == 2){
+    if(enemyCount >= 20 && enemyCount < 40){
         count[1]++;
     }
-    if(enemyCount == 3){
+    if(enemyCount >= 40 && enemyCount < 60){
         count[2]++;
     }
-    if(enemyCount == 4){
+    if(enemyCount >= 60 && enemyCount < 80){
         count[3]++;
     }
-    if(enemyCount == 5){
+    if(enemyCount >= 80 && enemyCount < 100){
         count[4]++;
     }
-    if(enemyCount == 6){
+    if(enemyCount >= 100){
         count[5]++;
     }
 }

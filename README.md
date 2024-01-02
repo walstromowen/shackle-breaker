@@ -12,6 +12,7 @@ Text adventure game based on the Shackle Breaker story
 * Two attacks/bonus actions
 * trinket and waist slots
 * Item stamina /magic consumption modifier
+* Summon abilites
 
 # Planned Quality of Life Improvements
 * Alphabetize CSS rules
@@ -20,17 +21,18 @@ Text adventure game based on the Shackle Breaker story
 * convert enemies and characters to shared entitiy class
 * Prevent Party switching during certain encounters
 * Character Specific decisions during encounters
+* Refactor attacks and Weapon Scaling
 
 # Bugs
 * Image Flashing
-* mini Menu appears on level up and transisiton screens
+* Item mini Menu appears on level up and transisiton screens
 * canvas player icon not loading on start up.
 * Enemy Status Icons still appear on next enemies ocasionally
 * Items are used up upon choosing move not upon using item.
 * Recurperate and channel acasionally giving going over max limit
 * Shiphon not doing damage
-* Switching combatants cause bug when switching occurs first
-
+* Switching combatants causes health bar to be bigger than max when switching to animal
+* Select new combatant button loads faster than battle buttons when new combatant has status effects
 
 # MISC notes
 * Enemy Level ups disstribute 16 points between stats
@@ -39,6 +41,6 @@ Text adventure game based on the Shackle Breaker story
 - 0.5 (medium) 
 - 0.75 (fast)
 * Ability Attack formula
-- Math.floor(Math.random() * (max - min+ 1) + min)
+- Math.floor(Math.random() * (max - min + 1) + min)
 * Enemy stat increments 40pts = 20 player attribute, points resource stats double wieghted
 * player attribute increments 15 attribute Points, 

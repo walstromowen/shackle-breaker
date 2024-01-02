@@ -1,11 +1,14 @@
 import {Recover, Punch, Retreat} from "./abilities.js";
-import { Bleeding } from "./statusEffects.js";
+import { Bleeding, Bound, Poisoned} from "./statusEffects.js";
 
 export default class Character{
     constructor(characterCreationArray){ //[name, apperanceSrc, origin, attributesArray, equippedArray, miscStatsArray[speed, evasion]]
         this.name = characterCreationArray[0];
         this.apperance = characterCreationArray[1]
         this.origin = characterCreationArray[2]
+        if(characterCreationArray[4][0].type == "two hand"){
+            characterCreationArray[4][1] = characterCreationArray[4][0];
+        }
         this.equippedArray = [characterCreationArray[4][0], characterCreationArray[4][1], characterCreationArray[4][2], characterCreationArray[4][3], characterCreationArray[4][4], characterCreationArray[4][5] , characterCreationArray[4][6]]; 
         this.abilityArray = [new Punch, new Recover, new Retreat];
         this.level = 1;

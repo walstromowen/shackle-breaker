@@ -1,12 +1,12 @@
 import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
     ThrowNet, Immolate, LightningBolt, Channel, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Bite, SpitBile, LeechLife, Devour, Pounce, CastShadow, ThrowSmokebomb, Shockwave, GuardBreak, BlinkStrike, Punch, WildSwing,
-    Roar} from "./abilities.js"
+    Roar, ShootArrow, TripleShot} from "./abilities.js"
     import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer, NightbladeSword,
         Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, NightbladeHelm, NightbladeChestplate,
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
-        LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, 
+        LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, Shortbow,
         IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
-        ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide, Bandage, PineWood, FrostbiteTonic, ParalysisTonic
+        ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide, Bandage, FrostbiteTonic, ParalysisTonic, PineWood, TigerClaw, DogPaw, HawkTalons
         } from "./items.js";
 import { Channeled, Invigorated } from "./statusEffects.js";
 
@@ -169,7 +169,7 @@ export class Bat extends Enemy{
     }
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [2,4], [2,6], [0,4], [1,3], [2,3], [1,2], [1,2], [1,3], [1,3], [1,3], [1,3]);
-        this.gold = Math.floor((Math.random() * (10 - 5 + 1) + 5) * (1 + averagePartyLevel/5));
+        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/2));
         this.xp = Math.floor(20 * (1 + this.level/10 ));
     }
 }
@@ -259,7 +259,7 @@ export class AltusMage extends Enemy{
     }
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [2,6], [0,2], [2,6], [1,3], [0,1], [2,3], [2,3], [1,3], [1,3], [1,3], [1,3]);
-        this.gold = Math.floor((Math.random() * (20 - 5 + 1) + 5) * (1 + averagePartyLevel/5));
+        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/2));
         this.xp = Math.floor(50 * (1 + this.level/10 ));
     }
 }
@@ -304,7 +304,7 @@ export class CaveSpider extends Enemy{
     }
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [2,4], [2,6], [0,4], [1,3], [2,3], [1,2], [1,2], [1,3], [1,3], [1,3], [1,3]);
-        this.gold = Math.floor((Math.random() * (10 - 5 + 1) + 5) * (1 + averagePartyLevel/5));
+        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/2));
         this.xp = Math.floor(20 * (1 + this.level/10 ));
     }
 }
@@ -349,7 +349,7 @@ export class Groveguardian extends Enemy{
     }
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [4,8], [2,4], [0,2], [2,3], [2,3], [0,1], [1,2], [2,3], [1,2], [1,2], [1,3]);
-        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/5));
+        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/2));
         this.xp = Math.floor(50 * (1 + this.level/10 ));
     }
 }
@@ -430,7 +430,7 @@ export class TerrorBear extends Enemy{
         this.baseEvasion = 5;
         this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Bite, new Devour, new LightningBolt, new CastShadow];
-        this.statusArray = [new Channeled(this), new Invigorated(this)]
+        this.statusArray = []
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new HealthPotion, new Meteorite];
         this.gold = 0;
@@ -440,7 +440,7 @@ export class TerrorBear extends Enemy{
     }
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [4,8], [2,4], [0,2], [2,3], [2,3], [0,1], [1,2], [2,3], [1,2], [1,2], [1,3]);
-        this.gold = Math.floor((Math.random() * (15 - 10 + 1) + 10) * (1 + averagePartyLevel/5));
+        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/2));
         this.xp = Math.floor(75 * (1 + this.level/10 ));
     }
 }
@@ -476,7 +476,7 @@ export class ShadowStrider extends Enemy{
         this.baseEvasion = 15;
         this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Bite, new LightningBolt, new BlinkStrike];
-        this.statusArray = [new Channeled(this), new Invigorated(this)]
+        this.statusArray = []
         this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new StaminaPotion, new Meteorite];
         this.gold = 0;
@@ -486,7 +486,7 @@ export class ShadowStrider extends Enemy{
     }
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [2,6], [2,6], [2,6], [1,3], [2,4], [2,4], [2,4], [1,3], [1,3], [2,4], [1,3]);
-        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/5));
+        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/2));
         this.xp = Math.floor(40 * (1 + this.level/10 ));
     }
 }
@@ -533,7 +533,7 @@ export class Bandit extends Enemy{
     }
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [2,6], [2,6], [0,4], [2,3], [2,3], [0,2], [0,2], [1,3], [1,3], [1,3], [1,3]);
-        this.gold = Math.floor((Math.random() * (20 - 15 + 1) + 15) * (1 + averagePartyLevel/5));
+        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/2));
         this.xp = Math.floor(35 * (1 + this.level/10 ));
     }
 }
@@ -556,9 +556,9 @@ export class SkeletonMage extends Enemy{
         this.currentArcaneAttack = this.baseArcaneAttack;
         this.baseElementalAttack = 55;
         this.currentElementalAttack = this.baseElementalAttack;
-        this.baseBluntDefense = 35;
+        this.baseBluntDefense = 30;
         this.currentBluntDefense = this.baseBluntDefense;
-        this.basePierceDefense = 30;
+        this.basePierceDefense = 35;
         this.currentPierceDefense = this.basePierceDefense;
         this.baseArcaneDefense = 35;
         this.currentArcaneDefense = this.baseArcaneDefense;
@@ -578,7 +578,7 @@ export class SkeletonMage extends Enemy{
     }
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [2,6], [0,4], [2,6], [0,2], [0,2], [2,3], [2,3], [1,2], [2,3], [1,3], [1,3]);
-        this.gold = Math.floor((Math.random() * (20 - 15 + 1) + 15) * (1 + averagePartyLevel/5));
+        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/2));
         this.xp = Math.floor(35 * (1 + this.level/10 ));
     }
 }
@@ -623,7 +623,7 @@ export class Ghost extends Enemy{
     }
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [2,6], [0,4], [2,6], [0,2], [2,3], [2,3], [0,2], [1,3], [1,3], [1,3], [1,3]);
-        this.gold = Math.floor((Math.random() * (20 - 15 + 1) + 15) * (1 + averagePartyLevel/5));
+        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/2));
         this.xp = Math.floor(50 * (1 + this.level/10 ));
     }
 }
@@ -673,7 +673,7 @@ export class AltusGuard extends Enemy{
     }
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [2,6], [2,6], [0,4], [2,3], [2,3], [0,2], [0,2], [1,3], [1,3], [1,3], [1,3]);
-        this.gold = Math.floor((Math.random() * (20 - 15 + 1) + 15) * (1 + averagePartyLevel/5));
+        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/2));
         this.xp = Math.floor(35 * (1 + this.level/10 ));
     }
 }
@@ -718,7 +718,7 @@ export class Yeti extends Enemy{
     }
     levelUp(averagePartyLevel){
         this.incrementStats(averagePartyLevel, [4,8], [2,4], [0,2], [3,4], [1,2], [0,1], [1,2], [2,3], [2,3], [2,3], [1,3]);
-        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/5));
+        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/2));
         this.xp = Math.floor(50 * (1 + this.level/10 ));
     }
 }
