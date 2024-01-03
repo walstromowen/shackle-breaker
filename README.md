@@ -13,6 +13,7 @@ Text adventure game based on the Shackle Breaker story
 * trinket and waist slots
 * Item stamina /magic consumption modifier
 * Summon abilites
+* Attribute descriptions / level up screen details
 
 # Planned Quality of Life Improvements
 * Alphabetize CSS rules
@@ -22,17 +23,16 @@ Text adventure game based on the Shackle Breaker story
 * Prevent Party switching during certain encounters
 * Character Specific decisions during encounters
 * Refactor attacks and Weapon Scaling
+* Items are used up upon choosing move not upon using item.
 
 # Bugs
 * Image Flashing
 * Item mini Menu appears on level up and transisiton screens
 * canvas player icon not loading on start up.
 * Enemy Status Icons still appear on next enemies ocasionally
-* Items are used up upon choosing move not upon using item.
 * Recurperate and channel acasionally giving going over max limit
 * Shiphon not doing damage
 * Switching combatants causes health bar to be bigger than max when switching to animal
-* Select new combatant button loads faster than battle buttons when new combatant has status effects
 
 # MISC notes
 * Enemy Level ups disstribute 16 points between stats

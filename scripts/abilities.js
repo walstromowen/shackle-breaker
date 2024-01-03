@@ -622,10 +622,10 @@ export class TripleShot extends Ability{
         this.name = "triple shot";
         this.type = "pierce";
         this.speedMultiplier = 0.5;
-        this.staminaCost = 16;
+        this.staminaCost = 12;
         this.magicCost = 0;
         this.damageModifier = 4;
-        this.accuracy = 50;
+        this.accuracy = 40;
         this.soundEffect = "./audio/soundEffects/arrow-body-impact-146419.mp3";
         
     }
@@ -635,7 +635,7 @@ export class TripleShot extends Ability{
                 theController.playSoundEffect(this.soundEffect);
                 if(this.checkMiss(weilder, target, this.name) != true){
                     let damageOutput = Math.floor(Math.random() * ((weilder.currentPierceAttack + this.damageModifier) - weilder.currentPierceAttack + 1)) + weilder.currentPierceAttack;
-                    damageOutput = this.checkDamage(Math.floor(damageOutput/2), weilder, target, target.currentPierceDefense/2);
+                    damageOutput = this.checkDamage(Math.floor(damageOutput/3), weilder, target, target.currentPierceDefense/3);
                     theController.printToGameConsole(`${weilder.name} shoots ${target.name} for ${damageOutput} damage!`);
                     target.currentHP = target.currentHP - damageOutput;
                     if(damageOutput > 0){
