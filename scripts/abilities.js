@@ -633,7 +633,7 @@ export class TripleShot extends Ability{
         this.staminaCost = 16;
         this.magicCost = 0;
         this.damageModifier = 10;
-        this.accuracy = 50;
+        this.accuracy = 70;
         this.soundEffect = "./audio/soundEffects/arrow-body-impact-146419.mp3";
         
     }
@@ -644,7 +644,7 @@ export class TripleShot extends Ability{
                 if(this.checkMiss(weilder, target, this.name) != true){
                     let damageOutput = Math.floor(Math.random() * ((weilder.currentPierceAttack + this.damageModifier) - weilder.currentPierceAttack + 1)) + weilder.currentPierceAttack;
                     damageOutput = this.checkDamage(Math.floor(damageOutput/2.5), weilder, target, target.currentPierceDefense/2.5);
-                    theController.printToGameConsole(`${weilder.name} shoots ${target.name} for ${damageOutput} damage!`);
+                    theController.printToGameConsole(`-${weilder.name} shoots ${target.name} for ${damageOutput} damage!`);
                     target.currentHP = target.currentHP - damageOutput;
                     if(damageOutput > 0){
                         if(Math.random()*20 < 1){
@@ -856,6 +856,7 @@ export class Shockwave extends Ability{
                 return;
             }
             let damageOutput = Math.floor(Math.random() * ((((weilder.currentBluntAttack + weilder.currentElementalAttack)/2) + this.damageModifier) - ((weilder.currentBluntAttack + weilder.currentElementalAttack)/2) + 1)) + Math.floor(((weilder.currentBluntAttack + weilder.currentElementalAttack)/2));
+            
             for(let i = 0; i < target.statusArray.length; i++){
                 if(target.statusArray[i].name == "shielded"){
                     target.statusArray[i].onRemove();
@@ -1065,26 +1066,29 @@ export class ArcaneBlast extends Ability{
 export class ArcaneSalvo extends Ability{
     constructor(){
         super();
-        this.name = "arcaneSalvo";
+        this.name = "arcane salvo";
         this.type = "pierceArcane";
         this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 16;
         this.damageModifier = 10;
-        this.accuracy = 50;
+        this.accuracy = 100;
         this.soundEffect = "./audio/soundEffects/magic-missile-made-with-Voicemod-technology.mp3";
         
-    }
+    }//Math.floor(Math.random() * (max - min + 1) + min)
     activate(weilder, target){
         if(this.checkStamina(weilder) == true){
-            let count = Math.ceil(Math.random()*4);
+            let count = Math.ceil(Math.random()*4) + 1;
             theController.playSoundEffect(this.soundEffect);
+            theController.printToGameConsole(`${weilder.name} shoots ${target.name} with an ${this.name}!`);
             for(let j = 0; j < count; j++){
-                if(this.checkMiss(weilder, target, this.name) != true){
-                    let damageOutput = Math.floor(Math.random() * ((((weilder.currentPierceAttack + weilder.currentArcaneAttack)/2) + this.damageModifier) - ((weilder.currentPierceAttack + weilder.currentArcaneAttack)/2) + 1)) + Math.floor(((weilder.currentPierceAttack + weilder.currentArcaneAttack)/2));
-                    damageOutput = this.checkDamage(Math.floor(damageOutput/3), weilder, target, target.currentPierceDefense/3);
-                    theController.printToGameConsole(`${weilder.name} shoots ${target.name} for ${damageOutput} damage!`);
+                if(Math.random()*this.accuracy > target.currentEvasion){
+                    let damageOutput = Math.floor(Math.random() * ((((weilder.currentPierceAttack + weilder.currentArcaneAttack)/2) + this.damageModifier) - ((weilder.currentPierceAttack + weilder.currentArcaneAttack)/2) + 1) + ((weilder.currentPierceAttack + weilder.currentArcaneAttack)/2))
+                    damageOutput = this.checkDamage(Math.floor(damageOutput/2), weilder, target, target.currentPierceDefense/2);
+                    theController.printToGameConsole(`- ${target.name} takes ${damageOutput} damage!`);
                     target.currentHP = target.currentHP - damageOutput;
+                }else{
+                    theController.printToGameConsole(`- ${this.name} misses!`);
                 }
             }
         }

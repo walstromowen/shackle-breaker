@@ -79,7 +79,7 @@ export default class Controller {
             }
             //this.party.push(new Character(["kurtus", "media/kurty.jpg", "traveler", [100, 100, 100, 100, 100, 100], [new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]));
             
-            this.map = new Map("basic", "random");
+            this.map = new Map("portal", "boss1");
             this.miniMap = new MiniMap();
             this.map.mapEnviorment.terrain.onload = ()=>{
                 this.initializeRooms(this.map);
@@ -243,11 +243,11 @@ export default class Controller {
                 document.getElementById("character-creator-companion-image").src = "./media/icons/cancel.png";
                 break;
             case "dog":
-                this.tempCompanionValue = new Character(["Dog", "./media/dog.jpg", "animal", [0,6,6,6,6,6], [new DogPaw, new DogPaw, "N/A", "N/A", "N/A", "N/A", "N/A"], [28, 12]]);
+                this.tempCompanionValue = new Character(["Dog", "./media/dog.jpg", "animal", [0,6,6,6,6,6], [new DogPaw, new DogPaw, "N/A", "N/A", "N/A", "N/A", "N/A"]]);
                 document.getElementById("character-creator-companion-image").src = this.tempCompanionValue.apperance; 
                 break;
             case "hawk":
-                this.tempCompanionValue = new Character(["Hawk", "./media/hawk.jpg", "animal", [0,6,6,6,6,6], [new HawkTalons, new HawkTalons, "N/A", "N/A", "N/A", "N/A", "N/A"], [35, 18]]);
+                this.tempCompanionValue = new Character(["Hawk", "./media/hawk.jpg", "animal", [0,6,6,6,6,6], [new HawkTalons, new HawkTalons, "N/A", "N/A", "N/A", "N/A", "N/A"]]);
                 document.getElementById("character-creator-companion-image").src = this.tempCompanionValue.apperance; 
                 break;
         }
