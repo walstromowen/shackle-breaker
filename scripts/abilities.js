@@ -1,3 +1,5 @@
+import Character from "./character.js";
+import { Shortsword } from "./items.js";
 import {controller as theController} from "./main.js"
 import {Shielded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden, Bleeding} from "./statusEffects.js";
 
@@ -267,11 +269,6 @@ export class Slash extends Ability{
             theController.playSoundEffect(this.soundEffect);
             if(this.checkMiss(weilder, target, this.name) == true){
                 return;
-            }
-            for(let q = 0; q < 100; q++){
-                let damageOutput2 = Math.floor(Math.random() * ((((weilder.currentBluntAttack + weilder.currentPierceAttack)/2) + this.damageModifier) - ((weilder.currentBluntAttack + weilder.currentPierceAttack)/2) + 1)) + Math.floor(((weilder.currentBluntAttack + weilder.currentPierceAttack)/2));
-                damageOutput2 = this.checkDamage(damageOutput2, weilder, target, (target.currentBluntDefense + target.currentPierceDefense)/2);
-                console.log(damageOutput2);
             }
             let damageOutput = Math.floor(Math.random() * ((((weilder.currentBluntAttack + weilder.currentPierceAttack)/2) + this.damageModifier) - ((weilder.currentBluntAttack + weilder.currentPierceAttack)/2) + 1)) + Math.floor(((weilder.currentBluntAttack + weilder.currentPierceAttack)/2));
             damageOutput = this.checkDamage(damageOutput, weilder, target, (target.currentBluntDefense + target.currentPierceDefense)/2);
@@ -868,7 +865,6 @@ export class Shockwave extends Ability{
                 }
             }
             let damageOutput1 = this.checkDamage(damageOutput, weilder, target, (target.currentBluntDefense + target.currentElementalDefense)/2);
-            damageOutput1 = Math.floor(damageOutput1/2)
             let damageOutput2 = damageOutput - Math.floor((target.currentBluntDefense + target.currentElementalDefense)/2);
             if(target.currentStamina - damageOutput2 < 0){
                 damageOutput2 = target.currentStamina;
@@ -1188,7 +1184,7 @@ export class Siphon extends Ability{
                 restoreAmount = weilder.maxMagic - weilder.currentMagic;
             }
             weilder.currentMagic = weilder.currentMagic + restoreAmount;
-            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} magic damage and shipons ${restoreAmount} magic!`);
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} magic damage and sihpons ${restoreAmount} magic!`);
         }
     }
 }
@@ -1427,6 +1423,67 @@ export class MeteorShower extends Ability{
                     }
                     target.statusArray.push(new Burned(target));
                 } 
+            }
+        }
+    }
+}
+export class SummonSkeleton extends Ability{
+    constructor(){
+        super();
+        this.name = "summon skeleton";
+        this.type = "arcane";
+        this.speedMultiplier = 0.5;
+        this.staminaCost = 0;
+        this.magicCost = 50;
+        this.damageModifier = 0;
+        this.accuracy = 100;
+        this.soundEffect = "./audio/soundEffects/mixkit-deep-air-woosh-2604.wav";
+    }
+    activate(weilder, target){
+        if(this.checkStamina(weilder) == true && this.checkMagic(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            let summon = new Character(["skeleton", "./media/skeleton.jpg", "summon", [0,3,5,5,5,5], [new Shortsword(), "N/A", "N/A", "N/A", "N/A", "N/A", "N/A"]]);
+            summon.abilityArray = [new Slash, new Stab, new Strike, new Block];
+            let summonLevel = theController.calculateAveragePartyLevel();
+            summon.autoLevelUp(summonLevel);
+            summon.isSummon = true;
+            if(weilder === theController.party[0]){
+                theController.party.push(summon);
+                    let temp = theController.party[0];
+                    theController.party[0] = theController.party[theController.party.length - 1];
+                    theController.party[theController.party.length - 1] = temp;
+                    theController.updateParty();
+                
+            }else{
+                theController.battle.hostileParty.push(summon);
+                let temp = theController.battle.hostileParty[0];
+                theController.battle.hostileParty[0] = theController.battle.hostileParty[theController.battle.hostileParty.length - 1];
+                theController.battle.hostileParty[theController.battle.hostileParty.length - 1] = temp;
+                theController.updateEnemyStats();
+            }
+            theController.printToGameConsole(`${weilder.name} summons ${summon.name}!`);
+        }
+    }
+    canUseSpecialCondition(weilder, currentCharacter){
+        let summonCount = 0;
+        if(weilder === currentCharacter){
+            for(let i = 0; i < theController.party.length; i ++){
+                if(theController.party[i].isSummon == true){
+                    summonCount ++;
+                }
+            }
+            if(summonCount >= 2){
+                theController.printToGameConsole(`cannot summon more skeletons!`)
+                return false
+            }
+        }else{
+            for(let i = 0; i < theController.battle.hostileParty.length; i ++){
+                if(theController.party[i].name.isSummon == true){
+                    summonCount ++;
+                }
+            }
+            if(summonCount > 2){
+                return false
             }
         }
     }

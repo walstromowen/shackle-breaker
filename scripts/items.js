@@ -1,6 +1,6 @@
 import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, GuardBreak, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy, UseBandage,
         ThrowNet, Immolate, LightningBolt, Shockwave, Recuperate, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Channel, ThrowSmokebomb, CastShadow, BlinkStrike, Empower, WildSwing, Pounce, Bite, ShootArrow, TripleShot,
-        Roar, UseFrostbiteTonic, UseParalysisTonic} from "./abilities.js"
+        Roar, UseFrostbiteTonic, UseParalysisTonic, MeteorShower, SummonSkeleton} from "./abilities.js"
 
 export function getRandomItem(){
     let itemArray = [new LinenShirt, new LinenPants, new Dagger, new BlacksmithHammer, new Spear, new Shortsword, new Longsword, new Handaxe, new NightbladeSword,
@@ -506,6 +506,9 @@ export class FireStaff {
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
         }
+        if(this.level == 3){
+            this.abilityArray.push(new MeteorShower());
+        }
     }
 }
 export class LightningStaff {
@@ -690,6 +693,9 @@ export class DarkStaff {
             this.elementalDefense = this.elementalDefense + 0;
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
+        }
+        if(this.level == 3){
+            this.abilityArray.push(new SummonSkeleton());
         }
     }
 }

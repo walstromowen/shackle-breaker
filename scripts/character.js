@@ -1,4 +1,3 @@
-import {Recover, Punch, Retreat} from "./abilities.js";
 import { Bleeding, Bound, Poisoned} from "./statusEffects.js";
 
 export default class Character{
@@ -10,7 +9,7 @@ export default class Character{
             characterCreationArray[4][1] = characterCreationArray[4][0];
         }
         this.equippedArray = [characterCreationArray[4][0], characterCreationArray[4][1], characterCreationArray[4][2], characterCreationArray[4][3], characterCreationArray[4][4], characterCreationArray[4][5] , characterCreationArray[4][6]]; 
-        this.abilityArray = [new Punch, new Recover, new Retreat];
+        this.abilityArray = [];
         this.level = 1;
         this.currentXP = 0;
         this.vigor = characterCreationArray[3][0];
@@ -48,6 +47,7 @@ export default class Character{
         this.currentElementalDefense = this.baseElementalDefense;
         this.currentSpeed = this.baseSpeed;
         this.currentEvasion = this.baseEvasion;
+        this.isSummon = false;
     }
     autoLevelUp(level){
         this.level = level;
@@ -88,5 +88,11 @@ export default class Character{
         this.baseElementalDefense = (this.vigor * 1) + (this.endurance * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.insight * 1) + (this.focus * 2);
         this.baseSpeed = (this.vigor * 0) + (this.endurance * 0) + (this.strength * 0) + (this.dexterity * 0) + (this.insight * 0) + (this.focus * 0) + 25;
         this.baseEvasion = (this.vigor * 0) + (this.endurance * 0) + (this.strength * 0) + (this.dexterity * 0) + (this.insight * 0) + (this.focus * 0) + 10;
+    }
+    chooseAttack(){//for summons
+        return this.abilityArray[Math.floor(Math.random()*this.abilityArray.length)];
+    }
+    dropLoot(){
+        return "";
     }
 }

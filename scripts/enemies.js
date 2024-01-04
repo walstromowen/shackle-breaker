@@ -1,6 +1,6 @@
 import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
     ThrowNet, Immolate, LightningBolt, Channel, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Bite, SpitBile, LeechLife, Devour, Pounce, CastShadow, ThrowSmokebomb, Shockwave, GuardBreak, BlinkStrike, Punch, WildSwing,
-    Roar, ShootArrow, TripleShot, MeteorShower} from "./abilities.js"
+    Roar, ShootArrow, TripleShot, MeteorShower, SummonSkeleton} from "./abilities.js"
     import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer, NightbladeSword,
         Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, NightbladeHelm, NightbladeChestplate,
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
@@ -119,7 +119,8 @@ export class Skeleton extends Enemy{
                           new HealthPotion, new StaminaPotion, new ThrowingKnife, new SmokeBomb, new Bandage];
         this.gold = 0;
         this.xp = 0;
-        this.isBoss = false;             
+        this.isBoss = false;
+        this.isSummon = false;             
         this.levelUp(averagePartyLevel);
     }
     levelUp(averagePartyLevel){
@@ -165,6 +166,7 @@ export class Bat extends Enemy{
         this.gold = 0;
         this.xp = 0;
         this.isBoss = false;
+        this.isSummon = false;
         this.levelUp(averagePartyLevel);
     }
     levelUp(averagePartyLevel){
@@ -210,6 +212,7 @@ export class Wolf extends Enemy{
         this.gold = 0;
         this.xp = 0;
         this.isBoss = false;
+        this.isSummon = false;
         this.levelUp(averagePartyLevel);
     }
     levelUp(averagePartyLevel){
@@ -255,6 +258,7 @@ export class AltusMage extends Enemy{
         this.gold = 0;
         this.xp = 0;
         this.isBoss = false;
+        this.isSummon = false;
         this.levelUp(averagePartyLevel);
     }
     levelUp(averagePartyLevel){
@@ -300,6 +304,7 @@ export class CaveSpider extends Enemy{
         this.gold = 0;
         this.xp = 0;
         this.isBoss = false;
+        this.isSummon = false;
         this.levelUp(averagePartyLevel);
     }
     levelUp(averagePartyLevel){
@@ -345,6 +350,7 @@ export class Groveguardian extends Enemy{
         this.gold = 0;
         this.xp = 0;
         this.isBoss = false;
+        this.isSummon = false;
         this.levelUp(averagePartyLevel);
     }
     levelUp(averagePartyLevel){
@@ -390,6 +396,7 @@ export class EmperorDolos extends Enemy{
         this.gold = 0;
         this.xp = 0;
         this.isBoss = true;
+        this.isSummon = false;
         this.levelUp(averagePartyLevel);
     }
     levelUp(averagePartyLevel){
@@ -436,6 +443,7 @@ export class TerrorBear extends Enemy{
         this.gold = 0;
         this.xp = 0;
         this.isBoss = false;
+        this.isSummon = false;
         this.levelUp(averagePartyLevel);
     }
     levelUp(averagePartyLevel){
@@ -482,6 +490,7 @@ export class ShadowStrider extends Enemy{
         this.gold = 0;
         this.xp = 0;
         this.isBoss = false;
+        this.isSummon = false;
         this.levelUp(averagePartyLevel);
     }
     levelUp(averagePartyLevel){
@@ -528,7 +537,8 @@ export class Bandit extends Enemy{
                           new LeatherBoots, new HealthPotion, new StaminaPotion, new ThrowingKnife, new SmokeBomb, new Bandage];
         this.gold = 0;
         this.xp = 0;
-        this.isBoss = false;             
+        this.isBoss = false;
+        this.isSummon = false;             
         this.levelUp(averagePartyLevel);
     }
     levelUp(averagePartyLevel){
@@ -573,7 +583,8 @@ export class SkeletonMage extends Enemy{
         this.lootArray = [new ClothHood, new ClothRobe, new LinenShirt, new LinenPants, new HealthPotion, new MagicPotion, new IceStaff, new FrostbiteTonic, new ParalysisTonic];
         this.gold = 0;
         this.xp = 0;
-        this.isBoss = false;             
+        this.isBoss = false;
+        this.isSummon = false;             
         this.levelUp(averagePartyLevel);
     }
     levelUp(averagePartyLevel){
@@ -618,7 +629,8 @@ export class Ghost extends Enemy{
         this.lootArray = [new HealthPotion, new MagicPotion];
         this.gold = 0;
         this.xp = 0;
-        this.isBoss = false;             
+        this.isBoss = false;
+        this.isSummon = false;             
         this.levelUp(averagePartyLevel);
     }
     levelUp(averagePartyLevel){
@@ -668,7 +680,8 @@ export class AltusGuard extends Enemy{
             new HealthPotion, new StaminaPotion, new ThrowingKnife, new Bandage];
         this.gold = 0;
         this.xp = 0;
-        this.isBoss = false;             
+        this.isBoss = false; 
+        this.isSummon = false;            
         this.levelUp(averagePartyLevel);
     }
     levelUp(averagePartyLevel){
@@ -714,6 +727,7 @@ export class Yeti extends Enemy{
         this.gold = 0;
         this.xp = 0;
         this.isBoss = false;
+        this.isSummon = false;
         this.levelUp(averagePartyLevel);
     }
     levelUp(averagePartyLevel){
@@ -759,6 +773,7 @@ export class Tiger extends Enemy{
         this.gold = 0;
         this.xp = 0;
         this.isBoss = false;
+        this.isSummon = false;
         this.levelUp(averagePartyLevel);
     }
     levelUp(averagePartyLevel){
@@ -804,6 +819,53 @@ export class TwilightDragon extends Enemy{
         this.gold = 0;
         this.xp = 0;
         this.isBoss = true;
+        this.isSummon = false;
+        this.levelUp(averagePartyLevel);
+    }
+    levelUp(averagePartyLevel){
+        this.incrementStats(averagePartyLevel, [8,16], [2,6], [1,3], [2,4], [2,4], [2,4], [2,4], [1,3], [1,3], [1,3], [1,3]);
+        this.gold = 500;
+        this.xp = 500;
+    }
+}
+export class AncientAltusKing extends Enemy{
+    constructor(averagePartyLevel){
+        super();
+        this.name = "ancient altus king";
+        this.apperance = "media/ancient-altus-king.jpg"
+        this.maxHP = 100;
+        this.currentHP = this.maxHP;
+        this.maxStamina = 100;
+        this.currentStamina = this.maxStamina;
+        this.maxMagic = 300;
+        this.currentMagic = this.maxMagic;
+        this.baseBluntAttack = 50;
+        this.currentBluntAttack = this.baseBluntAttack;
+        this.basePierceAttack = 50;
+        this.currentPierceAttack = this.basePierceAttack;
+        this.baseArcaneAttack = 60; 
+        this.currentArcaneAttack = this.baseArcaneAttack;
+        this.baseElementalAttack = 60;
+        this.currentElementalAttack = this.baseElementalAttack;
+        this.baseBluntDefense = 35;
+        this.currentBluntDefense = this.baseBluntDefense;
+        this.basePierceDefense = 35;
+        this.currentPierceDefense = this.basePierceDefense;
+        this.baseArcaneDefense = 35;
+        this.currentArcaneDefense = this.baseArcaneDefense;
+        this.baseElementalDefense = 35;
+        this.currentElementalDefense = this.baseElementalDefense;
+        this.baseSpeed = 5;
+        this.currentSpeed = this.baseSpeed;
+        this.baseEvasion = 25;
+        this.currentEvasion = this.baseEvasion;
+        this.abilityArray = [new Shockwave, new IceShard, new SummonSkeleton];
+        this.lootChanceMultiplier = 0; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootArray = [new IceStaff];
+        this.gold = 0;
+        this.xp = 0;
+        this.isBoss = true;
+        this.isSummon = false;
         this.levelUp(averagePartyLevel);
     }
     levelUp(averagePartyLevel){

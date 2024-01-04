@@ -5,7 +5,7 @@ import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Lon
     IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
     ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide, Bandage, FrostbiteTonic, ParalysisTonic, PineWood, TigerClaw, DogPaw, HawkTalons
     } from "./items.js";
-import {Recover, Punch, Retreat, WildSwing} from "./abilities.js"
+import {Recover, Punch, Retreat, SummonSkeleton} from "./abilities.js"
 import Character from "./character.js";
 import Map from "./map.js";
 import MiniMap from "./miniMap.js";
@@ -614,10 +614,14 @@ export default class Controller {
             document.getElementById("enemy-main-stats-container").style.display = "block";
             document.getElementById("encounter-image-container").style.display = "none";
             this.enableCharacterBattleControls();
-            if(this.battle.hostileParty[0].name.charAt(0) == "a" || this.battle.hostileParty[0].name.charAt(0) == "e" || this.battle.hostileParty[0].name.charAt(0) == "i" || this.battle.hostileParty[0].name.charAt(0) == "o" || this.battle.hostileParty[0].name.charAt(0) == "u"){
-                this.printToGameConsole(`${this.party[0].name} encounters an ${this.battle.hostileParty[0].name}!`);
+            if(this.battle.hostileParty[0].isBoss == true){
+                this.printToGameConsole(`${this.party[0].name} faces ${this.battle.hostileParty[0].name}!`);
             }else{
-                this.printToGameConsole(`${this.party[0].name} encounters a ${this.battle.hostileParty[0].name}!`);
+                if(this.battle.hostileParty[0].name.charAt(0) == "a" || this.battle.hostileParty[0].name.charAt(0) == "e" || this.battle.hostileParty[0].name.charAt(0) == "i" || this.battle.hostileParty[0].name.charAt(0) == "o" || this.battle.hostileParty[0].name.charAt(0) == "u"){
+                    this.printToGameConsole(`${this.party[0].name} encounters an ${this.battle.hostileParty[0].name}!`);
+                }else{
+                    this.printToGameConsole(`${this.party[0].name} encounters a ${this.battle.hostileParty[0].name}!`);
+                }
             }
             document.getElementById('music-player').pause();
             if(enemyArray[0].isBoss == true){
@@ -1521,7 +1525,7 @@ export default class Controller {
                 document.getElementById("music-player").play();
                 this.toggleMap();
                 
-                this.updateCharacterStats();
+                this.updateParty();
              }, 2000);
         }
     }

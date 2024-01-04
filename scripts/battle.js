@@ -213,12 +213,21 @@ export default class Battle{
          });
     }
     endBattle(){
-        for(let x = 0; x < this.friendlyParty.length; x++){
+        let remainingFriendlyParty = this.friendlyParty.filter((entity)=>{
+            return entity.isSummon == false;
+        });
+        this.friendlyParty = remainingFriendlyParty;
+        theController.party = this.friendlyParty;
+        for(let x = 0; x < this.friendlyParty; x++){
             for(let y = 0; y < this.friendlyParty[x].statusArray.length; y++){
                 this.friendlyParty[x].statusArray[y].onRemove();
             }
             theController.calcCharacterAbilitiesAndStats(x)   
         }
+        let remainingHostileParty = this.hostileParty.filter((entity)=>{
+            return entity.isSummon == false;
+        });
+        this.hostileParty = remainingHostileParty;
         for(let x = 0; x < this.hostileParty.length; x++){
             for(let y = 0; y < this.hostileParty[x].statusArray.length; y++){
                 this.hostileParty[x].statusArray[y].onRemove();

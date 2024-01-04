@@ -1,5 +1,5 @@
 import {LockedTreasureChest, UnlockedTreasureChest, AltusAmbushOpportunity, MysteriousDoor, TravelingMerchant, AbandonedCabin, SuspiciousSkeleton, Robbery, Avalanche, MercenaryForHire, AncientTombstone, Quicksand, AnimalTracks} from "./encounters.js";
-import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos, ShadowStrider, TerrorBear, Bandit, Ghost, SkeletonMage, AltusGuard, Yeti, Tiger, TwilightDragon} from "./enemies.js";
+import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos, ShadowStrider, TerrorBear, Bandit, Ghost, SkeletonMage, AltusGuard, Yeti, Tiger, TwilightDragon, AncientAltusKing} from "./enemies.js";
 
 export default class MapEnviorment{
     constructor(biome){
@@ -240,6 +240,10 @@ export default class MapEnviorment{
                     }
                     break;
                 case "ancient altus ruins":
+                    if(isBoss == true){
+                        enemyArray.push(new AncientAltusKing(currentCharacterLevel));
+                        break;
+                    }
                     switch(Math.floor(Math.random()*4)){ 
                         case 0:
                             enemyArray.push(new Skeleton(currentCharacterLevel));
