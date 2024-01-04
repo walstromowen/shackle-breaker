@@ -167,7 +167,7 @@ export default class Controller {
         switch(value){
             case "traveler":
                 equippedArray.push(new Shortsword, "Empty", new LeatherHood, new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
-                this.partyGold = 300;
+                this.partyGold = 350;
                 break;
             case "blacksmith":
                 equippedArray.push(new BlacksmithHammer, "Empty", new IronHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
@@ -179,10 +179,10 @@ export default class Controller {
                 break;
             case "scholar":
                 equippedArray.push(new ArcaneStaff, "Empty", new ClothHood, new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
-                this.partyGold = 200;
+                this.partyGold = 250;
                 break;
             case "warrior":
-                equippedArray.push(new Handaxe, "Empty", new LeatherHelmet, new LeatherChestplate, "Empty", new LinenPants, new LeatherBoots);
+                equippedArray.push(new Handaxe, "Empty", new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots);
                 this.partyGold = 250;
                 break;
             case "thief":
@@ -191,7 +191,7 @@ export default class Controller {
                 break;
             case "hermit":
                 equippedArray.push(new FireStaff, "Empty", new ClothHood, new LinenShirt, "Empty",  new LinenPants, new LeatherBoots);
-                this.partyGold = 200;
+                this.partyGold = 250;
                 break;
         }
         let value2 = document.getElementById("keepsake-selection").value;
@@ -1626,14 +1626,12 @@ export default class Controller {
         return Math.ceil(sum / this.party.length);
     }
     calculateMaxEnemyCount(){
-        let enemyCount = Math.ceil(Math.random() * this.party.length);
+        let avgPartyLevel = this.calculateAveragePartyLevel()
+        let enemyCount = Math.ceil(Math.random() * Math.floor(avgPartyLevel/2));
         if(enemyCount > 6){
             enemyCount = 6;
         }
         if(enemyCount == 1 && this.party.length == 1){
-            if(Math.random()*3 < 1){
-                enemyCount = 2;
-            }
         }
         return enemyCount;
     }

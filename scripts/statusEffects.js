@@ -220,7 +220,7 @@ export class Invigorated extends StatusEffect{
         this.maxCharges = 6;
         this.currentCharges = this.maxCharges;
     }
-    onEndTurn(){;
+    onEndTurn(){
         let restoreAmount = Math.floor(this.holder.maxStamina * 0.1);
         if(this.holder.currentStamina + restoreAmount >= this.holder.maxMagic){
             restoreAmount = this.holder.maxStamina - this.holder.currentStamina 
@@ -324,5 +324,26 @@ export class Bleeding extends StatusEffect{
             theController.printToGameConsole(`${this.holder.name} bleeds for ${damageOutput} stamina damage!`);
         }
         this.currentCharges = this.currentCharges - 1;
+    }
+}
+export class Blessed extends StatusEffect{
+    constructor(holder){
+        super();
+        this.type = "end";
+        this.isCleansable = true;
+        this.name = "blessed";
+        this.iconSrc = "./media/icons/heart-plus.png";
+        this.holder = holder;
+        this.maxCharges = 5;
+        this.currentCharges = this.maxCharges;
+    }
+    onEndTurn(){
+        let restoreAmount = Math.floor(this.holder.maxHP * 0.08);
+        if(this.holder.currentHP + restoreAmount >= this.holder.maxHP){
+            restoreAmount = this.holder.maxHP - this.holder.currentHP 
+        }
+        this.holder.currentHP = this.holder.currentHP + restoreAmount;
+        this.currentCharges = this.currentCharges - 1;
+        theController.printToGameConsole(`${this.holder.name} regains ${restoreAmount} health points!`);
     }
 }

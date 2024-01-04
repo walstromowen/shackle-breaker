@@ -1,6 +1,6 @@
 import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, GuardBreak, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy, UseBandage,
         ThrowNet, Immolate, LightningBolt, Shockwave, Recuperate, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Channel, ThrowSmokebomb, CastShadow, BlinkStrike, Empower, WildSwing, Pounce, Bite, ShootArrow, TripleShot,
-        Roar, UseFrostbiteTonic, UseParalysisTonic, MeteorShower, SummonSkeleton} from "./abilities.js"
+        Roar, UseFrostbiteTonic, UseParalysisTonic, MeteorShower, SummonSkeleton, ArcaneSalvo, Bless} from "./abilities.js"
 
 export function getRandomItem(){
     let itemArray = [new LinenShirt, new LinenPants, new Dagger, new BlacksmithHammer, new Spear, new Shortsword, new Longsword, new Handaxe, new NightbladeSword,
@@ -620,6 +620,9 @@ export class ArcaneStaff {
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
         }
+        if(this.level == 3){
+            this.abilityArray.push(new ArcaneSalvo());
+        }
     }
 }
 export class LightStaff {
@@ -656,6 +659,9 @@ export class LightStaff {
             this.elementalDefense = this.elementalDefense + 0;
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
+        }
+        if(this.level == 3){
+            this.abilityArray.push(new Bless());
         }
     }
 }
@@ -1159,7 +1165,7 @@ export class ClothHood {
         this.pierceDefense = 1;
         this.arcaneDefense = 2;
         this.elementalDefense = 2;
-        this.speed = 0;
+        this.speed = - 1;
         this.evasion = 1;
         this.abilityArray = [new Channel()];
     }
@@ -1197,7 +1203,7 @@ export class ClothRobe {
         this.arcaneDefense = 4;
         this.elementalDefense = 4;
         this.speed = -1;
-        this.evasion = -1;
+        this.evasion = 1;
         this.abilityArray = [new Channel()];
     }
     upgrade(levels){
@@ -1235,7 +1241,7 @@ export class CrystalBall {
         this.elementalDefense = 2;
         this.speed = -2;
         this.evasion = 2;
-        this.abilityArray = [new Empower];
+        this.abilityArray = [new Empower, new Channel];
     }
     upgrade(levels){
         for(let i = 0; i < levels; i++){
@@ -1292,6 +1298,9 @@ export class NightbladeSword {
         if(this.level == 3){
             this.abilityArray.push(new CastShadow());
         }
+        if(this.level == 5){
+            this.abilityArray.push(new ArcaneSalvo());
+        }
     }
 }
 export class NightbladeHelm {
@@ -1329,6 +1338,9 @@ export class NightbladeHelm {
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 1;
         }
+        if(this.level == 3){
+            this.abilityArray.push(new CastShadow());
+        }
     }
 }
 export class NightbladeChestplate {
@@ -1365,6 +1377,9 @@ export class NightbladeChestplate {
             this.elementalDefense = this.elementalDefense + 1;
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 1;
+        }
+        if(this.level == 3){
+            this.abilityArray.push(new CastShadow());
         }
     }
 }

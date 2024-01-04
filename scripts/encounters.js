@@ -533,13 +533,13 @@ export class MercenaryForHire extends Encounter{
                 ]
             ),
             new Decision(
-                "hire (300 gold)", 
+                "hire (200 gold)", 
                 ()=>{theController.printToGameConsole(`${theController.party[0].name} attempts to hire the mercenary.`)},
                 "certain",
                 [
                     ()=>{
-                        if(theController.partyGold >= 300){
-                            theController.partyGold = theController.partyGold - 300;
+                        if(theController.partyGold >= 100){
+                            theController.partyGold = theController.partyGold - 100;
                             recruit(`${theController.encounter.companion.name} joins ${theController.party[0].name}'s party`, theController.encounter.companion)
                         }else{
                             retry(`"Oi! At least make it worth my while"`);

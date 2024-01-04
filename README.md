@@ -12,8 +12,8 @@ Text adventure game based on the Shackle Breaker story
 * Two attacks/bonus actions
 * trinket and waist slots
 * Item stamina /magic consumption modifier
-* Summon abilites
 * Attribute descriptions / level up screen details
+* Map abilities
 
 # Planned Quality of Life Improvements
 * Alphabetize CSS rules

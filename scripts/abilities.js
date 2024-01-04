@@ -1,7 +1,7 @@
 import Character from "./character.js";
 import { Shortsword } from "./items.js";
 import {controller as theController} from "./main.js"
-import {Shielded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden, Bleeding} from "./statusEffects.js";
+import {Shielded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden, Bleeding, Blessed} from "./statusEffects.js";
 
 class Ability{
     canUse(weilder, currentCharacter){
@@ -633,17 +633,17 @@ export class TripleShot extends Ability{
         this.staminaCost = 16;
         this.magicCost = 0;
         this.damageModifier = 10;
-        this.accuracy = 40;
+        this.accuracy = 50;
         this.soundEffect = "./audio/soundEffects/arrow-body-impact-146419.mp3";
         
     }
     activate(weilder, target){
         if(this.checkStamina(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
             for(let j = 0; j < 3; j++){
-                theController.playSoundEffect(this.soundEffect);
                 if(this.checkMiss(weilder, target, this.name) != true){
                     let damageOutput = Math.floor(Math.random() * ((weilder.currentPierceAttack + this.damageModifier) - weilder.currentPierceAttack + 1)) + weilder.currentPierceAttack;
-                    damageOutput = this.checkDamage(Math.floor(damageOutput/3), weilder, target, target.currentPierceDefense/3);
+                    damageOutput = this.checkDamage(Math.floor(damageOutput/2.5), weilder, target, target.currentPierceDefense/2.5);
                     theController.printToGameConsole(`${weilder.name} shoots ${target.name} for ${damageOutput} damage!`);
                     target.currentHP = target.currentHP - damageOutput;
                     if(damageOutput > 0){
@@ -1062,6 +1062,34 @@ export class ArcaneBlast extends Ability{
         }
     }
 }
+export class ArcaneSalvo extends Ability{
+    constructor(){
+        super();
+        this.name = "arcaneSalvo";
+        this.type = "pierceArcane";
+        this.speedMultiplier = 0.5;
+        this.staminaCost = 0;
+        this.magicCost = 16;
+        this.damageModifier = 10;
+        this.accuracy = 50;
+        this.soundEffect = "./audio/soundEffects/magic-missile-made-with-Voicemod-technology.mp3";
+        
+    }
+    activate(weilder, target){
+        if(this.checkStamina(weilder) == true){
+            let count = Math.ceil(Math.random()*4);
+            theController.playSoundEffect(this.soundEffect);
+            for(let j = 0; j < count; j++){
+                if(this.checkMiss(weilder, target, this.name) != true){
+                    let damageOutput = Math.floor(Math.random() * ((((weilder.currentPierceAttack + weilder.currentArcaneAttack)/2) + this.damageModifier) - ((weilder.currentPierceAttack + weilder.currentArcaneAttack)/2) + 1)) + Math.floor(((weilder.currentPierceAttack + weilder.currentArcaneAttack)/2));
+                    damageOutput = this.checkDamage(Math.floor(damageOutput/3), weilder, target, target.currentPierceDefense/3);
+                    theController.printToGameConsole(`${weilder.name} shoots ${target.name} for ${damageOutput} damage!`);
+                    target.currentHP = target.currentHP - damageOutput;
+                }
+            }
+        }
+    }
+}
 export class LightBeam extends Ability{
     constructor(){
         super();
@@ -1123,6 +1151,41 @@ export class Cleanse extends Ability{
             theController.printToGameConsole(`${weilder.name} has no negative status conditions to cleanse.`);
         }
         return false;
+    }
+}
+export class Bless extends Ability{
+    constructor(){
+        super();
+        this.name = "bless";
+        this.type = "arcane";
+        this.speedMultiplier = 0.75;
+        this.staminaCost = 0;
+        this.magicCost = 20;
+        this.damageModifier = 0;
+        this.accuracy = "";
+        this.soundEffect = "./audio/soundEffects/mixkit-light-spell-873.wav";
+    }
+     activate(weilder, target){
+        if(this.checkMagic(weilder) == true){
+            theController.printToGameConsole(`${weilder.name} uses ${this.name}!`);
+            theController.playSoundEffect(this.soundEffect);
+            for(let i = 0; i < weilder.statusArray.length; i++){
+                if(weilder.statusArray[i].name == "blessed"){
+                    weilder.statusArray[i].currentCharges = weilder.statusArray[i].maxCharges;
+                    return;
+                }
+            }
+            weilder.statusArray.push(new Blessed(weilder));
+        }
+    }
+    canUseSpecialCondition(weilder, currentCharacter){
+        if(weilder !== currentCharacter){
+            for(let i = 0; i < weilder.statusArray.length; i++){
+                if(weilder.statusArray[i].name == "blessed"){
+                    return false;
+                }
+            }
+        }
     }
 }
 export class DrainLife extends Ability{
@@ -1442,7 +1505,7 @@ export class SummonSkeleton extends Ability{
     activate(weilder, target){
         if(this.checkStamina(weilder) == true && this.checkMagic(weilder) == true){
             theController.playSoundEffect(this.soundEffect);
-            let summon = new Character(["skeleton", "./media/skeleton.jpg", "summon", [0,3,5,5,5,5], [new Shortsword(), "N/A", "N/A", "N/A", "N/A", "N/A", "N/A"]]);
+            let summon = new Character(["skeleton", "./media/skeleton.jpg", "summon", [0,6,6,6,6,6], [new Shortsword(), "N/A", "N/A", "N/A", "N/A", "N/A", "N/A"]]);
             summon.abilityArray = [new Slash, new Stab, new Strike, new Block];
             let summonLevel = theController.calculateAveragePartyLevel();
             summon.autoLevelUp(summonLevel);
