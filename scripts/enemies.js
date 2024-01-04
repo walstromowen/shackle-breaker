@@ -1,6 +1,6 @@
 import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
     ThrowNet, Immolate, LightningBolt, Channel, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Bite, SpitBile, LeechLife, Devour, Pounce, CastShadow, ThrowSmokebomb, Shockwave, GuardBreak, BlinkStrike, Punch, WildSwing,
-    Roar, ShootArrow, TripleShot} from "./abilities.js"
+    Roar, ShootArrow, TripleShot, MeteorShower} from "./abilities.js"
     import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer, NightbladeSword,
         Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, NightbladeHelm, NightbladeChestplate,
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
@@ -762,8 +762,53 @@ export class Tiger extends Enemy{
         this.levelUp(averagePartyLevel);
     }
     levelUp(averagePartyLevel){
-        this.incrementStats(averagePartyLevel, [2,6], [4,6], [0,4], [1,3], [2,3], [0,2], [0,2], [1,3], [1,3], [1,3], [1,3]);
+        this.incrementStats(averagePartyLevel, [2,6], [4,6], [0,4], [1,3], [2,3], [1,3], [1,3], [1,3], [0,2], [1,3], [0,2]);
         this.gold = Math.floor((Math.random() * (10 - 5 + 1) + 5) * (1 + averagePartyLevel/2));
         this.xp = Math.floor(30 * (1 + this.level/10 ));
+    }
+}
+export class TwilightDragon extends Enemy{
+    constructor(averagePartyLevel){
+        super();
+        this.name = "twilight dragon";
+        this.apperance = "media/twilight-dragon.jpg"
+        this.maxHP = 300;
+        this.currentHP = this.maxHP;
+        this.maxStamina = 200;
+        this.currentStamina = this.maxStamina;
+        this.maxMagic = 200;
+        this.currentMagic = this.maxMagic;
+        this.baseBluntAttack = 55;
+        this.currentBluntAttack = this.baseBluntAttack;
+        this.basePierceAttack = 55;
+        this.currentPierceAttack = this.basePierceAttack;
+        this.baseArcaneAttack = 55; 
+        this.currentArcaneAttack = this.baseArcaneAttack;
+        this.baseElementalAttack = 55;
+        this.currentElementalAttack = this.baseElementalAttack;
+        this.baseBluntDefense = 35;
+        this.currentBluntDefense = this.baseBluntDefense;
+        this.basePierceDefense = 35;
+        this.currentPierceDefense = this.basePierceDefense;
+        this.baseArcaneDefense = 35;
+        this.currentArcaneDefense = this.baseArcaneDefense;
+        this.baseElementalDefense = 35;
+        this.currentElementalDefense = this.baseElementalDefense;
+        this.baseSpeed = 20;
+        this.currentSpeed = this.baseSpeed;
+        this.baseEvasion = 10;
+        this.currentEvasion = this.baseEvasion;
+        this.abilityArray = [new Bite, new MeteorShower, new Roar, new CastShadow];
+        this.lootChanceMultiplier = 0; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootArray = [new NightbladeSword];
+        this.gold = 0;
+        this.xp = 0;
+        this.isBoss = true;
+        this.levelUp(averagePartyLevel);
+    }
+    levelUp(averagePartyLevel){
+        this.incrementStats(averagePartyLevel, [8,16], [2,6], [1,3], [2,4], [2,4], [2,4], [2,4], [1,3], [1,3], [1,3], [1,3]);
+        this.gold = 500;
+        this.xp = 500;
     }
 }

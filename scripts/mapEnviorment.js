@@ -1,5 +1,5 @@
 import {LockedTreasureChest, UnlockedTreasureChest, AltusAmbushOpportunity, MysteriousDoor, TravelingMerchant, AbandonedCabin, SuspiciousSkeleton, Robbery, Avalanche, MercenaryForHire, AncientTombstone, Quicksand, AnimalTracks} from "./encounters.js";
-import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos, ShadowStrider, TerrorBear, Bandit, Ghost, SkeletonMage, AltusGuard, Yeti, Tiger} from "./enemies.js";
+import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos, ShadowStrider, TerrorBear, Bandit, Ghost, SkeletonMage, AltusGuard, Yeti, Tiger, TwilightDragon} from "./enemies.js";
 
 export default class MapEnviorment{
     constructor(biome){
@@ -89,7 +89,10 @@ export default class MapEnviorment{
                         this.battleMusicSrc = "./audio/battle-sword-139313.mp3";
                         this.frameCoordinates = [
                             [3],
-                            [3]
+                            [3],
+                            [0],
+                            [0],
+                            [0]
                         ];
                         break;
                     case 1:
@@ -99,16 +102,19 @@ export default class MapEnviorment{
                         this.battleMusicSrc = "./audio/battle-sword-139313.mp3";
                         this.frameCoordinates = [
                             [3],
-                            [3]
+                            [3],
+                            [0],
+                            [0],
+                            [0]
                         ];
                         break;
                     default:
                         break;
                 }
                 break;
-            case "altas castle":
-                this.biome = "altas castle";
-                        this.imageSrc = "media/altas-castle-interior.jpg";
+            case "altus castle":
+                this.biome = "altus castle";
+                        this.imageSrc = "media/altus-castle-interior.jpg";
                         this.backgroundMusicSrc = "./audio/mixkit-evil-storm-atmosphere-2404.wav";
                         this.battleMusicSrc = "./audio/battle-sword-139313.mp3";
                         this.frameCoordinates = [
@@ -220,6 +226,10 @@ export default class MapEnviorment{
                     }
                     break;
                 case "twilight realm":
+                    if(isBoss == true){
+                        enemyArray.push(new TwilightDragon(currentCharacterLevel));
+                        break;
+                    }
                     switch(Math.floor(Math.random()*2)){ 
                         case 0:
                             enemyArray.push(new ShadowStrider(currentCharacterLevel));
@@ -245,7 +255,7 @@ export default class MapEnviorment{
                             break;
                     }
                     break;
-                case "altas castle":
+                case "altus castle":
                     if(isBoss == true){
                         enemyArray.push(new EmperorDolos(currentCharacterLevel));
                         break;

@@ -2,7 +2,7 @@ import {Recover, Punch, Retreat} from "./abilities.js";
 import { Bleeding, Bound, Poisoned} from "./statusEffects.js";
 
 export default class Character{
-    constructor(characterCreationArray){ //[name, apperanceSrc, origin, attributesArray, equippedArray, miscStatsArray[speed, evasion]]
+    constructor(characterCreationArray){ //[name, apperanceSrc, origin, attributesArray, equippedArray]
         this.name = characterCreationArray[0];
         this.apperance = characterCreationArray[1]
         this.origin = characterCreationArray[2]
@@ -30,8 +30,8 @@ export default class Character{
         this.basePierceDefense = 0;
         this.baseArcaneDefense = 0;
         this.baseElementalDefense = 0;
-        this.baseSpeed = characterCreationArray[5][0];
-        this.baseEvasion = characterCreationArray[5][1];
+        this.baseSpeed = 0;
+        this.baseEvasion = 0;
         this.statusArray = [];//new Poisoned(this), new Burned(this), new Frostbite(this), new Paralyzed(this), new Shielded(this), new Energized(this), new Empowered(this), new Bound(this)
         this.nextMove = "";
         this.scaleAttributes()
@@ -76,8 +76,8 @@ export default class Character{
     }
     scaleAttributes(){
         this.maxHP = (this.vigor * 10) + (this.endurance * 2) + (this.strength * 2) + (this.dexterity * 2) + (this.insight * 2) + (this.focus * 2);
-        this.maxStamina = (this.vigor * 1) + (this.endurance * 5) + (this.strength * 3) + (this.dexterity * 3) + (this.insight * 1) + (this.focus * 1);
-        this.maxMagic = (this.vigor * 1) + (this.endurance * 5) + (this.strength * 1) + (this.dexterity * 1) + (this.insight * 3) + (this.focus * 3);
+        this.maxStamina = (this.vigor * 2) + (this.endurance * 5) + (this.strength * 3) + (this.dexterity * 3) + (this.insight * 1) + (this.focus * 1);
+        this.maxMagic = (this.vigor * 2) + (this.endurance * 5) + (this.strength * 1) + (this.dexterity * 1) + (this.insight * 3) + (this.focus * 3);
         this.baseBluntAttack = (this.vigor * 1) + (this.endurance * 1) + (this.strength * 3) + (this.dexterity * 2) + (this.insight * 2) + (this.focus * 2);
         this.basePierceAttack = (this.vigor * 1) + (this.endurance * 1) + (this.strength * 2) + (this.dexterity * 3) + (this.insight * 2) + (this.focus * 2);
         this.baseArcaneAttack = (this.vigor * 1) + (this.endurance * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.insight * 3) + (this.focus * 2);
@@ -86,5 +86,7 @@ export default class Character{
         this.basePierceDefense = (this.vigor * 1) + (this.endurance * 1) + (this.strength * 1) + (this.dexterity * 2) + (this.insight * 1) + (this.focus * 1);
         this.baseArcaneDefense = (this.vigor * 1) + (this.endurance * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.insight * 2) + (this.focus * 1);
         this.baseElementalDefense = (this.vigor * 1) + (this.endurance * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.insight * 1) + (this.focus * 2);
+        this.baseSpeed = (this.vigor * 0) + (this.endurance * 0) + (this.strength * 0) + (this.dexterity * 0) + (this.insight * 0) + (this.focus * 0) + 25;
+        this.baseEvasion = (this.vigor * 0) + (this.endurance * 0) + (this.strength * 0) + (this.dexterity * 0) + (this.insight * 0) + (this.focus * 0) + 10;
     }
 }

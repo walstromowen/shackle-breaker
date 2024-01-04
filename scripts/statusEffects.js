@@ -238,7 +238,7 @@ export class Frostbite extends StatusEffect{
         this.name = "frostbite";
         this.iconSrc = "./media/icons/frozen-block.png";
         this.holder = holder;
-        this.maxCharges = 4;
+        this.maxCharges = 3;
         this.currentCharges = this.maxCharges;
         this.serverityMultiplier = 0.05;
     }
@@ -304,7 +304,7 @@ export class Bleeding extends StatusEffect{
         this.name = "bleeding";
         this.iconSrc = "./media/icons/ragged-wound.png";
         this.holder = holder;
-        this.maxCharges = 6;
+        this.maxCharges = 5;
         this.currentCharges = this.maxCharges;
         this.serverityMultiplier = 0.06;
     }

@@ -43,7 +43,7 @@ export class LockedTreasureChest extends Encounter{
                 [
                     ()=>{retry(`${theController.party[0].name} breaks a lockpick!`)},
                     ()=>{removeDecision(`${theController.party[0].name} jams the lock!`, "pick lock")},
-                    ()=>{toggleBattle(`as ${theController.party[0].name} reaches to pick the lock, something emerges from the shadows and races towards ${theController.party[0].name}!`, theController.map.mapEnviorment.generateEnemies(theController.calculateAveragePartyLevel(), false, theController.calculateMaxEnemyCount()))}
+                    ()=>{toggleBattle(`as ${theController.party[0].name} reaches to pick the lock, something emerges from the shadows and races towards ${theController.party[0].name}!`, theController.map.mapEnviorment.generateEnemies(theController.calculateAveragePartyLevel(), false, theController.calculateMaxEnemyCount()), true)}
                 ]
             ),
             new Decision(
@@ -56,7 +56,7 @@ export class LockedTreasureChest extends Encounter{
                 [
                     ()=>{retry(`the lock doesn't budge.`)},
                     ()=>{removeDecision(`${theController.party[0].name} cannot break the lock!`, "break lock")},
-                    ()=>{toggleBattle(`upon hearing the loud noise, something emerges from the shadows and races towards ${theController.party[0].name}!`, theController.map.mapEnviorment.generateEnemies(theController.calculateAveragePartyLevel(), false, theController.calculateMaxEnemyCount()))}
+                    ()=>{toggleBattle(`upon hearing the loud noise, something emerges from the shadows and races towards ${theController.party[0].name}!`, theController.map.mapEnviorment.generateEnemies(theController.calculateAveragePartyLevel(), false, theController.calculateMaxEnemyCount()), true)}
                 ]
             ),
             new Decision(
@@ -69,7 +69,7 @@ export class LockedTreasureChest extends Encounter{
                 [
                     ()=>{retry(`${theController.party[0].name} seaches in vain for the key.`)},
                     ()=>{removeDecision(`${theController.party[0].name} searches everywhere for the key`, "search for key")},
-                    ()=>{toggleBattle(`somethings lunges towards ${theController.party[0].name}!`, theController.map.mapEnviorment.generateEnemies(theController.calculateAveragePartyLevel(), false, theController.calculateMaxEnemyCount()))}
+                    ()=>{toggleBattle(`somethings lunges towards ${theController.party[0].name}!`, theController.map.mapEnviorment.generateEnemies(theController.calculateAveragePartyLevel(), false, theController.calculateMaxEnemyCount()), true)}
                 ]
             )
         ];
@@ -124,8 +124,8 @@ export class AltusAmbushOpportunity extends Encounter{
                     ()=>{leave(`${theController.party[0].name} slips away quietly.`)}
                 ],
                 [
-                    ()=>{toggleBattle(`the altus official spots ${theController.party[0].name} and draws his weapon!`, [new AltusMage(theController.calculateAveragePartyLevel())])},
-                    ()=>{toggleBattle(`the altus official spots ${theController.party[0].name} and draws his weapon!`, [new AltusGuard(theController.calculateAveragePartyLevel())])}
+                    ()=>{toggleBattle(`the altus official spots ${theController.party[0].name} and draws his weapon!`, [new AltusMage(theController.calculateAveragePartyLevel())], true)},
+                    ()=>{toggleBattle(`the altus official spots ${theController.party[0].name} and draws his weapon!`, [new AltusGuard(theController.calculateAveragePartyLevel())], true)}
                 ]
             ),
             new Decision(
@@ -136,7 +136,7 @@ export class AltusAmbushOpportunity extends Encounter{
                     ()=>{loot(`${theController.party[0].name} eliminates the offical without a sound. After searching the offical, ${theController.party[0].name} finds:`, [getRandomItem()], 40, 10)}
                 ],
                 [
-                    ()=>{toggleBattle(`the altus official spots ${theController.party[0].name} and draws his weapon!`, [new AltusMage(theController.calculateAveragePartyLevel())])}
+                    ()=>{toggleBattle(`the altus official spots ${theController.party[0].name} and draws his weapon!`, [new AltusMage(theController.calculateAveragePartyLevel())], true)}
                 ]
             ),
             new Decision(
@@ -147,11 +147,11 @@ export class AltusAmbushOpportunity extends Encounter{
                     ()=>{
                         let enemy = new AltusMage(theController.calculateAveragePartyLevel());
                         enemy.statusArray.push(new Bound(enemy));
-                        toggleBattle(`the official clumsly falls into ${theController.party[0].name}'s trap and struggles to break free!`, [enemy]);
+                        toggleBattle(`the official clumsly falls into ${theController.party[0].name}'s trap and struggles to break free!`, [enemy], true);
                     }
                 ],
                 [
-                    ()=>{toggleBattle(`the altus official effortlessly evades the trap and attacks ${theController.party[0].name}!`, [new AltusMage(theController.calculateAveragePartyLevel())])}
+                    ()=>{toggleBattle(`the altus official effortlessly evades the trap and attacks ${theController.party[0].name}!`, [new AltusMage(theController.calculateAveragePartyLevel())], true)}
                 ]
             )
         ];
@@ -190,7 +190,7 @@ export class MysteriousDoor extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.party[0].name} presses ${rune1}`)},
                 "neutral",
                 [
-                    ()=>{changeMap(`the door swings open and pulls ${theController.party[0].name} in!`, "portal", "random")},
+                    ()=>{changeMap(`the door swings open and pulls ${theController.party[0].name} in!`, "portal", "boss random")},
                     ()=>{regainHP(`the door swings open and showers${theController.party[0].name} will a soothing light.`, 0.5)}
                 ],
                 [
@@ -203,7 +203,7 @@ export class MysteriousDoor extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.party[0].name} presses ${rune2}`)},
                 "neutral",
                 [
-                    ()=>{changeMap(`the door swings open and pulls ${theController.party[0].name} in!`, "portal", "random")},
+                    ()=>{changeMap(`the door swings open and pulls ${theController.party[0].name} in!`, "portal", "boss random")},
                     ()=>{regainHP(`the door swings open and showers${theController.party[0].name} will a soothing light.`, 0.5)}
                 ],
                 [
@@ -242,8 +242,8 @@ export class SuspiciousSkeleton extends Encounter{
                     ()=>{leave(`${theController.party[0].name} slips away quietly.`)}
                 ],
                 [
-                    ()=>{toggleBattle(`the skeleton spots ${theController.party[0].name} and draws his weapon!`, [new Skeleton(theController.calculateAveragePartyLevel())])},
-                    ()=>{toggleBattle(`the skeleton spots ${theController.party[0].name} and draws his weapon!`, [new SkeletonMage(theController.calculateAveragePartyLevel())])}
+                    ()=>{toggleBattle(`the skeleton spots ${theController.party[0].name} and draws his weapon!`, [new Skeleton(theController.calculateAveragePartyLevel())], true)},
+                    ()=>{toggleBattle(`the skeleton spots ${theController.party[0].name} and draws his weapon!`, [new SkeletonMage(theController.calculateAveragePartyLevel())], true)}
                
                 ]
             ),
@@ -255,8 +255,8 @@ export class SuspiciousSkeleton extends Encounter{
                     ()=>{leave(`The skeleton leaves its post to investigates the sound leaving ${theController.party[0].name} a clear path forward.`)}
                 ],
                 [
-                    ()=>{toggleBattle(`the skeleton spots ${theController.party[0].name} and draws his weapon!`, [new Skeleton(theController.calculateAveragePartyLevel())])},
-                    ()=>{toggleBattle(`the skeleton spots ${theController.party[0].name} and draws his weapon!`, [new SkeletonMage(theController.calculateAveragePartyLevel())])}
+                    ()=>{toggleBattle(`the skeleton spots ${theController.party[0].name} and draws his weapon!`, [new Skeleton(theController.calculateAveragePartyLevel())], true)},
+                    ()=>{toggleBattle(`the skeleton spots ${theController.party[0].name} and draws his weapon!`, [new SkeletonMage(theController.calculateAveragePartyLevel())], true)}
                
                 ]
             ),
@@ -274,7 +274,7 @@ export class SuspiciousSkeleton extends Encounter{
                     
                     ()=>{
                         theController.party[0].statusArray.push(new Bound(theController.party[0]));
-                        toggleBattle(`the skeleton grabs onto ${theController.party[0].name}!`, [new Skeleton(theController.calculateAveragePartyLevel())])
+                        toggleBattle(`the skeleton grabs onto ${theController.party[0].name}!`, [new Skeleton(theController.calculateAveragePartyLevel())], true)
                     }
                 ]
             )
@@ -339,7 +339,7 @@ export class AbandonedCabin extends Encounter{
                     ()=>{loot(`${theController.party[0].name} finds: `, [getRandomItem()], 50, 10)},
                 ],
                 [
-                    ()=>{toggleBattle(`somethings lunges towards ${theController.party[0].name}!`, theController.map.mapEnviorment.generateEnemies(theController.calculateAveragePartyLevel(), false, theController.calculateMaxEnemyCount()))}
+                    ()=>{toggleBattle(`somethings lunges towards ${theController.party[0].name}!`, theController.map.mapEnviorment.generateEnemies(theController.calculateAveragePartyLevel(), false, theController.calculateMaxEnemyCount()), true)}
                 ]
             ),
             new Decision(
@@ -350,7 +350,7 @@ export class AbandonedCabin extends Encounter{
                     ()=>{regainHP(`${theController.party[0].name} takes a short rest.`, 0.5)}
                 ],
                 [
-                    ()=>{toggleBattle(`somethings lunges towards ${theController.party[0].name}!`, theController.map.mapEnviorment.generateEnemies(theController.calculateAveragePartyLevel(), false, theController.calculateMaxEnemyCount()))}
+                    ()=>{toggleBattle(`somethings lunges towards ${theController.party[0].name}!`, theController.map.mapEnviorment.generateEnemies(theController.calculateAveragePartyLevel(), false, theController.calculateMaxEnemyCount()), true)}
                 ]
             )
         ];
@@ -425,7 +425,7 @@ export class Robbery extends Encounter{
                     ()=>{loot(`${theController.party[0].name} and the thug rob the traveler of:`, [getRandomItem()], 20, 5)},
                 ],
                 [
-                    ()=>{toggleBattle(`${theController.party[0].name} joins the thug in robbing the traveler. Not long after, the thug turns on ${theController.party[0].name}!`, [new Bandit(theController.calculateAveragePartyLevel())])}
+                    ()=>{toggleBattle(`${theController.party[0].name} joins the thug in robbing the traveler. Not long after, the thug turns on ${theController.party[0].name}!`, [new Bandit(theController.calculateAveragePartyLevel())], true)}
                 ]
             )
         ];
@@ -611,9 +611,9 @@ export class UnearthedReamins extends Encounter{
                     ()=>{loot(`${theController.party[0].name} finds: `, [getRandomItem()], 50, 10)},
                 ],
                 [
-                    ()=>{toggleBattle(`the skeleton magically animates and walks towards ${theController.party[0].name}!`, [new Skeleton(theController.calculateAveragePartyLevel())])},
-                    ()=>{toggleBattle(`the skeleton magically animates and walks towards ${theController.party[0].name}!`, [new SkeletonMage(theController.calculateAveragePartyLevel())])},
-                    ()=>{toggleBattle(`an ominous precence approaches ${theController.party[0].name}!`, [new Ghost(theController.calculateAveragePartyLevel())])}
+                    ()=>{toggleBattle(`the skeleton magically animates and walks towards ${theController.party[0].name}!`, [new Skeleton(theController.calculateAveragePartyLevel())], true)},
+                    ()=>{toggleBattle(`the skeleton magically animates and walks towards ${theController.party[0].name}!`, [new SkeletonMage(theController.calculateAveragePartyLevel())], true)},
+                    ()=>{toggleBattle(`an ominous precence approaches ${theController.party[0].name}!`, [new Ghost(theController.calculateAveragePartyLevel())], true)}
                 ]
             )
         ];
@@ -675,10 +675,10 @@ export class AnimalTracks extends Encounter{
             case "plains":
                 switch(Math.floor(Math.random()*2)){
                     case 0:
-                        this.trackedEntity = new Character(["Dog", "./media/dog.jpg", "animal", [0,5,5,5,5,5], [new DogPaw, new DogPaw, "N/A", "N/A", "N/A", "N/A", "N/A"], [28, 12]]);
+                        this.trackedEntity = new Character(["Dog", "./media/dog.jpg", "animal", [0,6,6,6,6,6], [new DogPaw, new DogPaw, "N/A", "N/A", "N/A", "N/A", "N/A"]]);
                         break;
                     case 1:
-                        this.tempCompanionValue = new Character(["Hawk", "./media/hawk.jpg", "animal", [0,6,5,5,5,4], [new HawkTalons, new HawkTalons, "N/A", "N/A", "N/A", "N/A", "N/A"], [35, 18]]);
+                        this.tempCompanionValue = new Character(["Hawk", "./media/hawk.jpg", "animal", [0,6,6,6,6,6], [new HawkTalons, new HawkTalons, "N/A", "N/A", "N/A", "N/A", "N/A"]]);
                         break;
                 }
                 switch(Math.floor(Math.random()*2)){
@@ -693,7 +693,7 @@ export class AnimalTracks extends Encounter{
             case "forest":
                 switch(Math.floor(Math.random()*1)){
                     case 0:
-                        this.trackedEntity = new Character(["Dog", "./media/dog.jpg", "animal", [0,5,5,5,5,5], [new DogPaw, new DogPaw, "N/A", "N/A", "N/A", "N/A", "N/A"], [28, 12]]);
+                        this.trackedEntity = new Character(["Dog", "./media/dog.jpg", "animal", [0,6,6,6,6,6], [new DogPaw, new DogPaw, "N/A", "N/A", "N/A", "N/A", "N/A"]]);
                         break;
                     }
                 switch(Math.floor(Math.random()*2)){
@@ -708,7 +708,7 @@ export class AnimalTracks extends Encounter{
             case "mountain":
                 switch(Math.floor(Math.random()*1)){
                     case 0:
-                        this.tempCompanionValue = new Character(["Hawk", "./media/hawk.jpg", "animal", [0,6,5,5,5,4], [new HawkTalons, new HawkTalons, "N/A", "N/A", "N/A", "N/A", "N/A"], [35, 18]]);
+                        this.tempCompanionValue = new Character(["Hawk", "./media/hawk.jpg", "animal", [0,6,6,6,6,6], [new HawkTalons, new HawkTalons, "N/A", "N/A", "N/A", "N/A", "N/A"]]);
                         break;
                 }
                 switch(Math.floor(Math.random()*2)){
@@ -723,7 +723,7 @@ export class AnimalTracks extends Encounter{
             case "tundra":
                 switch(Math.floor(Math.random()*1)){
                     case 0:
-                        this.trackedEntity = new Character(["Tiger", "./media/tiger.jpg", "animal", [6,6,6,5,5,5], [new TigerClaw, new TigerClaw, "N/A", "N/A", "N/A", "N/A", "N/A"], [25, 10]]);
+                        this.trackedEntity = new Character(["Tiger", "./media/tiger.jpg", "animal", [6,5,7,5,4,4], [new TigerClaw, new TigerClaw, "N/A", "N/A", "N/A", "N/A", "N/A"]]);
                         break;
                 }
                 switch(Math.floor(Math.random()*3)){
@@ -753,7 +753,7 @@ export class AnimalTracks extends Encounter{
                 [
                     ()=>{
                         theController.party[0].statusArray.push(new Bound(theController.party[0]));
-                        toggleBattle(`A nearby ${theController.encounter.hunter.name} ambushes ${theController.party[0].name}!`, [theController.encounter.hunter]);
+                        toggleBattle(`A nearby ${theController.encounter.hunter.name} ambushes ${theController.party[0].name}!`, [theController.encounter.hunter], true);
                     }
                 ]
             ),
@@ -765,7 +765,7 @@ export class AnimalTracks extends Encounter{
                     ()=>{toggleNewEncounter(`${theController.party[0].name} notices something ahead.`, new WoundedAnimal(theController.encounter.trackedEntity, theController.encounter.hunter))}
                 ],
                 [
-                    ()=>{toggleBattle(`A nearby ${theController.encounter.hunter.name} moves in to attack ${theController.party[0].name}!`, [theController.encounter.hunter])},
+                    ()=>{toggleBattle(`A nearby ${theController.encounter.hunter.name} moves in to attack ${theController.party[0].name}!`, [theController.encounter.hunter], true)},
                     ()=>{leave(`after much tracking, ${theController.party[0].name} loses the tracks.`)}
                 ]
             )
@@ -802,7 +802,7 @@ export class WoundedAnimal extends Encounter{
                     ()=>{recruit(`the ${theController.encounter.trackedEntity.name} stands to its feet and nuzzles ${theController.party[0].name}`, theController.encounter.trackedEntity)}
                 ],
                 [
-                    ()=>{toggleBattle(`a ${theController.encounter.hunter.name} advances towards ${theController.party[0].name} giving ${theController.encounter.trackedEntity.name} enough time to escape! `, [theController.encounter.hunter])}
+                    ()=>{toggleBattle(`a ${theController.encounter.hunter.name} advances towards ${theController.party[0].name} giving ${theController.encounter.trackedEntity.name} enough time to escape! `, [theController.encounter.hunter], true)}
                 ]
             ),
             new Decision(
@@ -816,7 +816,7 @@ export class WoundedAnimal extends Encounter{
                 ],
                 [
                     ()=>{
-                        ()=>{toggleBattle(`a ${theController.encounter.hunter.name} advances towards ${theController.party[0].name} giving ${theController.encounter.trackedEntity.name} enough time to escape! `, [theController.encounter.hunter])}
+                        ()=>{toggleBattle(`a ${theController.encounter.hunter.name} advances towards ${theController.party[0].name} giving ${theController.encounter.trackedEntity.name} enough time to escape! `, [theController.encounter.hunter], true)}
                     }
                 ]
             ),

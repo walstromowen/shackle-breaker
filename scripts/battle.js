@@ -2,7 +2,8 @@ import {controller as theController} from "./main.js"
 import { SwitchCombatant } from "./abilities.js";
 
 export default class Battle{
-    constructor(friendlyParty, hostileParty){
+    constructor(friendlyParty, hostileParty, canRetreat){
+        this.canRetreat = canRetreat;
         this.friendlyParty = friendlyParty;
         this.hostileParty = hostileParty;
         this.battlePhase = "firstTurn";

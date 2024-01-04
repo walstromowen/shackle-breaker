@@ -14,18 +14,18 @@ import Battle from "./battle.js";
 export default class Controller {
     constructor(){
         this.wanderingCompanions = [
-            new Character(["Gadrum Glorysun", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], [new Shortsword, new Buckler, "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots], [25, 5]]),
-            new Character(["William Stillstar", "./media/mage-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Longsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots], [25, 5]]),
-            new Character(["Solair Sulabras", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Shortsword, new KiteShield, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots], [25, 5]]),
-            new Character(["Julian Memira", "./media/rogue-2.jpg", "mercenary", [5,5,5,5,5,5],  [new Shortsword, new Buckler, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots], [25, 5]]),
-            new Character(["Nicholi Ninarsk", "./media/rogue-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Handaxe, new Handaxe, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots], [25, 5]]),
-            new Character(["Ragnar Ninarsk", "./media/mage-2.jpg", "mercenary", [5,5,5,5,5,5],  [new IceStaff, "Empty", new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots], [25, 5]]),
-            new Character(["Revan Sekrav", "./media/rogue-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Dagger, new Shiv, new LeatherHood, new LinenShirt, new LeatherGloves, new LinenPants, new LeatherBoots], [25, 5]]),
-            new Character(["Alina Sulabras", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], [new Shortsword, new KiteShield, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots], [25, 5]]),
-            new Character(["Ariannel Memira", "./media/knight-2.jpg", "mercenary", [5,5,5,5,5,5], [new LightStaff, "Empty", new ClothHood, new ClothRobe, "Empty", new LinenPants, new LeatherBoots], [25, 5]]),
-            new Character(["Gwen Swallowtail", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], [new DarkStaff, "Empty", new ClothHood, new ClothRobe, "Empty", new LinenPants, new LeatherBoots], [25, 5]])
+            new Character(["Gadrum Glorysun", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], [new Shortsword, new Buckler, "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["William Stillstar", "./media/mage-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Longsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Solair Sulabras", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Shortsword, new KiteShield, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Julian Memira", "./media/rogue-2.jpg", "mercenary", [5,5,5,5,5,5],  [new Shortsword, new Buckler, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Nicholi Ninarsk", "./media/rogue-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Handaxe, new Handaxe, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Ragnar Ninarsk", "./media/mage-2.jpg", "mercenary", [5,5,5,5,5,5],  [new IceStaff, "Empty", new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Revan Sekrav", "./media/rogue-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Dagger, new Shiv, new LeatherHood, new LinenShirt, new LeatherGloves, new LinenPants, new LeatherBoots]]),
+            new Character(["Alina Sulabras", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], [new Shortsword, new KiteShield, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Ariannel Memira", "./media/knight-2.jpg", "mercenary", [5,5,5,5,5,5], [new LightStaff, "Empty", new ClothHood, new ClothRobe, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Gwen Swallowtail", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], [new DarkStaff, "Empty", new ClothHood, new ClothRobe, "Empty", new LinenPants, new LeatherBoots]])
         ];
-        this.characterCreationArray = ["name", "apperance", "background", "attributesArray", "equippedArray", "miscStatsArray"];
+        this.characterCreationArray = ["name", "apperance", "background", "attributesArray", "equippedArray"];
         this.tempCompanionValue = "none";
         this.map = "";
         this.miniMap = "";
@@ -42,6 +42,7 @@ export default class Controller {
         this.canMoveRoom = true;
         this.currentRoom = "";
         this.nextRoom = "";
+        this.gameStage = 0;
         this.initialize();
     }
     initialize(){
@@ -72,12 +73,11 @@ export default class Controller {
             }
             this.characterCreationArray[1] = document.getElementById("apperance-selection").value;
             this.characterCreationArray[2] = document.getElementById("background-selection").value;
-            this.characterCreationArray[5] = [25, 5];
             this.party[0] = new Character(this.characterCreationArray);
             if(this.tempCompanionValue != "none"){
                 this.party.push(this.tempCompanionValue);
             }
-            //this.party.push(new Character(["kurtus", "media/kurty.jpg", "traveler", [100, 100, 100, 100, 100, 100], [new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots], [25, 5]]));
+            //this.party.push(new Character(["kurtus", "media/kurty.jpg", "traveler", [100, 100, 100, 100, 100, 100], [new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]));
             
             this.map = new Map("basic", "random");
             this.miniMap = new MiniMap();
@@ -147,8 +147,8 @@ export default class Controller {
         document.getElementById("character-creation-insight").innerText = this.characterCreationArray[3][4];
         document.getElementById("character-creation-focus").innerText = this.characterCreationArray[3][5];
         document.getElementById("character-creation-health").innerText = (vigor * 10) + (endurance * 2) + (strength * 2) + (dexterity * 2) + (insight * 2) + (focus * 2);
-        document.getElementById("character-creation-stamina").innerText = (vigor * 1) + (endurance * 5) + (strength * 3) + (dexterity * 3) + (insight * 1) + (focus * 1);
-        document.getElementById("character-creation-magic").innerText = (vigor * 1) + (endurance * 5) + (strength * 1) + (dexterity * 1) + (insight * 3) + (focus * 3);
+        document.getElementById("character-creation-stamina").innerText = (vigor * 2) + (endurance * 5) + (strength * 3) + (dexterity * 3) + (insight * 1) + (focus * 1);
+        document.getElementById("character-creation-magic").innerText = (vigor * 2) + (endurance * 5) + (strength * 1) + (dexterity * 1) + (insight * 3) + (focus * 3);
         document.getElementById("character-creation-blunt-attack").innerText = (vigor * 1) + (endurance * 1) + (strength * 3) + (dexterity * 2) + (insight * 2) + (focus * 2);
         document.getElementById("character-creation-pierce-attack").innerText = (vigor * 1) + (endurance * 1) + (strength * 2) + (dexterity * 3) + (insight * 2) + (focus * 2);
         document.getElementById("character-creation-arcane-attack").innerText = (vigor * 1) + (endurance * 1) + (strength * 2) + (dexterity * 2) + (insight * 3) + (focus * 2);
@@ -157,8 +157,8 @@ export default class Controller {
         document.getElementById("character-creation-pierce-defense").innerText = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 2) + (insight * 1) + (focus * 1);
         document.getElementById("character-creation-arcane-defense").innerText = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 2) + (focus * 1);
         document.getElementById("character-creation-element-defense").innerText = (vigor * 1) + (endurance * 1) + (strength * 1) + (dexterity * 1) + (insight * 1) + (focus * 2);
-        document.getElementById("character-creation-speed").innerText = 25;
-        document.getElementById("character-creation-evasion").innerText = 10;
+        document.getElementById("character-creation-speed").innerText = (vigor * 0) + (endurance * 0) + (strength * 0) + (dexterity * 0) + (insight * 0) + (focus * 0) + 25;
+        document.getElementById("character-creation-evasion").innerText = (vigor * 0) + (endurance * 0) + (strength * 0) + (dexterity * 0) + (insight * 0) + (focus * 0) + 10;
     }
     characterCreatorUpdateInventory(){
         let equippedArray = [];
@@ -243,11 +243,11 @@ export default class Controller {
                 document.getElementById("character-creator-companion-image").src = "./media/icons/cancel.png";
                 break;
             case "dog":
-                this.tempCompanionValue = new Character(["Dog", "./media/dog.jpg", "animal", [0,5,5,5,5,5], [new DogPaw, new DogPaw, "N/A", "N/A", "N/A", "N/A", "N/A"], [28, 12]]);
+                this.tempCompanionValue = new Character(["Dog", "./media/dog.jpg", "animal", [0,6,6,6,6,6], [new DogPaw, new DogPaw, "N/A", "N/A", "N/A", "N/A", "N/A"], [28, 12]]);
                 document.getElementById("character-creator-companion-image").src = this.tempCompanionValue.apperance; 
                 break;
             case "hawk":
-                this.tempCompanionValue = new Character(["Hawk", "./media/hawk.jpg", "animal", [0,6,5,5,5,4], [new HawkTalons, new HawkTalons, "N/A", "N/A", "N/A", "N/A", "N/A"], [35, 18]]);
+                this.tempCompanionValue = new Character(["Hawk", "./media/hawk.jpg", "animal", [0,6,6,6,6,6], [new HawkTalons, new HawkTalons, "N/A", "N/A", "N/A", "N/A", "N/A"], [35, 18]]);
                 document.getElementById("character-creator-companion-image").src = this.tempCompanionValue.apperance; 
                 break;
         }
@@ -262,9 +262,15 @@ export default class Controller {
     }
     enableMapTransitionControls(){
         document.getElementById('map-transition-continue-btn').addEventListener("click", ()=>{
-            if(this.calculateAveragePartyLevel() == 10){
-                this.generateNewMap("altas castle", "boss1");
-            }else{
+            if(this.calculateAveragePartyLevel() >= 10 && this.gameStage == 0){
+                this.generateNewMap("altus castle", "boss1");
+                this.gameStage = 1;
+            }
+            if(this.calculateAveragePartyLevel() >= 15 && this.gameStage == 1){
+                this.generateNewMap("altus castle", "boss1");
+                this.gameStage = 2;
+            }
+            else{
                 this.generateNewMap("basic", "random");
             }
             this.canMoveRoom = true;
@@ -583,8 +589,8 @@ export default class Controller {
         this.canMoveRoom = true;
         this.updatePartyInventoryTab(this.partyInventory);
     }
-    toggleBattle(enemyArray){
-        this.battle = new Battle(this.party, enemyArray);
+    toggleBattle(enemyArray, canRetreat){
+        this.battle = new Battle(this.party, enemyArray, canRetreat);
         this.canMoveRoom = false;
         this.disableCharacterBattleControls();
         Array.from(document.getElementsByClassName('party-direction-btn')).forEach(btn=>{
@@ -1111,9 +1117,11 @@ export default class Controller {
     }
     movePartyRoom(nextRoom){
         if(nextRoom !== ""){
+            let canRetreat = true;
             if(nextRoom.type == "boss chamber"){
                 if(nextRoom.status == "notVisited"){
                     nextRoom.enemyArray = this.map.mapEnviorment.generateEnemies(this.calculateAveragePartyLevel(), true, 1);
+                    canRetreat = false;
                 }
             }
             if(nextRoom.type == "enemySpawn"){
@@ -1127,7 +1135,7 @@ export default class Controller {
             if(nextRoom.enemyArray.length != 0){
                 this.nextRoom = nextRoom;
                 this.printToGameConsole("something approaches...");
-                this.toggleBattle(nextRoom.enemyArray);
+                this.toggleBattle(nextRoom.enemyArray, canRetreat);
                 return; 
             }
             if(nextRoom.encounter !== ""){
@@ -1141,7 +1149,7 @@ export default class Controller {
                     this.nextRoom = nextRoom;
                     this.printToGameConsole("something approaches...");
                     nextRoom.enemyArray = this.map.mapEnviorment.generateEnemies(this.calculateAveragePartyLevel(), false, this.calculateMaxEnemyCount());
-                    this.toggleBattle(nextRoom.enemyArray);
+                    this.toggleBattle(nextRoom.enemyArray, canRetreat);
                     return;
                 }
             }
@@ -1614,12 +1622,9 @@ export default class Controller {
         return Math.ceil(sum / this.party.length);
     }
     calculateMaxEnemyCount(){
-        let enemyCount = Math.floor(Math.random() * this.party.length);
+        let enemyCount = Math.ceil(Math.random() * this.party.length);
         if(enemyCount > 6){
             enemyCount = 6;
-        }
-        if(enemyCount < 1){
-            enemyCount = 1;
         }
         if(enemyCount == 1 && this.party.length == 1){
             if(Math.random()*3 < 1){

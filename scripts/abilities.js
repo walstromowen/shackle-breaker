@@ -201,6 +201,12 @@ export class Retreat extends Ability{
             return "retreat";
         }
     }
+    canUseSpecialCondition(weilder){
+        if(theController.battle.canRetreat == false){
+            theController.printToGameConsole(`cannot retreat!`);
+            return false
+        }
+    }
 }
 export class Struggle extends Ability{
     constructor(){
@@ -226,7 +232,7 @@ export class Punch extends Ability{
         this.speedMultiplier = 1;
         this.staminaCost = 4;
         this.magicCost = 0;
-        this.damageModifier = 2;
+        this.damageModifier = 5;
         this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/face-punch-2-84757.wav";
     }
@@ -252,7 +258,7 @@ export class Slash extends Ability{
         this.speedMultiplier = 0.75;
         this.staminaCost = 8;
         this.magicCost = 0;
-        this.damageModifier = 4;
+        this.damageModifier = 5;
         this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/mixkit-metal-hit-woosh-1485.wav";
     }
@@ -261,6 +267,11 @@ export class Slash extends Ability{
             theController.playSoundEffect(this.soundEffect);
             if(this.checkMiss(weilder, target, this.name) == true){
                 return;
+            }
+            for(let q = 0; q < 100; q++){
+                let damageOutput2 = Math.floor(Math.random() * ((((weilder.currentBluntAttack + weilder.currentPierceAttack)/2) + this.damageModifier) - ((weilder.currentBluntAttack + weilder.currentPierceAttack)/2) + 1)) + Math.floor(((weilder.currentBluntAttack + weilder.currentPierceAttack)/2));
+                damageOutput2 = this.checkDamage(damageOutput2, weilder, target, (target.currentBluntDefense + target.currentPierceDefense)/2);
+                console.log(damageOutput2);
             }
             let damageOutput = Math.floor(Math.random() * ((((weilder.currentBluntAttack + weilder.currentPierceAttack)/2) + this.damageModifier) - ((weilder.currentBluntAttack + weilder.currentPierceAttack)/2) + 1)) + Math.floor(((weilder.currentBluntAttack + weilder.currentPierceAttack)/2));
             damageOutput = this.checkDamage(damageOutput, weilder, target, (target.currentBluntDefense + target.currentPierceDefense)/2);
@@ -287,7 +298,7 @@ export class GuardBreak extends Ability{
         this.speedMultiplier = 0.5;
         this.staminaCost = 12;
         this.magicCost = 0;
-        this.damageModifier = 4;
+        this.damageModifier = 5;
         this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/mixkit-metallic-sword-strike-2160.wav";
     }
@@ -327,7 +338,7 @@ export class Strike extends Ability{
         this.speedMultiplier = 0.75;
         this.staminaCost = 8;
         this.magicCost = 0;
-        this.damageModifier = 4;
+        this.damageModifier = 5;
         this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/mixkit-metallic-sword-strike-2160.wav";
     }
@@ -352,7 +363,7 @@ export class Stab extends Ability{
         this.speedMultiplier = 0.75;
         this.staminaCost = 8;
         this.magicCost = 0;
-        this.damageModifier = 4;
+        this.damageModifier = 5;
         this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/Knife-Stab-A10-www.fesliyanstudios.com.mp3";
     }
@@ -387,7 +398,7 @@ export class Flurry extends Ability{
         this.speedMultiplier = 0.25;
         this.staminaCost = 16;
         this.magicCost = 0;
-        this.damageModifier = 8;
+        this.damageModifier = 10;
         this.accuracy = 70;
         this.soundEffect = "./audio/soundEffects/Knife-Stab-A10-www.fesliyanstudios.com.mp3";
     }
@@ -422,7 +433,7 @@ export class Bite extends Ability{
         this.speedMultiplier = 0.5;
         this.staminaCost = 6;
         this.magicCost = 0;
-        this.damageModifier = 2;
+        this.damageModifier = 5;
         this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/chomp1.mp3";
     }
@@ -457,7 +468,7 @@ export class Pounce extends Ability{
         this.speedMultiplier = 0.25;
         this.staminaCost = 16;
         this.magicCost = 0;
-        this.damageModifier = 4;
+        this.damageModifier = 5;
         this.accuracy = 60;
         this.soundEffect = "./audio/soundEffects/sword-sound-2-36274.mp3";
     }
@@ -492,7 +503,7 @@ export class Eviscerate extends Ability{
         this.speedMultiplier = 0.5;
         this.staminaCost = 12;
         this.magicCost = 0;
-        this.damageModifier = 3;
+        this.damageModifier = 5;
         this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/Knife-Stab-A10-www.fesliyanstudios.com.mp3";
     }
@@ -554,7 +565,7 @@ export class ShieldBash extends Ability{
         this.speedMultiplier = 0.75;
         this.staminaCost = 16;
         this.magicCost = 0;
-        this.damageModifier = 4;
+        this.damageModifier = 5;
         this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/anvil-hit-2-14845.mp3";
     }
@@ -589,7 +600,7 @@ export class ShootArrow extends Ability{
         this.speedMultiplier = 1.0;
         this.staminaCost = 8;
         this.magicCost = 0;
-        this.damageModifier = 6;
+        this.damageModifier = 5;
         this.accuracy = 70;
         this.soundEffect = "./audio/soundEffects/arrow-body-impact-146419.mp3";
     }
@@ -622,9 +633,9 @@ export class TripleShot extends Ability{
         this.name = "triple shot";
         this.type = "pierce";
         this.speedMultiplier = 0.5;
-        this.staminaCost = 12;
+        this.staminaCost = 16;
         this.magicCost = 0;
-        this.damageModifier = 4;
+        this.damageModifier = 10;
         this.accuracy = 40;
         this.soundEffect = "./audio/soundEffects/arrow-body-impact-146419.mp3";
         
@@ -665,7 +676,7 @@ export class LeechLife extends Ability{
         this.speedMultiplier = 0.25;
         this.staminaCost = 12;
         this.magicCost = 0;
-        this.damageModifier = 3;
+        this.damageModifier = 5;
         this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/platzender-kopf_nachschlag-91637.mp3";
     }
@@ -695,7 +706,7 @@ export class SpitBile extends Ability{
         this.speedMultiplier = 0.5;
         this.staminaCost = 12;
         this.magicCost = 0;
-        this.damageModifier = 3;
+        this.damageModifier = 5;
         this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/platzender-kopf_nachschlag-91637.mp3";
     }
@@ -730,7 +741,7 @@ export class Fireball extends Ability{
         this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 12;
-        this.damageModifier = 3;
+        this.damageModifier = 5;
         this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/short-fireball-woosh-6146.mp3";
     }
@@ -766,7 +777,7 @@ export class Immolate extends Ability{
         this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 8;
-        this.damageModifier = 2;
+        this.damageModifier = 5;
         this.accuracy = 200;
         this.soundEffect = "./audio/soundEffects/short-fireball-woosh-6146.mp3";
     }
@@ -802,7 +813,7 @@ export class LightningBolt extends Ability{
         this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 12;
-        this.damageModifier = 3;
+        this.damageModifier = 5;
         this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/075681_electric-shock-33018.wav";
     }
@@ -837,7 +848,7 @@ export class Shockwave extends Ability{
         this.speedMultiplier = 0.75;
         this.staminaCost = 0;
         this.magicCost = 12;
-        this.damageModifier = 3;
+        this.damageModifier = 5;
         this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/075681_electric-shock-33018.wav";
     }
@@ -947,7 +958,7 @@ export class IceShard extends Ability{
         this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 12;
-        this.damageModifier = 3;
+        this.damageModifier = 5;
         this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/magic-spell-6005.mp3";
     }
@@ -1011,7 +1022,7 @@ export class ArcaneDart extends Ability{
         this.speedMultiplier = 0.75;
         this.staminaCost = 0;
         this.magicCost = 8;
-        this.damageModifier = 4;
+        this.damageModifier = 5;
         this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/magic-spell-6005.mp3";
     }
@@ -1063,7 +1074,7 @@ export class LightBeam extends Ability{
         this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 10;
-        this.damageModifier = 6;
+        this.damageModifier = 8;
         this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/supernatural-explosion-104295.wav";
     }
@@ -1126,7 +1137,7 @@ export class DrainLife extends Ability{
         this.speedMultiplier = 0.25;
         this.staminaCost = 0;
         this.magicCost = 16;
-        this.damageModifier = 3;
+        this.damageModifier = 5;
         this.accuracy = 60;
         this.soundEffect = "./audio/soundEffects/totem-strike-96497.wav";
     }
@@ -1156,7 +1167,7 @@ export class Siphon extends Ability{
         this.speedMultiplier = 0.75;
         this.staminaCost = 0;
         this.magicCost = 8;
-        this.damageModifier = 4;
+        this.damageModifier = 5;
         this.accuracy = 100;
         this.soundEffect = "./audio/soundEffects/mixkit-deep-air-woosh-2604.wav";
     }
@@ -1227,7 +1238,7 @@ export class CastShadow extends Ability{
                     weilder.statusArray[i].currentCharges = weilder.statusArray[i].maxCharges;
                     hiddenCheck = false;
                 }
-                if(weilder.statusArray[i].name == "empowered" && hiddenCheck == false){
+                if(weilder.statusArray[i].name == "empowered" && empoweredCheck == true){
                     weilder.statusArray[i].currentCharges = weilder.statusArray[i].maxCharges;
                     empoweredCheck = false;
                 }
@@ -1253,7 +1264,7 @@ export class BlinkStrike extends Ability{
         this.speedMultiplier = 0.75;
         this.staminaCost = 8;
         this.magicCost = 10;
-        this.damageModifier = 2;
+        this.damageModifier = 5;
         this.accuracy = 100;
         this.soundEffect = "./audio/soundEffects/mixkit-deep-air-woosh-2604.wav";
     }
@@ -1300,7 +1311,7 @@ export class Empower extends Ability{
         this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 8;
-        this.damageModifier = 2;
+        this.damageModifier = 0;
         this.accuracy = "";
         this.soundEffect = "./audio/soundEffects/short-fireball-woosh-6146.mp3";
     }
@@ -1372,12 +1383,12 @@ export class Roar extends Ability{
             if(this.checkMiss(weilder, target, this.name) == true){
                 return;
             }
-            let messageAddon = "lowering physical attack as low as possible!";
-            if(target.currentBluntAttack >= (target.baseBluntAttack - 9)){
+            let messageAddon = " lowering physical attack as low as possible!";
+            if(target.currentBluntAttack > (target.baseBluntAttack - 9)){
                 target.currentBluntAttack = target.currentBluntAttack - 3;
                 messageAddon = ", lowering physical attack";
             }
-            if(target.currentPierceAttack >= (target.basePierceAttack - 9)){
+            if(target.currentPierceAttack > (target.basePierceAttack - 9)){
                 target.currentPierceAttack = target.currentPierceAttack - 3;
                 messageAddon = ", lowering physical attack";
             }
@@ -1385,10 +1396,42 @@ export class Roar extends Ability{
         }
     }
 }
-/*
-export class SummonMeteor extends Ability{
-
+export class MeteorShower extends Ability{
+    constructor(){
+        super();
+        this.name = "meteor shower";
+        this.type = "bluntElemental";
+        this.speedMultiplier = 0.25;
+        this.staminaCost = 0;
+        this.magicCost = 30;
+        this.damageModifier = 20;
+        this.accuracy = 100;
+        this.soundEffect = "./audio/soundEffects/supernatural-explosion-104295.wav";
+    }
+    activate(weilder, target){
+        if(this.checkStamina(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
+            let damageOutput = Math.floor(Math.random() * ((((weilder.currentBluntAttack + weilder.currentElementalAttack)/2) + this.damageModifier) - ((weilder.currentBluntAttack + weilder.currentElementalAttack)/2) + 1)) + Math.floor(((weilder.currentBluntAttack + weilder.currentElementalAttack)/2));
+            damageOutput = this.checkDamage(damageOutput, weilder, target, (target.currentBluntDefense + target.currentElementalDefense)/2);
+            target.currentHP = target.currentHP - damageOutput;
+            theController.printToGameConsole(`${weilder.name} rains a ${this.name} against ${target.name} for ${damageOutput} damage!`);
+            if(damageOutput > 0){
+                if(Math.random()*3 < 1){
+                    for(let i = 0; i < target.statusArray.length; i++){
+                        if(target.statusArray[i].name == "burned"){
+                            return;
+                        }
+                    }
+                    target.statusArray.push(new Burned(target));
+                } 
+            }
+        }
+    }
 }
+/*
 export class ShapeShift extends Ability{
 
 }
@@ -1500,7 +1543,7 @@ export class ThrowKnife extends Ability{
         this.speedMultiplier = 1.0;
         this.staminaCost = 0;
         this.magicCost = 0;
-        this.damageModifier = 3;
+        this.damageModifier = 5;
         this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/arrow-body-impact-146419.mp3";
     }
@@ -1526,7 +1569,7 @@ export class ThrowPoisonedKnife extends Ability{
         this.speedMultiplier = 0.75;
         this.staminaCost = 0;
         this.magicCost = 0;
-        this.damageModifier = 3;
+        this.damageModifier = 5;
         this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/arrow-body-impact-146419.mp3";
     }

@@ -25,10 +25,10 @@ export function toggleNewEncounter(message, nextEncounter){
        theController.disableCharacterEncounterControls();
        theController.toggleEncounter(nextEncounter);
 }
-export function toggleBattle(message, enemyArray){
+export function toggleBattle(message, enemyArray, canRetreat){
     theController.printToGameConsole(message);
     theController.endEncounter(true);
-    theController.toggleBattle(enemyArray);
+    theController.toggleBattle(enemyArray, canRetreat);
     theController.nextRoom.enemyArray = enemyArray;
 }
 export function loot(message, itemArray, goldMin, goldMax){
