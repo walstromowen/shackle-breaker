@@ -5,7 +5,7 @@ import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Lon
     IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
     ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide, Bandage, FrostbiteTonic, ParalysisTonic, PineWood, TigerClaw, DogPaw, HawkTalons
     } from "./items.js";
-import {Recover, Punch, Retreat, SummonSkeleton} from "./abilities.js"
+import {Recover, Punch, Retreat} from "./abilities.js"
 import Character from "./character.js";
 import Map from "./map.js";
 import MiniMap from "./miniMap.js";
@@ -1627,7 +1627,9 @@ export default class Controller {
     }
     calculateMaxEnemyCount(){
         let avgPartyLevel = this.calculateAveragePartyLevel()
-        let enemyCount = Math.ceil(Math.random() * Math.floor(avgPartyLevel/2));
+        let enemyCount = Math.random() * Math.ceil(avgPartyLevel/2);
+
+     
         if(enemyCount > 6){
             enemyCount = 6;
         }
