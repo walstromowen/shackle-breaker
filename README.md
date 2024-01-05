@@ -33,6 +33,7 @@ Text adventure game based on the Shackle Breaker story
 * Recurperate and channel acasionally giving going over max limit
 * Shiphon not doing damage
 * Switching combatants causes health bar to be bigger than max when switching to animal
+* after bug above all max stats turn the same for all party members
 
 # MISC notes
 * Enemy Level ups disstribute 16 points between stats

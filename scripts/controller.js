@@ -79,7 +79,7 @@ export default class Controller {
             }
             //this.party.push(new Character(["kurtus", "media/kurty.jpg", "traveler", [100, 100, 100, 100, 100, 100], [new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]));
             
-            this.map = new Map("portal", "boss1");
+            this.map = new Map("basic", "random");
             this.miniMap = new MiniMap();
             this.map.mapEnviorment.terrain.onload = ()=>{
                 this.initializeRooms(this.map);
@@ -1627,13 +1627,12 @@ export default class Controller {
     }
     calculateMaxEnemyCount(){
         let avgPartyLevel = this.calculateAveragePartyLevel()
-        let enemyCount = Math.random() * Math.ceil(avgPartyLevel/2);
-
-     
-        if(enemyCount > 6){
-            enemyCount = 6;
+        if(avgPartyLevel > 12){
+            avgPartyLevel = 12;
         }
-        if(enemyCount == 1 && this.party.length == 1){
+        let enemyCount = Math.ceil(Math.random() * Math.ceil(avgPartyLevel/2));
+        if(enemyCount <= 0){
+            enemyCount = 1;
         }
         return enemyCount;
     }
