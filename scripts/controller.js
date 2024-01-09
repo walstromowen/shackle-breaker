@@ -655,9 +655,9 @@ export default class Controller {
         this.canMoveRoom = false;
         setTimeout(()=>{
             for(let i = 0; i < this.party.length; i++){
-                this.party[i].currentHP =  this.party[0].maxHP;
-                this.party[i].currentStamina =  this.party[0].maxStamina;
-                this.party[i].currentMagic =  this.party[0].maxMagic;
+                this.party[i].currentHP =  this.party[i].maxHP;
+                this.party[i].currentStamina =  this.party[i].maxStamina;
+                this.party[i].currentMagic =  this.party[i].maxMagic;
                 let statusLength = this.party[i].statusArray.length
                 for(let j = 0; j < statusLength; j++){
                     this.party[i].statusArray[0].onRemove();
