@@ -327,7 +327,7 @@ export class GuardBreak extends Ability{
                 }
             }
             let damageOutput1 = this.checkDamage(damageOutput, weilder, target, target.currentBluntDefense, "stamina");
-            let damageOutput2 = this.checkDamage(Math.floor(damageOutput/2), weilder, target, target.currentBluntDefense, "health");
+            let damageOutput2 = this.checkDamage(Math.floor(damageOutput/1.25), weilder, target, target.currentBluntDefense, "health");
             target.currentHP = target.currentHP - damageOutput2;
             target.currentStamina = target.currentStamina - damageOutput1;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput2} damage and ${damageOutput1} stamina damage!`);
@@ -872,7 +872,7 @@ export class Shockwave extends Ability{
                 }
             }
             let damageOutput1 = this.checkDamage(damageOutput, weilder, target, (target.currentBluntDefense + target.currentElementalDefense)/2, "stamina");
-            let damageOutput2 = this.checkDamage(Math.floor(damageOutput/2), weilder, target, (target.currentBluntDefense + target.currentElementalDefense)/2, "health");
+            let damageOutput2 = this.checkDamage(Math.floor(damageOutput/1.25), weilder, target, (target.currentBluntDefense + target.currentElementalDefense)/2, "health");
             target.currentHP = target.currentHP - damageOutput2;
             target.currentStamina = target.currentStamina - damageOutput1;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput2} damage and ${damageOutput1} stamina damage!`);
