@@ -1629,14 +1629,7 @@ export default class Controller {
         return Math.ceil(sum / this.party.length);
     }
     calculateMaxEnemyCount(){
-        let avgPartyLevel = this.calculateAveragePartyLevel()
-        if(avgPartyLevel > 12){
-            avgPartyLevel = 12;
-        }
-        let enemyCount = Math.ceil(Math.random() * Math.ceil(avgPartyLevel/2));
-        if(enemyCount <= 0){
-            enemyCount = 1;
-        }
+        let enemyCount = Math.floor(Math.random() * (this.party.length) + 1);
         return enemyCount;
     }
 }
