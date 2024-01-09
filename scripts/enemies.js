@@ -859,9 +859,9 @@ export class AncientAltusKing extends Enemy{
         this.currentSpeed = this.baseSpeed;
         this.baseEvasion = 25;
         this.currentEvasion = this.baseEvasion;
-        this.abilityArray = [new Shockwave, new IceShard, new SummonSkeleton];
+        this.abilityArray = [new Siphon, new Shockwave, new IceShard, new SummonSkeleton];
         this.lootChanceMultiplier = 0; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new IceStaff];
+        this.lootArray = [new IceStaff, new DarkStaff];
         this.gold = 0;
         this.xp = 0;
         this.isBoss = true;

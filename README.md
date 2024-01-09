@@ -34,6 +34,7 @@ Text adventure game based on the Shackle Breaker story
 * Shiphon not doing damage
 * Switching combatants causes health bar to be bigger than max when switching to animal
 * after bug above all max stats turn the same for all party members
+* status effects that occur on turn end not firing upon entity death.
 
 # MISC notes
 * Enemy Level ups disstribute 16 points between stats

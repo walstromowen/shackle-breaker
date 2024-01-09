@@ -262,6 +262,7 @@ export default class Controller {
     }
     enableMapTransitionControls(){
         document.getElementById('map-transition-continue-btn').addEventListener("click", ()=>{
+            this.generateNewMap("basic", "random");
             if(this.calculateAveragePartyLevel() >= 10 && this.gameStage == 0){
                 this.generateNewMap("altus castle", "boss1");
                 this.gameStage = 1;
@@ -269,9 +270,6 @@ export default class Controller {
             if(this.calculateAveragePartyLevel() >= 15 && this.gameStage == 1){
                 this.generateNewMap("altus castle", "boss1");
                 this.gameStage = 2;
-            }
-            else{
-                this.generateNewMap("basic", "random");
             }
             this.canMoveRoom = true;
             this.map.mapEnviorment.terrain.onload = ()=>{
@@ -1185,11 +1183,15 @@ export default class Controller {
                         return;
                     }
                     if(this.party[0].equippedArray[0] !== "Empty"){
-                        if(this.party[0].equippedArray[1] !== "Empty"){
+                        if(this.party[0].equippedArray[1] !== "Empty"){//if offhand full, unequip main and equip to main
+                            if(this.party[0].equippedArray[0].type == "two hand"){
+                                this.party[0].equippedArray[1] = "Empty";
+                                this.updateCharacterEquippedTab(1);
+                            }
                             this.partyInventory.push(this.party[0].equippedArray[0]);
                             this.party[0].equippedArray[0] = this.partyInventory[inventoryIndex];
                             this.updateCharacterEquippedTab(0);
-                        }else{
+                        }else{//else equip to offhand
                             this.party[0].equippedArray[1] = this.partyInventory[inventoryIndex];
                             this.updateCharacterEquippedTab(1);
                         }
@@ -1207,9 +1209,10 @@ export default class Controller {
                     }
                     if(this.party[0].equippedArray[0] !== "Empty"){
                         this.partyInventory.push(this.party[0].equippedArray[0]);
-                    }
-                    if(this.party[0].equippedArray[1] !== "Empty"){
-                        this.partyInventory.push(this.party[0].equippedArray[1]);
+                    }else{
+                        if(this.party[0].equippedArray[1] !== "Empty"){
+                            this.partyInventory.push(this.party[0].equippedArray[1]);
+                        }
                     }
                     this.party[0].equippedArray[0] = this.partyInventory[inventoryIndex];
                     this.party[0].equippedArray[1] = this.partyInventory[inventoryIndex];

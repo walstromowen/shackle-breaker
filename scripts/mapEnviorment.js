@@ -101,11 +101,11 @@ export default class MapEnviorment{
                         this.backgroundMusicSrc = "./audio/gathering-darkness-kevin-macleod-main-version-04-22-8459.mp3";
                         this.battleMusicSrc = "./audio/battle-sword-139313.mp3";
                         this.frameCoordinates = [
-                            [3],
-                            [3],
+                            [6],
+                            [6],
                             [0],
                             [0],
-                            [0]
+                            [6]
                         ];
                         break;
                     default:
@@ -118,11 +118,11 @@ export default class MapEnviorment{
                         this.backgroundMusicSrc = "./audio/mixkit-evil-storm-atmosphere-2404.wav";
                         this.battleMusicSrc = "./audio/battle-sword-139313.mp3";
                         this.frameCoordinates = [
-                            [3],
-                            [3],
+                            [6],
+                            [6],
                             [0],
                             [0],
-                            [0]
+                            [6]
                         ];
             default:
                 break;
