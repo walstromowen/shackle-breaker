@@ -84,7 +84,7 @@ export class Bound extends StatusEffect{
         this.currentCharges = this.maxCharges;
     }
     onStartTurn(){
-        if(this.holder.nextMove.name != 'switch combatant'){
+        if(this.holder.nextMove.name != "cleanse" || this.holder.nextMove.name != 'switch combatant'){
             this.holder.nextMove = new Struggle;
             if(Math.random()*3 > 2){
                 this.currentCharges = this.currentCharges - 1;
@@ -183,9 +183,11 @@ export class Paralyzed extends StatusEffect{
         this.currentCharges = this.maxCharges;
     }
     onStartTurn(){
-        this.holder.nextMove = new Struggle;
-        this.currentCharges = this.currentCharges - 1;
-        theController.printToGameConsole(`${this.holder.name} is paralyzed!`);
+        if(this.holder.nextMove.name != "cleanse" || this.holder.nextMove.name != "use paralysis tonic" || this.holder.nextMove.name != 'switch combatant'){
+            this.holder.nextMove = new Struggle;
+            this.currentCharges = this.currentCharges - 1;
+            theController.printToGameConsole(`${this.holder.name} is paralyzed!`);
+        }
     }
 }
 export class Channeled extends StatusEffect{
@@ -243,19 +245,21 @@ export class Frostbite extends StatusEffect{
         this.serverityMultiplier = 0.05;
     }
     onStartTurn(){
-        if(Math.random()*2 < 1 && this.holder.nextMove.name != 'switch combatant'){
-            theController.printToGameConsole(`${this.holder.name} is frozen!`);
-            this.holder.nextMove = new Struggle();
-        }else{
-            let damageOutput = Math.floor(this.holder.maxHP*this.serverityMultiplier);
-            damageOutput = this.checkDamage(damageOutput, this.holder);
-            if(damageOutput == 0){
-                damageOutput = 1;
+        if(this.holder.nextMove.name != "cleanse" || this.holder.nextMove.name != "use frostbite tonic" || this.holder.nextMove.name != 'switch combatant'){
+            if(Math.random()*2 < 1){
+                theController.printToGameConsole(`${this.holder.name} is frozen!`);
+                this.holder.nextMove = new Struggle();
+            }else{
+                let damageOutput = Math.floor(this.holder.maxHP*this.serverityMultiplier);
+                damageOutput = this.checkDamage(damageOutput, this.holder);
+                if(damageOutput == 0){
+                    damageOutput = 1;
+                }
+                this.holder.currentHP = this.holder.currentHP - damageOutput;
+                theController.printToGameConsole(`${this.holder.name} suffers ${damageOutput} frostbite damage!`);
             }
-            this.holder.currentHP = this.holder.currentHP - damageOutput;
-            theController.printToGameConsole(`${this.holder.name} suffers ${damageOutput} frostbite damage!`);
+            this.currentCharges = this.currentCharges - 1;
         }
-        this.currentCharges = this.currentCharges - 1;
     }
 }
 export class Hidden extends StatusEffect{

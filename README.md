@@ -32,9 +32,9 @@ Text adventure game based on the Shackle Breaker story
 * Enemy Status Icons still appear on next enemies ocasionally
 * Recurperate and channel acasionally giving going over max limit
 * Shiphon not doing damage
-* Switching combatants causes health bar to be bigger than max when switching to animal
-* after bug above all max stats turn the same for all party members
 * status effects that occur on turn end not firing upon entity death.
+* item mini menus sometimes cut off on smaller screens
+* Tonics not removing struggle effect.
 
 # MISC notes
 * Enemy Level ups disstribute 16 points between stats

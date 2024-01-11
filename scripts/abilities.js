@@ -1317,6 +1317,15 @@ export class CastShadow extends Ability{
             }
         }
     }
+    canUseSpecialCondition(weilder, currentCharacter){
+        if(weilder !== currentCharacter){
+            for(let i = 0; i < weilder.statusArray.length; i++){
+                if(weilder.statusArray[i].name == "hidden"){
+                    return false;
+                }
+            }
+        }
+    }
 }
 export class BlinkStrike extends Ability{
     constructor(){
@@ -1876,7 +1885,7 @@ export class UseParalysisTonic extends Ability{
     }
     activate(weilder, target){
         for(let i = 0; i < weilder.statusArray.length; i++){
-            if(weilder.statusArray[i].name == "paralysis"){
+            if(weilder.statusArray[i].name == "paralyzed"){
                 weilder.statusArray.splice(i, 1);
                 theController.printToGameConsole(`${weilder.name} was treated for paraylsis!`);
                 theController.playSoundEffect(this.soundEffect);
@@ -1886,7 +1895,7 @@ export class UseParalysisTonic extends Ability{
     }
     canUse(weilder){
         for(let i = 0; i < weilder.statusArray.length; i++){
-            if(weilder.statusArray[i].name == "paralysis"){
+            if(weilder.statusArray[i].name == "paralyzed"){
                 return true;
             }
         }
@@ -1948,16 +1957,6 @@ export class ThrowSmokebomb extends Ability{
         let status = new Hidden(weilder);
         status.onApplied();
         weilder.statusArray.push(status);
-    }
-    canUse(weilder){
-        if(theController.isInBattle == false){
-            theController.printToGameConsole("cannot use outside of combat.");
-            return false;
-        }else{
-            if(this.canUseSpecialCondition(weilder, currentCharacter) == false){
-                return false;
-            }
-        }
     }
     canUseSpecialCondition(weilder, currentCharacter){
         if(weilder !== currentCharacter){

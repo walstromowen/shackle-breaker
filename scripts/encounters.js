@@ -533,7 +533,7 @@ export class MercenaryForHire extends Encounter{
                 ]
             ),
             new Decision(
-                "hire (200 gold)", 
+                "hire (100 gold)", 
                 ()=>{theController.printToGameConsole(`${theController.party[0].name} attempts to hire the mercenary.`)},
                 "certain",
                 [
@@ -678,7 +678,7 @@ export class AnimalTracks extends Encounter{
                         this.trackedEntity = new Character(["Dog", "./media/dog.jpg", "animal", [0,6,6,6,6,6], [new DogPaw, new DogPaw, "N/A", "N/A", "N/A", "N/A", "N/A"]]);
                         break;
                     case 1:
-                        this.tempCompanionValue = new Character(["Hawk", "./media/hawk.jpg", "animal", [0,6,6,6,6,6], [new HawkTalons, new HawkTalons, "N/A", "N/A", "N/A", "N/A", "N/A"]]);
+                        this.trackedEntity = new Character(["Hawk", "./media/hawk.jpg", "animal", [0,6,6,6,6,6], [new HawkTalons, new HawkTalons, "N/A", "N/A", "N/A", "N/A", "N/A"]]);
                         break;
                 }
                 switch(Math.floor(Math.random()*2)){
@@ -708,7 +708,7 @@ export class AnimalTracks extends Encounter{
             case "mountain":
                 switch(Math.floor(Math.random()*1)){
                     case 0:
-                        this.tempCompanionValue = new Character(["Hawk", "./media/hawk.jpg", "animal", [0,6,6,6,6,6], [new HawkTalons, new HawkTalons, "N/A", "N/A", "N/A", "N/A", "N/A"]]);
+                        this.trackedEntity = new Character(["Hawk", "./media/hawk.jpg", "animal", [0,6,6,6,6,6], [new HawkTalons, new HawkTalons, "N/A", "N/A", "N/A", "N/A", "N/A"]]);
                         break;
                 }
                 switch(Math.floor(Math.random()*2)){
@@ -806,7 +806,7 @@ export class WoundedAnimal extends Encounter{
                 ]
             ),
             new Decision(
-                "put down animal", 
+                "put animal to rest", 
                 ()=>{theController.printToGameConsole(`not wanting to see the amimal struggle, ${theController.party[0].name} puts down the ${theController.encounter.trackedEntity.name}.`)},
                 "likely",
                 [

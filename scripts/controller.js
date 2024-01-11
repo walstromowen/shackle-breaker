@@ -213,6 +213,13 @@ export default class Controller {
             case "assasians-belt":
                 inventoryArray.push(new PoisonedKnife, new SmokeBomb, new Antidote);
                 break;
+            case "artisans-tools":
+                inventoryArray.push(new PineWood, new Hide);
+                break;
+            case "alchemists-vials":
+                inventoryArray.push(new ParalysisTonic, new FrostbiteTonic);
+                break;
+            
         }
         Array.from(document.getElementById("character-creation-inventory").getElementsByClassName("inventory-slot-long")).forEach(slot=>{
             slot.remove();
@@ -482,7 +489,7 @@ export default class Controller {
                         break;
                 }
                 this.party[0].scaleAttributes();
-                for(let j = 0; j < this.party[0].length; j++){
+                for(let j = 0; j < this.party[0].statusArray.length; j++){
                     this.party[0].statusArray[0].onRemove();
                     this.party[0].statusArray.splice(0,1);
                 }
