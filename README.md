@@ -34,7 +34,6 @@ Text adventure game based on the Shackle Breaker story
 * Shiphon not doing damage
 * status effects that occur on turn end not firing upon entity death.
 * item mini menus sometimes cut off on smaller screens
-* Tonics not removing struggle effect.
 
 # MISC notes
 * Enemy Level ups disstribute 16 points between stats

@@ -1865,7 +1865,7 @@ export class UseFrostbiteTonic extends Ability{
     }
     canUse(weilder){
         for(let i = 0; i < weilder.statusArray.length; i++){
-            if(weilder.statusArray[i].name == "bleeding"){
+            if(weilder.statusArray[i].name == "frostbite"){
                 return true;
             }
         }
