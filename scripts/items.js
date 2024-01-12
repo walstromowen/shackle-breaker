@@ -1,13 +1,13 @@
 import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, GuardBreak, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy, UseBandage,
         ThrowNet, Immolate, LightningBolt, Shockwave, Recuperate, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Channel, ThrowSmokebomb, CastShadow, BlinkStrike, Empower, WildSwing, Pounce, Bite, ShootArrow, TripleShot,
-        Roar, UseFrostbiteTonic, UseParalysisTonic, MeteorShower, SummonSkeleton, ArcaneSalvo, Bless} from "./abilities.js"
+        Roar, UseFrostbiteTonic, UseParalysisTonic, MeteorShower, SummonSkeleton, ArcaneSalvo, Bless, VineLash, ThrowThistles} from "./abilities.js"
 
 export function getRandomItem(){
     let itemArray = [new LinenShirt, new LinenPants, new Dagger, new BlacksmithHammer, new Spear, new Shortsword, new Longsword, new Handaxe, new NightbladeSword,
                 new Shiv, new Buckler, new FireStaff, new LightningStaff, new IceStaff, new ArcaneStaff, new LightStaff, new DarkStaff, new LeatherHelmet, 
                 new LeatherHood, new LeatherGloves, new LeatherChestplate, new LeatherGreaves, new NightbladeHelm, new NightbladeChestplate,
                 new LeatherBoots, new KiteShield, new IronHelmet, new IronGauntlets, new IronChainmail, 
-                new IronGreaves, new IronBoots, new CrystalBall, new ClothHood, new ClothRobe, new Shortbow,
+                new IronGreaves, new IronBoots, new CrystalBall, new ClothHood, new ClothRobe, new Shortbow, new ForestStaff,
                 new HealthPotion, new StaminaPotion, new MagicPotion, 
                 new ThrowingKnife, new PoisonedKnife, new Meteorite, new Antidote, new AloeRemedy, new Net, new SmokeBomb, new Bandage, new FrostbiteTonic, new ParalysisTonic];
                 return itemArray[Math.floor(Math.random() * itemArray.length)];
@@ -702,6 +702,43 @@ export class DarkStaff {
         }
         if(this.level == 3){
             this.abilityArray.push(new SummonSkeleton());
+        }
+    }
+}
+export class ForestStaff {
+    constructor(){
+        this.name = "forest staff";
+        this.type = "one hand";
+        this.imageSrc = "./media/icons/staff.png";
+        this.description = `A carved walking staff made from the branch of a tree. The discovery of the artifact released the potential ordinary things like this former tree branch`;
+        this.level = 1;
+        this.price = 200;
+        this.bluntAttack = 2;
+        this.pierceAttack = 2;
+        this.arcaneAttack = 0;
+        this.elementalAttack = 2;
+        this.bluntDefense = 1;
+        this.pierceDefense = 1;
+        this.arcaneDefense = 0;
+        this.elementalDefense = 1;
+        this.speed = 0;
+        this.evasion = 0;
+        this.abilityArray = [new VineLash(), new ThrowThistles(), new Strike(), new Meditate()];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.bluntAttack = this.bluntAttack + 2;
+            this.pierceAttack = this.pierceAttack + 2;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 2;
+            this.bluntDefense = this.bluntDefense + 0;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 0;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
         }
     }
 }

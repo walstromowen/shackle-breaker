@@ -1,10 +1,10 @@
 import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
     ThrowNet, Immolate, LightningBolt, Channel, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Bite, SpitBile, LeechLife, Devour, Pounce, CastShadow, ThrowSmokebomb, Shockwave, GuardBreak, BlinkStrike, Punch, WildSwing,
-    Roar, ShootArrow, TripleShot, MeteorShower, SummonSkeleton} from "./abilities.js"
+    Roar, ShootArrow, TripleShot, MeteorShower, SummonSkeleton, VineLash, ThrowThistles} from "./abilities.js"
     import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer, NightbladeSword,
         Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, NightbladeHelm, NightbladeChestplate,
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
-        LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, Shortbow,
+        LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, Shortbow, ForestStaff,
         IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
         ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide, Bandage, FrostbiteTonic, ParalysisTonic, PineWood, TigerClaw, DogPaw, HawkTalons
         } from "./items.js";
@@ -344,9 +344,9 @@ export class Groveguardian extends Enemy{
         this.currentSpeed = this.baseSpeed;
         this.baseEvasion = 5;
         this.currentEvasion = this.baseEvasion;
-        this.abilityArray = [new Bite, new Devour, new GuardBreak];
+        this.abilityArray = [new Bite, new GuardBreak, new VineLash, new ThrowThistles];
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new HealthPotion, new AloeRemedy, new Antidote, new PineWood];
+        this.lootArray = [new HealthPotion, new AloeRemedy, new Antidote, new PineWood, new ForestStaff];
         this.gold = 0;
         this.xp = 0;
         this.isBoss = false;
@@ -533,7 +533,7 @@ export class Bandit extends Enemy{
         this.abilityArray = [new ThrowSmokebomb, new Slash, new Stab, new Eviscerate, new ThrowKnife];
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new Shortsword, new Longsword, new Dagger, new Shiv, new Handaxe, new LeatherHelmet, new LeatherHood, 
-                          new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
+                          new LeatherGloves, new LeatherChestplate, new LeatherGreaves, new Shortbow, 
                           new LeatherBoots, new HealthPotion, new StaminaPotion, new ThrowingKnife, new SmokeBomb, new Bandage];
         this.gold = 0;
         this.xp = 0;

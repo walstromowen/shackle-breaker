@@ -639,7 +639,7 @@ export class TripleShot extends Ability{
         this.speedMultiplier = 0.5;
         this.staminaCost = 16;
         this.magicCost = 0;
-        this.damageModifier = 10;
+        this.damageModifier = 20;
         this.accuracy = 70;
         this.soundEffect = "./audio/soundEffects/arrow-body-impact-146419.mp3";
         
@@ -650,7 +650,7 @@ export class TripleShot extends Ability{
             for(let j = 0; j < 3; j++){
                 if(this.checkMiss(weilder, target, this.name) != true){
                     let damageOutput = Math.floor(Math.random() * ((weilder.currentPierceAttack + this.damageModifier) - weilder.currentPierceAttack + 1)) + weilder.currentPierceAttack;
-                    damageOutput = this.checkDamage(Math.floor(damageOutput/2.5), weilder, target, target.currentPierceDefense/2.5, "health");
+                    damageOutput = this.checkDamage(Math.floor(damageOutput/5), weilder, target, target.currentPierceDefense/5, "health");
                     theController.printToGameConsole(`-${weilder.name} shoots ${target.name} for ${damageOutput} damage!`);
                     target.currentHP = target.currentHP - damageOutput;
                     if(damageOutput > 0){
@@ -1073,7 +1073,7 @@ export class ArcaneSalvo extends Ability{
         this.speedMultiplier = 0.5;
         this.staminaCost = 0;
         this.magicCost = 16;
-        this.damageModifier = 10;
+        this.damageModifier = 20;
         this.accuracy = 100;
         this.soundEffect = "./audio/soundEffects/magic-missile-made-with-Voicemod-technology.mp3";
         
@@ -1086,7 +1086,7 @@ export class ArcaneSalvo extends Ability{
             for(let j = 0; j < count; j++){
                 if(Math.random()*this.accuracy > target.currentEvasion){
                     let damageOutput = Math.floor(Math.random() * ((((weilder.currentPierceAttack + weilder.currentArcaneAttack)/2) + this.damageModifier) - ((weilder.currentPierceAttack + weilder.currentArcaneAttack)/2) + 1) + ((weilder.currentPierceAttack + weilder.currentArcaneAttack)/2))
-                    damageOutput = this.checkDamage(Math.floor(damageOutput/2), weilder, target, target.currentPierceDefense/2, "health");
+                    damageOutput = this.checkDamage(Math.floor(damageOutput/4), weilder, target, target.currentPierceDefense/4, "health");
                     theController.printToGameConsole(`- ${target.name} takes ${damageOutput} damage!`);
                     target.currentHP = target.currentHP - damageOutput;
                 }else{
@@ -1141,10 +1141,15 @@ export class Cleanse extends Ability{
     }
     activate(weilder, target){ 
         if(this.checkMagic(weilder) == true){  
-            theController.printToGameConsole(`${weilder.name} was cleansed of the ${weilder.statusArray[0].name} effect.`);
-            weilder.statusArray.splice(0, 1);
             theController.playSoundEffect(this.soundEffect);
-            return;
+            for(let i = 0; i < weilder.statusArray.length; i++){
+                if(weilder.statusArray[i].isCleansable == true){
+                    theController.printToGameConsole(`${weilder.name} was cleansed of the ${weilder.statusArray[i].name} effect.`);
+                    weilder.statusArray[i].onRemove();
+                    weilder.statusArray.splice(i, 1);
+                    break;
+                }
+            }
         } 
     }
     canUseSpecialCondition(weilder, currentCharacter){
@@ -1251,6 +1256,82 @@ export class Siphon extends Ability{
             }
             weilder.currentMagic = weilder.currentMagic + restoreAmount;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} magic damage and sihpons ${restoreAmount} magic!`);
+        }
+    }
+}
+export class VineLash extends Ability{
+    constructor(){
+        super();
+        this.name = "vine lash";
+        this.type = "bluntElemental";
+        this.speedMultiplier = 0.5;
+        this.staminaCost = 6;
+        this.magicCost = 6;
+        this.damageModifier = 5;
+        this.accuracy = 80;
+        this.soundEffect = "./audio/soundEffects/sword-sound-2-36274.mp3";
+    }
+    activate(weilder, target){
+        if(this.checkStamina(weilder) == true && this.checkMagic(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
+            let damageOutput = Math.floor(Math.random() * ((((weilder.currentBluntAttack + weilder.currentElementalAttack)/2) + this.damageModifier) - ((weilder.currentBluntAttack + weilder.currentElementalAttack)/2) + 1) + ((weilder.currentBluntAttack + weilder.currentElementalAttack)/2))
+            damageOutput = this.checkDamage(damageOutput, weilder, target, (target.currentBluntDefense + target.currentElementalDefense)/2, "health");
+            target.currentHP = target.currentHP - damageOutput;
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
+            if(damageOutput > 0){
+                if(Math.random()*3 < 1){
+                    for(let i = 0; i < target.statusArray.length; i++){
+                        if(target.statusArray[i].name == "bound"){
+                            return;
+                        }
+                    }
+                    target.statusArray.push(new Bound(target));
+                }
+            }
+        }
+    }    
+}
+export class ThrowThistles extends Ability{
+    constructor(){
+        super();
+        this.name = "throw thistles";
+        this.type = "pierceElemental";
+        this.speedMultiplier = 0.5;
+        this.staminaCost = 10;
+        this.magicCost = 10;
+        this.damageModifier = 20;
+        this.accuracy = 60;
+        this.soundEffect = "./audio/soundEffects/magic-missile-made-with-Voicemod-technology.mp3";
+        
+    }
+    activate(weilder, target){
+        if(this.checkStamina(weilder) == true && this.checkMagic(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            for(let j = 0; j < 5; j++){
+                if(this.checkMiss(weilder, target, this.name) != true){
+                    let damageOutput = Math.floor(Math.random() * ((((weilder.currentPierceAttack + weilder.currentElementalAttack)/2)+ this.damageModifier) - ((weilder.currentPierceAttack + weilder.currentElementalAttack)/2) + 1)) + ((weilder.currentPierceAttack + weilder.currentElementalAttack)/2);
+                    damageOutput = this.checkDamage(Math.floor(damageOutput/6), weilder, target, target.currentPierceDefense/6, "health");
+                    theController.printToGameConsole(`-${weilder.name} shoots ${target.name} for ${damageOutput} damage!`);
+                    target.currentHP = target.currentHP - damageOutput;
+                    if(damageOutput > 0){
+                        if(Math.random()*60 < 1){
+                            let flag = false;
+                            for(let i = 0; i < target.statusArray.length; i++){
+                                if(target.statusArray[i].name == "posioned"){
+                                    flag = true;
+                                    break;
+                                }
+                            }
+                            if(flag == false){
+                                target.statusArray.push(new Poisoned(target));
+                            }
+                        } 
+                    }
+                }
+            }
         }
     }
 }

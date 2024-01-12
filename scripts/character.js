@@ -31,7 +31,7 @@ export default class Character{
         this.baseElementalDefense = 0;
         this.baseSpeed = 0;
         this.baseEvasion = 0;
-        this.statusArray = [new Frostbite(this)];//new Poisoned(this), new Burned(this), new Frostbite(this), new Paralyzed(this), new Shielded(this), new Energized(this), new Empowered(this), new Bound(this)
+        this.statusArray = [];//new Poisoned(this), new Burned(this), new Frostbite(this), new Paralyzed(this), new Shielded(this), new Energized(this), new Empowered(this), new Bound(this)
         this.nextMove = "";
         this.scaleAttributes()
         this.currentHP = this.maxHP;
