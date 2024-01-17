@@ -1216,10 +1216,9 @@ export default class Controller {
                     }
                     if(this.party[0].equippedArray[0] !== "Empty"){
                         this.partyInventory.push(this.party[0].equippedArray[0]);
-                    }else{
-                        if(this.party[0].equippedArray[1] !== "Empty"){
-                            this.partyInventory.push(this.party[0].equippedArray[1]);
-                        }
+                    }
+                    if(this.party[0].equippedArray[1] !== "Empty"){
+                        this.partyInventory.push(this.party[0].equippedArray[1]);
                     }
                     this.party[0].equippedArray[0] = this.partyInventory[inventoryIndex];
                     this.party[0].equippedArray[1] = this.partyInventory[inventoryIndex];

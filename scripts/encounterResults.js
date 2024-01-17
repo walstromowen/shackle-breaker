@@ -49,11 +49,24 @@ export function loot(message, itemArray, goldMin, goldMax){
     theController.updatePartyInventoryTab(theController.partyInventory);
     theController.endEncounter();
 }
-export function takeDamage(message, minPercentage, maxPercentage){
-    let damageOutput = Math.floor(Math.random() * ((theController.party[0].currentHP * maxPercentage) - (theController.party[0].currentHP * minPercentage) + 1) + (theController.party[0].currentHP * minPercentage));
-    damageOutput = checkDamage(damageOutput, theController.party[0]);
-    theController.party[0].currentHP = theController.party[0].currentHP - damageOutput;
-    theController.printToGameConsole(message + ` ${theController.party[0].name} takes ${damageOutput} damage.`);
+export function takeDamage(message, minPercentage, maxPercentage, targets){
+    let damageOutput
+    switch(targets){
+        case "all":
+            for(let i = 0; i < theController.party.length; i ++){
+                damageOutput = Math.floor(Math.random() * ((theController.party[i].currentHP * maxPercentage) - (theController.party[0].currentHP * minPercentage) + 1) + (theController.party[0].currentHP * minPercentage));
+                damageOutput = checkDamage(damageOutput, theController.party[i]);
+                theController.party[0].currentHP = theController.party[i].currentHP - damageOutput;
+                theController.printToGameConsole(message + ` ${theController.party[i].name} takes ${damageOutput} damage.`);
+            }
+            break;
+        default:
+            damageOutput = Math.floor(Math.random() * ((theController.party[0].currentHP * maxPercentage) - (theController.party[0].currentHP * minPercentage) + 1) + (theController.party[0].currentHP * minPercentage));
+            damageOutput = checkDamage(damageOutput, theController.party[0]);
+            theController.party[0].currentHP = theController.party[0].currentHP - damageOutput;
+            theController.printToGameConsole(message + ` ${theController.party[0].name} takes ${damageOutput} damage.`);
+            break;
+    }
     theController.endEncounter();
 }
 export function regainHP(message, percentage){

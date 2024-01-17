@@ -1,7 +1,7 @@
 import Character from "./character.js";
 import { Shortsword } from "./items.js";
 import {controller as theController} from "./main.js"
-import {Shielded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden, Bleeding, Blessed} from "./statusEffects.js";
+import {Shielded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden, Bleeding, Blessed, Vortexed} from "./statusEffects.js";
 
 class Ability{
     canUse(weilder, currentCharacter){
@@ -210,6 +210,9 @@ export class Retreat extends Ability{
     }
     activate(weilder, target){
         if(this.checkStamina(weilder) == true){
+            if(weilder !== theController.party[0]){
+                theController.nextRoom.enemyArray = [];
+            }
             theController.printToGameConsole(`${weilder.name} retreats!`);
             theController.playSoundEffect(this.soundEffect);
             return "retreat";
@@ -668,6 +671,39 @@ export class TripleShot extends Ability{
                         } 
                     }
                 }
+            }
+        }
+    }
+}
+export class ShootPoisonArrow extends Ability{
+    constructor(){
+        super();
+        this.name = "shoot poisoned arrow";
+        this.type = "pierce";
+        this.speedMultiplier = 1.0;
+        this.staminaCost = 20;
+        this.magicCost = 0;
+        this.damageModifier = 5;
+        this.accuracy = 70;
+        this.soundEffect = "./audio/soundEffects/arrow-body-impact-146419.mp3";
+    }
+    activate(weilder, target){
+        if(this.checkStamina(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentPierceAttack + this.damageModifier) - weilder.currentPierceAttack + 1)) + weilder.currentPierceAttack;
+            damageOutput = this.checkDamage(damageOutput, weilder, target, target.currentPierceDefense, "health");
+            target.currentHP = target.currentHP - damageOutput;
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
+            if(damageOutput > 0){   
+                for(let i = 0; i < target.statusArray.length; i++){
+                    if(target.statusArray[i].name == "poisoned"){
+                        return;
+                    }
+                }
+                target.statusArray.push(new Poisoned(target));
             }
         }
     }
@@ -1320,7 +1356,7 @@ export class ThrowThistles extends Ability{
                         if(Math.random()*60 < 1){
                             let flag = false;
                             for(let i = 0; i < target.statusArray.length; i++){
-                                if(target.statusArray[i].name == "posioned"){
+                                if(target.statusArray[i].name == "poisoned"){
                                     flag = true;
                                     break;
                                 }
@@ -1330,6 +1366,42 @@ export class ThrowThistles extends Ability{
                             }
                         } 
                     }
+                }
+            }
+        }
+    }
+}
+export class VortexSheild extends Ability{
+    constructor(){
+        super();
+        this.name = "vortex sheild";
+        this.type = "elemental";
+        this.speedMultiplier = 0.5;
+        this.staminaCost = 0;
+        this.magicCost = 16;
+        this.accuracy = "";
+        this.soundEffect = "./audio/soundEffects/mixkit-deep-air-woosh-2604.wav";
+    }
+    activate(weilder, target){
+        if(this.checkMagic(weilder) == true){
+            theController.printToGameConsole(`${weilder.name} uses ${this.name}!`);
+            theController.playSoundEffect(this.soundEffect);
+            for(let i = 0; i < weilder.statusArray.length; i++){
+                if(weilder.statusArray[i].name == "vortexed"){
+                    weilder.statusArray[i].currentCharges = weilder.statusArray[i].maxCharges;
+                    return;
+                }
+            }
+            let status = new Vortexed(weilder)
+            status.onApplied();
+            weilder.statusArray.push(status);
+        }
+    }
+    canUseSpecialCondition(weilder, currentCharacter){
+        if(weilder !== currentCharacter){
+            for(let i = 0; i < weilder.statusArray.length; i++){
+                if(weilder.statusArray[i].name == "vortexed"){
+                    return false;
                 }
             }
         }

@@ -1,13 +1,13 @@
 import {controller as theController} from "./main.js"
 import Character from "./character.js";
 import {Decision} from "./encounterDecision.js";
-import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, Bandit, SkeletonMage, Ghost, AltusGuard, Yeti, Tiger} from "./enemies.js";
+import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, Bandit, SkeletonMage, Ghost, AltusGuard, Yeti, Tiger, Merchant} from "./enemies.js";
 import {Shielded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden} from "./statusEffects.js";
 import {regainHP, initiateTrade, leave, retry, removeDecision, toggleNewEncounter, toggleBattle, loot, takeDamage, recieveStatusEffect, changeMap, recruit} from "./encounterResults.js";
 import {getRandomItem, LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer, NightbladeSword,
-    Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, NightbladeHelm, NightbladeChestplate,
+    Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, NightbladeHelm, NightbladeChestplate, RoyalAltusRobes, RoyalAltusPants,
     LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
-    LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, Shortbow,
+    LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, Shortbow, ForestStaff,
     IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
     ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide, Bandage, FrostbiteTonic, ParalysisTonic, PineWood, TigerClaw, DogPaw, HawkTalons
     } from "./items.js";
@@ -98,11 +98,19 @@ export class UnlockedTreasureChest extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.party[0].name} opens the chest.`)},
                 "likely",
                 [
-                    ()=>{loot(`${theController.party[0].name} finds the following items`, [getRandomItem()], 100, 10)}
+                    ()=>{
+                        let lootArray = [];
+                        let count = Math.ceil(Math.random()*3);
+                        for(let i = 0; i < count; i++){
+                            lootArray.push(getRandomItem())
+                        }
+                        loot(`${theController.party[0].name} finds the following items`, lootArray, 10, 100)
+                    }
                 ],
                 [
-                    ()=>{takeDamage(`as ${theController.party[0].name} opens the chest, an arrow flies up from the chest and hits ${theController.party[0].name}!`, 0.15, 0.25)},
-                    ()=>{recieveStatusEffect(`as ${theController.party[0].name} opens the chest, the chest explodes in an inferno of flames!`, new Burned(theController.party[0]))}
+                    ()=>{takeDamage(`as ${theController.party[0].name} opens the chest, an arrow flies up from the chest and hits ${theController.party[0].name}!`, 0.15, 0.25, 1)},
+                    ()=>{recieveStatusEffect(`as ${theController.party[0].name} opens the chest, the chest explodes in an inferno of flames!`, new Burned(theController.party[0]))},
+                    ()=>{recieveStatusEffect(`as ${theController.party[0].name} opens the chest, the chest englufs ${theController.party[0].name} in a cloud of noxious fumes!`, new Poisoned(theController.party[0]))}
                 ]
             )
         ];
@@ -133,7 +141,7 @@ export class AltusAmbushOpportunity extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.party[0].name} sneaks up to the official and draws a knife.`)},
                 "dexterity",
                 [
-                    ()=>{loot(`${theController.party[0].name} eliminates the offical without a sound. After searching the offical, ${theController.party[0].name} finds:`, [getRandomItem()], 40, 10)}
+                    ()=>{loot(`${theController.party[0].name} eliminates the offical without a sound. After searching the offical, ${theController.party[0].name} finds:`, [getRandomItem()], 10, 40)}
                 ],
                 [
                     ()=>{toggleBattle(`the altus official spots ${theController.party[0].name} and draws his weapon!`, [new AltusMage(theController.calculateAveragePartyLevel())], true)}
@@ -266,12 +274,14 @@ export class SuspiciousSkeleton extends Encounter{
                 "unlikely",
                 [
                     ()=>{loot(`${theController.party[0].name} and the skeleton have a pleasant discussion about the good old days. Then the skeleton gives ${theController.party[0].name}:`, [getRandomItem()], 0, 0)},
-                    ()=>{leave(`${theController.party[0].name} asks the skeleton for directions. The skeleton stares back in disbelief and then nods to the hallway ahead.`)}
+                    ()=>{leave(`${theController.party[0].name} asks the skeleton for directions. The skeleton stares back in disbelief and then nods to the hallway ahead.`)},
+                    ()=>{leave(`the skeleton doesn't respond. ${theController.party[0].name} moves on.`)},
+                    ()=>{recruit(`For reasons unknown, the skeleton decides to join ${theController.party[0].name} party...`, new Character(["Kurtus", "./media/skeleton.jpg", "companion", [-5,6,6,6,6,6], ["Empty", "Empty", new IronHelmet, new IronChainmail, new IronGauntlets, new IronGreaves, new IronBoots]]))},
+                    ()=>{recruit(`For reasons unknown, the skeleton decides to join ${theController.party[0].name} party...`, new Character(["Shimdy", "./media/skeleton-mage.jpg", "companion", [-5,5,5,5,5,10], [new ForestStaff, new CrystalBall, new ClothHood, new ClothRobe, "Empty", new LinenPants, new LeatherBoots]]))}
                 ],
                 [
                     ()=>{toggleBattle(`the skeleton fixes its gaze upon ${theController.party[0].name} and draws its weapon!`, [new Skeleton(theController.calculateAveragePartyLevel())])},
                     ()=>{toggleBattle(`the skeleton fixes its gaze upon ${theController.party[0].name} and draws its weapon!`, [new SkeletonMage(theController.calculateAveragePartyLevel())])},
-                    
                     ()=>{
                         theController.party[0].statusArray.push(new Bound(theController.party[0]));
                         toggleBattle(`the skeleton grabs onto ${theController.party[0].name}!`, [new Skeleton(theController.calculateAveragePartyLevel())], true)
@@ -309,6 +319,37 @@ export class TravelingMerchant extends Encounter{
                 [
                     
                 ]
+            ),
+            new Decision(
+                "threaten", 
+                ()=>{theController.printToGameConsole(`${theController.party[0].name} demands the merchant's goods.`)},
+                "strength",
+                [
+                    ()=>{
+                        let lootArray = [];
+                        let count = Math.ceil(Math.random()*3);
+                        for(let i = 0; i < count; i++){
+                            lootArray.push(getRandomItem())
+                        }
+                        loot(`the merchant hastely throws ${theController.party[0].name} his goods and runs away. ${theController.party[0].name} loots:`, lootArray, 20, 100)
+                    }
+                ],
+                [
+                    ()=>{toggleBattle(`the merchant draws his weapon!`, [new Merchant(theController.calculateAveragePartyLevel())])},
+                    ()=>{leave(`the merchant throws a smokebomb and disappears! Leaving ${theController.party[0].name} all alone.`)}
+                ]
+            ),
+            new Decision(
+                "Pick Pocket", 
+                ()=>{theController.printToGameConsole(`${theController.party[0].name} attempts to pick the merchant's pocket.`)},
+                "dexterity",
+                [
+                    ()=>{loot(` ${theController.party[0].name} quietly picks the merchant's pocket. ${theController.party[0].name} loots:`, [getRandomItem()], 20, 100)}
+                ],
+                [
+                    ()=>{toggleBattle(`the merchant draws his weapon!`, [new Merchant(theController.calculateAveragePartyLevel())])},
+                    ()=>{leave(`the merchant throws a smokebomb and disappears! Leaving ${theController.party[0].name} all alone.`)}
+                ]
             )
         ];
     }
@@ -336,7 +377,7 @@ export class AbandonedCabin extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.party[0].name} searches the cabin for anything useful.`)},
                 "neutral",
                 [
-                    ()=>{loot(`${theController.party[0].name} finds: `, [getRandomItem()], 50, 10)},
+                    ()=>{loot(`${theController.party[0].name} finds: `, [getRandomItem()], 10, 50)},
                 ],
                 [
                     ()=>{toggleBattle(`somethings lunges towards ${theController.party[0].name}!`, theController.map.mapEnviorment.generateEnemies(theController.calculateAveragePartyLevel(), false, theController.calculateMaxEnemyCount()), true)}
@@ -371,7 +412,7 @@ export class Avalanche extends Encounter{
                     ()=>{leave(`The avalanche crashes upon the land! After what feels like an eternity, ${theController.party[0].name} emerges from the rubble unharmed.`)}
                 ],
                 [
-                    ()=>{takeDamage(`The avalanche crashes down upon ${theController.party[0].name}!`, 0.25, 0.50)},
+                    ()=>{takeDamage(`The avalanche crashes down upon your party!`, 0.25, 0.50, "all")}
                 ]
             ),
             new Decision(
@@ -382,7 +423,7 @@ export class Avalanche extends Encounter{
                     ()=>{leave(`with great athleticism, ${theController.party[0].name} barely escapes the avalanche!`)}
                 ],
                 [
-                    ()=>{takeDamage(`The avalanche crashes down upon ${theController.party[0].name}!`, 0.25, 0.50)},
+                    ()=>{takeDamage(`The avalanche crashes down upon ${theController.party[0].name}!`, 0.25, 0.50, "all")},
                 ]
             )
         ];
@@ -422,7 +463,7 @@ export class Robbery extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.party[0].name} joins the bandit in robbing the traveler.`)},
                 "neutral",
                 [
-                    ()=>{loot(`${theController.party[0].name} and the thug rob the traveler of:`, [getRandomItem()], 20, 5)},
+                    ()=>{loot(`${theController.party[0].name} and the thug rob the traveler of:`, [getRandomItem()], 5, 20)},
                 ],
                 [
                     ()=>{toggleBattle(`${theController.party[0].name} joins the thug in robbing the traveler. Not long after, the thug turns on ${theController.party[0].name}!`, [new Bandit(theController.calculateAveragePartyLevel())], true)}
@@ -487,7 +528,7 @@ export class AssistVictim extends Encounter{
                 ()=>{theController.printToGameConsole(`"Please take it, I insist!`)},
                 "certain",
                 [
-                    ()=>{loot(`${theController.party[0].name} is rewarded with.`, [getRandomItem()], 50, 10)},
+                    ()=>{loot(`${theController.party[0].name} is rewarded with.`, [getRandomItem()], 10, 50)},
                 ],
                 [
 
@@ -576,7 +617,7 @@ export class AncientTombstone extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.party[0].name} starts digging around the tombstone, looking for anything useful.`)},
                 "neutral",
                 [
-                    ()=>{loot(`${theController.party[0].name} finds: `, [getRandomItem()], 30, 10)},
+                    ()=>{loot(`${theController.party[0].name} finds: `, [getRandomItem()], 10, 30)},
                 ],
                 [
                     ()=>{toggleNewEncounter(`${theController.party[0].name} notices something in the grave.`, new UnearthedReamins())}
@@ -608,7 +649,7 @@ export class UnearthedReamins extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.party[0].name} reaches for the skeleton.`)},
                 "neutral",
                 [
-                    ()=>{loot(`${theController.party[0].name} finds: `, [getRandomItem()], 50, 10)},
+                    ()=>{loot(`${theController.party[0].name} finds: `, [getRandomItem()], 10, 50)},
                 ],
                 [
                     ()=>{toggleBattle(`the skeleton magically animates and walks towards ${theController.party[0].name}!`, [new Skeleton(theController.calculateAveragePartyLevel())], true)},
@@ -623,7 +664,7 @@ export class Quicksand extends Encounter{
     constructor(){
         super();
         this.name = "quicksand";
-        this.messageFunction = ()=>{theController.printToGameConsole(`the ground begins to sink, and soon ${theController.party[0].name} falls into quicksand`)};
+        this.messageFunction = ()=>{theController.printToGameConsole(`the ground begins to sink, and soon ${theController.party[0].name} falls into quicksand!`)};
         this.imageSrc = "./media/sand-pit.jpg";
         this.decisionArray = [
             new Decision(
@@ -634,7 +675,7 @@ export class Quicksand extends Encounter{
                     ()=>{leave(`${theController.party[0].name} escapes!`)}
                 ],
                 [
-                    ()=>{takeDamage(`The quicksand engulfs ${theController.party[0].name}!`, 1.00, 1.00)},
+                    ()=>{takeDamage(`The quicksand engulfs ${theController.party[0].name}!`, 1.00, 1.00, 1)},
                 ]
             ),
             new Decision(
@@ -645,7 +686,7 @@ export class Quicksand extends Encounter{
                     ()=>{leave(`${theController.party[0].name} escapes!`)}
                 ],
                 [
-                    ()=>{takeDamage(`The quicksand engulfs ${theController.party[0].name}!`, 1.00, 1.00)},
+                    ()=>{takeDamage(`The quicksand engulfs ${theController.party[0].name}!`, 1.00, 1.00, 1)},
                 ]
             )
         ];
@@ -659,7 +700,7 @@ export class Quicksand extends Encounter{
                         ()=>{leave(`${theController.party[1].name} pulls ${theController.party[0].name} to safe ground with great strength.`)}
                     ],
                     [
-                        ()=>{takeDamage(`The quicksand engulfs ${theController.party[0].name}!`, 1.00, 1.00)},
+                        ()=>{takeDamage(`The quicksand engulfs ${theController.party[0].name}!`, 1.00, 1.00, 1)},
                     ]
                 )
             )
@@ -753,7 +794,7 @@ export class AnimalTracks extends Encounter{
                 [
                     ()=>{
                         theController.party[0].statusArray.push(new Bound(theController.party[0]));
-                        toggleBattle(`A nearby ${theController.encounter.hunter.name} ambushes ${theController.party[0].name}!`, [theController.encounter.hunter], true);
+                        toggleBattle(`Something snares ${theController.party[0].name}!`, [theController.encounter.hunter], true);
                     }
                 ]
             ),
@@ -807,7 +848,7 @@ export class WoundedAnimal extends Encounter{
             ),
             new Decision(
                 "put animal to rest", 
-                ()=>{theController.printToGameConsole(`not wanting to see the amimal struggle, ${theController.party[0].name} puts down the ${theController.encounter.trackedEntity.name}.`)},
+                ()=>{theController.printToGameConsole(`not wanting to see the amimal struggle, ${theController.party[0].name} puts the ${theController.encounter.trackedEntity.name} to rest.`)},
                 "likely",
                 [
                     ()=>{

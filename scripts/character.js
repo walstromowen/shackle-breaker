@@ -1,4 +1,4 @@
-import { Bleeding, Bound, Poisoned, Paralyzed, Frostbite} from "./statusEffects.js";
+import { Bleeding, Bound, Poisoned, Paralyzed, Frostbite, Vortexed} from "./statusEffects.js";
 
 export default class Character{
     constructor(characterCreationArray){ //[name, apperanceSrc, origin, attributesArray, equippedArray]

@@ -163,12 +163,12 @@ export class Empowered extends StatusEffect{
         this.currentCharges = this.currentCharges - 1;
     }
     onApplied(){
-        this.holder.currentArcaneAttack = this.holder.currentArcaneAttack + 10;
-        this.holder.currentElementalAttack = this.holder.currentElementalAttack + 10;
+        this.holder.currentArcaneAttack = this.holder.currentArcaneAttack + 15;
+        this.holder.currentElementalAttack = this.holder.currentElementalAttack + 15;
     }
     onRemove(){
-        this.holder.currentArcaneAttack = this.holder.currentArcaneAttack - 10;
-        this.holder.currentElementalAttack = this.holder.currentElementalAttack - 10;
+        this.holder.currentArcaneAttack = this.holder.currentArcaneAttack - 15;
+        this.holder.currentElementalAttack = this.holder.currentElementalAttack - 15;
     }
 }
 export class Paralyzed extends StatusEffect{
@@ -351,5 +351,27 @@ export class Blessed extends StatusEffect{
         this.holder.currentHP = this.holder.currentHP + restoreAmount;
         this.currentCharges = this.currentCharges - 1;
         theController.printToGameConsole(`${this.holder.name} regains ${restoreAmount} health points!`);
+    }
+}
+export class Vortexed extends StatusEffect{
+    constructor(holder){
+        super();
+        this.type = "end";
+        this.isCleansable = false;
+        this.name = "vortexed";
+        this.iconSrc = "./media/icons/tornado.png";
+        this.holder = holder;
+        this.maxCharges = 3;
+        this.currentCharges = this.maxCharges;
+    }
+    onRecieveDamage(){
+        let damageOutput = Math.floor(theController.battle.hostileParty[0].maxHP*0.1);
+        damageOutput = this.checkDamage(damageOutput, theController.battle.hostileParty[0]);
+        theController.battle.hostileParty[0].currentHP = theController.battle.hostileParty[0].currentHP - damageOutput;
+        
+    }
+    onEndTurn(){
+        this.currentCharges = this.currentCharges - 1;
+        theController.printToGameConsole(`${this.holder.name} is surrounded by a magical vortex!`);
     }
 }

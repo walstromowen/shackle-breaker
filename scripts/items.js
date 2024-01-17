@@ -1,11 +1,11 @@
 import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, GuardBreak, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy, UseBandage,
         ThrowNet, Immolate, LightningBolt, Shockwave, Recuperate, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Channel, ThrowSmokebomb, CastShadow, BlinkStrike, Empower, WildSwing, Pounce, Bite, ShootArrow, TripleShot,
-        Roar, UseFrostbiteTonic, UseParalysisTonic, MeteorShower, SummonSkeleton, ArcaneSalvo, Bless, VineLash, ThrowThistles} from "./abilities.js"
+        Roar, UseFrostbiteTonic, UseParalysisTonic, MeteorShower, SummonSkeleton, ArcaneSalvo, Bless, VineLash, ThrowThistles, VortexSheild, ShootPoisonArrow} from "./abilities.js"
 
 export function getRandomItem(){
     let itemArray = [new LinenShirt, new LinenPants, new Dagger, new BlacksmithHammer, new Spear, new Shortsword, new Longsword, new Handaxe, new NightbladeSword,
                 new Shiv, new Buckler, new FireStaff, new LightningStaff, new IceStaff, new ArcaneStaff, new LightStaff, new DarkStaff, new LeatherHelmet, 
-                new LeatherHood, new LeatherGloves, new LeatherChestplate, new LeatherGreaves, new NightbladeHelm, new NightbladeChestplate,
+                new LeatherHood, new LeatherGloves, new LeatherChestplate, new LeatherGreaves, new NightbladeHelm, new NightbladeChestplate, new RoyalAltusRobes, new RoyalAltusPants,
                 new LeatherBoots, new KiteShield, new IronHelmet, new IronGauntlets, new IronChainmail, 
                 new IronGreaves, new IronBoots, new CrystalBall, new ClothHood, new ClothRobe, new Shortbow, new ForestStaff,
                 new HealthPotion, new StaminaPotion, new MagicPotion, 
@@ -395,6 +395,9 @@ export class Shortbow {
             this.speed = this.speed + 1;
             this.evasion = this.evasion + 1;
         }
+        if(this.level == 3){
+            this.abilityArray.push(new ShootPoisonArrow());
+        }
     }
 }
 export class Shiv {
@@ -431,6 +434,12 @@ export class Shiv {
             this.elementalDefense = this.elementalDefense + 0;
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
+        }
+        if(this.level == 3){
+            this.abilityArray.push(new ThrowKnife());
+        }
+        if(this.level == 5){
+            this.abilityArray.push(new ThrowPoisonedKnife());
         }
     }
 }
@@ -740,6 +749,9 @@ export class ForestStaff {
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
         }
+        if(this.level == 3){
+            this.abilityArray.push(new VortexSheild());
+        }
     }
 }
 export class LeatherHelmet {
@@ -820,7 +832,7 @@ export class LeatherGloves {
     constructor(){
         this.name = "leather gloves";
         this.type = "arms";
-        this.imageSrc = "./media/icons/gauntlet.png";
+        this.imageSrc = "./media/icons/gloves.png";
         this.description = `leather gloves. A common article of clothing among worker of the Altus kingdom. With the discovery of magic, many in the altus kingdom lost appreciation for common safety practices like hand protection`;
         this.level = 1;
         this.price = 100;
@@ -1344,7 +1356,7 @@ export class NightbladeHelm {
     constructor(){
         this.name = "nightblade helm";
         this.type = "head";
-        this.imageSrc = "./media/icons/light-helm.png";
+        this.imageSrc = "./media/icons/closed-barbute.png";
         this.description = `a dark helm with a silver emblem. Legend speaks of elite warriors called Nightblades whose shadows were able to materialize into physical form. Such legends were thought to be a myth, this helm would say otherwise.`;
         this.level = 1;
         this.price = 150;
@@ -1384,7 +1396,7 @@ export class NightbladeChestplate {
     constructor(){
         this.name = "nightblade chestplate";
         this.type = "torso";
-        this.imageSrc = "./media/icons/leather-armor.png";
+        this.imageSrc = "./media/icons/scale-mail.png";
         this.description = `dark scaled armor with a silver emblem. Legend speaks of elite warriors called Nightblades whose shadows were able to materialize into physical form. Such legends were thought to be a myth, this chestplate would say otherwise.`;
         this.level = 1;
         this.price = 150;
@@ -1414,6 +1426,85 @@ export class NightbladeChestplate {
             this.elementalDefense = this.elementalDefense + 1;
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 1;
+        }
+        if(this.level == 3){
+            this.abilityArray.push(new CastShadow());
+        }
+    }
+}
+export class RoyalAltusRobes {
+    constructor(){
+        this.name = "royal altus robes";
+        this.type = "torso";
+        this.imageSrc = "./media/icons/heavy-collar.png";
+        this.description = `Royal robes belonging to a high ranking official of the altus kingdom. Although most believe the Altus emperor went mad, some speculate that another took his place shortly after the fall of the Altus kingdom.`;this.level = 1;
+        this.price = 150;
+        this.bluntAttack = 0;
+        this.pierceAttack = 0;
+        this.arcaneAttack = 0;
+        this.elementalAttack = 0;
+        this.bluntDefense = 1;
+        this.pierceDefense = 3;
+        this.arcaneDefense = 4;
+        this.elementalDefense = 2;
+        this.speed = 0;
+        this.evasion = 0;
+        this.abilityArray = [new Channel()];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 2;
+            this.arcaneDefense = this.arcaneDefense + 3;
+            this.elementalDefense = this.elementalDefense + 2;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+        }
+        if(this.level == 3){
+            this.abilityArray.push(new Empower());
+        }
+    }
+}
+export class RoyalAltusPants {
+    constructor(){
+        this.name = "royal altus pants";
+        this.type = "head";
+        this.imageSrc = "./media/icons/trousers.png";
+        this.description = `Royal pants belonging to a high ranking official of the altus kingdom. Although most believe the Altus emperor went mad, some speculate that another took his place shortly after the fall of the Altus kingdom.`;
+        this.level = 1;
+        this.price = 150;
+        this.bluntAttack = 0;
+        this.pierceAttack = 0;
+        this.arcaneAttack = 0;
+        this.elementalAttack = 0;
+        this.bluntDefense = 1;
+        this.pierceDefense = 3;
+        this.arcaneDefense = 4;
+        this.elementalDefense = 2;
+        this.speed = 0;
+        this.evasion = 0;
+        this.abilityArray = [new Channel];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 2;
+            this.arcaneDefense = this.arcaneDefense + 3;
+            this.elementalDefense = this.elementalDefense + 2;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
         }
         if(this.level == 3){
             this.abilityArray.push(new CastShadow());

@@ -14,6 +14,8 @@ Text adventure game based on the Shackle Breaker story
 * Item stamina /magic consumption modifier
 * Attribute descriptions / level up screen details
 * Map abilities
+* Darkness
+* Prebattle traits / abilitites
 
 # Planned Quality of Life Improvements
 * Alphabetize CSS rules
@@ -30,7 +32,7 @@ Text adventure game based on the Shackle Breaker story
 * Item mini Menu appears on level up and transisiton screens
 * canvas player icon not loading on start up.
 * Enemy Status Icons still appear on next enemies ocasionally
-* Recurperate and channel acasionally giving going over max limit
+* Recurperate and channel ocasionally giving going over max limit
 * Shiphon not doing damage
 * status effects that occur on turn end not firing upon entity death.
 * item mini menus sometimes cut off on smaller screens

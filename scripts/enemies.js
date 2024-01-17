@@ -1,8 +1,8 @@
 import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
     ThrowNet, Immolate, LightningBolt, Channel, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Bite, SpitBile, LeechLife, Devour, Pounce, CastShadow, ThrowSmokebomb, Shockwave, GuardBreak, BlinkStrike, Punch, WildSwing,
-    Roar, ShootArrow, TripleShot, MeteorShower, SummonSkeleton, VineLash, ThrowThistles} from "./abilities.js"
-    import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer, NightbladeSword,
-        Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, NightbladeHelm, NightbladeChestplate,
+    Roar, ShootArrow, TripleShot, MeteorShower, SummonSkeleton, VineLash, ThrowThistles, VortexSheild, Retreat} from "./abilities.js"
+    import {getRandomItem, LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer, NightbladeSword,
+        Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, NightbladeHelm, NightbladeChestplate, RoyalAltusRobes, RoyalAltusPants,
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
         LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, Shortbow, ForestStaff,
         IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
@@ -357,6 +357,9 @@ export class Groveguardian extends Enemy{
         this.incrementStats(averagePartyLevel, [4,8], [2,4], [0,2], [2,3], [2,3], [0,1], [1,2], [2,3], [1,2], [1,2], [1,3]);
         this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/2));
         this.xp = Math.floor(50 * (1 + this.level/10 ));
+        if(this.level == 5){
+            this.abilityArray.push(new VortexSheild());
+        }
     }
 }
 export class EmperorDolos extends Enemy{
@@ -578,7 +581,7 @@ export class SkeletonMage extends Enemy{
         this.currentSpeed = this.baseSpeed;
         this.baseEvasion = 10;
         this.currentEvasion = this.baseEvasion;
-        this.abilityArray = [new IceShard, new Shockwave, new Channel];
+        this.abilityArray = [new IceShard, new Shockwave, new Channel, new VortexSheild];
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new ClothHood, new ClothRobe, new LinenShirt, new LinenPants, new HealthPotion, new MagicPotion, new IceStaff, new FrostbiteTonic, new ParalysisTonic];
         this.gold = 0;
@@ -859,9 +862,9 @@ export class AncientAltusKing extends Enemy{
         this.currentSpeed = this.baseSpeed;
         this.baseEvasion = 25;
         this.currentEvasion = this.baseEvasion;
-        this.abilityArray = [new Siphon, new Shockwave, new IceShard, new SummonSkeleton];
+        this.abilityArray = [new Siphon, new Shockwave, new IceShard, new SummonSkeleton, new VortexSheild];
         this.lootChanceMultiplier = 0; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new IceStaff, new DarkStaff];
+        this.lootArray = [new IceStaff, new DarkStaff, new RoyalAltusRobes, new RoyalAltusPants];
         this.gold = 0;
         this.xp = 0;
         this.isBoss = true;
@@ -872,5 +875,51 @@ export class AncientAltusKing extends Enemy{
         this.incrementStats(averagePartyLevel, [8,16], [2,6], [1,3], [2,4], [2,4], [2,4], [2,4], [1,3], [1,3], [1,3], [1,3]);
         this.gold = 500;
         this.xp = 500;
+    }
+}
+export class Merchant extends Enemy{
+    constructor(averagePartyLevel){
+        super();
+        this.name = "merchant";
+        this.apperance = "media/traveling-merchant.jpg"
+        this.maxHP = 55;
+        this.currentHP = this.maxHP;
+        this.maxStamina = 35;
+        this.currentStamina = this.maxStamina;
+        this.maxMagic = 35;
+        this.currentMagic = this.maxMagic;
+        this.baseBluntAttack = 55;
+        this.currentBluntAttack = this.baseBluntAttack;
+        this.basePierceAttack = 55;
+        this.currentPierceAttack = this.basePierceAttack;
+        this.baseArcaneAttack = 55; 
+        this.currentArcaneAttack = this.baseArcaneAttack;
+        this.baseElementalAttack = 55;
+        this.currentElementalAttack = this.baseElementalAttack;
+        this.baseBluntDefense = 35;
+        this.currentBluntDefense = this.baseBluntDefense;
+        this.basePierceDefense = 35;
+        this.currentPierceDefense = this.basePierceDefense;
+        this.baseArcaneDefense = 35;
+        this.currentArcaneDefense = this.baseArcaneDefense;
+        this.baseElementalDefense = 35;
+        this.currentElementalDefense = this.baseElementalDefense;
+        this.baseSpeed = 27;
+        this.currentSpeed = this.baseSpeed;
+        this.baseEvasion = 15;
+        this.currentEvasion = this.baseEvasion;
+        this.abilityArray = [new ThrowSmokebomb, new Slash, new Stab, new Retreat, new ThrowPoisonedKnife, new ThrowNet];
+        this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootArray = [getRandomItem()];
+        this.gold = 0;
+        this.xp = 0;
+        this.isBoss = false;
+        this.isSummon = false;             
+        this.levelUp(averagePartyLevel);
+    }
+    levelUp(averagePartyLevel){
+        this.incrementStats(averagePartyLevel, [2,6], [2,6], [0,4], [2,3], [2,3], [0,2], [0,2], [1,3], [1,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/2));
+        this.xp = Math.floor(35 * (1 + this.level/10 ));
     }
 }
