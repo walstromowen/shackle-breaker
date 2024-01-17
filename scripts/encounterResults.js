@@ -54,9 +54,9 @@ export function takeDamage(message, minPercentage, maxPercentage, targets){
     switch(targets){
         case "all":
             for(let i = 0; i < theController.party.length; i ++){
-                damageOutput = Math.floor(Math.random() * ((theController.party[i].currentHP * maxPercentage) - (theController.party[0].currentHP * minPercentage) + 1) + (theController.party[0].currentHP * minPercentage));
+                damageOutput = Math.floor(Math.random() * ((theController.party[i].currentHP * maxPercentage) - (theController.party[i].currentHP * minPercentage) + 1) + (theController.party[i].currentHP * minPercentage));
                 damageOutput = checkDamage(damageOutput, theController.party[i]);
-                theController.party[0].currentHP = theController.party[i].currentHP - damageOutput;
+                theController.party[i].currentHP = theController.party[i].currentHP - damageOutput;
                 theController.printToGameConsole(message + ` ${theController.party[i].name} takes ${damageOutput} damage.`);
             }
             break;

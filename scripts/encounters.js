@@ -423,7 +423,7 @@ export class Avalanche extends Encounter{
                     ()=>{leave(`with great athleticism, ${theController.party[0].name} barely escapes the avalanche!`)}
                 ],
                 [
-                    ()=>{takeDamage(`The avalanche crashes down upon ${theController.party[0].name}!`, 0.25, 0.50, "all")},
+                    ()=>{takeDamage(`The avalanche crashes down upon your party!`, 0.25, 0.50, "all")}
                 ]
             )
         ];

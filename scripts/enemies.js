@@ -8,7 +8,7 @@ import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Clea
         IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
         ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide, Bandage, FrostbiteTonic, ParalysisTonic, PineWood, TigerClaw, DogPaw, HawkTalons
         } from "./items.js";
-import { Channeled, Invigorated } from "./statusEffects.js";
+import { Channeled, Invigorated, Vortexed } from "./statusEffects.js";
 
 class Enemy{
     constructor(){

@@ -1184,7 +1184,6 @@ export class Cleanse extends Ability{
                     weilder.statusArray[i].onRemove();
                     weilder.statusArray.splice(i, 1);
                     i--;
-                    break;
                 }
             }
         } 
