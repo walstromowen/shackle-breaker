@@ -1183,6 +1183,7 @@ export class Cleanse extends Ability{
                     theController.printToGameConsole(`${weilder.name} was cleansed of the ${weilder.statusArray[i].name} effect.`);
                     weilder.statusArray[i].onRemove();
                     weilder.statusArray.splice(i, 1);
+                    i--;
                     break;
                 }
             }
