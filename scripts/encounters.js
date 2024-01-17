@@ -314,7 +314,15 @@ export class TravelingMerchant extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.party[0].name} approaches the merchant`)},
                 "certain",
                 [
-                    ()=>{initiateTrade(`${theController.party[0].name} offers to trade`, [new HealthPotion, getRandomItem(), getRandomItem(), getRandomItem(), getRandomItem()], "trade")}
+                    ()=>{
+                        for(let i = 0; i < theController.encounter.decisionArray.length; i++){
+                            if(theController.encounter.decisionArray[i].name == "threaten"){
+                                theController.encounter.decisionArray.splice(i, 1);
+                                break;
+                            }
+                        }
+                        initiateTrade(`${theController.party[0].name} offers to trade`, [new HealthPotion, getRandomItem(), getRandomItem(), getRandomItem(), getRandomItem()], "trade")
+                    }
                 ],
                 [
                     
