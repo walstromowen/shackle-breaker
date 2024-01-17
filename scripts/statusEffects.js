@@ -336,7 +336,7 @@ export class Blessed extends StatusEffect{
     constructor(holder){
         super();
         this.type = "end";
-        this.isCleansable = true;
+        this.isCleansable = false;
         this.name = "blessed";
         this.iconSrc = "./media/icons/heart-plus.png";
         this.holder = holder;
@@ -365,9 +365,15 @@ export class Vortexed extends StatusEffect{
         this.currentCharges = this.maxCharges;
     }
     onRecieveDamage(){
-        let damageOutput = Math.floor(theController.battle.hostileParty[0].maxHP*0.1);
-        damageOutput = this.checkDamage(damageOutput, theController.battle.hostileParty[0]);
-        theController.battle.hostileParty[0].currentHP = theController.battle.hostileParty[0].currentHP - damageOutput;
+        if(holder === theController.party[0]){
+            let damageOutput = Math.floor(theController.battle.hostileParty[0].maxHP*0.1);
+            damageOutput = this.checkDamage(damageOutput, theController.battle.hostileParty[0]);
+            theController.battle.hostileParty[0].currentHP = theController.battle.hostileParty[0].currentHP - damageOutput;
+        }else{
+            let damageOutput = Math.floor(this.holder.maxHP*0.1);
+            damageOutput = this.checkDamage(damageOutput, this.holder);
+            this.holder.currentHP = this.holder.currentHP - damageOutput;
+        }
         
     }
     onEndTurn(){

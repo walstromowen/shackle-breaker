@@ -1856,7 +1856,7 @@ export class ThrowPoisonedKnife extends Ability{
         this.speedMultiplier = 0.75;
         this.staminaCost = 5;
         this.magicCost = 0;
-        this.damageModifier = 5;
+        this.damageModifier = 0;
         this.accuracy = 80;
         this.soundEffect = "./audio/soundEffects/arrow-body-impact-146419.mp3";
     }
