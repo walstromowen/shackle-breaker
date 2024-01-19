@@ -1,7 +1,7 @@
 import {controller as theController} from "./main.js"
 import Character from "./character.js";
 import {Decision} from "./encounterDecision.js";
-import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, Bandit, SkeletonMage, Ghost, AltusGuard, Yeti, Tiger, Merchant} from "./enemies.js";
+import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, Bandit, SkeletonMage, Ghost, AltusGuard, Yeti, Tiger, Merchant, FloatingSkull} from "./enemies.js";
 import {Shielded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden} from "./statusEffects.js";
 import {regainHP, initiateTrade, leave, retry, removeDecision, toggleNewEncounter, toggleBattle, loot, takeDamage, recieveStatusEffect, changeMap, recruit} from "./encounterResults.js";
 import {getRandomItem, LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer, NightbladeSword,
@@ -662,7 +662,8 @@ export class UnearthedReamins extends Encounter{
                 [
                     ()=>{toggleBattle(`the skeleton magically animates and walks towards ${theController.party[0].name}!`, [new Skeleton(theController.calculateAveragePartyLevel())], true)},
                     ()=>{toggleBattle(`the skeleton magically animates and walks towards ${theController.party[0].name}!`, [new SkeletonMage(theController.calculateAveragePartyLevel())], true)},
-                    ()=>{toggleBattle(`an ominous precence approaches ${theController.party[0].name}!`, [new Ghost(theController.calculateAveragePartyLevel())], true)}
+                    ()=>{toggleBattle(`an ominous precence approaches ${theController.party[0].name}!`, [new Ghost(theController.calculateAveragePartyLevel())], true)},
+                    ()=>{toggleBattle(`the skull's eyes begin to glow!`, [new FloatingSkull(theController.calculateAveragePartyLevel())], true)}
                 ]
             )
         ];
