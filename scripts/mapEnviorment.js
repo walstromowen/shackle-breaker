@@ -1,5 +1,6 @@
-import {LockedTreasureChest, UnlockedTreasureChest, AltusAmbushOpportunity, MysteriousDoor, TravelingMerchant, AbandonedCabin, SuspiciousSkeleton, Robbery, Avalanche, MercenaryForHire, AncientTombstone, Quicksand, AnimalTracks} from "./encounters.js";
-import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos, ShadowStrider, TerrorBear, Bandit, Ghost, SkeletonMage, AltusGuard, Yeti, Tiger, TwilightDragon, AncientAltusKing} from "./enemies.js";
+import {LockedTreasureChest, UnlockedTreasureChest, AltusAmbushOpportunity, MysteriousDoor, TravelingMerchant, AbandonedCabin, SuspiciousSkeleton, Robbery, Avalanche, MercenaryForHire, AncientTombstone, Quicksand, AnimalTracks,
+        UnearthedReamins} from "./encounters.js";
+import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos, ShadowStrider, TerrorBear, Bandit, Ghost, SkeletonMage, AltusGuard, Yeti, Tiger, TwilightDragon, AncientAltusKing, FloatingSkull} from "./enemies.js";
 
 export default class MapEnviorment{
     constructor(biome){
@@ -114,16 +115,30 @@ export default class MapEnviorment{
                 break;
             case "altus castle":
                 this.biome = "altus castle";
-                        this.imageSrc = "media/altus-castle-interior.jpg";
-                        this.backgroundMusicSrc = "./audio/mixkit-evil-storm-atmosphere-2404.wav";
-                        this.battleMusicSrc = "./audio/battle-sword-139313.mp3";
-                        this.frameCoordinates = [
-                            [6],
-                            [6],
-                            [0],
-                            [0],
-                            [6]
-                        ];
+                this.imageSrc = "media/altus-castle-interior.jpg";
+                this.backgroundMusicSrc = "./audio/mixkit-evil-storm-atmosphere-2404.wav";
+                this.battleMusicSrc = "./audio/battle-sword-139313.mp3";
+                this.frameCoordinates = [
+                    [6],
+                    [6],
+                    [0],
+                    [0],
+                    [6]
+                ];
+                break;
+            case "mysterious dungeon":
+                this.biome = "mysterious dungeon";
+                this.imageSrc = "media/mysterious-dungeon.jpg";
+                this.backgroundMusicSrc = "./audio/mixkit-evil-storm-atmosphere-2404.wav";
+                this.battleMusicSrc = "./audio/battle-sword-139313.mp3";
+                this.frameCoordinates = [
+                    [6],
+                    [6],
+                    [0],
+                    [0],
+                    [6]
+                ];
+                break;
             default:
                 break;
         }
@@ -133,7 +148,7 @@ export default class MapEnviorment{
         for(let i = 0; i < count; i ++){
             switch(this.biome){ 
                 case "cave": 
-                    switch(Math.floor(Math.random()*4)){ 
+                    switch(Math.floor(Math.random()*5)){ 
                         case 0:
                             enemyArray.push(new CaveSpider(currentCharacterLevel));
                             break;
@@ -145,6 +160,9 @@ export default class MapEnviorment{
                             break;
                         case 3:
                             enemyArray.push(new SkeletonMage(currentCharacterLevel));
+                            break;
+                        case 4:
+                            enemyArray.push(new FloatingSkull(currentCharacterLevel));
                             break;
                     }
                     break;
@@ -165,20 +183,17 @@ export default class MapEnviorment{
                     }
                     break;
                 case "plains":
-                    switch(Math.floor(Math.random()*5)){ 
+                    switch(Math.floor(Math.random()*4)){ 
                         case 0:
-                            enemyArray.push(new Skeleton(currentCharacterLevel));
-                            break;
-                        case 1:
                             enemyArray.push(new Wolf(currentCharacterLevel));
                             break;
-                        case 2:
+                        case 1:
                             enemyArray.push(new AltusMage(currentCharacterLevel));
                             break;
-                        case 3:
+                        case 2:
                             enemyArray.push(new Bandit(currentCharacterLevel));
                             break;
-                        case 4:
+                        case 3:
                             enemyArray.push(new AltusGuard(currentCharacterLevel));
                             break;
                     }
@@ -186,7 +201,7 @@ export default class MapEnviorment{
                 case "mountain":
                     switch(Math.floor(Math.random()*4)){ 
                         case 0:
-                            enemyArray.push(new Skeleton(currentCharacterLevel));
+                            enemyArray.push(new Bandit(currentCharacterLevel));
                             break;
                         case 1:
                             enemyArray.push(new Wolf(currentCharacterLevel));
@@ -244,7 +259,7 @@ export default class MapEnviorment{
                         enemyArray.push(new AncientAltusKing(currentCharacterLevel));
                         break;
                     }
-                    switch(Math.floor(Math.random()*4)){ 
+                    switch(Math.floor(Math.random()*5)){ 
                         case 0:
                             enemyArray.push(new Skeleton(currentCharacterLevel));
                             break;
@@ -256,6 +271,9 @@ export default class MapEnviorment{
                             break;
                         case 3:
                             enemyArray.push(new Ghost(currentCharacterLevel));
+                            break;
+                        case 4:
+                            enemyArray.push(new FloatingSkull(currentCharacterLevel));
                             break;
                     }
                     break;
@@ -270,6 +288,16 @@ export default class MapEnviorment{
                             break;
                         case 1:
                             enemyArray.push(new AltusGuard(currentCharacterLevel));
+                            break;
+                    }
+                    break;
+                case "mysterious dungeon":
+                    switch(Math.floor(Math.random()*2)){ 
+                        case 0:
+                            enemyArray.push(new Bat(currentCharacterLevel));
+                            break;
+                        case 1:
+                            enemyArray.push(new Skeleton(currentCharacterLevel));
                             break;
                     }
                     break;
@@ -388,6 +416,15 @@ export default class MapEnviorment{
                         return new SuspiciousSkeleton();
                     case 2:
                         return new AncientTombstone();
+                    default:
+                        return;
+                }
+            case "mysterious dungeon":
+                switch(Math.floor(Math.random()*2)){ 
+                    case 0:
+                        return new LockedTreasureChest();
+                    case 1:
+                        return new UnearthedReamins();
                     default:
                         return;
                 }

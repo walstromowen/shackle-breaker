@@ -32,7 +32,7 @@ export function toggleBattle(message, enemyArray, canRetreat){
     theController.nextRoom.enemyArray = enemyArray;
 }
 export function loot(message, itemArray, goldMin, goldMax){
-    let goldAmount = Math.floor(Math.random() * ((goldMax*theController.calculateAveragePartyLevel()) - goldMin) + goldMin);
+    let goldAmount = Math.floor(Math.random() * ((goldMax*(Math.floor(theController.calculateAveragePartyLevel()/10)+1)) - goldMin) + goldMin);
     if(itemArray.length != 0 || goldAmount > 0){
         theController.printToGameConsole(message);
         if(itemArray.length != 0){

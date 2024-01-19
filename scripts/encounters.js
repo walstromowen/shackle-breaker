@@ -199,7 +199,7 @@ export class MysteriousDoor extends Encounter{
                 "neutral",
                 [
                     ()=>{changeMap(`the door swings open and pulls ${theController.party[0].name} in!`, "portal", "boss random")},
-                    ()=>{regainHP(`the door swings open and showers${theController.party[0].name} will a soothing light.`, 0.5)}
+                    ()=>{regainHP(`the door swings open and showers ${theController.party[0].name} will a soothing light.`, 0.5)}
                 ],
                 [
                     ()=>{removeDecision(`${theController.party[0].name} the letters fade.`, rune1)},
@@ -212,7 +212,7 @@ export class MysteriousDoor extends Encounter{
                 "neutral",
                 [
                     ()=>{changeMap(`the door swings open and pulls ${theController.party[0].name} in!`, "portal", "boss random")},
-                    ()=>{regainHP(`the door swings open and showers${theController.party[0].name} will a soothing light.`, 0.5)}
+                    ()=>{regainHP(`the door swings open and showers ${theController.party[0].name} will a soothing light.`, 0.5)}
                 ],
                 [
                     ()=>{removeDecision(`${theController.party[0].name} the letters fade.`, rune2)},
@@ -224,8 +224,8 @@ export class MysteriousDoor extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.party[0].name} presses ${rune3}`)},
                 "neutral",
                 [
-                    ()=>{changeMap(`the door swings open and pulls ${theController.party[0].name} in!`, "portal", "random")},
-                    ()=>{regainHP(`the door swings open and showers${theController.party[0].name} will a soothing light.`, 0.5)}
+                    ()=>{changeMap(`the door swings open and pulls ${theController.party[0].name} in!`, "portal", "boss random")},
+                    ()=>{regainHP(`the door swings open and showers ${theController.party[0].name} will a soothing light.`, 0.5)}
                 ],
                 [
                     ()=>{removeDecision(`${theController.party[0].name} the letters fade.`, rune3)},
@@ -277,7 +277,7 @@ export class SuspiciousSkeleton extends Encounter{
                     ()=>{leave(`${theController.party[0].name} asks the skeleton for directions. The skeleton stares back in disbelief and then nods to the hallway ahead.`)},
                     ()=>{leave(`the skeleton doesn't respond. ${theController.party[0].name} moves on.`)},
                     ()=>{recruit(`For reasons unknown, the skeleton decides to join ${theController.party[0].name} party...`, new Character(["Kurtus", "./media/skeleton.jpg", "companion", [-5,6,6,6,6,6], ["Empty", "Empty", new IronHelmet, new IronChainmail, new IronGauntlets, new IronGreaves, new IronBoots]]))},
-                    ()=>{recruit(`For reasons unknown, the skeleton decides to join ${theController.party[0].name} party...`, new Character(["Shimdy", "./media/skeleton-mage.jpg", "companion", [-5,5,5,5,5,10], [new ForestStaff, new CrystalBall, new ClothHood, new ClothRobe, "Empty", new LinenPants, new LeatherBoots]]))}
+                    ()=>{recruit(`For reasons unknown, the skeleton decides to join ${theController.party[0].name} party...`, new Character(["Shmindy", "./media/skeleton-mage.jpg", "companion", [-5,5,5,5,5,10], [new ArcaneStaff, new CrystalBall, new ClothHood, new ClothRobe, "Empty", new LinenPants, new LeatherBoots]]))}
                 ],
                 [
                     ()=>{toggleBattle(`the skeleton fixes its gaze upon ${theController.party[0].name} and draws its weapon!`, [new Skeleton(theController.calculateAveragePartyLevel())])},
@@ -638,7 +638,7 @@ export class UnearthedReamins extends Encounter{
     constructor(){
         super();
         this.name = "unearthed remains";
-        this.messageFunction = ()=>{theController.printToGameConsole(`${theController.party[0].name} digs up an skeleton. It appears to be holding something.`)};
+        this.messageFunction = ()=>{theController.printToGameConsole(`${theController.party[0].name} finds an old skeleton. It appears to be holding something.`)};
         this.imageSrc = "./media/skull.jpg";
         this.decisionArray = [
             new Decision(

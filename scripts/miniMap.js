@@ -27,7 +27,7 @@ export default class MiniMap{
         //this.ctx.clearRect(0, 0, 288, 288);
         map.roomArray.forEach((room) => {
             if(Math.floor(room.position[0] / viewportDimensions[0]) == gridCoordinates[0] && Math.floor(room.position[1] / viewportDimensions[1]) == gridCoordinates[1]){ //if selected room's gird coordinates is equal to currentCharacter's current grid coordinates
-                if(room.type == "" || room.type == "enemySpawn" || room.type == "encounterSpawn"){
+                if(room.type == "" || room.type == "enemySpawn" || room.type == "encounterSpawn" || room.type == "noSpawnEncounter"){
                     this.ctx.drawImage(map.mapEnviorment.terrain, 32*room.frameXCoordinate, 0, 32, 32, room.position[0]%viewportDimensions[0]*this.tileWidth, room.position[1]%viewportDimensions[1]*this.tileHeight, this.tileWidth, this.tileHeight);
                 }
                 if(room.type == 'wall'){

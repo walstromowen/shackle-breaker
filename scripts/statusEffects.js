@@ -25,6 +25,9 @@ class StatusEffect{
     onDeliverDamage(){
         
     }
+    onAttemptAttack(){
+        
+    }
     onApplied(){
 
     }
@@ -62,7 +65,7 @@ export class Shielded extends StatusEffect{
     onRecieveDamage(){
         this.currentCharges = 0;
     }
-    onDeliverDamage(){
+    onAttemptAttack(){
         this.currentCharges = 0;
     }
     onRemove(){
@@ -295,7 +298,7 @@ export class Hidden extends StatusEffect{
         }
         this.holder.currentEvasion = this.holder.currentEvasion + 100;
     }
-    onDeliverDamage(){
+    onAttemptAttack(){
         this.currentCharges = 0;
     }
     onRecieveDamage(){
@@ -379,5 +382,45 @@ export class Vortexed extends StatusEffect{
     onEndTurn(){
         this.currentCharges = this.currentCharges - 1;
         theController.printToGameConsole(`${this.holder.name} is surrounded by a magical vortex!`);
+    }
+}
+export class Cursed extends StatusEffect{
+    constructor(holder){
+        super();
+        this.type = "end";
+        this.isCleansable = false;
+        this.name = "cursed";
+        this.iconSrc = "./media/icons/death-zone.png";
+        this.holder = holder;
+        this.caster;
+        this.serverityMultiplier = 0.05;
+        this.maxCharges = 5;
+        this.currentCharges = this.maxCharges;
+    }
+    onEndTurn(){
+        let damageOutput = Math.floor(this.holder.maxHP*this.serverityMultiplier);
+        damageOutput = this.checkDamage(damageOutput, this.holder);
+        if(damageOutput == 0){
+            damageOutput = 1;
+        }
+        this.holder.currentHP = this.holder.currentHP - damageOutput;
+        if(this.caster === theController.party[0] || this.caster === theController.battle.hostileParty[0]){
+            let restoreAmount = damageOutput;
+            if(this.caster.currentHP + restoreAmount >= this.caster.maxHP){
+                restoreAmount = this.caster.maxHP - this.caster.currentHP 
+            }
+            this.caster.currentHP = this.caster.currentHP + restoreAmount;
+            theController.printToGameConsole(`${this.caster.name} drains ${damageOutput} health points from ${this.holder.name} and restores ${restoreAmount} health points!`);
+        }else{
+            theController.printToGameConsole(`${this.holder.name} is drained of ${damageOutput} health points!`);
+        }
+        this.currentCharges = this.currentCharges - 1;
+    }
+    onApplied(){
+        if(this.holder === theController.party[0]){
+            this.caster = theController.battle.hostileParty[0];
+        }else{
+            this.caster = theController.party[0];
+        }
     }
 }

@@ -78,8 +78,9 @@ export default class Controller {
                 this.party.push(this.tempCompanionValue);
             }
             //this.party.push(new Character(["kurtus", "media/kurty.jpg", "traveler", [100, 100, 100, 100, 100, 100], [new Shortsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]));
-            
-            this.map = new Map("basic", "random");
+            this.map = new Map("mysterious dungeon", "small dungeon");
+            //this.map = new Map("altus castle", "boss1");
+            //this.map = new Map("basic", "random");
             this.miniMap = new MiniMap();
             this.map.mapEnviorment.terrain.onload = ()=>{
                 this.initializeRooms(this.map);
@@ -1153,7 +1154,7 @@ export default class Controller {
                 this.toggleEncounter(nextRoom.encounter);
                 return; 
             }
-            if(nextRoom.status == "visited"){
+            if(nextRoom.status == "visited" && (nextRoom.type == "enemySpawn" || nextRoom.type == "encounterSpawn")){
                 if(Math.floor(Math.random()*20) <= 2){
                     this.nextRoom = nextRoom;
                     this.printToGameConsole("something approaches...");

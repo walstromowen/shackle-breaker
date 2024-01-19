@@ -1,7 +1,7 @@
 import Character from "./character.js";
 import { Shortsword } from "./items.js";
 import {controller as theController} from "./main.js"
-import {Shielded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden, Bleeding, Blessed, Vortexed} from "./statusEffects.js";
+import {Shielded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden, Bleeding, Blessed, Vortexed, Cursed} from "./statusEffects.js";
 
 class Ability{
     canUse(weilder, currentCharacter){
@@ -118,6 +118,9 @@ class Ability{
         
     }
     checkMiss(weilder, target, abilityName){
+        for(let j = 0; j < weilder.statusArray.length; j++){
+            weilder.statusArray[j].onAttemptAttack();
+        }
         if(Math.random()*this.accuracy < target.currentEvasion){
             theController.printToGameConsole(`${target.name} avoids ${weilder.name}'s ${abilityName} attack!`);
             return true; //attack misses
@@ -330,7 +333,7 @@ export class GuardBreak extends Ability{
                 }
             }
             let damageOutput1 = this.checkDamage(damageOutput, weilder, target, target.currentBluntDefense, "stamina");
-            let damageOutput2 = this.checkDamage(Math.floor(damageOutput/1.25), weilder, target, target.currentBluntDefense, "health");
+            let damageOutput2 = this.checkDamage((damageOutput - 10), weilder, target, target.currentBluntDefense, "health");
             target.currentHP = target.currentHP - damageOutput2;
             target.currentStamina = target.currentStamina - damageOutput1;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput2} damage and ${damageOutput1} stamina damage!`);
@@ -883,7 +886,7 @@ export class LightningBolt extends Ability{
 export class Shockwave extends Ability{
     constructor(){
         super();
-        this.name = "shock wave";
+        this.name = "shockwave";
         this.type = "bluntElemental";
         this.speedMultiplier = 0.75;
         this.staminaCost = 0;
@@ -908,7 +911,7 @@ export class Shockwave extends Ability{
                 }
             }
             let damageOutput1 = this.checkDamage(damageOutput, weilder, target, (target.currentBluntDefense + target.currentElementalDefense)/2, "stamina");
-            let damageOutput2 = this.checkDamage(Math.floor(damageOutput/1.25), weilder, target, (target.currentBluntDefense + target.currentElementalDefense)/2, "health");
+            let damageOutput2 = this.checkDamage((damageOutput - 10), weilder, target, (target.currentBluntDefense + target.currentElementalDefense)/2, "health");
             target.currentHP = target.currentHP - damageOutput2;
             target.currentStamina = target.currentStamina - damageOutput1;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput2} damage and ${damageOutput1} stamina damage!`);
@@ -1305,7 +1308,7 @@ export class VineLash extends Ability{
         this.magicCost = 6;
         this.damageModifier = 5;
         this.accuracy = 80;
-        this.soundEffect = "./audio/soundEffects/sword-sound-2-36274.mp3";
+        this.soundEffect = "./audio/soundEffects/magic-spell-6005.mp3";
     }
     activate(weilder, target){
         if(this.checkStamina(weilder) == true && this.checkMagic(weilder) == true){
@@ -1401,6 +1404,89 @@ export class VortexSheild extends Ability{
         if(weilder !== currentCharacter){
             for(let i = 0; i < weilder.statusArray.length; i++){
                 if(weilder.statusArray[i].name == "vortexed"){
+                    return false;
+                }
+            }
+        }
+    }
+}
+export class FlameLash extends Ability{
+    constructor(){
+        super();
+        this.name = "flame lash";
+        this.type = "bluntElemental";
+        this.speedMultiplier = 0.5;
+        this.staminaCost = 6;
+        this.magicCost = 6;
+        this.damageModifier = 5;
+        this.accuracy = 80;
+        this.soundEffect = "./audio/soundEffects/magic-spell-6005.mp3";
+    }
+    activate(weilder, target){
+        if(this.checkStamina(weilder) == true && this.checkMagic(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
+            let damageOutput = Math.floor(Math.random() * ((((weilder.currentBluntAttack + weilder.currentElementalAttack)/2) + this.damageModifier) - ((weilder.currentBluntAttack + weilder.currentElementalAttack)/2) + 1) + ((weilder.currentBluntAttack + weilder.currentElementalAttack)/2))
+            damageOutput = this.checkDamage(damageOutput, weilder, target, (target.currentBluntDefense + target.currentElementalDefense)/2, "health");
+            target.currentHP = target.currentHP - damageOutput;
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
+            if(damageOutput > 0){
+                if(Math.random()*2 < 1){
+                    if(Math.random()*3 < 1){
+                        for(let i = 0; i < target.statusArray.length; i++){
+                            if(target.statusArray[i].name == "bound"){
+                                return;
+                            }
+                        }
+                        target.statusArray.push(new Bound(target));
+                    }
+                }else{
+                    if(Math.random()*3 < 1){
+                        for(let i = 0; i < target.statusArray.length; i++){
+                            if(target.statusArray[i].name == "burned"){
+                                return;
+                            }
+                        }
+                        target.statusArray.push(new Burned(target));
+                    }
+                }  
+            }
+        }
+    }    
+}
+export class Curse extends Ability{
+    constructor(){
+        super();
+        this.name = "curse";
+        this.type = "arcane";
+        this.speedMultiplier = 0.5;
+        this.staminaCost = 0;
+        this.magicCost = 25;
+        this.damageModifier = 0;
+        this.accuracy = "";
+        this.soundEffect = "./audio/soundEffects/totem-strike-96497.wav";
+    }
+     activate(weilder, target){
+        if(this.checkMagic(weilder) == true){
+            theController.printToGameConsole(`${weilder.name} places a ${this.name} against ${target.name}!`);
+            theController.playSoundEffect(this.soundEffect);
+            for(let i = 0; i < target.statusArray.length; i++){
+                if(target.statusArray[i].name == "cursed"){
+                    target.statusArray[i].currentCharges = target.statusArray[i].maxCharges;
+                    return;
+                }
+            }
+            let status = new Cursed(target)
+            status.onApplied();
+            target.statusArray.push(status);
+        }
+    }
+    canUseSpecialCondition(weilder, currentCharacter){
+        if(weilder !== currentCharacter){
+            for(let i = 0; i < theController.party[0].statusArray.length; i++){
+                if(theController.party[0].statusArray[i].name == "cursed"){
                     return false;
                 }
             }
@@ -1608,12 +1694,12 @@ export class Roar extends Ability{
                 return;
             }
             let messageAddon = " lowering physical attack as low as possible!";
-            if(target.currentBluntAttack > (target.baseBluntAttack - 9)){
-                target.currentBluntAttack = target.currentBluntAttack - 3;
+            if(target.currentBluntAttack > (target.baseBluntAttack - 15)){
+                target.currentBluntAttack = target.currentBluntAttack - 5;
                 messageAddon = ", lowering physical attack";
             }
-            if(target.currentPierceAttack > (target.basePierceAttack - 9)){
-                target.currentPierceAttack = target.currentPierceAttack - 3;
+            if(target.currentPierceAttack > (target.basePierceAttack - 15)){
+                target.currentPierceAttack = target.currentPierceAttack - 5;
                 messageAddon = ", lowering physical attack";
             }
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name}` + messageAddon);
