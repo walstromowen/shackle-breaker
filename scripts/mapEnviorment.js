@@ -297,7 +297,7 @@ export default class MapEnviorment{
                             enemyArray.push(new Bat(currentCharacterLevel));
                             break;
                         case 1:
-                            enemyArray.push(new Skeleton(currentCharacterLevel));
+                            enemyArray.push(new FloatingSkull(currentCharacterLevel));
                             break;
                     }
                     break;

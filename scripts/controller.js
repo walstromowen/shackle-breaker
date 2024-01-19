@@ -1154,7 +1154,7 @@ export default class Controller {
                 this.toggleEncounter(nextRoom.encounter);
                 return; 
             }
-            if(nextRoom.status == "visited" && (nextRoom.type == "enemySpawn" || nextRoom.type == "encounterSpawn")){
+            if(nextRoom.status == "visited" && nextRoom.type == ""){
                 if(Math.floor(Math.random()*20) <= 2){
                     this.nextRoom = nextRoom;
                     this.printToGameConsole("something approaches...");

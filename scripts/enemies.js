@@ -1,6 +1,6 @@
 import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
     ThrowNet, Immolate, LightningBolt, Channel, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Bite, SpitBile, LeechLife, Devour, Pounce, CastShadow, ThrowSmokebomb, Shockwave, GuardBreak, BlinkStrike, Punch, WildSwing,
-    Roar, ShootArrow, TripleShot, MeteorShower, SummonSkeleton, VineLash, ThrowThistles, VortexSheild, Retreat, ArcaneSalvo, Curse} from "./abilities.js"
+    Roar, ShootArrow, TripleShot, MeteorShower, SummonSkeleton, VineLash, ThrowThistles, VortexSheild, Retreat, ArcaneSalvo, Curse, FlameLash} from "./abilities.js"
     import {getRandomItem, LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer, NightbladeSword,
         Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, NightbladeHelm, NightbladeChestplate, RoyalAltusRobes, RoyalAltusPants,
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
@@ -265,6 +265,9 @@ export class AltusMage extends Enemy{
         this.incrementStats(averagePartyLevel, [2,6], [0,2], [2,6], [1,3], [0,1], [2,3], [2,3], [1,3], [1,3], [1,3], [1,3]);
         this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/3));
         this.xp = Math.floor(50 * (1 + this.level/10 ));
+        if(this.level == 5){
+            this.abilityArray.push(new FlameLash());
+        }
     }
 }
 export class CaveSpider extends Enemy{
@@ -934,11 +937,11 @@ export class FloatingSkull extends Enemy{
         this.currentStamina = this.maxStamina;
         this.maxMagic = 30;
         this.currentMagic = this.maxMagic;
-        this.baseBluntAttack = 50;
+        this.baseBluntAttack = 55;
         this.currentBluntAttack = this.baseBluntAttack;
         this.basePierceAttack = 55;
         this.currentPierceAttack = this.basePierceAttack;
-        this.baseArcaneAttack = 60; 
+        this.baseArcaneAttack = 55; 
         this.currentArcaneAttack = this.baseArcaneAttack;
         this.baseElementalAttack = 55;
         this.currentElementalAttack = this.baseElementalAttack;
@@ -950,13 +953,13 @@ export class FloatingSkull extends Enemy{
         this.currentArcaneDefense = this.baseArcaneDefense;
         this.baseElementalDefense = 35;
         this.currentElementalDefense = this.baseElementalDefense;
-        this.baseSpeed = 30;
+        this.baseSpeed = 25;
         this.currentSpeed = this.baseSpeed;
         this.baseEvasion = 15;
         this.currentEvasion = this.baseEvasion;
-        this.abilityArray = [new DrainLife, new ArcaneSalvo, new Curse];
-        this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [];
+        this.abilityArray = [new ArcaneDart];
+        this.lootChanceMultiplier = 3; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootArray = [new HealthPotion, new MagicPotion];
         this.gold = 0;
         this.xp = 0;
         this.isBoss = false;
@@ -967,5 +970,11 @@ export class FloatingSkull extends Enemy{
         this.incrementStats(averagePartyLevel, [2,4], [0,4], [2,6], [1,3], [1,2], [2,3], [1,2], [1,3], [1,3], [1,3], [1,3]);
         this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/3));
         this.xp = Math.floor(20 * (1 + this.level/10 ));
+        if(this.level == 3){
+            this.abilityArray.push(new Curse());
+        }
+        if(this.level == 5){
+            this.abilityArray.push(new DrainLife());
+        }
     }
 }
