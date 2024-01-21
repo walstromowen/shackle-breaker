@@ -1637,6 +1637,12 @@ export default class Controller {
     }
     calculateMaxEnemyCount(){
         let enemyCount = Math.floor(Math.random() * (this.party.length) + 1);
+        if(Math.random()*3 < 1){
+            enemyCount ++;
+        }
+        if(enemyCount > 6){
+            enemyCount = 6;
+        }
         return enemyCount;
     }
 }

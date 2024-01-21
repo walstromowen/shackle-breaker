@@ -424,7 +424,7 @@ export default class MapEnviorment{
                     case 0:
                         return new LockedTreasureChest();
                     case 1:
-                        return new UnlockedTreasureChest();
+                        return new UnearthedReamins();
                     default:
                         return;
                 }

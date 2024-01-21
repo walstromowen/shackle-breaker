@@ -1912,7 +1912,7 @@ export class ThrowKnife extends Ability{
         this.name = "throw knife";
         this.type = "pierce";
         this.speedMultiplier = 1.0;
-        this.staminaCost = 5;
+        this.staminaCost = 10;
         this.magicCost = 0;
         this.damageModifier = 5;
         this.accuracy = 80;
@@ -1940,7 +1940,7 @@ export class ThrowPoisonedKnife extends Ability{
         this.name = "throw poison knife";
         this.type = "pierce";
         this.speedMultiplier = 0.75;
-        this.staminaCost = 5;
+        this.staminaCost = 10;
         this.magicCost = 0;
         this.damageModifier = 0;
         this.accuracy = 80;

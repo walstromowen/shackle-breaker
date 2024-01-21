@@ -335,7 +335,7 @@ export class TravelingMerchant extends Encounter{
                 [
                     ()=>{
                         let lootArray = [];
-                        let count = Math.ceil(Math.random()*3);
+                        let count = Math.ceil(Math.random()*2);
                         for(let i = 0; i < count; i++){
                             lootArray.push(getRandomItem())
                         }
