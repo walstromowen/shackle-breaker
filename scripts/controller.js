@@ -1535,8 +1535,6 @@ export default class Controller {
                 if(this.battle.battlePhase != "retreat"){
                     this.battle.lootEnemies();
                     this.completeRoom();
-                }else{
-                    this.nextRoom.status = "retreated";
                 }
                 document.getElementById("music-player").src = this.map.mapEnviorment.backgroundMusicSrc;
                 document.getElementById("music-player").play();

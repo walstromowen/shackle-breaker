@@ -457,6 +457,9 @@ export class Elusive extends StatusEffect{
     onApplied(){
         this.holder.currentEvasion = this.holder.currentEvasion + this.value;
     }
+    onEndTurn(){
+        this.currentCharges = 0;
+    }
     onAttemptAttack(){
         this.currentCharges = 0;
     }

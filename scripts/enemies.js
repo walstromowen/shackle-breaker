@@ -162,7 +162,7 @@ export class Bat extends Enemy{
         this.currentEvasion = this.baseEvasion;
         this.abilityArray = [new Bite, new LeechLife];
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new HealthPotion, new Antidote];
+        this.lootArray = [new Antidote];
         this.gold = 0;
         this.xp = 0;
         this.isBoss = false;
@@ -1015,7 +1015,7 @@ export class Pursuer extends Enemy{
         this.currentSpeed = this.baseSpeed;
         this.baseEvasion = 10;
         this.currentEvasion = this.baseEvasion;
-        this.abilityArray = [new FlameLash, new Strike, new Flurry, new GuardBreak, new Retreat];
+        this.abilityArray = [new FlameLash, new Strike, new Flurry, new GuardBreak, new ThrowNet, new Retreat];
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
         this.lootArray = [new Spear, new Shortsword, new Longsword, new Handaxe, new Dagger, new Shiv, new BlacksmithHammer,
             new Buckler, new LeatherHelmet, new LeatherHood, new WarHammer, 

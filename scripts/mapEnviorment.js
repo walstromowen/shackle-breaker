@@ -300,12 +300,8 @@ export default class MapEnviorment{
                             enemyArray.push(new FloatingSkull(currentCharacterLevel));
                             break;
                         case 2:
-                            if(Math.random()*2){
-                                enemyArray = [new Pursuer(currentCharacterLevel)];
-                                i = count;
-                            }else{
-                                i--;
-                            }
+                            enemyArray = [new Pursuer(currentCharacterLevel)];
+                            i = count;
                             break;
                     }
                     break;

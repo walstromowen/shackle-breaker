@@ -219,6 +219,8 @@ export class Retreat extends Ability{
         if(this.checkStamina(weilder) == true){
             if(weilder !== theController.party[0]){
                 theController.nextRoom.enemyArray = [];
+            }else{
+                theController.nextRoom.status = "retreated";
             }
             theController.printToGameConsole(`${weilder.name} retreats!`);
             theController.playSoundEffect(this.soundEffect);
