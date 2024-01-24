@@ -28,6 +28,9 @@ class StatusEffect{
     onAttemptAttack(){
         
     }
+    onOpponentAttemptAttack(){
+        
+    }
     onApplied(){
 
     }
@@ -434,5 +437,33 @@ export class Cursed extends StatusEffect{
         }else{
             this.caster = theController.party[0];
         }
+    }
+}
+export class Elusive extends StatusEffect{
+    constructor(holder){
+        super();
+        this.type = "buff";
+        this.isCleansable = false;
+        this.name = "elusive";
+        this.iconSrc = "./media/icons/hidden.png";
+        this.holder = holder;
+        this.maxCharges = 3;
+        this.value = 50 - Math.floor(holder.currentEvasion);
+        this.currentCharges = this.maxCharges;
+    }
+    onRemove(){
+        this.holder.currentEvasion = this.holder.currentEvasion - this.value;
+    }
+    onApplied(){
+        this.holder.currentEvasion = this.holder.currentEvasion + this.value;
+    }
+    onAttemptAttack(){
+        this.currentCharges = 0;
+    }
+    onOpponentAttemptAttack(){
+        this.currentCharges = 0;
+    }
+    onRecieveDamage(){
+        this.currentCharges = 0;
     }
 }

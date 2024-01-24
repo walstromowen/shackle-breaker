@@ -5,7 +5,7 @@ import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Lon
     IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
     ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide, Bandage, FrostbiteTonic, ParalysisTonic, PineWood, TigerClaw, DogPaw, HawkTalons
     } from "./items.js";
-import {Recover, Punch, Retreat} from "./abilities.js"
+import {Recover, Punch, Retreat, Dodge} from "./abilities.js"
 import Character from "./character.js";
 import Map from "./map.js";
 import MiniMap from "./miniMap.js";
@@ -1433,6 +1433,7 @@ export default class Controller {
         }
         this.party[partyIndex].abilityArray.push(new Recover);
         this.party[partyIndex].abilityArray.push(new Retreat);
+        this.party[partyIndex].abilityArray.push(new Dodge);
         //punch check
         if(this.party[partyIndex].equippedArray[0] == "Empty"){
             this.party[partyIndex].abilityArray.push(new Punch);

@@ -1,7 +1,7 @@
 import Character from "./character.js";
 import { Shortsword } from "./items.js";
 import {controller as theController} from "./main.js"
-import {Shielded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden, Bleeding, Blessed, Vortexed, Cursed} from "./statusEffects.js";
+import {Shielded, Bound, Poisoned, Burned, Empowered, Paralyzed, Channeled, Frostbite, Invigorated, Hidden, Bleeding, Blessed, Vortexed, Cursed, Elusive} from "./statusEffects.js";
 
 class Ability{
     canUse(weilder, currentCharacter){
@@ -121,7 +121,11 @@ class Ability{
         for(let j = 0; j < weilder.statusArray.length; j++){
             weilder.statusArray[j].onAttemptAttack();
         }
-        if(Math.random()*this.accuracy < target.currentEvasion){
+        for(let j = 0; j < target.statusArray.length; j++){
+            target.statusArray[j].onOpponentAttemptAttack();
+        }
+        let chance = Math.random()*this.accuracy;
+        if(chance < target.currentEvasion){
             theController.printToGameConsole(`${target.name} avoids ${weilder.name}'s ${abilityName} attack!`);
             return true; //attack misses
         }
@@ -983,6 +987,43 @@ export class Recuperate extends Ability{
         if(weilder !== currentCharacter){
             for(let i = 0; i < weilder.statusArray.length; i++){
                 if(weilder.statusArray[i].name == "invigorated"){
+                    return false;
+                }
+            }
+        }
+    }
+}
+export class Dodge extends Ability{
+    constructor(){
+        super();
+        this.name = "dodge";
+        this.type = "";
+        this.speedMultiplier = 1.0;
+        this.staminaCost = 8;
+        this.magicCost = 0;
+        this.damageModifier = 0;
+        this.accuracy = "";
+        this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
+    }
+     activate(weilder, target){
+        if(this.checkStamina(weilder) == true){
+            theController.printToGameConsole(`prepares to dodge ${target.name}'s attack!`);
+            theController.playSoundEffect(this.soundEffect);
+            for(let i = 0; i < weilder.statusArray.length; i++){
+                if(weilder.statusArray[i].name == "elusive"){
+                    weilder.statusArray[i].currentCharges = weilder.statusArray[i].maxCharges;
+                    return;
+                }
+            }
+            let status = new Elusive(weilder)
+            status.onApplied();
+            weilder.statusArray.push(status);
+        }
+    }
+    canUseSpecialCondition(weilder, currentCharacter){
+        if(weilder !== currentCharacter){
+            for(let i = 0; i < weilder.statusArray.length; i++){
+                if(weilder.statusArray[i].name == "elusive"){
                     return false;
                 }
             }
