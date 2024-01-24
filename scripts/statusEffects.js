@@ -115,6 +115,9 @@ export class Poisoned extends StatusEffect{
         this.maxCharges = 8;
         this.currentCharges = this.maxCharges;
         this.serverityMultiplier = 0.08;
+        if(this.holder.isBoss == true){
+            this.serverityMultiplier = 0.04;
+        }
     }
     onEndTurn(){
         let damageOutput = Math.floor(this.holder.maxHP*this.serverityMultiplier);
@@ -137,6 +140,9 @@ export class Burned extends StatusEffect{
         this.maxCharges = 3;
         this.currentCharges = this.maxCharges;
         this.serverityMultiplier = 0.15;
+        if(this.holder.isBoss == true){
+            this.serverityMultiplier = 0.05;
+        }
     }
     onEndTurn(){
         let damageOutput = Math.floor(this.holder.maxHP*this.serverityMultiplier);
@@ -316,6 +322,9 @@ export class Bleeding extends StatusEffect{
         this.maxCharges = 5;
         this.currentCharges = this.maxCharges;
         this.serverityMultiplier = 0.06;
+        if(this.holder.isBoss == true){
+            this.serverityMultiplier = 0.03;
+        }
     }
     onEndTurn(){
         let damageOutput = Math.floor(this.holder.maxHP*this.serverityMultiplier);
@@ -396,6 +405,9 @@ export class Cursed extends StatusEffect{
         this.serverityMultiplier = 0.05;
         this.maxCharges = 5;
         this.currentCharges = this.maxCharges;
+        if(this.holder.isBoss == true){
+            this.serverityMultiplier = 0.02;
+        }
     }
     onEndTurn(){
         let damageOutput = Math.floor(this.holder.maxHP*this.serverityMultiplier);

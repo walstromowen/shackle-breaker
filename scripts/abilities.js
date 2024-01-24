@@ -222,9 +222,11 @@ export class Retreat extends Ability{
         }
     }
     canUseSpecialCondition(weilder){
-        if(theController.battle.canRetreat == false){
-            theController.printToGameConsole(`cannot retreat!`);
-            return false
+        if(weilder === theController.party[0]){
+            if(theController.battle.canRetreat == false){
+                theController.printToGameConsole(`cannot retreat!`);
+                return false
+            }
         }
     }
 }
@@ -333,7 +335,7 @@ export class GuardBreak extends Ability{
                 }
             }
             let damageOutput1 = this.checkDamage(damageOutput, weilder, target, target.currentBluntDefense, "stamina");
-            let damageOutput2 = this.checkDamage((damageOutput - 10), weilder, target, target.currentBluntDefense, "health");
+            let damageOutput2 = this.checkDamage(Math.floor(damageOutput/2), weilder, target, target.currentBluntDefense/2, "health");
             target.currentHP = target.currentHP - damageOutput2;
             target.currentStamina = target.currentStamina - damageOutput1;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput2} damage and ${damageOutput1} stamina damage!`);
@@ -586,8 +588,7 @@ export class ShieldBash extends Ability{
                 return;
             }
             let damageOutput = Math.floor(Math.random() * ((weilder.currentBluntAttack + this.damageModifier) - weilder.currentBluntAttack + 1)) + weilder.currentBluntAttack;
-            damageOutput = this.checkDamage(damageOutput, weilder, target, target.currentBluntDefense, "health");
-            damageOutput = Math.floor(damageOutput/2)
+            damageOutput = this.checkDamage(Math.floor(damageOutput/2), weilder, target, target.currentBluntDefense/2, "health");
             let messageAddon = "";
             if(target.currentBluntDefense >= (target.baseBluntDefense - 6)){
                 target.currentBluntDefense = target.currentBluntDefense - 2;
@@ -911,7 +912,7 @@ export class Shockwave extends Ability{
                 }
             }
             let damageOutput1 = this.checkDamage(damageOutput, weilder, target, (target.currentBluntDefense + target.currentElementalDefense)/2, "stamina");
-            let damageOutput2 = this.checkDamage((damageOutput - 10), weilder, target, (target.currentBluntDefense + target.currentElementalDefense)/2, "health");
+            let damageOutput2 = this.checkDamage(Math.floor(damageOutput/2), weilder, target, (target.currentBluntDefense + target.currentElementalDefense)/4, "health");
             target.currentHP = target.currentHP - damageOutput2;
             target.currentStamina = target.currentStamina - damageOutput1;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput2} damage and ${damageOutput1} stamina damage!`);

@@ -17,7 +17,7 @@ export default class Controller {
             new Character(["Gadrum Glorysun", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], [new Shortsword, new Buckler, "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
             new Character(["William Stillstar", "./media/mage-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Longsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
             new Character(["Solair Sulabras", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Shortsword, new KiteShield, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["Julian Memira", "./media/rogue-2.jpg", "mercenary", [5,5,5,5,5,5],  [new Shortbow, new Shortbow, new LeatherHood, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Julian Memira", "./media/rogue-2.jpg", "mercenary", [5,5,5,5,5,5],  [new Shortbow, "Empty", new LeatherHood, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
             new Character(["Nicholi Ninarsk", "./media/rogue-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Handaxe, new Handaxe, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
             new Character(["Ragnar Ninarsk", "./media/mage-2.jpg", "mercenary", [5,5,5,5,5,5],  [new IceStaff, "Empty", new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
             new Character(["Revan Sekrav", "./media/rogue-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Dagger, new Shiv, new LeatherHood, new LinenShirt, new LeatherGloves, new LinenPants, new LeatherBoots]]),
@@ -631,7 +631,7 @@ export default class Controller {
             }
             document.getElementById('music-player').pause();
             if(enemyArray[0].isBoss == true){
-                document.getElementById('music-player').src = "./audio/Alex-Productions - Epic Cinematic Adventure Vlog _ Eglair.mp3"
+                document.getElementById('music-player').src = this.battle.hostileParty[0].battleMusicSrc;
             }else{
                 document.getElementById('music-player').src = this.map.mapEnviorment.battleMusicSrc;
             }
@@ -1131,12 +1131,15 @@ export default class Controller {
             if(nextRoom.type == "boss chamber"){
                 if(nextRoom.status == "notVisited"){
                     nextRoom.enemyArray = this.map.mapEnviorment.generateEnemies(this.calculateAveragePartyLevel(), true, 1);
-                    canRetreat = false;
+                    canRetreat = nextRoom.enemyArray[0].canRetreatFrom;
                 }
             }
             if(nextRoom.type == "enemySpawn"){
                 nextRoom.enemyArray = this.map.mapEnviorment.generateEnemies(this.calculateAveragePartyLevel(), false, this.calculateMaxEnemyCount());
                 nextRoom.type = "";
+                if(nextRoom.enemyArray[0].isBoss == true){
+                    canRetreat = nextRoom.enemyArray[0].canRetreatFrom;
+                }
             }
             if(nextRoom.type == "encounterSpawn"){
                 nextRoom.encounter = this.map.mapEnviorment.generateEncounter();
@@ -1159,6 +1162,9 @@ export default class Controller {
                     this.nextRoom = nextRoom;
                     this.printToGameConsole("something approaches...");
                     nextRoom.enemyArray = this.map.mapEnviorment.generateEnemies(this.calculateAveragePartyLevel(), false, this.calculateMaxEnemyCount());
+                    if(nextRoom.enemyArray[0].isBoss == true){
+                        canRetreat = nextRoom.enemyArray[0].canRetreatFrom;
+                    }
                     this.toggleBattle(nextRoom.enemyArray, canRetreat);
                     return;
                 }
@@ -1218,7 +1224,7 @@ export default class Controller {
                     if(this.party[0].equippedArray[0] !== "Empty"){
                         this.partyInventory.push(this.party[0].equippedArray[0]);
                     }
-                    if(this.party[0].equippedArray[1] !== "Empty"){
+                    if(this.party[0].equippedArray[1] !== "Empty" && this.party[0].equippedArray[1].type !== "two hand"){
                         this.partyInventory.push(this.party[0].equippedArray[1]);
                     }
                     this.party[0].equippedArray[0] = this.partyInventory[inventoryIndex];

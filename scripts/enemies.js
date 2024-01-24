@@ -403,6 +403,8 @@ export class EmperorDolos extends Enemy{
         this.xp = 0;
         this.isBoss = true;
         this.isSummon = false;
+        this.battleMusicSrc = './audio/Alex-Productions - Epic Cinematic Adventure Vlog _ Eglair.mp3';
+        this.canRetreatFrom = false;
         this.levelUp(averagePartyLevel);
     }
     levelUp(averagePartyLevel){
@@ -826,6 +828,8 @@ export class TwilightDragon extends Enemy{
         this.xp = 0;
         this.isBoss = true;
         this.isSummon = false;
+        this.battleMusicSrc = './audio/Alex-Productions - Epic Cinematic Adventure Vlog _ Eglair.mp3';
+        this.canRetreatFrom = false;
         this.levelUp(averagePartyLevel);
     }
     levelUp(averagePartyLevel){
@@ -872,6 +876,8 @@ export class AncientAltusKing extends Enemy{
         this.xp = 0;
         this.isBoss = true;
         this.isSummon = false;
+        this.battleMusicSrc = './audio/Alex-Productions - Epic Cinematic Adventure Vlog _ Eglair.mp3';
+        this.canRetreatFrom = false;
         this.levelUp(averagePartyLevel);
     }
     levelUp(averagePartyLevel){
@@ -976,5 +982,58 @@ export class FloatingSkull extends Enemy{
         if(this.level == 5){
             this.abilityArray.push(new DrainLife());
         }
+    }
+}
+export class Pursuer extends Enemy{
+    constructor(averagePartyLevel){
+        super();
+        this.name = "the pursuer";
+        this.apperance = "media/the-pursuer.jpg"
+        this.maxHP = 100;
+        this.currentHP = this.maxHP;
+        this.maxStamina = 100;
+        this.currentStamina = this.maxStamina;
+        this.maxMagic = 100;
+        this.currentMagic = this.maxMagic;
+        this.baseBluntAttack = 60;
+        this.currentBluntAttack = this.baseBluntAttack;
+        this.basePierceAttack = 60;
+        this.currentPierceAttack = this.basePierceAttack;
+        this.baseArcaneAttack = 60; 
+        this.currentArcaneAttack = this.baseArcaneAttack;
+        this.baseElementalAttack = 60;
+        this.currentElementalAttack = this.baseElementalAttack;
+        this.baseBluntDefense = 55;
+        this.currentBluntDefense = this.baseBluntDefense;
+        this.basePierceDefense = 55;
+        this.currentPierceDefense = this.basePierceDefense;
+        this.baseArcaneDefense = 55;
+        this.currentArcaneDefense = this.baseArcaneDefense;
+        this.baseElementalDefense = 55;
+        this.currentElementalDefense = this.baseElementalDefense;
+        this.baseSpeed = 25;
+        this.currentSpeed = this.baseSpeed;
+        this.baseEvasion = 10;
+        this.currentEvasion = this.baseEvasion;
+        this.abilityArray = [new FlameLash, new Strike, new Flurry, new GuardBreak, new Retreat];
+        this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
+        this.lootArray = [new Spear, new Shortsword, new Longsword, new Handaxe, new Dagger, new Shiv, new BlacksmithHammer,
+            new Buckler, new LeatherHelmet, new LeatherHood, new WarHammer, 
+            new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
+            new LeatherBoots, new KiteShield, new IronHelmet, new IronGauntlets, 
+            new IronChainmail, new IronGreaves, new IronBoots, 
+            new HealthPotion, new StaminaPotion, new ThrowingKnife, new Bandage];
+        this.gold = 0;
+        this.xp = 0;
+        this.isBoss = true; 
+        this.isSummon = false;
+        this.battleMusicSrc = './audio/2022-03-16_-_Escape_Route_-_www.FesliyanStudios.com.mp3';
+        this.canRetreatFrom = false;
+        this.levelUp(averagePartyLevel);
+    }
+    levelUp(averagePartyLevel){
+        this.incrementStats(averagePartyLevel, [2,6], [2,4], [2,4], [1,3], [1,3], [1,3], [1,3], [1,3], [1,3], [1,3], [1,3]);
+        this.gold = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + averagePartyLevel/3));
+        this.xp = Math.floor(35 * (1 + this.level/10 ));
     }
 }

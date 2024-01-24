@@ -1,6 +1,6 @@
 import {LockedTreasureChest, UnlockedTreasureChest, AltusAmbushOpportunity, MysteriousDoor, TravelingMerchant, AbandonedCabin, SuspiciousSkeleton, Robbery, Avalanche, MercenaryForHire, AncientTombstone, Quicksand, AnimalTracks,
         UnearthedReamins} from "./encounters.js";
-import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos, ShadowStrider, TerrorBear, Bandit, Ghost, SkeletonMage, AltusGuard, Yeti, Tiger, TwilightDragon, AncientAltusKing, FloatingSkull} from "./enemies.js";
+import {Skeleton, Bat, Wolf, AltusMage, CaveSpider, Groveguardian, EmperorDolos, ShadowStrider, TerrorBear, Bandit, Ghost, SkeletonMage, AltusGuard, Yeti, Tiger, TwilightDragon, AncientAltusKing, FloatingSkull, Pursuer} from "./enemies.js";
 
 export default class MapEnviorment{
     constructor(biome){
@@ -292,12 +292,20 @@ export default class MapEnviorment{
                     }
                     break;
                 case "mysterious dungeon":
-                    switch(Math.floor(Math.random()*2)){ 
+                    switch(Math.floor(Math.random()*3)){ 
                         case 0:
                             enemyArray.push(new Bat(currentCharacterLevel));
                             break;
                         case 1:
                             enemyArray.push(new FloatingSkull(currentCharacterLevel));
+                            break;
+                        case 2:
+                            if(Math.random()*2){
+                                enemyArray = [new Pursuer(currentCharacterLevel)];
+                                i = count;
+                            }else{
+                                i--;
+                            }
                             break;
                     }
                     break;

@@ -26,6 +26,7 @@ Text adventure game based on the Shackle Breaker story
 * Character Specific decisions during encounters
 * Refactor attacks and Weapon Scaling
 * Items are used up upon choosing move not upon using item.
+* Refactor Battle and Ability classes (Promised based abillities?)
 
 # Bugs
 * Image Flashing

@@ -47,6 +47,7 @@ export default class Character{
         this.currentElementalDefense = this.baseElementalDefense;
         this.currentSpeed = this.baseSpeed;
         this.currentEvasion = this.baseEvasion;
+        this.isBoss = false;
         this.isSummon = false;
     }
     autoLevelUp(level){

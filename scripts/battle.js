@@ -264,7 +264,13 @@ export default class Battle{
                 }
                 if(casualtyTypes[i]=="hostile"){
                     theController.updateEnemyStats();
-                    theController.printToGameConsole(`${this.hostileParty[0].name} joins the fight!`)
+                    theController.printToGameConsole(`${this.hostileParty[0].name} joins the fight!`);
+                    if(this.hostileParty[0].isBoss == true){
+                        if(document.getElementById('music-player').src != this.hostileParty[0].battleMusicSrc){
+                            document.getElementById('music-player').src = this.hostileParty[0].battleMusicSrc;
+                            document.getElementById('music-player').play();
+                        }
+                    }
                 }
             }
             theController.enableCharacterBattleControls();
