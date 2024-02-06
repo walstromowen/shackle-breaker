@@ -381,11 +381,11 @@ export class Vortexed extends StatusEffect{
     }
     onRecieveDamage(){
         if(this.holder === theController.party[0]){
-            let damageOutput = Math.floor(theController.battle.hostileParty[0].maxHP*0.1);
+            let damageOutput = Math.floor(theController.battle.hostileParty[0].maxHP*0.2);
             damageOutput = this.checkDamage(damageOutput, theController.battle.hostileParty[0]);
             theController.battle.hostileParty[0].currentHP = theController.battle.hostileParty[0].currentHP - damageOutput;
         }else{
-            let damageOutput = Math.floor(theController.party[0].maxHP*0.1);
+            let damageOutput = Math.floor(theController.party[0].maxHP*0.2);
             damageOutput = this.checkDamage(damageOutput, theController.party[0]);
             theController.party[0].currentHP = theController.party[0].currentHP - damageOutput;
         }

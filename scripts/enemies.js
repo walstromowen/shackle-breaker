@@ -1011,7 +1011,7 @@ export class Pursuer extends Enemy{
         this.currentArcaneDefense = this.baseArcaneDefense;
         this.baseElementalDefense = 55;
         this.currentElementalDefense = this.baseElementalDefense;
-        this.baseSpeed = 25;
+        this.baseSpeed = 30;
         this.currentSpeed = this.baseSpeed;
         this.baseEvasion = 10;
         this.currentEvasion = this.baseEvasion;
@@ -1028,7 +1028,7 @@ export class Pursuer extends Enemy{
         this.isBoss = true; 
         this.isSummon = false;
         this.battleMusicSrc = './audio/2022-03-16_-_Escape_Route_-_www.FesliyanStudios.com.mp3';
-        this.canRetreatFrom = false;
+        this.canRetreatFrom = true;
         this.levelUp(averagePartyLevel);
     }
     levelUp(averagePartyLevel){

@@ -5,25 +5,26 @@ export let controller = new Controller();
 /*
 let count = [0,0,0,0,0,0]
 for(let a = 0; a < 100; a++){
-    let p = 5;
-    let enemyCount = Math.floor((Math.random() * (15 - 5 + 1) + 5) * (1 + p/2));
+    let length = 1;
+    let avgLvl = 15;
+    let enemyCount = Math.round(Math.random() * ((avgLvl * 0.2) + (length/3) + 1));
  
-    if(enemyCount >= 0 && enemyCount < 20){
+    if(enemyCount == 1){
         count[0]++;
     }
-    if(enemyCount >= 20 && enemyCount < 40){
+    if(enemyCount == 2){
         count[1]++;
     }
-    if(enemyCount >= 40 && enemyCount < 60){
+    if(enemyCount == 3){
         count[2]++;
     }
-    if(enemyCount >= 60 && enemyCount < 80){
+    if(enemyCount == 4){
         count[3]++;
     }
-    if(enemyCount >= 80 && enemyCount < 100){
+    if(enemyCount == 5){
         count[4]++;
     }
-    if(enemyCount >= 100){
+    if(enemyCount == 6){
         count[5]++;
     }
 }

@@ -703,7 +703,7 @@ export class ShootPoisonArrow extends Ability{
             if(this.checkMiss(weilder, target, this.name) == true){
                 return;
             }
-            let damageOutput = Math.floor(Math.random() * ((weilder.currentPierceAttack + this.damageModifier) - weilder.currentPierceAttack + 1)) + weilder.currentPierceAttack;
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentPierceAttack + this.damageModifier) - (weilder.currentPierceAttack - 10) + 1)) + weilder.currentPierceAttack - 10;
             damageOutput = this.checkDamage(damageOutput, weilder, target, target.currentPierceDefense, "health");
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
@@ -1204,7 +1204,7 @@ export class LightBeam extends Ability{
             if(this.checkMiss(weilder, target, this.name) == true){
                 return;
             }
-            let damageOutput = Math.floor(Math.random() * ((weilder.currentArcaneAttack + this.damageModifier) - weilder.currentArcaneAttack + 1)) + weilder.currentArcaneAttack;
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentArcaneAttack + this.damageModifier) - (weilder.currentArcaneAttack-5) + 1)) + weilder.currentArcaneAttack-5;
             damageOutput = this.checkDamage(damageOutput, weilder, target, target.currentArcaneDefense, "health");
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
@@ -1992,7 +1992,7 @@ export class ThrowPoisonedKnife extends Ability{
     }
     activate(weilder, target){
         if(this.checkStamina(weilder) == true){
-            let damageOutput = Math.floor(Math.random() * ((weilder.currentPierceAttack + this.damageModifier) - weilder.currentPierceAttack + 1)) + weilder.currentPierceAttack;
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentPierceAttack + this.damageModifier) - (weilder.currentPierceAttack-10) + 1)) + weilder.currentPierceAttack-10;
             damageOutput = this.checkDamage(damageOutput, weilder, target, target.currentPierceDefense, "health");
             target.currentHP = target.currentHP - damageOutput;
             theController.printToGameConsole(`${weilder.name} throws a poisoned throwing knfife at the ${target.name} for ${damageOutput} damage!`);

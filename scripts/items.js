@@ -1480,7 +1480,7 @@ export class RoyalAltusRobes {
 export class RoyalAltusPants {
     constructor(){
         this.name = "royal altus pants";
-        this.type = "head";
+        this.type = "legs";
         this.imageSrc = "./media/icons/trousers.png";
         this.description = `Royal pants belonging to a high ranking official of the altus kingdom. Although most believe the Altus emperor went mad, some speculate that another took his place shortly after the fall of the Altus kingdom.`;
         this.level = 1;
