@@ -1641,7 +1641,7 @@ export default class Controller {
         return Math.ceil(sum / this.party.length);
     }
     calculateMaxEnemyCount(){
-        let enemyCount = Math.round(Math.random() * (( calculateAveragePartyLevel() * 0.2) + (this.party.length/3) + 1));
+        let enemyCount = Math.round(Math.random() * ((this.calculateAveragePartyLevel() * 0.2) + (this.party.length/3) + 1));
         if(Math.random()*3 < 1){
             enemyCount ++;
         }
