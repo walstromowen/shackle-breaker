@@ -1068,6 +1068,41 @@ export class IceShard extends Ability{
         }
     } 
 }
+export class BolaShot extends Ability{
+    constructor(){
+        super();
+        this.name = "bola shot";
+        this.type = "blunt";
+        this.speedMultiplier = 0.5;
+        this.staminaCost = 12;
+        this.magicCost = 0;
+        this.damageModifier = 5;
+        this.accuracy = 80;
+        this.soundEffect = "./audio/soundEffects/arrow-body-impact-146419.mp3";
+    }
+    activate(weilder, target){
+        if(this.checkStamina(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
+            let damageOutput = Math.floor(Math.random() * ((weilder.currentBluntAttack + this.damageModifier) - weilder.currentBluntAttack + 1)) + weilder.currentBluntAttack;
+            damageOutput = this.checkDamage(damageOutput, weilder, target, target.currentBluntDefense, "health");
+            target.currentHP = target.currentHP - damageOutput;
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
+            if(damageOutput > 0){
+                if(Math.random()*3 < 1){
+                    for(let i = 0; i < target.statusArray.length; i++){
+                        if(target.statusArray[i].name == "bound"){
+                            return;
+                        }
+                    }
+                    target.statusArray.push(new Bound(target));
+                } 
+            }
+        }
+    }
+}
 export class IceBarrier extends Ability{
     constructor(){
         super();

@@ -1,13 +1,13 @@
 import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, GuardBreak, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy, UseBandage,
         ThrowNet, Immolate, LightningBolt, Shockwave, Recuperate, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Channel, ThrowSmokebomb, CastShadow, BlinkStrike, Empower, WildSwing, Pounce, Bite, ShootArrow, TripleShot,
-        Roar, UseFrostbiteTonic, UseParalysisTonic, MeteorShower, SummonSkeleton, ArcaneSalvo, Bless, VineLash, ThrowThistles, VortexSheild, ShootPoisonArrow, Curse, FlameLash} from "./abilities.js"
+        Roar, UseFrostbiteTonic, UseParalysisTonic, MeteorShower, SummonSkeleton, ArcaneSalvo, Bless, VineLash, ThrowThistles, VortexSheild, ShootPoisonArrow, Curse, FlameLash, BolaShot} from "./abilities.js"
 
 export function getRandomItem(){
     let itemArray = [new LinenShirt, new LinenPants, new Dagger, new BlacksmithHammer, new Spear, new Shortsword, new Longsword, new Handaxe, new NightbladeSword,
                 new Shiv, new Buckler, new FireStaff, new LightningStaff, new IceStaff, new ArcaneStaff, new LightStaff, new DarkStaff, new LeatherHelmet, 
                 new LeatherHood, new LeatherGloves, new LeatherChestplate, new LeatherGreaves, new NightbladeHelm, new NightbladeChestplate, new RoyalAltusRobes, new RoyalAltusPants,
                 new LeatherBoots, new KiteShield, new IronHelmet, new IronGauntlets, new IronChainmail, 
-                new IronGreaves, new IronBoots, new CrystalBall, new ClothHood, new ClothRobe, new Shortbow, new ForestStaff,
+                new IronGreaves, new IronBoots, new PanzerianGuantlets, new CrystalBall, new ClothHood, new ClothRobe, new Shortbow, new ForestStaff,
                 new HealthPotion, new StaminaPotion, new MagicPotion, 
                 new ThrowingKnife, new PoisonedKnife, new Meteorite, new Antidote, new AloeRemedy, new Net, new SmokeBomb, new Bandage, new FrostbiteTonic, new ParalysisTonic];
                 return itemArray[Math.floor(Math.random() * itemArray.length)];
@@ -1514,6 +1514,46 @@ export class RoyalAltusPants {
         }
         if(this.level == 3){
             this.abilityArray.push(new CastShadow());
+        }
+    }
+}
+export class PanzerianGuantlets {
+    constructor(){
+        this.name = "panzerian gauntlets";
+        this.type = "arms";
+        this.imageSrc = "./media/icons/armor-punch.png";
+        this.description = `a heavily modified pair of iron guantlets. Panzerians are a rare sight to the people of Altus Kingdom. Rumor has it Prince Dolo's was guarded by a Panzerian body guard who was so loyal he pursued the prince's every whim.`;
+        this.level = 1;
+        this.price = 150;
+        this.bluntAttack = 1;
+        this.pierceAttack = 0;
+        this.arcaneAttack = 0;
+        this.elementalAttack = 1;
+        this.bluntDefense = 4;
+        this.pierceDefense = 2;
+        this.arcaneDefense = 1;
+        this.elementalDefense = 2;
+        this.speed = 0;
+        this.evasion = -1;
+        this.abilityArray = [new BolaShot];
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.bluntAttack = this.bluntAttack + 1;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 1;
+            this.bluntDefense = this.bluntDefense + 2;
+            this.pierceDefense = this.pierceDefense + 1;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 2;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+        }
+        if(this.level == 3){
+            this.abilityArray.push(new FlameLash());
         }
     }
 }

@@ -1,11 +1,11 @@
 import {Slash, Strike, Stab, Flurry, Eviscerate, Block, Fireball, Meditate, Cleanse, ShieldBash, LightBeam, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, ThrowKnife, ThrowPoisonedKnife, SmashMeteorite, UseAntidote, UseAloeRemedy,
     ThrowNet, Immolate, LightningBolt, Channel, IceShard, IceBarrier, DrainLife, Siphon, ArcaneDart, ArcaneBlast, Bite, SpitBile, LeechLife, Devour, Pounce, CastShadow, ThrowSmokebomb, Shockwave, GuardBreak, BlinkStrike, Punch, WildSwing,
-    Roar, ShootArrow, TripleShot, MeteorShower, SummonSkeleton, VineLash, ThrowThistles, VortexSheild, Retreat, ArcaneSalvo, Curse, FlameLash} from "./abilities.js"
+    Roar, ShootArrow, TripleShot, MeteorShower, SummonSkeleton, VineLash, ThrowThistles, VortexSheild, Retreat, ArcaneSalvo, Curse, FlameLash, BolaShot} from "./abilities.js"
     import {getRandomItem, LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Longsword, Handaxe, WarHammer, NightbladeSword,
         Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, NightbladeHelm, NightbladeChestplate, RoyalAltusRobes, RoyalAltusPants,
         LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
         LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, Shortbow, ForestStaff,
-        IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
+        IronGreaves, IronBoots, PanzerianGuantlets, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
         ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide, Bandage, FrostbiteTonic, ParalysisTonic, PineWood, TigerClaw, DogPaw, HawkTalons
         } from "./items.js";
 import { Channeled, Invigorated, Vortexed } from "./statusEffects.js";
@@ -1015,14 +1015,9 @@ export class Pursuer extends Enemy{
         this.currentSpeed = this.baseSpeed;
         this.baseEvasion = 10;
         this.currentEvasion = this.baseEvasion;
-        this.abilityArray = [new FlameLash, new Strike, new Flurry, new GuardBreak, new ThrowNet, new Retreat];
+        this.abilityArray = [new FlameLash, new Flurry, new GuardBreak, new ThrowNet, new BolaShot, new Retreat];
         this.lootChanceMultiplier = 2; //lower numbers = more likely to drop loot, 0 is certain to drop loot
-        this.lootArray = [new Spear, new Shortsword, new Longsword, new Handaxe, new Dagger, new Shiv, new BlacksmithHammer,
-            new Buckler, new LeatherHelmet, new LeatherHood, new WarHammer, 
-            new LeatherGloves, new LeatherChestplate, new LeatherGreaves, 
-            new LeatherBoots, new KiteShield, new IronHelmet, new IronGauntlets, 
-            new IronChainmail, new IronGreaves, new IronBoots, 
-            new HealthPotion, new StaminaPotion, new ThrowingKnife, new Bandage];
+        this.lootArray = [new PanzerianGuantlets];
         this.gold = 0;
         this.xp = 0;
         this.isBoss = true; 

@@ -81,37 +81,31 @@ export default class MapEnviorment{
                         break;
                 }
                 break;
-            case "portal":
-                switch(Math.floor(Math.random()*2)){ 
-                    case 0: 
-                        this.biome = "twilight realm";
-                        this.imageSrc = "media/twilight-realm.jpg";
-                        this.backgroundMusicSrc = "./audio/mixkit-evil-storm-atmosphere-2404.wav";
-                        this.battleMusicSrc = "./audio/battle-sword-139313.mp3";
-                        this.frameCoordinates = [
-                            [3],
-                            [3],
-                            [0],
-                            [0],
-                            [0]
-                        ];
-                        break;
-                    case 1:
-                        this.biome = "ancient altus ruins";
-                        this.imageSrc = "media/ancient-altus-ruins.jpg";
-                        this.backgroundMusicSrc = "./audio/gathering-darkness-kevin-macleod-main-version-04-22-8459.mp3";
-                        this.battleMusicSrc = "./audio/battle-sword-139313.mp3";
-                        this.frameCoordinates = [
-                            [6],
-                            [6],
-                            [0],
-                            [0],
-                            [6]
-                        ];
-                        break;
-                    default:
-                        break;
-                }
+            case "twilight realm": 
+                this.biome = "twilight realm";
+                this.imageSrc = "media/twilight-realm.jpg";
+                this.backgroundMusicSrc = "./audio/mixkit-evil-storm-atmosphere-2404.wav";
+                this.battleMusicSrc = "./audio/battle-sword-139313.mp3";
+                this.frameCoordinates = [
+                    [3],
+                    [3],
+                    [0],
+                    [0],
+                    [0]
+                ];
+                break;
+            case "ancient altus ruins":
+                this.biome = "ancient altus ruins";
+                this.imageSrc = "media/ancient-altus-ruins.jpg";
+                this.backgroundMusicSrc = "./audio/gathering-darkness-kevin-macleod-main-version-04-22-8459.mp3";
+                this.battleMusicSrc = "./audio/battle-sword-139313.mp3";
+                this.frameCoordinates = [
+                    [6],
+                    [6],
+                    [0],
+                    [0],
+                    [6]
+                ];
                 break;
             case "altus castle":
                 this.biome = "altus castle";

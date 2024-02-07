@@ -71,8 +71,9 @@ p{
     margin: auto 0;
 }
 #title-screen{
-    background-image: url("./media/title-screen.jpg");
+    background-image: url("./media/title-screen3.jpg");
     background-size:cover;
+    background-position: center;
     height: 100vh;
 }
 #title-screen-button-container{
@@ -114,8 +115,16 @@ p{
     margin-top: 10px;
     
 }
+.lore-container{
+    width: 80%;
+    height: 200px;
+    margin: 10px auto auto 0px;
+}
 #background-lore-header{
     background-color: var(--color-2);
+}
+#background-description-message{
+    margin-top: 20px;
 }
 #character-creation-screen{
     display:none;
@@ -385,6 +394,15 @@ p{
 }
 .party-take-control-btn{
     width: 60px;
+}
+.party-name-input{
+    background-color: var(--color-3);
+    width: 50%;
+    font-size: 18px;
+    border: 2px solid var(--color-2);
+}
+.character-slot{
+    margin: 5px 0px;
 }
 #app{
     display: none;

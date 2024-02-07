@@ -8,7 +8,7 @@ import {getRandomItem, LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, 
     Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, NightbladeHelm, NightbladeChestplate, RoyalAltusRobes, RoyalAltusPants,
     LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
     LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, Shortbow, ForestStaff,
-    IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
+    IronGreaves, IronBoots, PanzerianGuantlets, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
     ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide, Bandage, FrostbiteTonic, ParalysisTonic, PineWood, TigerClaw, DogPaw, HawkTalons
     } from "./items.js";
 
@@ -110,7 +110,7 @@ export class UnlockedTreasureChest extends Encounter{
                 [
                     ()=>{takeDamage(`as ${theController.party[0].name} opens the chest, an arrow flies up from the chest and hits ${theController.party[0].name}!`, 0.15, 0.25, 1)},
                     ()=>{recieveStatusEffect(`as ${theController.party[0].name} opens the chest, the chest explodes in an inferno of flames!`, new Burned(theController.party[0]))},
-                    ()=>{recieveStatusEffect(`as ${theController.party[0].name} opens the chest, the chest englufs ${theController.party[0].name} in a cloud of noxious fumes!`, new Poisoned(theController.party[0]))}
+                    ()=>{recieveStatusEffect(`as ${theController.party[0].name} opens the chest, the chest engulfs ${theController.party[0].name} in a cloud of noxious fumes!`, new Poisoned(theController.party[0]))}
                 ]
             )
         ];
@@ -198,7 +198,8 @@ export class MysteriousDoor extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.party[0].name} presses ${rune1}`)},
                 "neutral",
                 [
-                    ()=>{changeMap(`the door swings open and pulls ${theController.party[0].name} in!`, "portal", "boss random")},
+                    ()=>{changeMap(`the door swings open and pulls ${theController.party[0].name} in!`, "ancient altus ruins", "boss random")},
+                    ()=>{changeMap(`the door swings open and pulls ${theController.party[0].name} in!`, "twilight realm", "boss random")},
                     ()=>{regainHP(`the door swings open and showers ${theController.party[0].name} will a soothing light.`, 0.5)}
                 ],
                 [
@@ -211,7 +212,8 @@ export class MysteriousDoor extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.party[0].name} presses ${rune2}`)},
                 "neutral",
                 [
-                    ()=>{changeMap(`the door swings open and pulls ${theController.party[0].name} in!`, "portal", "boss random")},
+                    ()=>{changeMap(`the door swings open and pulls ${theController.party[0].name} in!`, "ancient altus ruins", "boss random")},
+                    ()=>{changeMap(`the door swings open and pulls ${theController.party[0].name} in!`, "twilight realm", "boss random")},
                     ()=>{regainHP(`the door swings open and showers ${theController.party[0].name} will a soothing light.`, 0.5)}
                 ],
                 [
@@ -224,7 +226,8 @@ export class MysteriousDoor extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.party[0].name} presses ${rune3}`)},
                 "neutral",
                 [
-                    ()=>{changeMap(`the door swings open and pulls ${theController.party[0].name} in!`, "portal", "boss random")},
+                    ()=>{changeMap(`the door swings open and pulls ${theController.party[0].name} in!`, "ancient altus ruins", "boss random")},
+                    ()=>{changeMap(`the door swings open and pulls ${theController.party[0].name} in!`, "twilight realm", "boss random")},
                     ()=>{regainHP(`the door swings open and showers ${theController.party[0].name} will a soothing light.`, 0.5)}
                 ],
                 [
@@ -280,8 +283,8 @@ export class SuspiciousSkeleton extends Encounter{
                     ()=>{recruit(`For reasons unknown, the skeleton decides to join ${theController.party[0].name} party...`, new Character(["Shmindy", "./media/skeleton-mage.jpg", "companion", [-5,5,5,5,5,10], [new ArcaneStaff, new CrystalBall, new ClothHood, new ClothRobe, "Empty", new LinenPants, new LeatherBoots]]))}
                 ],
                 [
-                    ()=>{toggleBattle(`the skeleton fixes its gaze upon ${theController.party[0].name} and draws its weapon!`, [new Skeleton(theController.calculateAveragePartyLevel())])},
-                    ()=>{toggleBattle(`the skeleton fixes its gaze upon ${theController.party[0].name} and draws its weapon!`, [new SkeletonMage(theController.calculateAveragePartyLevel())])},
+                    ()=>{toggleBattle(`the skeleton fixes its gaze upon ${theController.party[0].name} and draws its weapon!`, [new Skeleton(theController.calculateAveragePartyLevel())], true)},
+                    ()=>{toggleBattle(`the skeleton fixes its gaze upon ${theController.party[0].name} and draws its weapon!`, [new SkeletonMage(theController.calculateAveragePartyLevel())], true)},
                     ()=>{
                         theController.party[0].statusArray.push(new Bound(theController.party[0]));
                         toggleBattle(`the skeleton grabs onto ${theController.party[0].name}!`, [new Skeleton(theController.calculateAveragePartyLevel())], true)
@@ -343,7 +346,7 @@ export class TravelingMerchant extends Encounter{
                     }
                 ],
                 [
-                    ()=>{toggleBattle(`the merchant draws his weapon!`, [new Merchant(theController.calculateAveragePartyLevel())])},
+                    ()=>{toggleBattle(`the merchant draws his weapon!`, [new Merchant(theController.calculateAveragePartyLevel())], true)},
                     ()=>{leave(`the merchant throws a smokebomb and disappears! Leaving ${theController.party[0].name} all alone.`)}
                 ]
             ),
@@ -355,7 +358,7 @@ export class TravelingMerchant extends Encounter{
                     ()=>{loot(` ${theController.party[0].name} quietly picks the merchant's pocket. ${theController.party[0].name} loots:`, [getRandomItem()], 20, 100)}
                 ],
                 [
-                    ()=>{toggleBattle(`the merchant draws his weapon!`, [new Merchant(theController.calculateAveragePartyLevel())])},
+                    ()=>{toggleBattle(`the merchant draws his weapon!`, [new Merchant(theController.calculateAveragePartyLevel())], true)},
                     ()=>{leave(`the merchant throws a smokebomb and disappears! Leaving ${theController.party[0].name} all alone.`)}
                 ]
             )
@@ -492,7 +495,7 @@ export class DefendTraveler extends Encounter{
                 ()=>{theController.printToGameConsole(`${theController.party[0].name} lunges at the bandit with weapon drawn!`)},
                 "certain",
                 [
-                    ()=>{toggleBattle(`the bandit draws his weapon to meet ${theController.party[0].name}!`, [new Bandit(theController.calculateAveragePartyLevel())])}
+                    ()=>{toggleBattle(`the bandit draws his weapon to meet ${theController.party[0].name}!`, [new Bandit(theController.calculateAveragePartyLevel())], true)}
                 ],
                 [
 

@@ -2,7 +2,7 @@ import {LinenShirt, LinenPants, Dagger, BlacksmithHammer, Spear, Shortsword, Lon
     Shiv, Buckler, FireStaff, LightningStaff, IceStaff, ArcaneStaff, LightStaff, DarkStaff, LeatherHelmet, NightbladeHelm, NightbladeChestplate,
     LeatherHood, LeatherGloves, LeatherChestplate, LeatherGreaves, 
     LeatherBoots, KiteShield, IronHelmet, IronGauntlets, IronChainmail, Shortbow, ForestStaff,
-    IronGreaves, IronBoots, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
+    IronGreaves, IronBoots, PanzerianGuantlets, CrystalBall, ClothHood, ClothRobe, HealthPotion, StaminaPotion, MagicPotion, 
     ThrowingKnife, PoisonedKnife, Meteorite, Antidote, AloeRemedy, Net, SmokeBomb, Hide, Bandage, FrostbiteTonic, ParalysisTonic, PineWood, TigerClaw, DogPaw, HawkTalons
     } from "./items.js";
 import {Recover, Punch, Retreat, Dodge} from "./abilities.js"
@@ -14,16 +14,16 @@ import Battle from "./battle.js";
 export default class Controller {
     constructor(){
         this.wanderingCompanions = [
-            new Character(["Gadrum Glorysun", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], [new Shortsword, new Buckler, "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Gadrum Glorysun", "./media/companion-warrior-male-2.jpg", "mercenary", [5,5,5,5,5,5], [new Shortsword, new Buckler, "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
             new Character(["William Stillstar", "./media/mage-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Longsword, "Empty", "Empty", new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["Solair Sulabras", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Shortsword, new KiteShield, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["Julian Memira", "./media/rogue-2.jpg", "mercenary", [5,5,5,5,5,5],  [new Shortbow, "Empty", new LeatherHood, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["Nicholi Ninarsk", "./media/rogue-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Handaxe, new Handaxe, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["Ragnar Ninarsk", "./media/mage-2.jpg", "mercenary", [5,5,5,5,5,5],  [new IceStaff, "Empty", new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["Revan Sekrav", "./media/rogue-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Dagger, new Shiv, new LeatherHood, new LinenShirt, new LeatherGloves, new LinenPants, new LeatherBoots]]),
-            new Character(["Alina Sulabras", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], [new Shortsword, new KiteShield, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["Ariannel Memira", "./media/knight-2.jpg", "mercenary", [5,5,5,5,5,5], [new LightStaff, "Empty", new ClothHood, new ClothRobe, "Empty", new LinenPants, new LeatherBoots]]),
-            new Character(["Gwen Swallowtail", "./media/knight-1.jpg", "mercenary", [5,5,5,5,5,5], [new DarkStaff, "Empty", new ClothHood, new ClothRobe, "Empty", new LinenPants, new LeatherBoots]])
+            new Character(["Solair Sulabras", "./media/companion-knight-male-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Shortsword, new KiteShield, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Julian Memira", "./media/companion-mage-male-1.jpg", "mercenary", [5,5,5,5,5,5],  [new DarkStaff, "Empty", new ClothHood, new ClothRobe, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Nicholi Ninarsk", "./media/companion-warrior-male-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Handaxe, new Handaxe, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Ragnar Ninarsk", "./media/companion-warrior-male-1.jpg", "mercenary", [5,5,5,5,5,5],  [new IceStaff, "Empty", new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Revan Sekrav", "./media/companion-rogue-male-1.jpg", "mercenary", [5,5,5,5,5,5],  [new Dagger, new Shiv, new LeatherHood, new LinenShirt, new LeatherGloves, new LinenPants, new LeatherBoots]]),
+            new Character(["Alina Sulabras", "./media/companion-knight-female-1.jpg", "mercenary", [5,5,5,5,5,5], [new Shortsword, new KiteShield, new LeatherHelmet, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Ariannel Memira", "./media/companion-mage-female-1.jpg", "mercenary", [5,5,5,5,5,5], [new LightStaff, "Empty", new ClothHood, new ClothRobe, "Empty", new LinenPants, new LeatherBoots]]),
+            new Character(["Gwen Swallowtail", "./media/companion-rogue-female-1.jpg", "mercenary", [5,5,5,5,5,5], [new Shortbow, "Empty", new LeatherHood, new LinenShirt, "Empty", new LinenPants, new LeatherBoots]])
         ];
         this.characterCreationArray = ["name", "apperance", "background", "attributesArray", "equippedArray"];
         this.tempCompanionValue = "none";
@@ -38,6 +38,7 @@ export default class Controller {
         this.battleBtnArray = [];
         this.encounterBtnArray = [];
         this.isInBattle = false;
+        this.isInEncounter = false;
         this.isInTrade = false;
         this.canMoveRoom = true;
         this.currentRoom = "";
@@ -57,6 +58,7 @@ export default class Controller {
             document.getElementById("character-creation-screen").style.display = "block";
             this.characterCreatorDetermineUpdateStats();
             this.characterCreatorUpdateInventory();
+            this.characterCreatorUpdateBackgroundLore();
             document.getElementById("music-player").src = "./audio/Alex-Productions - Epic Cinematic Adventure Vlog _ Eglair.mp3";
             document.getElementById("music-player").play();
         });
@@ -105,11 +107,15 @@ export default class Controller {
         document.getElementById("background-selection").addEventListener("change", ()=>{
             this.characterCreatorDetermineUpdateStats();
             this.characterCreatorUpdateInventory();
+            this.characterCreatorUpdateBackgroundLore();
         });
         document.getElementById("keepsake-selection").addEventListener("change", ()=>{
             this.characterCreatorUpdateInventory();
         });
         document.getElementById("companion-selection").addEventListener("change", ()=>{
+            if(this.tempCompanionValue.origin == 'mercenary'){
+                this.wanderingCompanions.push(this.tempCompanionValue);
+            }
             this.characterCreatorUpdateCompanion();
         });
     }
@@ -200,7 +206,7 @@ export default class Controller {
             case "none":
                 break;
             case "hunters-tools":
-                inventoryArray.push(new ThrowingKnife, new Net, new Bandage);
+                inventoryArray.push(new HealthPotion, new ThrowingKnife, new Net);
                 break;
             case "bag-of-potions":
                 inventoryArray.push(new HealthPotion, new StaminaPotion , new MagicPotion);
@@ -209,17 +215,21 @@ export default class Controller {
                 inventoryArray.push(new Meteorite);
                 break;
             case "herbal-medicine":
-                inventoryArray.push(new Bandage, new Antidote, new AloeRemedy);
+                inventoryArray.push(new HealthPotion, new Antidote, new AloeRemedy);
                 break;
             case "assasians-belt":
-                inventoryArray.push(new PoisonedKnife, new SmokeBomb, new Antidote);
+                inventoryArray.push(new HealthPotion, new PoisonedKnife, new SmokeBomb);
                 break;
             case "artisans-tools":
-                inventoryArray.push(new PineWood, new Hide);
+                inventoryArray.push(new HealthPotion, new PineWood, new Hide);
                 break;
             case "alchemists-vials":
-                inventoryArray.push(new ParalysisTonic, new FrostbiteTonic);
+                inventoryArray.push(new HealthPotion, new ParalysisTonic, new FrostbiteTonic);
                 break;
+            case "first-aid-kit":
+                inventoryArray.push(new HealthPotion, new Bandage);
+                break;
+              
             
         }
         Array.from(document.getElementById("character-creation-inventory").getElementsByClassName("inventory-slot-long")).forEach(slot=>{
@@ -258,7 +268,39 @@ export default class Controller {
                 this.tempCompanionValue = new Character(["Hawk", "./media/hawk.jpg", "animal", [0,6,6,6,6,6], [new HawkTalons, new HawkTalons, "N/A", "N/A", "N/A", "N/A", "N/A"]]);
                 document.getElementById("character-creator-companion-image").src = this.tempCompanionValue.apperance; 
                 break;
+            case "mercenary":
+                this.tempCompanionValue = this.getWanderingCompanion();
+                document.getElementById("character-creator-companion-image").src = this.tempCompanionValue.apperance; 
+                break;
         }
+    }
+    characterCreatorUpdateBackgroundLore(){
+        let value = document.getElementById("background-selection").value;
+        let backgroundLore = '';
+        switch(value){
+            case "traveler":
+                backgroundLore = 'After discovery of magic, travelers from all over came to the Altus kingdom. Few ever left.'
+                break;
+            case "blacksmith":
+                backgroundLore = 'With the discovery of magic, many lost interest in the wares of smiths. Ironically, smiths faired quite well during the fall of the Altus Kingdom, and in the chaos that followed. '
+                break;
+            case "ranger":
+                backgroundLore = 'Farmers, hunters, and countrymen who went into hiding during the fall of the Altus kingdom often took up the nomadic life of a ranger, some by choice, others by necessity.';
+                break;
+            case "scholar":
+                backgroundLore = 'Scholars from far and wide eagerly flocked to the the Altus kngdom to learn about the magical properties of the artifact. Many scholars were so engrossed in their ressearch that they ignored their family obligations.'
+                break;
+            case "warrior":
+                backgroundLore = "Warriors were always needed in the Altus kingdom. However, it was not lack of military strength that led to its demise, but rather an internal affair."
+                break;
+            case "thief":
+                backgroundLore = 'Many resorted to thievery in the years following the discovery of magic. Surprisingly, many did so not because of poverty but because of the thrill of it.'
+                break;
+            case "hermit":
+                backgroundLore = 'There were few in the Altus Kingdom who truly understood magic for what it was. Most still do not. Still, some choose to continue their research away from the artifact and its effects on the populance. '
+                break;
+        }
+       document.getElementById('background-description-message').innerText = backgroundLore;
     }
     enableGameOverScreenControls(){
         document.getElementById('gameover-to-menu-btn').addEventListener("click", ()=>{
@@ -590,6 +632,7 @@ export default class Controller {
         document.getElementById("merchant-inventory-container").style.display = "none";
         this.miniMap.resizeCanvas();
         this.miniMap.draw(this.map, this.currentRoom);
+        this.isInEncounter = false;
         this.isInBattle = false;
         this.isInTrade = false;
         this.canMoveRoom = true;
@@ -641,6 +684,7 @@ export default class Controller {
     }
     toggleEncounter(encounter){
         this.encounter = encounter;
+        this.isInEncounter = true;
         this.canMoveRoom = false;
         this.disableCharacterEncounterControls();
         Array.from(document.getElementsByClassName('party-direction-btn')).forEach(btn=>{
@@ -1038,7 +1082,7 @@ export default class Controller {
         });
         for(let i = 0; i < this.party.length; i++){
             let characterSlot = document.createElement("div");
-            let characterName = document.createElement("p");
+            let characterName = document.createElement("input");
             let characterOrderContainer = document.createElement("div");
             let characterTakeControlBtn = document.createElement("div");
             let characterRaiseBtn = document.createElement("div");
@@ -1051,7 +1095,8 @@ export default class Controller {
             characterRaiseBtn.classList.add("party-direction-btn");
             characterLowerBtn.classList.add("party-direction-btn");
             characterOrderContainer.classList.add("flex");
-            characterName.innerText = `${this.party[i].name}`;
+            characterName.classList.add("party-name-input");
+            characterName.value = `${this.party[i].name}`;
             characterTakeControlBtn.innerText = "Select";
             characterRaiseBtn.innerText = "↑";
             characterLowerBtn.innerText = "↓";
@@ -1063,6 +1108,19 @@ export default class Controller {
             characterSlot.appendChild( characterOrderContainer);
 
             document.getElementById("party-tab").appendChild(characterSlot);
+            characterName.addEventListener("click", ()=>{
+                this.canMoveRoom =false;
+            })
+            characterName.addEventListener("change", ()=>{
+                if(this.isInBattle==false && this.isInEncounter == false){
+                    if(characterName.value.length <= 18){
+                        this.party[i].name = characterName.value;
+                        document.getElementById('current-character-name').innerText = this.party[0].name;
+                    }
+                    this.canMoveRoom =true;
+                }
+                characterName.value = this.party[i].name;
+            })
             characterTakeControlBtn.addEventListener("click", ()=>{
                 if(i == 0){
                     this.printToGameConsole(`${this.party[0].name} is already selected.`);

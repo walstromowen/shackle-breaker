@@ -61,6 +61,7 @@
                                 <option value='assasians-belt'>Assasian's Belt</option>
                                 <option value='artisans-tools'>Artisan's Tools</option>
                                 <option value='alchemists-vials'>Alchemist's Vials</option>
+                                <option value='first-aid-kit'>First Aid Kit</option>
                             </select>
                         </div>
                         <div class='character-creation-input-row' id='character-creation-companion-row'>
@@ -69,6 +70,7 @@
                                 <option value='none'>None</option>
                                 <option value='dog'>Dog</option>
                                 <option value='hawk'>Hawk</option>
+                                <option value='mercenary'>Mercenary</option>
                             </select>
                         </div>
                     </div>
@@ -193,9 +195,12 @@
                 </div>
                 <div class='app-column' id='character-creation-column-2'>
                     <h3 id='background-lore-header'>Background Lore</h3>
-                    <div class='console'id='background-description'>
-                        <p>Which is worse, rotting in the prision cell you just escaped from, or facing the journey ahead. Perhaps they would take you back? No, they would make an example of you. Not that anyone would notice anyway.
-                            Yet can you make the journey ahead? Afterall, what makes you so special?</p>
+                    <div class='console'>
+                        <div class='lore-container'>
+                            <p class='lore-paragraph'>Which is worse, rotting in the prision cell you just escaped from, or facing the journey ahead. Perhaps they would take you back? No, they would make an example of you. Not that anyone would notice anyway.
+                                Yet can you make the journey ahead? Afterall, what makes you so special?</p>
+                            <p id='background-description-message' class='lore-paragraph'></p>
+                        </div>
                     </div>
                     <div id='character-creation-image-submit-btn-container'>
                         <div id='character-creator-image-container'>

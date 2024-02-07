@@ -5,9 +5,9 @@ export let controller = new Controller();
 /*
 let count = [0,0,0,0,0,0]
 for(let a = 0; a < 100; a++){
-    let length = 1;
-    let avgLvl = 15;
-    let enemyCount = Math.round(Math.random() * ((avgLvl * 0.2) + (length/3) + 1));
+    let length = 3;
+    let avgLvl = 9;
+    let enemyCount = Math.round(Math.random() * ((avgLvl * 0.2) + (length/3)) + 1);
  
     if(enemyCount == 1){
         count[0]++;
