@@ -645,6 +645,43 @@ export class ShootArrow extends Ability{
     }
 }
 
+
+export class ShootFireArrow extends Ability{
+    constructor(){
+        super();
+        this.name = "shoot fire arrow";
+        this.type = "pierceElemental";
+        this.speedMultiplier = 1.0;
+        this.staminaCost = 12;
+        this.magicCost = 5;
+        this.damageModifier = 5;
+        this.accuracy = 70;
+        this.soundEffect = "./audio/soundEffects/arrow-body-impact-146419.mp3";
+    }
+    activate(weilder, target){
+        if(this.checkStamina(weilder) == true){
+            theController.playSoundEffect(this.soundEffect);
+            if(this.checkMiss(weilder, target, this.name) == true){
+                return;
+            }
+            let damageOutput = Math.floor(Math.random() * ((((weilder.currentPierceAttack + weilder.currentElementalAttack)/2) this.damageModifier) - ((weilder.currentPierceAttack + weilder.currentElementalAttack)/2) + 1)) + Math.floor(((weilder.currentPierceAttack + weilder.currentElementalAttack)/2));
+            damageOutput = this.checkDamage(damageOutput, weilder, target, target.currentPierceDefense, target.currentBluntDefense "health");
+            target.currentHP = target.currentHP - damageOutput;
+            theController.printToGameConsole(`${weilder.name} uses ${this.name} against ${target.name} for ${damageOutput} damage!`);
+            if(damageOutput > 0){
+                if(Math.random()*10 < 1){
+                    for(let i = 0; i < target.statusArray.length; i++){
+                        if(target.statusArray[i].name == "bleeding burned"){
+                            return;
+                        }
+                    }
+                    target.statusArray.push(new Bleeding(target), new Burned(target));
+                } 
+            }
+        }
+    }
+}
+
 export class ShootExplosiveArrow extends Ability{
     constructor(){
         super();
