@@ -645,6 +645,36 @@ export class ShootArrow extends Ability{
     }
 }
 
+export class ShootNet extends Ability{
+    constructor(){
+        super();
+        this.name = "shoot net";
+        this.type = "blunt";
+        this.speedMultiplier = 0.5;
+        this.staminaCost = 5;
+        this.magicCost = 0;
+        this.damageModifier = 0;
+        this.accuracy = "";
+        this.soundEffect = "./audio/soundEffects/energy-90321.mp3";
+    }
+    activate(weilder, target){
+        theController.printToGameConsole(`${weilder.name} shot and traped ${target.name} in a net!`);
+        for(let i = 0; i < target.statusArray.length; i++){
+            if(target.statusArray[i].name == "bound"){
+                target.statusArray[i].currentCharges = target.statusArray[i].maxCharges;
+                theController.playSoundEffect(this.soundEffect);
+                return;
+            }
+        }
+        target.statusArray.push(new Bound(target));
+    }
+    canUse(weilder){
+        if(theController.isInBattle == false){
+            theController.printToGameConsole("cannot use outside of combat.");
+            return false;
+        }
+    }
+}
 
 export class ShootFireArrow extends Ability{
     constructor(){
