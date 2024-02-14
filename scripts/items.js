@@ -134,14 +134,14 @@ export class BlacksmithHammer {
         this.description = "A blacksmith's hammer. Since what many consider to be the fall of Altus kingdom, quality weapons are hard to come by. Perhaps this explains the blood stains on this ordinary hammer";
         this.level = 1;
         this.price = 100;
-        this.bluntAttack = 2;
-        this.pierceAttack = 1;
-        this.arcaneAttack = 0;
-        this.elementalAttack = 0;
-        this.bluntDefense = 0;
-        this.pierceDefense = 0;
-        this.arcaneDefense = 0;
-        this.elementalDefense = 0;
+        this.bluntAttack = 2000;
+        this.pierceAttack = 2000;
+        this.arcaneAttack = 2000;
+        this.elementalAttack = 2000;
+        this.bluntDefense = 2000;
+        this.pierceDefense = 2000;
+        this.arcaneDefense = 2000;
+        this.elementalDefense = 2000;
         this.speed = 2;
         this.evasion = 0;
         this.abilityArray = [new Strike()];
@@ -160,7 +160,10 @@ export class BlacksmithHammer {
             this.elementalDefense = this.elementalDefense + 0;
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
-        }
+          }
+          if(this.level == 3){
+          this.abilityArray.push(new WildSwing(), new GuardBreak());
+          }
     }
 }
 export class Spear {
