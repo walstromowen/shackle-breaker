@@ -369,15 +369,15 @@ export class Shortbow {
         this.level = 1;
         this.price = 200;
         this.bluntAttack = 1;
-        this.pierceAttack = 5;
+        this.pierceAttack = 500;
         this.arcaneAttack = 0;
         this.elementalAttack = 0;
-        this.bluntDefense = 0;
-        this.pierceDefense = 0;
-        this.arcaneDefense = 0;
-        this.elementalDefense = 0;
-        this.speed = 2;
-        this.evasion = 1;
+        this.bluntDefense = 500;
+        this.pierceDefense = 500;
+        this.arcaneDefense = 500;
+        this.elementalDefense = 500;
+        this.speed = 50;
+        this.evasion = 60;
         this.abilityArray = [new ShootArrow(), new TripleShot()];
     }
     upgrade(levels){
