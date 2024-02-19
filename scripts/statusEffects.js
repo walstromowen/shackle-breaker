@@ -400,7 +400,7 @@ export class Cursed extends StatusEffect{
     constructor(holder){
         super();
         this.type = "end";
-        this.isCleansable = false;
+        this.isCleansable = true;
         this.name = "cursed";
         this.iconSrc = "./media/icons/death-zone.png";
         this.holder = holder;

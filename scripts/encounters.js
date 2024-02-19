@@ -346,8 +346,14 @@ export class TravelingMerchant extends Encounter{
                     }
                 ],
                 [
-                    ()=>{toggleBattle(`the merchant draws his weapon!`, [new Merchant(theController.calculateAveragePartyLevel())], true)},
-                    ()=>{leave(`the merchant throws a smokebomb and disappears! Leaving ${theController.party[0].name} all alone.`)}
+                    ()=>{
+                        document.getElementById("merchant-inventory-container").style.display = "none";
+                        toggleBattle(`the merchant draws his weapon!`, [new Merchant(theController.calculateAveragePartyLevel())], true)
+                    },
+                    ()=>{
+                        document.getElementById("merchant-inventory-container").style.display = "none";
+                        leave(`the merchant throws a smokebomb and disappears! Leaving ${theController.party[0].name} all alone.`)
+                    }
                 ]
             ),
             new Decision(
@@ -358,8 +364,14 @@ export class TravelingMerchant extends Encounter{
                     ()=>{loot(` ${theController.party[0].name} quietly picks the merchant's pocket. ${theController.party[0].name} loots:`, [getRandomItem()], 20, 100)}
                 ],
                 [
-                    ()=>{toggleBattle(`the merchant draws his weapon!`, [new Merchant(theController.calculateAveragePartyLevel())], true)},
-                    ()=>{leave(`the merchant throws a smokebomb and disappears! Leaving ${theController.party[0].name} all alone.`)}
+                    ()=>{
+                        document.getElementById("merchant-inventory-container").style.display = "none";
+                        toggleBattle(`the merchant draws his weapon!`, [new Merchant(theController.calculateAveragePartyLevel())], true)
+                    },
+                    ()=>{
+                        document.getElementById("merchant-inventory-container").style.display = "none";
+                        leave(`the merchant throws a smokebomb and disappears! Leaving ${theController.party[0].name} all alone.`)
+                    }
                 ]
             )
         ];
