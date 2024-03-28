@@ -12,7 +12,6 @@ export default class OverworldController{
             this.view.resize();
             this.view.draw(this.model.props.getMap(), this.model.currentPartyPosition);
         });
-       
         document.getElementById('overworld-toggle-party-screen-button').addEventListener('click', ()=>{
             this.props.switchScreen('party-screen');
             playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
@@ -52,26 +51,26 @@ export default class OverworldController{
         document.getElementById('mobile-up-button').addEventListener('click', ()=>{
             if(this.model.props.getScreen() == 'overworld-screen'){
                 this.model.movePartyUp();
+                this.afterMove();
             }
-            this.afterMove();
         });
         document.getElementById('mobile-down-button').addEventListener('click', ()=>{
             if(this.model.props.getScreen() == 'overworld-screen'){
                 this.model.movePartyDown();
+                this.afterMove();
             }
-            this.afterMove();
         });
         document.getElementById('mobile-left-button').addEventListener('click', ()=>{
             if(this.model.props.getScreen() == 'overworld-screen'){
                 this.model.movePartyLeft();
+                this.afterMove();
             }
-            this.afterMove();
         });
         document.getElementById('mobile-right-button').addEventListener('click', ()=>{
             if(this.model.props.getScreen() == 'overworld-screen'){
                 this.model.movePartyRight();
+                this.afterMove();
             }
-            this.afterMove();
         });
     }
     onSwitchScreen(){
@@ -89,6 +88,8 @@ export default class OverworldController{
         }
     }
 }
+
+
 
 
 
