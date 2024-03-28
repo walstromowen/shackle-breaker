@@ -23,6 +23,6 @@ Text adventure game based on the Shackle Breaker story
 # Bugs
 * CSS typewritter effect needs to wrap
 * Party Position icon jumping depending on screen size
-* Status effect disapperaing when updating stats, also needs an amimation
+
 
 # MISC notes

@@ -50,19 +50,27 @@ export default class OverworldController{
             }
         });
         document.getElementById('mobile-up-button').addEventListener('click', ()=>{
-            this.model.movePartyUp();
+            if(this.model.props.getScreen() == 'overworld-screen'){
+                this.model.movePartyUp();
+            }
             this.afterMove();
         });
         document.getElementById('mobile-down-button').addEventListener('click', ()=>{
-            this.model.movePartyDown();
+            if(this.model.props.getScreen() == 'overworld-screen'){
+                this.model.movePartyDown();
+            }
             this.afterMove();
         });
         document.getElementById('mobile-left-button').addEventListener('click', ()=>{
-            this.model.movePartyLeft();
+            if(this.model.props.getScreen() == 'overworld-screen'){
+                this.model.movePartyLeft();
+            }
             this.afterMove();
         });
         document.getElementById('mobile-right-button').addEventListener('click', ()=>{
-            this.model.movePartyRight();
+            if(this.model.props.getScreen() == 'overworld-screen'){
+                this.model.movePartyRight();
+            }
             this.afterMove();
         });
     }

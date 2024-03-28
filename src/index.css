@@ -52,6 +52,9 @@
     .battle-character-card{
         width: 200px !important;
     }
+    .overworld-mobile-direction-buttons-container{
+        display: none !important;
+    }
 }
 
 
@@ -137,12 +140,9 @@
         cursor .4s step-end infinite alternate
         !important
     }
-    .overworld-mobile-direction-buttons-container{
-        display: flex !important;
-        justify-content: space-between;
-        align-items: center;
-        flex-direction: column;
-        width: 180px;
+    #battle-typing-container{
+        width:100%;
+        margin: 10px;
     }
 }
 /*Mobile Styles*/
@@ -435,6 +435,12 @@ img{
     bottom: 0;
     right: 0;
     display: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    width: 180px;
+    
 }
 .overworld-center-direction-container{
     display: flex;
@@ -779,8 +785,8 @@ img{
 }
 .battle-ability-button{
     padding: 4px;
-    width: 60px;
-    height:  60px;
+    width: var(--utility-button-sides);
+    height:  var(--utility-button-sides);
     box-shadow: 2px 2px 2px black;
     display: block;
     text-align:center;
