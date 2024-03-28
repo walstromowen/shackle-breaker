@@ -46,20 +46,39 @@ export default class OverworldController{
                         this.model.movePartyRight();
                         break;
                 }
-                this.view.draw(this.model.props.getMap(), this.model.currentPartyPosition);
-                if(this.model.props.getScreen() == 'battle-screen'){
-                    playMusic(this.model.props.getMap().biome.battleMusicSrc);
-                    //document.getElementById('music-player').pause();//temp
-                    this.view.playBattleTransisiton().then(()=>{
-                        this.props.switchScreen('battle-screen');
-                    });
-                }
+                this.afterMove();
             }
+        });
+        document.getElementById('mobile-up-button').addEventListener('click', ()=>{
+            this.model.movePartyUp();
+            this.afterMove();
+        });
+        document.getElementById('mobile-down-button').addEventListener('click', ()=>{
+            this.model.movePartyDown();
+            this.afterMove();
+        });
+        document.getElementById('mobile-left-button').addEventListener('click', ()=>{
+            this.model.movePartyLeft();
+            this.afterMove();
+        });
+        document.getElementById('mobile-right-button').addEventListener('click', ()=>{
+            this.model.movePartyRight();
+            this.afterMove();
         });
     }
     onSwitchScreen(){
         this.view.draw(this.model.props.getMap(), this.model.currentPartyPosition);
         playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
+    }
+    afterMove(){
+        this.view.draw(this.model.props.getMap(), this.model.currentPartyPosition);
+        if(this.model.props.getScreen() == 'battle-screen'){
+            playMusic(this.model.props.getMap().biome.battleMusicSrc);
+            //document.getElementById('music-player').pause();//temp
+            this.view.playBattleTransisiton().then(()=>{
+                this.props.switchScreen('battle-screen');
+            });
+        }
     }
 }
 

@@ -137,6 +137,13 @@
         cursor .4s step-end infinite alternate
         !important
     }
+    .overworld-mobile-direction-buttons-container{
+        display: flex !important;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+        width: 180px;
+    }
 }
 /*Mobile Styles*/
 @media only screen and (max-width: 480px) {
@@ -422,6 +429,28 @@ img{
 .apperance-image-container{
     margin: auto 0px;
     margin-left: 8px;
+}
+.overworld-mobile-direction-buttons-container{
+    position:absolute;
+    bottom: 0;
+    right: 0;
+    display: none;
+}
+.overworld-center-direction-container{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.mobile-direction-button{
+    width: 60px;
+    height: 60px;
+   
+    background-color: var(--color-2-transparent);
+    color: (var(--color-5));
+    font-size: var(--font-size-3);
+    text-align: center;
+    padding: 4px;
+    border-radius: 10px;
 }
 .party-grid-container{
     display: grid;
