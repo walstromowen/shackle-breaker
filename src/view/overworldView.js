@@ -85,7 +85,7 @@ export default class OverworldView{
             setTimeout(()=>{
                 resolve();
                 
-            }, 2000)
+            }, 1000)
         })
     }
 }
