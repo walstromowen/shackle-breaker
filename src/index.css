@@ -132,7 +132,7 @@
     }
     #battle-console-content{
         width: 100% !important;
-        white-space: wrap !important;
+        white-space: normal !important;
     }
     #battle-typing-container{
         width:100% !important;
@@ -868,7 +868,7 @@ img{
     
 }
 #battle-typing-container{
-    
+    width:fit-content;
     margin: 10px;
 }
 .typing-animation{
