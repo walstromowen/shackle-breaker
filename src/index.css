@@ -124,25 +124,18 @@
         min-height: 100dvh;
         height: auto;
     }
-    #battle-console-content{
-        font-size: var(--font-size-2) !important;
-        letter-spacing: 4px;
-        font-family: Monospace;
-        border-right: 4px solid white;
-        width: 100%;
-        white-space: wrap ! important;
-        overflow: hidden;
-        margin-right: auto;
-    }
     .typing-animation{
         animation: 
         float 2s,
         cursor .4s step-end infinite alternate
         !important
     }
+    #battle-console-content{
+        width: 100% !important;
+        white-space: wrap !important;
+    }
     #battle-typing-container{
         width:100% !important;
-        margin: 10px;
     }
 }
 /*Mobile Styles*/
@@ -862,7 +855,7 @@ img{
 #battle-console{
     flex: 1;
     background-color: var(--color-2);
-   
+    width: 100%;
 }
 #battle-console-content{
     font-size: var(--font-size-2);
