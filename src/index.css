@@ -141,7 +141,7 @@
         !important
     }
     #battle-typing-container{
-        width:100%;
+        width:100% !important;
         margin: 10px;
     }
 }
