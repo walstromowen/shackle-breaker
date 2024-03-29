@@ -70,10 +70,12 @@ export default class OverworldView{
                     
                 }
             }
+            console.log("x: " + partyPosition[0] + " " + partyPosition[0]%(this.overworldCanvas.width/this.tileWidth)*this.tileWidth + " " + this.overworldCanvas.width);
+            console.log("y: " + partyPosition[1] + " " +partyPosition[1]%(this.overworldCanvas.height/this.tileHeight)*this.tileHeight + " " + this.overworldCanvas.height)
             this.ctx.drawImage(
                 heroIcon, 
-                partyPosition[0]%(this.overworldCanvas.width/this.tileWidth)*this.tileWidth + this.viewport.offset[0], 
-                partyPosition[1]%(this.overworldCanvas.width/this.tileWidth)*this.tileHeight + this.viewport.offset[1], 
+                partyPosition[0]*this.tileWidth + this.viewport.offset[0], 
+                partyPosition[1]*this.tileHeight + this.viewport.offset[1], 
                 this.tileWidth, 
                 this.tileHeight); 
         });
