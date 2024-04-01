@@ -13,7 +13,7 @@ class StatusEffect{
     }
     activate(turnPhase){
         if(this.holder.currentHP <= 0){
-            return this.waitToResolve();
+            return this.skipStatusCycle();
         }
         if(turnPhase == 'start'){
             return this.onStartTurn();
@@ -35,39 +35,38 @@ class StatusEffect{
             resolve(resolveObject);
         });
     }
-    waitToResolve(){
+    skipStatusCycle(){
         return new Promise((resolve)=>{
             resolve({
                 text: false,
                 animation: false,
                 vitalsUpdate: false,
             });
-           
         })
     }
     onStartTurn(){
-        return this.waitToResolve();
+        return this.skipStatusCycle();
     }
     onEndTurn(){
-        return this.waitToResolve();
+        return this.skipStatusCycle();
     }
     onRemove(){
-        return this.waitToResolve();
+        return this.skipStatusCycle();
     }
     onRecieveDamage(){
-        return this.waitToResolve();
+        return this.skipStatusCycle();
     }
     onDeliverDamage(){
-        return this.waitToResolve();
+        return this.skipStatusCycle();
     }
     onAttemptAttack(){
-        return this.waitToResolve();
+        return this.skipStatusCycle();
     }
     onOpponentAttemptAttack(){
-        return this.waitToResolve();
+        return this.skipStatusCycle();
     }
     onApplied(){
-        return this.waitToResolve();
+        return this.skipStatusCycle();
     }
 }
 export class Poison extends StatusEffect{

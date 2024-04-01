@@ -60,7 +60,7 @@ export class Entity{
             legs: '',
             feet: '',
         }; 
-        this.statusArray = []; //  new Poison({holder: this}), new Burn({holder: this})
+        this.statusArray = [new Poison({holder: this}), new Burn({holder: this})]; //  new Poison({holder: this}), new Burn({holder: this})
         this.abilityArray = config.abilityArray || [new Slash(), new Strike(), new MagicMissile()];
         
         this.battleId = '';
@@ -188,7 +188,7 @@ export class Skeleton extends Entity{
         super({
             name: 'skeleton',
             apperance: './assets/media/entities/skeleton.jpg',
-            vigor: 5,
+            vigor: 1,
             strength: 5,
             dexterity: 5,
             intelligence: 5,

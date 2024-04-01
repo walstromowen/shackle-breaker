@@ -3,6 +3,15 @@ Text adventure game based on the Shackle Breaker story
 
 ## TODO
 
+# Planned Quality of Life Improvements
+* Alphabetize CSS rules
+* Confirm button when choosing targets
+* Move all status effect Promises to controller
+* Multi target attacks play animation on all targets and then update stats simeulatneosly
+* overworld map smooth transitioning between tiles
+
+
+
 # Planned Features
 * Stat Recovery
 * Battle speed Up
@@ -13,16 +22,11 @@ Text adventure game based on the Shackle Breaker story
 * Darkness
 * Prebattle traits / abilitites
 
-# Planned Quality of Life Improvements
-* Alphabetize CSS rules
-* Confirm button when choosing targets
-* Ability Icons too big on mobile
 
 
 
 # Bugs
 
-* Party Position icon jumping depending on screen size
 
 
 # MISC notes

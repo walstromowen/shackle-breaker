@@ -7,6 +7,7 @@ export default class BattleController{
         this.view = view;
         this.selectTargetEventHandler;
         this.removeTargetEventHandler;
+        this.skipEventHandler;
         this.initialize();
     }
     initialize(){
@@ -188,36 +189,67 @@ export default class BattleController{
         });
     }
     printToBattleConsoleHelpper(status, resolveObject){
+        let flag = true;
         return new Promise((resolve)=>{
+            document.addEventListener('click', this.skipEventHandler = ()=>{
+                if(flag == true){
+                    flag = false;
+                    this.view.printToBattleConsole(status.message);
+                    document.removeEventListener('click', this.skipEventHandler);
+                    resolve(resolveObject);
+                }
+            })
             setTimeout(()=>{
-                this.view.printToBattleConsole(status.message);
-                resolve(resolveObject);
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.view.printToBattleConsole(status.message);
+                    resolve(resolveObject);
+                }
             }, 2000);
         });
     }
     playStatusAnimationHelpper(status, resolveObject){
+        let flag = true;
         return new Promise((resolve)=>{
+            document.addEventListener('click', this.skipEventHandler = ()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.view.playStatusAnimation(status);
+                    resolve(resolveObject);
+                }
+            })
             setTimeout(()=>{
-                this.view.playStatusAnimation(status);
-                resolve(resolveObject);
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.view.playStatusAnimation(status);
+                    resolve(resolveObject);
+                }
             }, status.animationDuration);
         });
     }
     removeStatusAnimationsHelpper(status, resolveObject){
+        let flag = true;
         return new Promise((resolve)=>{
+            document.addEventListener('click', this.skipEventHandler = ()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.view.removeStatusAnimations(status);
+                    resolve(resolveObject);
+                }
+            })
             setTimeout(()=>{
-                this.view.removeStatusAnimations(status);
-                resolve(resolveObject);
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.view.removeStatusAnimations(status);
+                    resolve(resolveObject);
+                }
             }, 2000);
         });
-    }
-    promiseUpdateCombatantStats(combatant){
-        return new Promise((resolve)=>{
-            setTimeout(()=>{
-                this.view.updateCombatantStats(combatant)
-                resolve();
-            }, 2000);
-        })
     }
     handleDefeatedCombatantsHelpper(){
         let defeatedCombatants = this.model.activeCombatants.filter((combatant)=>{
@@ -234,21 +266,50 @@ export default class BattleController{
         }
     }
     handleDefeatedCombatant(combatant){
+        let flag = true;
         return new Promise((resolve)=>{
+            document.addEventListener('click', this.skipEventHandler = ()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.model.activeCombatants.splice(this.model.activeCombatants.indexOf(combatant), 1);
+                    this.view.printToBattleConsole(`${combatant.name} has been slain!`)
+                    this.removeCombatantCard(combatant).then(()=>{
+                        resolve();
+                    })
+                }
+            })
             setTimeout(()=>{
-                this.model.activeCombatants.splice(this.model.activeCombatants.indexOf(combatant), 1);
-                this.view.printToBattleConsole(`${combatant.name} has been slain!`)
-                this.removeCombatantCard(combatant).then(()=>{
-                    resolve();
-                })
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.model.activeCombatants.splice(this.model.activeCombatants.indexOf(combatant), 1);
+                    this.view.printToBattleConsole(`${combatant.name} has been slain!`)
+                    this.removeCombatantCard(combatant).then(()=>{
+                        resolve();
+                    })
+                }
             }, 2000)
         })
     }
     removeCombatantCard(combatant){
+        let flag = true;
         return new Promise((resolve)=>{
+            document.addEventListener('click', this.skipEventHandler = ()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.view.removeCombatantCard(combatant.battleId);
+                    resolve();
+                }
+            })
             setTimeout(()=>{
-                this.view.removeCombatantCard(combatant.battleId);
-                resolve();
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.view.removeCombatantCard(combatant.battleId);
+                    resolve();
+                }
             }, 2000)
         })
     }
@@ -275,49 +336,126 @@ export default class BattleController{
             }
         }
         return new Promise((resolve)=>{
-            attacker.nextAbility.canUse(attacker, target).then(()=>{
-                this.view.printToBattleConsole(attacker.nextAbility.message);
+            this.canUseHelpper(attacker, target).then(()=>{
+                return this.printAbilityToBattleConsoleHelpper(attacker.nextAbility)
+            }).then(()=>{
                 return this.playAbilityAnimationHelpper(attacker, target);
             }).then(()=>{
-                this.promiseUpdateCombatantStats(attacker)//I think this should do the trick
-                return this.promiseUpdateCombatantStats(target)
+                return this.removeAbilityAnimationsHelpper(attacker);
             }).then(()=>{
-                this.view.removeAbilityAnimations(attacker, target)
+                this.view.updateCombatantStats(attacker);
+                this.view.updateCombatantStats(target);
                 resolve();
-             });
+            })
+        });
+    }
+    canUseHelpper(attacker, target){
+        return new Promise((resolve)=>{
+            attacker.nextAbility.activate(attacker, target);
+            resolve();
+        });
+    }
+    printAbilityToBattleConsoleHelpper(ability){
+        let flag = true;
+        return new Promise((resolve)=>{
+            document.addEventListener('click', this.skipEventHandler = ()=>{
+                if(flag == true){
+                    flag = false;
+                    this.view.printToBattleConsole(ability.message);
+                    document.removeEventListener('click', this.skipEventHandler);
+                    resolve();
+                }
+            })
+            setTimeout(()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.view.printToBattleConsole(ability.message);
+                    resolve();
+                }
+            }, 2000);
         });
     }
     playAbilityAnimationHelpper(attacker, target){
+        let flag = true;
         return new Promise((resolve)=>{
+            document.addEventListener('click', this.skipEventHandler = ()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.view.playAbilityAnimation(attacker, target);
+                    resolve();
+                }
+            })
             setTimeout(()=>{
-                this.view.playAbilityAnimation(attacker, target);
-                resolve();
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.view.playAbilityAnimation(attacker, target);
+                    resolve();
+                }
             }, attacker.nextAbility.animationDuration);
         })
     }
-    checkEndBattle(){//determines if a party has been completely eliminated and needs to return to overworld
+    removeAbilityAnimationsHelpper(attacker, target){
+        let flag = true;
         return new Promise((resolve)=>{
+            document.addEventListener('click', this.skipEventHandler = ()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.view.removeAbilityAnimations(attacker, target)
+                    resolve();
+                }
+            })
             setTimeout(()=>{
-                let remainingAllies = this.model.allCombatants.filter((combatant)=>{
-                    return (combatant.isHostile == false && combatant.currentHP > 0);
-                })
-                if(remainingAllies.length == 0){
-                    this.view.printToBattleConsole('Party has been slain...');
-                    //TEMP
-                    
-                    return;
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.view.removeAbilityAnimations(attacker, target)
+                    resolve();
                 }
-                let remainingHostiles = this.model.allCombatants.filter((combatant)=>{
-                    return (combatant.isHostile == true && combatant.currentHP > 0);
-                })
-                if(remainingHostiles.length == 0){
-                    this.view.printToBattleConsole('Hostiles have been slain...');
-                    
-                    return;
-                }
-                resolve();
             }, 2000);
         });
+    }
+    checkEndBattleHelpper(){//determines if a party has been completely eliminated and needs to return to overworld
+        let flag = true;
+        return new Promise((resolve)=>{
+            document.addEventListener('click', this.skipEventHandler = ()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.checkEndBattle(resolve);
+                }
+            })
+            setTimeout(()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.checkEndBattle(resolve);
+                }
+            }, 2000);
+        });
+    }
+    checkEndBattle(resolveFunction){
+        let remainingAllies = this.model.allCombatants.filter((combatant)=>{
+            return (combatant.isHostile == false && combatant.currentHP > 0);
+        })
+        if(remainingAllies.length == 0){
+            this.view.printToBattleConsole('Party has been slain...');
+            //TEMP
+            
+            return;
+        }
+        let remainingHostiles = this.model.allCombatants.filter((combatant)=>{
+            return (combatant.isHostile == true && combatant.currentHP > 0);
+        })
+        if(remainingHostiles.length == 0){
+            this.view.printToBattleConsole('Hostiles have been slain...');
+            
+            return;
+        }
+        resolveFunction();  
     }
     callReinforcementsHelper(side){
         let combatantCount = 0;
@@ -350,17 +488,32 @@ export default class BattleController{
         }, Promise.resolve())
     }
     callReinforcement(combatant){
-       return new Promise((resolve)=>{
-           setTimeout(()=>{
-                this.view.createCombatantCard(combatant);
-                this.model.activeCombatants.push(combatant);
-                this.view.printToBattleConsole(`${combatant.name} joins the battle.`)
-                resolve();
-           }, 2000);
+        let flag = true;
+        return new Promise((resolve)=>{
+            document.addEventListener('click', this.skipEventHandler = ()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.view.createCombatantCard(combatant);
+                    this.model.activeCombatants.push(combatant);
+                    this.view.printToBattleConsole(`${combatant.name} joins the battle.`)
+                    resolve();
+                }
+            })
+            setTimeout(()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.view.createCombatantCard(combatant);
+                    this.model.activeCombatants.push(combatant);
+                    this.view.printToBattleConsole(`${combatant.name} joins the battle.`)
+                    resolve();
+                }
+            }, 2000);
        })
     }
     activatePostRound(){
-        this.checkEndBattle().then(()=>{
+        this.checkEndBattleHelpper().then(()=>{
             return this.callReinforcementsHelper('ally');
         }).then(()=>{
             return this.callReinforcementsHelper('hostile');

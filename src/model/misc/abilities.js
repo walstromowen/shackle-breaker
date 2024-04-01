@@ -19,22 +19,6 @@ export class Ability{
         }
         return damage;
     }
-    canUse(attacker, target){
-        if(attacker.currentHP <= 0){//if attacker is defeated
-            return new Promise((resolve)=>{
-                resolve();   
-            });
-        }
-        return this.activateHelpper(attacker, target);
-    }
-    activateHelpper(attacker, target){
-        return new Promise((resolve)=>{
-            setTimeout(()=>{
-                this.activate(attacker, target);
-                resolve();
-            }, this.animationDuration);
-        });
-    }
     updateMessage(message){
         this.message = message;
     }
