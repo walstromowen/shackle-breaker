@@ -1,5 +1,4 @@
-
-
+import { Poison, Burn} from "./statusEffects.js";
 
 export class Ability{
     constructor(config){
@@ -21,6 +20,14 @@ export class Ability{
     }
     updateMessage(message){
         this.message = message;
+    }
+    inflictStatus(status, target){
+        for(let i = 0; i < target.statusArray.length; i++){
+            if(target.statusArray[i].name == status.name){
+                return
+            }
+        }
+        target.statusArray.push(status);
     }
 }
 
@@ -77,5 +84,24 @@ export class MagicMissile extends Ability{
         let damage = this.checkDamage(attacker, target, 30);
         target.currentHP = target.currentHP - damage;
         this.updateMessage(`${attacker.name} fires a magic missle at ${target.name} for ${damage}.`);
+    }
+}
+export class ThrowPosionKnife extends Ability{
+    constructor(config){
+        super({
+            name: 'throwPosionKnife',
+            iconSrc: './assets/media/icons/flying-dagger.png',
+            background: 'grey',
+            targetCount: 1,
+            speedModifier: 1.25,
+            soundEffectSrc: "./assets/audio/soundEffects/magic-missile-made-with-Voicemod-technology.mp3",
+            animationName: 'swipe-right',
+        })
+    }
+    activate(attacker, target){
+        let damage = this.checkDamage(attacker, target, 10);
+        target.currentHP = target.currentHP - damage;
+        this.updateMessage(`${attacker.name} throws a posioned knife at ${target.name} for ${damage}.`);
+        this.inflictStatus(new Poison(target), target);
     }
 }

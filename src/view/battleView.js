@@ -2,15 +2,16 @@ import { loadCanvasImages, createElement, capiltalizeAllFirstLetters, playSoundE
 
 export default class BattleView{
     constructor(){
-       this.allyContainer = document.getElementById('ally-party-display');
-       this.hostileContainer = document.getElementById('hostile-party-display');
-       this.abilityTab = document.getElementById('battle-controls-abilities-tab');
-       this.itemsTab = document.getElementById('battle-controls-items-tab');
-       this.statsTab = document.getElementById('battle-controls-stats-tab');
-       this.battleControlsContainer = document.getElementById('battle-controls-container');
-       this.battleConsole = document.getElementById('battle-console');
-       this.battleConsoleContent = document.getElementById('battle-console-content');
-
+        this.allyContainer = document.getElementById('ally-party-display');
+        this.hostileContainer = document.getElementById('hostile-party-display');
+        this.abilityTab = document.getElementById('battle-controls-abilities-tab');
+        this.itemsTab = document.getElementById('battle-controls-items-tab');
+        this.statsTab = document.getElementById('battle-controls-stats-tab');
+        this.battleControlsContainer = document.getElementById('battle-controls-container');
+        this.battleConfirmTargetsContainer = document.getElementById('battle-confirm-targets-container');
+        this.battleConsole = document.getElementById('battle-console');
+        this.battleConsoleContent = document.getElementById('battle-console-content');
+    
     }
     createActiveCombatantCards(activeCombatants){
         activeCombatants.forEach((combatant)=>{

@@ -7,21 +7,24 @@ export default class BattleController{
         this.view = view;
         this.selectTargetEventHandler;
         this.removeTargetEventHandler;
+        this.confirmTargetEventHandler;
+        this.cancelAttackEventHandler
         this.skipEventHandler;
         this.initialize();
     }
     initialize(){
         document.getElementById('battle-controls-abilities-button').addEventListener('click', ()=>{
             this.view.switchTab('battle-controls-abilities-tab');
-        })
+        });
         document.getElementById('battle-controls-items-button').addEventListener('click', ()=>{
             this.view.switchTab('battle-controls-items-tab');
-        })
+        });
         document.getElementById('battle-controls-stats-button').addEventListener('click', ()=>{
             this.view.switchTab('battle-controls-stats-tab');
-        })
+        });
     }
     onSwitchScreen(){
+        this.view.switchTab('battle-controls-abilities-tab')
         this.model.initialize();
         this.view.createActiveCombatantCards(this.model.activeCombatants);
         this.activatePreround().then(()=>{
@@ -33,49 +36,40 @@ export default class BattleController{
         this.view.battleConsole.style.display = 'none';
         this.view.battleControlsContainer.style.display = 'block';
         return allys.reduce((chain, ally)=>{
-            return chain.then(()=>this.createAbilityButtonsHelpper(ally))
+            return chain.then(()=>this.cycleAllyChoices(ally))
         }, Promise.resolve())
     }
-    createAbilityButtonsHelpper(ally){
+    cycleAllyChoices(ally){
         return new Promise((resolve)=>{
-            this.view.highlightAttacker(ally.battleId);
-            let abilityButtons = this.view.createCombatantAbilityButtons(ally);
-            for(let i = 0; i < ally.abilityArray.length; i++){
-                abilityButtons[i].addEventListener('click', ()=>{
-                    let container = document.getElementById('battle-battlefield-container');
-                    container.removeEventListener('click', this.targetEventHandler);
-                    container.removeEventListener('click', this.selectTargetEventHandler);
-                    this.view.removeCardTargets();
-                    this.view.removeEntranceAnimations();
-                    this.view.removeAbilityHighlight();
-                    ally.abilityTargets = [];//model
-                    abilityButtons[i].classList.add('selected')//view
-                    ally.nextAbility = ally.abilityArray[i];//model
-                    this.createTargetListeners(ally, resolve);
-                })
-            }
+            this.createAbilityButtonsHelpper(ally, resolve);
         })
+    }
+    createAbilityButtonsHelpper(attacker, resolveFn){
+        this.view.battleConfirmTargetsContainer.style.display = 'none';
+        this.view.battleControlsContainer.style.display = 'block';
+        this.view.switchTab('battle-controls-abilities-tab');
+        this.view.removeCardTargets();
+        this.view.removeAbilityButtons();
+        this.view.highlightAttacker(attacker.battleId);
+        let abilityButtons = this.view.createCombatantAbilityButtons(attacker);
+        for(let i = 0; i < attacker.abilityArray.length; i++){
+            abilityButtons[i].addEventListener('click', ()=>{
+                let container = document.getElementById('battle-battlefield-container');
+                container.removeEventListener('click', this.selectTargetEventHandler);
+                container.removeEventListener('click', this.removeTargetEventHandler);
+                this.view.removeCardTargets();
+                this.view.removeEntranceAnimations();
+                this.view.removeAbilityHighlight();
+                attacker.abilityTargets = [];//model
+                abilityButtons[i].classList.add('selected')//view
+                attacker.nextAbility = attacker.abilityArray[i];//model
+                this.createTargetListeners(attacker, resolveFn);
+            })
+        } 
     }
     createTargetListeners(attacker, resolveFn){
         let container = document.getElementById('battle-battlefield-container');
         this.view.highlightPossibleTargets(attacker.battleId)
-        container.addEventListener('click', this.selectTargetEventHandler = (e)=>{
-            Array.from(container.getElementsByClassName('battle-character-card')).forEach((card)=>{
-                if(e.target.id == card.id){
-                    let selectedCard = e.target;
-                    selectedCard.classList.add('targeted');//view
-                    attacker.abilityTargets.push(this.model.getCombatant(selectedCard.id));//model
-                    if(attacker.abilityTargets.length == attacker.nextAbility.targetCount){
-                        this.view.removePossibleTargets(attacker.battleId)
-                        this.view.removeCardTargets();
-                        this.view.removeAbilityButtons();
-                        this.view.removeAttackerHighlight(attacker.battleId);
-                        container.removeEventListener('click', this.selectTargetEventHandler);
-                        resolveFn();//create submit choice button
-                    }
-                }
-            });
-        });
         container.addEventListener('contextmenu', this.removeTargetEventHandler = (e)=>{
             e.preventDefault()
             Array.from(container.getElementsByClassName('battle-character-card')).forEach((card)=>{
@@ -85,10 +79,45 @@ export default class BattleController{
                     for(let i = 0; i < attacker.abilityTargets.length; i++){
                         if(attacker.abilityTargets[i].battleId == selectedCard.id){
                             attacker.abilityTargets.splice(i, 1);
+                            i--     
                         }
                     }
                 }
             });
+        });
+        container.addEventListener('click', this.selectTargetEventHandler = (e)=>{
+            Array.from(container.getElementsByClassName('battle-character-card')).forEach((card)=>{
+                if(e.target.id == card.id){
+                    let selectedCard = e.target;
+                    selectedCard.classList.add('targeted');//view
+                    attacker.abilityTargets.push(this.model.getCombatant(selectedCard.id));//model
+                    if(attacker.abilityTargets.length == attacker.nextAbility.targetCount){
+                        this.toggleConfirmTargetsTab(attacker, resolveFn);//create submit choice button
+                    }
+                }
+            });
+        });
+    }
+    toggleConfirmTargetsTab(attacker, resolveFn){
+        let container = document.getElementById('battle-battlefield-container');
+        let confirmButton = document.getElementById('battle-controls-confirm-attack-button');
+        let backButton = document.getElementById('battle-controls-back-button');
+        container.removeEventListener('click', this.selectTargetEventHandler);
+        container.removeEventListener('contextmenu', this.removeTargetEventHandler);
+        confirmButton.removeEventListener('click', this.confirmTargetEventHandler);
+        backButton.removeEventListener('click', this.cancelAttackEventHandler);
+        this.view.removePossibleTargets(attacker.battleId)
+        this.view.battleConfirmTargetsContainer.style.display = 'flex';
+        this.view.battleControlsContainer.style.display = 'none';
+        confirmButton.addEventListener('click',this.confirmTargetEventHandler=()=>{
+            this.view.removeAttackerHighlight(attacker.battleId);
+            this.view.removeCardTargets();
+            this.view.battleConfirmTargetsContainer.style.display = 'none';
+            resolveFn();
+        })
+        backButton.addEventListener('click',this.cancelAttackEventHandler=()=>{
+            attacker.abilityTargets = [];
+            this.createAbilityButtonsHelpper(attacker, resolveFn)
         });
     }
     activateRound(){

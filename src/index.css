@@ -31,7 +31,7 @@
     --ability-animation-name: top-down;
     --ability-animation-duration: 2s;
     --animate-attacker-name: ally-attack;
-
+    --battle-ability-button-sides: 60px;
     
 }
 /*large computer styles*/
@@ -80,6 +80,7 @@
         --stat-cell-width: 100%;
         --medium-size-button-width: 100px;
         --utility-button-sides: 40px;
+        --battle-ability-button-sides: 50px;
     }
     .lobby-inputs-background-apperance-container{
         flex-wrap: wrap;
@@ -160,6 +161,7 @@
         --stat-cell-width: 100%;
         --medium-size-button-width: 60px;
         --utility-button-sides: 40px;
+        --battle-ability-button-sides: 40px;
     }
     .party-vital-label, .battle-vital-label{
         display: none;
@@ -167,6 +169,7 @@
     .battle-character-card{
         width: 100px !important;
     }
+    
    
 }
 
@@ -415,7 +418,7 @@ img{
     box-shadow: 8px 8px 8px black;
     height: fit-content;
 }
-.medium-size-button:hover, .party-grid-item:hover, .battle-controls-ui-button:hover{
+.medium-size-button:hover, .party-grid-item:hover, .battle-controls-ui-button:hover, .battle-controls-ui-button-large:hover{
     filter: brightness(1.5);
     box-shadow: 0px 0px 0px black;
 }
@@ -635,6 +638,23 @@ img{
     height: fit-content;
     font-size: var(--font-size-2);
 }
+.battle-controls-ui-button-large{
+    flex:1;
+    align-items: center;
+    padding: 4px;
+    font-size: var(--font-size-2);
+    color: var(--color-5);
+    text-align:center;
+    border: 2px solid var(--color-1);
+    display:flex;
+    justify-content: center;
+    background: radial-gradient( var(--color-4), var(--color-1));
+    height: 100%;
+    font-size: var(--font-size-2);
+    
+    text-align: center;
+    
+}
 .battle-controls-tab{
     padding: 10px;
     display: flex;
@@ -778,8 +798,8 @@ img{
 }
 .battle-ability-button{
     padding: 4px;
-    width: var(--utility-button-sides);
-    height:  var(--utility-button-sides);
+    width: var(--battle-ability-button-sides);
+    height:  var(--battle-ability-button-sides);
     box-shadow: 2px 2px 2px black;
     display: block;
     text-align:center;
@@ -871,6 +891,14 @@ img{
     width:fit-content;
     margin: 10px;
 }
+#battle-confirm-targets-container{
+    display:none;
+    justify-content: space-between;
+
+    flex: 1;
+
+}
+
 .typing-animation{
     animation:
         typing 1s,

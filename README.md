@@ -4,10 +4,9 @@ Text adventure game based on the Shackle Breaker story
 ## TODO
 
 # Planned Quality of Life Improvements
-* Alphabetize CSS rules
-* Confirm button when choosing targets
-* Move all status effect Promises to controller
 * Multi target attacks play animation on all targets and then update stats simeulatneosly
+* Alphabetize CSS rules
+* Move all status effect Promises to controller
 * overworld map smooth transitioning between tiles
 
 
