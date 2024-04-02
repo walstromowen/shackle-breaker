@@ -94,7 +94,7 @@ export class ThrowPosionKnife extends Ability{
             background: 'grey',
             targetCount: 1,
             speedModifier: 1.25,
-            soundEffectSrc: "./assets/audio/soundEffects/magic-missile-made-with-Voicemod-technology.mp3",
+            soundEffectSrc: "./assets/audio/soundEffects/arrow-body-impact-146419.mp3",
             animationName: 'swipe-right',
         })
     }
@@ -102,6 +102,6 @@ export class ThrowPosionKnife extends Ability{
         let damage = this.checkDamage(attacker, target, 10);
         target.currentHP = target.currentHP - damage;
         this.updateMessage(`${attacker.name} throws a posioned knife at ${target.name} for ${damage}.`);
-        this.inflictStatus(new Poison(target), target);
+        this.inflictStatus(new Poison({holder: target}), target);
     }
 }

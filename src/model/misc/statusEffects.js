@@ -80,7 +80,7 @@ export class Poison extends StatusEffect{
             soundEffectSrc: "./assets/audio/soundEffects/power-down-45784.mp3",
         });
     }
-    onStartTurn(){
+    onEndTurn(){
         return this.activateHelpper(
             ()=>{
                 let damage = this.checkDamage(5);
@@ -107,7 +107,7 @@ export class Burn extends StatusEffect{
             soundEffectSrc: "./assets/audio/soundEffects/short-fireball-woosh-6146.mp3",
         });
     }
-    onStartTurn(){
+    onEndTurn(){
         return this.activateHelpper(
             ()=>{
                 let damage = this.checkDamage(5);
