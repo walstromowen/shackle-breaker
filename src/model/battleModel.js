@@ -52,6 +52,12 @@ export default class BattleModel{
         })
         return allys;
     }
+    getActiveHostiles(){
+        let hostiles = this.activeCombatants.filter((combatant)=>{
+            return combatant.isHostile == true;
+        })
+        return hostiles;
+    }
     getCombatant(battleId){
         for(let i = 0; i < this.activeCombatants.length; i ++){
             if(this.activeCombatants[i].battleId == battleId){

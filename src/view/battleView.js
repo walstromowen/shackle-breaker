@@ -180,17 +180,8 @@ export default class BattleView{
             }
         });
     }
-    playAbilityAnimation(attacker, target){
+    playAbilityAnimations(attacker, targets){
         let attackerCard;
-        let targetCard;
-        Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
-            if(card.id == attacker.battleId){
-                attackerCard = card;
-            }
-            if(card.id == target.battleId){
-                targetCard = card;
-            }
-        });
         let root = document.querySelector(':root');
         root.style.setProperty('--ability-animation-image', `url(${attacker.nextAbility.iconSrc})`);
         root.style.setProperty('--ability-animation-name', attacker.nextAbility.animationName);
@@ -200,11 +191,24 @@ export default class BattleView{
         }else{
             root.style.setProperty('--animate-attacker-name', 'hostile-attack');
         }
-        targetCard.classList.add('animate-target');
+        Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
+            if(card.id == attacker.battleId){
+                attackerCard = card;
+            }
+        });
+        for(let i = 0; i < targets.length; i++){
+            let targetCard;
+            Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
+                if(card.id == targets[i].battleId){
+                    targetCard = card;
+                }
+            });
+            targetCard.classList.add('animate-target');
+        }
         attackerCard.classList.add('animate-attacker');
         playSoundEffect(attacker.nextAbility.soundEffectSrc);
     }
-    removeAbilityAnimations(attacker, target){
+    removeAbilityAnimations(){
         Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
             card.classList.remove('animate-target');
             card.classList.remove('animate-attacker');
@@ -225,7 +229,7 @@ export default class BattleView{
         holderCard.classList.add('animate-target');
         playSoundEffect(status.soundEffectSrc);
     }
-    removeStatusAnimations(status){
+    removeStatusAnimations(){
         Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
             card.classList.remove('animate-target');
         });

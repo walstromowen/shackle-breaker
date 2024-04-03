@@ -70,8 +70,8 @@ export default class OverworldView{
                     
                 }
             }
-            console.log("x: " + partyPosition[0] + " " + partyPosition[0]%(this.overworldCanvas.width/this.tileWidth)*this.tileWidth + " " + this.overworldCanvas.width);
-            console.log("y: " + partyPosition[1] + " " +partyPosition[1]%(this.overworldCanvas.height/this.tileHeight)*this.tileHeight + " " + this.overworldCanvas.height)
+            //console.log("x: " + partyPosition[0] + " " + partyPosition[0]%(this.overworldCanvas.width/this.tileWidth)*this.tileWidth + " " + this.overworldCanvas.width);
+            //console.log("y: " + partyPosition[1] + " " +partyPosition[1]%(this.overworldCanvas.height/this.tileHeight)*this.tileHeight + " " + this.overworldCanvas.height)
             this.ctx.drawImage(
                 heroIcon, 
                 partyPosition[0]*this.tileWidth + this.viewport.offset[0], 
@@ -83,11 +83,13 @@ export default class OverworldView{
     }
     playBattleTransisiton(){
         document.querySelector('body').classList.add('battle-wipe');
+        this.screen.classList.add('greyscale')
         return new Promise((resolve)=>{
             setTimeout(()=>{
+                this.screen.classList.remove('greyscale')
                 resolve();
                 
-            }, 1000)
+            }, 3000)
         })
     }
 }

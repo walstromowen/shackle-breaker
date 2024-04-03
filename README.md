@@ -4,7 +4,7 @@ Text adventure game based on the Shackle Breaker story
 ## TODO
 
 # Planned Quality of Life Improvements
-* Multi target attacks play animation on all targets and then update stats simeulatneosly
+* Enemy Splash attacks can double target single entity
 * Alphabetize CSS rules
 * Move all status effect Promises to controller
 * overworld map smooth transitioning between tiles

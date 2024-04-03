@@ -85,18 +85,36 @@ export default class BattleController{
                 }
             });
         });
-        container.addEventListener('click', this.selectTargetEventHandler = (e)=>{
+        container.addEventListener('click', this.selectTargetEventHandler = (e)=>{//check to see if available targets remaining
             Array.from(container.getElementsByClassName('battle-character-card')).forEach((card)=>{
                 if(e.target.id == card.id){
                     let selectedCard = e.target;
-                    selectedCard.classList.add('targeted');//view
-                    attacker.abilityTargets.push(this.model.getCombatant(selectedCard.id));//model
-                    if(attacker.abilityTargets.length == attacker.nextAbility.targetCount){
-                        this.toggleConfirmTargetsTab(attacker, resolveFn);//create submit choice button
-                    }
+                    this.validateTarget(attacker, selectedCard, resolveFn);
                 }
             });
         });
+    }
+    validateTarget(attacker, selectedCard, resolveFn){
+        if(attacker.nextAbility.sequenceType == 'chain'){
+            selectedCard.classList.add('targeted');//view
+            attacker.abilityTargets.push(this.model.getCombatant(selectedCard.id));
+            if(attacker.abilityTargets.length == attacker.nextAbility.targetCount){
+                this.toggleConfirmTargetsTab(attacker, resolveFn);//create submit choice button
+            }
+        }
+        if(attacker.nextAbility.sequenceType == 'splash'){
+            for(let i = 0; i < attacker.abilityTargets.length; i++){
+                if(attacker.abilityTargets[i].battleId == selectedCard.id){
+                    return;
+                }
+            }
+            selectedCard.classList.add('targeted');//view
+            attacker.abilityTargets.push(this.model.getCombatant(selectedCard.id));
+            if(attacker.abilityTargets.length == attacker.nextAbility.targetCount || 
+               attacker.nextAbility.targetCount - attacker.abilityTargets.length == this.model.getActiveHostiles().length){
+                this.toggleConfirmTargetsTab(attacker, resolveFn);
+            }
+        }
     }
     toggleConfirmTargetsTab(attacker, resolveFn){
         let container = document.getElementById('battle-battlefield-container');
@@ -142,7 +160,7 @@ export default class BattleController{
             }).then(()=>{
                 return this.handleDefeatedCombatantsHelpper();
             }).then(()=>{
-                return this.attackEachTarget(attacker);
+                return this.determineAbilitySequence(attacker);
             }).then(()=>{
                 return this.handleDefeatedCombatantsHelpper();
             }).then(()=>{
@@ -266,7 +284,7 @@ export default class BattleController{
                 if(flag == true){
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
-                    this.view.removeStatusAnimations(status);
+                    this.view.removeStatusAnimations();
                     resolve(resolveObject);
                 }
             })
@@ -274,7 +292,7 @@ export default class BattleController{
                 if(flag == true){
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
-                    this.view.removeStatusAnimations(status);
+                    this.view.removeStatusAnimations();
                     resolve(resolveObject);
                 }
             }, 2000);
@@ -342,45 +360,54 @@ export default class BattleController{
             }, 2000)
         })
     }
-    attackEachTarget(attacker){
-        return attacker.abilityTargets.reduce((chain, target)=>{
-            return chain.then(()=>this.activateAbilityHelpper(attacker, target));
-        }, Promise.resolve())
-
+    //Begin Ability Cycles
+    determineAbilitySequence(attacker){
+        switch(attacker.nextAbility.sequenceType){
+            case 'splash':
+                return this.activateAbilityCycle(attacker, attacker.abilityTargets);
+            case 'chain':
+                return attacker.abilityTargets.reduce((chain, target)=>{
+                    return chain.then(()=>this.activateAbilityCycle(attacker, [target]));
+                }, Promise.resolve())
+        }
     }
-    activateAbilityHelpper(attacker, target){
+    activateAbilityCycle(attacker, cycleTargets){
         if(attacker.currentHP <= 0){
             return new Promise((resolve)=>{
                 resolve();
             });
         }
-        if(target.currentHP <= 0){
-            let newTarget = this.model.getRandomTarget(attacker);
-            if(newTarget == false){
-                return new Promise((resolve)=>{
-                    resolve();
-                });
-            }else{
-                target = newTarget;
+        for(let i = 0; i < cycleTargets.length; i++){
+            if(cycleTargets[i].currentHP <= 0){
+                let newTarget = this.model.getRandomTarget(attacker);
+                if(newTarget == false){
+                    return new Promise((resolve)=>{
+                        resolve();
+                    });
+                }else{
+                    cycleTargets[i] = newTarget;
+                }
             }
         }
         return new Promise((resolve)=>{
-            this.canUseHelpper(attacker, target).then(()=>{
+            this.canUseHelpper(attacker, cycleTargets).then(()=>{
                 return this.printAbilityToBattleConsoleHelpper(attacker.nextAbility)
             }).then(()=>{
-                return this.playAbilityAnimationHelpper(attacker, target);
+                return this.playAbilityAnimationHelpper(attacker, cycleTargets);
             }).then(()=>{
-                return this.removeAbilityAnimationsHelpper(attacker);
+                return this.removeAbilityAnimationsHelpper();
             }).then(()=>{
                 this.view.updateCombatantStats(attacker);
-                this.view.updateCombatantStats(target);
+                for(let i = 0; i < cycleTargets.length; i++){
+                    this.view.updateCombatantStats(cycleTargets[i]);
+                }
                 resolve();
             })
         });
     }
-    canUseHelpper(attacker, target){
+    canUseHelpper(attacker, targets){
         return new Promise((resolve)=>{
-            attacker.nextAbility.activate(attacker, target);
+            attacker.nextAbility.canUse(attacker, targets);
             resolve();
         });
     }
@@ -405,14 +432,14 @@ export default class BattleController{
             }, 2000);
         });
     }
-    playAbilityAnimationHelpper(attacker, target){
+    playAbilityAnimationHelpper(attacker, targets){
         let flag = true;
         return new Promise((resolve)=>{
             document.addEventListener('click', this.skipEventHandler = ()=>{
                 if(flag == true){
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
-                    this.view.playAbilityAnimation(attacker, target);
+                    this.view.playAbilityAnimations(attacker, targets);
                     resolve();
                 }
             })
@@ -420,20 +447,20 @@ export default class BattleController{
                 if(flag == true){
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
-                    this.view.playAbilityAnimation(attacker, target);
+                    this.view.playAbilityAnimations(attacker, targets);
                     resolve();
                 }
             }, attacker.nextAbility.animationDuration);
         })
     }
-    removeAbilityAnimationsHelpper(attacker, target){
+    removeAbilityAnimationsHelpper(){
         let flag = true;
         return new Promise((resolve)=>{
             document.addEventListener('click', this.skipEventHandler = ()=>{
                 if(flag == true){
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
-                    this.view.removeAbilityAnimations(attacker, target)
+                    this.view.removeAbilityAnimations()
                     resolve();
                 }
             })
@@ -441,7 +468,7 @@ export default class BattleController{
                 if(flag == true){
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
-                    this.view.removeAbilityAnimations(attacker, target)
+                    this.view.removeAbilityAnimations()
                     resolve();
                 }
             }, 2000);
@@ -558,5 +585,111 @@ export default class BattleController{
 }
 
 
+/*
+    attackEachTarget(attacker){
+        return attacker.abilityTargets.reduce((chain, target)=>{
+            return chain.then(()=>this.activateAbilityHelpper(attacker, target));
+        }, Promise.resolve())
 
+    }
+    activateAbilityHelpper(attacker, target){
+        if(attacker.currentHP <= 0){
+            return new Promise((resolve)=>{
+                resolve();
+            });
+        }
+        if(target.currentHP <= 0){
+            let newTarget = this.model.getRandomTarget(attacker);
+            if(newTarget == false){
+                return new Promise((resolve)=>{
+                    resolve();
+                });
+            }else{
+                target = newTarget;
+            }
+        }
+        return new Promise((resolve)=>{
+            this.canUseHelpper(attacker, target).then(()=>{
+                return this.printAbilityToBattleConsoleHelpper(attacker.nextAbility)
+            }).then(()=>{
+                return this.playAbilityAnimationHelpper(attacker, target);
+            }).then(()=>{
+                return this.removeAbilityAnimationsHelpper(attacker);
+            }).then(()=>{
+                this.view.updateCombatantStats(attacker);
+                this.view.updateCombatantStats(target);
+                resolve();
+            })
+        });
+    }
+    canUseHelpper(attacker, target){
+        return new Promise((resolve)=>{
+            attacker.nextAbility.activate(attacker, target);
+            resolve();
+        });
+    }
+    printAbilityToBattleConsoleHelpper(ability){
+        let flag = true;
+        return new Promise((resolve)=>{
+            document.addEventListener('click', this.skipEventHandler = ()=>{
+                if(flag == true){
+                    flag = false;
+                    this.view.printToBattleConsole(ability.message);
+                    document.removeEventListener('click', this.skipEventHandler);
+                    resolve();
+                }
+            })
+            setTimeout(()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.view.printToBattleConsole(ability.message);
+                    resolve();
+                }
+            }, 2000);
+        });
+    }
+    playAbilityAnimationHelpper(attacker, target){
+        let flag = true;
+        return new Promise((resolve)=>{
+            document.addEventListener('click', this.skipEventHandler = ()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.view.playAbilityAnimation(attacker, target);
+                    resolve();
+                }
+            })
+            setTimeout(()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.view.playAbilityAnimation(attacker, target);
+                    resolve();
+                }
+            }, attacker.nextAbility.animationDuration);
+        })
+    }
+    removeAbilityAnimationsHelpper(attacker, target){
+        let flag = true;
+        return new Promise((resolve)=>{
+            document.addEventListener('click', this.skipEventHandler = ()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.view.removeAbilityAnimations(attacker, target)
+                    resolve();
+                }
+            })
+            setTimeout(()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.view.removeAbilityAnimations(attacker, target)
+                    resolve();
+                }
+            }, 2000);
+        });
+    }
+    */
 

@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, ThrowPosionKnife} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionKnife} from "./abilities.js";
 import { Poison, Burn} from "./statusEffects.js";
 export class Entity{
     constructor(config){
@@ -61,7 +61,7 @@ export class Entity{
             feet: '',
         }; 
         this.statusArray = []; //  new Poison({holder: this}), new Burn({holder: this})
-        this.abilityArray = config.abilityArray || [new Slash(), new Strike(), new MagicMissile(), new ThrowPosionKnife()];
+        this.abilityArray = config.abilityArray || [new Slash(), new Strike(), new MagicMissile(), new Cleave(), new ThrowPosionKnife()];
         
         this.battleId = '';
         this.isHostile = config.isHostile || false;

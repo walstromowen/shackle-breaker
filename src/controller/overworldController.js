@@ -83,6 +83,7 @@ export default class OverworldController{
             playMusic(this.model.props.getMap().biome.battleMusicSrc);
             //document.getElementById('music-player').pause();//temp
             this.view.playBattleTransisiton().then(()=>{
+                
                 this.props.switchScreen('battle-screen');
             });
         }
