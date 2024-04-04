@@ -518,7 +518,7 @@ export default class BattleController{
         }
         resolveFunction();  
     }
-    recoverStats(){
+    recoverStats(){//may want to split this into two
         let flag = true;
         return new Promise((resolve)=>{
             document.addEventListener('click', this.skipEventHandler = ()=>{
@@ -529,6 +529,7 @@ export default class BattleController{
                         this.model.activeCombatants[i].recoverHP();
                         this.model.activeCombatants[i].recoverStamina();
                         this.model.activeCombatants[i].recoverMagic();
+                        playSoundEffect("./assets/audio/soundEffects/energy-90321.mp3")
                         this.view.updateCombatantStats(this.model.activeCombatants[i]);
                     }
                     resolve();
