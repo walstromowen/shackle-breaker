@@ -61,7 +61,7 @@ export class Entity{
             feet: '',
         }; 
         this.statusArray = []; //  new Poison({holder: this}), new Burn({holder: this})
-        this.abilityArray = config.abilityArray || [new Slash(), new Strike(), new MagicMissile(), new Cleave(), new ThrowPosionKnife()];
+        this.abilityArray = config.abilityArray || [new Slash(), new Strike(), new MagicMissile(), new ThrowPosionKnife(), new Cleave()];
         
         this.battleId = '';
         this.isHostile = config.isHostile || false;
@@ -81,9 +81,9 @@ export class Entity{
         this.maxHP = (this.vigor * 10)  + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
         this.maxStamina = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
         this.maxMagic = (this.vigor * 2)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
-        this.baseHpRecovery = 0;
-        this.baseStaminaRecovery = 0;
-        this.baseMagicRecovery = 0;
+        this.baseHpRecovery = 5;
+        this.baseStaminaRecovery = 5;
+        this.baseMagicRecovery = 5;
         this.baseBluntAttack = (this.vigor * 1) + (this.strength * 3) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
         this.basePierceAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 3) + (this.intelligence * 2) + (this.attunement * 2);
         this.baseArcaneAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 3) + (this.attunement * 2);
@@ -148,7 +148,29 @@ export class Entity{
             this.currentCritical,
         ];
     }
+    recoverHP(){
+        this.currentHP += this.currentHpRecovery;
+        if(this.currentHP > this.maxHP){
+            this.currentHP = this.maxHP;
+        }
+
+    }
+    recoverStamina(){
+        this.currentStamina += this.currentStaminaRecovery;
+        if(this.currentStamina > this.maxStamina){
+            this.currentStamina = this.maxStamina;
+        }
+
+    }
+    recoverMagic(){
+        this.currentMagic += this.currentMagicRecovery;
+        if(this.currentMagic > this.maxMagic){
+            this.currentMagic = this.maxMagic;
+        }
+
+    }
 }
+
 
 export class Dog extends Entity{
     constructor(config){
@@ -189,10 +211,10 @@ export class Skeleton extends Entity{
             name: 'skeleton',
             apperance: './assets/media/entities/skeleton.jpg',
             vigor: 1,
-            strength: 5,
-            dexterity: 5,
-            intelligence: 5,
-            attunement: 5,
+            strength: 1,
+            dexterity: 1,
+            intelligence: 1,
+            attunement: 1,
             isHostile: true,
         });
     }

@@ -378,14 +378,19 @@ export default class BattleController{
             });
         }
         for(let i = 0; i < cycleTargets.length; i++){
-            if(cycleTargets[i].currentHP <= 0){
-                let newTarget = this.model.getRandomTarget(attacker);
-                if(newTarget == false){
-                    return new Promise((resolve)=>{
-                        resolve();
-                    });
-                }else{
-                    cycleTargets[i] = newTarget;
+            if(cycleTargets[i] == false){
+                cycleTargets.splice(i, 1)
+                i--
+            }else{
+                if(cycleTargets[i].currentHP <= 0){
+                    let newTarget = this.model.getRandomTarget(attacker);
+                    if(newTarget == false){
+                        return new Promise((resolve)=>{
+                            resolve();
+                        });
+                    }else{
+                        cycleTargets[i] = newTarget;
+                    }
                 }
             }
         }
@@ -513,7 +518,38 @@ export default class BattleController{
         }
         resolveFunction();  
     }
-    callReinforcementsHelper(side){
+    recoverStats(){
+        let flag = true;
+        return new Promise((resolve)=>{
+            document.addEventListener('click', this.skipEventHandler = ()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    for(let i = 0; i < this.model.activeCombatants.length; i++){
+                        this.model.activeCombatants[i].recoverHP();
+                        this.model.activeCombatants[i].recoverStamina();
+                        this.model.activeCombatants[i].recoverMagic();
+                        this.view.updateCombatantStats(this.model.activeCombatants[i]);
+                    }
+                    resolve();
+                }
+            })
+            setTimeout(()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    for(let i = 0; i < this.model.activeCombatants.length; i++){
+                        this.model.activeCombatants[i].recoverHP();
+                        this.model.activeCombatants[i].recoverStamina();
+                        this.model.activeCombatants[i].recoverMagic();
+                        this.view.updateCombatantStats(this.model.activeCombatants[i]);
+                    }
+                    resolve();
+                }
+            }, 2000);
+       })
+    }
+    cycleReinforcements(side){
         let combatantCount = 0;
         let incomingCombatants = [];
         let forEnemy = false;
@@ -540,8 +576,40 @@ export default class BattleController{
             }
         }
         return incomingCombatants.reduce((chain, combatant)=>{
-                return chain.then(()=>this.callReinforcement(combatant))//Wont work by surrounding callback in {}?
+                return chain.then(()=>this.callReinforcementHelpper(combatant))
         }, Promise.resolve())
+    }
+    callReinforcementHelpper(combatant){
+        return new Promise((resolve)=>{
+            this.printReinforcementToBattleConsole(combatant).then(()=>{
+                return this.callReinforcement(combatant);
+            }).then(()=>{
+                resolve();
+            })
+        })
+    }
+    printReinforcementToBattleConsole(combatant){
+        let flag = true;
+        return new Promise((resolve)=>{
+            document.addEventListener('click', this.skipEventHandler = ()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.model.activeCombatants.push(combatant);
+                    this.view.printToBattleConsole(`${combatant.name} joins the battle.`)
+                    resolve();
+                }
+            })
+            setTimeout(()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.model.activeCombatants.push(combatant);
+                    this.view.printToBattleConsole(`${combatant.name} joins the battle.`)
+                    resolve();
+                }
+            }, 2000);
+       })
     }
     callReinforcement(combatant){
         let flag = true;
@@ -551,8 +619,6 @@ export default class BattleController{
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
                     this.view.createCombatantCard(combatant);
-                    this.model.activeCombatants.push(combatant);
-                    this.view.printToBattleConsole(`${combatant.name} joins the battle.`)
                     resolve();
                 }
             })
@@ -561,8 +627,31 @@ export default class BattleController{
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
                     this.view.createCombatantCard(combatant);
-                    this.model.activeCombatants.push(combatant);
-                    this.view.printToBattleConsole(`${combatant.name} joins the battle.`)
+                    resolve();
+                }
+            }, 2000);
+       })
+    }
+    nextRoundHelpper(){
+        let flag = true;
+        return new Promise((resolve)=>{
+            document.addEventListener('click', this.skipEventHandler = ()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.activatePreround().then(()=>{
+                        this.activateRound();
+                    });
+                    resolve();
+                }
+            })
+            setTimeout(()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.activatePreround().then(()=>{
+                        this.activateRound();
+                    });
                     resolve();
                 }
             }, 2000);
@@ -570,126 +659,13 @@ export default class BattleController{
     }
     activatePostRound(){
         this.checkEndBattleHelpper().then(()=>{
-            return this.callReinforcementsHelper('ally');
+            return this.recoverStats()
         }).then(()=>{
-            return this.callReinforcementsHelper('hostile');
+            return this.cycleReinforcements('ally');
         }).then(()=>{
-            setTimeout(()=>{
-                this.activatePreround().then(()=>{
-                    this.activateRound();
-                });
-            }, 2000)
+            return this.cycleReinforcements('hostile');
+        }).then(()=>{
+            this.nextRoundHelpper();
         })
-        //recover stam /magic
     }
 }
-
-
-/*
-    attackEachTarget(attacker){
-        return attacker.abilityTargets.reduce((chain, target)=>{
-            return chain.then(()=>this.activateAbilityHelpper(attacker, target));
-        }, Promise.resolve())
-
-    }
-    activateAbilityHelpper(attacker, target){
-        if(attacker.currentHP <= 0){
-            return new Promise((resolve)=>{
-                resolve();
-            });
-        }
-        if(target.currentHP <= 0){
-            let newTarget = this.model.getRandomTarget(attacker);
-            if(newTarget == false){
-                return new Promise((resolve)=>{
-                    resolve();
-                });
-            }else{
-                target = newTarget;
-            }
-        }
-        return new Promise((resolve)=>{
-            this.canUseHelpper(attacker, target).then(()=>{
-                return this.printAbilityToBattleConsoleHelpper(attacker.nextAbility)
-            }).then(()=>{
-                return this.playAbilityAnimationHelpper(attacker, target);
-            }).then(()=>{
-                return this.removeAbilityAnimationsHelpper(attacker);
-            }).then(()=>{
-                this.view.updateCombatantStats(attacker);
-                this.view.updateCombatantStats(target);
-                resolve();
-            })
-        });
-    }
-    canUseHelpper(attacker, target){
-        return new Promise((resolve)=>{
-            attacker.nextAbility.activate(attacker, target);
-            resolve();
-        });
-    }
-    printAbilityToBattleConsoleHelpper(ability){
-        let flag = true;
-        return new Promise((resolve)=>{
-            document.addEventListener('click', this.skipEventHandler = ()=>{
-                if(flag == true){
-                    flag = false;
-                    this.view.printToBattleConsole(ability.message);
-                    document.removeEventListener('click', this.skipEventHandler);
-                    resolve();
-                }
-            })
-            setTimeout(()=>{
-                if(flag == true){
-                    flag = false;
-                    document.removeEventListener('click', this.skipEventHandler);
-                    this.view.printToBattleConsole(ability.message);
-                    resolve();
-                }
-            }, 2000);
-        });
-    }
-    playAbilityAnimationHelpper(attacker, target){
-        let flag = true;
-        return new Promise((resolve)=>{
-            document.addEventListener('click', this.skipEventHandler = ()=>{
-                if(flag == true){
-                    flag = false;
-                    document.removeEventListener('click', this.skipEventHandler);
-                    this.view.playAbilityAnimation(attacker, target);
-                    resolve();
-                }
-            })
-            setTimeout(()=>{
-                if(flag == true){
-                    flag = false;
-                    document.removeEventListener('click', this.skipEventHandler);
-                    this.view.playAbilityAnimation(attacker, target);
-                    resolve();
-                }
-            }, attacker.nextAbility.animationDuration);
-        })
-    }
-    removeAbilityAnimationsHelpper(attacker, target){
-        let flag = true;
-        return new Promise((resolve)=>{
-            document.addEventListener('click', this.skipEventHandler = ()=>{
-                if(flag == true){
-                    flag = false;
-                    document.removeEventListener('click', this.skipEventHandler);
-                    this.view.removeAbilityAnimations(attacker, target)
-                    resolve();
-                }
-            })
-            setTimeout(()=>{
-                if(flag == true){
-                    flag = false;
-                    document.removeEventListener('click', this.skipEventHandler);
-                    this.view.removeAbilityAnimations(attacker, target)
-                    resolve();
-                }
-            }, 2000);
-        });
-    }
-    */
-

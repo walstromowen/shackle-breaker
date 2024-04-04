@@ -4,15 +4,13 @@ Text adventure game based on the Shackle Breaker story
 ## TODO
 
 # Planned Quality of Life Improvements
-* Enemy Splash attacks can double target single entity
 * Alphabetize CSS rules
 * Move all status effect Promises to controller
 * overworld map smooth transitioning between tiles
-
+* Stat Recovery and drain
 
 
 # Planned Features
-* Stat Recovery
 * Battle speed Up
 * Shop/crafting/weapon/town
 * trinket and waist slots

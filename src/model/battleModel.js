@@ -68,6 +68,7 @@ export default class BattleModel{
     chooseHostileAttacks(){
         for(let i = 0; i < this.activeCombatants.length; i++){
             if(this.activeCombatants[i].isHostile == true){
+                this.activeCombatants[i].abilityTargets=[];
                 this.activeCombatants[i].nextAbility = getRandomArrayElement(this.activeCombatants[i].abilityArray);
                 for(let j = 0; j < this.activeCombatants[i].nextAbility.targetCount; j++){
                     this.activeCombatants[i].abilityTargets.push(this.getRandomTarget(this.activeCombatants[i]));
@@ -80,6 +81,17 @@ export default class BattleModel{
         for(let i = 0; i < this.activeCombatants.length; i++){
             if(this.activeCombatants[i].currentHP > 0 && this.activeCombatants[i] !== attacker && this.activeCombatants[i].isHostile != attacker.isHostile){
                 flag1 = true
+                if(attacker.nextAbility.sequenceType == 'splash'){
+                    let remainingTargets;
+                    if(attacker.isHostile == true){
+                        remainingTargets = this.getActiveAllys().length;
+                    }else{
+                        remainingTargets = this.getActiveHostiles().length;
+                    }
+                    if(attacker.abilityTargets.length >= remainingTargets){
+                        flag1 = false
+                    }
+                }
             }
         }
         if(flag1){
@@ -88,7 +100,16 @@ export default class BattleModel{
             while(flag2){
                 target = getRandomArrayElement(this.activeCombatants);
                 if(target.currentHP > 0 && target !== attacker && target.isHostile != attacker.isHostile){
-                    flag2 = false;
+                    if(attacker.nextAbility.sequenceType == 'splash'){
+                        flag2 = false;
+                        for(let j = 0; j <attacker.abilityTargets.length; j++){
+                            if(target.battleId == attacker.abilityTargets[j].battleId){
+                                flag2 = true;
+                            }
+                        }
+                    }else{
+                        flag2 = false;
+                    }
                 }
             }
             return target;

@@ -57,6 +57,7 @@ export class Slash extends Ability{
         })
     }
     activate(attacker, target){
+        attacker.currentStamina -= 10;
         let damage = this.checkDamage(attacker, target, 30);
         target.currentHP = target.currentHP - damage;
         this.updateMessage(`${attacker.name} slashes ${target.name}.`);
@@ -74,6 +75,7 @@ export class Strike extends Ability{
         })
     }
     activate(attacker, target){
+        attacker.currentStamina -= 10;
         let damage = this.checkDamage(attacker, target, 30);
         target.currentHP = target.currentHP - damage;
         this.updateMessage(`${attacker.name} strikes ${target.name}.`);
@@ -94,6 +96,7 @@ export class Cleave extends Ability{
         })
     }
     activate(attacker, target){
+        attacker.currentStamina -= 10;
         let damage = this.checkDamage(attacker, target, 15);
         target.currentHP = target.currentHP - damage;
     }
@@ -115,6 +118,7 @@ export class MagicMissile extends Ability{
         })
     }
     activate(attacker, target){
+        attacker.currentMagic -= 10;
         let damage = this.checkDamage(attacker, target, 10);
         target.currentHP = target.currentHP - damage;
         this.updateMessage(`${attacker.name} fires a magic missle at ${target.name}.`);
@@ -133,6 +137,7 @@ export class ThrowPosionKnife extends Ability{
         })
     }
     activate(attacker, target){
+        attacker.currentStamina -= 10;
         let damage = this.checkDamage(attacker, target, 5);
         target.currentHP = target.currentHP - damage;
         this.updateMessage(`${attacker.name} throws a posioned knife at ${target.name}.`);
