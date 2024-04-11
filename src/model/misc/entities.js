@@ -1,5 +1,6 @@
 import { MagicMissile, Slash, Strike, Cleave, ThrowPosionKnife} from "./abilities.js";
 import { Poison, Burn} from "./statusEffects.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, LinenShirt, LinenPants, PineWood, Handaxe } from "./items.js";
 export class Entity{
     constructor(config){
         this.name = config.name || 'entity';
@@ -75,7 +76,7 @@ export class Entity{
         this.isHostile = config.isHostile || false;
         this.nextAbility = '';
         this.abilityTargets = [];
-        this.equipAttatchables(this.equipment);
+        this.addAttatchableStats(['mainHand','offhand','head','torso','arms','legs','feet']);
         
     }
     setAttributes(props){
@@ -89,7 +90,7 @@ export class Entity{
         this.maxHP = (this.vigor * 10)  + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
         this.maxStamina = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
         this.maxMagic = (this.vigor * 2)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
-        this.baseHpRecovery = 5;
+        this.baseHpRecovery = 0;
         this.baseStaminaRecovery = 5;
         this.baseMagicRecovery = 5;
         this.baseBluntAttack = (this.vigor * 1) + (this.strength * 3) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
@@ -100,13 +101,9 @@ export class Entity{
         this.basePierceDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 2) + (this.intelligence * 1) + (this.attunement * 1);
         this.baseArcaneDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 2) + (this.attunement * 1);
         this.baseElementalDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 2);
-        this.baseBluntResistance = 0;
-        this.basePierceResistance = 0;
-        this.baseArcaneResistance =  0;
-        this.baseElementalResistance = 0;
         this.baseSpeed = 25;
-        this.baseEvasion = 0.1;
-        this.baseCritical = 0.1;
+        this.baseEvasion = 0.10;
+        this.baseCritical = 0.10;
     }
     getEquipment(slots){
         let currentlyEquippedArray = [];
@@ -284,15 +281,20 @@ export class Dog extends Entity{
     constructor(config){
         super({
             name: 'Dog',
-            apperance: './assets/media/entities/dog.jpg',
-            vigor: 5,
-            strength: 5,
-            dexterity: 5,
-            intelligence: 5,
-            attunement: 5,
+            vigor: config.vigor || 5,
+            strength: config.vigor || 5,
+            dexterity: config.vigor || 5,
+            intelligence: config.vigor || 5,
+            attunement: config.vigor || 5,
+            baseBluntResistance: config.baseBluntResistance || 0.1,
+            basePierceResistance: config.basePierceResistance || 0.1,
+            baseArcaneResistance: config.baseArcaneResistance || 0.1,
+            baseElementalResistance: config.baseElementalResistance || 0.1,
+            isHostile: config.isHostile || false,
             equipment: {
                 dogArmor: '',
             },
+            abilityArray: [new Slash()],
         })
     }
 }
@@ -302,12 +304,17 @@ export class Hawk extends Entity{
         super({
             name: 'Hawk',
             apperance: './assets/media/entities/hawk.jpg',
-            vigor: 5,
-            strength: 5,
-            dexterity: 5,
-            intelligence: 5,
-            attunement: 5,
+            vigor: config.vigor || 5,
+            strength: config.vigor || 5,
+            dexterity: config.vigor || 5,
+            intelligence: config.vigor || 5,
+            attunement: config.vigor || 5,
+            baseBluntResistance: config.baseBluntResistance || 0.1,
+            basePierceResistance: config.basePierceResistance || 0.1,
+            baseArcaneResistance: config.baseArcaneResistance || 0.1,
+            baseElementalResistance: config.baseElementalResistance || 0.1,
             equipment: {},
+            isHostile: config.isHostile || false,
             abilityArray: [new Slash()],
         });
     }
@@ -318,13 +325,22 @@ export class Skeleton extends Entity{
         super({
             name: 'skeleton',
             apperance: './assets/media/entities/skeleton.jpg',
-            vigor: 1,
-            strength: 1,
-            dexterity: 1,
-            intelligence: 1,
-            attunement: 1,
-            isHostile: true,
-            abilityArray: [new Slash(), new Cleave()],
+            vigor: config.vigor || 1,
+            strength: config.vigor || 5,
+            dexterity: config.vigor || 5,
+            intelligence: config.vigor || 5,
+            attunement: config.vigor || 5,
+            equipment: {
+                mainHand: new Handaxe({level: 1}),
+                offhand: '',
+                head: '',
+                torso: '',
+                arms: '',
+                legs: '',
+                feet: '',
+            },
+            isHostile: config.isHostile || true,
+            abilityArray: [],
         });
     }
 }
@@ -339,7 +355,7 @@ export const companionArray = [
         intelligence: 5,
         attunement: 5,
         equipment: {
-            mainHand: '',
+            mainHand: new Handaxe({level: 1}),
             offhand: '',
             head: '',
             torso: '',
@@ -357,7 +373,7 @@ export const companionArray = [
         intelligence: 5,
         attunement: 5,
         equipment: {
-            mainHand: '',
+            mainHand: new Handaxe({level: 1}),
             offhand: '',
             head: '',
             torso: '',
@@ -375,7 +391,7 @@ export const companionArray = [
         intelligence: 5,
         attunement: 5,
         equipment: {
-            mainHand: '',
+            mainHand: new ArcaneStaff({level: 1}),
             offhand: '',
             head: '',
             torso: '',
@@ -393,8 +409,8 @@ export const companionArray = [
         intelligence: 5,
         attunement: 5,
         equipment: {
-            mainHand: '',
-            offhand: '',
+            mainHand: new Dagger({level: 1}),
+            offhand: new Dagger({level: 1}),
             head: '',
             torso: '',
             arms: '',
@@ -411,7 +427,7 @@ export const companionArray = [
         intelligence: 5,
         attunement: 5,
         equipment: {
-            mainHand: '',
+            mainHand: new ArcaneStaff({level: 1}),
             offhand: '',
             head: '',
             torso: '',

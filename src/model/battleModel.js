@@ -69,7 +69,7 @@ export default class BattleModel{
         for(let i = 0; i < this.activeCombatants.length; i++){
             if(this.activeCombatants[i].isHostile == true){
                 this.activeCombatants[i].abilityTargets=[];
-                this.activeCombatants[i].nextAbility = getRandomArrayElement(this.activeCombatants[i].abilityArray);
+                this.activeCombatants[i].nextAbility = getRandomArrayElement(this.getCombinedAbiliites(this.activeCombatants[i]));
                 for(let j = 0; j < this.activeCombatants[i].nextAbility.targetCount; j++){
                     this.activeCombatants[i].abilityTargets.push(this.getRandomTarget(this.activeCombatants[i]));
                 }
