@@ -33,14 +33,14 @@ export default class LobbyController{
         });
         document.getElementById('lobby-background-selection').addEventListener('change', ()=>{
             this.model.updateBackground();
-            this.view.updateInventory(this.model.props.getParty()[0].getEquipment(), this.model.props.getInventory());
+            this.view.updateInventory(this.model.props.getParty()[0].getEquipment(['mainHand','offhand','head','torso','arms','legs','feet']), this.model.props.getInventory());
             this.view.updateAttributes(this.model.props.getParty()[0].getAttributes());
             this.view.updateStats(this.model.props.getParty()[0].getCurrentStats());
             this.view.updateGold(this.model.props.getGold());
         });
         document.getElementById('lobby-keepsake-selection').addEventListener('change', ()=>{
             this.model.updateKeepsake();
-            this.view.updateInventory(this.model.props.getParty()[0].getEquipment(), this.model.props.getInventory());
+            this.view.updateInventory(this.model.props.getParty()[0].getEquipment(['mainHand','offhand','head','torso','arms','legs','feet']), this.model.props.getInventory());
         });
         document.getElementById('lobby-companion-selection').addEventListener('change', ()=>{
             this.model.updateCompanion();
@@ -50,7 +50,7 @@ export default class LobbyController{
         });
     }
     onSwitchScreen(){
-        this.view.updateInventory(this.model.props.getParty()[0].getEquipment(), this.model.props.getInventory());
+        this.view.updateInventory(this.model.props.getParty()[0].getEquipment(['mainHand','offhand','head','torso','arms','legs','feet']), this.model.props.getInventory());
         this.view.updateAttributes(this.model.props.getParty()[0].getAttributes());
         this.view.updateStats(this.model.props.getParty()[0].getCurrentStats());
         this.view.updateGold(this.model.props.getGold());

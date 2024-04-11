@@ -122,5 +122,18 @@ export default class BattleModel{
             return (b.nextAbility.speedModifier*b.currentSpeed) - (a.nextAbility.speedModifier*a.currentSpeed);
         });
     }
+    getCombinedAbiliites(attacker){
+        let combinedAbilities = [];
+        let equipment = attacker.getEquipment(['mainHand','offhand','head','torso','arms','legs','feet']);
+        for(let i = 0; i < attacker.abilityArray.length; i++){
+            combinedAbilities.push(attacker.abilityArray[i]);
+        }
+        for(let i = 0; i < equipment.length; i++){
+            for(let j = 0; j < equipment[i].abilityArray.length; j++){
+                combinedAbilities.push(equipment[i].abilityArray[j]);
+            }
+        }
+        return combinedAbilities;
+    }
 }
 

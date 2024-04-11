@@ -26,6 +26,13 @@ export default class LobbyView{
         this.arcaneDefense = document.getElementById('lobby-arcane-defense');
         this.elementalAttack = document.getElementById('lobby-elemental-attack');
         this.elementalDefense = document.getElementById('lobby-elemental-defense');
+        this.bluntResistance = document.getElementById('lobby-blunt-resistance');
+        this.pierceResistance = document.getElementById('lobby-pierce-resistance');
+        this.arcaneResistance =  document.getElementById('lobby-arcane-resistance');
+        this.elementalResistance = document.getElementById('lobby-elemental-resistance');
+
+
+
         this.speed = document.getElementById('lobby-speed');
         this.evasion = document.getElementById('lobby-evasion');
         this.critical = document.getElementById('lobby-critical');
@@ -63,8 +70,9 @@ export default class LobbyView{
         this.attunement.innerText = attunement;
     }
     updateStats([currentHP, currentStamina, currentMagic, currentHpRecovery, currentStaminaRecovery, currentMagicRecovery, currentBluntAttack, currentPierceAttack,
-                 currentArcaneAttack, currentElementalAttack, currentBluntDefense, currentPierceDefense, currentArcaneDefense, currentElementalDefense, currentSpeed, currentEvasion,
-                 currentCritical]){
+                 currentArcaneAttack, currentElementalAttack, currentBluntDefense, currentPierceDefense, currentArcaneDefense, currentElementalDefense, 
+                 currentBluntResistance, currentPierceResistance, currentArcaneResistance, currentElementalResistance,
+                 currentSpeed, currentEvasion,currentCritical]){
         this.maxHP.innerText = currentHP;
         this.hitPointsRecovery.innerText = currentHpRecovery;
         this.maxStamina.innerText = currentStamina
@@ -79,6 +87,10 @@ export default class LobbyView{
         this.arcaneDefense.innerText = currentArcaneDefense;
         this.elementalAttack.innerText = currentElementalAttack;
         this.elementalDefense.innerText = currentElementalDefense;
+        this.bluntResistance.innerText = currentBluntResistance;
+        this.pierceResistance.innerText = currentPierceResistance;
+        this.arcaneResistance.innerText = currentArcaneResistance
+        this.elementalResistance.innerText = currentElementalResistance;
         this.speed.innerText = currentSpeed;
         this.evasion.innerText = currentEvasion;
         this.critical.innerText = currentCritical;

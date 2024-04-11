@@ -106,10 +106,10 @@ export default class BattleView{
             }
         });
     }
-    createCombatantAbilityButtons(combatant){
+    createCombatantAbilityButtons(combinedAbilities){
         let abilityButtons = [];
-        for(let i = 0; i < combatant.abilityArray.length; i++){
-            abilityButtons.push(this.createAbilityButton(combatant.abilityArray[i]))
+        for(let i = 0; i < combinedAbilities.length; i++){
+            abilityButtons.push(this.createAbilityButton(combinedAbilities[i]))
         }
         return abilityButtons;
     }

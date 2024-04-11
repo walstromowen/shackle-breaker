@@ -25,6 +25,10 @@ export class Entity{
         this.basePierceDefense = config.basePierceDefense || 0;
         this.baseArcaneDefense = config.baseArcaneDefense || 0;
         this.baseElementalDefense = config.baseElementalDefense || 0;
+        this.baseBluntResistance = config.baseBluntResistance || 0;
+        this.basePierceResistance = config.basePierceResistance || 0;
+        this.baseArcaneResistance = config.baseArcaneResistance || 0;
+        this.baseElementalResistance = config.baseElementalResistance || 0;
         this.baseSpeed = config.baseSpeed || 0;
         this.baseEvasion = config.baseEvasion || 0;
         this.baseCritical = config.baseCritical || 0;
@@ -43,6 +47,10 @@ export class Entity{
         this.currentPierceDefense = this.basePierceDefense;
         this.currentArcaneDefense = this.baseArcaneDefense;
         this.currentElementalDefense = this.baseElementalDefense;
+        this.currentBluntResistance = this.baseBluntResistance;
+        this.currentPierceResistance = this.basePierceResistance;
+        this.currentArcaneResistance = this.baseArcaneResistance;
+        this.currentElementalResistance = this.baseElementalResistance;
         this.currentSpeed = this.baseSpeed;
         this.currentEvasion = this.baseEvasion;
         this.currentCritical = this.baseCritical;
@@ -52,7 +60,7 @@ export class Entity{
 
         this.equipment = config.equipment || 
         {
-            mainhand: '',
+            mainHand: '',
             offhand: '',
             head: '',
             torso: '',
@@ -61,13 +69,13 @@ export class Entity{
             feet: '',
         }; 
         this.statusArray = []; //  new Poison({holder: this}), new Burn({holder: this})
-        this.abilityArray = config.abilityArray || [new Slash(), new Strike(), new MagicMissile(), new ThrowPosionKnife(), new Cleave()];
+        this.abilityArray = config.abilityArray || [];//new Strike(), new MagicMissile(), new ThrowPosionKnife(),
         
         this.battleId = '';
         this.isHostile = config.isHostile || false;
         this.nextAbility = '';
         this.abilityTargets = [];
-
+        this.equipAttatchables(this.equipment);
         
     }
     setAttributes(props){
@@ -92,12 +100,22 @@ export class Entity{
         this.basePierceDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 2) + (this.intelligence * 1) + (this.attunement * 1);
         this.baseArcaneDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 2) + (this.attunement * 1);
         this.baseElementalDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 2);
+        this.baseBluntResistance = 0;
+        this.basePierceResistance = 0;
+        this.baseArcaneResistance =  0;
+        this.baseElementalResistance = 0;
         this.baseSpeed = 25;
         this.baseEvasion = 0.1;
         this.baseCritical = 0.1;
     }
-    getEquipment(){
-        return Object.values(this.equipment);
+    getEquipment(slots){
+        let currentlyEquippedArray = [];
+        for(let i = 0; i < slots.length; i++){
+            if(this.equipment[slots[i]] != ''){
+                currentlyEquippedArray.push(this.equipment[slots[i]]);
+            }
+        }
+        return currentlyEquippedArray;
     }
     getAttributes(){
         return [
@@ -123,6 +141,10 @@ export class Entity{
         this.currentPierceDefense = this.basePierceDefense;
         this.currentArcaneDefense = this.baseArcaneDefense;
         this.currentElementalDefense = this.baseElementalDefense;
+        this.currentBluntResistance = this.baseBluntResistance;
+        this.currentPierceResistance = this.basePierceResistance;
+        this.currentArcaneResistance = this.baseArcaneResistance;
+        this.currentElementalResistance = this.baseElementalResistance;
         this.currentSpeed = this.baseSpeed;
         this.currentEvasion = this.baseEvasion;
         this.currentCritical = this.baseCritical;
@@ -143,6 +165,10 @@ export class Entity{
             this.currentPierceDefense,
             this.currentArcaneDefense,
             this.currentElementalDefense,
+            this.currentBluntResistance,
+            this.currentPierceResistance,
+            this.currentArcaneResistance,
+            this.currentElementalResistance,
             this.currentSpeed,
             this.currentEvasion,
             this.currentCritical,
@@ -168,6 +194,88 @@ export class Entity{
             this.currentMagic = this.maxMagic;
         }
 
+    }
+    equipAttatchables(attatchables){
+        for(let x = 0; x < attatchables.length; x++){
+            switch(attatchables[x].slot){
+                case 'oneHand':
+                    if(this.equipment['mainHand'] != '' && this.equipment['offhand'] == ''){
+                        this.equipment['offhand'] = attatchables[x];
+                    }else{
+                        this.equipment['mainHand'] = attatchables[x];
+                    }
+                    break;
+                default:
+                    this.equipment[attatchables[x].slot] = attatchables[x];
+                    break;
+            }
+        }
+    }
+    unequipAttatchables(slots){
+        let unequippedAttatchables = [];
+        for(let i = 0; i < slots.length; i++){
+            if(this.equipment[slots[i] != '']){
+                unequippedAttatchables.push(this.equipment[slots[i]]);
+            }
+            this.equipment[slots[i]] = '';
+        }
+        return(unequippedAttatchables);
+    }
+    addAttatchableStats(slots){
+        for(let i = 0; i < slots.length; i++){
+            if(this.equipment[slots[i]] != ''){
+                if(slots != 'offhand' && this.equipment[slots[i]].slot != 'twoHands'){
+                    this.currentHP += this.equipment[slots[i]].hp;
+                    this.currentStamina += this.equipment[slots[i]].stamina;
+                    this.currentMagic += this.equipment[slots[i]].magic;
+                    this.currentHpRecovery += this.equipment[slots[i]].hpRecovery
+                    this.currentStaminaRecovery += this.equipment[slots[i]].staminaRecovery;
+                    this.currentMagicRecovery += this.equipment[slots[i]].magicRecovery;
+                    this.currentBluntAttack += this.equipment[slots[i]].bluntAttack;
+                    this.currentPierceAttack += this.equipment[slots[i]].pierceAttack;
+                    this.currentArcaneAttack += this.equipment[slots[i]].arcaneAttack;
+                    this.currentElementalAttack += this.equipment[slots[i]].elementalAttack;
+                    this.currentBluntDefense += this.equipment[slots[i]].bluntDefense;
+                    this.currentPierceDefense += this.equipment[slots[i]].pierceDefense;
+                    this.currentArcaneDefense += this.equipment[slots[i]].arcaneDefense;
+                    this.currentElementalDefense += this.equipment[slots[i]].elementalDefense;
+                    this.currentBluntResistance += this.equipment[slots[i]].bluntResistance;
+                    this.currentPierceResistance += this.equipment[slots[i]].pierceResistance;
+                    this.currentArcaneResistance += this.equipment[slots[i]].arcaneResistance;
+                    this.currentElementalResistance += this.equipment[slots[i]].elementalResistance;
+                    this.currentSpeed += this.equipment[slots[i]].speed;
+                    this.currentEvasion += this.equipment[slots[i]].evasion;
+                    this.currentCritical += this.equipment[slots[i]].critical;
+                }
+            }
+        }
+    }
+    subtractAttatchableStats(slots){
+        for(let i = 0; i < slots.length; i++){
+            if(this.equipment[slots[i]] != ''){
+                this.currentHP -= this.equipment[slots[i]].hp;
+                this.currentStamina -= this.equipment[slots[i]].stamina;
+                this.currentMagic -= this.equipment[slots[i]].magic;
+                this.currentHpRecovery -= this.equipment[slots[i]].hpRecovery
+                this.currentStaminaRecovery -= this.equipment[slots[i]].staminaRecovery;
+                this.currentMagicRecovery -= this.equipment[slots[i]].magicRecovery;
+                this.currentBluntAttack -= this.equipment[slots[i]].bluntAttack;
+                this.currentPierceAttack -= this.equipment[slots[i]].pierceAttack;
+                this.currentArcaneAttack -= this.equipment[slots[i]].arcaneAttack;
+                this.currentElementalAttack -= this.equipment[slots[i]].elementalAttack;
+                this.currentBluntDefense -= this.equipment[slots[i]].bluntDefense;
+                this.currentPierceDefense -= this.equipment[slots[i]].pierceDefense;
+                this.currentArcaneDefense -= this.equipment[slots[i]].arcaneDefense;
+                this.currentElementalDefense -= this.equipment[slots[i]].elementalDefense;
+                this.currentBluntResistance -= this.equipment[slots[i]].bluntResistance;
+                this.currentPierceResistance -= this.equipment[slots[i]].pierceResistance;
+                this.currentArcaneResistance -= this.equipment[slots[i]].arcaneResistance;
+                this.currentElementalResistance -= this.equipment[slots[i]].elementalResistance;
+                this.currentSpeed -= this.equipment[slots[i]].speed;
+                this.currentEvasion -= this.equipment[slots[i]].evasion;
+                this.currentCritical -= this.equipment[slots[i]].critical;
+            }
+        }
     }
 }
 
@@ -200,7 +308,7 @@ export class Hawk extends Entity{
             intelligence: 5,
             attunement: 5,
             equipment: {},
-            abilityArray: [new Slash()]
+            abilityArray: [new Slash()],
         });
     }
 }
@@ -216,6 +324,7 @@ export class Skeleton extends Entity{
             intelligence: 1,
             attunement: 1,
             isHostile: true,
+            abilityArray: [new Slash(), new Cleave()],
         });
     }
 }
@@ -230,7 +339,7 @@ export const companionArray = [
         intelligence: 5,
         attunement: 5,
         equipment: {
-            mainhand: '',
+            mainHand: '',
             offhand: '',
             head: '',
             torso: '',
@@ -248,7 +357,7 @@ export const companionArray = [
         intelligence: 5,
         attunement: 5,
         equipment: {
-            mainhand: '',
+            mainHand: '',
             offhand: '',
             head: '',
             torso: '',
@@ -266,7 +375,7 @@ export const companionArray = [
         intelligence: 5,
         attunement: 5,
         equipment: {
-            mainhand: '',
+            mainHand: '',
             offhand: '',
             head: '',
             torso: '',
@@ -284,7 +393,7 @@ export const companionArray = [
         intelligence: 5,
         attunement: 5,
         equipment: {
-            mainhand: '',
+            mainHand: '',
             offhand: '',
             head: '',
             torso: '',
@@ -302,7 +411,7 @@ export const companionArray = [
         intelligence: 5,
         attunement: 5,
         equipment: {
-            mainhand: '',
+            mainHand: '',
             offhand: '',
             head: '',
             torso: '',

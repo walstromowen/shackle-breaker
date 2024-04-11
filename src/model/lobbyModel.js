@@ -1,6 +1,6 @@
 import { getRandomArrayElement } from "../utility.js";
 import {Entity, Dog, Hawk, companionArray} from "./misc/entities.js";
-import { Dagger, LinenShirt, LinenPants, PineWood } from "./misc/items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, LinenShirt, LinenPants, PineWood, Handaxe } from "./misc/items.js";
 
 export default class LobbyModel{
     constructor(props){
@@ -28,101 +28,76 @@ export default class LobbyModel{
     }
     updateBackground(){
         let background = document.getElementById('lobby-background-selection').value;
+        let equipment = '';
         switch(background){
             case 'traveler':
-                this.props.getParty()[0].equipment = {
-                    mainhand: '',
-                    offhand: '',
-                    head: '',
-                    torso: new LinenShirt({level: 1}),
-                    arms: '',
-                    legs: new LinenPants({level: 1}),
-                    feet: '',
-                }
+                equipment = [
+                    new ShortSword({level: 1}),
+                    new LinenShirt({level: 1}),
+                    new LinenPants({level: 1}),
+                ];
                 this.props.getParty()[0].setAttributes({vigor: 5, strength: 5, dexterity: 5, intelligence: 5, attunement: 5});
                 this.props.setGold(300);
                 break;
             case 'blacksmith':
-                this.props.getParty()[0].equipment = {
-                    mainhand: '',
-                    offhand: '',
-                    head: '',
-                    torso: new LinenShirt({level: 1}),
-                    arms: '',
-                    legs: new LinenPants({level: 1}),
-                    feet: '',
-                }
+                equipment = [
+                    new BlacksmithHammer({level: 1}),
+                    new LinenShirt({level: 1}),
+                    new LinenPants({level: 1}),
+                ];
                 this.props.getParty()[0].setAttributes({vigor: 9, strength: 4, dexterity: 4, intelligence: 4, attunement: 4});
                 this.props.setGold(250);
                 break;
             case 'ranger':
-                this.props.getParty()[0].equipment = {
-                    mainhand: '',
-                    offhand: '',
-                    head: '',
-                    torso: new LinenShirt({level: 1}),
-                    arms: '',
-                    legs: new LinenPants({level: 1}),
-                    feet: '',
-                }
+                equipment = [
+                    new LinenShirt({level: 1}),
+                    new LinenPants({level: 1}),
+                ];
                 this.props.getParty()[0].setAttributes({vigor: 5, strength: 4, dexterity: 6, intelligence: 4, attunement: 6});
                 this.props.setGold(300);
                 break;
             case 'scholar':
-                this.props.getParty()[0].equipment = {
-                    mainhand: '',
-                    offhand: '',
-                    head: '',
-                    torso: new LinenShirt({level: 1}),
-                    arms: '',
-                    legs: new LinenPants({level: 1}),
-                    feet: '',
-                }
+                equipment = [
+                    new ArcaneStaff({level: 1}),
+                    new LinenShirt({level: 1}),
+                    new LinenPants({level: 1}),
+                ];
                 this.props.getParty()[0].setAttributes({vigor: 5, strength: 5, dexterity: 5, intelligence: 7, attunement: 3});
                 this.props.setGold(250);
                 break;
             case 'warrior':
-                this.props.getParty()[0].equipment = {
-                    mainhand: '',
-                    offhand: '',
-                    head: '',
-                    torso: new LinenShirt({level: 1}),
-                    arms: '',
-                    legs: new LinenPants({level: 1}),
-                    feet: '',
-                }
+                equipment = [
+                    new Handaxe({level: 1}),
+                    new LinenShirt({level: 1}),
+                    new LinenPants({level: 1}),
+                ];
                 this.props.getParty()[0].setAttributes({vigor: 5, strength: 7, dexterity: 3, intelligence: 5, attunement: 5});
                 this.props.setGold(250);
                 break;
             case 'thief':
-                this.props.getParty()[0].equipment = {
-                    mainhand:  new Dagger({level: 1}),
-                    offhand: '',
-                    head: '',
-                    torso: new LinenShirt({level: 1}),
-                    arms: '',
-                    legs: new LinenPants({level: 1}),
-                    feet: '',
-                }
+                equipment = [
+                    new Dagger({level: 1}),
+                    new LinenShirt({level: 1}),
+                    new LinenPants({level: 1}),
+                ];
                 this.props.getParty()[0].setAttributes({vigor: 5, strength: 3, dexterity: 7, intelligence: 5, attunement: 5});
                 this.props.setGold(250);
                 break;
             case 'hermit':
-                this.props.getParty()[0].equipment = {
-                    mainhand: '',
-                    offhand: '',
-                    head: '',
-                    torso: new LinenShirt({level: 1}),
-                    arms: '',
-                    legs: new LinenPants({level: 1}),
-                    feet: '',
-                }
+                equipment = [
+                    new ArcaneStaff({level: 1}),
+                    new LinenShirt({level: 1}),
+                    new LinenPants({level: 1}),
+                ];
                 this.props.getParty()[0].setAttributes({vigor: 5, strength: 5, dexterity: 5, intelligence: 3, attunement: 7});
                 this.props.setGold(250);
             break;    
         }
+        this.props.getParty()[0].unequipAttatchables(['mainHand','offhand','head','torso','arms','legs','feet']);
         this.props.getParty()[0].scaleAttributes();
         this.props.getParty()[0].resetStats();
+        this.props.getParty()[0].equipAttatchables(equipment)
+        this.props.getParty()[0].addAttatchableStats(['mainHand','offhand','head','torso','arms','legs','feet']);
     }
     updateKeepsake(){
         let keepsake = document.getElementById('lobby-keepsake-selection').value;

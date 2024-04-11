@@ -45,14 +45,15 @@ export default class BattleController{
         })
     }
     createAbilityButtonsHelpper(attacker, resolveFn){
+        let combinedAbilities = this.model.getCombinedAbiliites(attacker);
         this.view.battleConfirmTargetsContainer.style.display = 'none';
         this.view.battleControlsContainer.style.display = 'block';
         this.view.switchTab('battle-controls-abilities-tab');
         this.view.removeCardTargets();
         this.view.removeAbilityButtons();
         this.view.highlightAttacker(attacker.battleId);
-        let abilityButtons = this.view.createCombatantAbilityButtons(attacker);
-        for(let i = 0; i < attacker.abilityArray.length; i++){
+        let abilityButtons = this.view.createCombatantAbilityButtons(combinedAbilities);
+        for(let i = 0; i < combinedAbilities.length; i++){
             abilityButtons[i].addEventListener('click', ()=>{
                 let container = document.getElementById('battle-battlefield-container');
                 container.removeEventListener('click', this.selectTargetEventHandler);
@@ -62,7 +63,7 @@ export default class BattleController{
                 this.view.removeAbilityHighlight();
                 attacker.abilityTargets = [];//model
                 abilityButtons[i].classList.add('selected')//view
-                attacker.nextAbility = attacker.abilityArray[i];//model
+                attacker.nextAbility = combinedAbilities[i];//model
                 this.createTargetListeners(attacker, resolveFn);
             })
         } 
