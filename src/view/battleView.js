@@ -180,7 +180,7 @@ export default class BattleView{
             }
         });
     }
-    playAbilityAnimations(attacker, targets){
+    playAbilityAnimations(attacker, targets, resolveObject){
         let attackerCard;
         let root = document.querySelector(':root');
         root.style.setProperty('--ability-animation-image', `url(${attacker.nextAbility.iconSrc})`);
@@ -205,6 +205,7 @@ export default class BattleView{
             });
             targetCard.classList.add('animate-target');
         }
+        
         attackerCard.classList.add('animate-attacker');
         playSoundEffect(attacker.nextAbility.soundEffectSrc);
     }

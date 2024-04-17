@@ -7,7 +7,9 @@ Text adventure game based on the Shackle Breaker story
 * Alphabetize CSS rules
 * Move all status effect Promises to controller
 * overworld map smooth transitioning between tiles
-* Ability polishing and damage scaling
+* Retreats
+* Switching combatants
+* Dodging Animation
 
 
 # Planned Features

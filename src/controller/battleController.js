@@ -396,28 +396,32 @@ export default class BattleController{
             }
         }
         return new Promise((resolve)=>{
-            this.canUseHelpper(attacker, cycleTargets).then(()=>{
-                return this.printAbilityToBattleConsoleHelpper(attacker.nextAbility)
-            }).then(()=>{
-                return this.playAbilityAnimationHelpper(attacker, cycleTargets);
-            }).then(()=>{
-                return this.removeAbilityAnimationsHelpper();
-            }).then(()=>{
-                this.view.updateCombatantStats(attacker);
-                for(let i = 0; i < cycleTargets.length; i++){
-                    this.view.updateCombatantStats(cycleTargets[i]);
+            this.canUseHelpper(attacker, cycleTargets).then((resolveObject)=>{
+                return this.printAbilityToBattleConsoleHelpper(attacker.nextAbility, resolveObject);
+            }).then((resolveObject)=>{
+                return this.playAbilityAnimationHelpper(attacker, cycleTargets, resolveObject);
+            }).then((resolveObject)=>{
+                return this.postAbilityAnimationsHelpper(attacker, resolveObject);
+            }).then((resolveObject)=>{
+                if(resolveObject.evade){
+                    return this.resolvePause(resolve);
+                }else{
+                    this.view.updateCombatantStats(attacker);
+                    for(let i = 0; i < cycleTargets.length; i++){
+                        this.view.updateCombatantStats(cycleTargets[i]);
+                    }
+                    resolve();
                 }
-                resolve();
             })
         });
     }
     canUseHelpper(attacker, targets){
         return new Promise((resolve)=>{
-            attacker.nextAbility.canUse(attacker, targets);
-            resolve();
+            let resolveObject = attacker.nextAbility.canUse(attacker, targets);
+            resolve(resolveObject);
         });
     }
-    printAbilityToBattleConsoleHelpper(ability){
+    printAbilityToBattleConsoleHelpper(ability, resolveObject){
         let flag = true;
         return new Promise((resolve)=>{
             document.addEventListener('click', this.skipEventHandler = ()=>{
@@ -425,7 +429,7 @@ export default class BattleController{
                     flag = false;
                     this.view.printToBattleConsole(ability.message);
                     document.removeEventListener('click', this.skipEventHandler);
-                    resolve();
+                    resolve(resolveObject);
                 }
             })
             setTimeout(()=>{
@@ -433,52 +437,73 @@ export default class BattleController{
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
                     this.view.printToBattleConsole(ability.message);
-                    resolve();
+                    resolve(resolveObject);
                 }
             }, 2000);
         });
     }
-    playAbilityAnimationHelpper(attacker, targets){
+    playAbilityAnimationHelpper(attacker, targets, resolveObject){
         let flag = true;
         return new Promise((resolve)=>{
             document.addEventListener('click', this.skipEventHandler = ()=>{
                 if(flag == true){
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
-                    this.view.playAbilityAnimations(attacker, targets);
-                    resolve();
+                    this.view.playAbilityAnimations(attacker, targets, resolveObject);
+                    resolve(resolveObject);
                 }
             })
             setTimeout(()=>{
                 if(flag == true){
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
-                    this.view.playAbilityAnimations(attacker, targets);
-                    resolve();
+                    this.view.playAbilityAnimations(attacker, targets, resolveObject);
+                    resolve(resolveObject);
                 }
             }, attacker.nextAbility.animationDuration);
         })
     }
-    removeAbilityAnimationsHelpper(){
+    postAbilityAnimationsHelpper(attacker, resolveObject){
         let flag = true;
         return new Promise((resolve)=>{
             document.addEventListener('click', this.skipEventHandler = ()=>{
                 if(flag == true){
+                    if(resolveObject.evade){
+                        this.view.printToBattleConsole(`Opponent evades ${attacker.name}'s attack!`);
+                    }
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
                     this.view.removeAbilityAnimations()
-                    resolve();
+                    resolve(resolveObject);
                 }
             })
             setTimeout(()=>{
                 if(flag == true){
+                    if(resolveObject.evade){
+                        this.view.printToBattleConsole(`Opponent evades ${attacker.name}'s attack!`);
+                    }
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
                     this.view.removeAbilityAnimations()
-                    resolve();
+                    resolve(resolveObject);
                 }
             }, 2000);
         });
+    }
+    resolvePause(resolveFn){
+        let flag = true;
+        document.addEventListener('click', this.skipEventHandler = ()=>{
+            if(flag == true){
+                flag = false;
+                resolveFn();
+            }
+        })
+        setTimeout(()=>{
+            if(flag == true){
+                flag = false;
+                resolveFn();
+            }
+        },2000)
     }
     checkEndBattleHelpper(){//determines if a party has been completely eliminated and needs to return to overworld
         let flag = true;
@@ -530,7 +555,7 @@ export default class BattleController{
                         this.model.activeCombatants[i].recoverHP();
                         this.model.activeCombatants[i].recoverStamina();
                         this.model.activeCombatants[i].recoverMagic();
-                        playSoundEffect("./assets/audio/soundEffects/energy-90321.mp3")
+                        playSoundEffect("./assets/audio/soundEffects/energy-90321.mp3");
                         this.view.updateCombatantStats(this.model.activeCombatants[i]);
                     }
                     resolve();
@@ -544,11 +569,12 @@ export default class BattleController{
                         this.model.activeCombatants[i].recoverHP();
                         this.model.activeCombatants[i].recoverStamina();
                         this.model.activeCombatants[i].recoverMagic();
+                        playSoundEffect("./assets/audio/soundEffects/energy-90321.mp3");
                         this.view.updateCombatantStats(this.model.activeCombatants[i]);
                     }
                     resolve();
                 }
-            }, 2000);
+            }, 0);
        })
     }
     cycleReinforcements(side){
