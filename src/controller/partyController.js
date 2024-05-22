@@ -3,6 +3,8 @@ import {playSoundEffect, playMusic} from '../utility.js';
 export default class PartyController{
     constructor(props, model, view){
         this.props = props;
+        this.model = model;
+        this.view = view;
         this.initialize();
     }
     initialize(){
@@ -11,32 +13,41 @@ export default class PartyController{
             playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
             
         })
+        
+    }
+    onSwitchScreen(){
+        this.model.initialize();
+        this.view.removeAllEntitySlots();
+        this.view.createPartySlots(this.model.props.getParty());
+
         //grid items
-        document.querySelectorAll('.party-grid-item').forEach((node)=>{
-            node.addEventListener('dragover', (e)=>{ //dragover targets the element that is being dragged over NOT the one you are dragging EVEN without e.stopPropagation();
-                e.preventDefault();
-                e.stopPropagation();
-            });
-            node.addEventListener('dragenter', (e)=>{ //dragover targets the element that is being dragged over NOT the one you are dragging EVEN without e.stopPropagation();
-                e.preventDefault();
-                e.stopPropagation();
-                node.classList.add('hover-brightness');
-            });
-            node.addEventListener('dragleave', (e)=>{ //dragover targets the element that is being dragged over NOT the one you are dragging EVEN without e.stopPropagation();
-                e.preventDefault();
-                e.stopPropagation();
-                node.classList.remove('hover-brightness');
-            });
-            node.addEventListener('drop', (e)=>{ //drop targets the element you drop into MUST include e.preventDefault in dragover if event if it is being used
-                e.stopPropagation();
-                const newData = document.getElementsByClassName('dragging')[0];
-                const oldData = node.getElementsByClassName('party-character-slot-data')[0];
-                newData.parentNode.appendChild(oldData);
-                node.appendChild(newData);
-                node.classList.remove('hover-brightness');
-            });
-           
-        })
+        if(this.model.props.getSituation() == 'overworld'){
+            document.querySelectorAll('.party-grid-item').forEach((node)=>{
+                node.addEventListener('dragover', (e)=>{ //dragover targets the element that is being dragged over NOT the one you are dragging EVEN without e.stopPropagation();
+                    e.preventDefault();
+                    e.stopPropagation();
+                });
+                node.addEventListener('dragenter', (e)=>{ //dragover targets the element that is being dragged over NOT the one you are dragging EVEN without e.stopPropagation();
+                    e.preventDefault();
+                    e.stopPropagation();
+                    node.classList.add('hover-brightness');
+                });
+                node.addEventListener('dragleave', (e)=>{ //dragover targets the element that is being dragged over NOT the one you are dragging EVEN without e.stopPropagation();
+                    e.preventDefault();
+                    e.stopPropagation();
+                    node.classList.remove('hover-brightness');
+                });
+                node.addEventListener('drop', (e)=>{ //drop targets the element you drop into MUST include e.preventDefault in dragover if event if it is being used
+                    e.stopPropagation();
+                    const newData = document.getElementsByClassName('dragging')[0];
+                    const oldData = node.getElementsByClassName('party-character-slot-data')[0];
+                    newData.parentNode.appendChild(oldData);
+                    node.appendChild(newData);
+                    node.classList.remove('hover-brightness');
+                });
+            
+            })
+        }
         //slot data
         document.querySelectorAll('.party-character-slot-data').forEach((node)=>{
             node.addEventListener('dragstart', ()=>{ //dragstart targets the element that has begun being dragged
@@ -58,6 +69,21 @@ export default class PartyController{
             node.querySelector('.party-toggle-summary-button').addEventListener('click', (e)=>{
                 e.stopPropagation();
                 this.props.switchScreen('character-summary-screen');
+                playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
+            });
+        });
+
+        
+
+        this.view.hideElementsForBattle(this.model.props.getSituation());
+    }
+    passBattleReinforcementResolve(resolveFn){
+        document.querySelectorAll('.party-character-slot-data').forEach((node)=>{
+            node.querySelector('.party-select-button').addEventListener('click', (e)=>{
+                e.stopPropagation();
+                let selectedEntity = this.model.getEntity(node.id);
+                resolveFn(selectedEntity);//not sure if this returns correct entity
+                this.props.switchScreen('battle-screen');
                 playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
             });
         });

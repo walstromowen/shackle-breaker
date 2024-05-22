@@ -23,7 +23,7 @@ export default class BattleView{
             const cardHeader = createElement('h3', 'battle-character-slot-name-header');
             const allVitalBarsContainer = createElement('div', 'battle-all-vital-bars-container');
 
-                const heatlhBarContainer = createElement('div', 'battle-vital-bar-container');
+                const healthBarContainer = createElement('div', 'battle-vital-bar-container');
                     const healthProgress = createElement('div', 'battle-vital-bar-progress health-color battle-health-progress');
                     const healthLabelContainer = createElement('div', 'battle-vital-label-container');
                         const healthIcon = createElement('img', 'icon health-icon');
@@ -46,12 +46,12 @@ export default class BattleView{
 
         combatantCard.appendChild(cardHeader);
         combatantCard.appendChild(allVitalBarsContainer);
-        allVitalBarsContainer.appendChild(heatlhBarContainer)
+        allVitalBarsContainer.appendChild(healthBarContainer)
         allVitalBarsContainer.appendChild(staminaBarContainer)
         allVitalBarsContainer.appendChild(magicBarContainer)
-        heatlhBarContainer.appendChild(healthProgress);
-        heatlhBarContainer.appendChild(healthLabelContainer);
-        heatlhBarContainer.appendChild(currentHealth);
+        healthBarContainer.appendChild(healthProgress);
+        healthBarContainer.appendChild(healthLabelContainer);
+        healthBarContainer.appendChild(currentHealth);
         healthLabelContainer.appendChild(healthIcon);
         healthLabelContainer.appendChild(healthLabel);
         
@@ -203,6 +203,15 @@ export default class BattleView{
                     targetCard = card;
                 }
             });
+            if(resolveObject.evade){
+                if(targets[i].isHostile == false){
+                    root.style.setProperty('--animate-target-name', 'ally-evade');
+                }else{
+                    root.style.setProperty('--animate-target-name', 'hostile-evade');
+                }
+            }else{
+                root.style.setProperty('--animate-target-name', 'none');
+            }
             targetCard.classList.add('animate-target');
         }
         

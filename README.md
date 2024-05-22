@@ -1,7 +1,11 @@
 # ShackleBreaker
-Text adventure game based on the Shackle Breaker story
+Roguelike turnbased adventure game based on the Shackle Breaker story
 
 ## TODO
+
+
+# Critical Changes
+* Party Screen update on switch -> So that ally switches and retreats can happen
 
 # Planned Quality of Life Improvements
 * Alphabetize CSS rules
@@ -9,11 +13,11 @@ Text adventure game based on the Shackle Breaker story
 * overworld map smooth transitioning between tiles
 * Retreats
 * Switching combatants
-* Dodging Animation
+* finalize selecting ally reinforcements
+
 
 
 # Planned Features
-* Battle speed Up
 * Shop/crafting/weapon/town
 * trinket and waist slots
 * Item stamina /magic consumption modifier
@@ -25,7 +29,8 @@ Text adventure game based on the Shackle Breaker story
 
 
 # Bugs
-
+* Magic Missile hurting self
+* second ally reinforcement retriggering battle enter animation
 
 
 # MISC notes

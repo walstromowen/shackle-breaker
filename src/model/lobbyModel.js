@@ -1,5 +1,5 @@
 import { getRandomArrayElement } from "../utility.js";
-import {Entity, Dog, Hawk, companionArray} from "./misc/entities.js";
+import {Entity, Dog, Hawk} from "./misc/entities.js";
 import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, LinenShirt, LinenPants, PineWood, Handaxe } from "./misc/items.js";
 
 export default class LobbyModel{
@@ -93,11 +93,11 @@ export default class LobbyModel{
                 this.props.setGold(250);
             break;    
         }
-        this.props.getParty()[0].unequipAttatchables(['mainHand','offhand','head','torso','arms','legs','feet']);
+        this.props.getParty()[0].unequipAttatchables(Object.keys(this.props.getParty()[0].equipment));
         this.props.getParty()[0].scaleAttributes();
         this.props.getParty()[0].resetStats();
         this.props.getParty()[0].equipAttatchables(equipment)
-        this.props.getParty()[0].addAttatchableStats(['mainHand','offhand','head','torso','arms','legs','feet']);
+        this.props.getParty()[0].addAttatchableStats(Object.keys(this.props.getParty()[0].equipment));
     }
     updateKeepsake(){
         let keepsake = document.getElementById('lobby-keepsake-selection').value;
@@ -137,13 +137,16 @@ export default class LobbyModel{
             case "none":
                 break;
             case "dog":
-                this.props.getParty().push(new Dog());
+                this.props.getParty().push(new Dog({}));
                 break;
             case "hawk":
-                this.props.getParty().push(new Hawk());
+                this.props.getParty().push(new Hawk({}));
                 break;
             case "mercenary":
-                this.props.getParty().push(getRandomArrayElement(companionArray));
+                this.props.getParty().push(this.props.recruitWanderingCompanion());
+                this.props.getParty().push(this.props.recruitWanderingCompanion());
+                this.props.getParty().push(this.props.recruitWanderingCompanion());
+                this.props.getParty().push(this.props.recruitWanderingCompanion());
                 break;
         }
     }

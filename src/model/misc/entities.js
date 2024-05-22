@@ -72,11 +72,12 @@ export class Entity{
         this.statusArray = []; //  new Poison({holder: this}), new Burn({holder: this})
         this.abilityArray = config.abilityArray || [];//new Strike(), new MagicMissile(), new ThrowPosionKnife(),
         
+        this.partyId = '';
         this.battleId = '';
         this.isHostile = config.isHostile || false;
         this.nextAbility = '';
         this.abilityTargets = [];
-        this.addAttatchableStats(['mainHand','offhand','head','torso','arms','legs','feet']);
+        this.addAttatchableStats(Object.keys(this.equipment));
         
     }
     setAttributes(props){
@@ -281,11 +282,12 @@ export class Dog extends Entity{
     constructor(config){
         super({
             name: 'Dog',
+            apperance: './assets/media/entities/dog.jpg',
             vigor: config.vigor || 5,
-            strength: config.vigor || 5,
-            dexterity: config.vigor || 5,
-            intelligence: config.vigor || 5,
-            attunement: config.vigor || 5,
+            strength: config.strength || 5,
+            dexterity: config.dexterity || 5,
+            intelligence: config.intelligence || 5,
+            attunement: config.attunement || 5,
             baseBluntResistance: config.baseBluntResistance || 0.1,
             basePierceResistance: config.basePierceResistance || 0.1,
             baseArcaneResistance: config.baseArcaneResistance || 0.1,
@@ -294,7 +296,7 @@ export class Dog extends Entity{
             equipment: {
                 dogArmor: '',
             },
-            abilityArray: [new Slash()],
+            abilityArray: [new Slash({})],
         })
     }
 }
@@ -305,17 +307,17 @@ export class Hawk extends Entity{
             name: 'Hawk',
             apperance: './assets/media/entities/hawk.jpg',
             vigor: config.vigor || 5,
-            strength: config.vigor || 5,
-            dexterity: config.vigor || 5,
-            intelligence: config.vigor || 5,
-            attunement: config.vigor || 5,
+            strength: config.strength || 5,
+            dexterity: config.dexterity || 5,
+            intelligence: config.intelligence || 5,
+            attunement: config.attunement || 5,
             baseBluntResistance: config.baseBluntResistance || 0.1,
             basePierceResistance: config.basePierceResistance || 0.1,
             baseArcaneResistance: config.baseArcaneResistance || 0.1,
             baseElementalResistance: config.baseElementalResistance || 0.1,
             equipment: {},
             isHostile: config.isHostile || false,
-            abilityArray: [new Slash()],
+            abilityArray: [new Slash({})],
         });
     }
 }
@@ -325,11 +327,11 @@ export class Skeleton extends Entity{
         super({
             name: 'skeleton',
             apperance: './assets/media/entities/skeleton.jpg',
-            vigor: config.vigor || 1,
-            strength: config.vigor || 5,
-            dexterity: config.vigor || 5,
-            intelligence: config.vigor || 5,
-            attunement: config.vigor || 5,
+            vigor: config.vigor || 5,
+            strength: config.strength || 5,
+            dexterity: config.dexterity || 5,
+            intelligence: config.intelligence || 5,
+            attunement: config.attunement || 5,
             equipment: {
                 mainHand: new Handaxe({level: 1}),
                 offhand: '',

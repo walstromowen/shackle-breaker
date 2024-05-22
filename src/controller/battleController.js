@@ -24,12 +24,14 @@ export default class BattleController{
         });
     }
     onSwitchScreen(){
-        this.view.switchTab('battle-controls-abilities-tab')
-        this.model.initialize();
-        this.view.createActiveCombatantCards(this.model.activeCombatants);
-        this.activatePreround().then(()=>{
-            this.activateRound();
-        })
+        if(this.model.props.getSituation() != 'battle'){
+            this.view.switchTab('battle-controls-abilities-tab')
+            this.model.initialize();
+            this.view.createActiveCombatantCards(this.model.activeCombatants);
+            this.activatePreround().then(()=>{
+                this.activateRound();
+            })
+        }
     }
     activatePreround(){
         let allys = this.model.getActiveAllys();
@@ -469,7 +471,11 @@ export default class BattleController{
             document.addEventListener('click', this.skipEventHandler = ()=>{
                 if(flag == true){
                     if(resolveObject.evade){
-                        this.view.printToBattleConsole(`Opponent evades ${attacker.name}'s attack!`);
+                        if(attacker.nextAbility.sequenceType == 'chain'){
+                            this.view.printToBattleConsole(`${attacker.abilityTargets[0].name} evades ${attacker.name}'s ${attacker.nextAbility.name}!`);
+                        }else{
+                            this.view.printToBattleConsole(`${attacker.name}'s misses!`);
+                        }
                     }
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
@@ -480,7 +486,11 @@ export default class BattleController{
             setTimeout(()=>{
                 if(flag == true){
                     if(resolveObject.evade){
-                        this.view.printToBattleConsole(`Opponent evades ${attacker.name}'s attack!`);
+                        if(attacker.nextAbility.sequenceType == 'chain'){
+                            this.view.printToBattleConsole(`${attacker.abilityTargets[0].name} evades ${attacker.name}'s ${attacker.nextAbility.name}!`);
+                        }else{
+                            this.view.printToBattleConsole(`${attacker.name}'s misses!`);
+                        }
                     }
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
@@ -577,9 +587,8 @@ export default class BattleController{
             }, 0);
        })
     }
-    cycleReinforcements(side){
+    cycleReinforcements(side){//need to switch to party screen for each hostile defeated if there is a reiforcement available
         let combatantCount = 0;
-        let incomingCombatants = [];
         let forEnemy = false;
         if(side == 'hostile'){
             forEnemy = true;
@@ -590,22 +599,67 @@ export default class BattleController{
             }
         }
         let emptyCardSlots = 3 - combatantCount;
-        for(let i = 0; i < emptyCardSlots; i++){
-            if(side == 'hostile'){
+        if(side == 'hostile'){
+            let incomingHostileCombatants = [];
+            for(let i = 0; i < emptyCardSlots; i++){
                 if(this.model.hostileReinforcements.length > 0){
-                    incomingCombatants.push(this.model.hostileReinforcements[0]);
+                    incomingHostileCombatants.push(this.model.hostileReinforcements[0]);
                     this.model.hostileReinforcements.splice(0, 1);
                 }
-            }else{
-                if(this.model.allyReinforcements.length > 0){
-                    incomingCombatants.push(this.model.allyReinforcements[0])
-                    this.model.allyReinforcements.splice(0, 1);
-                }
             }
-        }
-        return incomingCombatants.reduce((chain, combatant)=>{
+            return incomingHostileCombatants.reduce((chain, combatant)=>{
                 return chain.then(()=>this.callReinforcementHelpper(combatant))
-        }, Promise.resolve())
+            }, Promise.resolve());
+        }else{
+            let count = [];
+            for(let i = 0; i < emptyCardSlots; i++){
+              count.push('slot');
+            }
+            return count.reduce((chain)=>{
+                return chain.then(()=>this.chooseReinforcementHelpper(emptyCardSlots))
+            }, Promise.resolve());
+        }
+    }
+    chooseReinforcementHelpper(emptyCardSlots){
+        return new Promise((resolve)=>{
+            if(this.model.allyReinforcements.length > 0 && emptyCardSlots > 0){
+                this.chooseReinforcement().then((returnedCombatant)=>{
+                    for(let i = 0; i < this.model.allyReinforcements.length; i++){
+                        if(returnedCombatant.battleId = this.model.allyReinforcements[i].battleId){
+                            this.model.allyReinforcements.splice(i, 1);
+                        }
+                    }
+                    return this.callReinforcementHelpper(returnedCombatant)//results in an extra two second wait where last message replays
+                }).then(()=>{
+                    resolve();
+                })
+            }else{
+                resolve();
+            }
+        })
+    }
+    chooseReinforcement(){
+        let flag = true;
+        return new Promise((resolve)=>{
+            document.addEventListener('click', this.skipEventHandler = ()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.props.switchScreen('party-screen');
+                    this.props.getPartyController().passBattleReinforcementResolve(resolve);
+                    this.view.printToBattleConsole(``);
+                }
+            })
+            setTimeout(()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.props.switchScreen('party-screen');
+                    this.props.getPartyController().passBattleReinforcementResolve(resolve);
+                    this.view.printToBattleConsole(``);
+                }
+            }, 2000);
+       })
     }
     callReinforcementHelpper(combatant){
         return new Promise((resolve)=>{

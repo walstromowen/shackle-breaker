@@ -24,7 +24,7 @@ export default class GameController{
         this.lobbyController = new LobbyController(this.props, this.model.lobbyModel, this.view.lobbyView);
         this.overworldController = new OverworldController(this.props, this.model.overworldModel, this.view.overworldView);
         this.battleController = new BattleController(this.props, this.model.battleModel, this.view.battleView)
-        this.partyController = new PartyController(this.props);
+        this.partyController = new PartyController(this.props, this.model.partyModel, this.view.partyView);
         this.characterSummaryController = new CharacterSummaryController(this.props);
     }
     switchScreen(screenId){
@@ -46,7 +46,7 @@ export default class GameController{
                 this.battleController.onSwitchScreen();
                 break;
             case 'party-screen':
-
+                this.partyController.onSwitchScreen();
                 break;
             case 'character-summary-screen':
 

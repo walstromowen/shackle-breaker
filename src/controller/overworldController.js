@@ -75,7 +75,7 @@ export default class OverworldController{
     }
     onSwitchScreen(){
         this.view.draw(this.model.props.getMap(), this.model.currentPartyPosition);
-        playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
+        
      
     }
     afterMove(){

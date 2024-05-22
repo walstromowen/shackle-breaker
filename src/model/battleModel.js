@@ -12,6 +12,7 @@ export default class BattleModel{
         this.defeatedHostiles = [];
     }
     initialize(){
+        this.props.setSituation('battle');
         this.allCombatants = this.props.getParty().concat(this.props.getBattle().hostiles);
         this.sortCombatants();
     }
@@ -124,7 +125,7 @@ export default class BattleModel{
     }
     getCombinedAbiliites(attacker){
         let combinedAbilities = [];
-        let equipment = attacker.getEquipment(['mainHand','offhand','head','torso','arms','legs','feet']);
+        let equipment = attacker.getEquipment(Object.keys(attacker.equipment));
         for(let i = 0; i < attacker.abilityArray.length; i++){
             combinedAbilities.push(attacker.abilityArray[i]);
         }

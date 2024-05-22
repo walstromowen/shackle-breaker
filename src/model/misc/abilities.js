@@ -9,7 +9,7 @@ export class Ability{
         this.accuracy = config.accuracy || 1;
         this.speedModifier = config.speedModifier || 1;
         this.damageModifier = config.damageModifier || 1;
-        this.healthCost = config.magicCost || 0;
+        this.healthCost = config.healthCost || 0;
         this.staminaCost = config.staminaCost || 0;
         this.magicCost = config.magicCost || 0;
         this.damageTypes = config.damageTypes;
@@ -194,8 +194,8 @@ export class MagicMissile extends Ability{
             speedModifier: config.speedModifier || 0.75,
             damageModifier: config.damageModifier || 1.25,
             healthCost: config.healthCost || 0,
-            staminaCost: config.staminaCost || 10,
-            magicCost: config.magicCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 10,
             accuracy: config.accuracy || 0.75,
             damageTypes: config.damageTypes || ['arcane'],
             targetCount: 3,

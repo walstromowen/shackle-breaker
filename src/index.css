@@ -98,11 +98,6 @@
     .lobby-stats-settings-start-back-button-container{
         flex-direction:column !important;
     }
-    .party-grid-container{
-        grid-template-columns: 50% 50% !important;
-        grid-template-rows: 33% 33% 33% !important;
-        padding: 0px 10px 10px 10px !important;
-    }
     .character-summary-container{
         flex-direction:column;
     }
@@ -137,6 +132,11 @@
     }
     #battle-typing-container{
         width:100% !important;
+    }
+    #party-grid-container{
+        grid-template-columns: 50% 50% !important;
+        grid-template-rows: 33% 33% 33% !important;
+        padding: 0px 10px 10px 10px !important;
     }
 }
 /*Mobile Styles*/
@@ -452,16 +452,6 @@ img{
     font-size: var(--font-size-3);
     text-align: center;
     padding: 4px;
-    border-radius: 10px;
-}
-.party-grid-container{
-    display: grid;
-    grid-template-columns: 33% 33% 33%;
-    grid-template-rows: 50% 50%;
-    padding: 0px 40px 20px 40px;
-    gap: 10px;
-    flex:1;
-    width: 100%;
     border-radius: 10px;
 }
 .party-grid-item{
@@ -957,6 +947,9 @@ img{
 
     100% {scale: 1}
 }
+.animate-target{
+    animation: var(--animate-target-name) 2s;
+}
 .animate-target::before{
     content: ' ';
     position: absolute;
@@ -998,4 +991,24 @@ img{
     0%{transform: rotate(0deg)}
     10%{transform: rotate(15deg)}
     100%{transform: rotate(0deg)}
+}
+@keyframes ally-evade{
+    0%{transform: translate(0%)}
+    10%{transform: translate(-10%)}
+    100%{transform: translate(0%)}
+}
+@keyframes hostile-evade{
+    0%{transform: translate(0%)}
+    10%{transform: translate(10%)}
+    100%{transform: translate(0%)}
+}
+#party-grid-container{
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 50% 50%;
+    padding: 0px 40px 20px 40px;
+    gap: 10px;
+    flex:1;
+    width: 100%;
+    border-radius: 10px;
 }

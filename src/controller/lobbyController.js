@@ -14,7 +14,9 @@ export default class LobbyController{
             document.getElementById('music-player').pause();
         });
         document.getElementById('lobby-start-button').addEventListener('click', ()=>{
+            this.model.updateName();
             this.props.switchScreen('overworld-screen');
+            playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
             playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
         });
         document.getElementById('lobby-screen').querySelectorAll('.stat-cell-hoverable').forEach((node)=>{
@@ -33,14 +35,14 @@ export default class LobbyController{
         });
         document.getElementById('lobby-background-selection').addEventListener('change', ()=>{
             this.model.updateBackground();
-            this.view.updateInventory(this.model.props.getParty()[0].getEquipment(['mainHand','offhand','head','torso','arms','legs','feet']), this.model.props.getInventory());
+            this.view.updateInventory(this.model.props.getParty()[0].getEquipment(Object.keys(this.model.props.getParty()[0].equipment)), this.model.props.getInventory());
             this.view.updateAttributes(this.model.props.getParty()[0].getAttributes());
             this.view.updateStats(this.model.props.getParty()[0].getCurrentStats());
             this.view.updateGold(this.model.props.getGold());
         });
         document.getElementById('lobby-keepsake-selection').addEventListener('change', ()=>{
             this.model.updateKeepsake();
-            this.view.updateInventory(this.model.props.getParty()[0].getEquipment(['mainHand','offhand','head','torso','arms','legs','feet']), this.model.props.getInventory());
+            this.view.updateInventory(this.model.props.getParty()[0].getEquipment(Object.keys(this.model.props.getParty()[0].equipment)), this.model.props.getInventory());
         });
         document.getElementById('lobby-companion-selection').addEventListener('change', ()=>{
             this.model.updateCompanion();
@@ -50,7 +52,7 @@ export default class LobbyController{
         });
     }
     onSwitchScreen(){
-        this.view.updateInventory(this.model.props.getParty()[0].getEquipment(['mainHand','offhand','head','torso','arms','legs','feet']), this.model.props.getInventory());
+        this.view.updateInventory(this.model.props.getParty()[0].getEquipment(Object.keys(this.model.props.getParty()[0].equipment)), this.model.props.getInventory());
         this.view.updateAttributes(this.model.props.getParty()[0].getAttributes());
         this.view.updateStats(this.model.props.getParty()[0].getCurrentStats());
         this.view.updateGold(this.model.props.getGold());

@@ -1,6 +1,9 @@
 import LobbyModel from "./lobbyModel.js";
 import OverworldModel from "./overworldModel.js";
 import BattleModel from "./battleModel.js";
+import PartyModel from "./partyModel.js";
+import { Entity } from "./misc/entities.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, LinenShirt, LinenPants, PineWood, Handaxe } from "./misc/items.js";
 
 export default class GameModel{
     constructor(){
@@ -13,6 +16,7 @@ export default class GameModel{
             setInventory: this.setInventory.bind(this),
             setGold: this.setGold.bind(this),
             setScreen: this.setScreen.bind(this),
+            setSituation: this.setSituation.bind(this),
             getDifficulty: this.getDifficulty.bind(this),
             getBattle: this.getBattle.bind(this),
             getEncounter: this.getEncounter.bind(this),
@@ -21,6 +25,8 @@ export default class GameModel{
             getInventory: this.getInventory.bind(this),
             getGold: this.getGold.bind(this),
             getScreen: this.getScreen.bind(this),
+            getSituation: this.getSituation.bind(this),
+            recruitWanderingCompanion: this.recruitWanderingCompanion.bind(this),
             calcAveragePartyLevel: this.calcAveragePartyLevel.bind(this),
         }
         this.difficulty = '';
@@ -34,7 +40,100 @@ export default class GameModel{
         this.lobbyModel = new LobbyModel(this.props);
         this.overworldModel = new OverworldModel(this.props);
         this.battleModel = new BattleModel(this.props);
-       
+        this.partyModel = new PartyModel(this.props);
+        this.situation = 'overworld';
+        this.wanderingCompanions = [
+            new Entity({
+                name: 'Ragnar Ninarsk',
+                apperance: './assets/media/entities/companion-warrior-male-1.jpg',
+                vigor: 0,
+                strength: 5,
+                dexterity: 5,
+                intelligence: 5,
+                attunement: 5,
+                equipment: {
+                    mainHand: new Handaxe({level: 1}),
+                    offhand: '',
+                    head: '',
+                    torso: '',
+                    arms: '',
+                    legs: '',
+                    feet: '',
+                },
+            }),
+            new Entity({
+                name: 'Nicholi Ninarsk',
+                apperance: './assets/media/entities/companion-warrior-male-1.jpg',
+                vigor: 0,
+                strength: 5,
+                dexterity: 5,
+                intelligence: 5,
+                attunement: 5,
+                equipment: {
+                    mainHand: new Handaxe({level: 1}),
+                    offhand: '',
+                    head: '',
+                    torso: '',
+                    arms: '',
+                    legs: '',
+                    feet: '',
+                },
+            }),
+            new Entity({
+                name: 'Julian Memira',
+                apperance: './assets/media/entities/companion-mage-male-1.jpg',
+                vigor: 0,
+                strength: 5,
+                dexterity: 5,
+                intelligence: 5,
+                attunement: 5,
+                equipment: {
+                    mainHand: new ArcaneStaff({level: 1}),
+                    offhand: '',
+                    head: '',
+                    torso: '',
+                    arms: '',
+                    legs: '',
+                    feet: '',
+                },
+            }),
+            new Entity({
+                name: 'Revan Sekrav',
+                apperance: './assets/media/entities/companion-rogue-male-1.jpg',
+                vigor: 0,
+                strength: 5,
+                dexterity: 5,
+                intelligence: 5,
+                attunement: 5,
+                equipment: {
+                    mainHand: new Dagger({level: 1}),
+                    offhand: new Dagger({level: 1}),
+                    head: '',
+                    torso: '',
+                    arms: '',
+                    legs: '',
+                    feet: '',
+                },
+            }),
+            new Entity({
+                name: 'Gwen Swallowtail',
+                apperance: './assets/media/entities/companion-rogue-female-1.jpg',
+                vigor: 5,
+                strength: 5,
+                dexterity: 5,
+                intelligence: 5,
+                attunement: 5,
+                equipment: {
+                    mainHand: new ArcaneStaff({level: 1}),
+                    offhand: '',
+                    head: '',
+                    torso: '',
+                    arms: '',
+                    legs: '',
+                    feet: '',
+                },
+            }),
+        ];
     }
     setDifficulty(difficulty){
         this.difficulty = difficulty;
@@ -59,6 +158,9 @@ export default class GameModel{
     }
     setScreen(screen){
         this.screen = screen;
+    }
+    setSituation(situation){
+        this.situation = situation;
     }
     switchScreen(screenID){
         this.screen = screenID;
@@ -86,6 +188,15 @@ export default class GameModel{
     }
     getScreen(){
         return this.screen;
+    }
+    getSituation(){
+        return this.situation;
+    }
+    recruitWanderingCompanion(){
+        let index = Math.floor(Math.random()* this.wanderingCompanions.length)
+        let companion = this.wanderingCompanions[index];
+        this.wanderingCompanions.splice(index, 1);
+        return companion;
     }
     calcAveragePartyLevel(){
         let sum = 0;
