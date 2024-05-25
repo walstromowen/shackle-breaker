@@ -1,4 +1,4 @@
-import { Skeleton } from "./entities.js";
+import { Skeleton, Wolf} from "./entities.js";
 
 
 export default class Biome{
@@ -8,6 +8,7 @@ export default class Biome{
         this.backgroundMusicSrc = config.backgroundMusicSrc || "";
         this.battleMusicSrc = config.battleMusicSrc || "";
     }
+    
 }
 export class Plains extends Biome{
     constructor(config){
@@ -21,9 +22,12 @@ export class Plains extends Biome{
     generateEnemies(partyLevel, count){
         let enemyArray = [];
         for(let i = 0; i < count; i ++){
-            switch(Math.floor(Math.random()*1)){ 
+            switch(Math.floor(Math.random()*2)){ 
                 case 0:
                     enemyArray.push(new Skeleton({level: partyLevel}));
+                    break;
+                case 1:
+                    enemyArray.push(new Wolf({level: partyLevel}));
                     break;
             }
         }

@@ -346,6 +346,28 @@ export class Skeleton extends Entity{
         });
     }
 }
+export class Wolf extends Entity{
+    constructor(config){
+        super({
+            name: 'wolf',
+            apperance: './assets/media/entities/wolf.jpg',
+            vigor: config.vigor || 5,
+            strength: config.strength || 5,
+            dexterity: config.dexterity || 5,
+            intelligence: config.intelligence || 5,
+            attunement: config.attunement || 5,
+            baseBluntResistance: config.baseBluntResistance || 0.1,
+            basePierceResistance: config.basePierceResistance || 0.1,
+            baseArcaneResistance: config.baseArcaneResistance || 0.1,
+            baseElementalResistance: config.baseElementalResistance || 0.1,
+            isHostile: config.isHostile || true,
+            equipment: {
+                dogArmor: '',
+            },
+            abilityArray: [new Slash({})],
+        })
+    }
+}
 
 export const companionArray = [
     new Entity({
