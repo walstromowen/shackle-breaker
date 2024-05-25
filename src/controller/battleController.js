@@ -625,7 +625,7 @@ export default class BattleController{
             if(this.model.allyReinforcements.length > 0 && emptyCardSlots > 0){
                 this.chooseReinforcement().then((returnedCombatant)=>{
                     for(let i = 0; i < this.model.allyReinforcements.length; i++){
-                        if(returnedCombatant.battleId = this.model.allyReinforcements[i].battleId){
+                        if(returnedCombatant.battleId == this.model.allyReinforcements[i].battleId){
                             this.model.allyReinforcements.splice(i, 1);
                         }
                     }
@@ -646,7 +646,7 @@ export default class BattleController{
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
                     this.props.switchScreen('party-screen');
-                    this.props.getPartyController().passBattleReinforcementResolve(resolve);
+                    this.props.getPartyController().createSelectButtons(resolve, this.model.allyReinforcements)
                     this.view.printToBattleConsole(``);
                 }
             })
@@ -655,7 +655,8 @@ export default class BattleController{
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
                     this.props.switchScreen('party-screen');
-                    this.props.getPartyController().passBattleReinforcementResolve(resolve);
+                    this.props.getPartyController().createSelectButtons(resolve, this.model.allyReinforcements)
+            
                     this.view.printToBattleConsole(``);
                 }
             }, 2000);

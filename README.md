@@ -29,8 +29,7 @@ Roguelike turnbased adventure game based on the Shackle Breaker story
 
 
 # Bugs
-* Magic Missile hurting self
-* second ally reinforcement retriggering battle enter animation
+
 
 
 # MISC notes

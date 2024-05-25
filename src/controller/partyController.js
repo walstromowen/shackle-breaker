@@ -18,7 +18,7 @@ export default class PartyController{
     onSwitchScreen(){
         this.model.initialize();
         this.view.removeAllEntitySlots();
-        this.view.createPartySlots(this.model.props.getParty());
+        this.view.createPartySlots(this.model.props.getParty(), this.model.props.getSituation());
 
         //grid items
         if(this.model.props.getSituation() == 'overworld'){
@@ -45,47 +45,54 @@ export default class PartyController{
                     node.appendChild(newData);
                     node.classList.remove('hover-brightness');
                 });
-            
+                node.querySelector('.party-toggle-summary-button').addEventListener('click', (e)=>{
+                    e.stopPropagation();
+                    this.props.switchScreen('character-summary-screen');
+                    playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
+                });
             })
+
+             //slot data
+            document.querySelectorAll('.party-character-slot-data').forEach((node)=>{
+                this.addSelectableSlotDataListeners(node);
+            });
         }
-        //slot data
-        document.querySelectorAll('.party-character-slot-data').forEach((node)=>{
-            node.addEventListener('dragstart', ()=>{ //dragstart targets the element that has begun being dragged
-                node.classList.add('dragging');
-                node.querySelector('.party-character-slot-button-container').style.display='none';
-            });
-            node.addEventListener('dragend', ()=>{ //dragend targets the element that has stopped dragging dragged
-                node.classList.remove('dragging');
-            });
-            node.addEventListener('click', (e)=>{ //dragend targets the element that has stopped dragging dragged
-                e.stopPropagation();
-                node.querySelector('.party-character-slot-button-container').style.display='flex';
-                playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
-            });
-            node.addEventListener('mouseleave', (e)=>{
-                e.stopPropagation();
-                node.querySelector('.party-character-slot-button-container').style.display='none';
-            });
-            node.querySelector('.party-toggle-summary-button').addEventListener('click', (e)=>{
-                e.stopPropagation();
-                this.props.switchScreen('character-summary-screen');
-                playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
-            });
-        });
-
-        
-
-        this.view.hideElementsForBattle(this.model.props.getSituation());
     }
-    passBattleReinforcementResolve(resolveFn){
+    createSelectButtons(resolveFn, allyReinforcements){
         document.querySelectorAll('.party-character-slot-data').forEach((node)=>{
-            node.querySelector('.party-select-button').addEventListener('click', (e)=>{
-                e.stopPropagation();
-                let selectedEntity = this.model.getEntity(node.id);
-                resolveFn(selectedEntity);//not sure if this returns correct entity
-                this.props.switchScreen('battle-screen');
-                playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
-            });
+            for(let i = 0; i < allyReinforcements.length; i++){
+                if(allyReinforcements[i].partyId == node.id){
+                    this.view.createSelectButton(node);
+                    this.addSelectableSlotDataListeners(node)
+                    node.classList.add('possible-target');
+                    node.querySelector('.party-select-button').addEventListener('click', (e)=>{
+                        e.stopPropagation();
+                        let selectedEntity = this.model.getEntity(node.id);
+                        resolveFn(selectedEntity);
+                        this.props.switchScreen('battle-screen');
+                        playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
+                    });
+                    break;
+                }
+            } 
+        });
+    } 
+    addSelectableSlotDataListeners(node){
+        node.addEventListener('dragstart', ()=>{ //dragstart targets the element that has begun being dragged
+            node.classList.add('dragging');
+            node.querySelector('.party-character-slot-button-container').style.display='none';
+        });
+        node.addEventListener('dragend', ()=>{ //dragend targets the element that has stopped dragging dragged
+            node.classList.remove('dragging');
+        });
+        node.addEventListener('click', (e)=>{ //dragend targets the element that has stopped dragging dragged
+            e.stopPropagation();
+            node.querySelector('.party-character-slot-button-container').style.display='flex';
+            playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
+        });
+        node.addEventListener('mouseleave', (e)=>{
+            e.stopPropagation();
+            node.querySelector('.party-character-slot-button-container').style.display='none';
         });
     }
 }

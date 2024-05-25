@@ -6,12 +6,12 @@ export default class PartyView{
         this.screen = document.getElementById('party-screen');
         this.gridContainer = document.getElementById('party-grid-container');
     }
-    createPartySlots(party){
+    createPartySlots(party, situation){
         for(let i = 0; i < party.length; i++){
-            this.createPartySlot(party[i]);
+            this.createPartySlot(party[i], situation);
         }
     }
-    createPartySlot(entity){
+    createPartySlot(entity, situation){
         const partyGridItem = createElement('div', 'party-grid-item');
             const characterSlotData = createElement('div', 'party-character-slot-data');//dragable true TODO
                 const characterSlotNameHeader = createElement('h3', 'party-character-slot-name-header');
@@ -39,9 +39,16 @@ export default class PartyView{
                         const currentMagic = createElement('div', 'party-current-vital-label party-current-magic');
 
                 const slotButtonContainer = createElement('div', 'party-character-slot-button-container');
+                if(situation == 'overworld'){
                     const toggleSummaryButton = createElement('button', 'medium-size-button party-toggle-summary-button');
-                    const chooseReinforcementButton = createElement('button', 'medium-size-button party-select-button');
-
+                    slotButtonContainer.appendChild(toggleSummaryButton);
+                    toggleSummaryButton.innerText = 'Summary';
+                    characterSlotData.draggable = true;
+                    partyGridItem.classList.add('hoverable');
+                }else{
+                    document.getElementById('party-toggle-overworld-button').style.display = 'none';
+                }
+                    
         partyGridItem.appendChild(characterSlotData);
         characterSlotData.appendChild(characterSlotNameHeader);
         characterSlotData.appendChild(allVitalBarsContainer);
@@ -67,16 +74,10 @@ export default class PartyView{
         magicLabelContainer.appendChild(magicIcon);
         magicLabelContainer.appendChild(magicLabel);
 
-        slotButtonContainer.appendChild(toggleSummaryButton);
-        slotButtonContainer.appendChild(chooseReinforcementButton);
-
-        toggleSummaryButton.innerText = 'Summary';
-        chooseReinforcementButton.innerText = 'Select';
-
         this.gridContainer.appendChild(partyGridItem);
 
         characterSlotData.id = entity.partyId;
-        characterSlotData.draggable = true;
+        
         this.updateEntityStats(entity);
 
     }
@@ -93,6 +94,9 @@ export default class PartyView{
         slot.querySelector('.party-magic-progress').style.width = Math.floor(entity.currentMagic/entity.maxMagic*100) + "%";
         slot.querySelector('.magic-icon').src = './assets/media/icons/crystalize.png';
         slot.querySelector('.party-current-magic').innerText = entity.currentMagic;
+        if(entity.currentHP <= 0){
+            slot.classList.add('greyscale');
+        }
     }
     removeAllEntitySlots(){
         Array.from(this.gridContainer.getElementsByClassName('party-grid-item')).forEach((slot)=>{
@@ -106,23 +110,10 @@ export default class PartyView{
             }
         });
     }
-    hideElementsForBattle(situation){
-        if(situation != 'overworld'){
-            document.getElementById('party-toggle-overworld-button').style.display = 'none';
-            document.querySelectorAll('.party-toggle-summary-button').forEach((node)=>{
-                node.style.display='none';
-            });
-            document.querySelectorAll('.party-select-button').forEach((node)=>{
-                node.style.display='block';
-            });
-            document.querySelectorAll('.party-character-slot-data').forEach((node)=>{
-                node.draggable = false;
-            });
-        }else{
-            document.getElementById('party-toggle-overworld-button').style.display = 'block';
-            document.querySelectorAll('.party-select-button').forEach((node)=>{
-                node.style.display='none';
-            });
-        }
+    createSelectButton(node){
+        const chooseReinforcementButton = createElement('button', 'medium-size-button party-select-button');
+        chooseReinforcementButton.innerText = 'Select';
+        node.querySelector('.party-character-slot-button-container').appendChild(chooseReinforcementButton);
+        node.classList.add('hoverable');
     }
 }
