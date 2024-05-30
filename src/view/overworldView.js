@@ -92,7 +92,11 @@ export default class OverworldView{
             }, 3000)
         })
     }
+    hideOverWorldUi(){
+        document.getElementById('overworld-ui-container').style.display = 'none';
+    }
 }
+
 /*
 	context.drawImage(image, frameX, frameY, frameWidth, frameHeight, canvasX, canvasY, canvasWidth, canvasHeight);
 

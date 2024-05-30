@@ -131,7 +131,7 @@ export default class LobbyModel{
     updateCompanion(){
         let companion = document.getElementById("lobby-companion-selection").value;
         if(this.props.getParty().length > 1){
-            this.props.getParty().pop();
+            this.props.getParty().splice(1, this.props.getParty().length-1);
         }
         switch(companion){
             case "none":
@@ -143,9 +143,6 @@ export default class LobbyModel{
                 this.props.getParty().push(new Hawk({}));
                 break;
             case "mercenary":
-                this.props.getParty().push(this.props.recruitWanderingCompanion());
-                this.props.getParty().push(this.props.recruitWanderingCompanion());
-                this.props.getParty().push(this.props.recruitWanderingCompanion());
                 this.props.getParty().push(this.props.recruitWanderingCompanion());
                 break;
         }

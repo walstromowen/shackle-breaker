@@ -68,15 +68,23 @@ export default class BattleView{
         magicLabelContainer.appendChild(magicLabel);
 
         combatantCard.id = combatant.battleId;
-
+        this.addEntraceAnimation(combatant, combatantCard, true)
+        
+        this.updateCombatantStats(combatant);
+    }
+    addEntraceAnimation(combatant, combatantCard, willAdd){
         if(combatant.isHostile == false){
-            this.allyContainer.appendChild(combatantCard);
+            if(willAdd == true){
+                this.allyContainer.appendChild(combatantCard);
+            }
+           
             combatantCard.classList.add('battle-ally-enter-battle');
         }else{
-            this.hostileContainer.appendChild(combatantCard);
+            if(willAdd == true){
+                this.hostileContainer.appendChild(combatantCard);
+            }
             combatantCard.classList.add('battle-hostile-enter-battle');
         }
-        this.updateCombatantStats(combatant);
     }
     updateCombatantStats(combatant){
         const card = document.getElementById(combatant.battleId);
@@ -235,7 +243,7 @@ export default class BattleView{
         root.style.setProperty('--ability-animation-image', `url(${status.iconSrc})`);
         root.style.setProperty('--ability-animation-name', status.animationName);
         root.style.setProperty(' --ability-animation-duration', status.animationDuration);
-        
+        root.style.setProperty('--animate-target-name', 'none');
         holderCard.classList.add('animate-target');
         playSoundEffect(status.soundEffectSrc);
     }
@@ -244,4 +252,22 @@ export default class BattleView{
             card.classList.remove('animate-target');
         });
     }
+    replaceCombatantCard(combatant){
+        let newCombatant = combatant.nextAbility.newCombatant
+        const card = document.getElementById(combatant.battleId);
+        card.style.backgroundImage = `url(${newCombatant.apperance})`;
+        card.querySelector('.battle-character-slot-name-header').innerText = capiltalizeAllFirstLetters(newCombatant.name);
+        card.querySelector('.battle-health-progress').style.width = Math.floor(newCombatant.currentHP/newCombatant.maxHP*100) + "%";
+        card.querySelector('.health-icon').src = './assets/media/icons/hearts.png';
+        card.querySelector('.battle-current-health').innerText = newCombatant.currentHP;
+        card.querySelector('.battle-stamina-progress').style.width = Math.floor(newCombatant.currentStamina/newCombatant.maxStamina*100) + "%";
+        card.querySelector('.stamina-icon').src = './assets/media/icons/despair.png';
+        card.querySelector('.battle-current-stamina').innerText = newCombatant.currentStamina;
+        card.querySelector('.battle-magic-progress').style.width = Math.floor(newCombatant.currentMagic/newCombatant.maxMagic*100) + "%";
+        card.querySelector('.magic-icon').src = './assets/media/icons/crystalize.png';
+        card.querySelector('.battle-current-magic').innerText = newCombatant.currentMagic;
+        card.id = newCombatant.battleId;
+        this.addEntraceAnimation(combatant, card, false);
+    }
+
 }

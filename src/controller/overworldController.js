@@ -83,6 +83,7 @@ export default class OverworldController{
         if(this.model.props.getScreen() == 'battle-screen'){
             playMusic(this.model.props.getMap().biome.battleMusicSrc);
             //document.getElementById('music-player').pause();//temp
+            this.view.hideOverWorldUi();
             this.view.playBattleTransisiton().then(()=>{
                 
                 this.props.switchScreen('battle-screen');

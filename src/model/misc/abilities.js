@@ -12,11 +12,11 @@ export class Ability{
         this.healthCost = config.healthCost || 0;
         this.staminaCost = config.staminaCost || 0;
         this.magicCost = config.magicCost || 0;
-        this.damageTypes = config.damageTypes;
+        this.damageTypes = config.damageTypes || 'none';
         this.soundEffectSrc = config.soundEffectSrc;
-        this.animationName = config.animationName || 'top-down',
+        this.animationName = config.animationName || 'top-down';
         this.animationDuration = config.animationDuration || 2000;
-        this.sequenceType = config.sequenceType || 'chain',
+        this.sequenceType = config.sequenceType || 'chain';
         this.message;
     }
     calculateDamage(attacker, target){
@@ -86,7 +86,7 @@ export class Ability{
         target.statusArray.push(status);
     }
     canUse(attacker, targets){
-        let resolveObject = {evade: false,}
+        let resolveObject = {evade: false, switchCombatant: false,}
         switch(this.sequenceType){
             case 'chain':
                 if(this.checkTargetEvade(targets[0])){
@@ -101,12 +101,35 @@ export class Ability{
                 }
                 break;
         }
+        if(attacker.nextAbility.name == 'switch combatant'){
+            resolveObject.switchCombatant = true;
+        }
         this.spendResources(attacker);
         this.updateMessage(attacker, targets[0]);
         return resolveObject;
     }
 }
-
+export class SwitchCombatant extends Ability{
+    constructor(config){
+        super({
+            name: 'switch combatant',
+            iconSrc: 'none',
+            background: config.background || 'none',
+            speedModifier: config.speedModifier || 1,
+            soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
+            animationName: 'none',
+            animationDuration: config.animationDuration || 2000,
+        })
+        this.newCombatant = config.newCombatant;
+        this.onActivate = config.onActivate;
+    }
+    activate(attacker, target){
+        this.onActivate();
+    }
+    updateMessage(attacker, target){
+        this.message = `${this.newCombatant.name} joins the battle.`;
+    }
+}
 export class Slash extends Ability{
     constructor(config){
         super({

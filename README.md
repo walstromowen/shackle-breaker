@@ -4,16 +4,11 @@ Roguelike turnbased adventure game based on the Shackle Breaker story
 ## TODO
 
 
-# Critical Changes
-* Party Screen update on switch -> So that ally switches and retreats can happen
-
 # Planned Quality of Life Improvements
 * Alphabetize CSS rules
 * Move all status effect Promises to controller
 * overworld map smooth transitioning between tiles
-* Retreats
-* Switching combatants
-* finalize selecting ally reinforcements
+
 
 
 
@@ -24,11 +19,16 @@ Roguelike turnbased adventure game based on the Shackle Breaker story
 * Map abilities
 * Darkness
 * Prebattle traits / abilitites
+* Enemy spawning weight and factions
+* World Generation
+* Retreats
+* Default Abilities (punch)
 
 
 
 
 # Bugs
+
 
 
 

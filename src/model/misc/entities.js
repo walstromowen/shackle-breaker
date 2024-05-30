@@ -75,6 +75,7 @@ export class Entity{
         this.partyId = '';
         this.battleId = '';
         this.isHostile = config.isHostile || false;
+        this.isSelectable = true;
         this.nextAbility = '';
         this.abilityTargets = [];
         this.addAttatchableStats(Object.keys(this.equipment));

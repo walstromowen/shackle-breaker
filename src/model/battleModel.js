@@ -16,6 +16,11 @@ export default class BattleModel{
         this.allCombatants = this.props.getParty().concat(this.props.getBattle().hostiles);
         this.sortCombatants();
     }
+    makeCombatantsSelectable(){
+        for(let i = 0; i < this.allCombatants.length; i++){
+            this.allCombatants[i].isSelectable = true;
+        }
+    }
     sortCombatants(){
         let allyCount = 0;
         let hostileCount = 0;
@@ -63,6 +68,28 @@ export default class BattleModel{
         for(let i = 0; i < this.activeCombatants.length; i ++){
             if(this.activeCombatants[i].battleId == battleId){
                 return this.activeCombatants[i];
+            }
+        }
+    }
+    switchCombatants(activeCombatant, reinforcemnet){
+        for(let i = 0; i < this.activeCombatants.length; i ++){
+            if(this.activeCombatants[i].battleId == activeCombatant.battleId){
+                if(this.activeCombatants[i].isHostile == false){
+                    for(let j = 0; j < this.allyReinforcements.length; j++){
+                        if(this.allyReinforcements[j].battleId == reinforcemnet.battleId){
+                            this.allyReinforcements[j] = activeCombatant;
+                            this.activeCombatants[i] = reinforcemnet;
+                        }
+                    }
+                }else{
+                    for(let j = 0; j < this.hostileReinforcements.length; j++){
+                        if(this.hostileReinforcements[j].battleId == reinforcemnet.battleId){
+                            this.hostileReinforcements[j] = activeCombatant;
+                            this.activeCombatants[i] = reinforcemnet;
+                        }
+                    }
+                }
+                
             }
         }
     }

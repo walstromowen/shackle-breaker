@@ -418,7 +418,7 @@ img{
     box-shadow: 8px 8px 8px black;
     height: fit-content;
 }
-.medium-size-button:hover, .battle-controls-ui-button:hover, .battle-controls-ui-button-large:hover, .hoverable:hover{
+.medium-size-button:hover, .battle-controls-ui-button:hover, .battle-controls-ui-button-large:hover, .hoverable:hover, .party-character-slot-data:hover{
     filter: brightness(1.5);
     box-shadow: 0px 0px 0px black;
 }
@@ -946,6 +946,20 @@ img{
     25% {scale: 1.2}
 
     100% {scale: 1}
+}
+@keyframes switch-combatant {
+    0% {
+        opacity: 1;
+        translate:0%;
+    }
+    50% {
+        opacity: 0;
+        translate:0%;
+    }  
+    100% {
+        opacity: 1;
+        translate:0%;
+    }  
 }
 .animate-target{
     animation: var(--animate-target-name) 2s;

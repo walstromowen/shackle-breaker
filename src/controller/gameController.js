@@ -28,7 +28,6 @@ export default class GameController{
         this.characterSummaryController = new CharacterSummaryController(this.props);
     }
     switchScreen(screenId){
-        this.model.switchScreen(screenId);
         switch(screenId){
             case 'loading-screen':
                 //no model
@@ -46,12 +45,17 @@ export default class GameController{
                 this.battleController.onSwitchScreen();
                 break;
             case 'party-screen':
-                this.partyController.onSwitchScreen();
+                if(this.model.getScreen() == 'character-summary-screen' && this.model.getSituation() == 'battle'){
+                    //Do nothing if coming from summary in a batlle or encounter
+                }else{
+                    this.partyController.onSwitchScreen();
+                }
                 break;
             case 'character-summary-screen':
 
                 break;
         }
+        this.model.switchScreen(screenId);
         this.view.switchScreen(screenId);
     }
     getTitleController(){

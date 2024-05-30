@@ -23,8 +23,8 @@ export default class BattleController{
         });
     }
     onSwitchScreen(){
-        this.view.switchTab('battle-controls-abilities-tab')
         if(this.model.props.getSituation() != 'battle'){
+            this.view.switchTab('battle-controls-abilities-tab')
             this.model.initialize();
             this.view.createActiveCombatantCards(this.model.activeCombatants);
             this.activatePreround().then(()=>{
@@ -33,18 +33,18 @@ export default class BattleController{
         }
     }
     activatePreround(){
-        this.props.getPartyController().view.revealPartyToggleBackButton();
         let allys = this.model.getActiveAllys();
         this.view.battleConsole.style.display = 'none';
         this.view.battleControlsContainer.style.display = 'block';
         return allys.reduce((chain, ally)=>{
-            return chain.then(()=>this.cycleAllyChoices(ally))
+            return chain.then(()=>this.cycleAllyChoices(ally))//returns an entity here?
         }, Promise.resolve())
     }
     cycleAllyChoices(ally){
         return new Promise((resolve)=>{
             this.createAbilityButtonsHelpper(ally).then((selectedEntity)=>{
                 if(selectedEntity != undefined){
+                    selectedEntity.canSelect = false;
                     ally.nextAbility = new SwitchCombatant({
                         newCombatant: selectedEntity,
                         onActivate: ()=>{
@@ -52,73 +52,55 @@ export default class BattleController{
                         }
                     });
                     ally.abilityTargets = [ally];
-                    this.view.removeAttackerHighlight(ally.battleId);
-                    this.view.removeCardTargets();
                 }
                 resolve();
             });
         })
     }
-    createAbilityButtonsHelpper(ally, resolveFn){
-        if(resolveFn != undefined){
-            return this.createAbilityButtons(ally, resolveFn);
-        }
+    createAbilityButtonsHelpper(attacker){
         return new Promise((resolve)=>{
-            this.createAbilityButtons(ally, resolve)
-        });
+            document.getElementById('battle-controls-party-button').addEventListener('click', ()=>{
+                this.props.switchScreen('party-screen');
+                this.props.getPartyController().createSelectButtons(resolve, this.model.allyReinforcements);
+             
+            });
             
+            let combinedAbilities = this.model.getCombinedAbiliites(attacker);
+            this.view.battleConfirmTargetsContainer.style.display = 'none';
+            this.view.battleControlsContainer.style.display = 'block';
+            this.view.switchTab('battle-controls-abilities-tab');
+            this.view.removeCardTargets();
+            this.view.removeAbilityButtons();
+            this.view.highlightAttacker(attacker.battleId);
+            let abilityButtons = this.view.createCombatantAbilityButtons(combinedAbilities);
+            for(let i = 0; i < combinedAbilities.length; i++){
+                abilityButtons[i].addEventListener('click', ()=>{
+                    let container = document.getElementById('battle-battlefield-container');
+                    container.removeEventListener('click', this.selectTargetEventHandler);
+                    container.removeEventListener('click', this.removeTargetEventHandler);
+                    this.view.removeCardTargets();
+                    this.view.removeEntranceAnimations();
+                    this.view.removeAbilityHighlight();
+                    attacker.abilityTargets = [];//model
+                    abilityButtons[i].classList.add('selected')//view
+                    attacker.nextAbility = combinedAbilities[i];//model
+                    this.createTargetListeners(attacker, resolve);
+                })
+            } 
+        })
     }
-    createAbilityButtons(ally, resolveFn){
-        document.getElementById('battle-controls-party-button').addEventListener('click', ()=>{
-            this.props.switchScreen('party-screen');
-            this.props.getPartyController().createSelectButtons(resolveFn, this.model.allyReinforcements);
-            let container = document.getElementById('battle-battlefield-container');
-                container.removeEventListener('click', this.selectTargetEventHandler);
-                container.removeEventListener('contextmenu', this.removeTargetEventHandler);
-                this.view.removeCardTargets();
-                this.view.removeEntranceAnimations();
-                this.view.removeAbilityHighlight();
-                this.view.removePossibleTargets(ally.battleId)
-         
-        });
-        
-        let combinedAbilities = this.model.getCombinedAbiliites(ally);
-        this.view.battleConfirmTargetsContainer.style.display = 'none';
-        this.view.battleControlsContainer.style.display = 'block';
-        this.view.switchTab('battle-controls-abilities-tab');
-        this.view.removeCardTargets();
-        this.view.removeAbilityButtons();
-        this.view.highlightAttacker(ally.battleId);
-        let abilityButtons = this.view.createCombatantAbilityButtons(combinedAbilities);
-        for(let i = 0; i < combinedAbilities.length; i++){
-            abilityButtons[i].addEventListener('click', ()=>{
-                let container = document.getElementById('battle-battlefield-container');
-                container.removeEventListener('click', this.selectTargetEventHandler);
-                container.removeEventListener('contextmenu', this.removeTargetEventHandler);
-                this.view.removeCardTargets();
-                this.view.removeEntranceAnimations();
-                this.view.removeAbilityHighlight();
-                ally.abilityTargets = [];//model
-                abilityButtons[i].classList.add('selected')//view
-                ally.nextAbility = combinedAbilities[i];//model
-                this.createTargetListeners(ally, resolveFn);
-                
-                
-            })
-        } 
-    }
-    createTargetListeners(ally, resolveFn){
+    createTargetListeners(attacker, resolveFn){
         let container = document.getElementById('battle-battlefield-container');
-        this.view.highlightPossibleTargets(ally.battleId)
+        this.view.highlightPossibleTargets(attacker.battleId)
         container.addEventListener('contextmenu', this.removeTargetEventHandler = (e)=>{
             e.preventDefault()
             Array.from(container.getElementsByClassName('battle-character-card')).forEach((card)=>{
                 if(e.target.id == card.id){
                     let selectedCard = e.target;
                     selectedCard.classList.remove('targeted');//view
-                    for(let i = 0; i < ally.abilityTargets.length; i++){
-                        if(ally.abilityTargets[i].battleId == selectedCard.id){
-                            ally.abilityTargets.splice(i, 1);
+                    for(let i = 0; i < attacker.abilityTargets.length; i++){
+                        if(attacker.abilityTargets[i].battleId == selectedCard.id){
+                            attacker.abilityTargets.splice(i, 1);
                             i--     
                         }
                     }
@@ -129,34 +111,34 @@ export default class BattleController{
             Array.from(container.getElementsByClassName('battle-character-card')).forEach((card)=>{
                 if(e.target.id == card.id){
                     let selectedCard = e.target;
-                    this.validateTarget(ally, selectedCard, resolveFn);
+                    this.validateTarget(attacker, selectedCard, resolveFn);
                 }
             });
         });
     }
-    validateTarget(ally, selectedCard, resolveFn){
-        if(ally.nextAbility.sequenceType == 'chain'){
+    validateTarget(attacker, selectedCard, resolveFn){
+        if(attacker.nextAbility.sequenceType == 'chain'){
             selectedCard.classList.add('targeted');//view
-            ally.abilityTargets.push(this.model.getCombatant(selectedCard.id));
-            if(ally.abilityTargets.length == ally.nextAbility.targetCount){
-                this.toggleConfirmTargetsTab(ally, resolveFn);//create submit choice button
+            attacker.abilityTargets.push(this.model.getCombatant(selectedCard.id));
+            if(attacker.abilityTargets.length == attacker.nextAbility.targetCount){
+                this.toggleConfirmTargetsTab(attacker, resolveFn);//create submit choice button
             }
         }
-        if(ally.nextAbility.sequenceType == 'splash'){
-            for(let i = 0; i < ally.abilityTargets.length; i++){
-                if(ally.abilityTargets[i].battleId == selectedCard.id){
+        if(attacker.nextAbility.sequenceType == 'splash'){
+            for(let i = 0; i < attacker.abilityTargets.length; i++){
+                if(attacker.abilityTargets[i].battleId == selectedCard.id){
                     return;
                 }
             }
             selectedCard.classList.add('targeted');//view
-            ally.abilityTargets.push(this.model.getCombatant(selectedCard.id));
-            if(ally.abilityTargets.length == ally.nextAbility.targetCount || 
-               ally.nextAbility.targetCount - ally.abilityTargets.length == this.model.getActiveHostiles().length){
-                this.toggleConfirmTargetsTab(ally, resolveFn);
+            attacker.abilityTargets.push(this.model.getCombatant(selectedCard.id));
+            if(attacker.abilityTargets.length == attacker.nextAbility.targetCount || 
+               attacker.nextAbility.targetCount - attacker.abilityTargets.length == this.model.getActiveHostiles().length){
+                this.toggleConfirmTargetsTab(attacker, resolveFn);
             }
         }
     }
-    toggleConfirmTargetsTab(ally, resolveFn){
+    toggleConfirmTargetsTab(attacker, resolveFn){
         let container = document.getElementById('battle-battlefield-container');
         let confirmButton = document.getElementById('battle-controls-confirm-attack-button');
         let backButton = document.getElementById('battle-controls-back-button');
@@ -164,18 +146,18 @@ export default class BattleController{
         container.removeEventListener('contextmenu', this.removeTargetEventHandler);
         confirmButton.removeEventListener('click', this.confirmTargetEventHandler);
         backButton.removeEventListener('click', this.cancelAttackEventHandler);
-        this.view.removePossibleTargets(ally.battleId)
+        this.view.removePossibleTargets(attacker.battleId)
         this.view.battleConfirmTargetsContainer.style.display = 'flex';
         this.view.battleControlsContainer.style.display = 'none';
         confirmButton.addEventListener('click',this.confirmTargetEventHandler=()=>{
-            this.view.removeAttackerHighlight(ally.battleId);
+            this.view.removeAttackerHighlight(attacker.battleId);
             this.view.removeCardTargets();
             this.view.battleConfirmTargetsContainer.style.display = 'none';
             resolveFn();
         })
         backButton.addEventListener('click',this.cancelAttackEventHandler=()=>{
-            ally.abilityTargets = [];
-            this.createAbilityButtonsHelpper(ally, resolveFn)
+            attacker.abilityTargets = [];
+            this.createAbilityButtonsHelpper(attacker, resolveFn)
         });
     }
     activateRound(){
@@ -194,26 +176,25 @@ export default class BattleController{
         }, Promise.resolve())
     }
     takeTurn(attacker){
-        this.view.removeEntranceAnimations();
         this.currentAttacker = attacker;
         return new Promise((resolve)=>{
             this.checkBattleStatus().then(()=>{
-                return this.cycleStatusEffectsHelpper('start');
+                return this.cycleStatusEffectsHelpper(attacker, 'start');
             }).then(()=>{
                 return this.handleDefeatedCombatantsHelpper();
             }).then(()=>{
-                return this.determineAbilitySequence();
+                return this.determineAbilitySequence(attacker);
             }).then(()=>{
                 return this.handleDefeatedCombatantsHelpper();
             }).then(()=>{
-                return this.cycleStatusEffectsHelpper('end');
+                return this.cycleStatusEffectsHelpper(attacker, 'end');
             }).then(()=>{
                 return this.handleDefeatedCombatantsHelpper();
             }).then(()=>{
                 resolve();
             })
         })
-    }
+    }//YOLOOOOOOOOOOOO
     checkBattleStatus(){//jumps to postRound if one side is empty
         return new Promise((resolve)=>{
             let allyCount = 0;
@@ -234,13 +215,13 @@ export default class BattleController{
             resolve();
         });
     }
-    cycleStatusEffectsHelpper(turnPhase){
-        if(this.currentAttacker.statusArray.length == 0 || this.currentAttacker.currentHP <= 0){
+    cycleStatusEffectsHelpper(attacker, turnPhase){
+        if(attacker.statusArray.length == 0 ||attacker.currentHP <= 0){
             return new Promise((resolve)=>{
                 resolve();
             })
         }else{
-            return this.currentAttacker.statusArray.reduce((chain, status)=>{
+            return attacker.statusArray.reduce((chain, status)=>{
                 return chain.then(()=>this.cycleStatusEffect(status, turnPhase))
             }, Promise.resolve())
         }
@@ -403,18 +384,18 @@ export default class BattleController{
         })
     }
     //Begin Ability Cycles
-    determineAbilitySequence(){
-        switch( this.currentAttacker.nextAbility.sequenceType){
+    determineAbilitySequence(attacker){
+        switch(attacker.nextAbility.sequenceType){
             case 'splash':
-                return this.activateAbilityCycle(this.currentAttacker.abilityTargets);
+                return this.activateAbilityCycle(attacker, attacker.abilityTargets);
             case 'chain':
-                return this.currentAttacker.abilityTargets.reduce((chain, target)=>{
-                    return chain.then(()=>this.activateAbilityCycle([target]));
+                return attacker.abilityTargets.reduce((chain, target)=>{
+                    return chain.then(()=>this.activateAbilityCycle(attacker, [target]));
                 }, Promise.resolve())
         }
     }
-    activateAbilityCycle(cycleTargets){
-        if(this.currentAttacker.currentHP <= 0){
+    activateAbilityCycle(attacker, cycleTargets){
+        if(attacker.currentHP <= 0){
             return new Promise((resolve)=>{
                 resolve();
             });
@@ -426,7 +407,7 @@ export default class BattleController{
             }else{
                 let isActive = this.model.activeCombatants.includes(cycleTargets[i]);
                 if(cycleTargets[i].currentHP <= 0 || isActive == false){//Or is not active?
-                    let newTarget = this.model.getRandomTarget(this.currentAttacker);
+                    let newTarget = this.model.getRandomTarget(attacker);
                     if(newTarget == false){
                         return new Promise((resolve)=>{
                             resolve();
@@ -438,32 +419,31 @@ export default class BattleController{
             }
         }
         return new Promise((resolve)=>{
-            this.canUseHelpper(cycleTargets).then((resolveObject)=>{
-                return this.printAbilityToBattleConsoleHelpper(this.currentAttacker.nextAbility, resolveObject);
+            this.canUseHelpper(attacker, cycleTargets).then((resolveObject)=>{
+                return this.printAbilityToBattleConsoleHelpper(attacker.nextAbility, resolveObject);
             }).then((resolveObject)=>{
-                return this.playAbilityAnimationHelpper(cycleTargets, resolveObject);
+                return this.playAbilityAnimationHelpper(attacker, cycleTargets, resolveObject);
             }).then((resolveObject)=>{
-                return this.postAbilityAnimationsHelpper(resolveObject);
+                return this.postAbilityAnimationsHelpper(attacker, resolveObject);
             }).then((resolveObject)=>{
                 if(resolveObject.switchCombatant){
-                    this.currentAttacker = this.currentAttacker.nextAbility.newCombatant;
-                }else{
-                    if(resolveObject.evade){
-                        return this.resolvePause(resolve);
-                    }else{
-                        this.view.updateCombatantStats(this.currentAttacker);
-                        for(let i = 0; i < cycleTargets.length; i++){
-                            this.view.updateCombatantStats(cycleTargets[i]);
-                        }
-                    }
+                    attacker = attacker.nextAbility.newCombatant;
                 }
-                resolve();
+                if(resolveObject.evade){
+                    return this.resolvePause(resolve);
+                }else{
+                    this.view.updateCombatantStats(attacker);
+                    for(let i = 0; i < cycleTargets.length; i++){
+                        this.view.updateCombatantStats(cycleTargets[i]);
+                    }
+                    resolve();
+                }
             })
         });
     }
-    canUseHelpper(targets){
+    canUseHelpper(attacker, targets){
         return new Promise((resolve)=>{
-            let resolveObject =  this.currentAttacker.nextAbility.canUse(this.currentAttacker, targets);
+            let resolveObject = attacker.nextAbility.canUse(attacker, targets);
             resolve(resolveObject);
         });
     }
@@ -488,14 +468,14 @@ export default class BattleController{
             }, 2000);
         });
     }
-    playAbilityAnimationHelpper(targets, resolveObject){
+    playAbilityAnimationHelpper(attacker, targets, resolveObject){
         let flag = true;
         return new Promise((resolve)=>{
             document.addEventListener('click', this.skipEventHandler = ()=>{
                 if(flag == true){
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
-                    this.view.playAbilityAnimations(this.currentAttacker, targets, resolveObject);
+                    this.view.playAbilityAnimations(attacker, targets, resolveObject);
                     resolve(resolveObject);
                 }
             })
@@ -503,26 +483,26 @@ export default class BattleController{
                 if(flag == true){
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
-                    this.view.playAbilityAnimations(this.currentAttacker, targets, resolveObject);
+                    this.view.playAbilityAnimations(attacker, targets, resolveObject);
                     resolve(resolveObject);
                 }
-            }, this.currentAttacker.nextAbility.animationDuration);
+            }, attacker.nextAbility.animationDuration);
         })
     }
-    postAbilityAnimationsHelpper(resolveObject){
+    postAbilityAnimationsHelpper(attacker, resolveObject){
         let flag = true;
         return new Promise((resolve)=>{
             document.addEventListener('click', this.skipEventHandler = ()=>{
                 if(flag == true){
                     if(resolveObject.switchCombatant == true){
-                        this.view.replaceCombatantCard(this.currentAttacker);
-                    }else{
-                        if(resolveObject.evade){
-                            if(this.currentAttacker.nextAbility.sequenceType == 'chain'){
-                                this.view.printToBattleConsole(`${this.currentAttacker.abilityTargets[0].name} evades ${this.currentAttacker.name}'s ${this.currentAttacker.nextAbility.name}!`);
-                            }else{
-                                this.view.printToBattleConsole(`${this.currentAttacker.name}'s misses!`);
-                            }
+                        this.view.replaceCombatantCard(attacker);
+                        
+                    }
+                    if(resolveObject.evade){
+                        if(attacker.nextAbility.sequenceType == 'chain'){
+                            this.view.printToBattleConsole(`${attacker.abilityTargets[0].name} evades ${attacker.name}'s ${attacker.nextAbility.name}!`);
+                        }else{
+                            this.view.printToBattleConsole(`${attacker.name}'s misses!`);
                         }
                     }
                     flag = false;
@@ -533,15 +513,13 @@ export default class BattleController{
             })
             setTimeout(()=>{
                 if(flag == true){
-                    if(resolveObject.switchCombatant == true){
-                        this.view.replaceCombatantCard(this.currentAttacker);
-                    }else{
-                        if(resolveObject.evade){
-                            if(this.currentAttacker.nextAbility.sequenceType == 'chain'){
-                                this.view.printToBattleConsole(`${this.currentAttacker.abilityTargets[0].name} evades ${this.currentAttacker.name}'s ${this.currentAttacker.nextAbility.name}!`);
-                            }else{
-                                this.view.printToBattleConsole(`${this.currentAttacker.name}'s misses!`);
-                            }
+                    this.view.replaceCombatantCard(attacker);
+                   
+                    if(resolveObject.evade){
+                        if(attacker.nextAbility.sequenceType == 'chain'){
+                            this.view.printToBattleConsole(`${attacker.abilityTargets[0].name} evades ${attacker.name}'s ${attacker.nextAbility.name}!`);
+                        }else{
+                            this.view.printToBattleConsole(`${attacker.name}'s misses!`);
                         }
                     }
                     flag = false;
@@ -639,7 +617,7 @@ export default class BattleController{
             }, 0);
        })
     }
-    cycleReinforcements(side){
+    cycleReinforcements(side){//need to switch to party screen for each hostile defeated if there is a reiforcement available
         let combatantCount = 0;
         let forEnemy = false;
         if(side == 'hostile'){
@@ -700,7 +678,6 @@ export default class BattleController{
                     this.props.switchScreen('party-screen');
                     this.props.getPartyController().view.hidePartyToggleBackButton();
                     this.props.getPartyController().createSelectButtons(resolve, this.model.allyReinforcements)
-                    this.view.removeEntranceAnimations();
                     this.view.printToBattleConsole(``);
                 }
             })
@@ -796,7 +773,6 @@ export default class BattleController{
        })
     }
     activatePostRound(){
-        this.model.makeCombatantsSelectable();
         this.checkEndBattleHelpper().then(()=>{
             return this.recoverStats()
         }).then(()=>{
@@ -808,4 +784,4 @@ export default class BattleController{
         })
     }
 }
-
+*/

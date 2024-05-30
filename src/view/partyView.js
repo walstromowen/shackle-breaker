@@ -39,14 +39,12 @@ export default class PartyView{
                         const currentMagic = createElement('div', 'party-current-vital-label party-current-magic');
 
                 const slotButtonContainer = createElement('div', 'party-character-slot-button-container');
-                if(situation == 'overworld'){
                     const toggleSummaryButton = createElement('button', 'medium-size-button party-toggle-summary-button');
-                    slotButtonContainer.appendChild(toggleSummaryButton);
                     toggleSummaryButton.innerText = 'Summary';
+
+
+                if(situation == 'overworld'){
                     characterSlotData.draggable = true;
-                    partyGridItem.classList.add('hoverable');
-                }else{
-                    document.getElementById('party-toggle-overworld-button').style.display = 'none';
                 }
                     
         partyGridItem.appendChild(characterSlotData);
@@ -74,10 +72,12 @@ export default class PartyView{
         magicLabelContainer.appendChild(magicIcon);
         magicLabelContainer.appendChild(magicLabel);
 
+        slotButtonContainer.appendChild(toggleSummaryButton);
+        
         this.gridContainer.appendChild(partyGridItem);
 
         characterSlotData.id = entity.partyId;
-        
+       
         this.updateEntityStats(entity);
 
     }
@@ -114,6 +114,12 @@ export default class PartyView{
         const chooseReinforcementButton = createElement('button', 'medium-size-button party-select-button');
         chooseReinforcementButton.innerText = 'Select';
         node.querySelector('.party-character-slot-button-container').appendChild(chooseReinforcementButton);
-        node.classList.add('hoverable');
+        node.classList.add('possible-target');
+    }
+    hidePartyToggleBackButton(){
+        document.getElementById('party-toggle-back-button').style.display = 'none';
+    }
+    revealPartyToggleBackButton(){
+        document.getElementById('party-toggle-back-button').style.display = 'block';
     }
 }
