@@ -451,6 +451,9 @@ export default class BattleController{
                     if(resolveObject.evade){
                         return this.resolvePause(resolve);
                     }else{
+                        if(resolveObject.retreat){
+                           resolve();
+                        }
                         this.view.updateCombatantStats(this.currentAttacker);
                         for(let i = 0; i < cycleTargets.length; i++){
                             this.view.updateCombatantStats(cycleTargets[i]);
@@ -514,14 +517,18 @@ export default class BattleController{
         return new Promise((resolve)=>{
             document.addEventListener('click', this.skipEventHandler = ()=>{
                 if(flag == true){
-                    if(resolveObject.switchCombatant == true){
-                        this.view.replaceCombatantCard(this.currentAttacker);
+                    if(resolveObject.retreat == true){
+                        this.view.removeCombatantCard(this.currentAttacker.battleId);
                     }else{
-                        if(resolveObject.evade){
-                            if(this.currentAttacker.nextAbility.sequenceType == 'chain'){
-                                this.view.printToBattleConsole(`${this.currentAttacker.abilityTargets[0].name} evades ${this.currentAttacker.name}'s ${this.currentAttacker.nextAbility.name}!`);
-                            }else{
-                                this.view.printToBattleConsole(`${this.currentAttacker.name}'s misses!`);
+                        if(resolveObject.switchCombatant == true){
+                            this.view.replaceCombatantCard(this.currentAttacker);
+                        }else{
+                            if(resolveObject.evade){
+                                if(this.currentAttacker.nextAbility.sequenceType == 'chain'){
+                                    this.view.printToBattleConsole(`${this.currentAttacker.abilityTargets[0].name} evades ${this.currentAttacker.name}'s ${this.currentAttacker.nextAbility.name}!`);
+                                }else{
+                                    this.view.printToBattleConsole(`${this.currentAttacker.name}'s misses!`);
+                                }
                             }
                         }
                     }
@@ -533,14 +540,18 @@ export default class BattleController{
             })
             setTimeout(()=>{
                 if(flag == true){
-                    if(resolveObject.switchCombatant == true){
-                        this.view.replaceCombatantCard(this.currentAttacker);
+                    if(resolveObject.retreat == true){
+                        this.view.removeCombatantCard(this.currentAttacker.battleId);
                     }else{
-                        if(resolveObject.evade){
-                            if(this.currentAttacker.nextAbility.sequenceType == 'chain'){
-                                this.view.printToBattleConsole(`${this.currentAttacker.abilityTargets[0].name} evades ${this.currentAttacker.name}'s ${this.currentAttacker.nextAbility.name}!`);
-                            }else{
-                                this.view.printToBattleConsole(`${this.currentAttacker.name}'s misses!`);
+                        if(resolveObject.switchCombatant == true){
+                            this.view.replaceCombatantCard(this.currentAttacker);
+                        }else{
+                            if(resolveObject.evade){
+                                if(this.currentAttacker.nextAbility.sequenceType == 'chain'){
+                                    this.view.printToBattleConsole(`${this.currentAttacker.abilityTargets[0].name} evades ${this.currentAttacker.name}'s ${this.currentAttacker.nextAbility.name}!`);
+                                }else{
+                                    this.view.printToBattleConsole(`${this.currentAttacker.name}'s misses!`);
+                                }
                             }
                         }
                     }
@@ -601,10 +612,26 @@ export default class BattleController{
         })
         if(remainingHostiles.length == 0){
             this.view.printToBattleConsole('Hostiles have been slain...');
-            
+            this.onEndBattle();
+            return;
+        }
+        if(this.model.props.getBattle().currentAllyLimit == 0 ){
+            this.view.printToBattleConsole('All allies have escaped!');
+            this.onEndBattle();
+            return;
+        }
+        if(this.model.props.getBattle().currentHostileLimit == 0 ){
+            this.view.printToBattleConsole('All hostiles have escaped!');
+            this.onEndBattle();
             return;
         }
         resolveFunction();  
+    }
+    onEndBattle(){
+        setTimeout(()=>{
+            this.props.switchScreen('overworld-screen');
+            playMusic(this.model.props.getMap().biome.BackgroundMusicSrc);
+        }, 2000);
     }
     recoverStats(){//may want to split this into two
         let flag = true;
@@ -650,8 +677,8 @@ export default class BattleController{
                 combatantCount++;
             }
         }
-        let emptyCardSlots = 3 - combatantCount;
         if(side == 'hostile'){
+            let emptyCardSlots = this.model.props.getBattle().currentHostileLimit - combatantCount;
             let incomingHostileCombatants = [];
             for(let i = 0; i < emptyCardSlots; i++){
                 if(this.model.hostileReinforcements.length > 0){
@@ -663,6 +690,7 @@ export default class BattleController{
                 return chain.then(()=>this.callReinforcementHelpper(combatant))
             }, Promise.resolve());
         }else{
+            let emptyCardSlots = this.model.props.getBattle().currentAllyLimit - combatantCount;
             let count = [];
             for(let i = 0; i < emptyCardSlots; i++){
               count.push('slot');

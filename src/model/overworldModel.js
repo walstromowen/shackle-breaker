@@ -55,7 +55,7 @@ export default class OverworldModel{
             if(Math.floor(Math.random()*10) == 0){
                 this.nextPartyPosition = nextRoom.position;
                 let biome = this.props.getMap().biome
-                nextRoom.battle = new Battle(this.props.getParty(), biome.generateEnemies(this.props.calcAveragePartyLevel(), Math.floor(Math.random()*4)));
+                nextRoom.battle = new Battle(biome.generateEnemies(this.props.calcAveragePartyLevel(), 6)); //Math.floor(Math.random()*4)
                 this.toggleBattle(nextRoom.battle);
                 return;
             }

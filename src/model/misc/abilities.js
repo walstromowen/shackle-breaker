@@ -104,6 +104,9 @@ export class Ability{
         if(attacker.nextAbility.name == 'switch combatant'){
             resolveObject.switchCombatant = true;
         }
+        if(attacker.nextAbility.name == 'retreat'){
+            resolveObject.retreat = true;
+        }
         this.spendResources(attacker);
         this.updateMessage(attacker, targets[0]);
         return resolveObject;
@@ -128,6 +131,27 @@ export class SwitchCombatant extends Ability{
     }
     updateMessage(attacker, target){
         this.message = `${this.newCombatant.name} joins the battle.`;
+    }
+}
+export class Retreat extends Ability{
+    constructor(config){
+        super({
+            name: 'retreat',
+            iconSrc: './assets/media/icons/run.png',
+            background: config.background || 'grey',
+            speedModifier: config.speedModifier || 1,
+            soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
+            animationName: 'none',
+            animationDuration: config.animationDuration || 2000,
+            
+        })
+        this.onActivate = config.onActivate;
+    }
+    activate(attacker, target){
+        this.onActivate();
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} retreats!`;
     }
 }
 export class Slash extends Ability{

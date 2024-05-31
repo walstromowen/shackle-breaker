@@ -144,6 +144,10 @@ export default class LobbyModel{
                 break;
             case "mercenary":
                 this.props.getParty().push(this.props.recruitWanderingCompanion());
+                this.props.getParty().push(this.props.recruitWanderingCompanion());
+                this.props.getParty().push(this.props.recruitWanderingCompanion());
+                this.props.getParty().push(this.props.recruitWanderingCompanion());
+                this.props.getParty().push(this.props.recruitWanderingCompanion());
                 break;
         }
     }

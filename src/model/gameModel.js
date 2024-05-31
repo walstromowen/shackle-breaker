@@ -45,8 +45,8 @@ export default class GameModel{
         this.wanderingCompanions = [
             new Entity({
                 name: 'Ragnar Ninarsk',
-                apperance: './assets/media/entities/companion-warrior-male-1.jpg',
-                vigor: 0,
+                apperance: './assets/media/entities/companion-warrior-male-3.jpg',
+                vigor: 5,
                 strength: 5,
                 dexterity: 5,
                 intelligence: 5,
@@ -64,7 +64,7 @@ export default class GameModel{
             new Entity({
                 name: 'Nicholi Ninarsk',
                 apperance: './assets/media/entities/companion-warrior-male-1.jpg',
-                vigor: 0,
+                vigor: 5,
                 strength: 5,
                 dexterity: 5,
                 intelligence: 5,
@@ -82,7 +82,7 @@ export default class GameModel{
             new Entity({
                 name: 'Julian Memira',
                 apperance: './assets/media/entities/companion-mage-male-1.jpg',
-                vigor: 0,
+                vigor: 5,
                 strength: 5,
                 dexterity: 5,
                 intelligence: 5,
@@ -100,7 +100,7 @@ export default class GameModel{
             new Entity({
                 name: 'Revan Sekrav',
                 apperance: './assets/media/entities/companion-rogue-male-1.jpg',
-                vigor: 0,
+                vigor: 5,
                 strength: 5,
                 dexterity: 5,
                 intelligence: 5,

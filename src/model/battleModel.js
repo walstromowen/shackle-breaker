@@ -1,5 +1,6 @@
 
 import {getRandomArrayElement} from '../utility.js';
+import { Retreat } from './misc/abilities.js';
 
 export default class BattleModel{
     constructor(props){
@@ -13,6 +14,7 @@ export default class BattleModel{
     }
     initialize(){
         this.props.setSituation('battle');
+        this.props.getBattle().resetCurrentCombatantLimit();
         this.allCombatants = this.props.getParty().concat(this.props.getBattle().hostiles);
         this.sortCombatants();
     }
@@ -30,7 +32,7 @@ export default class BattleModel{
                 if(this.allCombatants[i].currentHp <= 0){
                     this.defeatedAllys.push(this.allCombatants[i])
                 }else{
-                    if(allyCount < 3){
+                    if(allyCount < this.props.getBattle().currentAllyLimit){
                         allyCount++;
                         this.activeCombatants.push(this.allCombatants[i]);
                     }else{
@@ -42,7 +44,7 @@ export default class BattleModel{
                 if(this.allCombatants[i].currentHp <= 0){
                     this.defeatedHostiles.push(this.allCombatants[i])
                 }else{
-                    if(hostileCount < 3){
+                    if(hostileCount < this.props.getBattle().currentHostileLimit){
                         hostileCount++
                         this.activeCombatants.push(this.allCombatants[i]);
                     }else{
@@ -161,7 +163,36 @@ export default class BattleModel{
                 combinedAbilities.push(equipment[i].abilityArray[j]);
             }
         }
+        if(attacker.isHostile == false){
+            combinedAbilities.push(new Retreat({
+                onActivate: ()=>{
+                    this.onRetreat(attacker);
+                }
+            }))
+        }
         return combinedAbilities;
+    }
+    onRetreat(combatant){
+        if(combatant.isHostile){
+            this.hostileReinforcements.push(combatant);
+        }else{
+            this.allyReinforcements.push(combatant);
+        }
+        for(let i = 0; i < this.activeCombatants.length; i++){
+            if(this.activeCombatants[i].battleId == combatant.battleId){
+                this.activeCombatants.splice(i, 1);
+                if(combatant.isHostile){
+                    this.hostileReinforcements.push(combatant);
+                    this.props.getBattle().currentHostileLimit--;
+                }else{
+                    this.allyReinforcements.push(combatant);
+                    this.props.getBattle().currentAllyLimit--;
+                }
+                break;
+            }
+        }
+        
+        
     }
 }
 

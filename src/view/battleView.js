@@ -195,9 +195,17 @@ export default class BattleView{
         root.style.setProperty('--ability-animation-name', attacker.nextAbility.animationName);
         root.style.setProperty(' --ability-animation-duration', attacker.nextAbility.animationDuration);
         if(attacker.isHostile == false){
-            root.style.setProperty('--animate-attacker-name', 'ally-attack');
+            if(resolveObject.switchCombatant || resolveObject.retreat){
+                root.style.setProperty('--animate-attacker-name', 'disappear');
+            }else{
+                root.style.setProperty('--animate-attacker-name', 'ally-attack');
+            }
         }else{
-            root.style.setProperty('--animate-attacker-name', 'hostile-attack');
+            if(resolveObject.switchCombatant || resolveObject.retreat){
+                root.style.setProperty('--animate-attacker-name', 'disappear');
+            }else{
+                root.style.setProperty('--animate-attacker-name', 'hostile-attack');
+            }
         }
         Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
             if(card.id == attacker.battleId){
