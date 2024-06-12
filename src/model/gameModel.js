@@ -2,8 +2,11 @@ import LobbyModel from "./lobbyModel.js";
 import OverworldModel from "./overworldModel.js";
 import BattleModel from "./battleModel.js";
 import PartyModel from "./partyModel.js";
+import CharacterSummaryModel from "./characterSummaryModel.js";
+
 import { Entity } from "./misc/entities.js";
 import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, LinenShirt, LinenPants, PineWood, Handaxe } from "./misc/items.js";
+
 
 export default class GameModel{
     constructor(){
@@ -41,10 +44,11 @@ export default class GameModel{
         this.overworldModel = new OverworldModel(this.props);
         this.battleModel = new BattleModel(this.props);
         this.partyModel = new PartyModel(this.props);
+        this.characterSummaryModel = new CharacterSummaryModel(this.props);
         this.situation = 'overworld';
         this.wanderingCompanions = [
             new Entity({
-                name: 'Ragnar Ninarsk',
+                name: 'Ragnar Ironson',
                 apperance: './assets/media/entities/companion-warrior-male-3.jpg',
                 vigor: 5,
                 strength: 5,
@@ -62,7 +66,7 @@ export default class GameModel{
                 },
             }),
             new Entity({
-                name: 'Nicholi Ninarsk',
+                name: 'Nicholi Ironson',
                 apperance: './assets/media/entities/companion-warrior-male-1.jpg',
                 vigor: 5,
                 strength: 5,

@@ -180,10 +180,9 @@ export default class BattleView{
     removeCombatantCard(battleId){
         Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
             if(card.id == battleId){
-                card.classList.add('disappear');
-                setTimeout(()=>{
-                    card.remove();
-                },2000)
+                
+                card.remove();
+                
                 
             }
         });
@@ -195,16 +194,26 @@ export default class BattleView{
         root.style.setProperty('--ability-animation-name', attacker.nextAbility.animationName);
         root.style.setProperty(' --ability-animation-duration', attacker.nextAbility.animationDuration);
         if(attacker.isHostile == false){
-            if(resolveObject.switchCombatant || resolveObject.retreat){
-                root.style.setProperty('--animate-attacker-name', 'disappear');
-            }else{
+            if(resolveObject.switchCombatant == false && resolveObject.retreat == false){
                 root.style.setProperty('--animate-attacker-name', 'ally-attack');
+            }else{
+                if(resolveObject.retreat){
+                    root.style.setProperty('--animate-attacker-name', 'ally-retreat');
+                }
+                if(resolveObject.switchCombatant){
+                    root.style.setProperty('--animate-attacker-name', 'ally-switch');
+                }
             }
         }else{
-            if(resolveObject.switchCombatant || resolveObject.retreat){
-                root.style.setProperty('--animate-attacker-name', 'disappear');
-            }else{
+            if(resolveObject.switchCombatant == false && resolveObject.retreat == false){
                 root.style.setProperty('--animate-attacker-name', 'hostile-attack');
+            }else{
+                if(resolveObject.retreat){
+                    root.style.setProperty('--animate-attacker-name', 'hostile-retreat');
+                }
+                if(resolveObject.switchCombatant){
+                    root.style.setProperty('--animate-attacker-name', 'hostile-switch');
+                }
             }
         }
         Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
@@ -212,25 +221,26 @@ export default class BattleView{
                 attackerCard = card;
             }
         });
-        for(let i = 0; i < targets.length; i++){
-            let targetCard;
-            Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
-                if(card.id == targets[i].battleId){
-                    targetCard = card;
-                }
-            });
-            if(resolveObject.evade){
-                if(targets[i].isHostile == false){
-                    root.style.setProperty('--animate-target-name', 'ally-evade');
+        if(resolveObject.switchCombatant == false && resolveObject.retreat == false){
+            for(let i = 0; i < targets.length; i++){
+                let targetCard;
+                Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
+                    if(card.id == targets[i].battleId){
+                        targetCard = card;
+                    }
+                });
+                if(resolveObject.evade){
+                    if(targets[i].isHostile == false){
+                        root.style.setProperty('--animate-target-name', 'ally-evade');
+                    }else{
+                        root.style.setProperty('--animate-target-name', 'hostile-evade');
+                    }
                 }else{
-                    root.style.setProperty('--animate-target-name', 'hostile-evade');
+                    root.style.setProperty('--animate-target-name', 'none');
                 }
-            }else{
-                root.style.setProperty('--animate-target-name', 'none');
+                targetCard.classList.add('animate-target');
             }
-            targetCard.classList.add('animate-target');
         }
-        
         attackerCard.classList.add('animate-attacker');
         playSoundEffect(attacker.nextAbility.soundEffectSrc);
     }

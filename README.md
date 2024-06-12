@@ -21,15 +21,13 @@ Roguelike turnbased adventure game based on the Shackle Breaker story
 * Prebattle traits / abilitites
 * Enemy spawning weight and factions
 * World Generation
-* Retreats
 * Default Abilities (punch)
+* Inventory System
 
 
 
 
 # Bugs
-
-
 
 
 # MISC notes

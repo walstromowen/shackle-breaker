@@ -1011,9 +1011,27 @@ img{
     10%{transform: translate(-10%)}
     100%{transform: translate(0%)}
 }
+@keyframes ally-retreat{
+    0%{transform: translate(0%)}
+    100%{transform: translate(-500%)}
+}
+@keyframes ally-switch{
+    0%{transform: translate(0%)}
+    50%{transform: translate(-500%)}
+    100%{transform: translate(0%)}
+}
 @keyframes hostile-evade{
     0%{transform: translate(0%)}
     10%{transform: translate(10%)}
+    100%{transform: translate(0%)}
+}
+@keyframes hostile-retreat{
+    0%{transform: translate(0%)}
+    100%{transform: translate(500%)}
+}
+@keyframes hostile-switch{
+    0%{transform: translate(0%)}
+    50%{transform: translate(500%)}
     100%{transform: translate(0%)}
 }
 #party-grid-container{

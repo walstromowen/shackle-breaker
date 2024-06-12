@@ -109,6 +109,11 @@ export default class BattleController{
     }
     createTargetListeners(ally, resolveFn){
         let container = document.getElementById('battle-battlefield-container');
+        if(ally.nextAbility.name = 'retreat'){//can also be used on self targeting moves or auto targeting moves
+            let selectedCard = document.getElementById(ally.battleId);
+            this.validateTarget(ally, selectedCard, resolveFn);
+            return;
+        }
         this.view.highlightPossibleTargets(ally.battleId)
         container.addEventListener('contextmenu', this.removeTargetEventHandler = (e)=>{
             e.preventDefault()
@@ -443,7 +448,11 @@ export default class BattleController{
             }).then((resolveObject)=>{
                 return this.playAbilityAnimationHelpper(cycleTargets, resolveObject);
             }).then((resolveObject)=>{
-                return this.postAbilityAnimationsHelpper(resolveObject);
+                if(resolveObject.switchCombatant){
+                    return this.switchCombatantAnimationHelpper(resolveObject);
+                }else{
+                    return this.postAbilityAnimationsHelpper(resolveObject);
+                }
             }).then((resolveObject)=>{
                 if(resolveObject.switchCombatant){
                     this.currentAttacker = this.currentAttacker.nextAbility.newCombatant;
@@ -451,12 +460,11 @@ export default class BattleController{
                     if(resolveObject.evade){
                         return this.resolvePause(resolve);
                     }else{
-                        if(resolveObject.retreat){
-                           resolve();
-                        }
-                        this.view.updateCombatantStats(this.currentAttacker);
-                        for(let i = 0; i < cycleTargets.length; i++){
-                            this.view.updateCombatantStats(cycleTargets[i]);
+                        if(resolveObject.retreat == false){
+                            this.view.updateCombatantStats(this.currentAttacker);
+                            for(let i = 0; i < cycleTargets.length; i++){
+                                this.view.updateCombatantStats(cycleTargets[i]);
+                            }
                         }
                     }
                 }
@@ -509,7 +517,7 @@ export default class BattleController{
                     this.view.playAbilityAnimations(this.currentAttacker, targets, resolveObject);
                     resolve(resolveObject);
                 }
-            }, this.currentAttacker.nextAbility.animationDuration);
+            }, 2000);
         })
     }
     postAbilityAnimationsHelpper(resolveObject){
@@ -560,7 +568,49 @@ export default class BattleController{
                     this.view.removeAbilityAnimations()
                     resolve(resolveObject);
                 }
-            }, 2000);
+            }, this.currentAttacker.nextAbility.animationDuration);
+        });
+    }
+    switchCombatantAnimationHelpper(resolveObject){
+        let flag = true;
+        return new Promise((resolve)=>{
+            this.switchCombatantAnimation().then(()=>{
+                document.addEventListener('click', this.skipEventHandler = ()=>{
+                    if(flag == true){
+                        flag = false;
+                        document.removeEventListener('click', this.skipEventHandler);
+                        this.view.removeAbilityAnimations()
+                        resolve(resolveObject);
+                    }
+                })
+                setTimeout(()=>{
+                    if(flag == true){
+                        flag = false;
+                        document.removeEventListener('click', this.skipEventHandler);
+                        this.view.removeAbilityAnimations()
+                        resolve(resolveObject); 
+                    }
+                }, this.currentAttacker.nextAbility.animationDuration/2);
+            });
+        })
+    }
+    switchCombatantAnimation(resolveObject){
+        let flag = true;
+        return new Promise((resolve)=>{
+            document.addEventListener('click', this.skipEventHandler = ()=>{
+                if(flag == true){
+                    this.view.replaceCombatantCard(this.currentAttacker);
+                    document.removeEventListener('click', this.skipEventHandler);
+                    resolve(resolveObject)
+                }
+            })
+            setTimeout(()=>{
+                if(flag == true){
+                    this.view.replaceCombatantCard(this.currentAttacker);
+                    document.removeEventListener('click', this.skipEventHandler);
+                    resolve(resolveObject)
+                }
+            }, this.currentAttacker.nextAbility.animationDuration/2);
         });
     }
     resolvePause(resolveFn){

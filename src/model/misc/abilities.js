@@ -70,6 +70,9 @@ export class Ability{
         attacker.currentMagic -= this.magicCost;
     }
     checkTargetEvade(target){
+        if(this.name == 'switchCombatant' || 'retreat'){
+            return false;
+        }
         if(target.currentEvasion > this.accuracy * Math.random()){
             return true; //true means target evades
         }
@@ -86,7 +89,7 @@ export class Ability{
         target.statusArray.push(status);
     }
     canUse(attacker, targets){
-        let resolveObject = {evade: false, switchCombatant: false,}
+        let resolveObject = {evade: false, switchCombatant: false, retreat: false}
         switch(this.sequenceType){
             case 'chain':
                 if(this.checkTargetEvade(targets[0])){

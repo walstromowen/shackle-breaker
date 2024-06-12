@@ -53,6 +53,12 @@ export default class BattleModel{
                 }
             }
         }
+        if(allyCount < this.props.getBattle().currentAllyLimit){
+            this.props.getBattle().currentAllyLimit = allyCount;
+        }
+        if(hostileCount < this.props.getBattle().currentHostileLimit){
+            this.props.getBattle().currentHostileLimit = hostileCount;
+        }
     }
     getActiveAllys(){
         let allys = this.activeCombatants.filter((combatant)=>{

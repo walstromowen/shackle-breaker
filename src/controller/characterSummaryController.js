@@ -3,6 +3,8 @@ import {playSoundEffect, playMusic} from '../utility.js';
 export default class CharacterSummaryController{
     constructor(props, model, view){
         this.props = props;
+        this.model = model;
+        this.view = view;
         this.initialize();
     }
     initialize(){
@@ -21,5 +23,12 @@ export default class CharacterSummaryController{
                 miniMenu.style.display = 'none';
             });
         });
+    }
+    onSwitchScreen(){
+        
+        //updateName
+        //updateStats and attributes of current character
+        //AddInventoryItems (linked to character)
+        //Switch Buttons
     }
 }
