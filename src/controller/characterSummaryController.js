@@ -25,10 +25,8 @@ export default class CharacterSummaryController{
         });
     }
     onSwitchScreen(){
-        
-        //updateName
-        //updateStats and attributes of current character
-        //AddInventoryItems (linked to character)
+        this.view.displayCharacterSummary(this.model.currentCharacter);
+      
         //Switch Buttons
     }
 }

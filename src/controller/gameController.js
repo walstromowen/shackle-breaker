@@ -16,7 +16,7 @@ export default class GameController{
             getOverworldController: this.getOverworldController.bind(this),
             getBattleController: this.getBattleController.bind(this),
             getPartyController: this.getPartyController.bind(this),
-            getCharacterSummaryController: this.getTitleController.bind(this),
+            getCharacterSummaryController: this.getCharacterSummaryController.bind(this),
         }
         this.model = model;
         this.view = view;

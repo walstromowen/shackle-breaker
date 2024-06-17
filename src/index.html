@@ -428,58 +428,61 @@
             <div class='character-summary-container'>
                 <div class='character-summary-vitals-equipment-inventory-container'>
                     <div class='character-summary-vitals-equipment-container'>
-                        <h5>Shackle Breaker</h5>
+                        <h5 id='character-summary-character-name'>Shackle Breaker</h5>
                         <div class='character-summary-all-vital-bars-container'>
                             <div class='character-summary-vital-bar-container'>
-                                <div class='character-summary-vital-bar-progress health-color' ></div>
+                                <div id='character-summary-health-progress' class='character-summary-vital-bar-progress health-color' ></div>
                                 <div class='character-summary-vital-label-container'>
                                     <img class='icon' src='./assets/media/icons/hearts.png'>
                                     <p class='character-summary-vital-label'>HP</p>
                                 </div>
-                                <p class ='character-summary-current-vital-label'><span>9999</span> / <span>9999</span></p>
+                                <p class ='character-summary-current-vital-label'><span id='character-summary-current-health'>9999</span> / <span id='character-summary-max-health'>9999</span></p>
                             </div>
                             <div class='character-summary-vital-bar-container'>
-                                <div class='character-summary-vital-bar-progress stamina-color' ></div>
+                                <div id='character-summary-stamina-progress'class='character-summary-vital-bar-progress stamina-color' ></div>
                                 <div class='character-summary-vital-label-container'>
                                     <img class='icon' src='./assets/media/icons/despair.png'>
                                     <p class='character-summary-label'>STA</p>
                                 </div>
-                                <p class ='character-summary-current-vital-label'><span>9999</span> / <span>9999</span></p>
+                                <p class ='character-summary-current-vital-label'><span id='character-summary-current-stamina'>9999</span> / <span id='character-summary-max-stamina'>9999</span></p>
                             </div>
                             <div class='character-summary-vital-bar-container'>
-                                <div class='character-summary-vital-bar-progress magic-color' ></div>
+                                <div id='character-summary-magic-progress' class='character-summary-vital-bar-progress magic-color' ></div>
                                 <div class='character-summary-vital-label-container'>
                                     <img class='icon' src='./assets/media/icons/crystalize.png'>
                                     <p class='character-summary-label'>MAG</p>
                                 </div>
-                                <p class ='character-summary-current-vital-label'><span>9999</span> / <span>9999</span></p>
+                                <p class ='character-summary-current-vital-label'><span id='character-summary-current-magic'>9999</span> / <span id='character-summary-max-magic'>9999</span></p>
                             </div>
                         </div>
-                        <div class='character-summary-equipped-container'>
-                            <div class='character-summary-inventory-slot'>
-                                <img class='character-summary-inventory-slot-image' src=''>
+                        <div class='character-summary-equipped-character-image-container'>
+                            <div class='character-summary-equipped-container'>
+                                <div class='character-summary-inventory-slot'>
+                                    <img class='character-summary-inventory-slot-image' src=''>
+                                </div>
+                                <div class='character-summary-inventory-slot'>
+                                    <img class='character-summary-inventory-slot-image' src=''>
+                                </div>
+                                <div class='character-summary-inventory-slot'>
+                                    <img class='character-summary-inventory-slot-image' src=''>
+                                </div>
+                                <div class='character-summary-inventory-slot'>
+                                    <img class='character-summary-inventory-slot-image' src=''>
+                                </div>
+                                <div class='character-summary-inventory-slot'>
+                                    <img class='character-summary-inventory-slot-image' src=''>
+                                </div>
+                                <div class='character-summary-inventory-slot'>
+                                    <img class='character-summary-inventory-slot-image' src=''>
+                                </div>
+                                <div class='character-summary-inventory-slot'>
+                                    <img class='character-summary-inventory-slot-image' src=''>
+                                </div>
+                                <div class='character-summary-inventory-slot'>
+                                    <img class='character-summary-inventory-slot-image' src=''>
+                                </div>
                             </div>
-                            <div class='character-summary-inventory-slot'>
-                                <img class='character-summary-inventory-slot-image' src=''>
-                            </div>
-                            <div class='character-summary-inventory-slot'>
-                                <img class='character-summary-inventory-slot-image' src=''>
-                            </div>
-                            <div class='character-summary-inventory-slot'>
-                                <img class='character-summary-inventory-slot-image' src=''>
-                            </div>
-                            <div class='character-summary-inventory-slot'>
-                                <img class='character-summary-inventory-slot-image' src=''>
-                            </div>
-                            <div class='character-summary-inventory-slot'>
-                                <img class='character-summary-inventory-slot-image' src=''>
-                            </div>
-                            <div class='character-summary-inventory-slot'>
-                                <img class='character-summary-inventory-slot-image' src=''>
-                            </div>
-                            <div class='character-summary-inventory-slot'>
-                                <img class='character-summary-inventory-slot-image' src=''>
-                            </div>
+                            <img src='' id='character-summary-character-image'>
                         </div>
                     </div>
                     <div class='character-summary-inventory-container'>
@@ -495,7 +498,7 @@
                                     <img class='icon' src='./assets/media/icons/healing.png'>
                                     <p class='stat-label'>VIG:</p>
                                 </div>
-                                <p class='stat-value'><span id='lobby-vigor'>999</span></p>
+                                <p class='stat-value'><span id='character-summary-vigor'>999</span></p>
                                 <div class='stat-cell-hover-menu'>
                                     <div class='flex-right'>
                                         <img class='icon' src='./assets/media/icons/healing.png'>
@@ -511,7 +514,7 @@
                                     <img class='icon' src='./assets/media/icons/strong.png'>
                                     <p class='stat-label'>STR:</p>
                                 </div>
-                                <p class='stat-value'><span id='lobby-strength'>999</span></p>
+                                <p class='stat-value'><span id='character-summary-strength'>999</span></p>
                                 <div class='stat-cell-hover-menu'>
                                     <div class='flex-right'>
                                         <img class='icon' src='./assets/media/icons/strong.png'>
@@ -525,7 +528,7 @@
                                     <img class='icon' src='./assets/media/icons/body-balance.png'>
                                     <p class='stat-label'>DEX:</p>
                                 </div>
-                                <p class='stat-value'><span id='lobby-dexterity'>999</span></p>
+                                <p class='stat-value'><span id='character-summary-dexterity'>999</span></p>
                                 <div class='stat-cell-hover-menu'>
                                     <div class='flex-right'>
                                         <img class='icon' src='./assets/media/icons/body-balance.png'>
@@ -541,7 +544,7 @@
                                     <img class='icon' src='./assets/media/icons/wisdom.png'>
                                     <p class='stat-label'>INT:</p>
                                 </div>
-                                <p class='stat-value'><span id='lobby-insight'>999</span></p>
+                                <p class='stat-value'><span id='character-summary-intelligence'>999</span></p>
                                 <div class='stat-cell-hover-menu'>
                                     <div class='flex-right'>
                                         <img class='icon' src='./assets/media/icons/wisdom.png'>
@@ -555,7 +558,7 @@
                                     <img class='icon' src='./assets/media/icons/meditation.png'>
                                     <p class='stat-label'>ATN:</p>
                                 </div>
-                                <p class='stat-value'><span id='lobby-focus'>999</span></p>
+                                <p class='stat-value'><span id='character-summary-attunement'>999</span></p>
                                 <div class='stat-cell-hover-menu'>
                                     <div class='flex-right'>
                                         <img class='icon' src='./assets/media/icons/meditation.png'>
@@ -572,48 +575,48 @@
                             <div class='stat-cell'>
                                 <div class='flex'>
                                     <img class='icon' src='./assets/media/icons/hearts.png'>
-                                    <p class='stat-label'>HP:</p>
+                                    <p class='stat-label'>HP RC:</p>
                                 </div>
-                                <p class='stat-value'><span id='lobby-max-hp'>999</span></p>
+                                <p class='stat-value'><span id='character-summary-hp-recovery'>999</span></p>
                             </div>
                             <div class='stat-cell'>
                                 <div class='flex'>
-                                    <img class='icon' src='./assets/media/icons/hearts.png'>
-                                    <p class='stat-label'>HP RC:</p>
+                                    <img class='icon' src='./assets/media/icons/sprint.png'>
+                                    <p class='stat-label'>SPD:</p>
                                 </div>
-                                <p class='stat-value'><span id='lobby-hp-recovery'>999</span></p>
+                                <p class='stat-value'><span id='character-summary-speed'>999</span></p>
                             </div>
                         </div>
                         <div class='flex-wrap'>
-                            <div class='stat-cell'>
-                                <div class='flex'>
-                                    <img class='icon' src='./assets/media/icons/despair.png'>
-                                    <p class='stat-label'>STA:</p>
-                                </div>
-                                <p class='stat-value'><span id='lobby-max-stamina'>999</span></p>
-                            </div>
                             <div class='stat-cell'>
                                 <div class='flex'>
                                     <img class='icon' src='./assets/media/icons/despair.png'>
                                     <p class='stat-label'>STA RC:</p>
                                 </div>
-                                <p class='stat-value'><span id='lobby-stamina-recovery'>999</span></p>
+                                <p class='stat-value'><span id='character-summary-stamina-recovery'>999</span></p>
+                            </div>
+                            <div class='stat-cell'>
+                                <div class='flex'>
+                                    <img class='icon' src='./assets/media/icons/dodging.png'>
+                                    <p class='stat-label'>EVA:</p>
+                                </div>
+                                <p class='stat-value'><span id='character-summary-evasion'>999</span></p>
                             </div>
                         </div>
                         <div class='flex-wrap'>
                             <div class='stat-cell'>
                                 <div class='flex'>
                                     <img class='icon' src='./assets/media/icons/crystalize.png'>
-                                    <p class='stat-label'>MAG:</p>
+                                    <p class='stat-label'>MAG RC:</p>
                                 </div>
-                                <p class='stat-value'><span id='lobby-max-magic'>999</span></p>
+                                <p class='stat-value'><span id='character-summary-magic-recovery'>999</span></p>
                             </div>
                             <div class='stat-cell'>
                                 <div class='flex'>
-                                    <img class='icon' src='./assets/media/icons/crystalize.png'>
-                                    <p class='stat-label'>MAG RC:</p>
+                                    <img class='icon' src='./assets/media/icons/on-target.png'>
+                                    <p class='stat-label'>CRIT:</p>
                                 </div>
-                                <p class='stat-value'><span id='lobby-magic-recovery'>999</span></p>
+                                <p class='stat-value'><span id='character-summary-critical'>999</span></p>
                             </div>
                         </div>
                         <div class='flex-wrap'>
@@ -622,30 +625,14 @@
                                     <img class='icon' src='./assets/media/icons/hammer-drop.png'>
                                     <p class='stat-label'>BLT ATK:</p>
                                 </div>
-                                <p class='stat-value'><span id='lobby-blunt-attack'>999</span></p>
+                                <p class='stat-value'><span id='character-summary-blunt-attack'>999</span></p>
                             </div>
-                            <div class='stat-cell'>
-                                <div class='flex'>
-                                    <img class='icon' src='./assets/media/icons/hammer-drop.png'>
-                                    <p class='stat-label'>BLT DEF:</p>
-                                </div>
-                                <p class='stat-value'><span id='lobby-blunt-defense'>999</span></p>
-                            </div>
-                        </div>
-                        <div class='flex-wrap'>
                             <div class='stat-cell'>
                                 <div class='flex'>
                                     <img class='icon' src='./assets/media/icons/quick-slash.png'>
                                     <p class='stat-label'>PIR ATK:</p>
                                 </div>
-                                <p class='stat-value'><span id='lobby-pierce-attack'>999</span></p>
-                            </div>
-                            <div class='stat-cell'>
-                                <div class='flex'>
-                                    <img class='icon' src='./assets/media/icons/quick-slash.png'>
-                                    <p class='stat-label'>PIR DEF:</p>
-                                </div>
-                                <p class='stat-value'><span id='lobby-pierce-defense'>999</span></p>
+                                <p class='stat-value'><span id='character-summary-pierce-attack'>999</span></p>
                             </div>
                         </div>
                         <div class='flex-wrap'>
@@ -654,55 +641,78 @@
                                     <img class='icon' src='./assets/media/icons/spiky-explosion.png'>
                                     <p class='stat-label'>ARC ATK:</p>
                                 </div>
-                                <p class='stat-value'><span id='lobby-blunt-attack'>999</span></p>
+                                <p class='stat-value'><span id='character-summary-arcane-attack'>999</span></p>
+                            </div>
+                            <div class='stat-cell'>
+                                <div class='flex'>
+                                    <img class='icon' src='./assets/media/icons/swirl-string.png'>
+                                    <p class='stat-label'>ELM ATK:</p>
+                                </div>
+                                <p class='stat-value'><span id='character-summary-elemental-attack'>999</span></p>
+                            </div>
+                        </div>
+                        <div class='flex-wrap'>
+                            <div class='stat-cell'>
+                                <div class='flex'>
+                                    <img class='icon' src='./assets/media/icons/hammer-drop.png'>
+                                    <p class='stat-label'>BLT DEF:</p>
+                                </div>
+                                <p class='stat-value'><span id='character-summary-blunt-defense'>999</span></p>
+                            </div>
+                            <div class='stat-cell'>
+                                <div class='flex'>
+                                    <img class='icon' src='./assets/media/icons/hammer-drop.png'>
+                                    <p class='stat-label'>BLT RES:</p>
+                                </div>
+                                <p class='stat-value'><span id='character-summary-blunt-resistance'>999</span></p>
+                            </div>
+                        </div>
+                        <div class='flex-wrap'>
+                            <div class='stat-cell'>
+                                <div class='flex'>
+                                    <img class='icon' src='./assets/media/icons/quick-slash.png'>
+                                    <p class='stat-label'>PIR DEF:</p>
+                                </div>
+                                <p class='stat-value'><span id='character-summary-pierce-defense'>999</span></p>
+                            </div>
+                            <div class='stat-cell'>
+                                <div class='flex'>
+                                    <img class='icon' src='./assets/media/icons/quick-slash.png'>
+                                    <p class='stat-label'>PIR RES:</p>
+                                </div>
+                                <p class='stat-value'><span id='character-summary-pierce-resistance'>999</span></p>
+                            </div>
+                        </div>
+                        <div class='flex-wrap'>
+                            <div class='stat-cell'>
+                                <div class='flex'>
+                                    <img class='icon' src='./assets/media/icons/spiky-explosion.png'>
+                                    <p class='stat-label'>ARC DEF:</p>
+                                </div>
+                                <p class='stat-value'><span id='character-summary-arcane-defense'>999</span></p>
                             </div>
                             <div class='stat-cell'>
                                 <div class='flex'>
                                     <img class='icon' src='./assets/media/icons/spiky-explosion.png'>
                                     <p class='stat-label'>ARC DEF:</p>
                                 </div>
-                                <p class='stat-value'><span id='lobby-blunt-defense'>999</span></p>
+                                <p class='stat-value'><span id='character-summary-arcane-resistance'>999</span></p>
                             </div>
                         </div>
                         <div class='flex-wrap'>
-                            <div class='stat-cell'>
-                                <div class='flex'>
-                                    <img class='icon' src='./assets/media/icons/swirl-string.png'>
-                                    <p class='stat-label'>ELM ATK:</p>
-                                </div>
-                                <p class='stat-value'><span id='lobby-elemental-attack'>999</span></p>
-                            </div>
                             <div class='stat-cell'>
                                 <div class='flex'>
                                     <img class='icon' src='./assets/media/icons/swirl-string.png'>
                                     <p class='stat-label'>ELM DEF:</p>
                                 </div>
-                                <p class='stat-value'><span id='lobby-elemental-defense'>999</span></p>
-                            </div>
-                        </div>
-                        <div class='flex-wrap'>
-                            <div class='stat-cell'>
-                                <div class='flex'>
-                                    <img class='icon' src='./assets/media/icons/sprint.png'>
-                                    <p class='stat-label'>SPD:</p>
-                                </div>
-                                <p class='stat-value'><span id='lobby-elemental-attack'>999</span></p>
+                                <p class='stat-value'><span id='character-summary-elemental-defense'>999</span></p>
                             </div>
                             <div class='stat-cell'>
                                 <div class='flex'>
-                                    <img class='icon' src='./assets/media/icons/dodging.png'>
-                                    <p class='stat-label'>EVA:</p>
+                                    <img class='icon' src='./assets/media/icons/swirl-string.png'>
+                                    <p class='stat-label'>ELM RES:</p>
                                 </div>
-                                <p class='stat-value'><span id='lobby-elemental-defense'>999</span></p>
-                            </div>
-                        </div>
-                        <div class='flex-wrap'>
-                            <div class='stat-cell'>
-                                <div class='flex'>
-                                    <img class='icon' src='./assets/media/icons/on-target.png'>
-                                    <p class='stat-label'>CRIT:</p>
-                                </div>
-                                <p class='stat-value'><span id='lobby-elemental-attack'>999</span></p>
+                                <p class='stat-value'><span id='character-summary-elemental-resistance'>999</span></p>
                             </div>
                         </div>
                     </div> 
@@ -723,12 +733,8 @@
                     <button id='battle-controls-items-button' class='battle-controls-ui-button'>Items</button>
                     <button id='battle-controls-party-button' class='battle-controls-ui-button'>Party</button>
                 </div>
-                <div class='battle-controls-tab' id='battle-controls-abilities-tab'>
-
-                </div>
-                <div class='battle-controls-tab' id='battle-controls-items-tab'>
-
-                </div>
+                <div class='battle-controls-tab' id='battle-controls-abilities-tab'></div>
+                <div class='battle-controls-tab' id='battle-controls-items-tab'></div>
             </div>
             <div id='battle-confirm-targets-container'>
                 <button id='battle-controls-back-button' class='battle-controls-ui-button-large'>Back</button>

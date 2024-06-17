@@ -52,6 +52,8 @@ export default class PartyController{
             }
             node.querySelector('.party-toggle-summary-button').addEventListener('click', (e)=>{
                 e.stopPropagation();
+                let partyId = node.getElementsByClassName('party-character-slot-data')[0].id
+                this.props.getCharacterSummaryController().model.setCurrentCharacter(this.model.getEntity(partyId))
                 this.props.switchScreen('character-summary-screen');
                 playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
             });

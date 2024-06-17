@@ -109,7 +109,7 @@ export default class BattleController{
     }
     createTargetListeners(ally, resolveFn){
         let container = document.getElementById('battle-battlefield-container');
-        if(ally.nextAbility.name = 'retreat'){//can also be used on self targeting moves or auto targeting moves
+        if(ally.nextAbility.name == 'retreat'){//can also be used on self targeting moves or auto targeting moves
             let selectedCard = document.getElementById(ally.battleId);
             this.validateTarget(ally, selectedCard, resolveFn);
             return;
