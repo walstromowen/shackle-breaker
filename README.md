@@ -10,8 +10,6 @@ Roguelike turnbased adventure game based on the Shackle Breaker story
 * overworld map smooth transitioning between tiles
 
 
-
-
 # Planned Features
 * Shop/crafting/weapon/town
 * trinket and waist slots
@@ -22,12 +20,12 @@ Roguelike turnbased adventure game based on the Shackle Breaker story
 * Enemy spawning weight and factions
 * World Generation
 * Default Abilities (punch)
-* Inventory System
-
-
+* Encounter System
 
 
 # Bugs
-
+* switching from mercenary to another companion and then back causes bug (no companions left to recruit)
+* adding item from inventirt to empty slot causes bug
+* initiating a retreat and the revisting battle causes bug
 
 # MISC notes

@@ -1,11 +1,15 @@
 import { MagicMissile, Slash, Strike, Cleave, ThrowPosionKnife} from "./abilities.js";
 
+let counter = 0;
+
 export class Item{
     constructor(config){
         this.name = config.name || 'item';
         this.description = config.description || `an item.`;
         this.imageSrc = config.imageSrc || './assets/media/icons/knapsack.png';
         this.price = config.price || 1;
+        this.itemId = counter;
+        counter++;
     }
 }
 
@@ -408,7 +412,7 @@ export class LinenPants extends Attachable{
     constructor(config){
         super({
             name: 'linen pants',
-            description: 'A heavily worn pair of linen trousers. Standard article of clothing for citizens of the Altus kingdom, or rather, whats left of them.',
+            description: 'A heavily worn pair of linen trousers. Standard article of clothing for citizens of the Altus kingdom, or rather, what is left of them.',
             imageSrc:  './assets/media/icons/trousers.png',
             price: 50,
             slot: 'legs',
@@ -463,6 +467,122 @@ export class LinenPants extends Attachable{
     }
 }
 
+export class LeatherHelmet extends Attachable{
+    constructor(config){
+        super({
+            name: 'leather helmet',
+            description: 'A leather helmet. A standard issue helmet among scouts and archers of the Altus kingdom.',
+            imageSrc:  './assets/media/icons/light-helm.png',
+            price: 50,
+            slot: 'head',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 0,
+            magicRecovery: 0,
+            bluntAttack: 0,
+            pierceAttack: 0,
+            arcaneAttack: 0,
+            elementalAttack: 0,
+            bluntDefense: 2,
+            pierceDefense: 2,
+            arcaneDefense: 2,
+            elementalDefense: 2,
+            bluntResistance: 0.02,
+            pierceResistance: 0.02,
+            arcaneResistance: 0.02,
+            elementalResistance: 0.02,
+            speed: 1,
+            evasion: 0.02,
+            critical: 0.02,
+            abilityArray: [],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 0;
+            this.magicRecovery = this.magicRecovery + 0;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 1;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 1;
+            this.evasion = this.evasion + 0.01;
+            this.critical = this.critical + 0.01;
+        }
+    }
+}
+export class LeatherHood extends Attachable{
+    constructor(config){
+        super({
+            name: 'leather hood',
+            description: 'A hood that obscures the face made of dark leather. Although most indulged in the discovery of magic, there were a few that found it ominous.',
+            imageSrc:  './assets/media/icons/hood.png',
+            price: 50,
+            slot: 'head',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 0,
+            magicRecovery: 0,
+            bluntAttack: 0,
+            pierceAttack: 0,
+            arcaneAttack: 0,
+            elementalAttack: 0,
+            bluntDefense: 2,
+            pierceDefense: 2,
+            arcaneDefense: 2,
+            elementalDefense: 2,
+            bluntResistance: 0.01,
+            pierceResistance: 0.01,
+            arcaneResistance: 0.02,
+            elementalResistance: 0.02,
+            speed: 1,
+            evasion: 0.03,
+            critical: 0.03,
+            abilityArray: [],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 0;
+            this.magicRecovery = this.magicRecovery + 0;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 1;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 1;
+            this.evasion = this.evasion + 0.01;
+            this.critical = this.critical + 0.01;
+        }
+    }
+}
 
 export class PineWood extends Material{
     constructor(){

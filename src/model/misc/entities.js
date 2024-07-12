@@ -245,6 +245,7 @@ export class Entity{
                     this.currentSpeed += this.equipment[slots[i]].speed;
                     this.currentEvasion += this.equipment[slots[i]].evasion;
                     this.currentCritical += this.equipment[slots[i]].critical;
+                    this.adjustFloatingPointErrors();
                 }
             }
         }
@@ -273,8 +274,17 @@ export class Entity{
                 this.currentSpeed -= this.equipment[slots[i]].speed;
                 this.currentEvasion -= this.equipment[slots[i]].evasion;
                 this.currentCritical -= this.equipment[slots[i]].critical;
+                this.adjustFloatingPointErrors();
             }
         }
+    }
+    adjustFloatingPointErrors(){ //eliminates floating point rounding consequence when doing operations on floats
+        this.currentBluntResistance = Math.round(this.currentBluntResistance * 100)/100; 
+        this.currentPierceResistance = Math.round(this.currentPierceResistance * 100)/100; 
+        this.currentArcaneResistance = Math.round(this.currentArcaneResistance * 100)/100; 
+        this.currentElementalResistance = Math.round(this.currentElementalResistance * 100)/100; 
+        this.currentEvasion = Math.round(this.currentEvasion * 100)/100; 
+        this.currentCritical = Math.round(this.currentCritical * 100)/100; 
     }
 }
 

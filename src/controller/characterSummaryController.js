@@ -26,7 +26,94 @@ export default class CharacterSummaryController{
     }
     onSwitchScreen(){
         this.view.displayCharacterSummary(this.model.currentCharacter);
-      
+        this.view.createInventorySlots(this.model.props.getInventory());//Eventually will want to switch to fixed number of slots ie 64 slots
+        this.view.createEquippedItemSlots(this.model.props.getParty()[0])//TODO!!! This will always get equipment of first party member, need to get inventory of selected character
+        //slots
+        this.addSlotDragListeners(this.view.screen.querySelectorAll('.character-summary-equipped-slot'), 'equipSlots');
+        this.addSlotDragListeners(this.view.screen.querySelectorAll('.inventory-slot'), 'inventorySlots');
+        //slotData
+        this.view.screen.querySelectorAll('.inventory-slot-data').forEach((node)=>{
+            if(this.model.props.getSituation() == 'overworld'){
+                node.addEventListener('dragstart', ()=>{ 
+                    node.classList.add('dragging');
+                    
+                });
+                node.addEventListener('dragend', ()=>{
+                    node.classList.remove('dragging');
+                });
+            }
+        });
+        //all slot datas need to be able to be dragged into equipment slots and invneotry slots
+        
         //Switch Buttons
+    }
+    addSlotDragListeners(nodeList, dropLocation){
+        nodeList.forEach((node)=>{
+            if(this.model.props.getSituation() == 'overworld'){
+                node.addEventListener('dragover', (e)=>{ 
+                    e.preventDefault();
+                    e.stopPropagation();
+                });
+                node.addEventListener('dragenter', (e)=>{ 
+                    e.preventDefault();
+                    e.stopPropagation();
+                    node.classList.add('hover-brightness');
+                });
+                node.addEventListener('dragleave', (e)=>{ 
+                    e.preventDefault();
+                    e.stopPropagation();
+                    node.classList.remove('hover-brightness');
+                });
+                node.addEventListener('drop', (e)=>{ 
+                    e.stopPropagation();
+                    let incomingItemSlotType; 
+                    let outgoingItemSlotType;
+                    let draggedData = document.getElementsByClassName('dragging')[0];
+                    let exsistingData = node.getElementsByClassName('inventory-slot-data')[0];
+                    //inv to equip
+                    if(dropLocation == 'equipSlots'){
+                        let inventoryItem = this.model.getInventoryItemFromItemId(draggedData.id)
+                        if(inventoryItem.itemType == 'attachable'){
+                            incomingItemSlotType = inventoryItem.slot;
+                            outgoingItemSlotType = this.model.getInventoryItemSlotTypeFromClassList(exsistingData.parentNode.classList)
+                            if(incomingItemSlotType != outgoingItemSlotType){
+                                return;
+                            }
+                            this.model.switchEquipmentFromInventory(outgoingItemSlotType, inventoryItem)
+                        }else{
+                            return
+                        }
+                    }
+                    //equip to specific inv slot
+                    if(dropLocation == 'inventorySlots'){
+                        let inventoryItem;
+                        let inventoryItemType;
+                        if(exsistingData.id != undefined){
+                            inventoryItem = this.model.getInventoryItemFromItemId(exsistingData.id)
+                            inventoryItemType = inventoryItem.itemType;
+                        }else{
+                            inventoryItemType = 'attachable'
+                        }
+                        if(inventoryItemType == 'attachable'){
+                            incomingItemSlotType = inventoryItem.slot
+                            outgoingItemSlotType = this.model.getInventoryItemSlotTypeFromClassList(draggedData.parentNode.classList)
+                            if(incomingItemSlotType != outgoingItemSlotType){
+                                return;
+                            }
+                            this.model.switchEquipmentFromInventory(outgoingItemSlotType, inventoryItem)
+                        }else{
+                            return
+                        }
+                    }
+
+                    //inv to inv (occurs by default)
+                    draggedData.parentNode.appendChild(exsistingData);
+                    node.appendChild(draggedData);
+                    node.classList.remove('hover-brightness');
+                    this.view.displayCharacterSummary(this.model.currentCharacter)
+                });
+          
+            }
+        })
     }
 }

@@ -1,4 +1,4 @@
-
+import {createElement, capiltalizeAllFirstLetters, playSoundEffect} from '../utility.js';
 
 export default class CharacterSummaryView{
     constructor(){
@@ -45,6 +45,9 @@ export default class CharacterSummaryView{
         this.critical = document.getElementById('character-summary-critical');
 
         this.characterImage = document.getElementById('character-summary-character-image');
+
+        this.inventoryContainer = document.getElementById('character-summary-inventory-slots-container');
+        this.equippedContainer = document.getElementById('character-summary-equipped-container');
     }
     displayCharacterSummary(entity){
         this.characterName.innerText = entity.name;
@@ -89,5 +92,48 @@ export default class CharacterSummaryView{
 
         this.characterImage.src = entity.apperance;
 
+    }
+
+    createInventorySlots(inventory){
+        this.inventoryContainer.querySelectorAll('.inventory-slot').forEach((node)=>{
+            node.remove();
+        });
+        for(let i = 0; i < inventory.length; i++){
+            this.createInventorySlot(inventory[i]);
+        }
+    }
+    createInventorySlot(item){
+        const slot = createElement('div', 'inventory-slot');
+        const slotData = createElement('img', 'inventory-slot-data');
+        slotData.src = item.imageSrc;
+        slot.appendChild(slotData);
+        this.inventoryContainer.appendChild(slot);
+        slotData.id = item.itemId;
+    }
+    createEquippedItemSlots(entity){
+        this.screen.querySelectorAll('.character-summary-equipped-slot').forEach((node)=>{
+            node.remove();
+        });
+        let equipmentSlots = Object.keys(entity.equipment);
+        for(let i = 0; i < equipmentSlots.length; i++){
+            const slot = createElement('div', `character-summary-equipped-slot ${equipmentSlots[i]}`);
+            const slotData = createElement('img', 'inventory-slot-data');
+            if(entity.equipment[equipmentSlots[i]] != ''){
+                slotData.src = entity.equipment[equipmentSlots[i]].imageSrc;
+                slotData.id = entity.equipment[equipmentSlots[i]].itemId;
+            }else{
+                switch(equipmentSlots[i]){
+                    default:
+                        slotData.removeAttribute('id');
+                        //slotData.src = 'assets/media/icons/cancel.png';
+                        break;
+                }
+            }
+            slot.appendChild(slotData);
+            this.equippedContainer.appendChild(slot);
+            
+        }
+        
+        //create a slot for each equipment slot in entity //This will be different for dog and humanoid
     }
 }

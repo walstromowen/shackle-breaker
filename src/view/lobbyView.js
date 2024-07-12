@@ -1,3 +1,5 @@
+import {createElement, capiltalizeAllFirstLetters, playSoundEffect} from '../utility.js';
+
 export default class LobbyView{
     constructor(){
         this.screen = document.getElementById('lobby-screen');
@@ -56,9 +58,10 @@ export default class LobbyView{
         }
     }
     createInventorySlot(item){
-        const slot = document.createElement('img');
-        slot.src = item.imageSrc;
-        slot.classList.add('inventory-slot');
+        const slot = createElement('div', 'inventory-slot');
+        const slotData = createElement('img', 'inventory-slot-data');
+        slotData.src = item.imageSrc;
+        slot.appendChild(slotData);
         this.lobbyInventory.appendChild(slot);
 
     }

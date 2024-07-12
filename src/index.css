@@ -126,11 +126,11 @@
         cursor .4s step-end infinite alternate
         !important
     }
-    .character-summary-equipped-container{
-        grid-template-columns: auto auto !important;
-    }
     .character-summary-equipped-character-image-container{
         flex-direction: row !important;
+    }
+    #character-summary-equipped-container{
+        grid-template-columns: auto auto !important;
     }
     #battle-console-content{
         width: 100% !important;
@@ -574,14 +574,7 @@ img{
 .character-summary-name-header{
     font-size: var(--font-size-2);
 }
-.character-summary-equipped-container{
-    margin: 0px auto;
-    width: fit-content;
-    display: grid;
-    gap: 4px;
-    grid-template-columns: auto auto auto auto;
-}
-.character-summary-inventory-slot, .inventory-slot{
+.inventory-slot-data{
     padding: 4px;
     width: var(--utility-button-sides);
     height:  var(--utility-button-sides);
@@ -591,7 +584,7 @@ img{
     background-color: var(--color-3);
     border-radius: 10px;
 }
-.character-summary-inventory-slot:hover, .inventory-slot:hover, .battle-ability-button:hover{
+.inventory-slot-data:hover, .battle-ability-button:hover{
     filter: brightness(1.5);
     box-shadow: 0px 0px 0px black;
 }
@@ -831,7 +824,7 @@ img{
     width: var(--lobby-apperance-image-width);
    
 }
-#lobby-inventory{
+#lobby-inventory, #character-summary-inventory-slots-container{
     display: flex;
     gap: 4px;
     flex-wrap: wrap;
@@ -1064,4 +1057,11 @@ img{
     width: 80%;
     margin: 10px auto;
     
+}
+#character-summary-equipped-container{
+    margin: 0px auto;
+    width: fit-content;
+    display: grid;
+    gap: 4px;
+    grid-template-columns: auto auto auto auto;
 }

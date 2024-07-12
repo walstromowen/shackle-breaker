@@ -1,6 +1,6 @@
 import { getRandomArrayElement } from "../utility.js";
 import {Entity, Dog, Hawk} from "./misc/entities.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, LinenShirt, LinenPants, PineWood, Handaxe } from "./misc/items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, LinenShirt, LinenPants, PineWood, Handaxe, LeatherHelmet, LeatherHood } from "./misc/items.js";
 
 export default class LobbyModel{
     constructor(props){
@@ -32,6 +32,7 @@ export default class LobbyModel{
         switch(background){
             case 'traveler':
                 equipment = [
+                    new LeatherHood({level: 1}),
                     new ShortSword({level: 1}),
                     new LinenShirt({level: 1}),
                     new LinenPants({level: 1}),
@@ -115,7 +116,7 @@ export default class LobbyModel{
                 this.props.setInventory([]);
                 break;
             case 'artisans-tools':
-                this.props.setInventory([new PineWood()]);
+                this.props.setInventory([new PineWood(), new PineWood(), new LeatherHelmet({level: 1})]);
                 break;
             case 'alchemists-vials':
                 this.props.setInventory([]);
@@ -148,6 +149,8 @@ export default class LobbyModel{
                 this.props.getParty().push(this.props.recruitWanderingCompanion());
                 this.props.getParty().push(this.props.recruitWanderingCompanion());
                 this.props.getParty().push(this.props.recruitWanderingCompanion());
+                
+                
                 break;
         }
     }
