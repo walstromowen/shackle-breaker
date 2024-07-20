@@ -28,29 +28,59 @@ export default class CharacterSummaryModel{
         }
     }
     getInventoryItemSlotTypeFromClassList(parentNodeClassList){
-        if(parentNodeClassList.contains('oneHand')){}
-        if(parentNodeClassList.contains('twohand')){}
-        if(parentNodeClassList.contains('head')){return 'head';}
-        if(parentNodeClassList.contains('torso')){return 'torso';}
-        if(parentNodeClassList.contains('arms')){return 'arms';}
-        if(parentNodeClassList.contains('legs')){return 'legs';}
-        if(parentNodeClassList.contains('feet')){return 'feet';}
+        let slot = parentNodeClassList.value
+        slot = slot.replace('character-summary-equipped-slot ', '');
+        slot = slot.replace(' ', '');
+        slot = slot.replace('hover-brightness', '');
+        return slot;
+        
     }
     switchEquipmentFromInventory(outgoingItemSlotType, incomingItem){//from equipment to inventory
+        let incomingItemSlot = this.handleMultiSlotItem(incomingItem.slot, outgoingItemSlotType)
 
-        //subtract outgoing item stats            
-        this.currentCharacter.subtractAttatchableStats([outgoingItemSlotType])
-        //add outgoing item to inventory in correct spot
+
+
+
+        //subtract outgoing item stats   
         let inventory = this.props.getInventory();
-        for(let i = 0; i < inventory.length; i++){
-            if(inventory[i].slot == outgoingItemSlotType){
-                inventory[i] = this.currentCharacter.equipment[outgoingItemSlotType];
-                break;
+        if(this.currentCharacter.equipment[outgoingItemSlotType] != ''){
+            this.currentCharacter.subtractAttatchableStats([outgoingItemSlotType])
+            //add outgoing item to inventory in correct spot
+            for(let i = 0; i < inventory.length; i++){
+                
+                if(inventory[i].itemId == incomingItem.itemId){
+                    inventory[i] = this.currentCharacter.equipment[outgoingItemSlotType];
+                    break;
+                }
             }
-        }
+        }else{
+            for(let i = 0; i < inventory.length; i++){
+                if(inventory[i].itemId == incomingItem.itemId){
+                    inventory.splice(i, 1);
+                    break;
+                }
+            }
+        }         
         //add in to equipment
-        this.currentCharacter.equipment[[incomingItem.slot]] = incomingItem;
+        this.currentCharacter.equipment[[incomingItemSlot]] = incomingItem;
         //add in
-        this.currentCharacter.addAttatchableStats([incomingItem.slot])
+        this.currentCharacter.addAttatchableStats([incomingItemSlot])
+    }
+    unequipAttatchable(equippedItemSlotType){
+        this.currentCharacter.subtractAttatchableStats([equippedItemSlotType])
+        this.props.getInventory().push(this.currentCharacter.equipment[equippedItemSlotType])
+        this.currentCharacter.equipment[equippedItemSlotType] = '';
+        //TODO
+    }
+    
+    handleMultiSlotItem(incomingItemSlot, outgoingItemSlotType){
+        switch(incomingItemSlot){
+            case 'oneHand':
+                return outgoingItemSlotType;
+            case 'twoHand':
+                break;
+            default:
+                return incomingItemSlot;
+        }
     }
 }

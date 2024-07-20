@@ -291,6 +291,64 @@ export class Handaxe extends Attachable{
         }
     }
 }
+export class Shortbow extends Attachable{
+    constructor(config){
+        super({
+            name: 'shortbow',
+            description: `A wooden shortbow. A standard issue shortbow among scouts and archers of the Altus kingdom. "Shortbows are good at evening the odds in unfair fights. They are also particualily popular among those bad at playing the violin." - Commander Mentoras.`,
+            imageSrc:  './assets/media/icons/shortbow.png',
+            price: 100,
+            slot: 'twoHand',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 0,
+            magicRecovery: 0,
+            bluntAttack: 1,
+            pierceAttack: 5,
+            arcaneAttack: 0,
+            elementalAttack: 0,
+            bluntDefense: 0,
+            pierceDefense: 0,
+            arcaneDefense: 0,
+            elementalDefense: 0,
+            bluntResistance: 0,
+            pierceResistance: 0,
+            arcaneResistance: 0,
+            elementalResistance: 0,
+            speed: 0,
+            evasion: 0,
+            critical: 0,
+            abilityArray: [new ThrowPosionKnife({})],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 0;
+            this.magicRecovery = this.magicRecovery + 0;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 3;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 0;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 0;
+            this.elementalDefense = this.elementalDefense + 0;
+            this.speed = this.speed + 0.01;
+            this.evasion = this.evasion + 0.01;
+            this.critical = this.critical + 0.01;
+        }
+    }
+}
 export class ArcaneStaff extends Attachable{
     constructor(config){
         super({

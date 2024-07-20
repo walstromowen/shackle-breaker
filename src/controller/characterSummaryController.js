@@ -23,11 +23,34 @@ export default class CharacterSummaryController{
                 miniMenu.style.display = 'none';
             });
         });
+        this.view.inventoryPannel.addEventListener('dragover', (e)=>{ 
+            e.preventDefault();
+            e.stopPropagation();
+        });
+        this.view.inventoryPannel.addEventListener('dragenter', (e)=>{ 
+            e.preventDefault();
+            e.stopPropagation();
+        });
+        this.view.inventoryPannel.addEventListener('dragleave', (e)=>{ 
+            e.preventDefault();
+            e.stopPropagation();
+        });
+        this.view.inventoryPannel.addEventListener('drop', (e)=>{ 
+            e.preventDefault();
+            e.stopPropagation();
+            let draggedData = document.getElementsByClassName('dragging')[0];
+            if(draggedData.id != undefined){
+                let equippedItemSlotType = this.model.getInventoryItemSlotTypeFromClassList(draggedData.parentNode.classList)
+                this.model.unequipAttatchable(equippedItemSlotType)
+                this.onSwitchScreen();
+               
+            }
+        });
     }
     onSwitchScreen(){
         this.view.displayCharacterSummary(this.model.currentCharacter);
-        this.view.createInventorySlots(this.model.props.getInventory());//Eventually will want to switch to fixed number of slots ie 64 slots
-        this.view.createEquippedItemSlots(this.model.props.getParty()[0])//TODO!!! This will always get equipment of first party member, need to get inventory of selected character
+        this.view.createInventorySlots(this.model.props.getInventory());
+        this.view.createEquippedItemSlots(this.model.currentCharacter);
         //slots
         this.addSlotDragListeners(this.view.screen.querySelectorAll('.character-summary-equipped-slot'), 'equipSlots');
         this.addSlotDragListeners(this.view.screen.querySelectorAll('.inventory-slot'), 'inventorySlots');
@@ -43,7 +66,6 @@ export default class CharacterSummaryController{
                 });
             }
         });
-        //all slot datas need to be able to be dragged into equipment slots and invneotry slots
         
         //Switch Buttons
     }
@@ -76,8 +98,11 @@ export default class CharacterSummaryController{
                         if(inventoryItem.itemType == 'attachable'){
                             incomingItemSlotType = inventoryItem.slot;
                             outgoingItemSlotType = this.model.getInventoryItemSlotTypeFromClassList(exsistingData.parentNode.classList)
+                            
                             if(incomingItemSlotType != outgoingItemSlotType){
-                                return;
+                                if(incomingItemSlotType != 'oneHand' && incomingItemSlotType != 'twoHand'){
+                                    return;
+                                }
                             }
                             this.model.switchEquipmentFromInventory(outgoingItemSlotType, inventoryItem)
                         }else{
@@ -98,7 +123,9 @@ export default class CharacterSummaryController{
                             incomingItemSlotType = inventoryItem.slot
                             outgoingItemSlotType = this.model.getInventoryItemSlotTypeFromClassList(draggedData.parentNode.classList)
                             if(incomingItemSlotType != outgoingItemSlotType){
-                                return;
+                                if(incomingItemSlotType != 'oneHand' && incomingItemSlotType != 'twoHand'){
+                                    return;
+                                }
                             }
                             this.model.switchEquipmentFromInventory(outgoingItemSlotType, inventoryItem)
                         }else{
@@ -107,10 +134,13 @@ export default class CharacterSummaryController{
                     }
 
                     //inv to inv (occurs by default)
-                    draggedData.parentNode.appendChild(exsistingData);
-                    node.appendChild(draggedData);
-                    node.classList.remove('hover-brightness');
-                    this.view.displayCharacterSummary(this.model.currentCharacter)
+                    if(exsistingData.id != undefined){
+                        this.onSwitchScreen();
+                        //draggedData.parentNode.appendChild(exsistingData);
+                        //node.appendChild(draggedData);
+                        //node.classList.remove('hover-brightness');
+                        //this.view.displayCharacterSummary(this.model.currentCharacter)
+                    }
                 });
           
             }

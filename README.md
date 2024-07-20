@@ -25,7 +25,8 @@ Roguelike turnbased adventure game based on the Shackle Breaker story
 
 # Bugs
 * switching from mercenary to another companion and then back causes bug (no companions left to recruit)
-* adding item from inventirt to empty slot causes bug
 * initiating a retreat and the revisting battle causes bug
+* music doesnt play in overworld after retreat
+
 
 # MISC notes

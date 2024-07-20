@@ -46,6 +46,7 @@ export default class CharacterSummaryView{
 
         this.characterImage = document.getElementById('character-summary-character-image');
 
+        this.inventoryPannel = document.getElementById('character-summary-inventory-container');
         this.inventoryContainer = document.getElementById('character-summary-inventory-slots-container');
         this.equippedContainer = document.getElementById('character-summary-equipped-container');
     }

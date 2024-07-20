@@ -1,6 +1,6 @@
 import { MagicMissile, Slash, Strike, Cleave, ThrowPosionKnife} from "./abilities.js";
 import { Poison, Burn} from "./statusEffects.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, LinenShirt, LinenPants, PineWood, Handaxe } from "./items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, LinenShirt, LinenPants, PineWood, Handaxe, Shortbow } from "./items.js";
 export class Entity{
     constructor(config){
         this.name = config.name || 'entity';
@@ -223,7 +223,7 @@ export class Entity{
     addAttatchableStats(slots){
         for(let i = 0; i < slots.length; i++){
             if(this.equipment[slots[i]] != ''){
-                if(slots != 'offhand' && this.equipment[slots[i]].slot != 'twoHands'){
+                //if(slots != 'offhand' && this.equipment[slots[i]].slot != 'twoHands'){
                     this.currentHP += this.equipment[slots[i]].hp;
                     this.currentStamina += this.equipment[slots[i]].stamina;
                     this.currentMagic += this.equipment[slots[i]].magic;
@@ -247,7 +247,7 @@ export class Entity{
                     this.currentCritical += this.equipment[slots[i]].critical;
                     this.adjustFloatingPointErrors();
                 }
-            }
+            //}
         }
     }
     subtractAttatchableStats(slots){
