@@ -204,6 +204,10 @@ export class Entity{
                         this.equipment['mainHand'] = attatchables[x];
                     }
                     break;
+                case 'twoHand':
+                    this.equipment['mainHand'] = attatchables[x];
+                    this.equipment['offhand'] = attatchables[x];
+                    break;
                 default:
                     this.equipment[attatchables[x].slot] = attatchables[x];
                     break;
@@ -213,17 +217,27 @@ export class Entity{
     unequipAttatchables(slots){
         let unequippedAttatchables = [];
         for(let i = 0; i < slots.length; i++){
-            if(this.equipment[slots[i] != '']){
+            if(this.equipment[slots[i]] != ''){
+                if(slots[i] == 'mainHand' && this.equipment[slots[i]].slot == 'twoHand'){
+                    this.equipment['offhand'] = '';
+                }
+                if(slots[i] == 'offhand' && this.equipment[slots[i]].slot == 'twoHand'){
+                    this.equipment['mainHand'] = '';
+                }
                 unequippedAttatchables.push(this.equipment[slots[i]]);
             }
             this.equipment[slots[i]] = '';
+            
         }
         return(unequippedAttatchables);
     }
     addAttatchableStats(slots){
+        let twoHandCount = 0;
         for(let i = 0; i < slots.length; i++){
-            if(this.equipment[slots[i]] != ''){
-                //if(slots != 'offhand' && this.equipment[slots[i]].slot != 'twoHands'){
+            if(this.equipment[slots[i]].slot == 'twoHand' && twoHandCount >= 1){
+                //skip iteration
+            }else{
+                if(this.equipment[slots[i]] != ''){
                     this.currentHP += this.equipment[slots[i]].hp;
                     this.currentStamina += this.equipment[slots[i]].stamina;
                     this.currentMagic += this.equipment[slots[i]].magic;
@@ -246,35 +260,46 @@ export class Entity{
                     this.currentEvasion += this.equipment[slots[i]].evasion;
                     this.currentCritical += this.equipment[slots[i]].critical;
                     this.adjustFloatingPointErrors();
+                    if(this.equipment[slots[i]].slot == 'twoHand'){
+                        twoHandCount++
+                    }
                 }
-            //}
+            }
         }
     }
     subtractAttatchableStats(slots){
+        let twoHandCount = 0;
         for(let i = 0; i < slots.length; i++){
-            if(this.equipment[slots[i]] != ''){
-                this.currentHP -= this.equipment[slots[i]].hp;
-                this.currentStamina -= this.equipment[slots[i]].stamina;
-                this.currentMagic -= this.equipment[slots[i]].magic;
-                this.currentHpRecovery -= this.equipment[slots[i]].hpRecovery
-                this.currentStaminaRecovery -= this.equipment[slots[i]].staminaRecovery;
-                this.currentMagicRecovery -= this.equipment[slots[i]].magicRecovery;
-                this.currentBluntAttack -= this.equipment[slots[i]].bluntAttack;
-                this.currentPierceAttack -= this.equipment[slots[i]].pierceAttack;
-                this.currentArcaneAttack -= this.equipment[slots[i]].arcaneAttack;
-                this.currentElementalAttack -= this.equipment[slots[i]].elementalAttack;
-                this.currentBluntDefense -= this.equipment[slots[i]].bluntDefense;
-                this.currentPierceDefense -= this.equipment[slots[i]].pierceDefense;
-                this.currentArcaneDefense -= this.equipment[slots[i]].arcaneDefense;
-                this.currentElementalDefense -= this.equipment[slots[i]].elementalDefense;
-                this.currentBluntResistance -= this.equipment[slots[i]].bluntResistance;
-                this.currentPierceResistance -= this.equipment[slots[i]].pierceResistance;
-                this.currentArcaneResistance -= this.equipment[slots[i]].arcaneResistance;
-                this.currentElementalResistance -= this.equipment[slots[i]].elementalResistance;
-                this.currentSpeed -= this.equipment[slots[i]].speed;
-                this.currentEvasion -= this.equipment[slots[i]].evasion;
-                this.currentCritical -= this.equipment[slots[i]].critical;
-                this.adjustFloatingPointErrors();
+            if(this.equipment[slots[i]].slot == 'twoHand' && twoHandCount >= 1){
+                //skip iteration
+            }else{
+                if(this.equipment[slots[i]] != ''){
+                    this.currentHP -= this.equipment[slots[i]].hp;
+                    this.currentStamina -= this.equipment[slots[i]].stamina;
+                    this.currentMagic -= this.equipment[slots[i]].magic;
+                    this.currentHpRecovery -= this.equipment[slots[i]].hpRecovery
+                    this.currentStaminaRecovery -= this.equipment[slots[i]].staminaRecovery;
+                    this.currentMagicRecovery -= this.equipment[slots[i]].magicRecovery;
+                    this.currentBluntAttack -= this.equipment[slots[i]].bluntAttack;
+                    this.currentPierceAttack -= this.equipment[slots[i]].pierceAttack;
+                    this.currentArcaneAttack -= this.equipment[slots[i]].arcaneAttack;
+                    this.currentElementalAttack -= this.equipment[slots[i]].elementalAttack;
+                    this.currentBluntDefense -= this.equipment[slots[i]].bluntDefense;
+                    this.currentPierceDefense -= this.equipment[slots[i]].pierceDefense;
+                    this.currentArcaneDefense -= this.equipment[slots[i]].arcaneDefense;
+                    this.currentElementalDefense -= this.equipment[slots[i]].elementalDefense;
+                    this.currentBluntResistance -= this.equipment[slots[i]].bluntResistance;
+                    this.currentPierceResistance -= this.equipment[slots[i]].pierceResistance;
+                    this.currentArcaneResistance -= this.equipment[slots[i]].arcaneResistance;
+                    this.currentElementalResistance -= this.equipment[slots[i]].elementalResistance;
+                    this.currentSpeed -= this.equipment[slots[i]].speed;
+                    this.currentEvasion -= this.equipment[slots[i]].evasion;
+                    this.currentCritical -= this.equipment[slots[i]].critical;
+                    this.adjustFloatingPointErrors();
+                    if(this.equipment[slots[i]].slot == 'twoHand'){
+                        twoHandCount++
+                    }
+                }
             }
         }
     }

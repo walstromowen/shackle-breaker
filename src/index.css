@@ -79,7 +79,7 @@
         --ui-pannel-padding: 4px;
         --stat-cell-width: 100%;
         --medium-size-button-width: 100px;
-        --utility-button-sides: 40px;
+        --utility-button-sides: 50px;
         --battle-ability-button-sides: 50px;
     }
     .lobby-inputs-background-apperance-container{
@@ -205,6 +205,7 @@ h5{
 }
 img{
     user-select: none;
+    
 }
 .health-color{
     background-color: var(--health-color);

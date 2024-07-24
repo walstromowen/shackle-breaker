@@ -41,11 +41,23 @@ export default class CharacterSummaryController{
             let draggedData = document.getElementsByClassName('dragging')[0];
             if(draggedData.id != undefined){
                 let equippedItemSlotType = this.model.getInventoryItemSlotTypeFromClassList(draggedData.parentNode.classList)
-                this.model.unequipAttatchable(equippedItemSlotType)
+                if(equippedItemSlotType == 'inventory-slot'){//push item to back of inventory
+                    this.model.pushInventoryItemToInventoryEnd(draggedData.id)
+                }else{
+                    this.model.unequipAttatchable(equippedItemSlotType)
+                }
                 this.onSwitchScreen();
-               
             }
         });
+        this.view.previousCharacterButton.addEventListener('click', ()=>{
+            this.model.updateCurrentCharacter('previous')
+            this.onSwitchScreen();
+        })
+        this.view.nextCharacterButton.addEventListener('click', ()=>{
+            this.model.updateCurrentCharacter('next')
+            this.onSwitchScreen();
+        })
+       
     }
     onSwitchScreen(){
         this.view.displayCharacterSummary(this.model.currentCharacter);
@@ -92,27 +104,50 @@ export default class CharacterSummaryController{
                     let outgoingItemSlotType;
                     let draggedData = document.getElementsByClassName('dragging')[0];
                     let exsistingData = node.getElementsByClassName('inventory-slot-data')[0];
-                    //inv to equip
+                    //to equip
                     if(dropLocation == 'equipSlots'){
-                        let inventoryItem = this.model.getInventoryItemFromItemId(draggedData.id)
+                        let inventoryItem
+                        if(draggedData.parentNode.classList.contains('character-summary-equipped-slot')){//from equip
+                            inventoryItem = this.model.currentCharacter.equipment[this.model.getInventoryItemSlotTypeFromClassList(draggedData.parentNode.classList)];
+                           
+                        }else{
+                            inventoryItem = this.model.getInventoryItemFromItemId(draggedData.id)
+                        }
                         if(inventoryItem.itemType == 'attachable'){
                             incomingItemSlotType = inventoryItem.slot;
                             outgoingItemSlotType = this.model.getInventoryItemSlotTypeFromClassList(exsistingData.parentNode.classList)
                             
                             if(incomingItemSlotType != outgoingItemSlotType){
-                                if(incomingItemSlotType != 'oneHand' && incomingItemSlotType != 'twoHand'){
+                                if(
+                                    (incomingItemSlotType == 'oneHand' && outgoingItemSlotType == 'mainHand') ||
+                                    (incomingItemSlotType == 'oneHand' && outgoingItemSlotType == 'offhand') ||
+                                    (incomingItemSlotType == 'twoHand' && outgoingItemSlotType == 'mainHand') ||
+                                    (incomingItemSlotType == 'twoHand' && outgoingItemSlotType == 'offhand')
+                                ){
+                                    //skip
+                                }else{
                                     return;
                                 }
                             }
-                            this.model.switchEquipmentFromInventory(outgoingItemSlotType, inventoryItem)
+                            if(draggedData.parentNode.classList.contains('character-summary-equipped-slot')){
+                                incomingItemSlotType =  this.model.getInventoryItemSlotTypeFromClassList(draggedData.parentNode.classList);
+                                this.model.switchItemsBetweenEquipSlots(outgoingItemSlotType, incomingItemSlotType);
+                            }else{
+                                this.model.switchEquipmentFromInventory(outgoingItemSlotType, inventoryItem)
+                            }
                         }else{
                             return
                         }
                     }
-                    //equip to specific inv slot
-                    if(dropLocation == 'inventorySlots'){
+                    //to inv slot
+                    if(dropLocation == 'inventorySlots' && exsistingData.classList.contains('inventory-slot') == false){
                         let inventoryItem;
                         let inventoryItemType;
+                        if(draggedData.parentNode.classList.contains('inventory-slot')){//from inventory
+                            this.model.switchInventorySlots(draggedData.id, exsistingData.id);
+                            this.onSwitchScreen();
+                            return;
+                        }
                         if(exsistingData.id != undefined){
                             inventoryItem = this.model.getInventoryItemFromItemId(exsistingData.id)
                             inventoryItemType = inventoryItem.itemType;
@@ -122,8 +157,16 @@ export default class CharacterSummaryController{
                         if(inventoryItemType == 'attachable'){
                             incomingItemSlotType = inventoryItem.slot
                             outgoingItemSlotType = this.model.getInventoryItemSlotTypeFromClassList(draggedData.parentNode.classList)
+                            
                             if(incomingItemSlotType != outgoingItemSlotType){
-                                if(incomingItemSlotType != 'oneHand' && incomingItemSlotType != 'twoHand'){
+                                if(
+                                    (incomingItemSlotType == 'oneHand' && outgoingItemSlotType == 'mainHand') ||
+                                    (incomingItemSlotType == 'oneHand' && outgoingItemSlotType == 'offhand') ||
+                                    (incomingItemSlotType == 'twoHand' && outgoingItemSlotType == 'mainHand') ||
+                                    (incomingItemSlotType == 'twoHand' && outgoingItemSlotType == 'offhand')
+                                ){
+                                    //skip
+                                }else{
                                     return;
                                 }
                             }
@@ -136,10 +179,6 @@ export default class CharacterSummaryController{
                     //inv to inv (occurs by default)
                     if(exsistingData.id != undefined){
                         this.onSwitchScreen();
-                        //draggedData.parentNode.appendChild(exsistingData);
-                        //node.appendChild(draggedData);
-                        //node.classList.remove('hover-brightness');
-                        //this.view.displayCharacterSummary(this.model.currentCharacter)
                     }
                 });
           

@@ -48,9 +48,17 @@ export default class LobbyView{
         this.lobbyInventory.querySelectorAll('.inventory-slot').forEach((node)=>{
             node.remove();
         });
+        let twoHandCount = 0;
         for(let i = 0; i < equipment.length; i++){
             if(equipment[i].itemType == 'attachable'){
-                this.createInventorySlot(equipment[i]);
+                if(twoHandCount >= 1 && equipment[i].slot == 'twoHand'){
+                    //skip
+                }else{
+                    this.createInventorySlot(equipment[i]);
+                    if(equipment[i].slot == 'twoHand'){
+                        twoHandCount++;
+                    }
+                }
             } 
         }
         for(let i = 0; i < partyInventory.length; i++){
@@ -63,6 +71,7 @@ export default class LobbyView{
         slotData.src = item.imageSrc;
         slot.appendChild(slotData);
         this.lobbyInventory.appendChild(slot);
+        slotData.draggable = false;
 
     }
     updateAttributes([vigor, strength, dexterity, intelligence, attunement]){

@@ -64,7 +64,7 @@ export class Dagger extends Attachable{
         super({
             name: 'dagger',
             description: 'A simple dagger. "Often times, a duel is another way of saying who can draw their weapon fastest" - Commander Mentoras.',
-            imageSrc:  './assets/media/icons/dagger.png',
+            imageSrc:  './assets/media/icons/bowie-knife.png',
             price: 100,
             slot: 'oneHand',
             level: 1,
@@ -122,7 +122,7 @@ export class ShortSword extends Attachable{
         super({
             name: 'shortsword',
             description: 'A standard shortsword. Standard issue shortsword of the Altus guard. "A shorter longsword is a faster longsword" - Commander Mentoras.',
-            imageSrc:  './assets/media/icons/shortsword.png',
+            imageSrc:  './assets/media/icons/stiletto.png',
             price: 100,
             slot: 'oneHand',
             level: 1,
@@ -180,7 +180,7 @@ export class BlacksmithHammer extends Attachable{
         super({
             name: 'blacksmith hammer',
             description: "A blacksmith's hammer. Since what many consider to be the fall of Altus kingdom, quality weapons are hard to come by. Perhaps this explains the blood stains on this ordinary hammer",
-            imageSrc:  './assets/media/icons/blacksmith-hammer.png',
+            imageSrc:  './assets/media/icons/flat-hammer.png',
             price: 100,
             slot: 'oneHand',
             level: 1,
@@ -238,7 +238,7 @@ export class Handaxe extends Attachable{
         super({
             name: 'handaxe',
             description: `A battered handaxe. After the fall of Altus kingdom, many common tools were repurposed as weapons much like this well worn axe. "An axe is a simple lever. The harder you pull the lever, the quicker your work becomes." - Commander Mentoras.`,
-            imageSrc:  './assets/media/icons/handaxe.png',
+            imageSrc:  './assets/media/icons/battered-axe.png',
             price: 100,
             slot: 'oneHand',
             level: 1,
@@ -296,7 +296,7 @@ export class Shortbow extends Attachable{
         super({
             name: 'shortbow',
             description: `A wooden shortbow. A standard issue shortbow among scouts and archers of the Altus kingdom. "Shortbows are good at evening the odds in unfair fights. They are also particualily popular among those bad at playing the violin." - Commander Mentoras.`,
-            imageSrc:  './assets/media/icons/shortbow.png',
+            imageSrc:  './assets/media/icons/high-shot.png',
             price: 100,
             slot: 'twoHand',
             level: 1,
@@ -354,7 +354,7 @@ export class ArcaneStaff extends Attachable{
         super({
             name: 'arcane staff',
             description: "A wooden staff imbued with arcane. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time",
-            imageSrc:  './assets/media/icons/staff.png',
+            imageSrc:  './assets/media/icons/wizard-staff.png',
             price: 200,
             slot: 'oneHand',
             level: 1,
@@ -588,7 +588,7 @@ export class LeatherHood extends Attachable{
         super({
             name: 'leather hood',
             description: 'A hood that obscures the face made of dark leather. Although most indulged in the discovery of magic, there were a few that found it ominous.',
-            imageSrc:  './assets/media/icons/hood.png',
+            imageSrc:  './assets/media/icons/cloak.png',
             price: 50,
             slot: 'head',
             level: 1,

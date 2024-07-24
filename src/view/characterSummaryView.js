@@ -49,6 +49,9 @@ export default class CharacterSummaryView{
         this.inventoryPannel = document.getElementById('character-summary-inventory-container');
         this.inventoryContainer = document.getElementById('character-summary-inventory-slots-container');
         this.equippedContainer = document.getElementById('character-summary-equipped-container');
+
+        this.previousCharacterButton = document.getElementById('character-summary-previous-character-button'); 
+        this.nextCharacterButton = document.getElementById('character-summary-next-character-button'); 
     }
     displayCharacterSummary(entity){
         this.characterName.innerText = entity.name;
@@ -123,12 +126,9 @@ export default class CharacterSummaryView{
                 slotData.src = entity.equipment[equipmentSlots[i]].imageSrc;
                 slotData.id = entity.equipment[equipmentSlots[i]].itemId;
             }else{
-                switch(equipmentSlots[i]){
-                    default:
-                        slotData.removeAttribute('id');
-                        //slotData.src = 'assets/media/icons/cancel.png';
-                        break;
-                }
+                slotData.removeAttribute('id')
+                slotData.src = `assets/media/icons/${equipmentSlots[i]}-empty-slot.png`;
+                slotData.draggable = false;
             }
             slot.appendChild(slotData);
             this.equippedContainer.appendChild(slot);
