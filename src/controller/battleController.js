@@ -34,10 +34,10 @@ export default class BattleController{
     }
     activatePreround(){
         this.props.getPartyController().view.revealPartyToggleBackButton();
-        let allys = this.model.getActiveAllys();
+        let allies = this.model.getActiveAllies();
         this.view.battleConsole.style.display = 'none';
         this.view.battleControlsContainer.style.display = 'block';
-        return allys.reduce((chain, ally)=>{
+        return allies.reduce((chain, ally)=>{
             return chain.then(()=>this.cycleAllyChoices(ally))
         }, Promise.resolve())
     }
@@ -366,6 +366,12 @@ export default class BattleController{
                 if(flag == true){
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
+                    if(combatant.isHostile == true){
+                        this.model.defeatedHostiles.push(combatant);
+                        this.model.pileLoot(combatant)
+                    }else{
+                        this.model.defeatedAllies.push(combatant);
+                    }
                     this.model.activeCombatants.splice(this.model.activeCombatants.indexOf(combatant), 1);
                     this.view.printToBattleConsole(`${combatant.name} has been slain!`)
                     this.removeCombatantCard(combatant).then(()=>{
@@ -377,6 +383,12 @@ export default class BattleController{
                 if(flag == true){
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
+                    if(combatant.isHostile == true){
+                        this.model.defeatedHostiles.push(combatant);
+                        this.model.pileLoot(combatant)
+                    }else{
+                        this.model.defeatedAllies.push(combatant);
+                    }
                     this.model.activeCombatants.splice(this.model.activeCombatants.indexOf(combatant), 1);
                     this.view.printToBattleConsole(`${combatant.name} has been slain!`)
                     this.removeCombatantCard(combatant).then(()=>{
@@ -653,7 +665,7 @@ export default class BattleController{
         })
         if(remainingAllies.length == 0){
             this.view.printToBattleConsole('Party has been slain...');
-            //TEMP
+            //TODO GAME OVER SCREEN
             
             return;
         }
@@ -662,25 +674,35 @@ export default class BattleController{
         })
         if(remainingHostiles.length == 0){
             this.view.printToBattleConsole('Hostiles have been slain...');
-            this.onEndBattle();
+            let partyPosition = this.props.getOverworldController().model.currentPartyPosition
+            this.model.props.getMap().tileLayout[partyPosition[1]][partyPosition[0]].battle = '';
+            this.onEndBattle();   
             return;
         }
         if(this.model.props.getBattle().currentAllyLimit == 0 ){
             this.view.printToBattleConsole('All allies have escaped!');
+            this.props.getOverworldController().model.currentPartyPosition = this.props.getOverworldController().model.previousPartyPosition
             this.onEndBattle();
             return;
         }
         if(this.model.props.getBattle().currentHostileLimit == 0 ){
             this.view.printToBattleConsole('All hostiles have escaped!');
+            let partyPosition = this.props.getOverworldController().model.currentPartyPosition
+            this.model.props.getMap().tileLayout[partyPosition[1]][partyPosition[0]].battle = '';
             this.onEndBattle();
             return;
         }
         resolveFunction();  
     }
     onEndBattle(){
+        this.model.lootBattle();
+        //this.view.printToBattleConsole(`Your party loots ${this.model.props.getBattle().loot}`);
         setTimeout(()=>{
+            this.model.props.setSituation('overworld')
             this.props.switchScreen('overworld-screen');
-            playMusic(this.model.props.getMap().biome.BackgroundMusicSrc);
+            this.view.removeAllCombatantCards();
+            playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
+            this.props.getOverworldController().view.revealOverworldUi();
         }, 2000);
     }
     recoverStats(){//may want to split this into two

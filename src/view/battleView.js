@@ -23,6 +23,7 @@ export default class BattleView{
             const cardHeader = createElement('h3', 'battle-character-slot-name-header');
             const allVitalBarsContainer = createElement('div', 'battle-all-vital-bars-container');
 
+                const statusIconContainer = createElement('div', 'battle-status-icon-container');
                 const healthBarContainer = createElement('div', 'battle-vital-bar-container');
                     const healthProgress = createElement('div', 'battle-vital-bar-progress health-color battle-health-progress');
                     const healthLabelContainer = createElement('div', 'battle-vital-label-container');
@@ -46,6 +47,7 @@ export default class BattleView{
 
         combatantCard.appendChild(cardHeader);
         combatantCard.appendChild(allVitalBarsContainer);
+        allVitalBarsContainer.appendChild(statusIconContainer)
         allVitalBarsContainer.appendChild(healthBarContainer)
         allVitalBarsContainer.appendChild(staminaBarContainer)
         allVitalBarsContainer.appendChild(magicBarContainer)
@@ -99,6 +101,19 @@ export default class BattleView{
         card.querySelector('.battle-magic-progress').style.width = Math.floor(combatant.currentMagic/combatant.maxMagic*100) + "%";
         card.querySelector('.magic-icon').src = './assets/media/icons/crystalize.png';
         card.querySelector('.battle-current-magic').innerText = combatant.currentMagic;
+        this.updateStatusIcons(card, combatant);
+    }
+    updateStatusIcons(card, combatant){
+        Array.from(card.getElementsByClassName('battle-status-icon')).forEach((icon)=>{
+            icon.remove();
+        });
+        let statusContainer = card.querySelector('.battle-status-icon-container')
+        for(let i = 0; i < combatant.statusArray.length; i++){
+            let statusIcon = createElement('img', 'battle-status-icon'); 
+            statusIcon.src = combatant.statusArray[i].iconSrc;
+            statusContainer.append(statusIcon);
+        }
+        
     }
     updateMultipleCombatantStats(affected){
         for(let i = 0; i < affected.length; i++){
@@ -122,9 +137,13 @@ export default class BattleView{
         return abilityButtons;
     }
     createAbilityButton(ability){
-        const abilityButton = document.createElement('img');
-        abilityButton.src = ability.iconSrc;
-        abilityButton.classList.add('battle-ability-button');
+        const abilityButton = createElement('div', 'battle-ability-button');
+        abilityButton.style.backgroundImage = `url(${ability.iconSrc})`;
+
+
+        const itemMiniMenu = createElement('div', 'item-mini-menu');
+        //TODO
+
         this.abilityTab.appendChild(abilityButton);
         return abilityButton;
     }
@@ -180,12 +199,14 @@ export default class BattleView{
     removeCombatantCard(battleId){
         Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
             if(card.id == battleId){
-                
-                card.remove();
-                
-                
+                card.remove(); 
             }
         });
+    }
+    removeAllCombatantCards(){
+        Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
+            card.remove(); 
+        })
     }
     playAbilityAnimations(attacker, targets, resolveObject){
         let attackerCard;

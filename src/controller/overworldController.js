@@ -28,6 +28,7 @@ export default class OverworldController{
             document.getElementById('overworld-escape-menu').style.display='none';
             this.props.switchScreen('title-screen');
             playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
+            document.getElementById('music-player').pause();
         });
         window.addEventListener("keydown", (e) => {
             if(this.model.props.getScreen() == 'overworld-screen'){

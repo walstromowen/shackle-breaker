@@ -804,7 +804,19 @@ img{
     text-align:center;
     background-color: var(--color-3);
     border-radius: 10px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     
+}
+.battle-status-icon-container{
+    height: 20px;
+    display: flex;
+    justify-content: end;
+    flex-wrap: wrap;
+}
+.battle-status-icon{
+    height: 20px;
 }
 #title-screen{
     background: url('./assets/media/screens/title-screen.jpg');

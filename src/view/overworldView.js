@@ -95,6 +95,9 @@ export default class OverworldView{
     hideOverWorldUi(){
         document.getElementById('overworld-ui-container').style.display = 'none';
     }
+    revealOverworldUi(){
+        document.getElementById('overworld-ui-container').style.display = 'flex';
+    }
 }
 
 /*

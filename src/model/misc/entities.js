@@ -78,6 +78,7 @@ export class Entity{
         this.isSelectable = true;
         this.nextAbility = '';
         this.abilityTargets = [];
+        this.lootTable = config.lootTable || {};
         this.addAttatchableStats(Object.keys(this.equipment));
         
     }
@@ -311,6 +312,21 @@ export class Entity{
         this.currentEvasion = Math.round(this.currentEvasion * 100)/100; 
         this.currentCritical = Math.round(this.currentCritical * 100)/100; 
     }
+    dropLoot(count){
+        let generatedItems = [];
+        for(let i = 0; i < count; i++){
+            let allWeightSum = this.lootTable.reduce((ac, itemProbability)=> ac + itemProbability.weight, 0);
+            let threshold = Math.random() * allWeightSum;
+            for(let itemProbability of this.lootTable){
+                threshold -= itemProbability.weight;
+                if(threshold < 0){
+                    generatedItems.push(itemProbability.item);
+                    break;
+                }
+            }
+        }
+        return generatedItems;
+    }
 }
 
 
@@ -379,6 +395,11 @@ export class Skeleton extends Entity{
             },
             isHostile: config.isHostile || true,
             abilityArray: [],
+            lootTable: [
+                {item: new ShortSword({level: 1}), weight: 1},
+                {item: new Handaxe({level: 1}), weight: 2},
+                {item: new PineWood(), weight: 3}
+            ],
         });
     }
 }
@@ -401,6 +422,10 @@ export class Wolf extends Entity{
                 dogArmor: '',
             },
             abilityArray: [new Slash({})],
+            lootTable: [
+                {item: new Dagger({level: 1}), weight: 1},
+                {item: new Shortbow({level: 1}), weight: 1}
+            ],
         })
     }
 }

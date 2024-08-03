@@ -5,6 +5,7 @@ export default class Battle{
         this.hostiles = hostiles;
         this.weather = 'clear';
         this.battlefield = '';
+        this.loot = [];
         this.maxAllyCount;
         this.maxHostileCount;
         this.currentAllyLimit;

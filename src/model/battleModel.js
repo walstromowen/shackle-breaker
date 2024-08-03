@@ -9,10 +9,16 @@ export default class BattleModel{
         this.activeCombatants = [];
         this.allyReinforcements = [];
         this.hostileReinforcements = [];
-        this.defeatedAllys = [];
+        this.defeatedAllies = [];
         this.defeatedHostiles = [];
     }
     initialize(){
+        this.allCombatants = [];
+        this.activeCombatants = [];
+        this.allyReinforcements = [];
+        this.hostileReinforcements = [];
+        this.defeatedAllies = [];
+        this.defeatedHostiles = [];
         this.props.setSituation('battle');
         this.props.getBattle().resetCurrentCombatantLimit();
         this.allCombatants = this.props.getParty().concat(this.props.getBattle().hostiles);
@@ -29,8 +35,8 @@ export default class BattleModel{
         for(let i = 0; i < this.allCombatants.length; i++){
             this.allCombatants[i].battleId = `b${i}`;
             if(this.allCombatants[i].isHostile == false){
-                if(this.allCombatants[i].currentHp <= 0){
-                    this.defeatedAllys.push(this.allCombatants[i])
+                if(this.allCombatants[i].currentHP <= 0){
+                    this.defeatedAllies.push(this.allCombatants[i])
                 }else{
                     if(allyCount < this.props.getBattle().currentAllyLimit){
                         allyCount++;
@@ -41,7 +47,7 @@ export default class BattleModel{
                 }
             }
             if(this.allCombatants[i].isHostile == true){
-                if(this.allCombatants[i].currentHp <= 0){
+                if(this.allCombatants[i].currentHP <= 0){
                     this.defeatedHostiles.push(this.allCombatants[i])
                 }else{
                     if(hostileCount < this.props.getBattle().currentHostileLimit){
@@ -60,11 +66,11 @@ export default class BattleModel{
             this.props.getBattle().currentHostileLimit = hostileCount;
         }
     }
-    getActiveAllys(){
-        let allys = this.activeCombatants.filter((combatant)=>{
+    getActiveAllies(){
+        let allies = this.activeCombatants.filter((combatant)=>{
             return combatant.isHostile == false;
         })
-        return allys;
+        return allies;
     }
     getActiveHostiles(){
         let hostiles = this.activeCombatants.filter((combatant)=>{
@@ -120,7 +126,7 @@ export default class BattleModel{
                 if(attacker.nextAbility.sequenceType == 'splash'){
                     let remainingTargets;
                     if(attacker.isHostile == true){
-                        remainingTargets = this.getActiveAllys().length;
+                        remainingTargets = this.getActiveAllies().length;
                     }else{
                         remainingTargets = this.getActiveHostiles().length;
                     }
@@ -199,6 +205,17 @@ export default class BattleModel{
         }
         
         
+    }
+    pileLoot(combatant){
+        let droppedItems = combatant.dropLoot(1);//GOOD!
+        if(droppedItems.length != 0){
+            this.props.getBattle().loot = this.props.getBattle().loot.concat(droppedItems)//TODO battle loot not updating here
+        }
+    }
+    lootBattle(){
+        for(let i = 0; i < this.props.getBattle().loot.length; i++){
+            this.props.getInventory().push(this.props.getBattle().loot[i]);
+        }
     }
 }
 

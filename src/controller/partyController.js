@@ -45,9 +45,11 @@ export default class PartyController{
                     e.stopPropagation();
                     const newData = document.getElementsByClassName('dragging')[0];
                     const oldData = node.getElementsByClassName('party-character-slot-data')[0];
-                    newData.parentNode.appendChild(oldData);
-                    node.appendChild(newData);
-                    node.classList.remove('hover-brightness');
+                    this.model.switchPartySlots(oldData.id, newData.id);
+                    this.onSwitchScreen();
+                    //newData.parentNode.appendChild(oldData);
+                    //node.appendChild(newData);
+                    //node.classList.remove('hover-brightness');
                 });
             }
             node.querySelector('.party-toggle-summary-button').addEventListener('click', (e)=>{
