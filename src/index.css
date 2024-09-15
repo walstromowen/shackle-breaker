@@ -32,6 +32,8 @@
     --ability-animation-duration: 2s;
     --animate-attacker-name: ally-attack;
     --battle-ability-button-sides: 60px;
+    --inventory-mini-menu-width: 300px;
+    --inventory-mini-menu-height: 300px;
     
 }
 /*large computer styles*/
@@ -44,6 +46,8 @@
         --stat-cell-width: 50%;
         --lobby-input-width: calc(100% - 180px);
         --medium-size-button-width: 400px;
+        --inventory-mini-menu-width: 400px;
+        --inventory-mini-menu-height: 300px;
         
     }
     .stat-value{
@@ -81,6 +85,8 @@
         --medium-size-button-width: 100px;
         --utility-button-sides: 50px;
         --battle-ability-button-sides: 50px;
+        --inventory-mini-menu-width: 240px;
+        --inventory-mini-menu-height: 200px;
     }
     .lobby-inputs-background-apperance-container{
         flex-wrap: wrap;
@@ -171,6 +177,8 @@
         --medium-size-button-width: 60px;
         --utility-button-sides: 40px;
         --battle-ability-button-sides: 40px;
+        --inventory-mini-menu-width: 200px;
+        --inventory-mini-menu-height: 300px;
     }
     .party-vital-label, .battle-vital-label{
         display: none;
@@ -428,7 +436,7 @@ img{
     box-shadow: 8px 8px 8px black;
     height: fit-content;
 }
-.medium-size-button:hover, .battle-controls-ui-button:hover, .battle-controls-ui-button-large:hover, .hoverable:hover, .party-character-slot-data:hover{
+.medium-size-button:hover, .inventory-mini-menu-tab-button:hover, .battle-controls-ui-button:hover, .battle-controls-ui-button-large:hover, .hoverable:hover, .party-character-slot-data:hover{
     filter: brightness(1.5);
     box-shadow: 0px 0px 0px black;
 }
@@ -584,6 +592,9 @@ img{
     text-align:center;
     background-color: var(--color-3);
     border-radius: 10px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 .inventory-slot-data:hover, .battle-ability-button:hover{
     filter: brightness(1.5);
@@ -612,7 +623,7 @@ img{
     flex-direction: column;
     justify-content: space-around;
 }
-.battle-controls-tab-buttons-container{
+.battle-controls-tab-buttons-container, #inventory-mini-menu-tab-button-container{
     display: flex;
     justify-content: space-between;
 }
@@ -1047,6 +1058,33 @@ img{
     50%{transform: translate(500%)}
     100%{transform: translate(0%)}
 }
+.inventory-mini-menu-tab-button{
+    flex:1;
+    padding: 4px;
+    font-size: var(--font-size-3);
+    color: var(--color-5);
+    text-align:center;
+    border: 2px solid var(--color-1);
+    display:flex;
+    justify-content: center;
+    background: radial-gradient( var(--color-4), var(--color-1));
+    height: fit-content;
+    font-size: var(--font-size-2);
+}
+.inventory-mini-menu-overview-tab-stat-container{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin-bottom: 4px;
+}
+.inventory-mini-menu-tab{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    
+    
+}
 #party-grid-container{
     display: grid;
     grid-template-columns: 33% 33% 33%;
@@ -1077,4 +1115,42 @@ img{
     padding: var(--ui-pannel-padding);
     width: 50%;
     
+}
+#inventory-mini-menu-img{
+    padding: 4px;
+    width: 60px;
+    height:  60px;
+    display: block;
+    text-align:center;
+    border-radius: 10px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+#inventory-mini-menu{
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    display: none;
+    width: var(--inventory-mini-menu-width);
+    height: var(--inventory-mini-menu-height);
+    min-height: var(--inventory-mini-menu-height);
+    flex-direction:column;
+    box-shadow: 4px 8px 20px black;
+    overflow: hidden;
+    background: radial-gradient( var(--color-4), var(--color-1));
+    
+    
+}
+#inventory-mini-menu-tab-container{
+    
+    padding: 4px;
+    width: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    
+    
+}
+#inventory-mini-menu-item-name{
+    margin-bottom: 8px;
 }

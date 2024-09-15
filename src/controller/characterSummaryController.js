@@ -5,6 +5,7 @@ export default class CharacterSummaryController{
         this.props = props;
         this.model = model;
         this.view = view;
+        this.inventoryMiniMenuExitEventHandler;
         this.initialize();
     }
     initialize(){
@@ -71,13 +72,91 @@ export default class CharacterSummaryController{
             if(this.model.props.getSituation() == 'overworld'){
                 node.addEventListener('dragstart', ()=>{ 
                     node.classList.add('dragging');
+                    document.getElementById('inventory-mini-menu').style.display = 'none';
                     
                 });
                 node.addEventListener('dragend', ()=>{
                     node.classList.remove('dragging');
                 });
             }
+            node.addEventListener('click', (e)=>{
+                e.preventDefault();
+                e.stopPropagation();
+                node.classList.add
+                if(node.parentNode.classList.contains('character-summary-equipped-slot')){
+                    let slot = this.model.getInventoryItemSlotTypeFromClassList(node.parentNode.classList);
+                    if(this.model.currentCharacter.equipment[slot] != ''){
+                        let item = this.model.currentCharacter.equipment[slot];
+                        this.props.updateMiniMenu(item);
+                    }else{
+                        document.getElementById('inventory-mini-menu').style.display = 'none';
+                        return;
+                    }
+                }else{
+                    let item = this.model.getInventoryItemFromItemId(node.id);
+                    this.props.updateMiniMenu(item);
+                } 
+                document.getElementById('inventory-mini-menu-overview-tab').style.display = 'flex';
+                document.getElementById('inventory-mini-menu-stats-tab').style.display = 'none';
+                document.getElementById('inventory-mini-menu-abilities-tab').style.display = 'none';
+                let miniMenu = document.getElementById('inventory-mini-menu');
+                miniMenu.style.display = 'flex';
+                miniMenu.style.left = node.getBoundingClientRect().x  + node.getBoundingClientRect().width + "px";
+                miniMenu.style.top = node.getBoundingClientRect().y   + "px";
+                this.view.screen.addEventListener('click', this.inventoryMiniMenuExitEventHandler = (ev)=>{
+                    this.view.screen.removeEventListener('click', this.inventoryMiniMenuExitEventHandler);
+                    let miniMenu = document.getElementById('inventory-mini-menu');
+                    if(
+                        ev.clientX < miniMenu.getBoundingClientRect().x ||
+                        ev.clientX > miniMenu.getBoundingClientRect().x + miniMenu.getBoundingClientRect().width ||
+                        ev.clientY < miniMenu.getBoundingClientRect().y ||
+                        ev.clientY > miniMenu.getBoundingClientRect().y + miniMenu.getBoundingClientRect().height
+                    ){
+                        miniMenu.style.display = 'none';
+                    }
+                });
+            
+            });
         });
+            /*
+            node.addEventListener('click', ()=>{
+                //if mouse not over boundaries of minimenu or node then hide minimenu
+                //alert('leave')
+                let miniMenu = document.getElementById('inventory-mini-menu');
+                miniMenu.addEventListener('mouseleave', this.inventoryMiniMenuMouseMoveEventHandler = (e)=>{
+                    this.view.screen.removeEventListener('mousemove', this.inventoryMiniMenuMouseMoveEventHandler);
+                    document.getElementById('inventory-mini-menu').style.display = 'none';
+                })
+
+
+
+                
+                this.view.screen.addEventListener('mousemove', this.inventoryMiniMenuMouseMoveEventHandler = (e)=>{
+                    if(
+                        (
+                            e.clientX < miniMenu.getBoundingClientRect().x ||
+                            e.clientX > miniMenu.getBoundingClientRect().x + miniMenu.getBoundingClientRect().width ||
+                            e.clientY < miniMenu.getBoundingClientRect().y ||
+                            e.clientY > miniMenu.getBoundingClientRect().y + miniMenu.getBoundingClientRect().height
+                        )
+                        &&
+                        (
+                            e.clientX < node.getBoundingClientRect().x ||
+                            e.clientX > node.getBoundingClientRect().x + node.getBoundingClientRect().width ||
+                            e.clientY < node.getBoundingClientRect().y ||
+                            e.clientY > node.getBoundingClientRect().y + node.getBoundingClientRect().height
+                        )
+                    ){
+                        this.view.screen.removeEventListener('mousemove', this.inventoryMiniMenuMouseMoveEventHandler);
+                        document.getElementById('inventory-mini-menu').style.display = 'none';
+                   
+                        
+                    }
+                })
+                
+            })
+        });
+        */
         
         //Switch Buttons
     }

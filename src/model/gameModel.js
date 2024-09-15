@@ -49,7 +49,7 @@ export default class GameModel{
         this.wanderingCompanions = [
             new Entity({
                 name: 'Ragnar Ironson',
-                apperance: './assets/media/entities/companion-warrior-male-3.jpg',
+                apperance: './assets/media/entities/companion-warrior-1.jpg',
                 vigor: 5,
                 strength: 5,
                 dexterity: 5,
@@ -67,7 +67,7 @@ export default class GameModel{
             }),
             new Entity({
                 name: 'Nicholi Ironson',
-                apperance: './assets/media/entities/companion-warrior-male-1.jpg',
+                apperance: './assets/media/entities/companion-warrior-4.jpg',
                 vigor: 5,
                 strength: 5,
                 dexterity: 5,
@@ -85,7 +85,7 @@ export default class GameModel{
             }),
             new Entity({
                 name: 'Julian Memira',
-                apperance: './assets/media/entities/companion-mage-male-1.jpg',
+                apperance: './assets/media/entities/companion-warrior-3.jpg',
                 vigor: 5,
                 strength: 5,
                 dexterity: 5,
@@ -103,7 +103,7 @@ export default class GameModel{
             }),
             new Entity({
                 name: 'Revan Sekrav',
-                apperance: './assets/media/entities/companion-rogue-male-1.jpg',
+                apperance: './assets/media/entities/companion-warrior-2.jpg',
                 vigor: 5,
                 strength: 5,
                 dexterity: 5,
@@ -121,7 +121,7 @@ export default class GameModel{
             }),
             new Entity({
                 name: 'Gwen Swallowtail',
-                apperance: './assets/media/entities/companion-rogue-female-1.jpg',
+                apperance: './assets/media/entities/companion-rogue-1.jpg',
                 vigor: 5,
                 strength: 5,
                 dexterity: 5,

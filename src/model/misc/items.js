@@ -645,8 +645,8 @@ export class LeatherHood extends Attachable{
 export class PineWood extends Material{
     constructor(){
         super({
-            name: 'pine Wood',
-            description: 'a pine wood board.',
+            name: 'pine wood',
+            description: 'A pine wood board. Boards such are these are considered softwood, and although plentiful, are less sturdy than hardwoods',
             imageSrc: './assets/media/icons/wood-beam.png',
             price: 100,
         });

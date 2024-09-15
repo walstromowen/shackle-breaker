@@ -17,6 +17,7 @@ export default class GameController{
             getBattleController: this.getBattleController.bind(this),
             getPartyController: this.getPartyController.bind(this),
             getCharacterSummaryController: this.getCharacterSummaryController.bind(this),
+            updateMiniMenu: this.updateMiniMenu.bind(this),
         }
         this.model = model;
         this.view = view;
@@ -26,6 +27,24 @@ export default class GameController{
         this.battleController = new BattleController(this.props, this.model.battleModel, this.view.battleView)
         this.partyController = new PartyController(this.props, this.model.partyModel, this.view.partyView);
         this.characterSummaryController = new CharacterSummaryController(this.props, this.model.characterSummaryModel, this.view.characterSummaryView);
+        this.initialize();
+    }
+    initialize(){
+        document.getElementById('inventory-mini-menu-overview-button').addEventListener('click', ()=>{
+            document.getElementById('inventory-mini-menu-stats-tab').style.display = 'none';
+            document.getElementById('inventory-mini-menu-abilities-tab').style.display = 'none';
+            document.getElementById('inventory-mini-menu-overview-tab').style.display = 'flex';
+        });
+        document.getElementById('inventory-mini-menu-stats-button').addEventListener('click', ()=>{
+            document.getElementById('inventory-mini-menu-overview-tab').style.display = 'none';
+            document.getElementById('inventory-mini-menu-abilities-tab').style.display = 'none';
+            document.getElementById('inventory-mini-menu-stats-tab').style.display = 'flex'; 
+        });
+        document.getElementById('inventory-mini-menu-abilities-button').addEventListener('click', ()=>{
+            document.getElementById('inventory-mini-menu-overview-tab').style.display = 'none';
+            document.getElementById('inventory-mini-menu-stats-tab').style.display = 'none';
+            document.getElementById('inventory-mini-menu-abilities-tab').style.display = 'flex';
+        });
     }
     switchScreen(screenId){
         switch(screenId){
@@ -75,5 +94,8 @@ export default class GameController{
     }
     getCharacterSummaryController(){
         return this.characterSummaryController;
+    }
+    updateMiniMenu(item){
+        this.view.updateMiniMenu(item);
     }
 }

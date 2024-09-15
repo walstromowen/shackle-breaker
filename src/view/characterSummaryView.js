@@ -108,8 +108,14 @@ export default class CharacterSummaryView{
     }
     createInventorySlot(item){
         const slot = createElement('div', 'inventory-slot');
-        const slotData = createElement('img', 'inventory-slot-data');
-        slotData.src = item.imageSrc;
+        const slotData = createElement('div', 'inventory-slot-data');
+        slotData.draggable = true;
+        slotData.style.backgroundImage = `url(${item.imageSrc})`;
+        //miniMenu
+       
+
+
+
         slot.appendChild(slotData);
         this.inventoryContainer.appendChild(slot);
         slotData.id = item.itemId;
@@ -121,13 +127,14 @@ export default class CharacterSummaryView{
         let equipmentSlots = Object.keys(entity.equipment);
         for(let i = 0; i < equipmentSlots.length; i++){
             const slot = createElement('div', `character-summary-equipped-slot ${equipmentSlots[i]}`);
-            const slotData = createElement('img', 'inventory-slot-data');
+            const slotData = createElement('div', 'inventory-slot-data');
             if(entity.equipment[equipmentSlots[i]] != ''){
-                slotData.src = entity.equipment[equipmentSlots[i]].imageSrc;
+                slotData.style.backgroundImage = `url(${entity.equipment[equipmentSlots[i]].imageSrc})`;
                 slotData.id = entity.equipment[equipmentSlots[i]].itemId;
+                slotData.draggable = true;
             }else{
                 slotData.removeAttribute('id')
-                slotData.src = `assets/media/icons/${equipmentSlots[i]}-empty-slot.png`;
+                slotData.style.backgroundImage = `url(assets/media/icons/${equipmentSlots[i]}-empty-slot.png)`;
                 slotData.draggable = false;
             }
             slot.appendChild(slotData);

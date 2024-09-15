@@ -4,7 +4,8 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 # Planned Features
 * Item pop up menus
 * Default Abilities (punch)
-* loot
+* loot messages
+
 
 * Encounter System
 * Map abilities

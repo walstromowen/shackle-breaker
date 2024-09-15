@@ -67,8 +67,8 @@ export default class LobbyView{
     }
     createInventorySlot(item){
         const slot = createElement('div', 'inventory-slot');
-        const slotData = createElement('img', 'inventory-slot-data');
-        slotData.src = item.imageSrc;
+        const slotData = createElement('div', 'inventory-slot-data');
+        slotData.style.backgroundImage = `url(${item.imageSrc})`;
         slot.appendChild(slotData);
         this.lobbyInventory.appendChild(slot);
         slotData.draggable = false;

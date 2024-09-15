@@ -35,10 +35,22 @@
                         <select id='lobby-apperance-selection' class='lobby-input'>
                             <option id='knight-1' value='./assets/media/entities/knight-1.jpg'>Knight 1</option>
                             <option id='knight-2' value='./assets/media/entities/knight-2.jpg'>Knight 2</option>
+                            <option id='knight-3' value='./assets/media/entities/knight-3.jpg'>Knight 3</option>
+                            <option id='knight-4' value='./assets/media/entities/knight-4.jpg'>Knight 4</option>
+                            <option id='knight-5' value='./assets/media/entities/knight-5.jpg'>Knight 5</option>
+
                             <option id='rogue-1' value='./assets/media/entities/rogue-1.jpg'>Rogue 1</option>
                             <option id='rogue-2' value='./assets/media/entities/rogue-2.jpg'>Rogue 2</option>
+                            <option id='rogue-3' value='./assets/media/entities/rogue-3.jpg'>Rogue 3</option>
+                            <option id='rogue-4' value='./assets/media/entities/rogue-4.jpg'>Rogue 4</option>
+                            <option id='rogue-5' value='./assets/media/entities/rogue-5.jpg'>Rogue 5</option>
+
                             <option id='mage-1' value='./assets/media/entities/mage-1.jpg'>Mage 1</option>
                             <option id='mage-2' value='./assets/media/entities/mage-2.jpg'>Mage 2</option>
+                            <option id='mage-3' value='./assets/media/entities/mage-3.jpg'>Mage 3</option>
+                            <option id='mage-4' value='./assets/media/entities/mage-4.jpg'>Mage 4</option>
+                            <option id='mage-5' value='./assets/media/entities/mage-5.jpg'>Mage 5</option>
+                            
                         </select>
                     </div>
                     <div class='lobby-input-row'>
@@ -724,6 +736,185 @@
         </div>
         <div id='gameover-screen' class='screen'>
             
+        </div>
+        <div id='inventory-mini-menu'>
+            <div id='inventory-mini-menu-tab-button-container'>
+                <button id='inventory-mini-menu-overview-button' class='inventory-mini-menu-tab-button'>Overview</button>
+                <button id='inventory-mini-menu-stats-button' class='inventory-mini-menu-tab-button'>Stats</button>
+                <button id='inventory-mini-menu-abilities-button' class='inventory-mini-menu-tab-button'>Abilities</button>
+            </div>
+            <div id='inventory-mini-menu-tab-container'>
+                <div id='inventory-mini-menu-overview-tab' class='inventory-mini-menu-tab'>
+                    <p id='inventory-mini-menu-item-name' class='stat-label'>ITEM NAME</p>
+                    <div class='flex-right'>
+                        <img src='./assets/media/icons/light-helm.png' id='inventory-mini-menu-img'>
+                        <div class='inventory-mini-menu-overview-tab-stat-container'>
+                            <div class='flex'>
+                                <p class='stat-label'>LEVEL:</p>
+                                <p class='stat-value'><span id='inventory-mini-menu-item-level'>999</span></p>
+                            </div>
+                            <div class='flex'>
+                                <p class='stat-label'>SLOT:</p>
+                                <p class='stat-value'><span id='inventory-mini-menu-item-slot'>999</span></p>
+                            </div>
+                            <div class='flex'>
+                                <p class='stat-label'>PRICE:</p>
+                                <p class='stat-value'><span id='inventory-mini-menu-item-price'>999</span></p>
+                            </div>                      
+                        </div>
+                    </div>
+                    <p id='inventory-mini-menu-item-description'>This is an item description about the item above.</p>
+                </div>
+                <div id='inventory-mini-menu-stats-tab' class='inventory-mini-menu-tab'>
+                    <div class='flex-wrap'>
+                        <div class='stat-cell'>
+                            <div class='flex'>
+                                <img class='icon' src='./assets/media/icons/hearts.png' draggable="false">
+                                <p class='stat-label'>HP RC:</p>
+                            </div>
+                            <p class='stat-value'><span id='inventory-mini-menu-hp-recovery'>999</span></p>
+                        </div>
+                        <div class='stat-cell'>
+                            <div class='flex'>
+                                <img class='icon' src='./assets/media/icons/sprint.png' draggable="false">
+                                <p class='stat-label'>SPD:</p>
+                            </div>
+                            <p class='stat-value'><span id='inventory-mini-menu-speed'>999</span></p>
+                        </div>
+                    </div>
+                    <div class='flex-wrap'>
+                        <div class='stat-cell'>
+                            <div class='flex'>
+                                <img class='icon' src='./assets/media/icons/despair.png' draggable="false">
+                                <p class='stat-label'>STA RC:</p>
+                            </div>
+                            <p class='stat-value'><span id='inventory-mini-menu-stamina-recovery'>999</span></p>
+                        </div>
+                        <div class='stat-cell'>
+                            <div class='flex'>
+                                <img class='icon' src='./assets/media/icons/dodging.png' draggable="false">
+                                <p class='stat-label'>EVA:</p>
+                            </div>
+                            <p class='stat-value'><span id='inventory-mini-menu-evasion'>999</span></p>
+                        </div>
+                    </div>
+                    <div class='flex-wrap'>
+                        <div class='stat-cell'>
+                            <div class='flex'>
+                                <img class='icon' src='./assets/media/icons/crystalize.png' draggable="false">
+                                <p class='stat-label'>MAG RC:</p>
+                            </div>
+                            <p class='stat-value'><span id='inventory-mini-menu-magic-recovery'>999</span></p>
+                        </div>
+                        <div class='stat-cell'>
+                            <div class='flex'>
+                                <img class='icon' src='./assets/media/icons/on-target.png' draggable="false">
+                                <p class='stat-label'>CRIT:</p>
+                            </div>
+                            <p class='stat-value'><span id='inventory-mini-menu-critical'>999</span></p>
+                        </div>
+                    </div>
+                    <div class='flex-wrap'>
+                        <div class='stat-cell'>
+                            <div class='flex'>
+                                <img class='icon' src='./assets/media/icons/hammer-drop.png' draggable="false">
+                                <p class='stat-label'>BLT ATK:</p>
+                            </div>
+                            <p class='stat-value'><span id='inventory-mini-menu-blunt-attack'>999</span></p>
+                        </div>
+                        <div class='stat-cell'>
+                            <div class='flex'>
+                                <img class='icon' src='./assets/media/icons/quick-slash.png' draggable="false">
+                                <p class='stat-label'>PIR ATK:</p>
+                            </div>
+                            <p class='stat-value'><span id='inventory-mini-menu-pierce-attack'>999</span></p>
+                        </div>
+                    </div>
+                    <div class='flex-wrap'>
+                        <div class='stat-cell'>
+                            <div class='flex'>
+                                <img class='icon' src='./assets/media/icons/spiky-explosion.png' draggable="false">
+                                <p class='stat-label'>ARC ATK:</p>
+                            </div>
+                            <p class='stat-value'><span id='inventory-mini-menu-arcane-attack'>999</span></p>
+                        </div>
+                        <div class='stat-cell'>
+                            <div class='flex'>
+                                <img class='icon' src='./assets/media/icons/swirl-string.png' draggable="false">
+                                <p class='stat-label'>ELM ATK:</p>
+                            </div>
+                            <p class='stat-value'><span id='inventory-mini-menu-elemental-attack'>999</span></p>
+                        </div>
+                    </div>
+                    <div class='flex-wrap'>
+                        <div class='stat-cell'>
+                            <div class='flex'>
+                                <img class='icon' src='./assets/media/icons/hammer-drop.png' draggable="false">
+                                <p class='stat-label'>BLT DEF:</p>
+                            </div>
+                            <p class='stat-value'><span id='inventory-mini-menu-blunt-defense'>999</span></p>
+                        </div>
+                        <div class='stat-cell'>
+                            <div class='flex'>
+                                <img class='icon' src='./assets/media/icons/hammer-drop.png' draggable="false">
+                                <p class='stat-label'>BLT RES:</p>
+                            </div>
+                            <p class='stat-value'><span id='inventory-mini-menu-blunt-resistance'>999</span></p>
+                        </div>
+                    </div>
+                    <div class='flex-wrap'>
+                        <div class='stat-cell'>
+                            <div class='flex'>
+                                <img class='icon' src='./assets/media/icons/quick-slash.png' draggable="false">
+                                <p class='stat-label'>PIR DEF:</p>
+                            </div>
+                            <p class='stat-value'><span id='inventory-mini-menu-pierce-defense'>999</span></p>
+                        </div>
+                        <div class='stat-cell'>
+                            <div class='flex'>
+                                <img class='icon' src='./assets/media/icons/quick-slash.png' draggable="false">
+                                <p class='stat-label'>PIR RES:</p>
+                            </div>
+                            <p class='stat-value'><span id='inventory-mini-menu-pierce-resistance'>999</span></p>
+                        </div>
+                    </div>
+                    <div class='flex-wrap'>
+                        <div class='stat-cell'>
+                            <div class='flex'>
+                                <img class='icon' src='./assets/media/icons/spiky-explosion.png' draggable="false">
+                                <p class='stat-label'>ARC DEF:</p>
+                            </div>
+                            <p class='stat-value'><span id='inventory-mini-menu-arcane-defense'>999</span></p>
+                        </div>
+                        <div class='stat-cell'>
+                            <div class='flex'>
+                                <img class='icon' src='./assets/media/icons/spiky-explosion.png' draggable="false">
+                                <p class='stat-label'>ARC RES:</p>
+                            </div>
+                            <p class='stat-value'><span id='inventory-mini-menu-arcane-resistance'>999</span></p>
+                        </div>
+                    </div>
+                    <div class='flex-wrap'>
+                        <div class='stat-cell'>
+                            <div class='flex'>
+                                <img class='icon' src='./assets/media/icons/swirl-string.png' draggable="false">
+                                <p class='stat-label'>ELM DEF:</p>
+                            </div>
+                            <p class='stat-value'><span id='inventory-mini-menu-elemental-defense'>999</span></p>
+                        </div>
+                        <div class='stat-cell'>
+                            <div class='flex'>
+                                <img class='icon' src='./assets/media/icons/swirl-string.png' draggable="false">
+                                <p class='stat-label'>ELM RES:</p>
+                            </div>
+                            <p class='stat-value'><span id='inventory-mini-menu-elemental-resistance'>999</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div id='inventory-mini-menu-abilities-tab' class='inventory-mini-menu-tab'>
+
+                </div>
+            </div>
         </div>
         <audio src='' id='music-player' loop></audio>
         <audio src='' id='sound-effect-player'></audio>
