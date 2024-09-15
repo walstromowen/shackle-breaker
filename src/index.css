@@ -832,7 +832,7 @@ img{
 #title-screen{
     background: url('./assets/media/screens/title-screen.jpg');
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: top;
     background-size: cover;
 }
 #lobby-apperance-image{
