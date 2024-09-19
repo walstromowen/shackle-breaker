@@ -78,7 +78,7 @@ export default class GameView{
         document.getElementById('inventory-mini-menu-abilities-tab').querySelectorAll('.inventory-mini-menu-ability-slot').forEach((node)=>{
             node.remove();
         });
-        if(item.itemType=='attachable'){
+        if(item.itemType!='material'){
             for(let i = 0; i < item.abilityArray.length; i++){
                 this.createAbilitySlot(item.abilityArray[i]);
             }

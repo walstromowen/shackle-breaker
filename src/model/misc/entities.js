@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionKnife} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife} from "./abilities.js";
 import { Poison, Burn} from "./statusEffects.js";
 import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, LinenShirt, LinenPants, PineWood, Handaxe, Shortbow } from "./items.js";
 export class Entity{
@@ -70,7 +70,7 @@ export class Entity{
             feet: '',
         }; 
         this.statusArray = []; //  new Poison({holder: this}), new Burn({holder: this})
-        this.abilityArray = config.abilityArray || [];//new Strike(), new MagicMissile(), new ThrowPosionKnife(),
+        this.abilityArray = config.abilityArray || [];//new Strike(), new MagicMissile(), new ThrowPosionedKnife(),
         
         this.partyId = '';
         this.battleId = '';

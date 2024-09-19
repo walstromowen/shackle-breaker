@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionKnife} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, DrinkHealthPotion} from "./abilities.js";
 
 let counter = 0;
 
@@ -49,6 +49,7 @@ class Consumable extends Item{
         super(config);
         this.itemType = 'consumable';
         this.abilityArray = config.abilityArray || [];
+        this.inProgress = false;
     }
 }
 
@@ -89,7 +90,7 @@ export class Dagger extends Attachable{
             speed: 0,
             evasion: 0,
             critical: 0,
-            abilityArray: [new Slash({}), new ThrowPosionKnife({})],
+            abilityArray: [new Slash({}), new ThrowPosionedKnife({})],
         })
         this.upgrade(config.level-this.level);
     }
@@ -321,7 +322,7 @@ export class Shortbow extends Attachable{
             speed: 0,
             evasion: 0,
             critical: 0,
-            abilityArray: [new ThrowPosionKnife({})],
+            abilityArray: [new ThrowPosionedKnife({})],
         })
         this.upgrade(config.level-this.level);
     }
@@ -649,6 +650,30 @@ export class PineWood extends Material{
             description: 'A pine wood board. Boards such are these are considered softwood, and although plentiful, are less sturdy than hardwoods',
             imageSrc: './assets/media/icons/wood-beam.png',
             price: 100,
+        });
+    }
+}
+
+export class HealthPotion extends Consumable{
+    constructor(){
+        super({
+            name: 'health potion',
+            description: 'a magical brew designed to restore health',
+            imageSrc: './assets/media/icons/standing-potion.png',
+            price: 20,
+            abilityArray: [new DrinkHealthPotion({})],
+        });
+    }
+}
+
+export class PoisonedKnife extends Consumable{
+    constructor(){
+        super({
+            name: 'poisoned knife',
+            description: 'a small knife, dipped in poison, that can be thrown during combat',
+            imageSrc: './assets/media/icons/thrown-daggers.png',
+            price: 20,
+            abilityArray: [new ThrowPosionedKnife({})],
         });
     }
 }

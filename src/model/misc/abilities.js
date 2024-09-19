@@ -17,6 +17,7 @@ export class Ability{
         this.animationName = config.animationName || 'top-down';
         this.animationDuration = config.animationDuration || 2000;
         this.sequenceType = config.sequenceType || 'chain';
+        this.consumable = config.consumable || '';
         this.message;
     }
     calculateDamage(attacker, target){
@@ -63,6 +64,27 @@ export class Ability{
             damage = 1;
         }
         return damage;
+    }
+    checkRestore(target, rawRestore, stat){
+        let restore = Math.floor(rawRestore)
+        switch(stat){
+            case 'health':
+                if(target.currentHP + restore > target.maxHP){
+                    restore = target.maxHP - target.currentHP;
+                }
+            break;
+            case 'stamina':
+                if(target.currentStamina + restore > target.maxStamina){
+                    restore = target.maxStamina - target.currentStamina;
+                }
+            break;
+            case 'magic':
+                if(target.currentMagic + restore > target.maxMagic){
+                    restore = target.maxMagic - target.currentMagic;
+                }
+            break;
+        }
+        return restore;
     }
     spendResources(attacker){
         attacker.currentHP -= this.healthCost;
@@ -262,10 +284,10 @@ export class MagicMissile extends Ability{
        this.message = `${attacker.name} fires a magic missle at ${target.name}.`;
     }
 }
-export class ThrowPosionKnife extends Ability{
+export class ThrowPosionedKnife extends Ability{
     constructor(config){
         super({
-            name: 'throwPosionKnife',
+            name: 'throw posioned knife',
             iconSrc: './assets/media/icons/flying-dagger.png',
             background: config.background || 'grey',
             speedModifier: config.speedModifier || 1.25,
@@ -287,6 +309,33 @@ export class ThrowPosionKnife extends Ability{
     }
     updateMessage(attacker, target){
         this.message = `${attacker.name} throws a posioned knife at ${target.name}.`;
+    }
+}
+
+export class DrinkHealthPotion extends Ability{
+    constructor(config){
+        super({
+            name: 'drink health potion',
+            iconSrc: './assets/media/icons/standing-potion.png',
+            background: config.background || 'red',
+            speedModifier: config.speedModifier || 1,
+            soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
+            animationName: 'none',
+            animationDuration: config.animationDuration || 2000,
+        })
+    }
+    activate(attacker, target){
+        let rawHPRestore = attacker.maxHP*0.5;
+        let hPRestore = this.checkRestore(target, rawHPRestore, 'health');
+        target.currentHP = target.currentHP + hPRestore;
+    }
+    updateMessage(attacker, target){
+        if(attacker == target){
+            this.message = `${attacker.name} drinks a health potion.`;
+        }
+        else{
+            this.message = `${attacker.name} throws a health potion at ${target}.`;
+        }
     }
 }
 

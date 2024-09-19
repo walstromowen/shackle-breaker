@@ -87,6 +87,8 @@ export default class CharacterSummaryController{
                     let slot = this.model.getInventoryItemSlotTypeFromClassList(node.parentNode.classList);
                     if(this.model.currentCharacter.equipment[slot] != ''){
                         let item = this.model.currentCharacter.equipment[slot];
+                        document.getElementById('inventory-mini-menu-consumable-use-button').style.display = 'none';
+                        document.getElementById('inventory-mini-menu-attatchable-upgrade-button').style.display = 'block';
                         this.props.updateMiniMenu(item);
                     }else{
                         document.getElementById('inventory-mini-menu').style.display = 'none';
@@ -94,8 +96,32 @@ export default class CharacterSummaryController{
                     }
                 }else{
                     let item = this.model.getInventoryItemFromItemId(node.id);
+
+                    switch(item.itemType){
+                        case 'attatchable':
+                            document.getElementById('inventory-mini-menu-consumable-use-button').style.display = 'none';
+                            document.getElementById('inventory-mini-menu-attatchable-upgrade-button').style.display = 'block';
+                            document.getElementById('inventory-mini-menu-attatchable-upgrade-button').addEventListener('click', ()=>{
+                                //upgrade Item (Also need to remove upon switching item)
+                            })
+
+                            break;
+                        case 'consumable':
+                            document.getElementById('inventory-mini-menu-consumable-use-button').style.display = 'block';
+                            document.getElementById('inventory-mini-menu-attatchable-upgrade-button').style.display = 'none';
+                            document.getElementById('inventory-mini-menu-consumable-use-button').addEventListener('click', ()=>{
+                                //Use Consumable (Also need to remove upon switching item)
+                            })
+                            break;
+                        case 'material':
+                            document.getElementById('inventory-mini-menu-consumable-use-button').style.display = 'none';
+                            document.getElementById('inventory-mini-menu-attatchable-upgrade-button').style.display = 'none';
+                            break;
+                    }
                     this.props.updateMiniMenu(item);
                 } 
+
+
                 document.getElementById('inventory-mini-menu-overview-tab').style.display = 'flex';
                 document.getElementById('inventory-mini-menu-stats-tab').style.display = 'none';
                 document.getElementById('inventory-mini-menu-abilities-tab').style.display = 'none';

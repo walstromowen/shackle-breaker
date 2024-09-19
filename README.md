@@ -2,7 +2,10 @@
 Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Walstrom
 
 # Planned Features
-* Item pop up menus
+* Consumables
+    * use button in character summary
+    * different effects upon uisng in battle vs overworld
+    * charges
 * Default Abilities (punch)
 * loot messages
 
@@ -25,5 +28,6 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 * Alphabetize CSS rules
 * Move all status effect Promises to controller
 * overworld map smooth transitioning between tiles
+* Mobile event listener support
 
 # MISC notes

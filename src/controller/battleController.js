@@ -81,15 +81,17 @@ export default class BattleController{
                 this.view.removePossibleTargets(ally.battleId)
          
         });
-        
-        let combinedAbilities = this.model.getCombinedAbiliites(ally);
         this.view.battleConfirmTargetsContainer.style.display = 'none';
         this.view.battleControlsContainer.style.display = 'block';
         this.view.switchTab('battle-controls-abilities-tab');
         this.view.removeCardTargets();
         this.view.removeAbilityButtons();
+        this.view.removeConsumableAbilityButtons();
         this.view.highlightAttacker(ally.battleId);
-        let abilityButtons = this.view.createCombatantAbilityButtons(combinedAbilities);
+
+        //equipment abilities
+        let combinedAbilities = this.model.getCombinedAbiliites(ally);
+        let abilityButtons = this.view.createCombatantAbilityButtons(combinedAbilities, 'equipment');
         for(let i = 0; i < combinedAbilities.length; i++){
             abilityButtons[i].addEventListener('click', ()=>{
                 let container = document.getElementById('battle-battlefield-container');
@@ -105,6 +107,25 @@ export default class BattleController{
                 
                 
             })
+        } 
+        //consumable abilities
+        let consumableAbilities = this.model.getAvailableConsumableAbilities();
+        let consumableAbilityButtons = this.view.createCombatantAbilityButtons(consumableAbilities, 'consumable');
+        for(let i = 0; i < consumableAbilities.length; i++){
+            consumableAbilityButtons[i].addEventListener('click', ()=>{
+                let container = document.getElementById('battle-battlefield-container');
+                container.removeEventListener('click', this.selectTargetEventHandler);
+                container.removeEventListener('contextmenu', this.removeTargetEventHandler);
+                this.view.removeCardTargets();
+                this.view.removeEntranceAnimations();
+                this.view.removeAbilityHighlight();
+                ally.abilityTargets = [];//model
+                consumableAbilityButtons[i].classList.add('selected')//view
+                ally.nextAbility = consumableAbilities[i];//model
+                let consumable = this.model.getConsumables()[i];
+                ally.nextAbility.consumable = consumable;
+                this.createTargetListeners(ally, resolveFn);
+            });
         } 
     }
     createTargetListeners(ally, resolveFn){
@@ -176,6 +197,9 @@ export default class BattleController{
             this.view.removeAttackerHighlight(ally.battleId);
             this.view.removeCardTargets();
             this.view.battleConfirmTargetsContainer.style.display = 'none';
+            if(ally.nextAbility.consumable != ''){
+                ally.nextAbility.consumable.inProgress = true;
+            }
             resolveFn();
         })
         backButton.addEventListener('click',this.cancelAttackEventHandler=()=>{
@@ -487,6 +511,7 @@ export default class BattleController{
     canUseHelpper(targets){
         return new Promise((resolve)=>{
             let resolveObject =  this.currentAttacker.nextAbility.canUse(this.currentAttacker, targets);
+            this.model.removeConsumableByItemIdFromInventory(this.currentAttacker.nextAbility.consumable.itemId);
             resolve(resolveObject);
         });
     }

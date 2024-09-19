@@ -16,7 +16,7 @@
     --lobby-input-width: calc(100% - 140px);
     --lobby-inputs-container-width: 40%;
     --lobby-background-apperance-container-width: 60%;
-    --lobby-apperance-image-width: 160px;
+    --lobby-apperance-image-width: 200px;
     --lobby-currency-items-attrubitues-container-width: 50%;
     --lobby-currency-items-container-width: 50%;
     --lobby-attributes-container-width: 50%;
@@ -48,7 +48,7 @@
         --medium-size-button-width: 400px;
         --inventory-mini-menu-width: 400px;
         --inventory-mini-menu-height: 300px;
-        
+        --lobby-apperance-image-width: 300px;
     }
     .stat-value{
         margin-right: 10px;
@@ -352,6 +352,9 @@ img{
     width:var(--lobby-inputs-container-width);
     background-color: var(--color-2);
     padding: var(--ui-pannel-padding);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .lobby-background-apperance-container{
     display: flex;
@@ -436,7 +439,7 @@ img{
     box-shadow: 8px 8px 8px black;
     height: fit-content;
 }
-.medium-size-button:hover, .inventory-mini-menu-tab-button:hover, .battle-controls-ui-button:hover, .battle-controls-ui-button-large:hover, .hoverable:hover, .party-character-slot-data:hover{
+.medium-size-button:hover, .inventory-mini-menu-tab-button:hover, .battle-controls-ui-button:hover, .battle-controls-ui-button-large:hover, .hoverable:hover, .party-character-slot-data:hover, .inventory-mini-menu-small-size-button:hover{
     filter: brightness(1.5);
     box-shadow: 0px 0px 0px black;
 }
@@ -1080,10 +1083,21 @@ img{
 .inventory-mini-menu-tab{
     display:flex;
     flex-direction: column;
-    justify-content: space-between;
-    
-    
-    
+    gap: 4px;
+    height: 100%;
+}
+.inventory-mini-menu-small-size-button{
+    padding: 4px;
+    flex: 1;
+    font-size: var(--font-size-3);
+    color: var(--color-5);
+    text-align:center;
+    border: 2px solid var(--color-1);
+    display:flex;
+    justify-content: center;
+    background: radial-gradient( var(--color-4), var(--color-1));
+    box-shadow: 8px 8px 8px black;
+    height: fit-content;
 }
 #party-grid-container{
     display: grid;
@@ -1143,7 +1157,7 @@ img{
     
 }
 #inventory-mini-menu-tab-container{
-    
+    height: 100%;
     padding: 4px;
     width: 100%;
     max-height: 100%;
@@ -1153,4 +1167,11 @@ img{
 }
 #inventory-mini-menu-item-name{
     margin-bottom: 8px;
+}
+#inventory-mini-menu-small-button-container{
+    display:flex;
+    
+}
+#inventory-mini-menu-item-description{
+   flex-grow: 1;
 }

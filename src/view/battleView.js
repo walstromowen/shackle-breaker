@@ -129,22 +129,22 @@ export default class BattleView{
             }
         });
     }
-    createCombatantAbilityButtons(combinedAbilities){
+    createCombatantAbilityButtons(combinedAbilities, location){
         let abilityButtons = [];
         for(let i = 0; i < combinedAbilities.length; i++){
-            abilityButtons.push(this.createAbilityButton(combinedAbilities[i]))
+            abilityButtons.push(this.createAbilityButton(combinedAbilities[i], location))
         }
         return abilityButtons;
     }
-    createAbilityButton(ability){
+    createAbilityButton(ability, location){
         const abilityButton = createElement('div', 'battle-ability-button');
         abilityButton.style.backgroundImage = `url(${ability.iconSrc})`;
 
-
-        const itemMiniMenu = createElement('div', 'item-mini-menu');
-        //TODO
-
-        this.abilityTab.appendChild(abilityButton);
+        if(location == 'equipment'){
+            this.abilityTab.appendChild(abilityButton);
+        }else{
+            this.itemsTab.appendChild(abilityButton);
+        }
         return abilityButton;
     }
     removeEntranceAnimations(){
@@ -182,6 +182,11 @@ export default class BattleView{
     }
     removeAbilityButtons(){
         Array.from(document.getElementsByClassName('battle-ability-button')).forEach((button)=>{
+            button.remove();
+        });
+    }
+    removeConsumableAbilityButtons(){
+        Array.from(document.getElementsByClassName('battle-consumable-ability-button')).forEach((button)=>{
             button.remove();
         });
     }

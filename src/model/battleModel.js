@@ -184,6 +184,39 @@ export default class BattleModel{
         }
         return combinedAbilities;
     }
+    getAvailableConsumableAbilities(){
+        let consumableAbilities = [];
+        let currentInventory = this.props.getInventory();
+        for(let i = 0; i < currentInventory.length; i++){
+            if(currentInventory[i].itemType == 'consumable' && currentInventory[i].inProgress == false){
+                for(let j = 0; j < currentInventory[i].abilityArray.length; j++){
+                    consumableAbilities.push(currentInventory[i].abilityArray[j])
+                }
+                
+            }
+        }
+        return consumableAbilities;
+
+    }
+    getConsumables(){
+        let consumables = [];
+        let currentInventory = this.props.getInventory();
+        for(let i = 0; i < currentInventory.length; i++){
+            if(currentInventory[i].itemType == 'consumable'){
+                    consumables.push(currentInventory[i])
+            }
+        }
+        return consumables;
+    }
+    removeConsumableByItemIdFromInventory(consumableID){
+        let inventory = this.props.getInventory();
+        for(let i = 0; i < inventory.length; i++){
+            if(inventory[i].itemId == consumableID){
+                inventory.splice(i, 1);
+                break;
+            }
+        }
+    }
     onRetreat(combatant){
         if(combatant.isHostile){
             this.hostileReinforcements.push(combatant);
