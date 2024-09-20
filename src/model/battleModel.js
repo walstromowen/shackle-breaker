@@ -188,7 +188,7 @@ export default class BattleModel{
         let consumableAbilities = [];
         let currentInventory = this.props.getInventory();
         for(let i = 0; i < currentInventory.length; i++){
-            if(currentInventory[i].itemType == 'consumable' && currentInventory[i].inProgress == false){
+            if(currentInventory[i].itemType == 'consumable' && currentInventory[i].inProgress == false && currentInventory[i].useSituations.includes('battle')){
                 for(let j = 0; j < currentInventory[i].abilityArray.length; j++){
                     consumableAbilities.push(currentInventory[i].abilityArray[j])
                 }

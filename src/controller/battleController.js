@@ -1,4 +1,4 @@
-import {playSoundEffect, playMusic} from '../utility.js';
+import {playSoundEffect, playMusic, capiltalizeAllFirstLetters} from '../utility.js';
 import {SwitchCombatant} from '../model/misc/abilities.js';
 
 export default class BattleController{
@@ -685,13 +685,14 @@ export default class BattleController{
         });
     }
     checkEndBattle(resolveFunction){
+        let endBattleFlag = false;
         let remainingAllies = this.model.allCombatants.filter((combatant)=>{
             return (combatant.isHostile == false && combatant.currentHP > 0);
         })
         if(remainingAllies.length == 0){
             this.view.printToBattleConsole('Party has been slain...');
             //TODO GAME OVER SCREEN
-            
+            endBattleFlag = true;
             return;
         }
         let remainingHostiles = this.model.allCombatants.filter((combatant)=>{
@@ -699,36 +700,68 @@ export default class BattleController{
         })
         if(remainingHostiles.length == 0){
             this.view.printToBattleConsole('Hostiles have been slain...');
-            let partyPosition = this.props.getOverworldController().model.currentPartyPosition
+            let partyPosition = this.props.getOverworldController().model.currentPartyPosition;
             this.model.props.getMap().tileLayout[partyPosition[1]][partyPosition[0]].battle = '';
-            this.onEndBattle();   
-            return;
+            endBattleFlag = true;
+            this.onEndBattle().then(()=>{
+                return;
+            });   
+           
         }
         if(this.model.props.getBattle().currentAllyLimit == 0 ){
             this.view.printToBattleConsole('All allies have escaped!');
-            this.props.getOverworldController().model.currentPartyPosition = this.props.getOverworldController().model.previousPartyPosition
-            this.onEndBattle();
-            return;
+            this.props.getOverworldController().model.currentPartyPosition = this.props.getOverworldController().model.previousPartyPosition;
+            endBattleFlag = true;
+            this.onEndBattle().then(()=>{
+                return;
+            });   
         }
         if(this.model.props.getBattle().currentHostileLimit == 0 ){
             this.view.printToBattleConsole('All hostiles have escaped!');
             let partyPosition = this.props.getOverworldController().model.currentPartyPosition
             this.model.props.getMap().tileLayout[partyPosition[1]][partyPosition[0]].battle = '';
-            this.onEndBattle();
-            return;
+            endBattleFlag = true;
+            this.onEndBattle().then(()=>{
+                return;
+            });   
         }
-        resolveFunction();  
+        if(endBattleFlag == false){
+            resolveFunction();  
+        }
     }
     onEndBattle(){
-        this.model.lootBattle();
-        //this.view.printToBattleConsole(`Your party loots ${this.model.props.getBattle().loot}`);
-        setTimeout(()=>{
-            this.model.props.setSituation('overworld')
-            this.props.switchScreen('overworld-screen');
-            this.view.removeAllCombatantCards();
-            playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
-            this.props.getOverworldController().view.revealOverworldUi();
-        }, 2000);
+        return new Promise((resolve)=>{
+            this.displayLoot().then(()=>{
+                setTimeout(()=>{
+                    this.model.props.setSituation('overworld')
+                    this.props.switchScreen('overworld-screen');
+                    this.view.removeAllCombatantCards();
+                    playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
+                    this.props.getOverworldController().view.revealOverworldUi();
+                    resolve()
+                }, 4000);
+            })
+        });
+    }
+    displayLoot(){
+        return new Promise((resolve)=>{
+            let loot = this.model.props.getBattle().loot;
+            if(loot.length > 0){
+                this.model.lootBattle();
+                setTimeout(()=>{
+                    let message = `Your party loots:\n`;
+                    for(let i = 0; i < loot.length; i++){
+                        message += `${capiltalizeAllFirstLetters(this.model.props.getBattle().loot[i].name)}\n`
+                    }
+                    this.view.printToBattleConsole(message);
+                    resolve();
+                }, 2000);
+            }
+            else{
+                resolve();
+            }
+            
+        }) 
     }
     recoverStats(){//may want to split this into two
         let flag = true;

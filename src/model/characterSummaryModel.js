@@ -49,6 +49,15 @@ export default class CharacterSummaryModel{
             }
         }
     }
+    removeItemFromInventoryByItemId(itemID){
+        let inventory = this.props.getInventory();
+        for(let i = 0; i < inventory.length; i++){
+            if(inventory[i].itemId == itemID){
+                inventory.splice(i, 1);
+                break;
+            }
+        }
+    }
     getInventoryItemSlotTypeFromClassList(parentNodeClassList){
         let slot = parentNodeClassList.value
         slot = slot.replace('character-summary-equipped-slot ', '');

@@ -118,7 +118,7 @@
         width: 100% !important;
     }
     #lobby-screen, #character-summary-screen{
-        min-height: 100dvh;
+        
         height: auto;
     }
     .typing-animation{

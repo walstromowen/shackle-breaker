@@ -2,12 +2,8 @@
 Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Walstrom
 
 # Planned Features
-* Consumables
-    * use button in character summary
-    * different effects upon uisng in battle vs overworld
-    * charges
 * Default Abilities (punch)
-* loot messages
+
 
 
 * Encounter System
@@ -23,6 +19,7 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 
 # Bugs
 * switching from mercenary to another companion and then back causes bug (no companions left to recruit)
+* consumable items not removing properly when multiple ally using them.
 
 # Planned Quality of Life Improvements
 * Alphabetize CSS rules

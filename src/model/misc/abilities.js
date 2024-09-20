@@ -334,8 +334,24 @@ export class DrinkHealthPotion extends Ability{
             this.message = `${attacker.name} drinks a health potion.`;
         }
         else{
-            this.message = `${attacker.name} throws a health potion at ${target}.`;
+            this.message = `${attacker.name} throws a health potion at ${target.name}.`;
         }
+    }
+}
+export class DrinkKurtussBrewOfMadness extends Ability{
+    constructor(config){
+        super({
+            name: 'drink kurtuss brew of madness',
+            iconSrc: './assets/media/icons/standing-potion.png',
+            background: config.background || 'red',
+            speedModifier: config.speedModifier || 1,
+            soundEffectSrc: './assets/audio/soundEffects/energy-90321.mp3',
+            animationName: 'none',
+            animationDuration: config.animationDuration || 2000,
+        })
+    }
+    activate(attacker, target){
+        target.apperance = './assets/media/entities/kurty.jpg'
     }
 }
 

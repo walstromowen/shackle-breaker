@@ -6,6 +6,7 @@ export default class CharacterSummaryController{
         this.model = model;
         this.view = view;
         this.inventoryMiniMenuExitEventHandler;
+        this.inventoryMiniMenuUseButtonHandler;
         this.initialize();
     }
     initialize(){
@@ -82,7 +83,8 @@ export default class CharacterSummaryController{
             node.addEventListener('click', (e)=>{
                 e.preventDefault();
                 e.stopPropagation();
-                node.classList.add
+                //remove event listeners from mini-menu buttons
+                document.getElementById('inventory-mini-menu-consumable-use-button').removeEventListener('click', this.inventoryMiniMenuUseButtonHandler)
                 if(node.parentNode.classList.contains('character-summary-equipped-slot')){
                     let slot = this.model.getInventoryItemSlotTypeFromClassList(node.parentNode.classList);
                     if(this.model.currentCharacter.equipment[slot] != ''){
@@ -107,11 +109,25 @@ export default class CharacterSummaryController{
 
                             break;
                         case 'consumable':
-                            document.getElementById('inventory-mini-menu-consumable-use-button').style.display = 'block';
                             document.getElementById('inventory-mini-menu-attatchable-upgrade-button').style.display = 'none';
-                            document.getElementById('inventory-mini-menu-consumable-use-button').addEventListener('click', ()=>{
-                                //Use Consumable (Also need to remove upon switching item)
-                            })
+                            if(item.useSituations.includes(this.model.props.getSituation())){
+                                document.getElementById('inventory-mini-menu-consumable-use-button').style.display = 'block';
+                                document.getElementById('inventory-mini-menu-consumable-use-button').addEventListener('click', this.inventoryMiniMenuUseButtonHandler = ()=>{
+                                    item.abilityArray[0].activate(this.model.currentCharacter, this.model.currentCharacter);
+                                    playSoundEffect(item.abilityArray[0].soundEffectSrc);
+                                    //this.onSwitchScreen();
+                                    //document.getElementById('inventory-mini-menu-consumable-use-button').removeEventListener('click', listener);
+                                    item.charges --;
+                                    if(item.charges <= 0){
+                                        this.model.removeItemFromInventoryByItemId(node.id);
+                                        document.getElementById('inventory-mini-menu').style.display = 'none';
+                                    }
+                                    this.onSwitchScreen();
+                                    
+                                });
+                            }else{
+                                document.getElementById('inventory-mini-menu-consumable-use-button').style.display = 'none';
+                            }
                             break;
                         case 'material':
                             document.getElementById('inventory-mini-menu-consumable-use-button').style.display = 'none';
@@ -120,7 +136,7 @@ export default class CharacterSummaryController{
                     }
                     this.props.updateMiniMenu(item);
                 } 
-
+                
 
                 document.getElementById('inventory-mini-menu-overview-tab').style.display = 'flex';
                 document.getElementById('inventory-mini-menu-stats-tab').style.display = 'none';

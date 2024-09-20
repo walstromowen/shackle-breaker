@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, DrinkHealthPotion} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, DrinkHealthPotion, DrinkKurtussBrewOfMadness} from "./abilities.js";
 
 let counter = 0;
 
@@ -50,6 +50,8 @@ class Consumable extends Item{
         this.itemType = 'consumable';
         this.abilityArray = config.abilityArray || [];
         this.inProgress = false;
+        this.charges = config.charges || 1;
+        this.useSituations = config.useSituations || ['overworld', 'battle'];
     }
 }
 
@@ -662,6 +664,7 @@ export class HealthPotion extends Consumable{
             imageSrc: './assets/media/icons/standing-potion.png',
             price: 20,
             abilityArray: [new DrinkHealthPotion({})],
+            charges: 2,
         });
     }
 }
@@ -674,6 +677,20 @@ export class PoisonedKnife extends Consumable{
             imageSrc: './assets/media/icons/thrown-daggers.png',
             price: 20,
             abilityArray: [new ThrowPosionedKnife({})],
+            useSituations: ['battle'],
+        });
+    }
+}
+
+export class KurtussBrewOfMadness extends Consumable{
+    constructor(){
+        super({
+            name: "kurtus's brew of madness",
+            description: 'Fabled brew of Kurtus the Greatucus. It is said that the legendary warrior duo of Kurtus the Greatucus and Shmindolyn were unmatched in combat, but ultimatley succumbed to madness. It is rumored that consumption of a special concoction contributed to said madness.',
+            imageSrc: './assets/media/icons/potion-of-madness.png',
+            price: 200,
+            abilityArray: [new DrinkKurtussBrewOfMadness({})],
+            useSituations: ['overworld'],
         });
     }
 }
