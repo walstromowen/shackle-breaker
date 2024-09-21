@@ -62,7 +62,7 @@ export default class CharacterSummaryController{
        
     }
     onSwitchScreen(){
-        this.view.displayCharacterSummary(this.model.currentCharacter);
+        this.view.displayCharacterSummary(this.model.currentCharacter, this.model.props.getGold());
         this.view.createInventorySlots(this.model.props.getInventory());
         this.view.createEquippedItemSlots(this.model.currentCharacter);
         //slots

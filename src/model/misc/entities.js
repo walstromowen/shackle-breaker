@@ -6,6 +6,7 @@ export class Entity{
         this.name = config.name || 'entity';
         this.apperance = config.apperance || './assets/media/entities/knight-1.jpg';
         
+        this.level = config.level || 1;
         this.vigor = config.vigor || 1;
         this.strength = config.strength || 1;
         this.dexterity = config.strength || 1;
@@ -56,7 +57,6 @@ export class Entity{
         this.currentEvasion = this.baseEvasion;
         this.currentCritical = this.baseCritical;
 
-        this.level = config.level || 1;
         this.currentXP = 0;
 
         this.equipment = config.equipment || 
@@ -119,6 +119,7 @@ export class Entity{
     }
     getAttributes(){
         return [
+            this.level,
             this.vigor,
             this.strength,
             this.dexterity,

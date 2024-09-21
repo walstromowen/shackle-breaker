@@ -8,6 +8,7 @@ export default class LobbyView{
         
         this.gold = document.getElementById('lobby-gold');
 
+        this.level = document.getElementById('lobby-level');
         this.vigor = document.getElementById('lobby-vigor');
         this.strength = document.getElementById('lobby-strength');
         this.dexterity = document.getElementById('lobby-dexterity');
@@ -40,6 +41,8 @@ export default class LobbyView{
         this.critical = document.getElementById('lobby-critical');
 
         this.lobbyInventory = document.getElementById('lobby-inventory');
+
+        
     }
     updateApperance(src){
         this.apperanceImage.src = src;
@@ -74,7 +77,8 @@ export default class LobbyView{
         slotData.draggable = false;
 
     }
-    updateAttributes([vigor, strength, dexterity, intelligence, attunement]){
+    updateAttributes([level, vigor, strength, dexterity, intelligence, attunement]){
+        this.level.innerText = level;
         this.vigor.innerText = vigor;
         this.strength.innerText = strength;
         this.dexterity.innerText = dexterity;

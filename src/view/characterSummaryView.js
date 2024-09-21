@@ -5,7 +5,7 @@ export default class CharacterSummaryView{
         this.screen = document.getElementById('character-summary-screen');
             
         this.characterName = document.getElementById('character-summary-character-name');
-
+        
         this.maxHP = document.getElementById('character-summary-max-health');
         this.maxStamina = document.getElementById('character-summary-max-stamina');
         this.maxMagic = document.getElementById('character-summary-max-magic');
@@ -17,6 +17,7 @@ export default class CharacterSummaryView{
         this.staminaProgress = document.getElementById('character-summary-stamina-progress');
         this.magicProgress = document.getElementById('character-summary-magic-progress');
 
+        this.currentLevel = document.getElementById('character-summary-level');
         this.vigor = document.getElementById('character-summary-vigor');
         this.strength = document.getElementById('character-summary-strength');
         this.dexterity = document.getElementById('character-summary-dexterity');
@@ -52,8 +53,10 @@ export default class CharacterSummaryView{
 
         this.previousCharacterButton = document.getElementById('character-summary-previous-character-button'); 
         this.nextCharacterButton = document.getElementById('character-summary-next-character-button'); 
+
+        this.currentGold = document.getElementById('character-summary-gold');
     }
-    displayCharacterSummary(entity){
+    displayCharacterSummary(entity, gold){
         this.characterName.innerText = entity.name;
 
         this.maxHP.innerText = entity.maxHP;
@@ -67,6 +70,7 @@ export default class CharacterSummaryView{
         this.staminaProgress.style.width = Math.floor(entity.currentStamina/entity.maxStamina*100) + "%";
         this.magicProgress.style.width = Math.floor(entity.currentMagic/entity.maxMagic*100) + "%";
 
+        this.currentLevel.innerText = entity.level;
         this.vigor.innerText = entity.vigor;
         this.strength.innerText = entity.strength;
         this.dexterity.innerText = entity.dexterity;
@@ -94,7 +98,9 @@ export default class CharacterSummaryView{
         this.evasion.innerText = entity.currentEvasion;
         this.critical.innerText = entity.currentCritical;
 
-        this.characterImage.src = entity.apperance;
+        this.characterImage.src = entity.apperance; 
+
+        this.currentGold.innerText = gold;
 
     }
 
@@ -111,11 +117,6 @@ export default class CharacterSummaryView{
         const slotData = createElement('div', 'inventory-slot-data');
         slotData.draggable = true;
         slotData.style.backgroundImage = `url(${item.imageSrc})`;
-        //miniMenu
-       
-
-
-
         slot.appendChild(slotData);
         this.inventoryContainer.appendChild(slot);
         slotData.id = item.itemId;
@@ -141,7 +142,5 @@ export default class CharacterSummaryView{
             this.equippedContainer.appendChild(slot);
             
         }
-        
-        //create a slot for each equipment slot in entity //This will be different for dog and humanoid
     }
 }

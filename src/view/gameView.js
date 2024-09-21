@@ -89,7 +89,7 @@ export default class GameView{
         const slot = createElement('div', 'inventory-mini-menu-ability-slot');
 
             const imgNameContainer = createElement('div', 'flex');
-                const abilityImg = createElement('img', 'icon');
+                const abilityImg = createElement('img', 'utility-button');
                 const abilityName = createElement('p', 'stat-label');
 
             const hpCostContainer = createElement('div', 'stat-cell');
@@ -183,72 +183,3 @@ export default class GameView{
         document.getElementById('inventory-mini-menu-abilities-tab').appendChild(slot);
     }
 }
-
-
-/*
-                <div class='flex-wrap'>
-                    <div class='stat-cell'>
-                        <div class='flex'>
-                            <img class='icon' src='./assets/media/icons/hearts.png' draggable="false">
-                            <p class='stat-label'>HP RC:</p>
-                        </div>
-                        <p class='stat-value'><span id='inventory-mini-menu-hp-recovery'>999</span></p>
-                    </div>
-                    <div class='stat-cell'>
-                        <div class='flex'>
-                            <img class='icon' src='./assets/media/icons/sprint.png' draggable="false">
-                            <p class='stat-label'>SPD:</p>
-                        </div>
-                        <p class='stat-value'><span id='inventory-mini-menu-speed'>999</span></p>
-                    </div>
-                </div>
-                <div class='flex-wrap'>
-                    <div class='stat-cell'>
-                        <div class='flex'>
-                            <img class='icon' src='./assets/media/icons/despair.png' draggable="false">
-                            <p class='stat-label'>STA RC:</p>
-                        </div>
-                        <p class='stat-value'><span id='inventory-mini-menu-stamina-recovery'>999</span></p>
-                    </div>
-                    <div class='stat-cell'>
-                        <div class='flex'>
-                            <img class='icon' src='./assets/media/icons/dodging.png' draggable="false">
-                            <p class='stat-label'>EVA:</p>
-                        </div>
-                        <p class='stat-value'><span id='inventory-mini-menu-evasion'>999</span></p>
-                    </div>
-                </div>
-                <div class='flex-wrap'>
-                    <div class='stat-cell'>
-                        <div class='flex'>
-                            <img class='icon' src='./assets/media/icons/crystalize.png' draggable="false">
-                            <p class='stat-label'>MAG RC:</p>
-                        </div>
-                        <p class='stat-value'><span id='inventory-mini-menu-magic-recovery'>999</span></p>
-                    </div>
-                    <div class='stat-cell'>
-                        <div class='flex'>
-                            <img class='icon' src='./assets/media/icons/on-target.png' draggable="false">
-                            <p class='stat-label'>CRIT:</p>
-                        </div>
-                        <p class='stat-value'><span id='inventory-mini-menu-critical'>999</span></p>
-                    </div>
-                </div>
-                <div class='flex-wrap'>
-                    <div class='stat-cell'>
-                        <div class='flex'>
-                            <img class='icon' src='./assets/media/icons/hammer-drop.png' draggable="false">
-                            <p class='stat-label'>BLT ATK:</p>
-                        </div>
-                        <p class='stat-value'><span id='inventory-mini-menu-blunt-attack'>999</span></p>
-                    </div>
-                    <div class='stat-cell'>
-                        <div class='flex'>
-                            <img class='icon' src='./assets/media/icons/quick-slash.png' draggable="false">
-                            <p class='stat-label'>PIR ATK:</p>
-                        </div>
-                        <p class='stat-value'><span id='inventory-mini-menu-pierce-attack'>999</span></p>
-                    </div>
-                </div>
-
-*/

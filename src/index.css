@@ -148,7 +148,7 @@
     #character-summary-character-image{
         width: 40% !important;
     }
-    #character-summary-inventory-container{
+    #character-summary-inventory-currency-container{
         width: 100% !important;
         height: 200px !important;
         overflow-y: auto;
@@ -626,6 +626,7 @@ img{
     flex-direction: column;
     justify-content: space-around;
 }
+
 .battle-controls-tab-buttons-container, #inventory-mini-menu-tab-button-container{
     display: flex;
     justify-content: space-between;
@@ -830,7 +831,7 @@ img{
     flex-wrap: wrap;
 }
 .battle-status-icon{
-    height: 20px;
+    height: 40px;
 }
 #title-screen{
     background: url('./assets/media/screens/title-screen.jpg');
@@ -1121,14 +1122,26 @@ img{
     gap: 4px;
     grid-template-columns: auto auto auto auto;
 }
+#character-summary-inventory-currency-container{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#character-summary-currency-container{
+    display: flex;
+    flex-direction:column;
+    gap: 4px;
+    background-color: var(--color-2);
+    padding: var(--ui-pannel-padding);
+}
 #character-summary-inventory-container{
     display: flex;
     flex-direction:column;
     gap: 4px;
     background-color: var(--color-2);
     padding: var(--ui-pannel-padding);
-    width: 50%;
-    
+    height: 100%
 }
 #inventory-mini-menu-img{
     padding: 4px;

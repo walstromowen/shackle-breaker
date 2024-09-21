@@ -129,6 +129,13 @@
                     <div class='lobby-attributes-container'>
                         <h3 class='ui-header'>Attributes</h3>
                         <div class='flex-wrap'>
+                            <div class='stat-cell'>
+                                <div class='flex'>
+                                    <img class='icon' src='./assets/media/icons/seven-pointed-star.png' draggable="false">
+                                    <p class='stat-label'>LVL:</p>
+                                </div>
+                                <p class='stat-value'><span id='lobby-level'>999</span></p>
+                            </div>
                             <div class='stat-cell-hoverable'>
                                 <div class='flex'>
                                     <img class='icon' src='./assets/media/icons/healing.png' draggable="false">
@@ -472,15 +479,36 @@
                             <img src='' id='character-summary-character-image' draggable="false">
                         </div>
                     </div>
-                    <div id='character-summary-inventory-container'>
-                        <h3 class='ui-header'>Items</h3>
-                        <div id='character-summary-inventory-slots-container'></div>
+                    <div id='character-summary-inventory-currency-container'>
+                        <div id='character-summary-currency-container'>
+                            <h3 class='ui-header'>Currency</h3>
+                            <div>
+                                <div class ='stat-cell'>
+                                    <div class='flex'>
+                                        <img class='icon' src='./assets/media/icons/coins.png' draggable="false">
+                                        <p class='stat-label'>G:</p>
+                                    </div>
+                                    <p class='stat-value'><span id='character-summary-gold'>999</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id='character-summary-inventory-container'>
+                            <h3 class='ui-header'>Items</h3>
+                            <div id='character-summary-inventory-slots-container'></div>
+                        </div>
                     </div>
                 </div>
                 <div class='character-summary-stats-attributes-container'>
                     <div class='character-summary-attributes-container'>
                         <h3 class='ui-header'>Attributes</h3>
                         <div class='flex-wrap'>
+                            <div class='stat-cell'>
+                                <div class='flex'>
+                                    <img class='icon' src='./assets/media/icons/seven-pointed-star.png' draggable="false">
+                                    <p class='stat-label'>LVL:</p>
+                                </div>
+                                <p class='stat-value'><span id='character-summary-level'>999</span></p>
+                            </div>
                             <div class='stat-cell-hoverable'>
                                 <div class='flex'>
                                     <img class='icon' src='./assets/media/icons/healing.png' draggable="false">
