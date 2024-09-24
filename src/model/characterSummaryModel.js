@@ -101,7 +101,7 @@ export default class CharacterSummaryModel{
         if(incomingItemSlot == 'twoHand'){
             this.currentCharacter.equipment[['mainHand']] = incomingItem;
             this.currentCharacter.equipment[['offhand']] = incomingItem;
-            this.currentCharacter.addAttatchableStats(['mainHand']);
+            this.currentCharacter.addAttachableStats(['mainHand']);
         }else{
             if(this.currentCharacter.equipment[[incomingItemSlot]].slot == 'twoHand' && incomingItemSlot == 'mainHand'){
                 this.currentCharacter.equipment['offhand'] = '';
@@ -111,7 +111,7 @@ export default class CharacterSummaryModel{
             }
             this.currentCharacter.equipment[[incomingItemSlot]] = incomingItem;
             //add inv stats
-            this.currentCharacter.addAttatchableStats([incomingItemSlot])
+            this.currentCharacter.addAttachableStats([incomingItemSlot])
         }
     }
     
@@ -163,5 +163,28 @@ export default class CharacterSummaryModel{
             default:
                 return incomingItemSlot;
         }
+    }
+    increaseAttribute(attribute){
+        switch(attribute){
+            case 'vigor':
+                this.currentCharacter.vigor++;
+                break;
+            case 'strength':
+                this.currentCharacter.strength++;
+                break;
+            case 'dexterity':
+                this.currentCharacter.dexterity++;
+                break;
+            case 'intelligence':
+                this.currentCharacter.intelligence++;
+                break;
+            case 'attunement':
+                this.currentCharacter.attunement++;
+                break;
+        }
+        this.currentCharacter.scaleAttributes();
+        this.currentCharacter.resetStats();
+        this.currentCharacter.addAttachableStats(Object.keys(this.currentCharacter.equipment));
+        this.currentCharacter.skillPoints--;
     }
 }

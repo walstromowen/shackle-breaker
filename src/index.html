@@ -482,13 +482,20 @@
                     <div id='character-summary-inventory-currency-container'>
                         <div id='character-summary-currency-container'>
                             <h3 class='ui-header'>Currency</h3>
-                            <div>
+                            <div class='flex-wrap'>
                                 <div class ='stat-cell'>
                                     <div class='flex'>
                                         <img class='icon' src='./assets/media/icons/coins.png' draggable="false">
                                         <p class='stat-label'>G:</p>
                                     </div>
                                     <p class='stat-value'><span id='character-summary-gold'>999</span></p>
+                                </div>
+                                <div class ='stat-cell'>
+                                    <div class='flex'>
+                                        <img class='icon' src='./assets/media/icons/seven-pointed-star.png' draggable="false">
+                                        <p class='stat-label'>SKL PT:</p>
+                                    </div>
+                                    <p class='stat-value'><span id='character-summary-skill-points'>999</span></p>
                                 </div>
                             </div>
                         </div>
@@ -507,20 +514,27 @@
                                     <img class='icon' src='./assets/media/icons/seven-pointed-star.png' draggable="false">
                                     <p class='stat-label'>LVL:</p>
                                 </div>
-                                <p class='stat-value'><span id='character-summary-level'>999</span></p>
+                                <div class='flex-no-gap'>
+                                    <p class='stat-value'><span id='character-summary-level'>999</span></p>
+                                </div>
                             </div>
                             <div class='stat-cell-hoverable'>
                                 <div class='flex'>
                                     <img class='icon' src='./assets/media/icons/healing.png' draggable="false">
                                     <p class='stat-label'>VIG:</p>
                                 </div>
-                                <p class='stat-value'><span id='character-summary-vigor'>999</span></p>
+                                <div class='flex-no-gap'>
+                                    <button id='vigor-increase-button' class='character-summary-attribute-increase-button'>^</button>
+                                    <p class='stat-value'><span id='character-summary-vigor'>999</span></p>
+                                <!--
                                 <div class='stat-cell-hover-menu'>
                                     <div class='flex-right'>
                                         <img class='icon' src='./assets/media/icons/healing.png' draggable="false">
                                         <p class='stat-label'>Vigor</p>
                                     </div>
                                     <p>A measure of how many hits one can take. Affects max health points as well as one's resistance to status effects. Also determines the effectiveness of decisions that require one to endure hardship.</p>
+                                </div>
+                                -->
                                 </div>
                             </div>
                         </div>
@@ -530,7 +544,10 @@
                                     <img class='icon' src='./assets/media/icons/strong.png' draggable="false">
                                     <p class='stat-label'>STR:</p>
                                 </div>
-                                <p class='stat-value'><span id='character-summary-strength'>999</span></p>
+                                <div class='flex-no-gap'>
+                                    <button id='strength-increase-button' class='character-summary-attribute-increase-button'>^</button>
+                                    <p class='stat-value'><span id='character-summary-strength'>999</span></p>
+                                <!--
                                 <div class='stat-cell-hover-menu'>
                                     <div class='flex-right'>
                                         <img class='icon' src='./assets/media/icons/strong.png' draggable="false">
@@ -538,19 +555,26 @@
                                     </div>
                                     <p>A measure of ones's physical prowess. Affects blunt damage and defense as well as one's maxium stamina. Also determines the effectiveness of decisions that require one to utilize strength.</p>
                                 </div>
+                                -->
+                                </div>
                             </div>
                             <div class='stat-cell-hoverable'>
                                 <div class='flex'>
                                     <img class='icon' src='./assets/media/icons/body-balance.png' draggable="false">
                                     <p class='stat-label'>DEX:</p>
                                 </div>
-                                <p class='stat-value'><span id='character-summary-dexterity'>999</span></p>
+                                <div class='flex-no-gap'>
+                                    <button id='dexterity-increase-button' class='character-summary-attribute-increase-button'>^</button>
+                                    <p class='stat-value'><span id='character-summary-dexterity'>999</span></p>
+                                <!--
                                 <div class='stat-cell-hover-menu'>
                                     <div class='flex-right'>
                                         <img class='icon' src='./assets/media/icons/body-balance.png' draggable="false">
                                         <p class='stat-label'>Dexterity</p>
                                     </div>
                                     <p>A measure of ones's finesse. Affects piercing damage and defense as well as one's maximum stamina. Also determines the effectiveness of decisions that require sleight of hand, stealth, and mobility.</p>
+                                </div>
+                                -->
                                 </div>
                             </div>
                         </div>
@@ -560,7 +584,10 @@
                                     <img class='icon' src='./assets/media/icons/wisdom.png' draggable="false">
                                     <p class='stat-label'>INT:</p>
                                 </div>
-                                <p class='stat-value'><span id='character-summary-intelligence'>999</span></p>
+                                <div class='flex-no-gap'>
+                                    <button id='intelligence-increase-button' class='character-summary-attribute-increase-button'>^</button>
+                                    <p class='stat-value'><span id='character-summary-intelligence'>999</span></p>
+                                <!--
                                 <div class='stat-cell-hover-menu'>
                                     <div class='flex-right'>
                                         <img class='icon' src='./assets/media/icons/wisdom.png' draggable="false">
@@ -568,19 +595,26 @@
                                     </div>
                                     <p>A measure of ones's knowledge. Affects arcane damage and defense as well as ones maximum magic. Also determines the effectiveness of decisions that require problem solving, academica, and logical reasoning.</p>
                                 </div>
+                                -->
+                                </div>
                             </div>
                             <div class='stat-cell-hoverable'>
                                 <div class='flex'>
                                     <img class='icon' src='./assets/media/icons/meditation.png' draggable="false">
                                     <p class='stat-label'>ATN:</p>
                                 </div>
-                                <p class='stat-value'><span id='character-summary-attunement'>999</span></p>
+                                <div class='flex-no-gap'>
+                                    <button id='attunement-increase-button' class='character-summary-attribute-increase-button'>^</button>
+                                    <p class='stat-value'><span id='character-summary-attunement'>999</span></p>
+                                <!--
                                 <div class='stat-cell-hover-menu'>
                                     <div class='flex-right'>
                                         <img class='icon' src='./assets/media/icons/meditation.png' draggable="false">
                                         <p class='stat-label'>Attunement</p>
                                     </div>
                                     <p>A measure of ones's attachment to the elements. Affects elemental damage and defense as well as ones maximum magic. Also determines the effectiveness of decisions that utilize perception, intuition, and nature.</p>
+                                </div>
+                            -->
                                 </div>
                             </div>
                         </div>

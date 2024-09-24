@@ -99,7 +99,7 @@ export default class LobbyModel{
         this.props.getParty()[0].scaleAttributes();
         this.props.getParty()[0].resetStats();
         this.props.getParty()[0].equipAttatchables(equipment)
-        this.props.getParty()[0].addAttatchableStats(Object.keys(this.props.getParty()[0].equipment));
+        this.props.getParty()[0].addAttachableStats(Object.keys(this.props.getParty()[0].equipment));
     }
     updateKeepsake(){
         let keepsake = document.getElementById('lobby-keepsake-selection').value;

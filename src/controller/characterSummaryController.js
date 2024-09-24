@@ -7,6 +7,12 @@ export default class CharacterSummaryController{
         this.view = view;
         this.inventoryMiniMenuExitEventHandler;
         this.inventoryMiniMenuUseButtonHandler;
+        this.vigorIncreaseHandler;
+        this.strengthIncreaseHandler;
+        this.dexterityIncreaseHandler;
+        this.intelligenceIncreaseHandler;
+        this.attunementIncreaseHandler;
+
         this.initialize();
     }
     initialize(){
@@ -15,6 +21,7 @@ export default class CharacterSummaryController{
             document.getElementById('sound-effect-player').src = './assets/audio/soundEffects/cinematic-boom-6872.mp3';
             document.getElementById('sound-effect-player').play();
         });
+        /*
         document.getElementById('character-summary-screen').querySelectorAll('.stat-cell-hoverable').forEach((node)=>{
             node.addEventListener('mouseenter', (e)=>{
                 const miniMenu =  node.querySelector('.stat-cell-hover-menu');
@@ -25,6 +32,7 @@ export default class CharacterSummaryController{
                 miniMenu.style.display = 'none';
             });
         });
+        */
         this.view.inventoryPannel.addEventListener('dragover', (e)=>{ 
             e.preventDefault();
             e.stopPropagation();
@@ -59,12 +67,48 @@ export default class CharacterSummaryController{
             this.model.updateCurrentCharacter('next')
             this.onSwitchScreen();
         })
-       
+        //TEMP!
+        window.addEventListener("keydown", (e) => {
+            if(e.key == 'q'){
+                this.model.currentCharacter.skillPoints++;
+                this.onSwitchScreen();
+            }
+        });
+        //TEMP!
     }
     onSwitchScreen(){
+        this.model.currentCharacter.awardSkillPoints();
         this.view.displayCharacterSummary(this.model.currentCharacter, this.model.props.getGold());
         this.view.createInventorySlots(this.model.props.getInventory());
         this.view.createEquippedItemSlots(this.model.currentCharacter);
+        this.removeAttrubuteIncreaseListeners();
+        this.view.hideAttributeUpgradeButtons();
+        if(this.model.props.getSituation() == 'overworld'){
+            if(this.model.currentCharacter.skillPoints > 0){
+                document.getElementById('vigor-increase-button').addEventListener('click', this.vigorIncreaseHandler = ()=>{
+                    this.model.increaseAttribute('vigor');
+                    this.onSwitchScreen();
+                });
+                document.getElementById('strength-increase-button').addEventListener('click', this.strengthIncreaseHandler = ()=>{
+                    this.model.increaseAttribute('strength');
+                    this.onSwitchScreen();
+                });
+                document.getElementById('dexterity-increase-button').addEventListener('click', this.dexterityIncreaseHandler = ()=>{
+                    this.model.increaseAttribute('dexterity');
+                    this.onSwitchScreen();
+                });
+                document.getElementById('intelligence-increase-button').addEventListener('click', this.intelligenceIncreaseHandler = ()=>{
+                    this.model.increaseAttribute('intelligence');
+                    this.onSwitchScreen();
+                });
+                document.getElementById('attunement-increase-button').addEventListener('click', this.attunementIncreaseHandler = ()=>{
+                    this.model.increaseAttribute('attunement');
+                    this.onSwitchScreen();
+                });
+                this.view.revealAttributeUpgradeButtons();
+            }
+        }
+
         //slots
         this.addSlotDragListeners(this.view.screen.querySelectorAll('.character-summary-equipped-slot'), 'equipSlots');
         this.addSlotDragListeners(this.view.screen.querySelectorAll('.inventory-slot'), 'inventorySlots');
@@ -305,5 +349,12 @@ export default class CharacterSummaryController{
           
             }
         })
+    }
+    removeAttrubuteIncreaseListeners(){
+        document.getElementById('vigor-increase-button').removeEventListener('click', this.vigorIncreaseHandler);
+        document.getElementById('strength-increase-button').removeEventListener('click', this.strengthIncreaseHandler);
+        document.getElementById('dexterity-increase-button').removeEventListener('click', this.dexterityIncreaseHandler);
+        document.getElementById('intelligence-increase-button').removeEventListener('click', this.intelligenceIncreaseHandler);
+        document.getElementById('attunement-increase-button').removeEventListener('click', this.attunementIncreaseHandler);
     }
 }

@@ -34,7 +34,7 @@
     --battle-ability-button-sides: 60px;
     --inventory-mini-menu-width: 300px;
     --inventory-mini-menu-height: 300px;
-    
+    --icon-height-width: 20px;
 }
 /*large computer styles*/
 @media only screen and (min-width: 1440px) {
@@ -87,6 +87,7 @@
         --battle-ability-button-sides: 50px;
         --inventory-mini-menu-width: 240px;
         --inventory-mini-menu-height: 200px;
+        --icon-height-width: 30px;
     }
     .lobby-inputs-background-apperance-container{
         flex-wrap: wrap;
@@ -179,6 +180,7 @@
         --battle-ability-button-sides: 40px;
         --inventory-mini-menu-width: 200px;
         --inventory-mini-menu-height: 300px;
+        --icon-height-width: 20px;
     }
     .party-vital-label, .battle-vital-label{
         display: none;
@@ -259,14 +261,20 @@ img{
     height: 0;
     gap: 10px;
 }
+.flex-no-gap{
+    display:flex;
+    align-items: center;
+}
 .stat-cell{
     display: flex;
     justify-content: space-between;
+    align-items:center;
     width: var(--stat-cell-width);
 }
 .stat-cell-hoverable{
     display: flex;
     justify-content: space-between;
+    align-items:center;
     width: var(--stat-cell-width);
     position: relative;
 }
@@ -282,8 +290,8 @@ img{
     z-index: 1;
 }
 .icon{
-    height: 20px;
-    width: 20px;
+    height: var(--icon-height-width);
+    width: var(--icon-height-width);
     
 }
 .ui-header-container{
@@ -626,7 +634,17 @@ img{
     flex-direction: column;
     justify-content: space-around;
 }
-
+.character-summary-attribute-increase-button{
+    height: var(--icon-height-width);
+    width:var(--icon-height-width);
+    font-size: var(--font-size-3);
+    background-color: var(--color-3);
+    color: var(--color-5);
+    font-weight: bold;
+    border-radius: 4px;
+    padding:auto;
+    display:none;
+}
 .battle-controls-tab-buttons-container, #inventory-mini-menu-tab-button-container{
     display: flex;
     justify-content: space-between;

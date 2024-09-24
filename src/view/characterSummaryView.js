@@ -55,6 +55,7 @@ export default class CharacterSummaryView{
         this.nextCharacterButton = document.getElementById('character-summary-next-character-button'); 
 
         this.currentGold = document.getElementById('character-summary-gold');
+        this.currentSkillPoints = document.getElementById('character-summary-skill-points');
     }
     displayCharacterSummary(entity, gold){
         this.characterName.innerText = entity.name;
@@ -101,6 +102,7 @@ export default class CharacterSummaryView{
         this.characterImage.src = entity.apperance; 
 
         this.currentGold.innerText = gold;
+        this.currentSkillPoints.innerText = entity.skillPoints;
 
     }
 
@@ -142,5 +144,15 @@ export default class CharacterSummaryView{
             this.equippedContainer.appendChild(slot);
             
         }
+    }
+    revealAttributeUpgradeButtons(){
+        this.screen.querySelectorAll('.character-summary-attribute-increase-button').forEach((node)=>{
+            node.style.display='block';
+        });
+    }
+    hideAttributeUpgradeButtons(){
+        this.screen.querySelectorAll('.character-summary-attribute-increase-button').forEach((node)=>{
+            node.style.display='none';
+        });
     }
 }

@@ -58,6 +58,7 @@ export class Entity{
         this.currentCritical = this.baseCritical;
 
         this.currentXP = 0;
+        this.skillPoints = 0;
 
         this.equipment = config.equipment || 
         {
@@ -79,7 +80,7 @@ export class Entity{
         this.nextAbility = '';
         this.abilityTargets = [];
         this.lootTable = config.lootTable || {};
-        this.addAttatchableStats(Object.keys(this.equipment));
+        this.addAttachableStats(Object.keys(this.equipment));
         
     }
     setAttributes(props){
@@ -233,7 +234,7 @@ export class Entity{
         }
         return(unequippedAttatchables);
     }
-    addAttatchableStats(slots){
+    addAttachableStats(slots){
         let twoHandCount = 0;
         for(let i = 0; i < slots.length; i++){
             if(this.equipment[slots[i]].slot == 'twoHand' && twoHandCount >= 1){
@@ -327,6 +328,15 @@ export class Entity{
             }
         }
         return generatedItems;
+    }
+    awardSkillPoints(){
+        let requiredXP = Math.floor(((this.level + 10)**2)*0.5)
+        if(this.currentXP >= requiredXP){
+            this.skillPoints++;
+            this.level ++;
+            this.currentXP = this.currentXP - requiredXP;
+            this.awardSkillPoints();
+        }
     }
 }
 
