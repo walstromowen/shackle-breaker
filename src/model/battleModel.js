@@ -250,5 +250,13 @@ export default class BattleModel{
             this.props.getInventory().push(this.props.getBattle().loot[i]);
         }
     }
+    distributeXP(combatant){
+        let activeAllys = this.activeCombatants.filter((combatant)=>{
+            return combatant.isHostile == false;
+        })
+        for(let i = 0; i < activeAllys.length; i++){
+            activeAllys[i].currentXP += Math.floor(combatant.dropXP()/activeAllys.length);
+        }
+    }
 }
 

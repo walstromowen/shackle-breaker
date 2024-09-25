@@ -448,6 +448,10 @@
                 <div class='character-summary-vitals-equipment-inventory-container'>
                     <div class='character-summary-vitals-equipment-container'>
                         <h5 id='character-summary-character-name'>Shackle Breaker</h5>
+                        <div class='character-summary-equipped-character-image-container'>
+                            <img src='' id='character-summary-character-image' draggable="false">
+                            <div id='character-summary-equipped-container'></div>
+                        </div>
                         <div class='character-summary-all-vital-bars-container'>
                             <div class='character-summary-vital-bar-container'>
                                 <div id='character-summary-health-progress' class='character-summary-vital-bar-progress health-color' ></div>
@@ -473,10 +477,14 @@
                                 </div>
                                 <p class ='character-summary-current-vital-label'><span id='character-summary-current-magic'>9999</span> / <span id='character-summary-max-magic'>9999</span></p>
                             </div>
-                        </div>
-                        <div class='character-summary-equipped-character-image-container'>
-                            <div id='character-summary-equipped-container'></div>
-                            <img src='' id='character-summary-character-image' draggable="false">
+                            <div class='character-summary-vital-bar-container'>
+                                <div id='character-summary-xp-progress' class='character-summary-vital-bar-progress xp-color' ></div>
+                                <div class='character-summary-vital-label-container'>
+                                    <img class='icon' src='./assets/media/icons/seven-pointed-star.png' draggable="false">
+                                    <p class='character-summary-vital-label'>XP</p>
+                                </div>
+                                <p class ='character-summary-current-vital-label'><span id='character-summary-current-xp'>9999</span> / <span id='character-summary-next-level-amount'>9999</span></p>
+                            </div>
                         </div>
                     </div>
                     <div id='character-summary-inventory-currency-container'>

@@ -108,16 +108,16 @@ export default class LobbyModel{
                 this.props.setInventory([]);
                 break;
             case 'bag-of-potions':
-                this.props.setInventory([new HealthPotion(), new PoisonedKnife(), new KurtussBrewOfMadness(), new PoisonedKnife(), new PoisonedKnife()]);
+                this.props.setInventory([new HealthPotion(), new KurtussBrewOfMadness()]);
                 break;
             case 'herbal-medicine':
                 this.props.setInventory([]);
                 break;
             case 'assasians-belt':
-                this.props.setInventory([]);
+                this.props.setInventory([new PoisonedKnife(), new PoisonedKnife(), new PoisonedKnife()]);
                 break;
             case 'artisans-tools':
-                this.props.setInventory([new PineWood(), new PineWood(), new LeatherHelmet({level: 1}), new Handaxe({level: 1})]);
+                this.props.setInventory([new PineWood()]);
                 break;
             case 'alchemists-vials':
                 this.props.setInventory([]);

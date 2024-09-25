@@ -8,6 +8,7 @@
     --health-color: #8B000099;
     --stamina-color: #01322099;
     --magic-color: #00008b99;
+    --xp-color: rgb(152, 130, 2);
     --font-size-0: 80px;
     --font-size-1: 36px;
     --font-size-2: 24px;
@@ -225,6 +226,9 @@ img{
 }
 .magic-color{
     background-color: var(--magic-color);
+}
+.xp-color{
+    background-color: var(--xp-color);
 }
 .no-pointer-events{
     pointer-events:none;
@@ -843,7 +847,7 @@ img{
     
 }
 .battle-status-icon-container{
-    height: 20px;
+    height: 40px;
     display: flex;
     justify-content: end;
     flex-wrap: wrap;

@@ -335,8 +335,16 @@ export class Entity{
             this.skillPoints++;
             this.level ++;
             this.currentXP = this.currentXP - requiredXP;
+            this.currentHP = this.maxHP;
+            this.currentStamina = this.maxStamina;
+            this.currentMagic = this.maxMagic;
             this.awardSkillPoints();
         }
+    }
+    dropXP(){
+        let amount = Math.floor(((Math.random() * (0.75 - 0.25 + 1) + 0.25)*((this.maxHP + this.maxStamina + this.maxMagic)/3)) *(1 + this.level*0.1))
+       
+        return amount;
     }
 }
 

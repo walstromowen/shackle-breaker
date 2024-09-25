@@ -9,13 +9,17 @@ export default class CharacterSummaryView{
         this.maxHP = document.getElementById('character-summary-max-health');
         this.maxStamina = document.getElementById('character-summary-max-stamina');
         this.maxMagic = document.getElementById('character-summary-max-magic');
+        this.nextLevelAmount = document.getElementById('character-summary-next-level-amount');
+
         this.currentHP = document.getElementById('character-summary-current-health');
         this.currentStamina = document.getElementById('character-summary-current-stamina');
         this.currentMagic = document.getElementById('character-summary-current-magic');
+        this.currentXP = document.getElementById('character-summary-current-xp');
 
         this.healthProgress = document.getElementById('character-summary-health-progress');
         this.staminaProgress = document.getElementById('character-summary-stamina-progress');
         this.magicProgress = document.getElementById('character-summary-magic-progress');
+        this.xpProgress = document.getElementById('character-summary-xp-progress');
 
         this.currentLevel = document.getElementById('character-summary-level');
         this.vigor = document.getElementById('character-summary-vigor');
@@ -63,13 +67,17 @@ export default class CharacterSummaryView{
         this.maxHP.innerText = entity.maxHP;
         this.maxStamina.innerText = entity.maxStamina;
         this.maxMagic.innerText = entity.maxMagic;
+        this.nextLevelAmount.innerText = Math.floor(((entity.level + 10)**2)*0.5);
+
         this.currentHP.innerText = entity.currentHP;
         this.currentStamina.innerText = entity.currentStamina;
         this.currentMagic.innerText = entity.currentMagic;
+        this.currentXP.innerText = entity.currentXP;
 
         this.healthProgress.style.width = Math.floor(entity.currentHP/entity.maxHP*100) + "%";
         this.staminaProgress.style.width = Math.floor(entity.currentStamina/entity.maxStamina*100) + "%";
         this.magicProgress.style.width = Math.floor(entity.currentMagic/entity.maxMagic*100) + "%";
+        this.xpProgress.style.width = Math.floor(entity.currentXP/Math.floor(((entity.level + 10)**2)*0.5)*100 ) + "%";
 
         this.currentLevel.innerText = entity.level;
         this.vigor.innerText = entity.vigor;

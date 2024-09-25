@@ -393,6 +393,7 @@ export default class BattleController{
                     if(combatant.isHostile == true){
                         this.model.defeatedHostiles.push(combatant);
                         this.model.pileLoot(combatant)
+                        this.model.distributeXP(combatant);
                     }else{
                         this.model.defeatedAllies.push(combatant);
                     }
@@ -731,11 +732,22 @@ export default class BattleController{
     }
     onEndBattle(){
         return new Promise((resolve)=>{
-            this.displayLoot().then(()=>{
+            /*
+            let allies = this.model.allCombatants.filter((combatant)=>{
+                return combatant.isHostile == false;
+            })
+            allies.forEach((ally)=>{
+                ally.currentXP += 100;
+            })
+            */
+            this.checkLevelUps().then(()=>{
+                return this.displayLoot();
+            }).then(()=>{
                 setTimeout(()=>{
                     this.model.props.setSituation('overworld')
                     this.props.switchScreen('overworld-screen');
                     this.view.removeAllCombatantCards();
+                    document.querySelector('body').classList.remove('battle-wipe');
                     playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
                     this.props.getOverworldController().view.revealOverworldUi();
                     resolve()
@@ -743,25 +755,81 @@ export default class BattleController{
             })
         });
     }
-    displayLoot(){
+    checkLevelUps(){
+        //loop through all combatants and check if they leveled up if so give them some seconds to display message
+        let allies = this.model.allCombatants.filter((combatant)=>{
+            return combatant.isHostile == false;
+        })
+        return allies.reduce((chain, ally)=>{
+            return chain.then(()=>this.displayAllyLevelUp(ally))
+        }, Promise.resolve())   
+    }
+    displayAllyLevelUp(ally){
+        let flag = true;
         return new Promise((resolve)=>{
-            let loot = this.model.props.getBattle().loot;
-            if(loot.length > 0){
-                this.model.lootBattle();
-                setTimeout(()=>{
-                    let message = `Your party loots:\n`;
-                    for(let i = 0; i < loot.length; i++){
-                        message += `${capiltalizeAllFirstLetters(this.model.props.getBattle().loot[i].name)}\n`
+            if(ally.currentXP >= Math.floor(((ally.level + 10)**2)*0.5)){
+                document.addEventListener('click', this.skipEventHandler = ()=>{
+                    if(flag == true){
+                        flag = false;
+                        ally.awardSkillPoints();
+                        this.view.printToBattleConsole(`${ally.name} is now level ${ally.level}!`);
+                        playSoundEffect("./assets/audio/soundEffects/energy-90321.mp3");
+                        this.view.updateCombatantStats(ally);
+                        document.removeEventListener('click', this.skipEventHandler);
+                        resolve();
                     }
-                    this.view.printToBattleConsole(message);
-                    resolve();
-                }, 2000);
-            }
-            else{
+                })
+                setTimeout(()=>{
+                    if(flag == true){
+                        flag = false;
+                        document.removeEventListener('click', this.skipEventHandler);
+                        ally.awardSkillPoints();
+                        this.view.printToBattleConsole(`${ally.name} is now level ${ally.level}!`);
+                        playSoundEffect("./assets/audio/soundEffects/energy-90321.mp3");
+                        this.view.updateCombatantStats(ally);
+                        resolve();
+                    }
+                }, 4000);
+            }else{
                 resolve();
             }
-            
-        }) 
+        });
+    }
+    displayLoot(){
+        let flag = true;
+        return new Promise((resolve)=>{
+            document.addEventListener('click', this.skipEventHandler = ()=>{
+                if(flag == true){
+                    flag = false;
+                    let loot = this.model.props.getBattle().loot;
+                    if(loot.length > 0){
+                        this.model.lootBattle();
+                        let message = `Your party loots:\n`;
+                        for(let i = 0; i < loot.length; i++){
+                            message += `${capiltalizeAllFirstLetters(this.model.props.getBattle().loot[i].name)}\n`
+                        }
+                        this.view.printToBattleConsole(message);
+                    }
+                    resolve();
+                }
+            })
+            setTimeout(()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    let loot = this.model.props.getBattle().loot;
+                    if(loot.length > 0){
+                        this.model.lootBattle();
+                        let message = `Your party loots:\n`;
+                        for(let i = 0; i < loot.length; i++){
+                            message += `${capiltalizeAllFirstLetters(this.model.props.getBattle().loot[i].name)}\n`
+                        }
+                        this.view.printToBattleConsole(message);
+                    }
+                    resolve();
+                }
+            }, 4000); 
+        });
     }
     recoverStats(){//may want to split this into two
         let flag = true;

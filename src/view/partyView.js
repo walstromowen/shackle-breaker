@@ -38,6 +38,13 @@ export default class PartyView{
                             const magicLabel = createElement('p', 'party-vital-label');
                         const currentMagic = createElement('div', 'party-current-vital-label party-current-magic');
 
+                    const xpBarContainer = createElement('div', 'party-vital-bar-container');
+                        const xpProgress = createElement('div', 'party-vital-bar-progress xp-color party-xp-progress');
+                        const xpLabelContainer = createElement('div', 'party-vital-label-container');
+                            const xpIcon = createElement('img', 'icon xp-icon');
+                            const xpLabel = createElement('p', 'party-vital-label');
+                        const currentXP = createElement('div', 'party-current-vital-label party-current-xp');
+
                 const slotButtonContainer = createElement('div', 'party-character-slot-button-container');
                     const toggleSummaryButton = createElement('button', 'medium-size-button party-toggle-summary-button');
                     toggleSummaryButton.innerText = 'Summary';
@@ -54,6 +61,7 @@ export default class PartyView{
         allVitalBarsContainer.appendChild(healthBarContainer)
         allVitalBarsContainer.appendChild(staminaBarContainer)
         allVitalBarsContainer.appendChild(magicBarContainer)
+        allVitalBarsContainer.appendChild(xpBarContainer)
         healthBarContainer.appendChild(healthProgress);
         healthBarContainer.appendChild(healthLabelContainer);
         healthBarContainer.appendChild(currentHealth);
@@ -72,6 +80,12 @@ export default class PartyView{
         magicLabelContainer.appendChild(magicIcon);
         magicLabelContainer.appendChild(magicLabel);
 
+        xpBarContainer.appendChild(xpProgress);
+        xpBarContainer.appendChild(xpLabelContainer);
+        xpBarContainer.appendChild(currentXP);
+        xpLabelContainer.appendChild(xpIcon);
+        xpLabelContainer.appendChild(xpLabel);
+
         slotButtonContainer.appendChild(toggleSummaryButton);
         
         this.gridContainer.appendChild(partyGridItem);
@@ -84,18 +98,26 @@ export default class PartyView{
     updateEntityStats(entity){
         const slot = document.getElementById(entity.partyId);
         slot.style.backgroundImage = `url(${entity.apperance})`;
+
         slot.querySelector('.party-character-slot-name-header').innerText = capiltalizeAllFirstLetters(entity.name);
         slot.querySelector('.party-health-progress').style.width = Math.floor(entity.currentHP/entity.maxHP*100) + "%";
         slot.querySelector('.health-icon').src = './assets/media/icons/hearts.png';
         slot.querySelector('.party-current-health').innerText = entity.currentHP;
+
         slot.querySelector('.party-stamina-progress').style.width = Math.floor(entity.currentStamina/entity.maxStamina*100) + "%";
         slot.querySelector('.stamina-icon').src = './assets/media/icons/despair.png';
         slot.querySelector('.party-current-stamina').innerText = entity.currentStamina;
         slot.querySelector('.party-magic-progress').style.width = Math.floor(entity.currentMagic/entity.maxMagic*100) + "%";
+
         slot.querySelector('.magic-icon').src = './assets/media/icons/crystalize.png';
         slot.querySelector('.party-current-magic').innerText = entity.currentMagic;
+        slot.querySelector('.party-xp-progress').style.width = Math.floor(entity.currentXP/Math.floor(((entity.level + 10)**2)*0.5)*100 ) + "%";
+        slot.querySelector('.xp-icon').src = './assets/media/icons/seven-pointed-star.png';
+        slot.querySelector('.party-current-xp').innerText = entity.currentXP;
         if(entity.currentHP <= 0){
             slot.classList.add('greyscale');
+        }else{
+            slot.classList.remove('greyscale');
         }
     }
     removeAllEntitySlots(){

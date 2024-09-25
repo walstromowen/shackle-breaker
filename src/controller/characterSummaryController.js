@@ -70,7 +70,7 @@ export default class CharacterSummaryController{
         //TEMP!
         window.addEventListener("keydown", (e) => {
             if(e.key == 'q'){
-                this.model.currentCharacter.skillPoints++;
+                this.model.currentCharacter.currentXP+=10;
                 this.onSwitchScreen();
             }
         });
