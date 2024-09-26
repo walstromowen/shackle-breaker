@@ -110,7 +110,7 @@ export class Ability{
         }
         target.statusArray.push(status);
     }
-    canUse(attacker, targets){
+    prepareAbilitiy(attacker, targets){
         let resolveObject = {evade: false, switchCombatant: false, retreat: false}
         switch(this.sequenceType){
             case 'chain':
@@ -136,6 +136,48 @@ export class Ability{
         this.updateMessage(attacker, targets[0]);
         return resolveObject;
     }
+    checkLackingResources(attacker){
+        let lackingResources = [];
+        if(attacker.currentStamina - this.staminaCost < 0){
+            lackingResources.push('stamina')
+        }
+        if(attacker.currentMagic - this.magicCost < 0){
+            lackingResources.push('magic')
+        }
+        return lackingResources;
+    }
+   
+/*
+    checkResource(attacker){
+        if(attacker.isHostile == false){
+            if(attacker.currentStamina - this.staminaCost < 0){
+                return ('Not enough stamina!');
+            }
+            if(attacker.currentMagic - this.magicCost < 0){
+                return ('Not enough magic!');
+            }
+        }else{
+
+        }
+         
+
+
+        else{
+            if(attacker.currentStamina - this.staminaCost < 0){
+                attacker.nextMove = new Recover;
+            }
+            if(attacker.currentMagic - this.magicCost < 0){
+                attacker.nextMove = new Meditate;
+            }
+        }
+        if(this.canUseSpecialCondition(attacker, currentCharacter) == false){
+            return false;
+        }
+    }
+    canUseSpecialCondition(attacker, currentCharacter){
+        return true;
+    }
+    */
 }
 export class SwitchCombatant extends Ability{
     constructor(config){
@@ -179,6 +221,24 @@ export class Retreat extends Ability{
         this.message = `${attacker.name} retreats!`;
     }
 }
+export class Rest extends Ability{
+    constructor(config){
+        super({
+            name: 'rest',
+            iconSrc: './assets/media/icons/despair.png',
+            background: config.background || 'grey',
+            speedModifier: config.speedModifier || 1,
+            soundEffectSrc: "./assets/audio/soundEffects/power-down-45784.mp3",
+            animationName: 'none',
+        })
+    }
+    activate(attacker, target){
+       
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} must rest!`;
+    }
+}
 export class Slash extends Ability{
     constructor(config){
         super({
@@ -198,8 +258,8 @@ export class Slash extends Ability{
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
-        let damage = this.checkDamage(target, rawDamage, 'health');
-        target.currentHP = target.currentHP - damage;
+        let damage = this.checkDamage(target, rawDamage, 'stamina');
+        target.currentStamina = target.currentStamina - damage;
     }
     updateMessage(attacker, target){
         this.message = `${attacker.name} slashes ${target.name}.`;

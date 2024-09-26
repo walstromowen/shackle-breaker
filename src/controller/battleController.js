@@ -1,5 +1,5 @@
 import {playSoundEffect, playMusic, capiltalizeAllFirstLetters} from '../utility.js';
-import {SwitchCombatant} from '../model/misc/abilities.js';
+import {SwitchCombatant, Rest} from '../model/misc/abilities.js';
 
 export default class BattleController{
     constructor(props, model, view){
@@ -70,15 +70,16 @@ export default class BattleController{
     }
     createAbilityButtons(ally, resolveFn){
         document.getElementById('battle-controls-party-button').addEventListener('click', ()=>{
+            this.view.removeGlowRed(ally, ['stamina', 'magic']);
             this.props.switchScreen('party-screen');
             this.props.getPartyController().createSelectButtons(resolveFn, this.model.allyReinforcements);
             let container = document.getElementById('battle-battlefield-container');
-                container.removeEventListener('click', this.selectTargetEventHandler);
-                container.removeEventListener('contextmenu', this.removeTargetEventHandler);
-                this.view.removeCardTargets();
-                this.view.removeEntranceAnimations();
-                this.view.removeAbilityHighlight();
-                this.view.removePossibleTargets(ally.battleId)
+            container.removeEventListener('click', this.selectTargetEventHandler);
+            container.removeEventListener('contextmenu', this.removeTargetEventHandler);
+            this.view.removeCardTargets();
+            this.view.removeEntranceAnimations();
+            this.view.removeAbilityHighlight();
+            this.view.removePossibleTargets(ally.battleId)
          
         });
         this.view.battleConfirmTargetsContainer.style.display = 'none';
@@ -94,18 +95,23 @@ export default class BattleController{
         let abilityButtons = this.view.createCombatantAbilityButtons(combinedAbilities, 'equipment');
         for(let i = 0; i < combinedAbilities.length; i++){
             abilityButtons[i].addEventListener('click', ()=>{
-                let container = document.getElementById('battle-battlefield-container');
-                container.removeEventListener('click', this.selectTargetEventHandler);
-                container.removeEventListener('contextmenu', this.removeTargetEventHandler);
-                this.view.removeCardTargets();
-                this.view.removeEntranceAnimations();
+                let lackingResources = combinedAbilities[i].checkLackingResources(ally);
                 this.view.removeAbilityHighlight();
-                ally.abilityTargets = [];//model
-                abilityButtons[i].classList.add('selected')//view
-                ally.nextAbility = combinedAbilities[i];//model
-                this.createTargetListeners(ally, resolveFn);
-                
-                
+                this.view.removeGlowRed(ally, lackingResources);
+                if(lackingResources.length == 0){
+                    let container = document.getElementById('battle-battlefield-container');
+                    container.removeEventListener('click', this.selectTargetEventHandler);
+                    container.removeEventListener('contextmenu', this.removeTargetEventHandler);
+                    this.view.removeCardTargets();
+                    this.view.removeEntranceAnimations();
+                    ally.abilityTargets = [];//model
+                    abilityButtons[i].classList.add('selected')//view
+                    ally.nextAbility = combinedAbilities[i];//model
+                    this.createTargetListeners(ally, resolveFn);
+                }else{
+                    this.view.glowRed(ally, lackingResources);
+                    playSoundEffect("./assets/audio/soundEffects/power-down-45784.mp3");
+                }
             })
         } 
         //consumable abilities
@@ -480,7 +486,7 @@ export default class BattleController{
             }
         }
         return new Promise((resolve)=>{
-            this.canUseHelpper(cycleTargets).then((resolveObject)=>{
+            this.prepareAbilitiyHelpper(cycleTargets).then((resolveObject)=>{
                 return this.printAbilityToBattleConsoleHelpper(this.currentAttacker.nextAbility, resolveObject);
             }).then((resolveObject)=>{
                 return this.playAbilityAnimationHelpper(cycleTargets, resolveObject);
@@ -509,9 +515,12 @@ export default class BattleController{
             })
         });
     }
-    canUseHelpper(targets){
+    prepareAbilitiyHelpper(targets){
         return new Promise((resolve)=>{
-            let resolveObject =  this.currentAttacker.nextAbility.canUse(this.currentAttacker, targets);
+            if(this.currentAttacker.nextAbility.checkLackingResources(this.currentAttacker).length != 0){
+                this.currentAttacker.nextAbility = new Rest({});
+            }
+            let resolveObject = this.currentAttacker.nextAbility.prepareAbilitiy(this.currentAttacker, targets);
             this.model.removeConsumableByItemIdFromInventory(this.currentAttacker.nextAbility.consumable.itemId);
             resolve(resolveObject);
         });
@@ -732,14 +741,6 @@ export default class BattleController{
     }
     onEndBattle(){
         return new Promise((resolve)=>{
-            /*
-            let allies = this.model.allCombatants.filter((combatant)=>{
-                return combatant.isHostile == false;
-            })
-            allies.forEach((ally)=>{
-                ally.currentXP += 100;
-            })
-            */
             this.checkLevelUps().then(()=>{
                 return this.displayLoot();
             }).then(()=>{
@@ -756,7 +757,6 @@ export default class BattleController{
         });
     }
     checkLevelUps(){
-        //loop through all combatants and check if they leveled up if so give them some seconds to display message
         let allies = this.model.allCombatants.filter((combatant)=>{
             return combatant.isHostile == false;
         })

@@ -2,6 +2,7 @@
 Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Walstrom
 
 # Planned Features
+* more animation control
 * looting gold
 * Default Abilities (punch)
 * upgrading items

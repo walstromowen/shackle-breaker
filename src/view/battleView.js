@@ -24,6 +24,7 @@ export default class BattleView{
             const allVitalBarsContainer = createElement('div', 'battle-all-vital-bars-container');
 
                 const statusIconContainer = createElement('div', 'battle-status-icon-container');
+
                 const healthBarContainer = createElement('div', 'battle-vital-bar-container');
                     const healthProgress = createElement('div', 'battle-vital-bar-progress health-color battle-health-progress');
                     const healthLabelContainer = createElement('div', 'battle-vital-label-container');
@@ -214,6 +215,25 @@ export default class BattleView{
         })
     }
     playAbilityAnimations(attacker, targets, resolveObject){
+        /*
+        
+        update attacker animation
+        update target animation
+        update Target Animation Img
+
+        update attacker animation duration
+        update target animation duration
+
+        attacker animation 
+        attacker Target animation 
+        attacker Target Animation Img 
+        */
+        
+            
+
+
+
+
         let attackerCard;
         let root = document.querySelector(':root');
         root.style.setProperty('--ability-animation-image', `url(${attacker.nextAbility.iconSrc})`);
@@ -313,5 +333,28 @@ export default class BattleView{
         card.id = newCombatant.battleId;
         this.addEntraceAnimation(combatant, card, false);
     }
-
+    glowRed(combatant, lackingResources){
+        const card = document.getElementById(combatant.battleId);
+        for(let i = 0; i < lackingResources.length; i++){
+            if(lackingResources[i] == 'stamina'){
+                card.querySelector('.battle-current-stamina').classList.add('glow-red')
+            }
+            if(lackingResources[i] == 'magic'){
+                card.querySelector('.battle-current-magic').classList.add('glow-red')
+            }
+        }
+    }
+    removeGlowRed(combatant, lackingResources){
+        const card = document.getElementById(combatant.battleId);
+        for(let i = 0; i < lackingResources.length; i++){
+            if(lackingResources[i] == 'stamina'){
+                card.querySelector('.battle-current-stamina').classList.remove('glow-red')
+                void card.querySelector('.battle-current-stamina').offsetWidth;
+            }
+            if(lackingResources[i] == 'magic'){
+                card.querySelector('.battle-current-magic').classList.remove('glow-red')
+                void card.querySelector('.battle-current-magic').offsetWidth;
+            }
+        }
+    }
 }

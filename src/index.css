@@ -946,7 +946,21 @@ img{
     flex: 1;
 
 }
-
+.glow-red{
+    animation: glow-red 1s;
+}
+@keyframes glow-red{
+    0%{
+        scale: 1.0;
+    }
+    50%{
+        scale: 1.5;
+        color: red;
+    }
+    100%{
+        scale: 1.0;
+    }
+}
 .typing-animation{
     animation:
         typing 1s,
@@ -1084,6 +1098,7 @@ img{
     50%{transform: translate(500%)}
     100%{transform: translate(0%)}
 }
+
 .inventory-mini-menu-tab-button{
     flex:1;
     padding: 4px;
