@@ -28,10 +28,11 @@
     --stat-cell-width: 100%;
     --medium-size-button-width: 150px;
     --utility-button-sides: 40px;
-    --ability-animation-image: url('');
-    --ability-animation-name: top-down;
-    --ability-animation-duration: 2s;
-    --animate-attacker-name: ally-attack;
+    --battle-attacker-animation: ally-attack;
+    --battle-target-animation: ally-evade;
+    --battle-ability-animation: swipe-down;
+    --battle-ability-animation-image: url('');
+    --battle-ability-animation-duration: 2s;
     --battle-ability-button-sides: 60px;
     --inventory-mini-menu-width: 300px;
     --inventory-mini-menu-height: 300px;
@@ -997,6 +998,10 @@ img{
 
     100% {translate:0 100%}
 }
+@keyframes sink {
+    0% {translate:0 -10%}
+    100% {translate:0 10%}
+}
 @keyframes swipe-right {
     0% {translate:-100%}
     
@@ -1025,10 +1030,10 @@ img{
         translate:0%;
     }  
 }
-.animate-target{
-    animation: var(--animate-target-name) 2s;
+.battle-target-animation{
+    animation: var(--battle-target-animation) 2s;
 }
-.animate-target::before{
+.battle-target-animation::before{
     content: ' ';
     position: absolute;
     top: 0;
@@ -1039,9 +1044,9 @@ img{
     background-color: var(--color-2-transparent);
 
 }
-.animate-target::after{
+.battle-target-animation::after{
     content: '';
-    background-image: var(--ability-animation-image);
+    background-image: var(--battle-ability-animation-image);
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -1051,14 +1056,17 @@ img{
     height: 100%;
     width: 100%;
     z-index: 1;
-    animation: var(--ability-animation-name) var(--ability-animation-duration);
+    animation: var(--battle-ability-animation) var(--battle-ability-animation-duration);
     overflow: hidden;
  
 }
 
-.animate-attacker{
-    animation: var(--animate-attacker-name) 2s;
+.battle-attacker-animation{
+    animation:var(--battle-attacker-animation) var(--battle-ability-animation-duration);
     
+}
+@keyframes none{
+    100%{}
 }
 @keyframes hostile-attack{
     0%{transform: rotate(0deg)}

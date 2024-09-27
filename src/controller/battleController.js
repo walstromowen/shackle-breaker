@@ -70,7 +70,7 @@ export default class BattleController{
     }
     createAbilityButtons(ally, resolveFn){
         document.getElementById('battle-controls-party-button').addEventListener('click', ()=>{
-            this.view.removeGlowRed(ally, ['stamina', 'magic']);
+            this.view.removeGlowRed(ally);
             this.props.switchScreen('party-screen');
             this.props.getPartyController().createSelectButtons(resolveFn, this.model.allyReinforcements);
             let container = document.getElementById('battle-battlefield-container');
@@ -97,7 +97,7 @@ export default class BattleController{
             abilityButtons[i].addEventListener('click', ()=>{
                 let lackingResources = combinedAbilities[i].checkLackingResources(ally);
                 this.view.removeAbilityHighlight();
-                this.view.removeGlowRed(ally, lackingResources);
+                this.view.removeGlowRed(ally);
                 if(lackingResources.length == 0){
                     let container = document.getElementById('battle-battlefield-container');
                     container.removeEventListener('click', this.selectTargetEventHandler);
@@ -487,6 +487,9 @@ export default class BattleController{
         }
         return new Promise((resolve)=>{
             this.prepareAbilitiyHelpper(cycleTargets).then((resolveObject)=>{
+                if(resolveObject.rest){
+                    cycleTargets = this.currentAttacker.abilityTargets;
+                }
                 return this.printAbilityToBattleConsoleHelpper(this.currentAttacker.nextAbility, resolveObject);
             }).then((resolveObject)=>{
                 return this.playAbilityAnimationHelpper(cycleTargets, resolveObject);
@@ -518,6 +521,7 @@ export default class BattleController{
     prepareAbilitiyHelpper(targets){
         return new Promise((resolve)=>{
             if(this.currentAttacker.nextAbility.checkLackingResources(this.currentAttacker).length != 0){
+                this.currentAttacker.abilityTargets = [this.currentAttacker];
                 this.currentAttacker.nextAbility = new Rest({});
             }
             let resolveObject = this.currentAttacker.nextAbility.prepareAbilitiy(this.currentAttacker, targets);
@@ -615,7 +619,7 @@ export default class BattleController{
                     this.view.removeAbilityAnimations()
                     resolve(resolveObject);
                 }
-            }, this.currentAttacker.nextAbility.animationDuration);
+            }, this.currentAttacker.nextAbility.abilityAnimationDuration);
         });
     }
     switchCombatantAnimationHelpper(resolveObject){
@@ -637,7 +641,7 @@ export default class BattleController{
                         this.view.removeAbilityAnimations()
                         resolve(resolveObject); 
                     }
-                }, this.currentAttacker.nextAbility.animationDuration/2);
+                }, this.currentAttacker.nextAbility.abilityAnimationDuration/2);
             });
         })
     }
@@ -646,6 +650,7 @@ export default class BattleController{
         return new Promise((resolve)=>{
             document.addEventListener('click', this.skipEventHandler = ()=>{
                 if(flag == true){
+                    flag = false;
                     this.view.replaceCombatantCard(this.currentAttacker);
                     document.removeEventListener('click', this.skipEventHandler);
                     resolve(resolveObject)
@@ -653,11 +658,12 @@ export default class BattleController{
             })
             setTimeout(()=>{
                 if(flag == true){
+                    flag = false;
                     this.view.replaceCombatantCard(this.currentAttacker);
                     document.removeEventListener('click', this.skipEventHandler);
                     resolve(resolveObject)
                 }
-            }, this.currentAttacker.nextAbility.animationDuration/2);
+            }, this.currentAttacker.nextAbility.abilityAnimationDuration/2);
         });
     }
     resolvePause(resolveFn){

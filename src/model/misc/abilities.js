@@ -4,7 +4,6 @@ export class Ability{
     constructor(config){
         this.name = config.name;
         this.iconSrc = config.iconSrc;
-        this.background = config.background;
         this.targetCount = config.targetCount || 1;
         this.accuracy = config.accuracy || 1;
         this.speedModifier = config.speedModifier || 1;
@@ -12,10 +11,16 @@ export class Ability{
         this.healthCost = config.healthCost || 0;
         this.staminaCost = config.staminaCost || 0;
         this.magicCost = config.magicCost || 0;
-        this.damageTypes = config.damageTypes || 'none';
+        this.damageTypes = config.damageTypes || '';
+
+        this.attackerAnimation = config.attackerAnimation || 'none';
+        this.targetAnimation = config.targetAnimation || 'none';
+        this.abilityAnimation = config.abilityAnimation || null;
+        this.abilityAnimationImage = config.abilityAnimationImage || 'none';
+        this.abilityAnimationDuration = config.abilityAnimationDuration || 2000;
+
         this.soundEffectSrc = config.soundEffectSrc;
-        this.animationName = config.animationName || 'top-down';
-        this.animationDuration = config.animationDuration || 2000;
+        
         this.sequenceType = config.sequenceType || 'chain';
         this.consumable = config.consumable || '';
         this.message;
@@ -111,7 +116,7 @@ export class Ability{
         target.statusArray.push(status);
     }
     prepareAbilitiy(attacker, targets){
-        let resolveObject = {evade: false, switchCombatant: false, retreat: false}
+        let resolveObject = {evade: false, switchCombatant: false, retreat: false, rest: false}
         switch(this.sequenceType){
             case 'chain':
                 if(this.checkTargetEvade(targets[0])){
@@ -132,6 +137,9 @@ export class Ability{
         if(attacker.nextAbility.name == 'retreat'){
             resolveObject.retreat = true;
         }
+        if(attacker.nextAbility.name == 'rest'){
+            resolveObject.rest = true;
+        }
         this.spendResources(attacker);
         this.updateMessage(attacker, targets[0]);
         return resolveObject;
@@ -146,49 +154,15 @@ export class Ability{
         }
         return lackingResources;
     }
-   
-/*
-    checkResource(attacker){
-        if(attacker.isHostile == false){
-            if(attacker.currentStamina - this.staminaCost < 0){
-                return ('Not enough stamina!');
-            }
-            if(attacker.currentMagic - this.magicCost < 0){
-                return ('Not enough magic!');
-            }
-        }else{
-
-        }
-         
-
-
-        else{
-            if(attacker.currentStamina - this.staminaCost < 0){
-                attacker.nextMove = new Recover;
-            }
-            if(attacker.currentMagic - this.magicCost < 0){
-                attacker.nextMove = new Meditate;
-            }
-        }
-        if(this.canUseSpecialCondition(attacker, currentCharacter) == false){
-            return false;
-        }
-    }
-    canUseSpecialCondition(attacker, currentCharacter){
-        return true;
-    }
-    */
 }
 export class SwitchCombatant extends Ability{
     constructor(config){
         super({
             name: 'switch combatant',
             iconSrc: 'none',
-            background: config.background || 'none',
             speedModifier: config.speedModifier || 1,
             soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
-            animationName: 'none',
-            animationDuration: config.animationDuration || 2000,
+            targetAnimation: 'ally-retreat',
         })
         this.newCombatant = config.newCombatant;
         this.onActivate = config.onActivate;
@@ -205,11 +179,9 @@ export class Retreat extends Ability{
         super({
             name: 'retreat',
             iconSrc: './assets/media/icons/run.png',
-            background: config.background || 'grey',
             speedModifier: config.speedModifier || 1,
             soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
-            animationName: 'none',
-            animationDuration: config.animationDuration || 2000,
+            targetAnimation: 'ally-retreat',
             
         })
         this.onActivate = config.onActivate;
@@ -226,10 +198,12 @@ export class Rest extends Ability{
         super({
             name: 'rest',
             iconSrc: './assets/media/icons/despair.png',
-            background: config.background || 'grey',
             speedModifier: config.speedModifier || 1,
             soundEffectSrc: "./assets/audio/soundEffects/power-down-45784.mp3",
-            animationName: 'none',
+            abilityAnimation: 'sink',
+            abilityAnimationImage: './assets/media/icons/despair.png',
+            
+            
         })
     }
     activate(attacker, target){
@@ -244,7 +218,6 @@ export class Slash extends Ability{
         super({
             name: 'slash',
             iconSrc: './assets/media/icons/quick-slash.png',
-            background: config.background || 'grey',
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 1,
             healthCost: config.healthCost || 0,
@@ -252,14 +225,17 @@ export class Slash extends Ability{
             magicCost: config.magicCost || 0,
             damageTypes: config.damageTypes || ['blunt', 'pierce'],
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-metal-hit-woosh-1485.wav",
-            animationName: 'swipe-right',
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/quick-slash.png',
+            abilityAnimation: config.abilityAnimation || 'swipe-right',
+           
             
         })
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
-        let damage = this.checkDamage(target, rawDamage, 'stamina');
-        target.currentStamina = target.currentStamina - damage;
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
     }
     updateMessage(attacker, target){
         this.message = `${attacker.name} slashes ${target.name}.`;
@@ -278,7 +254,10 @@ export class Strike extends Ability{
             magicCost: config.magicCost || 0,
             damageTypes: config.damageTypes || ['blunt'],
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-metallic-sword-strike-2160.wav",
-            animationName: 'swipe-down',
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimation: config.abilityAnimation || 'swipe-down',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/hammer-drop.png',
+           
         })
     }
     activate(attacker, target){
@@ -295,7 +274,6 @@ export class Cleave extends Ability{
         super({
             name: 'cleave',
             iconSrc: './assets/media/icons/serrated-slash.png',
-            background: config.background || 'grey',
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 1,
             healthCost: config.healthCost || 0,
@@ -304,8 +282,11 @@ export class Cleave extends Ability{
             damageTypes: config.damageTypes || ['blunt'],
             targetCount: 2,
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-metal-hit-woosh-1485.wav",
-            animationName: 'swipe-right',
-            sequenceType: 'splash'
+            sequenceType: 'splash',
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimation: config.abilityAnimation || 'swipe-right',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/serrated-slash.png',
+
         })
     }
     activate(attacker, target){
@@ -322,7 +303,6 @@ export class MagicMissile extends Ability{
         super({
             name: 'magic missle',
             iconSrc: './assets/media/icons/frayed-arrow.png',
-            background: config.background || 'blue',
             speedModifier: config.speedModifier || 0.75,
             damageModifier: config.damageModifier || 1.25,
             healthCost: config.healthCost || 0,
@@ -332,7 +312,10 @@ export class MagicMissile extends Ability{
             damageTypes: config.damageTypes || ['arcane'],
             targetCount: 3,
             soundEffectSrc: "./assets/audio/soundEffects/magic-missile-made-with-Voicemod-technology.mp3",
-            animationName: 'swipe-right',
+
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimation: config.abilityAnimation || 'swipe-right',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/frayed-arrow.png',
         })
     }
     activate(attacker, target){
@@ -359,6 +342,12 @@ export class ThrowPosionedKnife extends Ability{
             targetCount: 1,
             soundEffectSrc: "./assets/audio/soundEffects/arrow-body-impact-146419.mp3",
             animationName: 'swipe-right',
+
+
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimation: config.abilityAnimation || 'swipe-right',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/flying-dagger.png',
+
         })
     }
     activate(attacker, target){
@@ -380,8 +369,9 @@ export class DrinkHealthPotion extends Ability{
             background: config.background || 'red',
             speedModifier: config.speedModifier || 1,
             soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
-            animationName: 'none',
-            animationDuration: config.animationDuration || 2000,
+            
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/standing-potion.png',
+           
         })
     }
     activate(attacker, target){
@@ -406,8 +396,9 @@ export class DrinkKurtussBrewOfMadness extends Ability{
             background: config.background || 'red',
             speedModifier: config.speedModifier || 1,
             soundEffectSrc: './assets/audio/soundEffects/energy-90321.mp3',
-            animationName: 'none',
-            animationDuration: config.animationDuration || 2000,
+
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/standing-potion.png',
+           
         })
     }
     activate(attacker, target){

@@ -2,7 +2,6 @@
 Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Walstrom
 
 # Planned Features
-* more animation control
 * looting gold
 * Default Abilities (punch)
 * upgrading items
@@ -24,6 +23,7 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 * switching from mercenary to another companion and then back causes bug (no companions left to recruit)
 * consumable items not removing properly when multiple ally using them.
 
+
 # Planned Quality of Life Improvements
 * Alphabetize CSS rules
 * Move all status effect Promises to controller
@@ -31,5 +31,6 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 * Mobile event listener support
 * change attack animations (not ability aniamations, entities currently rocking when drinking potions)
 * XP and gold calculation refinements
+* Animations
 
 # MISC notes

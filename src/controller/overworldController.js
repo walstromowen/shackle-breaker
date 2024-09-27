@@ -24,6 +24,17 @@ export default class OverworldController{
             document.getElementById('overworld-escape-menu').style.display='none';
             playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
         });
+        document.getElementById('overworld-escape-menu-fullscreen-button').addEventListener('click', ()=>{
+            if(document.querySelector('body').requestFullscreen) {
+                document.querySelector('body').requestFullscreen();
+            }else if (document.querySelector('body').webkitRequestFullscreen) { /* Safari */
+                document.querySelector('body').webkitRequestFullscreen();
+            }else if (document.querySelector('body').msRequestFullscreen) { /* IE11 */
+                document.querySelector('body').msRequestFullscreen();
+            }
+        });
+
+
         document.getElementById('overworld-escape-menu-exit-button').addEventListener('click', ()=>{
             document.getElementById('overworld-escape-menu').style.display='none';
             this.props.switchScreen('title-screen');

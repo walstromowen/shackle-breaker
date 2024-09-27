@@ -215,25 +215,53 @@ export default class BattleView{
         })
     }
     playAbilityAnimations(attacker, targets, resolveObject){
-        /*
+        //update CSS
+        let root = document.querySelector(':root');
         
-        update attacker animation
-        update target animation
-        update Target Animation Img
-
-        update attacker animation duration
-        update target animation duration
-
-        attacker animation 
-        attacker Target animation 
-        attacker Target Animation Img 
-        */
         
+        root.style.setProperty('--battle-attacker-animation', attacker.nextAbility.attackerAnimation);
+        root.style.setProperty('--battle-target-animation', attacker.nextAbility.targetAnimation);
+        root.style.setProperty('--battle-ability-animation', attacker.nextAbility.abilityAnimation);
+        root.style.setProperty('--battle-ability-animation-image', `url(${attacker.nextAbility.abilityAnimationImage})`);
+        root.style.setProperty(' --battle-ability-animation-duration', attacker.nextAbility.abilityAnimationDuration);
+        
+        //get attacker card and 
+        Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
+            if(card.id == attacker.battleId){
+                let attackerCard = card;
+                if(attacker === targets[0]){
+
+                }else{
+                    attackerCard.classList.add('battle-attacker-animation');
+                }
+            }
+        });
+
+        //get target cards 
+        for(let i = 0; i < targets.length; i++){
+            let targetCard;
+            Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
+                if(card.id == targets[i].battleId){
+                    targetCard = card;
+                    if(resolveObject.evade){
+                        root.style.setProperty('--battle-ability-animation', 'none');
+                        root.style.setProperty('--battle-ability-animation-image', 'none');
+                        if(targets[i].isHostile == false){
+                            root.style.setProperty('--battle-target-animation', 'ally-evade');
+                        }else{
+                            root.style.setProperty('--battle-target-animation', 'hostile-evade');
+                        }
+                    }
+                    targetCard.classList.add('battle-target-animation');
+                }
+            });
+        }
+        playSoundEffect(attacker.nextAbility.soundEffectSrc);
             
 
 
 
-
+/*OLD
         let attackerCard;
         let root = document.querySelector(':root');
         root.style.setProperty('--ability-animation-image', `url(${attacker.nextAbility.iconSrc})`);
@@ -289,11 +317,12 @@ export default class BattleView{
         }
         attackerCard.classList.add('animate-attacker');
         playSoundEffect(attacker.nextAbility.soundEffectSrc);
+        */
     }
     removeAbilityAnimations(){
         Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
-            card.classList.remove('animate-target');
-            card.classList.remove('animate-attacker');
+            card.classList.remove('battle-attacker-animation');
+            card.classList.remove('battle-target-animation');
         });
     }
     playStatusAnimation(status){
@@ -343,18 +372,14 @@ export default class BattleView{
                 card.querySelector('.battle-current-magic').classList.add('glow-red')
             }
         }
+       
     }
-    removeGlowRed(combatant, lackingResources){
+    removeGlowRed(combatant){
         const card = document.getElementById(combatant.battleId);
-        for(let i = 0; i < lackingResources.length; i++){
-            if(lackingResources[i] == 'stamina'){
-                card.querySelector('.battle-current-stamina').classList.remove('glow-red')
-                void card.querySelector('.battle-current-stamina').offsetWidth;
-            }
-            if(lackingResources[i] == 'magic'){
-                card.querySelector('.battle-current-magic').classList.remove('glow-red')
-                void card.querySelector('.battle-current-magic').offsetWidth;
-            }
-        }
+        card.querySelector('.battle-current-stamina').classList.remove('glow-red');
+        card.querySelector('.battle-current-magic').classList.remove('glow-red');
+        card.offsetWidth;
     }
 }
+
+

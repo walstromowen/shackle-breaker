@@ -67,14 +67,6 @@ export default class CharacterSummaryController{
             this.model.updateCurrentCharacter('next')
             this.onSwitchScreen();
         })
-        //TEMP!
-        window.addEventListener("keydown", (e) => {
-            if(e.key == 'q'){
-                this.model.currentCharacter.currentXP+=10;
-                this.onSwitchScreen();
-            }
-        });
-        //TEMP!
     }
     onSwitchScreen(){
         this.model.currentCharacter.awardSkillPoints();
