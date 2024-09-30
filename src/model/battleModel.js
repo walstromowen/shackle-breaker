@@ -249,6 +249,7 @@ export default class BattleModel{
         for(let i = 0; i < this.props.getBattle().loot.length; i++){
             this.props.getInventory().push(this.props.getBattle().loot[i]);
         }
+        this.props.setGold(this.props.getGold() + this.props.getBattle().gold);
     }
     distributeXP(combatant){
         let activeAllys = this.activeCombatants.filter((combatant)=>{
@@ -257,6 +258,14 @@ export default class BattleModel{
         for(let i = 0; i < activeAllys.length; i++){
             activeAllys[i].currentXP += Math.floor(combatant.dropXP()/activeAllys.length);
         }
+    }
+    pileGold(combatant){
+        this.props.getBattle().gold += combatant.dropGold();
+    }
+    resetBattleLoot(){
+        this.props.getBattle().gold = 0;
+        this.props.getBattle().loot = [];
+       
     }
 }
 

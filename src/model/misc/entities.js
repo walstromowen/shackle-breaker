@@ -1,6 +1,6 @@
 import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife} from "./abilities.js";
 import { Poison, Burn} from "./statusEffects.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, LinenShirt, LinenPants, PineWood, Handaxe, Shortbow } from "./items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, LinenShirt, LinenPants, PineWood, Handaxe, Shortbow, HealthPotion, StaminaPotion, MagicPotion } from "./items.js";
 export class Entity{
     constructor(config){
         this.name = config.name || 'entity';
@@ -270,7 +270,7 @@ export class Entity{
             }
         }
     }
-    subtractAttatchableStats(slots){
+    subtractAttachableStats(slots){
         let twoHandCount = 0;
         for(let i = 0; i < slots.length; i++){
             if(this.equipment[slots[i]].slot == 'twoHand' && twoHandCount >= 1){
@@ -343,7 +343,10 @@ export class Entity{
     }
     dropXP(){
         let amount = Math.floor(((Math.random() * (0.75 - 0.25 + 1) + 0.25)*((this.maxHP + this.maxStamina + this.maxMagic)/3)) *(1 + this.level*0.1))
-       
+        return amount;
+    }
+    dropGold(){
+        let amount = Math.floor(((Math.random() * (0.75 - 0.25 + 1) + 0.25)*((this.maxHP + this.maxStamina + this.maxMagic)/3)) *(1 + this.level*0.1))
         return amount;
     }
 }
@@ -397,14 +400,14 @@ export class Skeleton extends Entity{
     constructor(config){
         super({
             name: 'skeleton',
-            apperance: './assets/media/entities/skeleton.jpg',
+            apperance: config.skeleton || './assets/media/entities/skeleton.jpg',
             vigor: config.vigor || 5,
             strength: config.strength || 5,
             dexterity: config.dexterity || 5,
             intelligence: config.intelligence || 5,
             attunement: config.attunement || 5,
             equipment: {
-                mainHand: new Handaxe({level: 1}),
+                mainHand: new ShortSword({level: 1}),
                 offhand: '',
                 head: '',
                 torso: '',
@@ -416,8 +419,11 @@ export class Skeleton extends Entity{
             abilityArray: [],
             lootTable: [
                 {item: new ShortSword({level: 1}), weight: 1},
-                {item: new Handaxe({level: 1}), weight: 2},
-                {item: new PineWood(), weight: 3}
+                {item: new Handaxe({level: 1}), weight: 1},
+                {item: new HealthPotion(), weight: 2},
+                {item: new StaminaPotion(), weight: 2},
+                {item: new MagicPotion(), weight: 2},
+                {item: new PineWood(), weight: 3},
             ],
         });
     }

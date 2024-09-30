@@ -80,18 +80,18 @@ export default class CharacterSummaryModel{
         //subtract outgoing item stats and add outgoing items to inventory in correct spot   
         if(incomingItemSlot == 'twoHand'){
             if(this.currentCharacter.equipment['mainHand'] != ''){
-                this.currentCharacter.subtractAttatchableStats(['mainHand'])
+                this.currentCharacter.subtractAttachableStats(['mainHand'])
                 inventory.splice(incomingIndex, 0, this.currentCharacter.equipment['mainHand']);
                 indexModifier++ ;
             }
             if(this.currentCharacter.equipment['offhand'] != ''){
-                this.currentCharacter.subtractAttatchableStats(['offhand'])
+                this.currentCharacter.subtractAttachableStats(['offhand'])
                 inventory.splice(incomingIndex, 0, this.currentCharacter.equipment['offhand']);
                 indexModifier++ ;
             }
         }else{
             if(this.currentCharacter.equipment[outgoingItemSlotType] != ''){
-                this.currentCharacter.subtractAttatchableStats([outgoingItemSlotType])
+                this.currentCharacter.subtractAttachableStats([outgoingItemSlotType])
                 inventory.splice(incomingIndex, 0, this.currentCharacter.equipment[outgoingItemSlotType]);
                 indexModifier++ ;
             }
@@ -116,7 +116,7 @@ export default class CharacterSummaryModel{
     }
     
     unequipAttatchable(equippedItemSlotType){
-        this.currentCharacter.subtractAttatchableStats([equippedItemSlotType])
+        this.currentCharacter.subtractAttachableStats([equippedItemSlotType])
         let unequippedItem = this.currentCharacter.unequipAttatchables([equippedItemSlotType])[0]
         this.props.getInventory().push(unequippedItem)
     }

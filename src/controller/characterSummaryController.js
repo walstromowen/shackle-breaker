@@ -7,6 +7,7 @@ export default class CharacterSummaryController{
         this.view = view;
         this.inventoryMiniMenuExitEventHandler;
         this.inventoryMiniMenuUseButtonHandler;
+        this.inventoryMiniMenuUpgradeButtonHandler;
         this.vigorIncreaseHandler;
         this.strengthIncreaseHandler;
         this.dexterityIncreaseHandler;
@@ -120,13 +121,29 @@ export default class CharacterSummaryController{
                 e.preventDefault();
                 e.stopPropagation();
                 //remove event listeners from mini-menu buttons
-                document.getElementById('inventory-mini-menu-consumable-use-button').removeEventListener('click', this.inventoryMiniMenuUseButtonHandler)
+                document.getElementById('inventory-mini-menu-consumable-use-button').removeEventListener('click', this.inventoryMiniMenuUseButtonHandler);
+                document.getElementById('inventory-mini-menu-consumable-use-button').removeEventListener('click', this.inventoryMiniMenuUpgradeButtonHandler);
                 if(node.parentNode.classList.contains('character-summary-equipped-slot')){
                     let slot = this.model.getInventoryItemSlotTypeFromClassList(node.parentNode.classList);
                     if(this.model.currentCharacter.equipment[slot] != ''){
                         let item = this.model.currentCharacter.equipment[slot];
                         document.getElementById('inventory-mini-menu-consumable-use-button').style.display = 'none';
-                        document.getElementById('inventory-mini-menu-attatchable-upgrade-button').style.display = 'block';
+                        if(this.model.props.getSituation() == 'overworld'){
+                            document.getElementById('inventory-mini-menu-attatchable-upgrade-button').style.display = 'block';
+                            document.getElementById('inventory-mini-menu-attatchable-upgrade-button').addEventListener('click', this.inventoryMiniMenuUpgradeButtonHandler = ()=>{
+                                if(this.model.props.getGold() >= Math.floor(item.price*1.5)){
+                                    this.model.props.setGold(this.model.props.getGold() - Math.floor(item.price*1.5))
+                                    this.model.currentCharacter.subtractAttachableStats([this.model.getInventoryItemSlotTypeFromClassList(node.parentNode.classList)]);
+                                    item.upgrade(1);
+                                    this.model.currentCharacter.addAttachableStats([this.model.getInventoryItemSlotTypeFromClassList(node.parentNode.classList)]);
+                                    this.props.updateMiniMenu(item);
+                                    this.onSwitchScreen();
+                                    playSoundEffect('./assets/audio/soundeffects/mixkit-metal-medieval-construction-818.wav');
+                                }
+                            });
+                        }else{
+                            document.getElementById('inventory-mini-menu-attatchable-upgrade-button').style.display = 'none';
+                        }
                         this.props.updateMiniMenu(item);
                     }else{
                         document.getElementById('inventory-mini-menu').style.display = 'none';
@@ -134,25 +151,33 @@ export default class CharacterSummaryController{
                     }
                 }else{
                     let item = this.model.getInventoryItemFromItemId(node.id);
-
                     switch(item.itemType){
-                        case 'attatchable':
+                        case 'attachable':
+                            if(this.model.props.getSituation() == 'overworld'){
+                                document.getElementById('inventory-mini-menu-attatchable-upgrade-button').style.display = 'block';
+                                document.getElementById('inventory-mini-menu-attatchable-upgrade-button').addEventListener('click', this.inventoryMiniMenuUpgradeButtonHandler = ()=>{
+                                    if(this.model.props.getGold() >= Math.floor(item.price*1.5)){
+                                        this.model.props.setGold(this.model.props.getGold() - Math.floor(item.price*1.5))
+                                        item.upgrade(1);
+                                        this.props.updateMiniMenu(item);
+                                        this.onSwitchScreen();
+                                        playSoundEffect('./assets/audio/soundeffects/mixkit-metal-medieval-construction-818.wav');
+                                    }
+                                    
+                                })
+                            }else{
+                                document.getElementById('inventory-mini-menu-attatchable-upgrade-button').style.display = 'none';
+                            }
                             document.getElementById('inventory-mini-menu-consumable-use-button').style.display = 'none';
-                            document.getElementById('inventory-mini-menu-attatchable-upgrade-button').style.display = 'block';
-                            document.getElementById('inventory-mini-menu-attatchable-upgrade-button').addEventListener('click', ()=>{
-                                //upgrade Item (Also need to remove upon switching item)
-                            })
 
                             break;
                         case 'consumable':
                             document.getElementById('inventory-mini-menu-attatchable-upgrade-button').style.display = 'none';
-                            if(item.useSituations.includes(this.model.props.getSituation())){
+                            if(item.useSituations.includes(this.model.props.getSituation()) && this.model.props.getSituation() == 'overworld'){
                                 document.getElementById('inventory-mini-menu-consumable-use-button').style.display = 'block';
                                 document.getElementById('inventory-mini-menu-consumable-use-button').addEventListener('click', this.inventoryMiniMenuUseButtonHandler = ()=>{
                                     item.abilityArray[0].activate(this.model.currentCharacter, this.model.currentCharacter);
                                     playSoundEffect(item.abilityArray[0].soundEffectSrc);
-                                    //this.onSwitchScreen();
-                                    //document.getElementById('inventory-mini-menu-consumable-use-button').removeEventListener('click', listener);
                                     item.charges --;
                                     if(item.charges <= 0){
                                         this.model.removeItemFromInventoryByItemId(node.id);

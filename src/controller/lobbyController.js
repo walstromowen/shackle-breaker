@@ -14,6 +14,7 @@ export default class LobbyController{
             document.getElementById('music-player').pause();
         });
         document.getElementById('lobby-start-button').addEventListener('click', ()=>{
+            this.model.updateCompanion();
             this.model.updateName();
             this.props.switchScreen('overworld-screen');
             playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
@@ -43,9 +44,6 @@ export default class LobbyController{
         document.getElementById('lobby-keepsake-selection').addEventListener('change', ()=>{
             this.model.updateKeepsake();
             this.view.updateInventory(this.model.props.getParty()[0].getEquipment(Object.keys(this.model.props.getParty()[0].equipment)), this.model.props.getInventory());
-        });
-        document.getElementById('lobby-companion-selection').addEventListener('change', ()=>{
-            this.model.updateCompanion();
         });
         document.getElementById('lobby-difficulty-selection').addEventListener('change', ()=>{
             this.model.updateDifficulty();

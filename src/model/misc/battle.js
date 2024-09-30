@@ -6,6 +6,7 @@ export default class Battle{
         this.weather = 'clear';
         this.battlefield = '';
         this.loot = [];
+        this.gold = 0;
         this.maxAllyCount;
         this.maxHostileCount;
         this.currentAllyLimit;

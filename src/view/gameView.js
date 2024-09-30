@@ -50,28 +50,30 @@ export default class GameView{
                 document.getElementById('inventory-mini-menu-arcane-resistance').innerText = item.arcaneResistance;
                 document.getElementById('inventory-mini-menu-elemental-defense').innerText = item.elementalDefense;
                 document.getElementById('inventory-mini-menu-elemental-resistance').innerText = item.elementalResistance;
+
+                document.getElementById('inventory-mini-menu-attatchable-upgrade-cost-value').innerText = Math.floor(item.price*1.5);
+
+                document.getElementById('inventory-mini-menu-attachable-stats').style.display = 'block';
+                document.getElementById('inventory-mini-menu-consumable-stats').style.display = 'none';
+
                 break;
             case 'material':
                 document.getElementById('inventory-mini-menu-item-level').innerText = 'N/A';
                 document.getElementById('inventory-mini-menu-item-slot').innerText = 'N/A';
-                document.getElementById('inventory-mini-menu-hp-recovery').innerText = 'N/A';
-                document.getElementById('inventory-mini-menu-speed').innerText = 'N/A';
-                document.getElementById('inventory-mini-menu-stamina-recovery').innerText = 'N/A';
-                document.getElementById('inventory-mini-menu-evasion').innerText = 'N/A';
-                document.getElementById('inventory-mini-menu-magic-recovery').innerText = 'N/A';
-                document.getElementById('inventory-mini-menu-critical').innerText = 'N/A';
-                document.getElementById('inventory-mini-menu-blunt-attack').innerText = 'N/A';
-                document.getElementById('inventory-mini-menu-pierce-attack').innerText = 'N/A';
-                document.getElementById('inventory-mini-menu-arcane-attack').innerText = 'N/A';
-                document.getElementById('inventory-mini-menu-elemental-attack').innerText = 'N/A';
-                document.getElementById('inventory-mini-menu-blunt-defense').innerText = 'N/A';
-                document.getElementById('inventory-mini-menu-blunt-resistance').innerText = 'N/A';
-                document.getElementById('inventory-mini-menu-pierce-defense').innerText = 'N/A';
-                document.getElementById('inventory-mini-menu-pierce-resistance').innerText = 'N/A';
-                document.getElementById('inventory-mini-menu-arcane-defense').innerText = 'N/A';
-                document.getElementById('inventory-mini-menu-arcane-resistance').innerText = 'N/A';
-                document.getElementById('inventory-mini-menu-elemental-defense').innerText = 'N/A';
-                document.getElementById('inventory-mini-menu-elemental-resistance').innerText = 'N/A';
+
+                document.getElementById('inventory-mini-menu-attachable-stats').style.display = 'none';
+                document.getElementById('inventory-mini-menu-consumable-stats').style.display = 'none';
+                break;
+            case 'consumable':
+                document.getElementById('inventory-mini-menu-item-level').innerText = 'N/A';
+                document.getElementById('inventory-mini-menu-item-slot').innerText = 'N/A';
+                document.getElementById('inventory-mini-menu-uses').innerText = item.charges;
+
+                document.getElementById('inventory-mini-menu-use-situations').innerText = item.useSituations;
+
+                document.getElementById('inventory-mini-menu-attachable-stats').style.display = 'none';
+                document.getElementById('inventory-mini-menu-consumable-stats').style.display = 'block';
+                break;
         }
         
 

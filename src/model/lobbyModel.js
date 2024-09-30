@@ -1,6 +1,6 @@
 import { getRandomArrayElement } from "../utility.js";
 import {Entity, Dog, Hawk} from "./misc/entities.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, LinenShirt, LinenPants, PineWood, Handaxe, LeatherHelmet, LeatherHood, Shortbow, HealthPotion, PoisonedKnife, KurtussBrewOfMadness} from "./misc/items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, LinenShirt, LinenPants, PineWood, Handaxe, LeatherHelmet, LeatherHood, Shortbow, HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion} from "./misc/items.js";
 
 export default class LobbyModel{
     constructor(props){
@@ -108,7 +108,7 @@ export default class LobbyModel{
                 this.props.setInventory([]);
                 break;
             case 'bag-of-potions':
-                this.props.setInventory([new HealthPotion(), new KurtussBrewOfMadness()]);
+                this.props.setInventory([new HealthPotion(), new StaminaPotion(), new MagicPotion(), new HealthPotion(), new StaminaPotion(), new MagicPotion(), new KurtussBrewOfMadness()]);
                 break;
             case 'herbal-medicine':
                 this.props.setInventory([]);

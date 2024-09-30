@@ -992,15 +992,21 @@ img{
 
 /*Attack Animations*/
 @keyframes swipe-down {
-    0% {translate:0 -100%}
+    0% {translate:-100%}
     
-    25% {translate:0 100%}
+    25% {translate:100%}
 
-    100% {translate:0 100%}
+    100% {translate:100%}
 }
 @keyframes sink {
-    0% {translate:0 -10%}
-    100% {translate:0 10%}
+    0% {translate:-10%}
+    100% {translate: 10%}
+}
+@keyframes drink {
+    0% {rotate:0deg}
+    25% {rotate: -45deg}
+    50% {rotate: -45deg}
+    100% {rotate: 0deg}
 }
 @keyframes swipe-right {
     0% {translate:-100%}

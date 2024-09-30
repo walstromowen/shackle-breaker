@@ -5,11 +5,18 @@ class StatusEffect{
         this.holder = config.holder;
         this.maxCharges = config.maxCharges;
         this.currentCharges = this.maxCharges;
-        this.animationName = config.animationName || 'explode';
-        this.animationDuration = config.animationDuration || 2000;
         this.activate = this.activate.bind(this);
         this.soundEffectSrc = config.soundEffectSrc || "./assets/audio/soundEffects/power-down-45784.mp3",
         this.message = '';
+
+        this.attackerAnimation = config.attackerAnimation || null;
+        this.targetAnimation = config.targetAnimation || 'none';
+        this.abilityAnimation = config.abilityAnimation || 'explode';
+        this.abilityAnimationImage = config.abilityAnimationImage || this.iconSrc;
+        this.abilityAnimationDuration = config.abilityAnimationDuration || 2000;
+
+
+
     }
     activate(turnPhase){
         if(this.holder.currentHP <= 0){
@@ -76,7 +83,6 @@ export class Poison extends StatusEffect{
             holder: config.holder,
             maxCharges: 6,
             iconSrc: "./assets/media/icons/bubbles.png",
-            animationName: 'explode', 
             soundEffectSrc: "./assets/audio/soundEffects/power-down-45784.mp3",
         });
     }
@@ -103,7 +109,6 @@ export class Burn extends StatusEffect{
             iconSrc: "./assets/media/icons/flame.png",
             holder: config.holder,
             maxCharges: 3,
-            animationName: 'explode', 
             soundEffectSrc: "./assets/audio/soundEffects/short-fireball-woosh-6146.mp3",
         });
     }

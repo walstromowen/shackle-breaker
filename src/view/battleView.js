@@ -332,6 +332,17 @@ export default class BattleView{
                 holderCard = card;
             }
         });
+        //TODO
+        let root = document.querySelector(':root');
+        root.style.setProperty('--battle-target-animation', status.targetAnimation);
+        root.style.setProperty('--battle-ability-animation', status.abilityAnimation);
+        root.style.setProperty('--battle-ability-animation-image', `url(${status.abilityAnimationImage})`);
+        root.style.setProperty(' --battle-ability-animation-duration', status.abilityAnimationDuration);
+
+        holderCard.classList.add('battle-target-animation');
+        playSoundEffect(status.soundEffectSrc);
+
+/*OLD
         let root = document.querySelector(':root');
         root.style.setProperty('--ability-animation-image', `url(${status.iconSrc})`);
         root.style.setProperty('--ability-animation-name', status.animationName);
@@ -339,10 +350,11 @@ export default class BattleView{
         root.style.setProperty('--animate-target-name', 'none');
         holderCard.classList.add('animate-target');
         playSoundEffect(status.soundEffectSrc);
+*/
     }
     removeStatusAnimations(){
         Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
-            card.classList.remove('animate-target');
+            card.classList.remove('battle-target-animation');
         });
     }
     replaceCombatantCard(combatant){

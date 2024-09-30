@@ -366,18 +366,17 @@ export class DrinkHealthPotion extends Ability{
         super({
             name: 'drink health potion',
             iconSrc: './assets/media/icons/standing-potion.png',
-            background: config.background || 'red',
             speedModifier: config.speedModifier || 1,
             soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
-            
+            abilityAnimation: 'drink',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/standing-potion.png',
            
         })
     }
     activate(attacker, target){
-        let rawHPRestore = attacker.maxHP*0.5;
-        let hPRestore = this.checkRestore(target, rawHPRestore, 'health');
-        target.currentHP = target.currentHP + hPRestore;
+        let rawHPRestore = target.maxHP*0.5;
+        let hpRestore = this.checkRestore(target, rawHPRestore, 'health');
+        target.currentHP = target.currentHP + hpRestore;
     }
     updateMessage(attacker, target){
         if(attacker == target){
@@ -385,6 +384,58 @@ export class DrinkHealthPotion extends Ability{
         }
         else{
             this.message = `${attacker.name} throws a health potion at ${target.name}.`;
+        }
+    }
+}
+export class DrinkStaminaPotion extends Ability{
+    constructor(config){
+        super({
+            name: 'drink stamina potion',
+            iconSrc: './assets/media/icons/square-bottle.png',
+            speedModifier: config.speedModifier || 1,
+            soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
+            abilityAnimation: 'drink',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/square-bottle.png',
+           
+        })
+    }
+    activate(attacker, target){
+        let rawStaminaRestore = target.maxStamina*0.5;
+        let staminaRestore = this.checkRestore(target, rawStaminaRestore, 'stamina');
+        target.currentStamina = target.currentStamina + staminaRestore;
+    }
+    updateMessage(attacker, target){
+        if(attacker == target){
+            this.message = `${attacker.name} drinks a stamina potion.`;
+        }
+        else{
+            this.message = `${attacker.name} throws a stamina potion at ${target.name}.`;
+        }
+    }
+}
+export class DrinkMagicPotion extends Ability{
+    constructor(config){
+        super({
+            name: 'drink magic potion',
+            iconSrc: './assets/media/icons/potion-ball.png',
+            speedModifier: config.speedModifier || 1,
+            soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
+            abilityAnimation: 'drink',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/potion-ball.png',
+           
+        })
+    }
+    activate(attacker, target){
+        let rawMagicRestore = target.maxMagic*0.5;
+        let magicRestore = this.checkRestore(target, rawMagicRestore, 'magic');
+        target.currentMagic = target.currentMagic + magicRestore;
+    }
+    updateMessage(attacker, target){
+        if(attacker == target){
+            this.message = `${attacker.name} drinks a magic potion.`;
+        }
+        else{
+            this.message = `${attacker.name} throws a magic potion at ${target.name}.`;
         }
     }
 }

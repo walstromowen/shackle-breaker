@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, DrinkHealthPotion, DrinkKurtussBrewOfMadness} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, DrinkKurtussBrewOfMadness} from "./abilities.js";
 
 let counter = 0;
 
@@ -664,11 +664,34 @@ export class HealthPotion extends Consumable{
             imageSrc: './assets/media/icons/standing-potion.png',
             price: 20,
             abilityArray: [new DrinkHealthPotion({})],
-            charges: 2,
+            charges: 1,
         });
     }
 }
-
+export class StaminaPotion extends Consumable{
+    constructor(){
+        super({
+            name: 'stamina potion',
+            description: 'a magical brew designed to restore stamina',
+            imageSrc: './assets/media/icons/square-bottle.png',
+            price: 20,
+            abilityArray: [new DrinkStaminaPotion({})],
+            charges: 1,
+        });
+    }
+}
+export class MagicPotion extends Consumable{
+    constructor(){
+        super({
+            name: 'magic potion',
+            description: 'a magical brew designed to restore magic',
+            imageSrc: './assets/media/icons/potion-ball.png',
+            price: 20,
+            abilityArray: [new DrinkMagicPotion({})],
+            charges: 1,
+        });
+    }
+}
 export class PoisonedKnife extends Consumable{
     constructor(){
         super({

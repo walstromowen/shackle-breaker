@@ -400,6 +400,7 @@ export default class BattleController{
                         this.model.defeatedHostiles.push(combatant);
                         this.model.pileLoot(combatant)
                         this.model.distributeXP(combatant);
+                        this.model.pileGold(combatant);
                     }else{
                         this.model.defeatedAllies.push(combatant);
                     }
@@ -727,6 +728,7 @@ export default class BattleController{
         if(this.model.props.getBattle().currentAllyLimit == 0 ){
             this.view.printToBattleConsole('All allies have escaped!');
             this.props.getOverworldController().model.currentPartyPosition = this.props.getOverworldController().model.previousPartyPosition;
+            this.model.resetBattleLoot();
             endBattleFlag = true;
             this.onEndBattle().then(()=>{
                 return;
@@ -735,6 +737,7 @@ export default class BattleController{
         if(this.model.props.getBattle().currentHostileLimit == 0 ){
             this.view.printToBattleConsole('All hostiles have escaped!');
             let partyPosition = this.props.getOverworldController().model.currentPartyPosition
+            this.model.resetBattleLoot();
             this.model.props.getMap().tileLayout[partyPosition[1]][partyPosition[0]].battle = '';
             endBattleFlag = true;
             this.onEndBattle().then(()=>{
@@ -780,7 +783,9 @@ export default class BattleController{
                         ally.awardSkillPoints();
                         this.view.printToBattleConsole(`${ally.name} is now level ${ally.level}!`);
                         playSoundEffect("./assets/audio/soundEffects/energy-90321.mp3");
-                        this.view.updateCombatantStats(ally);
+                        if(document.getElementById(`${ally.battleId}`)){
+                            this.view.updateCombatantStats(ally);
+                        }
                         document.removeEventListener('click', this.skipEventHandler);
                         resolve();
                     }
@@ -792,7 +797,9 @@ export default class BattleController{
                         ally.awardSkillPoints();
                         this.view.printToBattleConsole(`${ally.name} is now level ${ally.level}!`);
                         playSoundEffect("./assets/audio/soundEffects/energy-90321.mp3");
-                        this.view.updateCombatantStats(ally);
+                        if(document.getElementById(`${ally.battleId}`)){
+                            this.view.updateCombatantStats(ally);
+                        }
                         resolve();
                     }
                 }, 4000);
@@ -808,12 +815,18 @@ export default class BattleController{
                 if(flag == true){
                     flag = false;
                     let loot = this.model.props.getBattle().loot;
-                    if(loot.length > 0){
-                        this.model.lootBattle();
+                    let gold = this.model.props.getBattle().gold;
+                    if(loot.length > 0 || gold > 0){
                         let message = `Your party loots:\n`;
-                        for(let i = 0; i < loot.length; i++){
-                            message += `${capiltalizeAllFirstLetters(this.model.props.getBattle().loot[i].name)}\n`
+                        if(gold > 0){
+                            message += `${gold} Gold`;
                         }
+                        if(loot.length > 0){
+                            for(let i = 0; i < loot.length; i++){
+                                message += `${capiltalizeAllFirstLetters(this.model.props.getBattle().loot[i].name)}\n`
+                            }
+                        }
+                        this.model.lootBattle();
                         this.view.printToBattleConsole(message);
                     }
                     resolve();
@@ -824,12 +837,18 @@ export default class BattleController{
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
                     let loot = this.model.props.getBattle().loot;
-                    if(loot.length > 0){
-                        this.model.lootBattle();
+                    let gold = this.model.props.getBattle().gold;
+                    if(loot.length > 0 || gold > 0){
                         let message = `Your party loots:\n`;
-                        for(let i = 0; i < loot.length; i++){
-                            message += `${capiltalizeAllFirstLetters(this.model.props.getBattle().loot[i].name)}\n`
+                        if(gold > 0){
+                            message += `${gold} Gold\n`;
                         }
+                        if(loot.length > 0){
+                            for(let i = 0; i < loot.length; i++){
+                                message += `${capiltalizeAllFirstLetters(this.model.props.getBattle().loot[i].name)}\n`
+                            }
+                        }
+                        this.model.lootBattle();
                         this.view.printToBattleConsole(message);
                     }
                     resolve();
