@@ -819,7 +819,7 @@ export default class BattleController{
                     if(loot.length > 0 || gold > 0){
                         let message = `Your party loots:\n`;
                         if(gold > 0){
-                            message += `${gold} Gold`;
+                            message += `${gold} Gold\n`;
                         }
                         if(loot.length > 0){
                             for(let i = 0; i < loot.length; i++){

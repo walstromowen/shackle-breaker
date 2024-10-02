@@ -122,7 +122,7 @@ export default class CharacterSummaryController{
                 e.stopPropagation();
                 //remove event listeners from mini-menu buttons
                 document.getElementById('inventory-mini-menu-consumable-use-button').removeEventListener('click', this.inventoryMiniMenuUseButtonHandler);
-                document.getElementById('inventory-mini-menu-consumable-use-button').removeEventListener('click', this.inventoryMiniMenuUpgradeButtonHandler);
+                document.getElementById('inventory-mini-menu-attatchable-upgrade-button').removeEventListener('click', this.inventoryMiniMenuUpgradeButtonHandler);
                 if(node.parentNode.classList.contains('character-summary-equipped-slot')){
                     let slot = this.model.getInventoryItemSlotTypeFromClassList(node.parentNode.classList);
                     if(this.model.currentCharacter.equipment[slot] != ''){

@@ -77,7 +77,11 @@ export default class CharacterSummaryView{
         this.healthProgress.style.width = Math.floor(entity.currentHP/entity.maxHP*100) + "%";
         this.staminaProgress.style.width = Math.floor(entity.currentStamina/entity.maxStamina*100) + "%";
         this.magicProgress.style.width = Math.floor(entity.currentMagic/entity.maxMagic*100) + "%";
-        this.xpProgress.style.width = Math.floor(entity.currentXP/Math.floor(((entity.level + 10)**2)*0.5)*100 ) + "%";
+        let xpProgress = entity.currentXP/Math.floor(((entity.level + 10)**2)*0.5)*100
+        if(Math.floor(entity.currentXP/Math.floor(((entity.level + 10)**2)*0.5)*100 > 100)){
+            xpProgress = 100
+        }
+        this.xpProgress.style.width = xpProgress + "%";
 
         this.currentLevel.innerText = entity.level;
         this.vigor.innerText = entity.vigor;

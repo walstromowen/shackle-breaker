@@ -1,6 +1,8 @@
 import { getRandomArrayElement } from "../utility.js";
 import {Entity, Dog, Hawk} from "./misc/entities.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, LinenShirt, LinenPants, PineWood, Handaxe, LeatherHelmet, LeatherHood, Shortbow, HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion} from "./misc/items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow} from "./misc/items.js";
+import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, AloeRemedy, Bandage} from "./misc/items.js";
+
 
 export default class LobbyModel{
     constructor(props){
@@ -87,7 +89,7 @@ export default class LobbyModel{
                 break;
             case 'hermit':
                 equipment = [
-                    new ArcaneStaff({level: 1}),
+                    new FireStaff({level: 1}),
                     new LinenShirt({level: 1}),
                     new LinenPants({level: 1}),
                 ];
@@ -105,28 +107,28 @@ export default class LobbyModel{
         let keepsake = document.getElementById('lobby-keepsake-selection').value;
         switch(keepsake){
             case 'hunters-tools':
-                this.props.setInventory([]);
+                this.props.setInventory([new HealthPotion()]);
                 break;
             case 'bag-of-potions':
-                this.props.setInventory([new HealthPotion(), new StaminaPotion(), new MagicPotion(), new HealthPotion(), new StaminaPotion(), new MagicPotion(), new KurtussBrewOfMadness()]);
+                this.props.setInventory([new HealthPotion(), new StaminaPotion(), new MagicPotion()]);
                 break;
             case 'herbal-medicine':
-                this.props.setInventory([]);
+                this.props.setInventory([new HealthPotion(), new Antidote(), new AloeRemedy()]);
                 break;
             case 'assasians-belt':
-                this.props.setInventory([new PoisonedKnife(), new PoisonedKnife(), new PoisonedKnife()]);
+                this.props.setInventory([new HealthPotion(), new PoisonedKnife()]);
                 break;
             case 'artisans-tools':
-                this.props.setInventory([new PineWood()]);
+                this.props.setInventory([new HealthPotion(), new PineWood()]);
                 break;
             case 'alchemists-vials':
-                this.props.setInventory([]);
+                this.props.setInventory([new HealthPotion()]);
                 break;
             case 'first-aid-kit':
-                this.props.setInventory([]);
+                this.props.setInventory([new HealthPotion(), new Bandage()]);
                 break;
             case 'meteorite':
-                this.props.setInventory([]);
+                this.props.setInventory([new HealthPotion()]);
             break;
         }
     }
@@ -146,12 +148,6 @@ export default class LobbyModel{
                 break;
             case "mercenary":
                 this.props.getParty().push(this.props.recruitWanderingCompanion());
-                this.props.getParty().push(this.props.recruitWanderingCompanion());
-                this.props.getParty().push(this.props.recruitWanderingCompanion());
-                this.props.getParty().push(this.props.recruitWanderingCompanion());
-                this.props.getParty().push(this.props.recruitWanderingCompanion());
-                
-                
                 break;
         }
     }

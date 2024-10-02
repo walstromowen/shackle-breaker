@@ -1,6 +1,8 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife} from "./abilities.js";
-import { Poison, Burn} from "./statusEffects.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, LinenShirt, LinenPants, PineWood, Handaxe, Shortbow, HealthPotion, StaminaPotion, MagicPotion } from "./items.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite} from "./abilities.js";
+import { Poison, Burn, Bleed} from "./statusEffects.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, LinenShirt, LinenPants, Handaxe, Shortbow, } from "./items.js";
+import { PineWood, HealthPotion, StaminaPotion, MagicPotion, Antidote, AloeRemedy, Bandage } from "./items.js";
+
 export class Entity{
     constructor(config){
         this.name = config.name || 'entity';
@@ -370,7 +372,7 @@ export class Dog extends Entity{
             equipment: {
                 dogArmor: '',
             },
-            abilityArray: [new Slash({})],
+            abilityArray: [new Bite({})],
         })
     }
 }
@@ -423,7 +425,8 @@ export class Skeleton extends Entity{
                 {item: new HealthPotion(), weight: 2},
                 {item: new StaminaPotion(), weight: 2},
                 {item: new MagicPotion(), weight: 2},
-                {item: new PineWood(), weight: 3},
+                {item: new Bandage(), weight: 3},
+                
             ],
         });
     }
@@ -446,10 +449,34 @@ export class Wolf extends Entity{
             equipment: {
                 dogArmor: '',
             },
-            abilityArray: [new Slash({})],
+            abilityArray: [new Bite({})],
             lootTable: [
                 {item: new Dagger({level: 1}), weight: 1},
-                {item: new Shortbow({level: 1}), weight: 1}
+                {item: new StaminaPotion({level: 1}), weight: 1}
+            ],
+        })
+    }
+}
+export class Spider extends Entity{
+    constructor(config){
+        super({
+            name: 'spider',
+            apperance: './assets/media/entities/spider.jpg',
+            vigor: config.vigor || 3,
+            strength: config.strength || 3,
+            dexterity: config.dexterity || 6,
+            intelligence: config.intelligence || 5,
+            attunement: config.attunement || 6,
+            baseBluntResistance: config.baseBluntResistance || 0.1,
+            basePierceResistance: config.basePierceResistance || 0.1,
+            baseArcaneResistance: config.baseArcaneResistance || 0.1,
+            baseElementalResistance: config.baseElementalResistance || 0.1,
+            isHostile: config.isHostile || true,
+            equipment: {},
+            abilityArray: [new Bite({})],
+            lootTable: [
+                {item: new Dagger({level: 1}), weight: 1},
+                {item: new StaminaPotion({level: 1}), weight: 1}
             ],
         })
     }

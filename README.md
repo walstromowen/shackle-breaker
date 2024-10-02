@@ -2,9 +2,9 @@
 Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Walstrom
 
 # Planned Features
-
+* Pass/ Rest Ability
+* Auto level up for enemies
 * Default Abilities (punch)
-* consumbable ability refinement
 * Double abilies modifier
 
 * Encounter System
@@ -16,12 +16,11 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 * World Generation
 * Shop/crafting/weapon/town
 * trinket and waist slots
-* Item stamina /magic consumption modifier
 
 
 # Bugs
-* upgrading items upgrade items of previously clicked items (should just need to remove event listener)
 * If an ally retreats then second ally dies, the retreated ally can be selected to fill in for the defeated ally even though he just escaped
+* if ally retreats with a status effect, the effect still plays
 
 
 # Planned Quality of Life Improvements
@@ -31,5 +30,6 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 * Mobile event listener support
 * XP and gold calculation refinements
 * Animations dpendent on hostile vs ally
+* Labels for ability sources
 
 # MISC notes

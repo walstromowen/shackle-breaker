@@ -111,7 +111,11 @@ export default class PartyView{
 
         slot.querySelector('.magic-icon').src = './assets/media/icons/crystalize.png';
         slot.querySelector('.party-current-magic').innerText = entity.currentMagic;
-        slot.querySelector('.party-xp-progress').style.width = Math.floor(entity.currentXP/Math.floor(((entity.level + 10)**2)*0.5)*100 ) + "%";
+        let xpProgress = entity.currentXP/Math.floor(((entity.level + 10)**2)*0.5)*100
+        if(Math.floor(entity.currentXP/Math.floor(((entity.level + 10)**2)*0.5)*100 > 100)){
+            xpProgress = 100
+        }
+        slot.querySelector('.party-xp-progress').style.width = xpProgress + "%";
         slot.querySelector('.xp-icon').src = './assets/media/icons/seven-pointed-star.png';
         slot.querySelector('.party-current-xp').innerText = entity.currentXP;
         if(entity.currentHP <= 0){

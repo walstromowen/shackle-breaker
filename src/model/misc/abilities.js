@@ -1,4 +1,4 @@
-import { Poison, Burn} from "./statusEffects.js";
+import { Poison, Burn, Bleed} from "./statusEffects.js";
 
 export class Ability{
     constructor(config){
@@ -114,6 +114,14 @@ export class Ability{
             }
         }
         target.statusArray.push(status);
+    }
+    removeStatus(statusName, target){
+        for(let i = 0; i < target.statusArray.length; i++){
+            if(target.statusArray[i].name == statusName){
+                target.statusArray.splice(i, 1);
+                return;
+            }
+        }
     }
     prepareAbilitiy(attacker, targets){
         let resolveObject = {evade: false, switchCombatant: false, retreat: false, rest: false}
@@ -236,6 +244,11 @@ export class Slash extends Ability{
         let rawDamage = this.calculateDamage(attacker, target);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            if(Math.random()*10 < 1){
+                this.inflictStatus(new Bleed({holder: target}), target);
+            } 
+        }
     }
     updateMessage(attacker, target){
         this.message = `${attacker.name} slashes ${target.name}.`;
@@ -325,6 +338,72 @@ export class MagicMissile extends Ability{
     }
     updateMessage(attacker, target){
        this.message = `${attacker.name} fires a magic missle at ${target.name}.`;
+    }
+}
+export class Bite extends Ability{
+    constructor(config){
+        super({
+            name: 'bite',
+            iconSrc: './assets/media/icons/sharp-lips.png',
+            speedModifier: config.speedModifier || 1.25,
+            damageModifier: config.damageModifier || 0.75,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 10,
+            magicCost: config.magicCost || 0,
+            damageTypes: config.damageTypes || ['blunt', 'pierce'],
+            soundEffectSrc: "./assets/audio/soundEffects/chomp1.mp3",
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/sharp-lips.png',
+            abilityAnimation: config.abilityAnimation || 'explode',
+           
+            
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            if(Math.random()*6 < 1){
+                this.inflictStatus(new Bleed({holder: target}), target);
+            }
+        }
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} bites ${target.name}.`;
+    }
+}
+export class Fireball extends Ability{
+    constructor(config){
+        super({
+            name: 'fireball',
+            iconSrc: './assets/media/icons/fireball.png',
+            speedModifier: config.speedModifier || 0.75,
+            damageModifier: config.damageModifier || 1.25,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 12,
+            accuracy: config.accuracy || 0.75,
+            damageTypes: config.damageTypes || ['elemental'],
+            soundEffectSrc: "./assets/audio/soundEffects/short-fireball-woosh-6146.mp3",
+
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimation: config.abilityAnimation || 'swipe-right',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/fireball.png',
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            if(Math.random()*6 < 1){
+                this.inflictStatus(new Burn({holder: target}), target);
+            }
+        }
+    }
+    updateMessage(attacker, target){
+       this.message = `${attacker.name} shoots a fireball ${target.name}.`;
     }
 }
 export class ThrowPosionedKnife extends Ability{
@@ -439,6 +518,102 @@ export class DrinkMagicPotion extends Ability{
         }
     }
 }
+export class UseAntidote extends Ability{
+    constructor(config){
+        super({
+            name: 'use antidote',
+            iconSrc: './assets/media/icons/corked-tube.png',
+            speedModifier: config.speedModifier || 1,
+            soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
+            abilityAnimation: 'drink',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/corked-tube.png',
+           
+        })
+    }
+    activate(attacker, target){
+        this.removeStatus('poison', target);
+    }
+    updateMessage(attacker, target){
+        if(attacker == target){
+            this.message = `${attacker.name} drinks an antidote.`;
+        }
+        else{
+            this.message = `${attacker.name} throws an antidote at ${target.name}.`;
+        }
+    }
+}
+export class UseAloeRemedy extends Ability{
+    constructor(config){
+        super({
+            name: 'use aloe remedy',
+            iconSrc: './assets/media/icons/curled-leaf.png',
+            speedModifier: config.speedModifier || 1,
+            soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
+            abilityAnimation: 'explode',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/curled-leaf.png',
+           
+        })
+    }
+    activate(attacker, target){
+        this.removeStatus('burn', target);
+    }
+    updateMessage(attacker, target){
+        if(attacker == target){
+            this.message = `${attacker.name} uses an aloe remedy.`;
+        }
+        else{
+            this.message = `${attacker.name} applies an aloe remedy to ${target.name}.`;
+        }
+    }
+}
+export class UseBandage extends Ability{
+    constructor(config){
+        super({
+            name: 'use bandage',
+            iconSrc: './assets/media/icons/bandage-roll.png',
+            speedModifier: config.speedModifier || 1,
+            soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
+            abilityAnimation: 'explode',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/bandage-roll.png',
+           
+        })
+    }
+    activate(attacker, target){
+        let healthRestore = this.checkRestore(target, target.maxHP * 0.15, 'health');
+        target.currentHP += healthRestore;
+        this.removeStatus('bleed', target);
+    }
+    updateMessage(attacker, target){
+        if(attacker == target){
+            this.message = `${attacker.name} uses a bandage.`;
+        }
+        else{
+            this.message = `${attacker.name} wraps ${target.name} with a bandage.`;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export class DrinkKurtussBrewOfMadness extends Ability{
     constructor(config){
         super({

@@ -1,4 +1,5 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, DrinkKurtussBrewOfMadness} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball} from "./abilities.js";
+import { DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, UseAntidote, UseAloeRemedy, UseBandage, DrinkKurtussBrewOfMadness} from "./abilities.js";
 
 let counter = 0;
 
@@ -410,6 +411,64 @@ export class ArcaneStaff extends Attachable{
         }
     }
 }
+export class FireStaff extends Attachable{
+    constructor(config){
+        super({
+            name: 'fire staff',
+            description: "A wooden staff imbued with fire. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time",
+            imageSrc:  './assets/media/icons/wizard-staff.png',
+            price: 200,
+            slot: 'oneHand',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 0,
+            magicRecovery: 0,
+            bluntAttack: 1,
+            pierceAttack: 1,
+            arcaneAttack: 0,
+            elementalAttack: 3,
+            bluntDefense: 0,
+            pierceDefense: 0,
+            arcaneDefense: 0,
+            elementalDefense: 0,
+            bluntResistance: 0,
+            pierceResistance: 0,
+            arcaneResistance: 0,
+            elementalResistance: 0,
+            speed: 0,
+            evasion: 0,
+            critical: 0,
+            abilityArray: [new Strike({}), new Fireball({})],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 0;
+            this.magicRecovery = this.magicRecovery + 0;
+            this.bluntAttack = this.bluntAttack + 1;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 1;
+            this.elementalAttack = this.elementalAttack + 3;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 0;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+            this.critical = this.critical + 0;
+        }
+    }
+}
 export class LinenShirt extends Attachable{
     constructor(config){
         super({
@@ -688,6 +747,42 @@ export class MagicPotion extends Consumable{
             imageSrc: './assets/media/icons/potion-ball.png',
             price: 20,
             abilityArray: [new DrinkMagicPotion({})],
+            charges: 1,
+        });
+    }
+}
+export class Antidote extends Consumable{
+    constructor(){
+        super({
+            name: 'antidote',
+            description: 'an antidote used to treat most poisons.',
+            imageSrc: './assets/media/icons/corked-tube.png',
+            price: 30,
+            abilityArray: [new UseAntidote({})],
+            charges: 1,
+        });
+    }
+}
+export class AloeRemedy extends Consumable{
+    constructor(){
+        super({
+            name: 'aloe remedy',
+            description: 'a remedy used to treat burns.',
+            imageSrc: './assets/media/icons/curled-leaf.png',
+            price: 30,
+            abilityArray: [new UseAloeRemedy({})],
+            charges: 1,
+        });
+    }
+}
+export class Bandage extends Consumable{
+    constructor(){
+        super({
+            name: 'bandage',
+            description: 'a bandage used to stop bleeding.',
+            imageSrc: './assets/media/icons/bandage-roll.png',
+            price: 30,
+            abilityArray: [new UseBandage({})],
             charges: 1,
         });
     }
