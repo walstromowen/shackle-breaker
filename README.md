@@ -2,9 +2,8 @@
 Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Walstrom
 
 # Planned Features
-* Pass/ Rest Ability
-* Auto level up for enemies
-* Default Abilities (punch)
+
+* Auto level up for enemies MAYBE FIXED?
 * Double abilies modifier
 
 * Encounter System
@@ -20,7 +19,6 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 
 # Bugs
 * If an ally retreats then second ally dies, the retreated ally can be selected to fill in for the defeated ally even though he just escaped
-* if ally retreats with a status effect, the effect still plays
 
 
 # Planned Quality of Life Improvements

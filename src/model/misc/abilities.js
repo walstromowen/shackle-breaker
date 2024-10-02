@@ -254,12 +254,38 @@ export class Slash extends Ability{
         this.message = `${attacker.name} slashes ${target.name}.`;
     }
 }
-export class Strike extends Ability{
+export class Punch extends Ability{
     constructor(config){
         super({
             name: 'strike',
+            iconSrc: './assets/media/icons/punch.png',
+            speedModifier: config.speedModifier || 1,
+            damageModifier: config.damageModifier || 0.25,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 4,
+            magicCost: config.magicCost || 0,
+            damageTypes: config.damageTypes || ['blunt'],
+            soundEffectSrc: "./assets/audio/soundEffects/mixkit-metallic-sword-strike-2160.wav",
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimation: config.abilityAnimation || 'swipe-right',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/punch.png',
+           
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} punches ${target.name}.`;
+    }
+}
+export class Strike extends Ability{
+    constructor(config){
+        super({
+            name: 'punch',
             iconSrc: './assets/media/icons/hammer-drop.png',
-            background: config.background || 'grey',
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 1,
             healthCost: config.healthCost || 0,

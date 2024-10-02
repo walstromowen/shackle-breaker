@@ -136,7 +136,7 @@ export default class BattleController{
     }
     createTargetListeners(ally, resolveFn){
         let container = document.getElementById('battle-battlefield-container');
-        if(ally.nextAbility.name == 'retreat'){//can also be used on self targeting moves or auto targeting moves
+        if(ally.nextAbility.name == 'retreat' || ally.nextAbility.name == 'rest'){//can also be used on self targeting moves or auto targeting moves
             let selectedCard = document.getElementById(ally.battleId);
             this.validateTarget(ally, selectedCard, resolveFn);
             return;
@@ -270,7 +270,7 @@ export default class BattleController{
         });
     }
     cycleStatusEffectsHelpper(turnPhase){
-        if(this.currentAttacker.statusArray.length == 0 || this.currentAttacker.currentHP <= 0){
+        if(this.currentAttacker.statusArray.length == 0 || this.currentAttacker.currentHP <= 0 || this.currentAttacker.nextAbility.name == 'retreat'){
             return new Promise((resolve)=>{
                 resolve();
             })

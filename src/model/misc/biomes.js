@@ -54,7 +54,7 @@ export class Cave extends Biome{
                 case 1:
                     enemyArray.push(new Wolf({level: partyLevel}));
                     break;
-                case 1:
+                case 2:
                     enemyArray.push(new Spider({level: partyLevel}));
                     break;
             }

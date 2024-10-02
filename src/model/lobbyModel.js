@@ -1,7 +1,7 @@
 import { getRandomArrayElement } from "../utility.js";
 import {Entity, Dog, Hawk} from "./misc/entities.js";
 import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow} from "./misc/items.js";
-import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, AloeRemedy, Bandage} from "./misc/items.js";
+import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, AloeRemedy, Bandage, PineWood} from "./misc/items.js";
 
 
 export default class LobbyModel{

@@ -14,7 +14,7 @@ export class Entity{
         this.dexterity = config.strength || 1;
         this.intelligence = config.intelligence || 1;
         this.attunement = config.attunement || 1;
-
+        this.autoLevel();
         this.maxHP = config.maxHP || 0;
         this.maxStamina = config.maxStamina || 0;
         this.maxMagic = config.maxMagic || 0;
@@ -350,6 +350,31 @@ export class Entity{
     dropGold(){
         let amount = Math.floor(((Math.random() * (0.75 - 0.25 + 1) + 0.25)*((this.maxHP + this.maxStamina + this.maxMagic)/3)) *(1 + this.level*0.1))
         return amount;
+    }
+    autoLevel(){
+        for(let i = 1; i < this.level; i++){
+            let chance = Math.floor(Math.random()*5)
+            switch(chance){
+                case 0:
+                    this.vigor++;
+                break;
+                case 1:
+                    this.strength++;
+                break;
+                case 2:
+                    this.dexterity++;
+                break;
+                case 3:
+                    this.intelligence++;
+                break;
+                case 4:
+                    this.attunement++
+                break;
+            }
+        }
+        //this.scaleAttributes();
+        //this.resetStats();
+        //this.addAttachableStats(Object.keys(this.equipment));
     }
 }
 

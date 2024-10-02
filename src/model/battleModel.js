@@ -1,6 +1,6 @@
 
 import {getRandomArrayElement} from '../utility.js';
-import { Retreat } from './misc/abilities.js';
+import { Retreat, Rest, Punch} from './misc/abilities.js';
 
 export default class BattleModel{
     constructor(props){
@@ -180,7 +180,11 @@ export default class BattleModel{
                 onActivate: ()=>{
                     this.onRetreat(attacker);
                 }
-            }))
+            }));
+            combinedAbilities.push(new Rest({}));
+            if(attacker.equipment.mainHand == '' && attacker.equipment.offhand == ''){
+                combinedAbilities.push(new Punch({}));
+            }
         }
         return combinedAbilities;
     }
