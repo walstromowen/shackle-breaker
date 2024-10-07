@@ -136,7 +136,7 @@ export default class BattleController{
     }
     createTargetListeners(ally, resolveFn){
         let container = document.getElementById('battle-battlefield-container');
-        if(ally.nextAbility.name == 'retreat' || ally.nextAbility.name == 'rest'){//can also be used on self targeting moves or auto targeting moves
+        if(ally.nextAbility.targetLock == 'self'){//can also be used on self targeting moves or auto targeting moves
             let selectedCard = document.getElementById(ally.battleId);
             this.validateTarget(ally, selectedCard, resolveFn);
             return;
@@ -351,7 +351,7 @@ export default class BattleController{
                     this.view.playStatusAnimation(status);
                     resolve(resolveObject);
                 }
-            }, status.animationDuration);
+            }, status.abilityAnimationDuration);
         });
     }
     removeStatusAnimationsHelpper(status, resolveObject){
@@ -476,7 +476,7 @@ export default class BattleController{
                 let isActive = this.model.activeCombatants.includes(cycleTargets[i]);
                 if(cycleTargets[i].currentHP <= 0 || isActive == false){//Or is not active?
                     let newTarget = this.model.getRandomTarget(this.currentAttacker);
-                    if(newTarget == false){
+                    if(newTarget == null){
                         return new Promise((resolve)=>{
                             resolve();
                         });

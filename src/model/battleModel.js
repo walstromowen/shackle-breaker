@@ -1,6 +1,6 @@
 
 import {getRandomArrayElement} from '../utility.js';
-import { Retreat, Rest, Punch} from './misc/abilities.js';
+import { Ability, Retreat, Rest, Punch} from './misc/abilities.js';
 
 export default class BattleModel{
     constructor(props){
@@ -113,11 +113,48 @@ export default class BattleModel{
                 this.activeCombatants[i].abilityTargets=[];
                 this.activeCombatants[i].nextAbility = getRandomArrayElement(this.getCombinedAbiliites(this.activeCombatants[i]));
                 for(let j = 0; j < this.activeCombatants[i].nextAbility.targetCount; j++){
-                    this.activeCombatants[i].abilityTargets.push(this.getRandomTarget(this.activeCombatants[i]));
+                    this.getRandomTarget(this.activeCombatants[i]);
                 }
             }
         }
     }
+    getRandomTarget(attacker){//error when multiple target attack has no more available targets
+        let possibleTarget;
+        let availableTargets = [];
+        switch(attacker.nextAbility.defaultTarget){
+            case 'self': 
+                possibleTarget = attacker;
+            break;
+            case 'ally': 
+                availableTargets = this.activeCombatants.filter((combatant)=>{
+                    return (combatant.isHostile == attacker.isHostile && combatant.currentHP > 0);
+                })
+                if(availableTargets.length == 0){
+                    return;
+                }
+                possibleTarget = getRandomArrayElement(this.activeCombatants);
+                while(possibleTarget.currentHP <= 0 || possibleTarget.isHostile != attacker.isHostile){
+                    possibleTarget = getRandomArrayElement(this.activeCombatants);
+                }
+            break;
+            case 'opponent': 
+                availableTargets = this.activeCombatants.filter((combatant)=>{
+                    return (combatant.isHostile != attacker.isHostile && combatant.currentHP > 0);
+                })
+                if(availableTargets.length == 0){
+                    return;
+                }
+                possibleTarget = getRandomArrayElement(this.activeCombatants);
+                while(possibleTarget.currentHP <= 0 || possibleTarget.isHostile == attacker.isHostile){
+                    possibleTarget = getRandomArrayElement(this.activeCombatants);
+                }
+            break;
+        }
+        attacker.abilityTargets.push(possibleTarget);
+    }
+
+
+    /*
     getRandomTarget(attacker){//modify for buffs and healing attacks and possible splash attacks
         let flag1 = false;
         for(let i = 0; i < this.activeCombatants.length; i++){
@@ -159,6 +196,7 @@ export default class BattleModel{
             return false;
         }
     }
+        */
     determineTurnOrder(){
         return this.activeCombatants.sort((a, b)=>{
             return (b.nextAbility.speedModifier*b.currentSpeed) - (a.nextAbility.speedModifier*a.currentSpeed);
@@ -172,7 +210,23 @@ export default class BattleModel{
         }
         for(let i = 0; i < equipment.length; i++){
             for(let j = 0; j < equipment[i].abilityArray.length; j++){
-                combinedAbilities.push(equipment[i].abilityArray[j]);
+                let repeatCount = 0;
+                let firstRepeatIndex = 0;
+                for(let k = 0; k < combinedAbilities.length; k++){
+                    if(equipment[i].abilityArray[j].name == combinedAbilities[k].name){
+                        if(repeatCount == 0){
+                            firstRepeatIndex = k;
+                        }
+                        repeatCount++;
+                    }
+                }
+                if(repeatCount == 0){
+                    combinedAbilities.push(equipment[i].abilityArray[j]);
+                }
+                if(repeatCount == 1){
+                    let mergedAbility = this.createdMergedAbility(combinedAbilities[firstRepeatIndex], equipment[i].abilityArray[j]);
+                    combinedAbilities[firstRepeatIndex] = mergedAbility;
+                }
             }
         }
         if(attacker.isHostile == false){
@@ -199,6 +253,7 @@ export default class BattleModel{
                 
             }
         }
+     
         return consumableAbilities;
 
     }
@@ -271,5 +326,36 @@ export default class BattleModel{
         this.props.getBattle().loot = [];
        
     }
+    createdMergedAbility(ability1, ability2){
+        let mergedAbility = new Ability({
+            name: ability1.name,
+            iconSrc: ability1.iconSrc,
+            targetCount: ability1.targetCount,
+            accuracy: ((ability1.accuracy + ability2.accuracy) / 2)*1.1,
+            speedModifier:((ability1.speedModifier + ability2.speedModifier) / 2)*1.1,
+            damageModifier: ((ability1.damageModifier + ability2.damageModifier) / 2)*1.1,
+            healthCost: Math.floor(((ability1.healthCost + ability2.healthCost) / 2)*1.1),
+            staminaCost: Math.floor(((ability1.staminaCost + ability2.staminaCost) / 2)*1.1),
+            magicCost: Math.floor(((ability1.speedModifier + ability2.speedModifier) / 2)*1.1),
+
+            damageTypes: ability1.damageTypes.concat(ability2.damageTypes.filter((item) => ability1.damageTypes.indexOf(item) < 0)),//remove duplicate damage types
+
+            defaultTarget: ability1.defaultTarget,
+            targetLock: ability1.targetLock,
+            attackerAnimation: ability1.attackerAnimation,
+            targetAnimation: ability1.targetAnimation,
+            abilityAnimation: ability1.abilityAnimation,
+            abilityAnimationImage: ability1.abilityAnimationImage,
+            abilityAnimationDuration: ability1.abilityAnimationDuration,
+
+            soundEffectSrc: ability1.soundEffectSrc,
+            sequenceType: ability1.sequenceType,
+            duelWeilded: true,
+        })
+        mergedAbility.updateMessage = ability1.updateMessage;
+        mergedAbility.activate = ability1.activate;
+        return mergedAbility;
+    }
 }
+
 

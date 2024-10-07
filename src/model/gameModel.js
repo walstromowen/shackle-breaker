@@ -33,7 +33,7 @@ export default class GameModel{
             getScreen: this.getScreen.bind(this),
             getSituation: this.getSituation.bind(this),
             recruitWanderingCompanion: this.recruitWanderingCompanion.bind(this),
-            calcAveragePartyLevel: this.calcAveragePartyLevel.bind(this),
+            calcHighestPartyLevel: this.calcHighestPartyLevel.bind(this),
         }
         this.difficulty = '';
         this.battle = '';
@@ -205,12 +205,13 @@ export default class GameModel{
         this.wanderingCompanions.splice(index, 1);
         return companion;
     }
-    calcAveragePartyLevel(){
-        let sum = 0;
+    calcHighestPartyLevel(){
+        let highestLevel = 0;
         for(let i = 0; i < this.party.length; i++){
-            sum = sum + this.party[i].level;
+            if(this.party[i].level > highestLevel){
+                highestLevel = this.party[i].level;
+            }
         }
-        let average = Math.floor(sum/this.party.length);
-        return average;
+        return highestLevel;
     }
 }

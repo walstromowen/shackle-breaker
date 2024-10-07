@@ -1,7 +1,8 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake} from "./abilities.js";
 import { Poison, Burn, Bleed} from "./statusEffects.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, LinenShirt, LinenPants, Handaxe, Shortbow, } from "./items.js";
-import { PineWood, HealthPotion, StaminaPotion, MagicPotion, Antidote, AloeRemedy, Bandage } from "./items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow} from "./items.js";
+import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, AloeRemedy, Bandage, PineWood} from "./items.js";
+
 
 export class Entity{
     constructor(config){
@@ -383,6 +384,7 @@ export class Dog extends Entity{
     constructor(config){
         super({
             name: 'Dog',
+            level: config.level || 1,
             apperance: './assets/media/entities/dog.jpg',
             vigor: config.vigor || 5,
             strength: config.strength || 5,
@@ -406,6 +408,7 @@ export class Hawk extends Entity{
     constructor(config){
         super({
             name: 'Hawk',
+            level: config.level || 1,
             apperance: './assets/media/entities/hawk.jpg',
             vigor: config.vigor || 5,
             strength: config.strength || 5,
@@ -427,13 +430,14 @@ export class Skeleton extends Entity{
     constructor(config){
         super({
             name: 'skeleton',
+            level: config.level || 1,
             apperance: config.skeleton || './assets/media/entities/skeleton.jpg',
             vigor: config.vigor || 5,
             strength: config.strength || 5,
             dexterity: config.dexterity || 5,
             intelligence: config.intelligence || 5,
             attunement: config.attunement || 5,
-            equipment: {
+            equipment: config.equipment || {
                 mainHand: new ShortSword({level: 1}),
                 offhand: '',
                 head: '',
@@ -446,7 +450,6 @@ export class Skeleton extends Entity{
             abilityArray: [],
             lootTable: [
                 {item: new ShortSword({level: 1}), weight: 1},
-                {item: new Handaxe({level: 1}), weight: 1},
                 {item: new HealthPotion(), weight: 2},
                 {item: new StaminaPotion(), weight: 2},
                 {item: new MagicPotion(), weight: 2},
@@ -456,10 +459,68 @@ export class Skeleton extends Entity{
         });
     }
 }
+export class SkeletonCultist extends Entity{
+    constructor(config){
+        super({
+            name: 'skeleton cultist',
+            level: config.level || 1,
+            apperance: config.skeleton || './assets/media/entities/skeleton-light-mage.jpg',
+            vigor: config.vigor || 4,
+            strength: config.strength || 4,
+            dexterity: config.dexterity || 5,
+            intelligence: config.intelligence || 7,
+            attunement: config.attunement || 5,
+            equipment: config.equipment || {
+                mainHand: new LightStaff({level: 1}),
+                offhand: new FireStaff({level: 1}),
+                head: '',
+                torso: new LinenShirt({level: 1}),
+                arms: '',
+                legs:  new LinenPants({level: 1}),
+                feet: '',
+            },
+            isHostile: config.isHostile || true,
+            abilityArray: [],
+            lootTable: [
+                {item: new LightStaff({level: 1}), weight: 1},
+                {item: new LinenShirt({level: 1}), weight: 1},
+                {item: new LinenPants({level: 1}), weight: 1},
+                {item: new HealthPotion(), weight: 2},
+                {item: new MagicPotion(), weight: 2},
+                {item: new Bandage(), weight: 3},
+            ],
+        });
+    }
+}
+export class GroveGuardian extends Entity{
+    constructor(config){
+        super({
+            name: 'grove guardian',
+            level: config.level || 1,
+            apperance: './assets/media/entities/grove-guardian.jpg',
+            vigor: config.vigor || 9,
+            strength: config.strength || 5,
+            dexterity: config.dexterity || 3,
+            intelligence: config.intelligence || 3,
+            attunement: config.attunement || 5,
+            baseBluntResistance: config.baseBluntResistance || 0.2,
+            basePierceResistance: config.basePierceResistance || 0.05,
+            baseArcaneResistance: config.baseArcaneResistance || 0.1,
+            baseElementalResistance: config.baseElementalResistance || 0.05,
+            isHostile: config.isHostile || true,
+            equipment: {},
+            abilityArray: [new Bite({}), new Earthquake({})],
+            lootTable: [
+                {item: new StaminaPotion({level: 1}), weight: 1}
+            ],
+        })
+    }
+}
 export class Wolf extends Entity{
     constructor(config){
         super({
             name: 'wolf',
+            level: config.level || 1,
             apperance: './assets/media/entities/wolf.jpg',
             vigor: config.vigor || 5,
             strength: config.strength || 5,
@@ -476,7 +537,6 @@ export class Wolf extends Entity{
             },
             abilityArray: [new Bite({})],
             lootTable: [
-                {item: new Dagger({level: 1}), weight: 1},
                 {item: new StaminaPotion({level: 1}), weight: 1}
             ],
         })
@@ -486,6 +546,7 @@ export class Spider extends Entity{
     constructor(config){
         super({
             name: 'spider',
+            level: config.level || 1,
             apperance: './assets/media/entities/spider.jpg',
             vigor: config.vigor || 3,
             strength: config.strength || 3,
@@ -500,7 +561,6 @@ export class Spider extends Entity{
             equipment: {},
             abilityArray: [new Bite({})],
             lootTable: [
-                {item: new Dagger({level: 1}), weight: 1},
                 {item: new StaminaPotion({level: 1}), weight: 1}
             ],
         })

@@ -12,6 +12,8 @@ export class Ability{
         this.staminaCost = config.staminaCost || 0;
         this.magicCost = config.magicCost || 0;
         this.damageTypes = config.damageTypes || '';
+        this.defaultTarget = config.defaultTarget || 'opponent';
+        this.targetLock = config.targetLock || '';
 
         this.attackerAnimation = config.attackerAnimation || 'none';
         this.targetAnimation = config.targetAnimation || 'none';
@@ -24,6 +26,7 @@ export class Ability{
         this.sequenceType = config.sequenceType || 'chain';
         this.consumable = config.consumable || '';
         this.message;
+        this.duelWeilded = config.duelweilded || false;
     }
     calculateDamage(attacker, target){
         let rawDamage = 0;
@@ -104,9 +107,6 @@ export class Ability{
             return true; //true means target evades
         }
     }
-    updateMessage(message){
-        this.message = message;
-    }
     inflictStatus(status, target){
         for(let i = 0; i < target.statusArray.length; i++){
             if(target.statusArray[i].name == status.name){
@@ -162,6 +162,12 @@ export class Ability{
         }
         return lackingResources;
     }
+    activate(attacker, target){
+       
+    }
+    updateMessage(message){
+        this.message = message;
+    }
 }
 export class SwitchCombatant extends Ability{
     constructor(config){
@@ -171,6 +177,7 @@ export class SwitchCombatant extends Ability{
             speedModifier: config.speedModifier || 1,
             soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
             targetAnimation: 'ally-retreat',
+            targetLock: 'self',
         })
         this.newCombatant = config.newCombatant;
         this.onActivate = config.onActivate;
@@ -190,7 +197,7 @@ export class Retreat extends Ability{
             speedModifier: config.speedModifier || 1,
             soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
             targetAnimation: 'ally-retreat',
-            
+            targetLock: 'self',
         })
         this.onActivate = config.onActivate;
     }
@@ -210,12 +217,9 @@ export class Rest extends Ability{
             soundEffectSrc: "./assets/audio/soundEffects/power-down-45784.mp3",
             abilityAnimation: 'sink',
             abilityAnimationImage: './assets/media/icons/despair.png',
-            
+            targetLock: 'self',
             
         })
-    }
-    activate(attacker, target){
-       
     }
     updateMessage(attacker, target){
         this.message = `${attacker.name} must rest!`;
@@ -284,7 +288,7 @@ export class Punch extends Ability{
 export class Strike extends Ability{
     constructor(config){
         super({
-            name: 'punch',
+            name: 'strike',
             iconSrc: './assets/media/icons/hammer-drop.png',
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 1,
@@ -366,6 +370,38 @@ export class MagicMissile extends Ability{
        this.message = `${attacker.name} fires a magic missle at ${target.name}.`;
     }
 }
+export class LesserHeal extends Ability{
+    constructor(config){
+        super({
+            name: 'lesser heal',
+            iconSrc: './assets/media/icons/heart-plus.png',
+            speedModifier: config.speedModifier || 1,
+            damageModifier: config.damageModifier || 1,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 12,
+            damageTypes: config.damageTypes || ['arcane'],
+            soundEffectSrc: "./assets/audio/soundEffects/mixkit-light-spell-873.wav",
+            attackerAnimation: config.attackerAnimation || 'none',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/heart-plus.png',
+            abilityAnimation: config.abilityAnimation || 'explode',
+            defaultTarget: 'ally',
+            
+        })
+    }
+    activate(attacker, target){
+        let healthRestore = this.checkRestore(target, target.maxHP * 0.2, 'health');
+        target.currentHP += healthRestore;
+    }
+    updateMessage(attacker, target){
+        if(attacker == target){
+            this.message = `${attacker.name} heals.`;
+        }
+        else{
+            this.message = `${attacker.name} heals ${target.name}.`;
+        }
+    }
+}
 export class Bite extends Ability{
     constructor(config){
         super({
@@ -432,6 +468,35 @@ export class Fireball extends Ability{
        this.message = `${attacker.name} shoots a fireball ${target.name}.`;
     }
 }
+export class Earthquake extends Ability{
+    constructor(config){
+        super({
+            name: 'earthquake',
+            iconSrc: './assets/media/icons/earth-split.png',
+            speedModifier: config.speedModifier || 0.5,
+            damageModifier: config.damageModifier || 3.5,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 30,
+            magicCost: config.magicCost || 0,
+            damageTypes: config.damageTypes || ['blunt'],
+            targetCount: 3,
+            soundEffectSrc: "./assets/audio/soundEffects/supernatural-explosion-104295.wav",
+            sequenceType: 'splash',
+            attackerAnimation: config.attackerAnimation || 'explode',
+            abilityAnimation: config.abilityAnimation || 'swipe-down',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/earth-split.png',
+            
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+    }
+    updateMessage(attacker){
+        this.message = (`${attacker.name} creates an earthquake!`);
+    }
+}
 export class ThrowPosionedKnife extends Ability{
     constructor(config){
         super({
@@ -472,10 +537,10 @@ export class DrinkHealthPotion extends Ability{
             name: 'drink health potion',
             iconSrc: './assets/media/icons/standing-potion.png',
             speedModifier: config.speedModifier || 1,
-            soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
+            soundEffectSrc: "./assets/audio/soundEffects/mixkit-light-spell-873 copy.wav",
             abilityAnimation: 'drink',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/standing-potion.png',
-           
+            defaultTarget: 'self',
         })
     }
     activate(attacker, target){
@@ -501,7 +566,7 @@ export class DrinkStaminaPotion extends Ability{
             soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
             abilityAnimation: 'drink',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/square-bottle.png',
-           
+            defaultTarget: 'self',
         })
     }
     activate(attacker, target){
@@ -527,7 +592,7 @@ export class DrinkMagicPotion extends Ability{
             soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
             abilityAnimation: 'drink',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/potion-ball.png',
-           
+            defaultTarget: 'self',
         })
     }
     activate(attacker, target){
@@ -550,10 +615,10 @@ export class UseAntidote extends Ability{
             name: 'use antidote',
             iconSrc: './assets/media/icons/corked-tube.png',
             speedModifier: config.speedModifier || 1,
-            soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
+            soundEffectSrc: "./assets/audio/soundEffects/mixkit-light-spell-873.wav",
             abilityAnimation: 'drink',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/corked-tube.png',
-           
+            defaultTarget: 'self',
         })
     }
     activate(attacker, target){
@@ -574,10 +639,10 @@ export class UseAloeRemedy extends Ability{
             name: 'use aloe remedy',
             iconSrc: './assets/media/icons/curled-leaf.png',
             speedModifier: config.speedModifier || 1,
-            soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
+            soundEffectSrc: "./assets/audio/soundEffects/mixkit-light-spell-873.wav",
             abilityAnimation: 'explode',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/curled-leaf.png',
-           
+            defaultTarget: 'self',
         })
     }
     activate(attacker, target){
@@ -598,10 +663,10 @@ export class UseBandage extends Ability{
             name: 'use bandage',
             iconSrc: './assets/media/icons/bandage-roll.png',
             speedModifier: config.speedModifier || 1,
-            soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
+            soundEffectSrc: "./assets/audio/soundEffects/mixkit-light-spell-873.wav",
             abilityAnimation: 'explode',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/bandage-roll.png',
-           
+            defaultTarget: 'self',
         })
     }
     activate(attacker, target){

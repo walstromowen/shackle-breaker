@@ -1,6 +1,6 @@
 import { getRandomArrayElement } from "../utility.js";
 import {Entity, Dog, Hawk} from "./misc/entities.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow} from "./misc/items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow} from "./misc/items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, AloeRemedy, Bandage, PineWood} from "./misc/items.js";
 
 
@@ -81,6 +81,7 @@ export default class LobbyModel{
             case 'thief':
                 equipment = [
                     new Dagger({level: 1}),
+                    new Dagger({level: 1}),
                     new LinenShirt({level: 1}),
                     new LinenPants({level: 1}),
                 ];
@@ -89,7 +90,7 @@ export default class LobbyModel{
                 break;
             case 'hermit':
                 equipment = [
-                    new FireStaff({level: 1}),
+                    new LightStaff({level: 1}),
                     new LinenShirt({level: 1}),
                     new LinenPants({level: 1}),
                 ];
@@ -116,7 +117,7 @@ export default class LobbyModel{
                 this.props.setInventory([new HealthPotion(), new Antidote(), new AloeRemedy()]);
                 break;
             case 'assasians-belt':
-                this.props.setInventory([new HealthPotion(), new PoisonedKnife()]);
+                this.props.setInventory([new HealthPotion(), new PoisonedKnife(), new PoisonedKnife()]);
                 break;
             case 'artisans-tools':
                 this.props.setInventory([new HealthPotion(), new PineWood()]);
@@ -125,7 +126,7 @@ export default class LobbyModel{
                 this.props.setInventory([new HealthPotion()]);
                 break;
             case 'first-aid-kit':
-                this.props.setInventory([new HealthPotion(), new Bandage()]);
+                this.props.setInventory([new HealthPotion(), new Bandage()], );
                 break;
             case 'meteorite':
                 this.props.setInventory([new HealthPotion()]);
@@ -148,7 +149,6 @@ export default class LobbyModel{
                 break;
             case "mercenary":
                 this.props.getParty().push(this.props.recruitWanderingCompanion());
-                break;
         }
     }
     updateDifficulty(){

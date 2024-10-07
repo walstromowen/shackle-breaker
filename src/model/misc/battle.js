@@ -17,7 +17,7 @@ export default class Battle{
         this.setMaxCombatantCount();
     }
     setMaxCombatantCount(){
-        let count = Math.ceil(Math.random()*3)
+        let count = 3; //Math.ceil(Math.random()*3)
         this.maxAllyCount = count;
         this.maxHostileCount = count;
         this.resetCurrentCombatantLimit();

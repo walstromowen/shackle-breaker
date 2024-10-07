@@ -1,4 +1,5 @@
-import { Skeleton, Wolf, Spider} from "./entities.js";
+import { Skeleton, SkeletonCultist, Wolf, Spider, GroveGuardian} from "./entities.js";
+
 
 
 export default class Biome{
@@ -22,11 +23,14 @@ export class Plains extends Biome{
     generateEnemies(partyLevel, count){
         let enemyArray = [];
         for(let i = 0; i < count; i ++){
-            switch(Math.floor(Math.random()*2)){ 
+            switch(Math.floor(Math.random()*3)){ 
                 case 0:
                     enemyArray.push(new Skeleton({level: partyLevel}));
                     break;
                 case 1:
+                    enemyArray.push(new GroveGuardian({level: partyLevel}));
+                    break;
+                case 2:
                     enemyArray.push(new Wolf({level: partyLevel}));
                     break;
             }
@@ -52,7 +56,7 @@ export class Cave extends Biome{
                     enemyArray.push(new Skeleton({level: partyLevel}));
                     break;
                 case 1:
-                    enemyArray.push(new Wolf({level: partyLevel}));
+                    enemyArray.push(new SkeletonCultist({level: partyLevel}));
                     break;
                 case 2:
                     enemyArray.push(new Spider({level: partyLevel}));
