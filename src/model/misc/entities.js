@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb} from "./abilities.js";
 import { Poison, Burn, Bleed} from "./statusEffects.js";
 import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, AloeRemedy, Bandage, PineWood} from "./items.js";
@@ -535,7 +535,7 @@ export class Wolf extends Entity{
             equipment: {
                 dogArmor: '',
             },
-            abilityArray: [new Bite({})],
+            abilityArray: [new Bite({}), new ShootWeb({})],
             lootTable: [
                 {item: new StaminaPotion({level: 1}), weight: 1}
             ],
@@ -559,7 +559,7 @@ export class Spider extends Entity{
             baseElementalResistance: config.baseElementalResistance || 0.1,
             isHostile: config.isHostile || true,
             equipment: {},
-            abilityArray: [new Bite({})],
+            abilityArray: [new Bite({}), new ShootWeb({})],
             lootTable: [
                 {item: new StaminaPotion({level: 1}), weight: 1}
             ],

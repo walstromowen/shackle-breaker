@@ -1,3 +1,5 @@
+import {Rest, Struggle} from './abilities.js';
+
 class StatusEffect{
     constructor(config){
         this.name = config.name;
@@ -9,7 +11,7 @@ class StatusEffect{
         this.soundEffectSrc = config.soundEffectSrc || "./assets/audio/soundEffects/power-down-45784.mp3",
         this.message = '';
 
-        this.attackerAnimation = config.attackerAnimation || null;
+        this.attackerAnimation = config.attackerAnimation || 'none';
         this.targetAnimation = config.targetAnimation || 'none';
         this.abilityAnimation = config.abilityAnimation || 'explode';
         this.abilityAnimationImage = config.abilityAnimationImage || this.iconSrc;
@@ -21,6 +23,9 @@ class StatusEffect{
     activate(turnPhase){
         if(this.holder.currentHP <= 0){
             return this.skipStatusCycle();
+        }
+        if(this.currentCharges == this.maxCharges){
+            this.onApplied();
         }
         if(turnPhase == 'start'){
             return this.onStartTurn();
@@ -75,8 +80,12 @@ class StatusEffect{
         return restore;
     }
     activateHelpper(fn, resolveObject){
+        this.currentCharges --;
+        if(this.currentCharges <= 0){
+            this.onRemove();
+        }
+        
         return new Promise((resolve)=>{
-            this.maxCharges = this.maxCharges - 1;
             fn();
             resolve(resolveObject);
         });
@@ -97,22 +106,27 @@ class StatusEffect{
         return this.skipStatusCycle();
     }
     onRemove(){
-        return this.skipStatusCycle();
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == this.name){
+                this.holder.statusArray.splice(i, 1);
+                break;
+            }
+        }
     }
     onRecieveDamage(){
-        return this.skipStatusCycle();
+        
     }
     onDeliverDamage(){
-        return this.skipStatusCycle();
+        
     }
     onAttemptAttack(){
-        return this.skipStatusCycle();
+        
     }
     onOpponentAttemptAttack(){
-        return this.skipStatusCycle();
+        
     }
     onApplied(){
-        return this.skipStatusCycle();
+        
     }
 }
 export class Poison extends StatusEffect{
@@ -133,7 +147,7 @@ export class Poison extends StatusEffect{
                 let damage = this.checkDamage(this.holder, this.holder.maxHP * this.severityMofifier, 'health');
                 this.holder.currentHP = this.holder.currentHP - damage;
                 this.severityMofifier += 0.02;
-                this.message = (`${this.holder.name} takes ${damage} damage from poison.`);
+                this.message = (`${this.holder.name} takes damage from poison.`);
             }, 
             {
                 text: true,
@@ -208,5 +222,79 @@ export class Bleed extends StatusEffect{
             }
         );
     }
+}
 
+export class Bind extends StatusEffect{
+    constructor(config){
+        super({
+            name:'bind',
+            iconSrc: "./assets/media/icons/crossed-chains.png",
+            holder: config.holder,
+            maxCharges: 3,
+            soundEffectSrc: "./assets/audio/soundEffects/power-down-45784.mp3",
+            targetAnimation: 'shake',
+            abilityAnimation: 'none',
+        });
+        this.escapethreshold = config.escapethreshold || 0.75;
+    }
+    onStartTurn(){
+        return this.activateHelpper(
+            ()=>{
+                this.message = `${this.holder.name} attempts to break free.`;
+                if(Math.random() > this.escapethreshold){
+                    this.onRemove();
+                }else{
+                    this.holder.nextAbility = new Struggle({});
+                    this.holder.abilityTargets = [this.holder];
+                }
+            }, 
+            {
+                text: true,
+                animation: true,
+                vitalsUpdate: true,
+            }
+        );
+    }
+}
+
+export class Shielded extends StatusEffect{
+    constructor(config){
+        super({
+            name:'sheilded',
+            iconSrc: "./assets/media/icons/shield.png",
+            holder: config.holder,
+            maxCharges: 5,
+            targetAnimation: 'none',
+            abilityAnimation: 'none',
+        });
+    }
+    onApplied(){
+        this.holder.bluntResistance += 0.5;
+        this.holder.pierceResistance += 0.5;
+        this.holder.arcaneResistance += 0.5;
+        this.holder.elementalResistance += 0.5;
+        
+    }
+    onRemove(){
+        this.holder.bluntResistance -= 0.5;
+        this.holder.pierceResistance -= 0.5;
+        this.holder.arcaneResistance -= 0.5;
+        this.holder.elementalResistance -= 0.5;
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == this.name){
+                this.holder.statusArray.splice(i, 1);
+                break;
+            }
+        }
+    }
+    onEndTurn(){
+        return this.activateHelpper(
+            ()=>{}, 
+            {
+                text: false,
+                animation: false,
+                vitalsUpdate: false,
+            }
+        );
+    }
 }

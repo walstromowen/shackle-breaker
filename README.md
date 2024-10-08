@@ -2,7 +2,6 @@
 Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Walstrom
 
 # Planned Features
-* removal of status effects automatically / on remove waiting in sequence
 * Encounter System
 * Map abilities
 * Wheather

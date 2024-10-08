@@ -992,15 +992,26 @@ img{
 
 /*Attack Animations*/
 @keyframes swipe-down {
-    0% {translate:-100%}
-    
-    25% {translate:100%}
-
-    100% {translate:100%}
+    0% {transform: translateY(-10%)}
+    20% {transform: translateY(100%)}
+    100% {transform: translateY(100%)}
 }
 @keyframes sink {
-    0% {translate:-10%}
-    100% {translate: 10%}
+    0% {transform: translateY(-10%)}
+    100% {transform: translateY(10%)}
+}
+@keyframes shake {
+    0% {translate:-5%}
+    
+    5% {translate:5%}
+
+    10% {translate:-5%}
+
+    15% {translate:5%}
+
+    20% {translate:-5%}
+
+    100% {translate:0%}
 }
 @keyframes drink {
     0% {rotate:0deg}
@@ -1014,6 +1025,13 @@ img{
     25% {translate:100%}
 
     100% {translate:100%}
+}
+@keyframes stick-right {
+    0% {translate:-100%}
+    
+    25% {translate:0%}
+
+    100% {translate:0%}
 }
 @keyframes explode {
     0% {scale: 0.6}
@@ -1037,7 +1055,7 @@ img{
     }  
 }
 .battle-target-animation{
-    animation: var(--battle-target-animation) 2s;
+    animation: var(--battle-target-animation) var(--battle-ability-animation-duration);
 }
 .battle-target-animation::before{
     content: ' ';
@@ -1047,7 +1065,7 @@ img{
     height: 100%;
     width: 100%;
     z-index: 1;
-    background-color: var(--color-2-transparent);
+    background-color: transparent;
 
 }
 .battle-target-animation::after{
@@ -1072,7 +1090,7 @@ img{
     
 }
 @keyframes none{
-    100%{}
+    0%{}
 }
 @keyframes hostile-attack{
     0%{transform: rotate(0deg)}

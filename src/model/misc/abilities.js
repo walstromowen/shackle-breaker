@@ -1,4 +1,5 @@
-import { Poison, Burn, Bleed} from "./statusEffects.js";
+import { Shielded } from "../../../../shackle-breaker-old/scripts/statusEffects.js";
+import { Poison, Burn, Bleed, Bind} from "./statusEffects.js";
 
 export class Ability{
     constructor(config){
@@ -17,7 +18,7 @@ export class Ability{
 
         this.attackerAnimation = config.attackerAnimation || 'none';
         this.targetAnimation = config.targetAnimation || 'none';
-        this.abilityAnimation = config.abilityAnimation || null;
+        this.abilityAnimation = config.abilityAnimation || 'none';
         this.abilityAnimationImage = config.abilityAnimationImage || 'none';
         this.abilityAnimationDuration = config.abilityAnimationDuration || 2000;
 
@@ -222,7 +223,23 @@ export class Rest extends Ability{
         })
     }
     updateMessage(attacker, target){
-        this.message = `${attacker.name} must rest!`;
+        this.message = `${attacker.name} rests.`;
+    }
+}
+export class Struggle extends Ability{
+    constructor(config){
+        super({
+            name: 'struggle',
+            iconSrc: './assets/media/icons/despair.png',
+            speedModifier: config.speedModifier || 1,
+            soundEffectSrc: "./assets/audio/soundEffects/power-down-45784.mp3",
+            targetAnimation: 'shake',
+            targetLock: 'self',
+            
+        })
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} cannot attack!`;
     }
 }
 export class Slash extends Ability{
@@ -495,6 +512,63 @@ export class Earthquake extends Ability{
     }
     updateMessage(attacker){
         this.message = (`${attacker.name} creates an earthquake!`);
+    }
+}
+export class ShootWeb extends Ability{
+    constructor(config){
+        super({
+            name: 'shoot web',
+            iconSrc: './assets/media/icons/wep-spit.png',
+            speedModifier: config.speedModifier || 1,
+            damageModifier: config.damageModifier || 0.25,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 12,
+            magicCost: config.magicCost || 0,
+            damageTypes: config.damageTypes || ['elemental'],
+            soundEffectSrc: "./assets/audio/soundEffects/platzender-kopf_nachschlag-91637.mp3",
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimation: config.abilityAnimation || 'stick-right',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/spider-web.png',
+           
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            if(Math.random()*3 < 1){
+                this.inflictStatus(new Bind({holder: target}), target);
+            }
+        }
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} shoots a web at ${target.name}.`;
+    }
+}
+export class Block extends Ability{
+    constructor(config){
+        super({
+            name: 'block',
+            iconSrc: './assets/media/icons/sheild.png',
+            speedModifier: config.speedModifier || 1.25,
+            damageModifier: config.damageModifier || 1.0,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 12,
+            magicCost: config.magicCost || 0,
+            damageTypes: config.damageTypes || ['blunt'],
+            soundEffectSrc: "./assets/audio/soundEffects/anvil-hit-2-14845.mp3",
+            attackerAnimation: config.attackerAnimation || 'none',
+            abilityAnimation: config.abilityAnimation || 'none',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/sheild.png',
+            targetLock: 'self',
+        })
+    }
+    activate(attacker, target){
+        this.inflictStatus(new Shielded({holder: target}), target);
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} raises a shield.`;
     }
 }
 export class ThrowPosionedKnife extends Ability{

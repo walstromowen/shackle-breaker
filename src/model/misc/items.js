@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block} from "./abilities.js";
 import { DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, UseAntidote, UseAloeRemedy, UseBandage, DrinkKurtussBrewOfMadness} from "./abilities.js";
 
 let counter = 0;
@@ -761,7 +761,64 @@ export class LeatherHood extends Attachable{
         }
     }
 }
-
+export class Buckler extends Attachable{
+    constructor(config){
+        super({
+            name: 'buckler',
+            description: 'A wooden buckler. A buckler fashioned from hard wood. A blue and green symbol of unknown origin is painted on its front.',
+            imageSrc:  './assets/media/icons/round-sheild.png',
+            price: 100,
+            slot: 'oneHand',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 0,
+            magicRecovery: 0,
+            bluntAttack: 0,
+            pierceAttack: 0,
+            arcaneAttack: 0,
+            elementalAttack: 0,
+            bluntDefense: 2,
+            pierceDefense: 2,
+            arcaneDefense: 2,
+            elementalDefense: 2,
+            bluntResistance: 0.02,
+            pierceResistance: 0.02,
+            arcaneResistance: 0.02,
+            elementalResistance: 0.02,
+            speed: -1,
+            evasion: 0,
+            critical: 0,
+            abilityArray: [new Block({})],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 0;
+            this.magicRecovery = this.magicRecovery + 0;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 3;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+            this.critical = this.critical + 0;
+        }
+    }
+}
 export class PineWood extends Material{
     constructor(){
         super({
