@@ -1,6 +1,6 @@
 import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb} from "./abilities.js";
 import { Poison, Burn, Bleed} from "./statusEffects.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow} from "./items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, AloeRemedy, Bandage, PineWood} from "./items.js";
 
 
@@ -439,7 +439,7 @@ export class Skeleton extends Entity{
             attunement: config.attunement || 5,
             equipment: config.equipment || {
                 mainHand: new ShortSword({level: 1}),
-                offhand: '',
+                offhand: new Buckler({level: 1}),
                 head: '',
                 torso: '',
                 arms: '',
@@ -535,7 +535,7 @@ export class Wolf extends Entity{
             equipment: {
                 dogArmor: '',
             },
-            abilityArray: [new Bite({}), new ShootWeb({})],
+            abilityArray: [new Bite({})],
             lootTable: [
                 {item: new StaminaPotion({level: 1}), weight: 1}
             ],

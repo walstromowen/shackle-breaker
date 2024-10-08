@@ -766,7 +766,7 @@ export class Buckler extends Attachable{
         super({
             name: 'buckler',
             description: 'A wooden buckler. A buckler fashioned from hard wood. A blue and green symbol of unknown origin is painted on its front.',
-            imageSrc:  './assets/media/icons/round-sheild.png',
+            imageSrc:  './assets/media/icons/round-shield.png',
             price: 100,
             slot: 'oneHand',
             level: 1,

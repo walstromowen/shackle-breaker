@@ -260,26 +260,26 @@ export class Bind extends StatusEffect{
 export class Shielded extends StatusEffect{
     constructor(config){
         super({
-            name:'sheilded',
+            name:'shielded',
             iconSrc: "./assets/media/icons/shield.png",
             holder: config.holder,
-            maxCharges: 5,
+            maxCharges: 1,
             targetAnimation: 'none',
             abilityAnimation: 'none',
         });
     }
     onApplied(){
-        this.holder.bluntResistance += 0.5;
-        this.holder.pierceResistance += 0.5;
-        this.holder.arcaneResistance += 0.5;
-        this.holder.elementalResistance += 0.5;
+        this.holder.currentBluntResistance += 0.5;
+        this.holder.currentPierceResistance += 0.5;
+        this.holder.currentArcaneResistance += 0.5;
+        this.holder.currentElementalResistance += 0.5;
         
     }
     onRemove(){
-        this.holder.bluntResistance -= 0.5;
-        this.holder.pierceResistance -= 0.5;
-        this.holder.arcaneResistance -= 0.5;
-        this.holder.elementalResistance -= 0.5;
+        this.holder.currentBluntResistance -= 0.5;
+        this.holder.currentPierceResistance -= 0.5;
+        this.holder.currentArcaneResistance -= 0.5;
+        this.holder.currentElementalResistance -= 0.5;
         for(let i = 0; i < this.holder.statusArray.length; i++){
             if(this.holder.statusArray[i].name == this.name){
                 this.holder.statusArray.splice(i, 1);

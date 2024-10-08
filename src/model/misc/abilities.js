@@ -1,5 +1,4 @@
-import { Shielded } from "../../../../shackle-breaker-old/scripts/statusEffects.js";
-import { Poison, Burn, Bleed, Bind} from "./statusEffects.js";
+import { Poison, Burn, Bleed, Bind, Shielded} from "./statusEffects.js";
 
 export class Ability{
     constructor(config){
@@ -550,7 +549,7 @@ export class Block extends Ability{
     constructor(config){
         super({
             name: 'block',
-            iconSrc: './assets/media/icons/sheild.png',
+            iconSrc: './assets/media/icons/shield.png',
             speedModifier: config.speedModifier || 1.25,
             damageModifier: config.damageModifier || 1.0,
             healthCost: config.healthCost || 0,
@@ -560,7 +559,7 @@ export class Block extends Ability{
             soundEffectSrc: "./assets/audio/soundEffects/anvil-hit-2-14845.mp3",
             attackerAnimation: config.attackerAnimation || 'none',
             abilityAnimation: config.abilityAnimation || 'none',
-            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/sheild.png',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/shield.png',
             targetLock: 'self',
         })
     }
