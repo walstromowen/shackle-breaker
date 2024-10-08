@@ -788,7 +788,7 @@ export class Buckler extends Attachable{
             pierceResistance: 0.02,
             arcaneResistance: 0.02,
             elementalResistance: 0.02,
-            speed: -1,
+            speed: 0,
             evasion: 0,
             critical: 0,
             abilityArray: [new Block({})],

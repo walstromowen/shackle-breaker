@@ -289,7 +289,9 @@ export class Shielded extends StatusEffect{
     }
     onEndTurn(){
         return this.activateHelpper(
-            ()=>{}, 
+            ()=>{
+                
+            }, 
             {
                 text: false,
                 animation: false,
