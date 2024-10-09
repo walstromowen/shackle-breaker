@@ -114,6 +114,7 @@ export class Ability{
             }
         }
         target.statusArray.push(status);
+        status.onApplied();
     }
     removeStatus(statusName, target){
         for(let i = 0; i < target.statusArray.length; i++){
@@ -127,6 +128,8 @@ export class Ability{
         let resolveObject = {evade: false, switchCombatant: false, retreat: false, rest: false}
         switch(this.sequenceType){
             case 'chain':
+                this.triggerOnAttemptAbility(attacker);
+                this.triggerOnOpponentAttemptAbility(targets[0]);
                 if(this.checkTargetEvade(targets[0])){
                     resolveObject.evade = true;
                 }else{
@@ -134,7 +137,9 @@ export class Ability{
                 }
                 break;
             case 'splash':
+                this.triggerOnAttemptAbility(attacker);
                 for(let i = 0; i < targets.length; i++){
+                    this.triggerOnOpponentAttemptAbility(targets[0]);
                     this.activate(attacker, targets[i])
                 }
                 break;
@@ -168,6 +173,28 @@ export class Ability{
     updateMessage(message){
         this.message = message;
     }
+    //to target events
+    triggerOnRecieveDamage(target){
+        for(let i = 0; i < target.statusArray.length; i++){
+            target.statusArray[i].onRecieveDamage();
+        }
+    }
+    triggerOnOpponentAttemptAbility(target){
+        for(let i = 0; i < target.statusArray.length; i++){
+            target.statusArray[i].onOpponentAttemptAbility();
+        }
+    }
+    //to attacker (target is attacker)
+    triggerOnDeliverDamage(target){
+        for(let i = 0; i < target.statusArray.length; i++){
+            target.statusArray[i].onDeliverDamage();
+        }
+    }
+    triggerOnAttemptAbility(target){
+        for(let i = 0; i < target.statusArray.length; i++){
+            target.statusArray[i].onAttemptAbility();
+        }
+    }
 }
 export class SwitchCombatant extends Ability{
     constructor(config){
@@ -197,6 +224,7 @@ export class Retreat extends Ability{
             speedModifier: config.speedModifier || 1,
             soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
             targetAnimation: 'ally-retreat',
+            defaultTarget: 'self',
             targetLock: 'self',
         })
         this.onActivate = config.onActivate;
@@ -217,6 +245,7 @@ export class Rest extends Ability{
             soundEffectSrc: "./assets/audio/soundEffects/power-down-45784.mp3",
             abilityAnimation: 'sink',
             abilityAnimationImage: './assets/media/icons/despair.png',
+            defaultTarget: 'self',
             targetLock: 'self',
             
         })
@@ -233,6 +262,7 @@ export class Struggle extends Ability{
             speedModifier: config.speedModifier || 1,
             soundEffectSrc: "./assets/audio/soundEffects/power-down-45784.mp3",
             targetAnimation: 'shake',
+            defaultTarget: 'self',
             targetLock: 'self',
             
         })
@@ -265,6 +295,8 @@ export class Slash extends Ability{
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
+            this.triggerOnDeliverDamage(attacker);
+            this.triggerOnRecieveDamage(target);
             if(Math.random()*10 < 1){
                 this.inflictStatus(new Bleed({holder: target}), target);
             } 
@@ -289,13 +321,17 @@ export class Punch extends Ability{
             attackerAnimation: config.attackerAnimation || 'ally-attack',
             abilityAnimation: config.abilityAnimation || 'swipe-right',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/punch.png',
-           
+            defaultTarget: 'self',
         })
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            this.triggerOnDeliverDamage(attacker);
+            this.triggerOnRecieveDamage(target);
+        }
     }
     updateMessage(attacker, target){
         this.message = `${attacker.name} punches ${target.name}.`;
@@ -323,6 +359,10 @@ export class Strike extends Ability{
         let rawDamage = this.calculateDamage(attacker, target);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            this.triggerOnDeliverDamage(attacker);
+            this.triggerOnRecieveDamage(target);
+        }
     }
     updateMessage(attacker, target){
         this.message = `${attacker.name} strikes ${target.name}.`;
@@ -352,6 +392,10 @@ export class Cleave extends Ability{
         let rawDamage = this.calculateDamage(attacker, target);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            this.triggerOnDeliverDamage(attacker);
+            this.triggerOnRecieveDamage(target);
+        }
     }
     updateMessage(attacker){
         this.message = (`${attacker.name} uses cleave.`);
@@ -381,6 +425,10 @@ export class MagicMissile extends Ability{
         let rawDamage = this.calculateDamage(attacker, target);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            this.triggerOnDeliverDamage(attacker);
+            this.triggerOnRecieveDamage(target);
+        }
     }
     updateMessage(attacker, target){
        this.message = `${attacker.name} fires a magic missle at ${target.name}.`;
@@ -442,6 +490,8 @@ export class Bite extends Ability{
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
+            this.triggerOnDeliverDamage(attacker);
+            this.triggerOnRecieveDamage(target);
             if(Math.random()*6 < 1){
                 this.inflictStatus(new Bleed({holder: target}), target);
             }
@@ -478,6 +528,8 @@ export class Fireball extends Ability{
             if(Math.random()*6 < 1){
                 this.inflictStatus(new Burn({holder: target}), target);
             }
+            this.triggerOnDeliverDamage(attacker);
+            this.triggerOnRecieveDamage(target);
         }
     }
     updateMessage(attacker, target){
@@ -508,6 +560,10 @@ export class Earthquake extends Ability{
         let rawDamage = this.calculateDamage(attacker, target);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            this.triggerOnDeliverDamage(attacker);
+            this.triggerOnRecieveDamage(target);
+        }
     }
     updateMessage(attacker){
         this.message = (`${attacker.name} creates an earthquake!`);
@@ -539,6 +595,8 @@ export class ShootWeb extends Ability{
             if(Math.random()*3 < 1){
                 this.inflictStatus(new Bind({holder: target}), target);
             }
+            this.triggerOnDeliverDamage(attacker);
+            this.triggerOnRecieveDamage(target);
         }
     }
     updateMessage(attacker, target){
@@ -558,8 +616,10 @@ export class Block extends Ability{
             damageTypes: config.damageTypes || ['blunt'],
             soundEffectSrc: "./assets/audio/soundEffects/anvil-hit-2-14845.mp3",
             attackerAnimation: config.attackerAnimation || 'none',
+            targetAnimation: 'ally-evade',
             abilityAnimation: config.abilityAnimation || 'none',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/shield.png',
+            defaultTarget: 'self',
             targetLock: 'self',
         })
     }
@@ -597,6 +657,8 @@ export class ThrowPosionedKnife extends Ability{
         let rawDamage = this.calculateDamage(attacker, target);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
+        this.triggerOnDeliverDamage(attacker);
+        this.triggerOnRecieveDamage(target);
         this.inflictStatus(new Poison({holder: target}), target);
     }
     updateMessage(attacker, target){
@@ -756,28 +818,6 @@ export class UseBandage extends Ability{
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export class DrinkKurtussBrewOfMadness extends Ability{
     constructor(config){
         super({

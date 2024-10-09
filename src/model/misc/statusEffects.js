@@ -22,10 +22,13 @@ class StatusEffect{
     }
     activate(turnPhase){
         if(this.holder.currentHP <= 0){
-            return this.skipStatusCycle();
-        }
-        if(this.currentCharges == this.maxCharges){
-            this.onApplied();
+            return new Promise((resolve)=>{
+                resolve({
+                    text: false,
+                    animation: false,
+                    vitalsUpdate: false,
+                });
+            });
         }
         if(turnPhase == 'start'){
             return this.onStartTurn();
@@ -80,30 +83,34 @@ class StatusEffect{
         return restore;
     }
     activateHelpper(fn, resolveObject){
-        this.currentCharges --;
         if(this.currentCharges <= 0){
             this.onRemove();
         }
-        
         return new Promise((resolve)=>{
             fn();
             resolve(resolveObject);
         });
     }
-    skipStatusCycle(){
-        return new Promise((resolve)=>{
-            resolve({
-                text: false,
-                animation: false,
-                vitalsUpdate: false,
-            });
-        })
-    }
+    //turn events
     onStartTurn(){
-        return this.skipStatusCycle();
-    }
+        return this.activateHelpper(()=>{}, 
+        {
+            text: false,
+            animation: false,
+            vitalsUpdate: false,
+        }
+    )}
     onEndTurn(){
-        return this.skipStatusCycle();
+        return this.activateHelpper(()=>{}, 
+        {
+            text: false,
+            animation: false,
+            vitalsUpdate: false,
+        }
+    )}
+    //apply / remove events
+    onApplied(){
+        
     }
     onRemove(){
         for(let i = 0; i < this.holder.statusArray.length; i++){
@@ -113,21 +120,21 @@ class StatusEffect{
             }
         }
     }
+    //to target events
     onRecieveDamage(){
         
     }
+    onOpponentAttemptAbility(){
+        
+    }
+    //to attacker
     onDeliverDamage(){
         
     }
-    onAttemptAttack(){
+    onAttemptAbility(){
         
     }
-    onOpponentAttemptAttack(){
-        
-    }
-    onApplied(){
-        
-    }
+   
 }
 export class Poison extends StatusEffect{
     constructor(config){
@@ -148,6 +155,7 @@ export class Poison extends StatusEffect{
                 this.holder.currentHP = this.holder.currentHP - damage;
                 this.severityMofifier += 0.02;
                 this.message = (`${this.holder.name} takes damage from poison.`);
+                this.currentCharges --;
             }, 
             {
                 text: true,
@@ -174,6 +182,7 @@ export class Burn extends StatusEffect{
                 let damage = this.checkDamage(this.holder, this.holder.maxHP * 0.1, 'health');
                 this.holder.currentHP = this.holder.currentHP - damage;
                 this.message = `${this.holder.name} suffers from burns.`;
+                this.currentCharges --;
             }, 
             {
                 text: true,
@@ -213,6 +222,7 @@ export class Bleed extends StatusEffect{
                 this.holder.currentStamina = this.holder.currentStamina - staminaDamage;
                 this.holder.currentHP = this.holder.currentHP - healthDamage;
                 this.severityMofifier += 0.02;
+                this.currentCharges --;
                 
             }, 
             {
@@ -247,6 +257,7 @@ export class Bind extends StatusEffect{
                     this.holder.nextAbility = new Struggle({});
                     this.holder.abilityTargets = [this.holder];
                 }
+                this.currentCharges --;
             }, 
             {
                 text: true,
@@ -269,23 +280,29 @@ export class Shielded extends StatusEffect{
         });
     }
     onApplied(){
-        this.holder.currentBluntResistance += 0.5;
-        this.holder.currentPierceResistance += 0.5;
-        this.holder.currentArcaneResistance += 0.5;
-        this.holder.currentElementalResistance += 0.5;
+        this.holder.currentBluntResistance += 0.5.toFixed(2);
+        this.holder.currentPierceResistance += 0.5.toFixed(2);
+        this.holder.currentArcaneResistance += 0.5.toFixed(2);
+        this.holder.currentElementalResistance += 0.5.toFixed(2);
         
     }
     onRemove(){
-        this.holder.currentBluntResistance -= 0.5;
-        this.holder.currentPierceResistance -= 0.5;
-        this.holder.currentArcaneResistance -= 0.5;
-        this.holder.currentElementalResistance -= 0.5;
         for(let i = 0; i < this.holder.statusArray.length; i++){
             if(this.holder.statusArray[i].name == this.name){
                 this.holder.statusArray.splice(i, 1);
                 break;
             }
         }
+        this.holder.currentBluntResistance -= 0.5.toFixed(2);
+        this.holder.currentPierceResistance -= 0.5.toFixed(2);
+        this.holder.currentArcaneResistance -= 0.5.toFixed(2);
+        this.holder.currentElementalResistance -= 0.5.toFixed(2);
+    }
+    onDeliverDamage(){
+        this.onRemove();
+    }
+    onRecieveDamage(){
+        this.onRemove();
     }
     onEndTurn(){
         return this.activateHelpper(

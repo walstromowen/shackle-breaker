@@ -91,7 +91,7 @@ export default class BattleController{
         this.view.highlightAttacker(ally.battleId);
 
         //equipment abilities
-        let combinedAbilities = this.model.getCombinedAbiliites(ally);
+        let combinedAbilities = this.model.getCombinedAbilities(ally);
         let abilityButtons = this.view.createCombatantAbilityButtons(combinedAbilities, 'equipment');
         for(let i = 0; i < combinedAbilities.length; i++){
             abilityButtons[i].addEventListener('click', ()=>{

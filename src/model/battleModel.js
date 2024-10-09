@@ -111,7 +111,7 @@ export default class BattleModel{
         for(let i = 0; i < this.activeCombatants.length; i++){
             if(this.activeCombatants[i].isHostile == true){
                 this.activeCombatants[i].abilityTargets=[];
-                this.activeCombatants[i].nextAbility = getRandomArrayElement(this.getCombinedAbiliites(this.activeCombatants[i]));
+                this.activeCombatants[i].nextAbility = getRandomArrayElement(this.getCombinedAbilities(this.activeCombatants[i]));
                 for(let j = 0; j < this.activeCombatants[i].nextAbility.targetCount; j++){
                     this.getRandomTarget(this.activeCombatants[i]);
                 }
@@ -202,7 +202,7 @@ export default class BattleModel{
             return (b.nextAbility.speedModifier*b.currentSpeed) - (a.nextAbility.speedModifier*a.currentSpeed);
         });
     }
-    getCombinedAbiliites(attacker){
+    getCombinedAbilities(attacker){
         let combinedAbilities = [];
         let equipment = attacker.getEquipment(Object.keys(attacker.equipment));
         for(let i = 0; i < attacker.abilityArray.length; i++){
