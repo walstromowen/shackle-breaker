@@ -267,7 +267,34 @@ export class Bind extends StatusEffect{
         );
     }
 }
-
+export class Paralyzed extends StatusEffect{
+    constructor(config){
+        super({
+            name:'paralyzed',
+            iconSrc: "./assets/media/icons/electric.png",
+            holder: config.holder,
+            maxCharges: 2,
+            soundEffectSrc: "./assets/audio/soundEffects/075681_electric-shock-33018.wav",
+            targetAnimation: 'shake',
+            abilityAnimation: 'none',
+        });
+    }
+    onStartTurn(){
+        return this.activateHelpper(
+            ()=>{
+                this.message = `${this.holder.name} is paralyzed.`;
+                this.holder.nextAbility = new Struggle({});
+                this.holder.abilityTargets = [this.holder];
+                this.currentCharges --;
+            }, 
+            {
+                text: true,
+                animation: true,
+                vitalsUpdate: true,
+            }
+        );
+    }
+}
 export class Shielded extends StatusEffect{
     constructor(config){
         super({
@@ -280,10 +307,10 @@ export class Shielded extends StatusEffect{
         });
     }
     onApplied(){
-        this.holder.currentBluntResistance += 0.5.toFixed(2);
-        this.holder.currentPierceResistance += 0.5.toFixed(2);
-        this.holder.currentArcaneResistance += 0.5.toFixed(2);
-        this.holder.currentElementalResistance += 0.5.toFixed(2);
+        this.holder.currentBluntResistance = (this.holder.currentBluntResistance + 0.5);
+        this.holder.currentPierceResistance = (this.holder.currentPierceResistance + 0.5);
+        this.holder.currentArcaneResistance = (this.holder.currentArcaneResistance + 0.5);
+        this.holder.currentElementalResistance = (this.holder.currentElementalResistance + 0.5);
         
     }
     onRemove(){
@@ -293,10 +320,10 @@ export class Shielded extends StatusEffect{
                 break;
             }
         }
-        this.holder.currentBluntResistance -= 0.5.toFixed(2);
-        this.holder.currentPierceResistance -= 0.5.toFixed(2);
-        this.holder.currentArcaneResistance -= 0.5.toFixed(2);
-        this.holder.currentElementalResistance -= 0.5.toFixed(2);
+        this.holder.currentBluntResistance = (this.holder.currentBluntResistance - 0.5);
+        this.holder.currentPierceResistance = (this.holder.currentPierceResistance - 0.5);
+        this.holder.currentArcaneResistance = (this.holder.currentArcaneResistance - 0.5);
+        this.holder.currentElementalResistance = (this.holder.currentElementalResistance - 0.5);
     }
     onDeliverDamage(){
         this.onRemove();

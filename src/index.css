@@ -1029,7 +1029,7 @@ img{
 @keyframes stick-right {
     0% {translate:-100%}
     
-    25% {translate:0%}
+    10% {translate:0%}
 
     100% {translate:0%}
 }
@@ -1039,6 +1039,13 @@ img{
     25% {scale: 1.2}
 
     100% {scale: 1}
+}
+@keyframes implode {
+    0% {scale: 1.2}
+    
+    25% {scale: 0.6}
+
+    100% {scale: 0.6}
 }
 @keyframes switch-combatant {
     0% {

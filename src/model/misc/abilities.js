@@ -1,4 +1,4 @@
-import { Poison, Burn, Bleed, Bind, Shielded} from "./statusEffects.js";
+import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded} from "./statusEffects.js";
 
 export class Ability{
     constructor(config){
@@ -368,6 +368,41 @@ export class Strike extends Ability{
         this.message = `${attacker.name} strikes ${target.name}.`;
     }
 }
+export class ShootArrow extends Ability{
+    constructor(config){
+        super({
+            name: 'shoot arrow',
+            iconSrc: './assets/media/icons/broadhead-arrow.png',
+            speedModifier: config.speedModifier || 1.25,
+            damageModifier: config.damageModifier || 1,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 12,
+            magicCost: config.magicCost || 0,
+            damageTypes: config.damageTypes || ['pierce'],
+            soundEffectSrc: "./assets/audio/soundEffects/arrow-body-impact-146419.mp3",
+            attackerAnimation: config.attackerAnimation || 'ally-evade',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/broadhead-arrow.png',
+            abilityAnimation: config.abilityAnimation || 'stick-right',
+           
+            
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            this.triggerOnDeliverDamage(attacker);
+            this.triggerOnRecieveDamage(target);
+            if(Math.random()*20 < 1){
+                this.inflictStatus(new Bleed({holder: target}), target);
+            } 
+        }
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} shoots ${target.name} with an arrow.`;
+    }
+}
 export class Cleave extends Ability{
     constructor(config){
         super({
@@ -480,7 +515,7 @@ export class Bite extends Ability{
             soundEffectSrc: "./assets/audio/soundEffects/chomp1.mp3",
             attackerAnimation: config.attackerAnimation || 'ally-attack',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/sharp-lips.png',
-            abilityAnimation: config.abilityAnimation || 'explode',
+            abilityAnimation: config.abilityAnimation || 'implode',
            
             
         })
@@ -511,11 +546,11 @@ export class Fireball extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 12,
-            accuracy: config.accuracy || 0.75,
+            accuracy: config.accuracy || 0.80,
             damageTypes: config.damageTypes || ['elemental'],
             soundEffectSrc: "./assets/audio/soundEffects/short-fireball-woosh-6146.mp3",
 
-            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            attackerAnimation: config.attackerAnimation || 'ally-evade',
             abilityAnimation: config.abilityAnimation || 'swipe-right',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/fireball.png',
         })
@@ -536,6 +571,42 @@ export class Fireball extends Ability{
        this.message = `${attacker.name} shoots a fireball ${target.name}.`;
     }
 }
+export class LightningBolt extends Ability{
+    constructor(config){
+        super({
+            name: 'lightning bolt',
+            iconSrc: './assets/media/icons/lightning-tree.png',
+            speedModifier: config.speedModifier || 0.75,
+            damageModifier: config.damageModifier || 1.25,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 12,
+            magicCost: config.magicCost || 12,
+            accuracy: config.accuracy || 0.80,
+            damageTypes: config.damageTypes || ['elemental'],
+            soundEffectSrc: "./assets/audio/soundEffects/075681_electric-shock-33018.wav",
+            attackerAnimation: config.attackerAnimation || 'ally-evade',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/lightning-tree.png',
+            abilityAnimation: config.abilityAnimation || 'shake',
+           
+            
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            this.triggerOnDeliverDamage(attacker);
+            this.triggerOnRecieveDamage(target);
+            if(Math.random()*6 < 1){
+                this.inflictStatus(new Paralyzed({holder: target}), target);
+            } 
+        }
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} shoots lightning at ${target.name}.`;
+    }
+}
 export class Earthquake extends Ability{
     constructor(config){
         super({
@@ -551,7 +622,7 @@ export class Earthquake extends Ability{
             soundEffectSrc: "./assets/audio/soundEffects/supernatural-explosion-104295.wav",
             sequenceType: 'splash',
             attackerAnimation: config.attackerAnimation || 'explode',
-            abilityAnimation: config.abilityAnimation || 'swipe-down',
+            abilityAnimation: config.abilityAnimation || 'sink',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/earth-split.png',
             
         })
@@ -818,6 +889,34 @@ export class UseBandage extends Ability{
         }
     }
 }
+export class UseParalysisTonic extends Ability{
+    constructor(config){
+        super({
+            name: 'use paralysis tonic',
+            iconSrc: './assets/media/icons/round-bottom-flask.png',
+            speedModifier: config.speedModifier || 1,
+            soundEffectSrc: "./assets/audio/soundEffects/mixkit-light-spell-873.wav",
+            abilityAnimation: 'explode',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/round-bottom-flask.png',
+            defaultTarget: 'self',
+        })
+    }
+    activate(attacker, target){
+        letstaminaRestore = this.checkRestore(target, target.maxStamina * 0.3, 'stamina');
+        target.currentHP += staminaRestore;
+        this.removeStatus('paralyzed', target);
+    }
+    updateMessage(attacker, target){
+        if(attacker == target){
+            this.message = `${attacker.name} uses a paralysis tonic.`;
+        }
+        else{
+            this.message = `${attacker.name} throws a paralysis tonic at ${target.name}.`;
+        }
+    }
+}
+
+
 export class DrinkKurtussBrewOfMadness extends Ability{
     constructor(config){
         super({

@@ -5,9 +5,12 @@ import PartyModel from "./partyModel.js";
 import CharacterSummaryModel from "./characterSummaryModel.js";
 
 import { Entity } from "./misc/entities.js";
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite} from "./misc/abilities.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, LinenShirt, LinenPants, Handaxe, Shortbow, } from "./misc/items.js";
-import { PineWood, HealthPotion, StaminaPotion, MagicPotion, Antidote, AloeRemedy, Bandage } from "./misc/items.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt} from "./misc/abilities.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler} from "./misc/items.js";
+import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, AloeRemedy, Bandage, PineWood} from "./misc/items.js";
+
+
+
 
 
 
@@ -59,8 +62,8 @@ export default class GameModel{
                 intelligence: 5,
                 attunement: 3,
                 equipment: {
-                    mainHand: new Handaxe({level: 1}),
-                    offhand: '',
+                    mainHand: new ShortSword({level: 1}),
+                    offhand: new Buckler({level: 1}),
                     head: '',
                     torso: new LinenShirt({level: 1}),
                     arms: '',
@@ -95,7 +98,7 @@ export default class GameModel{
                 intelligence: 7,
                 attunement: 5,
                 equipment: {
-                    mainHand: new ArcaneStaff({level: 1}),
+                    mainHand: new LightStaff({level: 1}),
                     offhand: '',
                     head: '',
                     torso: new LinenShirt({level: 1}),

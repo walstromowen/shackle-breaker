@@ -1,5 +1,5 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block} from "./abilities.js";
-import { DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, UseAntidote, UseAloeRemedy, UseBandage, DrinkKurtussBrewOfMadness} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt} from "./abilities.js";
+import { DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, UseAntidote, UseAloeRemedy, UseParalysisTonic, UseBandage, DrinkKurtussBrewOfMadness} from "./abilities.js";
 
 let counter = 0;
 
@@ -325,7 +325,7 @@ export class Shortbow extends Attachable{
             speed: 0,
             evasion: 0,
             critical: 0,
-            abilityArray: [new ThrowPosionedKnife({})],
+            abilityArray: [new ShootArrow({})],
         })
         this.upgrade(config.level-this.level);
     }
@@ -500,6 +500,64 @@ export class FireStaff extends Attachable{
             evasion: 0,
             critical: 0,
             abilityArray: [new Strike({}), new Fireball({})],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 0;
+            this.magicRecovery = this.magicRecovery + 0;
+            this.bluntAttack = this.bluntAttack + 1;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 1;
+            this.elementalAttack = this.elementalAttack + 3;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 0;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+            this.critical = this.critical + 0;
+        }
+    }
+}
+export class LightningStaff extends Attachable{
+    constructor(config){
+        super({
+            name: 'fire staff',
+            description: "A wooden staff imbued with lightning. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time",
+            imageSrc:  './assets/media/icons/wizard-staff.png',
+            price: 200,
+            slot: 'oneHand',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 0,
+            magicRecovery: 0,
+            bluntAttack: 1,
+            pierceAttack: 1,
+            arcaneAttack: 0,
+            elementalAttack: 3,
+            bluntDefense: 0,
+            pierceDefense: 0,
+            arcaneDefense: 0,
+            elementalDefense: 0,
+            bluntResistance: 0,
+            pierceResistance: 0,
+            arcaneResistance: 0,
+            elementalResistance: 0,
+            speed: 0,
+            evasion: 0,
+            critical: 0,
+            abilityArray: [new Strike({}), new LightningBolt({})],
         })
         this.upgrade(config.level-this.level);
     }
@@ -829,7 +887,16 @@ export class PineWood extends Material{
         });
     }
 }
-
+export class Hide extends Material{
+    constructor(){
+        super({
+            name: 'hide',
+            description: 'a valuable animal hide. Hide of a common animal.',
+            imageSrc: './assets/media/icons/animal-hide.png',
+            price: 100,
+        });
+    }
+}
 export class HealthPotion extends Consumable{
     constructor(){
         super({
@@ -898,6 +965,18 @@ export class Bandage extends Consumable{
             imageSrc: './assets/media/icons/bandage-roll.png',
             price: 30,
             abilityArray: [new UseBandage({})],
+            charges: 1,
+        });
+    }
+}
+export class ParalysisTonic extends Consumable{
+    constructor(){
+        super({
+            name: 'bandage',
+            description: `a tonic used to treat paralysis. Although the power of the artifact drove many mad, a select few used its power for good resulting in major breakthroughs in medicine.`,
+            imageSrc: './assets/media/icons/round-bottom-flask.png',
+            price: 30,
+            abilityArray: [new UseParalysisTonic({})],
             charges: 1,
         });
     }

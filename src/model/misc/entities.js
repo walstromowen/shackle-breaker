@@ -1,7 +1,7 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb} from "./abilities.js";
-import { Poison, Burn, Bleed} from "./statusEffects.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler} from "./items.js";
-import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, AloeRemedy, Bandage, PineWood} from "./items.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt} from "./abilities.js";
+import { Poison, Burn, Bleed, Shielded} from "./statusEffects.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler} from "./items.js";
+import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Hide} from "./items.js";
 
 
 export class Entity{
@@ -450,6 +450,7 @@ export class Skeleton extends Entity{
             abilityArray: [],
             lootTable: [
                 {item: new ShortSword({level: 1}), weight: 1},
+                {item: new Buckler({level: 1}), weight: 1},
                 {item: new HealthPotion(), weight: 2},
                 {item: new StaminaPotion(), weight: 2},
                 {item: new MagicPotion(), weight: 2},
@@ -511,9 +512,29 @@ export class GroveGuardian extends Entity{
             equipment: {},
             abilityArray: [new Bite({}), new Earthquake({})],
             lootTable: [
-                {item: new StaminaPotion({level: 1}), weight: 1}
+                {item: new HealthPotion({level: 1}), weight: 2},
+                {item: new PineWood({level: 1}), weight: 3}
             ],
         })
+    }
+    scaleAttributes(){
+        this.maxHP = (this.vigor * 12)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
+        this.maxStamina = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
+        this.maxMagic = (this.vigor * 2)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
+        this.baseHpRecovery = 0;
+        this.baseStaminaRecovery = 5;
+        this.baseMagicRecovery = 5;
+        this.baseBluntAttack = (this.vigor * 1) + (this.strength * 3) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
+        this.basePierceAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 3) + (this.intelligence * 2) + (this.attunement * 2);
+        this.baseArcaneAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 3) + (this.attunement * 2);
+        this.baseElementalAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 3);
+        this.baseBluntDefense = (this.vigor * 1)  + (this.strength * 2) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 1);
+        this.basePierceDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 2) + (this.intelligence * 0) + (this.attunement * 0);
+        this.baseArcaneDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 2) + (this.attunement * 1);
+        this.baseElementalDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 0) + (this.attunement * 1);
+        this.baseSpeed = 15;
+        this.baseEvasion = 0.05;
+        this.baseCritical = 0.10;
     }
 }
 export class Wolf extends Entity{
@@ -537,7 +558,7 @@ export class Wolf extends Entity{
             },
             abilityArray: [new Bite({})],
             lootTable: [
-                {item: new StaminaPotion({level: 1}), weight: 1}
+                {item: new Hide({level: 1}), weight: 1}
             ],
         })
     }
@@ -561,7 +582,8 @@ export class Spider extends Entity{
             equipment: {},
             abilityArray: [new Bite({}), new ShootWeb({})],
             lootTable: [
-                {item: new StaminaPotion({level: 1}), weight: 1}
+                {item: new ParalysisTonic({level: 1}), weight: 1},
+                {item: new StaminaPotion({level: 1}), weight: 3}
             ],
         })
     }

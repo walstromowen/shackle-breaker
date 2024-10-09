@@ -1,7 +1,7 @@
 import { getRandomArrayElement } from "../utility.js";
 import {Entity, Dog, Hawk} from "./misc/entities.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler} from "./misc/items.js";
-import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, AloeRemedy, Bandage, PineWood} from "./misc/items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LightningStaff} from "./misc/items.js";
+import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, AloeRemedy, ParalysisTonic, Bandage, PineWood} from "./misc/items.js";
 
 
 export default class LobbyModel{
@@ -91,7 +91,7 @@ export default class LobbyModel{
                 break;
             case 'hermit':
                 equipment = [
-                    new LightStaff({level: 1}),
+                    new LightningStaff({level: 1}),
                     new LinenShirt({level: 1}),
                     new LinenPants({level: 1}),
                 ];
@@ -124,7 +124,7 @@ export default class LobbyModel{
                 this.props.setInventory([new HealthPotion(), new PineWood()]);
                 break;
             case 'alchemists-vials':
-                this.props.setInventory([new HealthPotion()]);
+                this.props.setInventory([new HealthPotion(), new ParalysisTonic()]);
                 break;
             case 'first-aid-kit':
                 this.props.setInventory([new HealthPotion(), new Bandage()], );
