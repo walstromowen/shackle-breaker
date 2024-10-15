@@ -1,5 +1,5 @@
 import { getRandomArrayElement } from "../utility.js";
-import {Entity, Dog, Hawk} from "./misc/entities.js";
+import {Entity, Dog, Hawk, Tiger} from "./misc/entities.js";
 import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LightningStaff} from "./misc/items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, AloeRemedy, ParalysisTonic, Bandage, PineWood} from "./misc/items.js";
 
@@ -18,11 +18,16 @@ export default class LobbyModel{
     }
     updateName(){
         let name = document.getElementById('lobby-name-selection').value;
-        if(name == ''){
-            this.props.getParty()[0].name = 'Shackle Breaker';
-        }else{
-            this.props.getParty()[0].name = name;
+        let lowerCaseName = name.toLowerCase();
+        switch(lowerCaseName){
+            case '':
+                name = 'Shackle Breaker';
+            break;
+            case 'sterben':
+                this.props.getParty().push(new Tiger({apperance: './assets/media/entities/armored-tiger.jpg'}));
+            break;
         }
+        this.props.getParty()[0].name = name;
     }
     updateApperance(){
         let apperance = document.getElementById('lobby-apperance-selection').value;
@@ -130,7 +135,7 @@ export default class LobbyModel{
                 this.props.setInventory([new HealthPotion(), new Bandage()], );
                 break;
             case 'meteorite':
-                this.props.setInventory([new HealthPotion()]);
+                this.props.setInventory([new HealthPotion(), new KurtussBrewOfMadness()]);
             break;
         }
     }

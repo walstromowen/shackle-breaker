@@ -6,6 +6,7 @@ import OverworldController from "./overworldController.js";
 import BattleController from "./battleController.js";
 import PartyController from "./partyController.js";
 import CharacterSummaryController from "./characterSummaryController.js";
+import EncounterController from "./encounterController.js";
 
 export default class GameController{
     constructor(model, view){
@@ -17,6 +18,7 @@ export default class GameController{
             getBattleController: this.getBattleController.bind(this),
             getPartyController: this.getPartyController.bind(this),
             getCharacterSummaryController: this.getCharacterSummaryController.bind(this),
+            getEncounterController: this.getEncounterController.bind(this),
             updateMiniMenu: this.updateMiniMenu.bind(this),
         }
         this.model = model;
@@ -27,6 +29,7 @@ export default class GameController{
         this.battleController = new BattleController(this.props, this.model.battleModel, this.view.battleView)
         this.partyController = new PartyController(this.props, this.model.partyModel, this.view.partyView);
         this.characterSummaryController = new CharacterSummaryController(this.props, this.model.characterSummaryModel, this.view.characterSummaryView);
+        this.encounterController = new EncounterController(this.props, this.model.encounterModel, this.view.encounterView);
         this.initialize();
     }
     initialize(){
@@ -73,6 +76,9 @@ export default class GameController{
             case 'character-summary-screen':
                 this.characterSummaryController.onSwitchScreen();
                 break;
+            case 'encounter-screen':
+                this.encounterController.onSwitchScreen();
+                break;
         }
         this.model.switchScreen(screenId);
         this.view.switchScreen(screenId);
@@ -94,6 +100,9 @@ export default class GameController{
     }
     getCharacterSummaryController(){
         return this.characterSummaryController;
+    }
+    getEncounterController(){
+        return this.encounterController;
     }
     updateMiniMenu(item){
         this.view.updateMiniMenu(item);

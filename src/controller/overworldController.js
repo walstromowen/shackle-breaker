@@ -33,8 +33,13 @@ export default class OverworldController{
                 document.querySelector('body').msRequestFullscreen();
             }
         });
-
-
+        //TEMP
+        document.getElementById('to-encounter-screen-test').addEventListener('click', ()=>{
+            document.getElementById('overworld-escape-menu').style.display='none';
+            this.props.switchScreen('encounter-screen');
+            playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
+        });
+        //TEMP
         document.getElementById('overworld-escape-menu-exit-button').addEventListener('click', ()=>{
             document.getElementById('overworld-escape-menu').style.display='none';
             this.props.switchScreen('title-screen');
@@ -96,10 +101,19 @@ export default class OverworldController{
             playMusic(this.model.props.getMap().biome.battleMusicSrc);
             //document.getElementById('music-player').pause();//temp
             this.view.hideOverWorldUi();
-            this.view.playBattleTransisiton().then(()=>{
+            this.view.playBattleTransition().then(()=>{
                 
                 this.props.switchScreen('battle-screen');
             });
+            return;
+        }
+        if(this.model.props.getScreen() == 'encounter-screen'){
+            this.view.hideOverWorldUi();
+            this.view.playBattleTransition().then(()=>{
+                
+                this.props.switchScreen('encounter-screen');
+            });
+            return;
         }
     }
 }

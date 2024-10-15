@@ -81,7 +81,7 @@ export default class OverworldView{
         });
 
     }
-    playBattleTransisiton(){
+    playBattleTransition(){
         document.querySelector('body').classList.add('battle-wipe');
         this.screen.classList.add('greyscale')
         return new Promise((resolve)=>{

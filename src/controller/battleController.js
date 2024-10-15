@@ -709,6 +709,7 @@ export default class BattleController{
         if(remainingAllies.length == 0){
             this.view.printToBattleConsole('Party has been slain...');
             //TODO GAME OVER SCREEN
+            alert('you lose! Please refresh page');
             endBattleFlag = true;
             return;
         }

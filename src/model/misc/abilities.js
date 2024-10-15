@@ -1,4 +1,4 @@
-import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded} from "./statusEffects.js";
+import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown} from "./statusEffects.js";
 
 export class Ability{
     constructor(config){
@@ -250,6 +250,11 @@ export class Rest extends Ability{
             
         })
     }
+    activate(attacker, target){
+        target.recoverHP();
+        target.recoverStamina();
+        target.recoverMagic();
+    }
     updateMessage(attacker, target){
         this.message = `${attacker.name} rests.`;
     }
@@ -312,7 +317,7 @@ export class Punch extends Ability{
             name: 'strike',
             iconSrc: './assets/media/icons/punch.png',
             speedModifier: config.speedModifier || 1,
-            damageModifier: config.damageModifier || 0.25,
+            damageModifier: config.damageModifier || 0.33,
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 4,
             magicCost: config.magicCost || 0,
@@ -321,7 +326,7 @@ export class Punch extends Ability{
             attackerAnimation: config.attackerAnimation || 'ally-attack',
             abilityAnimation: config.abilityAnimation || 'swipe-right',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/punch.png',
-            defaultTarget: 'self',
+            defaultTarget: 'opponent',
         })
     }
     activate(attacker, target){
@@ -401,6 +406,39 @@ export class ShootArrow extends Ability{
     }
     updateMessage(attacker, target){
         this.message = `${attacker.name} shoots ${target.name} with an arrow.`;
+    }
+}
+export class Tripleshot extends Ability{
+    constructor(config){
+        super({
+            name: 'triple shot',
+            iconSrc: './assets/media/icons/striking-arrows.png',
+            speedModifier: config.speedModifier || 1,
+            damageModifier: config.damageModifier || 1,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 20,
+            magicCost: config.magicCost || 0,
+            damageTypes: config.damageTypes || ['pierce'],
+            targetCount: 2,
+            soundEffectSrc: "./assets/audio/soundEffects/arrow-body-impact-146419.mp3",
+            sequenceType: 'splash',
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimation: config.abilityAnimation || 'swipe-right',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/broadhead-arrow.png',
+
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            this.triggerOnDeliverDamage(attacker);
+            this.triggerOnRecieveDamage(target);
+        }
+    }
+    updateMessage(attacker){
+        this.message = (`${attacker.name} fires a triple shot.`);
     }
 }
 export class Cleave extends Ability{
@@ -672,6 +710,41 @@ export class ShootWeb extends Ability{
     }
     updateMessage(attacker, target){
         this.message = `${attacker.name} shoots a web at ${target.name}.`;
+    }
+}
+export class Pounce extends Ability{
+    constructor(config){
+        super({
+            name: 'pounce',
+            iconSrc: './assets/media/icons/paw-print.png',
+            speedModifier: config.speedModifier || 1,
+            damageModifier: config.damageModifier || 1,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 15,
+            magicCost: config.magicCost || 0,
+            damageTypes: config.damageTypes || ['blunt'],
+            soundEffectSrc: "./assets/audio/soundEffects/platzender-kopf_nachschlag-91637.mp3",
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimation: config.abilityAnimation || 'stick-right',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/wolverine-claws.png',
+            targetAnimation: config.targetAnimation || 'hostile-evade',
+           
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            if(Math.random()*3 < 1){
+                this.inflictStatus(new KnockedDown({holder: target}), target);
+            }
+            this.triggerOnDeliverDamage(attacker);
+            this.triggerOnRecieveDamage(target);
+        }
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} pounces on ${target.name}.`;
     }
 }
 export class Block extends Ability{

@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch} from "./abilities.js";
 import { Poison, Burn, Bleed, Shielded} from "./statusEffects.js";
 import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Hide} from "./items.js";
@@ -12,7 +12,7 @@ export class Entity{
         this.level = config.level || 1;
         this.vigor = config.vigor || 1;
         this.strength = config.strength || 1;
-        this.dexterity = config.strength || 1;
+        this.dexterity = config.dexterity || 1;
         this.intelligence = config.intelligence || 1;
         this.attunement = config.attunement || 1;
         this.autoLevel();
@@ -154,6 +154,7 @@ export class Entity{
         this.currentEvasion = this.baseEvasion;
         this.currentCritical = this.baseCritical;
     }
+
     getCurrentStats(){
         return [
             this.currentHP,
@@ -338,9 +339,6 @@ export class Entity{
             this.skillPoints++;
             this.level ++;
             this.currentXP = this.currentXP - requiredXP;
-            this.currentHP = this.maxHP;
-            this.currentStamina = this.maxStamina;
-            this.currentMagic = this.maxMagic;
             this.awardSkillPoints();
         }
     }
@@ -397,9 +395,9 @@ export class Dog extends Entity{
             baseElementalResistance: config.baseElementalResistance || 0.1,
             isHostile: config.isHostile || false,
             equipment: {
-                dogArmor: '',
+                mediumAnimalArmor: '',
             },
-            abilityArray: [new Bite({})],
+            abilityArray: [new Bite({}), new Pounce({})],
         })
     }
 }
@@ -426,10 +424,67 @@ export class Hawk extends Entity{
     }
 }
 
+export class Tiger extends Entity{
+    constructor(config){
+        super({
+            name: 'Tiger',
+            level: config.level || 1,
+            apperance: config.apperance ||'./assets/media/entities/tiger.jpg',
+            vigor: config.vigor || 5,
+            strength: config.strength || 6,
+            dexterity: config.dexterity || 7,
+            intelligence: config.intelligence || 4,
+            attunement: config.attunement || 3,
+            baseBluntResistance: config.baseBluntResistance || 0.1,
+            basePierceResistance: config.basePierceResistance || 0.1,
+            baseArcaneResistance: config.baseArcaneResistance || 0.1,
+            baseElementalResistance: config.baseElementalResistance || 0.1,
+            isHostile: config.isHostile || false,
+            equipment: {
+                mediumAnimalArmor: '',
+            },
+            abilityArray: [new Bite({}), new Pounce({})],
+        })
+    }
+}
+export class MadVillager extends Entity{
+    constructor(config){
+        super({
+            name: 'Mad Villager',
+            level: config.level || 1,
+            apperance: config.skeleton || './assets/media/entities/cursed-villager-1.jpg',
+            vigor: config.vigor || 5,
+            strength: config.strength || 7,
+            dexterity: config.dexterity || 7,
+            intelligence: config.intelligence || 3,
+            attunement: config.attunement || 3,
+            equipment: config.equipment || {
+                mainHand: '',
+                offhand: '',
+                head: '',
+                torso: '',
+                arms: '',
+                legs: '',
+                feet: '',
+            },
+            isHostile: config.isHostile || true,
+            abilityArray: [new Bite({}), new Punch({})],
+            lootTable: [
+                {item: new LinenShirt({level: 1}), weight: 1},
+                {item: new LinenPants({level: 1}), weight: 1},
+                {item: new HealthPotion(), weight: 2},
+                {item: new StaminaPotion(), weight: 1},
+                {item: new MagicPotion(), weight: 1},
+                {item: new Bandage(), weight: 3},
+                
+            ],
+        });
+    }
+}
 export class Skeleton extends Entity{
     constructor(config){
         super({
-            name: 'skeleton',
+            name: 'Skeleton',
             level: config.level || 1,
             apperance: config.skeleton || './assets/media/entities/skeleton.jpg',
             vigor: config.vigor || 5,
@@ -450,6 +505,7 @@ export class Skeleton extends Entity{
             abilityArray: [],
             lootTable: [
                 {item: new ShortSword({level: 1}), weight: 1},
+                {item: new Handaxe({level: 1}), weight: 1},
                 {item: new Buckler({level: 1}), weight: 1},
                 {item: new HealthPotion(), weight: 2},
                 {item: new StaminaPotion(), weight: 2},
@@ -463,7 +519,7 @@ export class Skeleton extends Entity{
 export class SkeletonCultist extends Entity{
     constructor(config){
         super({
-            name: 'skeleton cultist',
+            name: 'Skeleton Cultist',
             level: config.level || 1,
             apperance: config.skeleton || './assets/media/entities/skeleton-light-mage.jpg',
             vigor: config.vigor || 4,
@@ -484,6 +540,7 @@ export class SkeletonCultist extends Entity{
             abilityArray: [],
             lootTable: [
                 {item: new LightStaff({level: 1}), weight: 1},
+                {item: new FireStaff({level: 1}), weight: 1},
                 {item: new LinenShirt({level: 1}), weight: 1},
                 {item: new LinenPants({level: 1}), weight: 1},
                 {item: new HealthPotion(), weight: 2},
@@ -496,7 +553,7 @@ export class SkeletonCultist extends Entity{
 export class GroveGuardian extends Entity{
     constructor(config){
         super({
-            name: 'grove guardian',
+            name: 'Grove Guardian',
             level: config.level || 1,
             apperance: './assets/media/entities/grove-guardian.jpg',
             vigor: config.vigor || 9,
@@ -540,7 +597,7 @@ export class GroveGuardian extends Entity{
 export class Wolf extends Entity{
     constructor(config){
         super({
-            name: 'wolf',
+            name: 'Wolf',
             level: config.level || 1,
             apperance: './assets/media/entities/wolf.jpg',
             vigor: config.vigor || 5,
@@ -554,9 +611,9 @@ export class Wolf extends Entity{
             baseElementalResistance: config.baseElementalResistance || 0.1,
             isHostile: config.isHostile || true,
             equipment: {
-                dogArmor: '',
+                mediumAnimalArmor: '',
             },
-            abilityArray: [new Bite({})],
+            abilityArray: [new Bite({}), new Pounce({})],
             lootTable: [
                 {item: new Hide({level: 1}), weight: 1}
             ],
@@ -566,7 +623,7 @@ export class Wolf extends Entity{
 export class Spider extends Entity{
     constructor(config){
         super({
-            name: 'spider',
+            name: 'Spider',
             level: config.level || 1,
             apperance: './assets/media/entities/spider.jpg',
             vigor: config.vigor || 3,

@@ -1,26 +1,15 @@
 
 
 export default class Battle{
-    constructor(hostiles){
-        this.hostiles = hostiles;
-        this.weather = 'clear';
-        this.battlefield = '';
-        this.loot = [];
-        this.gold = 0;
-        this.maxAllyCount;
-        this.maxHostileCount;
-        this.currentAllyLimit;
-        this.currentHostileLimit;
-        this.initialize();
-    }
-    initialize(){
-        this.setMaxCombatantCount();
-    }
-    setMaxCombatantCount(){
-        let count = 3; //Math.ceil(Math.random()*3)
-        this.maxAllyCount = count;
-        this.maxHostileCount = count;
-        this.resetCurrentCombatantLimit();
+    constructor(config){
+        this.hostiles = config.hostiles;
+        this.weather = config.weather || 'clear';
+        this.loot = config.loot || [];
+        this.gold = config.gold || 0;
+        this.maxAllyCount = config.maxAllyCount || 3;
+        this.maxHostileCount = config.maxHostileCount || 3;
+        this.currentAllyLimit = this.maxAllyCount;
+        this.currentHostileLimit = this.maxHostileCount;
     }
     resetCurrentCombatantLimit(){
         this.currentAllyLimit = this.maxAllyCount;

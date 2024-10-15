@@ -52,11 +52,20 @@ export default class OverworldModel{
                 this.toggleBattle(nextRoom.battle);
                 return; 
             }
-            if(Math.floor(Math.random()*10) == 0){
-                this.nextPartyPosition = nextRoom.position;
+            if(nextRoom.encounter != ''){
+                this.toggleEncounter(nextRoom.encounter);
+            }
+            let chance = Math.floor(Math.random()*20);
+            if(chance == 0){
                 let biome = this.props.getMap().biome
-                nextRoom.battle = new Battle(biome.generateEnemies(this.props.calcHighestPartyLevel(), Math.ceil(Math.random()*4))); 
+                nextRoom.battle = new Battle({hostiles: biome.generateEnemies(this.props.calcHighestPartyLevel(), Math.ceil(Math.random()*4))}); 
                 this.toggleBattle(nextRoom.battle);
+                return;
+            }
+            if(chance == 1){
+                let biome = this.props.getMap().biome
+                nextRoom.encounter = biome.generateEncounter();
+                this.toggleEncounter(nextRoom.encounter);
                 return;
             }
         }
@@ -66,6 +75,16 @@ export default class OverworldModel{
         this.props.setScreen('battle-screen');
         
     }
-    
+    toggleEncounter(encounter){
+        this.props.setEncounter(encounter);
+        this.props.setScreen('encounter-screen');
+    }
+    //TODO
+    determineCurrentCharater(){
+        this.currentCharacter = getRandomArrayElement(this.props.getParty());
+        if(this.currentCharacter.currentHP <= 0){
+            this.determineCurrentCharater();
+        }
+    }
     
 }

@@ -1,5 +1,6 @@
 import { Skeleton, SkeletonCultist, Wolf, Spider, GroveGuardian} from "./entities.js";
-
+import Encounter from "./encounters/encounter.js";
+import { MadVillagerAhead} from "./encounters/stages.js";
 
 
 export default class Biome{
@@ -9,7 +10,13 @@ export default class Biome{
         this.backgroundMusicSrc = config.backgroundMusicSrc || "";
         this.battleMusicSrc = config.battleMusicSrc || "";
     }
-    
+    generateEncounter(){
+        let chance = Math.floor(Math.random() * 1)
+        switch(chance){ 
+            case 0:
+                return new Encounter(new MadVillagerAhead(), false)
+        }
+    }
 }
 export class Plains extends Biome{
     constructor(config){
@@ -37,6 +44,7 @@ export class Plains extends Biome{
         }
         return enemyArray;
     }
+
 }
 
 export class Cave extends Biome{

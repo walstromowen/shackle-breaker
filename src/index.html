@@ -99,8 +99,8 @@
                     </div>
                 </div>
                 <div class='lobby-background-apperance-container'>
-                    <p id='background-description'>Which is worse, rotting in the prision cell you just escaped from, or facing the journey ahead. Perhaps they would take you back? No, they would make an example of you. Not that anyone would notice anyway.
-                        Yet can you make the journey ahead? Afterall, what makes you so special?</p>
+                    <p id='background-description'>Which is worse, rotting in the prison cell you just escaped from, or facing the journey ahead. Perhaps they would take you back? No, they would make an example of you. Not that anyone would notice anyway.
+                        Yet can you make the journey ahead? After all, what makes you so special?</p>
                     <div class='apperance-image-container'>
                         <img id='lobby-apperance-image' src='./assets/media/entities/knight-1.jpg' draggable="false">
                     </div>
@@ -193,7 +193,7 @@
                                         <img class='icon' src='./assets/media/icons/wisdom.png' draggable="false">
                                         <p class='stat-label'>Intelligence</p>
                                     </div>
-                                    <p>A measure of ones's knowledge. Affects arcane damage and defense as well as ones maximum magic. Also determines the effectiveness of decisions that require problem solving, academica, and logical reasoning.</p>
+                                    <p>A measure of ones's knowledge. Affects arcane damage and defense as well as one's maximum magic. Also determines the effectiveness of decisions that require problem solving, academica, and logical reasoning.</p>
                                 </div>
                             </div>
                             <div class='stat-cell-hoverable'>
@@ -419,6 +419,7 @@
                 <div class='title-screen-button-container'>
                     <button id='overworld-escape-menu-resume-button' class='title-screen-button'>Resume</button>
                     <button id='overworld-escape-menu-fullscreen-button' class='title-screen-button'>Fullscreen</button>
+                    <button id='to-encounter-screen-test' class='title-screen-button'>TESTING</button>
                     <button id='overworld-escape-menu-exit-button' class='title-screen-button'>Exit</button>
                 </div>
             </div>
@@ -778,9 +779,6 @@
                 </div>
             </div>
         </div>
-
-
-
         <div id='battle-screen' class='screen'>
             <div id='battle-battlefield-container'>
                 <div class='battle-character-card-container' id='ally-party-display'></div> 
@@ -805,9 +803,108 @@
                 </div>
             </div>
         </div>
+
+
+
+
+
+
+
+        <div id='encounter-screen' class='screen'>
+            <div id='encounter-cards-stats-container'>
+                <div id='encounter-cards-container'>
+                    <div class='encounter-card' id='encounter-card-current-character'>
+                        <h3 class='encounter-card-name-header' id='encounter-character-card-name-header'>Current Character</h3>
+                        <div class='encounter-card-status-icon-container' id='encounter-character-card-status-icon-container'></div>
+                        <div class='encounter-card-all-vital-bars-container'>
+                            <div class='encounter-card-vital-bar-container'>
+                                <div id='encounter-character-card-health-progress' class='encounter-card-vital-bar-progress health-color' ></div>
+                                <div class='encounter-card-vital-label-container'>
+                                    <img class='icon' src='./assets/media/icons/hearts.png' draggable="false">
+                                    <p class='encounter-card-vital-label'>HP</p>
+                                </div>
+                                <p class ='encounter-card-current-vital-label'><span id='encounter-character-card-current-health'>9999</span> / <span id='encounter-character-card-max-health'>9999</span></p>
+                            </div>
+                            <div class='encounter-card-vital-bar-container'>
+                                <div id='encounter-character-card-stamina-progress'class='encounter-card-vital-bar-progress stamina-color' ></div>
+                                <div class='encounter-card-vital-label-container'>
+                                    <img class='icon' src='./assets/media/icons/despair.png' draggable="false">
+                                    <p class='encounter-card-vital-label'>STA</p>
+                                </div>
+                                <p class ='encounter-card-current-vital-label'><span id='encounter-character-card-current-stamina'>9999</span> / <span id='encounter-character-card-max-stamina'>9999</span></p>
+                            </div>
+                            <div class='encounter-card-vital-bar-container'>
+                                <div id='encounter-character-card-magic-progress' class='encounter-card-vital-bar-progress magic-color' ></div>
+                                <div class='encounter-card-vital-label-container'>
+                                    <img class='icon' src='./assets/media/icons/crystalize.png' draggable="false">
+                                    <p class='encounter-card-vital-label'>MAG</p>
+                                </div>
+                                <p class ='encounter-card-current-vital-label'><span id='encounter-character-card-current-magic'>9999</span> / <span id='encounter-character-card-max-magic'>9999</span></p>
+                            </div>
+                        </div> 
+                    </div> 
+                    <div class='encounter-card' id='encounter-card-event'>
+                        <h3 class='encounter-card-name-header' id='encounter-card-event-header'>Event</h3>
+                    </div>
+                </div>
+                <div id='encounter-current-character-stats-container'>
+                    <div class='encounter-stat-cell'>
+                        <div class='flex'>
+                            <img class='icon' src='./assets/media/icons/healing.png' draggable="false">
+                            <p class='encounter-stat-label'>VIG:</p>
+                        </div>
+                        <p class='stat-value'><span id='encounter-current-character-vigor'>999</span></p>
+                    </div>
+                    <div class='encounter-stat-cell'>
+                        <div class='flex'>
+                            <img class='icon' src='./assets/media/icons/strong.png' draggable="false">
+                            <p class='encounter-stat-label'>STR:</p>
+                        </div>
+                        <p class='stat-value'><span id='encounter-current-character-strength'>999</span></p>
+                    </div>
+                    <div class='encounter-stat-cell'>
+                        <div class='flex'>
+                            <img class='icon' src='./assets/media/icons/body-balance.png' draggable="false">
+                            <p class='encounter-stat-label'>DEX:</p>
+                        </div>     
+                        <p class='stat-value'><span id='encounter-current-character-dexterity'>999</span></p>
+                    </div>
+                    <div class='encounter-stat-cell'>
+                        <div class='flex'>
+                            <img class='icon' src='./assets/media/icons/wisdom.png' draggable="false">
+                            <p class='encounter-stat-label'>INT:</p>
+                        </div>
+                        <p class='stat-value'><span id='encounter-current-character-intelligence'>999</span></p>
+                    </div>
+                    <div class='encounter-stat-cell'>
+                        <div class='flex'>
+                            <img class='icon' src='./assets/media/icons/meditation.png' draggable="false">
+                            <p class='encounter-stat-label'>ATN:</p>
+                        </div>
+                        <p class='stat-value'><span id='encounter-current-character-attunement'>999</span></p>
+                    </div>
+                </div>
+            </div>
+            <div id='encounter-choices-console-container'>
+                <div id='encounter-console'>
+                    <div id='encounter-typing-container'>
+                        <p id='encounter-console-content'></p>
+                    </div>
+                </div>
+                <div id='encounter-controls-choice-options-tab'></div>
+            </div>
+        </div>
+
+
+
+
         <div id='gameover-screen' class='screen'>
             
         </div>
+
+
+
+        
         <div id='inventory-mini-menu'>
             <div id='inventory-mini-menu-tab-button-container'>
                 <button id='inventory-mini-menu-overview-button' class='inventory-mini-menu-tab-button'>Overview</button>

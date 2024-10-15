@@ -344,3 +344,32 @@ export class Shielded extends StatusEffect{
         );
     }
 }
+
+export class KnockedDown extends StatusEffect{
+    constructor(config){
+        super({
+            name:'knocked down',
+            iconSrc: "./assets/media/icons/falling.png",
+            holder: config.holder,
+            maxCharges: 1,
+            soundEffectSrc: "./assets/audio/soundEffects/vine-boom-sound-effect.mp3",
+            targetAnimation: 'shake',
+            abilityAnimation: 'none',
+        });
+    }
+    onStartTurn(){
+        return this.activateHelpper(
+            ()=>{
+                this.message = `${this.holder.name} is knocked down.`;
+                this.holder.nextAbility = new Struggle({});
+                this.holder.abilityTargets = [this.holder];
+                this.currentCharges --;
+            }, 
+            {
+                text: true,
+                animation: true,
+                vitalsUpdate: true,
+            }
+        );
+    }
+}

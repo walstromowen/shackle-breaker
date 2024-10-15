@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot} from "./abilities.js";
 import { DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, UseAntidote, UseAloeRemedy, UseParalysisTonic, UseBandage, DrinkKurtussBrewOfMadness} from "./abilities.js";
 
 let counter = 0;
@@ -299,7 +299,7 @@ export class Shortbow extends Attachable{
     constructor(config){
         super({
             name: 'shortbow',
-            description: `A wooden shortbow. A standard issue shortbow among scouts and archers of the Altus kingdom. "Shortbows are good at evening the odds in unfair fights. They are also particualily popular among those bad at playing the violin." - Commander Mentoras.`,
+            description: `A wooden shortbow. A standard issue shortbow among scouts and archers of the Altus kingdom. "Shortbows are good at evening the odds in unfair fights. They are also particuarlily popular among those bad at playing the violin." - Commander Mentoras.`,
             imageSrc:  './assets/media/icons/high-shot.png',
             price: 100,
             slot: 'twoHand',
@@ -325,7 +325,7 @@ export class Shortbow extends Attachable{
             speed: 0,
             evasion: 0,
             critical: 0,
-            abilityArray: [new ShootArrow({})],
+            abilityArray: [new ShootArrow({}), new Tripleshot({})],
         })
         this.upgrade(config.level-this.level);
     }

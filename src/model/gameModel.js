@@ -3,6 +3,7 @@ import OverworldModel from "./overworldModel.js";
 import BattleModel from "./battleModel.js";
 import PartyModel from "./partyModel.js";
 import CharacterSummaryModel from "./characterSummaryModel.js";
+import EncounterModel from "./encounterModel.js";
 
 import { Entity } from "./misc/entities.js";
 import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt} from "./misc/abilities.js";
@@ -51,6 +52,7 @@ export default class GameModel{
         this.battleModel = new BattleModel(this.props);
         this.partyModel = new PartyModel(this.props);
         this.characterSummaryModel = new CharacterSummaryModel(this.props);
+        this.encounterModel = new EncounterModel(this.props);
         this.situation = 'overworld';
         this.wanderingCompanions = [
             new Entity({

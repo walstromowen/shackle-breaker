@@ -5,6 +5,7 @@ import OverworldView from "./overworldView.js";
 import BattleView from "./battleView.js";
 import PartyView from "./partyView.js";
 import CharacterSummaryView from "./characterSummaryView.js";
+import EncounterView from './encounterView.js';
 
 export default class GameView{
     constructor(){
@@ -13,6 +14,7 @@ export default class GameView{
         this.battleView = new BattleView();
         this.partyView = new PartyView();
         this.characterSummaryView = new CharacterSummaryView();
+        this.encounterView = new EncounterView();
     }
     switchScreen(screenId){
         Array.from(document.getElementsByClassName('screen')).forEach((screen)=>{
