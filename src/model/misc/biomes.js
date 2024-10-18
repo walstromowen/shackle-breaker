@@ -1,6 +1,6 @@
 import { Skeleton, SkeletonCultist, Wolf, Spider, GroveGuardian} from "./entities.js";
 import Encounter from "./encounters/encounter.js";
-import { MadVillagerAhead} from "./encounters/stages.js";
+import { MadmanAhead} from "./encounters/madmanAhead.js";
 
 
 export default class Biome{
@@ -14,7 +14,7 @@ export default class Biome{
         let chance = Math.floor(Math.random() * 1)
         switch(chance){ 
             case 0:
-                return new Encounter(new MadVillagerAhead(), false)
+                return new Encounter(new MadmanAhead(), false)
         }
     }
 }

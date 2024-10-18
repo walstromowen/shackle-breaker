@@ -37,6 +37,13 @@ export default class EncounterView{
         this.encounterConsoleContent = document.getElementById('encounter-console-content');
 
         this.encounterControlsChoicesTab = document.getElementById('encounter-controls-choice-options-tab');
+
+        this.rollerMenu = document.getElementById('encounter-roller-menu');
+        this.rollerValue = document.getElementById('encounter-roller-menu-roll-display-value');
+        this.rollerThreshold = document.getElementById('encounter-roller-menu-threshold-value');
+        this.rollerAttributeBonus = document.getElementById('encounter-roller-menu-attribute-bonus-value');
+
+        this.rollButton = document.getElementById('encounter-roller-menu-roll-button');
     }
     updateCurrentCharacterCardStats(currentCharacter){
         this.characterCard.style.backgroundImage = `url(${currentCharacter.apperance})`;
@@ -93,6 +100,28 @@ export default class EncounterView{
                 resolve(); 
             }, 3000)
         })
+    }
+    updateEncounterRollerBonusAndThreshold(attributeBonuseScore, sucessThreshold){
+        this.rollerValue.innerText = '-';
+        this.rollerThreshold.innerText = sucessThreshold;
+        this.rollerAttributeBonus.innerText = '+ ' + attributeBonuseScore;
+    }
+    displayEncounterRoller(){
+        this.rollerMenu.style.display = 'flex';
+        this.rollButton.style.display = 'block';
+    }
+    hideEncounterRoller(){
+        this.rollerMenu.style.display = 'none';
+    }
+    hideRollButtons(){
+        this.rollButton.style.display = 'none';
+    }
+    addAttributebonusAnimation(value, attributeBonuseScore){
+        this.rollerAttributeBonus.classList.add('animate-atrribute-bonus');
+        this.rollerValue.innerText = value + attributeBonuseScore;
+    }
+    removeAttributebonusAnimation(){
+        this.rollerAttributeBonus.classList.remove('animate-atrribute-bonus');
     }
 }
 

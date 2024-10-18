@@ -24,8 +24,8 @@ export default class EncounterModel{
     }
     calculateAttributeBonusScore(decision){
         let attributeScore = 0;
-        for(let i = 0; decision.attributeArray.length; i++){
-            switch(decision.attributeArray[i]){
+        for(let i = 0; i < decision.attributes.length; i++){
+            switch(decision.attributes[i]){
                 case 'vigor':
                     attributeScore += this.currentCharacter.vigor;
                     break;
@@ -45,16 +45,16 @@ export default class EncounterModel{
                     attributeScore += this.currentCharacter.attunement;
                     break;
                 default:
-                    attributeScore += 1;
+                    attributeScore = 0;
                     break;
             }
         }
-        attributeScore = Math.floor(attributeScore/decision.attributeArray.length);
-        let attributeBonuseScore =  Math.floor(attributeScore/3)
-        return attributeBonuseScore;
+        attributeScore = Math.floor(attributeScore/decision.attributes.length);
+        let attributeBonusScore =  Math.floor(attributeScore/3)
+        return attributeBonusScore;
     }
-    checkDecisionSuccess(attributeBonuseScore, decision){
-        if(Math.floor(Math.random()*(20 + attributeBonuseScore)) > decision.successThreshold){
+    checkDecisionSuccess(roll, successThreshold){
+        if(roll >= successThreshold){
             return true;
         }else{
             return false;
@@ -84,12 +84,17 @@ export default class EncounterModel{
         let tile =  this.props.getMap().tileLayout[currentPartyPosition[1]][currentPartyPosition[0]];
         tile.encounter =  '';
         tile.battle = this.props.getBattle();
-
     }
     checkResetEncounter(){
-        let encounter = this.model.getEncounter();
+        let encounter = this.props.getEncounter();
         if(encounter.resetOnLeave){
             encounter.currentStage = encounter.initialStage;
+        }
+    }
+    lootStage(loot){
+        let inventory = this.props.getInventory();
+        for(let i = 0; i < loot.length; i++){
+            inventory.push(loot[i]);
         }
     }
 }

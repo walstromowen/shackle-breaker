@@ -447,10 +447,10 @@ export class Tiger extends Entity{
         })
     }
 }
-export class MadVillager extends Entity{
+export class Madman extends Entity{
     constructor(config){
         super({
-            name: 'Mad Villager',
+            name: 'Madman',
             level: config.level || 1,
             apperance: config.skeleton || './assets/media/entities/cursed-villager-1.jpg',
             vigor: config.vigor || 5,
@@ -468,7 +468,7 @@ export class MadVillager extends Entity{
                 feet: '',
             },
             isHostile: config.isHostile || true,
-            abilityArray: [new Bite({}), new Punch({})],
+            abilityArray: [new Bite({})],
             lootTable: [
                 {item: new LinenShirt({level: 1}), weight: 1},
                 {item: new LinenPants({level: 1}), weight: 1},
@@ -575,7 +575,7 @@ export class GroveGuardian extends Entity{
         })
     }
     scaleAttributes(){
-        this.maxHP = (this.vigor * 12)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
+        this.maxHP = (this.vigor * 10)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
         this.maxStamina = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
         this.maxMagic = (this.vigor * 2)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
         this.baseHpRecovery = 0;

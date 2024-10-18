@@ -2,7 +2,6 @@
 Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Walstrom
 
 # Planned Features
-* Encounter System
 * Map abilities
 * Wheather
 * Darkness
@@ -34,5 +33,6 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 * Alphabetize CSS rules
 * Move all status effect Promises to controller
 * battle and console typing animation wait time and fix
+* waits in encounter system tie with actions and weird effect of returning to overwold being a retreat.
 
 # MISC notes

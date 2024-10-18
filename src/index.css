@@ -91,6 +91,9 @@
         --inventory-mini-menu-height: 200px;
         --icon-height-width: 30px;
     }
+    .flex-switch{
+        flex-direction:column;
+    }
     .lobby-inputs-background-apperance-container{
         flex-wrap: wrap;
     }
@@ -122,7 +125,7 @@
     }
     #lobby-screen, #character-summary-screen{
         
-        height: auto;
+       
     }
     .typing-animation{
         animation: 
@@ -159,6 +162,15 @@
         height: 200px !important;
         overflow-y: auto;
     }
+    #encounter-roller-menu-button-container{
+        flex-direction: column !important;
+    }
+
+    #encounter-roller-menu-roll-center-column{
+        width: 80% !important;
+       
+       
+    }
 }
 /*Mobile Styles*/
 @media only screen and (max-width: 480px) {
@@ -193,7 +205,6 @@
     .battle-character-card{
         width: 100px !important;
     }
- 
    
 }
 
@@ -244,6 +255,7 @@ img{
     padding: 10px;
     flex-direction:column;
     gap: 10px;
+    position:relative;
 }
 .flex{
     display:flex;
@@ -272,6 +284,13 @@ img{
 .flex-no-gap{
     display:flex;
     align-items: center;
+}
+.flex-switch{
+    display:flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+    width: 90%;
 }
 .stat-cell{
     display: flex;
@@ -312,6 +331,10 @@ img{
 }
 .ui-header{
     font-size: var(--font-size-1);
+}
+.ui-header-center{
+    font-size: var(--font-size-1);
+    text-align: center;
 }
 
 .main-header{
@@ -861,6 +884,14 @@ img{
 .battle-status-icon{
     height: 40px;
 }
+.encounter-roller-menu-header{
+    font-size: var(--font-size-0);
+    text-align: center;
+}
+.encounter-roller-menu-button-container{
+    width: 25%;
+    height: 100%;
+}
 #title-screen{
     background: url('./assets/media/screens/title-screen.jpg');
     background-repeat: no-repeat;
@@ -898,7 +929,7 @@ img{
     justify-content: space-between;
     height: 100%;
 }
-#overworld-escape-menu{
+#overworld-escape-menu, #encounter-roller-menu{
     position: absolute;
     z-index:1;
     height: 100%;
@@ -912,6 +943,7 @@ img{
     padding: 0px;
     gap: 0px;
     overflow:hidden;
+    
 }
 #battle-battlefield-container{
     background: radial-gradient(var(--color-3), var(--color-1));
@@ -1141,6 +1173,19 @@ img{
     50%{transform: translate(500%)}
     100%{transform: translate(0%)}
 }
+@keyframes animate-attribute-bonus{
+    0% {
+        scale: 1.0;
+    }
+    50% {
+        scale: 1.2;
+        color: gold
+    }  
+    100% {
+        scale: 1.0;
+        
+    }  
+}
 
 .inventory-mini-menu-tab-button{
     flex:1;
@@ -1213,6 +1258,16 @@ img{
 }
 .encounter-decision-button:hover{
     color: red;
+}
+.roller-circle{
+    border-radius: 20%;
+    padding: 20px;
+    background-color: var(--color-1);
+   
+    border: 8px inset var(--color-1);
+}
+.animate-atrribute-bonus{
+    animation: animate-attribute-bonus 2000;
 }
 #party-grid-container{
     display: grid;
@@ -1347,4 +1402,48 @@ img{
     flex: 1;
     display: flex;
     flex-direction: column;
+}
+#encounter-roller-menu{
+    height: 100%;
+    padding: 5%;
+}
+#encounter-roller-menu-button-container{
+    display:flex;
+    border: 8px outset var(--color-1);
+    border-radius: 20px;
+    box-shadow: 8px 8px 8px black;
+    align-items: center;
+    width: 100%;
+    flex: 1;
+    gap: 10px;
+    justify-content: space-around;
+    background: radial-gradient(var(--color-3), var(--color-1));
+    padding: 10px;
+    height: 100%;
+}
+#encounter-roller-menu-roll-display-container{
+    background-color: var(--color-1);
+    border: 8px inset var(--color-1);
+    flex:1;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around;
+    width: 90%;
+}
+#encounter-roller-menu-roll-display-value{
+    font-size: var(--font-size-0);
+    text-align: center;
+    
+    
+}
+#encounter-roller-menu-roll-center-column{
+    width: 50%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+   
 }

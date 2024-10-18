@@ -33,13 +33,6 @@ export default class OverworldController{
                 document.querySelector('body').msRequestFullscreen();
             }
         });
-        //TEMP
-        document.getElementById('to-encounter-screen-test').addEventListener('click', ()=>{
-            document.getElementById('overworld-escape-menu').style.display='none';
-            this.props.switchScreen('encounter-screen');
-            playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
-        });
-        //TEMP
         document.getElementById('overworld-escape-menu-exit-button').addEventListener('click', ()=>{
             document.getElementById('overworld-escape-menu').style.display='none';
             this.props.switchScreen('title-screen');
