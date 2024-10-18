@@ -1179,7 +1179,7 @@ img{
     }
     50% {
         scale: 1.2;
-        color: gold
+        color: var(--stamina-color)
     }  
     100% {
         scale: 1.0;
@@ -1267,7 +1267,7 @@ img{
     border: 8px inset var(--color-1);
 }
 .animate-atrribute-bonus{
-    animation: animate-attribute-bonus 2000;
+    animation:animate-attribute-bonus 2s;
 }
 #party-grid-container{
     display: grid;

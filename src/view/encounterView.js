@@ -60,11 +60,11 @@ export default class EncounterView{
         this.characterCardMagicProgress.style.width = Math.floor(currentCharacter.currentMagic/currentCharacter.maxMagic*100) + "%";
     }
     updateCurrentCharacterAttributes(currentCharacter){
-        this.currentCharacterVigor.innerText = currentCharacter.vigor;
-        this.currentCharacterStrength.innerText = currentCharacter.strength;
-        this.currentCharacterDexterity.innerText = currentCharacter.dexterity;
-        this.currentCharacterIntelligence.innerText = currentCharacter.intelligence;
-        this.currentCharacterAttunement.innerText = currentCharacter.attunement;
+        this.currentCharacterVigor.innerText = '+' + Math.floor(currentCharacter.vigor/3);
+        this.currentCharacterStrength.innerText = '+' + Math.floor(currentCharacter.strength/3);
+        this.currentCharacterDexterity.innerText = '+' + Math.floor(currentCharacter.dexterity/3);
+        this.currentCharacterIntelligence.innerText = '+' + Math.floor(currentCharacter.intelligence/3);
+        this.currentCharacterAttunement.innerText = '+' + Math.floor(currentCharacter.attunement/3);
     }
     updateEventCard(currentStage){
         this.eventCard.style.backgroundImage = `url(${currentStage.imageSrc})`;
@@ -102,7 +102,7 @@ export default class EncounterView{
         })
     }
     updateEncounterRollerBonusAndThreshold(attributeBonuseScore, sucessThreshold){
-        this.rollerValue.innerText = '-';
+        this.rollerValue.innerText = '20';
         this.rollerThreshold.innerText = sucessThreshold;
         this.rollerAttributeBonus.innerText = '+ ' + attributeBonuseScore;
     }
@@ -119,6 +119,7 @@ export default class EncounterView{
     addAttributebonusAnimation(value, attributeBonuseScore){
         this.rollerAttributeBonus.classList.add('animate-atrribute-bonus');
         this.rollerValue.innerText = value + attributeBonuseScore;
+        playSoundEffect('./assets/audio/soundEffects/magic-spell-6005.mp3')
     }
     removeAttributebonusAnimation(){
         this.rollerAttributeBonus.classList.remove('animate-atrribute-bonus');

@@ -179,7 +179,7 @@ export default class EncounterController{
     }
     onRoll(attributeBonuseScore, decision, remainingUpdates){
         let outcome;
-        let rollValue =  Math.floor(Math.random()*20);
+        let rollValue =  Math.ceil(Math.random()*20);
         this.view.rollerValue.innerText = rollValue;
         if(remainingUpdates > 0){
             setTimeout(()=>{
