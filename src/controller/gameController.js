@@ -67,7 +67,7 @@ export default class GameController{
                 this.battleController.onSwitchScreen();
                 break;
             case 'party-screen':
-                if(this.model.getScreen() == 'character-summary-screen' && this.model.getSituation() == 'battle'){
+                if(this.model.getScreen() == 'character-summary-screen' && (this.model.getSituation() == 'battle' || this.model.getSituation() == 'encounter')){
                     //Do nothing if coming from summary in a battle or encounter
                 }else{
                     this.partyController.onSwitchScreen();
@@ -77,7 +77,9 @@ export default class GameController{
                 this.characterSummaryController.onSwitchScreen();
                 break;
             case 'encounter-screen':
-                this.encounterController.onSwitchScreen();
+                if(this.model.getScreen() != 'party-screen'){
+                    this.encounterController.onSwitchScreen();
+                }
                 break;
         }
         this.model.switchScreen(screenId);

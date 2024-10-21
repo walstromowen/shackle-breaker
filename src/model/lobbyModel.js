@@ -1,6 +1,6 @@
 import { getRandomArrayElement } from "../utility.js";
 import {Entity, Dog, Hawk, Tiger} from "./misc/entities.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LightningStaff} from "./misc/items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LightningStaff, DarkStaff, IceStaff} from "./misc/items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, AloeRemedy, ParalysisTonic, Bandage, PineWood} from "./misc/items.js";
 
 
@@ -96,7 +96,7 @@ export default class LobbyModel{
                 break;
             case 'hermit':
                 equipment = [
-                    new LightningStaff({level: 1}),
+                    new FireStaff({level: 1}),
                     new LinenShirt({level: 1}),
                     new LinenPants({level: 1}),
                 ];
@@ -135,7 +135,7 @@ export default class LobbyModel{
                 this.props.setInventory([new HealthPotion(), new Bandage()], );
                 break;
             case 'meteorite':
-                this.props.setInventory([new HealthPotion(), new KurtussBrewOfMadness()]);
+                this.props.setInventory([new KurtussBrewOfMadness()]);
             break;
         }
     }

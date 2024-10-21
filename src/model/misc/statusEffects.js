@@ -295,6 +295,67 @@ export class Paralyzed extends StatusEffect{
         );
     }
 }
+export class Frozen extends StatusEffect{
+    constructor(config){
+        super({
+            name:'frozen',
+            iconSrc: "./assets/media/icons/frozen-block.png",
+            holder: config.holder,
+            maxCharges: 5,
+            soundEffectSrc: "./assets/audio/soundEffects/cold-wind-fade.wav",
+            targetAnimation: 'shake',
+            abilityAnimation: 'none',
+        });
+    }
+    onApplied(){
+        this.holder.currentSpeed -= this.holder.baseSpeed * 0.5;
+        
+    }
+    onRemove(){
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == this.name){
+                this.holder.statusArray.splice(i, 1);
+                break;
+            }
+        }
+        this.holder.currentSpeed += this.holder.baseSpeed * 0.5;
+    }
+    onStartTurn(){
+        return this.activateHelpper(
+            ()=>{
+                let chance = Math.random()*2
+                if(chance < 1){
+                    this.message = `${this.holder.name} is frozen.`;
+                    this.holder.nextAbility = new Struggle({});
+                    this.holder.abilityTargets = [this.holder];
+                }else{
+                    this.message = `${this.holder.name} is cold.`;
+                }
+                this.currentCharges --;
+            }, 
+            {
+                text: true,
+                animation: true,
+                vitalsUpdate: true,
+            }
+        );
+    }
+    onEndTurn(){
+        return this.activateHelpper(
+            ()=>{
+                let damage = this.checkDamage(this.holder, this.holder.maxHP * 0.05, 'health');
+                this.holder.currentHP = this.holder.currentHP - damage;
+                this.message = `${this.holder.name} suffers from frostbite.`;
+                this.currentCharges --;
+            }, 
+            {
+                text: true,
+                animation: true,
+                vitalsUpdate: true,
+            }
+        );
+    }
+}
 export class Shielded extends StatusEffect{
     constructor(config){
         super({

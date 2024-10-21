@@ -6,9 +6,11 @@ export function playSoundEffect(soundEffectPath){
 }
 
 export function playMusic(musicTrackPath){
-    document.getElementById('music-player').pause();
-    document.getElementById('music-player').src = musicTrackPath;
-    document.getElementById('music-player').play();
+    if(document.getElementById('music-player').src != musicTrackPath){
+        document.getElementById('music-player').pause();
+        document.getElementById('music-player').src = musicTrackPath;
+        document.getElementById('music-player').play();
+    }
 }
 
 export function loadCanvasImages(urls){

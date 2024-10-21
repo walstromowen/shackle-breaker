@@ -3,15 +3,20 @@ import { getRandomArrayElement } from "../utility.js";
 export default class EncounterModel{
     constructor(props){
         this.props = props;
-        this.currentCharacter;
+        this.currentCharacter = '';
         this.currentStage;
-        this.initialize();
     }
-    initialize(){}
+    initialize(){
+        this.props.setSituation('encounter');
+        this.determineCurrentCharater();
+        this.initializeCurrentStage();
+    }
     determineCurrentCharater(){
-        this.currentCharacter = getRandomArrayElement(this.props.getParty());
-        if(this.currentCharacter.currentHP <= 0){
-            this.determineCurrentCharater();
+        if(this.currentCharacter == ''){
+            this.currentCharacter = getRandomArrayElement(this.props.getParty());
+            if(this.currentCharacter.currentHP <= 0){
+                this.determineCurrentCharater();
+            }
         }
     }
     initializeCurrentStage(){
@@ -82,8 +87,11 @@ export default class EncounterModel{
     }
     updateTileBattle(currentPartyPosition){
         let tile =  this.props.getMap().tileLayout[currentPartyPosition[1]][currentPartyPosition[0]];
-        tile.encounter =  '';
         tile.battle = this.props.getBattle();
+    }
+    updateTileEncounter(currentPartyPosition){
+        let tile =  this.props.getMap().tileLayout[currentPartyPosition[1]][currentPartyPosition[0]];
+        tile.encounter =  this.props.getEncounter();
     }
     checkResetEncounter(){
         let encounter = this.props.getEncounter();
@@ -95,6 +103,21 @@ export default class EncounterModel{
         let inventory = this.props.getInventory();
         for(let i = 0; i < loot.length; i++){
             inventory.push(loot[i]);
+        }
+    }
+    makePartySelectable(){
+        let party = this.props.getParty()
+        for(let i = 0; i < party.length; i++){
+            party[i].isSelectable = true;
+        }
+    }
+    checkGoldCost(cost){
+        let currentGold = this.props.getGold();
+        if(currentGold  >= cost){
+            this.props.setGold(currentGold - cost)
+            return true;
+        }else{
+            return false;
         }
     }
 }

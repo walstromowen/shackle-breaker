@@ -6,9 +6,9 @@ export default class OverworldModel{
         this.props = props;
         this.currentPartyPosition = [0,0];//in Tiles
         this.previousPartyPosition = [0,0];//in Tiles
-        this.initialize();
+        this.generateNewMap();
     }
-    initialize(){//want this to execute after lobby start happens
+    generateNewMap(){//want this to execute after lobby start happens
         this.props.setMap(new Map());
         this.currentPartyPosition = this.props.getMap().getEntrancePosition();
     }
@@ -54,17 +54,23 @@ export default class OverworldModel{
             }
             if(nextRoom.encounter != ''){
                 this.toggleEncounter(nextRoom.encounter);
+                return;
             }
             let chance = Math.floor(Math.random()*20);
             if(chance == 0){
-                let biome = this.props.getMap().biome
-                nextRoom.battle = new Battle({hostiles: biome.generateEnemies(this.props.calcHighestPartyLevel(), Math.ceil(Math.random()*4))}); 
+                let biome = this.props.getMap().biome;
+                nextRoom.battle = new Battle(
+                    {
+                        hostiles: biome.generateEnemies(this.props.calcHighestPartyLevel(), Math.ceil(Math.random()*4)), 
+                        battleMusicSrc: biome.battleMusicSrc,
+                    }
+                ); 
                 this.toggleBattle(nextRoom.battle);
                 return;
             }
             if(chance == 1){
-                let biome = this.props.getMap().biome
-                nextRoom.encounter = biome.generateEncounter();
+                let biome = this.props.getMap().biome;
+                nextRoom.encounter = biome.generateEncounter(this.props.recruitWanderingCompanion);
                 this.toggleEncounter(nextRoom.encounter);
                 return;
             }

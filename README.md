@@ -18,6 +18,7 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 * Multi Target splash attack such as cleave will only allow for targeting of one enemy (not enemy and ally) although this maybe isnt a bug
 * 3 target splash attacks targeting buggy
 * If an item is not used it "in use" value never goes away
+* After switching characters in encounter stage message cannot be skipped by clicking
 
 
 # Planned Quality of Life Improvements

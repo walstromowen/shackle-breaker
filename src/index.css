@@ -37,6 +37,7 @@
     --inventory-mini-menu-width: 300px;
     --inventory-mini-menu-height: 300px;
     --icon-height-width: 20px;
+    --animate-attribute-bonus: animate-attribute-bonus-success;
 }
 /*large computer styles*/
 @media only screen and (min-width: 1440px) {
@@ -1173,18 +1174,21 @@ img{
     50%{transform: translate(500%)}
     100%{transform: translate(0%)}
 }
-@keyframes animate-attribute-bonus{
-    0% {
-        scale: 1.0;
-    }
+@keyframes animate-attribute-bonus-success{
+    0% {scale: 1.0}
     50% {
         scale: 1.2;
         color: var(--stamina-color)
     }  
-    100% {
-        scale: 1.0;
-        
+    100% { scale: 1.0}  
+}
+@keyframes animate-attribute-bonus-failure{
+    0% {scale: 1.0}
+    50% {
+        scale: 1.2;
+        color: var(--health-color)
     }  
+    100% { scale: 1.0}  
 }
 
 .inventory-mini-menu-tab-button{
@@ -1266,8 +1270,8 @@ img{
    
     border: 8px inset var(--color-1);
 }
-.animate-atrribute-bonus{
-    animation:animate-attribute-bonus 2s;
+.animate-attribute-bonus{
+    animation:var(--animate-attribute-bonus) 2s;
 }
 #party-grid-container{
     display: grid;

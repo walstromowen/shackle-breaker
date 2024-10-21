@@ -72,7 +72,7 @@ export default class BattleController{
         document.getElementById('battle-controls-party-button').addEventListener('click', ()=>{
             this.view.removeGlowRed(ally);
             this.props.switchScreen('party-screen');
-            this.props.getPartyController().createSelectButtons(resolveFn, this.model.allyReinforcements);
+            this.props.getPartyController().createSelectButtons(resolveFn, this.model.allyReinforcements, 'battle-screen');
             let container = document.getElementById('battle-battlefield-container');
             container.removeEventListener('click', this.selectTargetEventHandler);
             container.removeEventListener('contextmenu', this.removeTargetEventHandler);
@@ -754,13 +754,17 @@ export default class BattleController{
             this.checkLevelUps().then(()=>{
                 return this.displayLoot();
             }).then(()=>{
+                document.querySelector('body').classList.remove('battle-wipe');
                 setTimeout(()=>{
-                    this.model.props.setSituation('overworld')
-                    this.props.switchScreen('overworld-screen');
+                    if(this.model.props.getMap().tileLayout[this.props.getOverworldController().model.currentPartyPosition[1]][0].encounter != ''){
+                        this.props.switchScreen('encounter-screen');
+                        playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
+                    }else{
+                        this.props.switchScreen('overworld-screen');
+                        playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
+                        this.props.getOverworldController().view.revealOverworldUi();
+                    }
                     this.view.removeAllCombatantCards();
-                    document.querySelector('body').classList.remove('battle-wipe');
-                    playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
-                    this.props.getOverworldController().view.revealOverworldUi();
                     resolve()
                 }, 4000);
             })
@@ -951,7 +955,7 @@ export default class BattleController{
                     document.removeEventListener('click', this.skipEventHandler);
                     this.props.switchScreen('party-screen');
                     this.props.getPartyController().view.hidePartyToggleBackButton();
-                    this.props.getPartyController().createSelectButtons(resolve, this.model.allyReinforcements)
+                    this.props.getPartyController().createSelectButtons(resolve, this.model.allyReinforcements, 'battle-screen')
                     this.view.removeEntranceAnimations();
                     this.view.printToBattleConsole(``);
                 }
@@ -962,7 +966,7 @@ export default class BattleController{
                     document.removeEventListener('click', this.skipEventHandler);
                     this.props.switchScreen('party-screen');
                     this.props.getPartyController().view.hidePartyToggleBackButton();
-                    this.props.getPartyController().createSelectButtons(resolve, this.model.allyReinforcements)
+                    this.props.getPartyController().createSelectButtons(resolve, this.model.allyReinforcements, 'battle-screen')
             
                     this.view.printToBattleConsole(``);
                 }

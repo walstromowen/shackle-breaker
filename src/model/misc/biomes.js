@@ -1,6 +1,8 @@
-import { Skeleton, SkeletonCultist, Wolf, Spider, GroveGuardian} from "./entities.js";
+import { Skeleton, SkeletonCultist, Wolf, Spider, GroveGuardian, Madman} from "./entities.js";
 import Encounter from "./encounters/encounter.js";
 import { MadmanAhead} from "./encounters/madmanAhead.js";
+import {WanderingMercenary} from "./encounters/wanderingMercenary.js";
+import { MysteriousAltar } from "./encounters/mysteriousAltar.js";
 
 
 export default class Biome{
@@ -9,13 +11,6 @@ export default class Biome{
         this.terrainSrc = config.terrainSrc || "";
         this.backgroundMusicSrc = config.backgroundMusicSrc || "";
         this.battleMusicSrc = config.battleMusicSrc || "";
-    }
-    generateEncounter(){
-        let chance = Math.floor(Math.random() * 1)
-        switch(chance){ 
-            case 0:
-                return new Encounter(new MadmanAhead(), false)
-        }
     }
 }
 export class Plains extends Biome{
@@ -32,7 +27,7 @@ export class Plains extends Biome{
         for(let i = 0; i < count; i ++){
             switch(Math.floor(Math.random()*3)){ 
                 case 0:
-                    enemyArray.push(new Skeleton({level: partyLevel}));
+                    enemyArray.push(new Madman({level: partyLevel}));
                     break;
                 case 1:
                     enemyArray.push(new GroveGuardian({level: partyLevel}));
@@ -44,7 +39,16 @@ export class Plains extends Biome{
         }
         return enemyArray;
     }
-
+    generateEncounter(wanderingCompanionFn){
+        let chance = Math.floor(Math.random() * 2)
+        switch(chance){ 
+            case 0:
+                let wanderingCompanion = wanderingCompanionFn();
+                return new Encounter(new WanderingMercenary({entity: wanderingCompanion}), false)
+            case 1:
+                return new Encounter(new MadmanAhead({}), false)
+        }
+    }
 }
 
 export class Cave extends Biome{
@@ -72,6 +76,18 @@ export class Cave extends Biome{
             }
         }
         return enemyArray;
+    }
+    generateEncounter(wanderingCompanionFn){
+        let chance = Math.floor(Math.random() * 1)
+        switch(chance){ 
+            case 0:
+                return new Encounter(new MysteriousAltar({}), false)
+               
+            case 1:
+                return new Encounter(new MysteriousAltar({}), false)
+               
+                
+        }
     }
 }
 

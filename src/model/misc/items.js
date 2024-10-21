@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard} from "./abilities.js";
 import { DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, UseAntidote, UseAloeRemedy, UseParalysisTonic, UseBandage, DrinkKurtussBrewOfMadness} from "./abilities.js";
 
 let counter = 0;
@@ -76,7 +76,7 @@ export class Dagger extends Attachable{
             stamina: 0,
             magic: 0,
             hpRecovery: 0,
-            staminaRecovery: 0,
+            staminaRecovery: 3,
             magicRecovery: 0,
             bluntAttack: 1,
             pierceAttack: 2,
@@ -105,7 +105,7 @@ export class Dagger extends Attachable{
             this.stamina = this.stamina + 0;
             this.magic = this.magic + 0;
             this.hpRecovery = this.hpRecovery + 0;
-            this.staminaRecovery = this.staminaRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 2;
             this.magicRecovery = this.magicRecovery + 0;
             this.bluntAttack = this.bluntAttack + 1;
             this.pierceAttack = this.pierceAttack + 2;
@@ -134,7 +134,7 @@ export class ShortSword extends Attachable{
             stamina: 0,
             magic: 0,
             hpRecovery: 0,
-            staminaRecovery: 0,
+            staminaRecovery: 2,
             magicRecovery: 0,
             bluntAttack: 2,
             pierceAttack: 3,
@@ -163,7 +163,7 @@ export class ShortSword extends Attachable{
             this.stamina = this.stamina + 0;
             this.magic = this.magic + 0;
             this.hpRecovery = this.hpRecovery + 0;
-            this.staminaRecovery = this.staminaRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 1;
             this.magicRecovery = this.magicRecovery + 0;
             this.bluntAttack = this.bluntAttack + 1;
             this.pierceAttack = this.pierceAttack + 3;
@@ -192,7 +192,7 @@ export class BlacksmithHammer extends Attachable{
             stamina: 0,
             magic: 0,
             hpRecovery: 0,
-            staminaRecovery: 0,
+            staminaRecovery: 3,
             magicRecovery: 0,
             bluntAttack: 2,
             pierceAttack: 1,
@@ -221,7 +221,7 @@ export class BlacksmithHammer extends Attachable{
             this.stamina = this.stamina + 0;
             this.magic = this.magic + 0;
             this.hpRecovery = this.hpRecovery + 0;
-            this.staminaRecovery = this.staminaRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 2;
             this.magicRecovery = this.magicRecovery + 0;
             this.bluntAttack = this.bluntAttack + 2;
             this.pierceAttack = this.pierceAttack + 1;
@@ -250,7 +250,7 @@ export class Handaxe extends Attachable{
             stamina: 0,
             magic: 0,
             hpRecovery: 0,
-            staminaRecovery: 0,
+            staminaRecovery: 2,
             magicRecovery: 0,
             bluntAttack: 2,
             pierceAttack: 3,
@@ -279,7 +279,7 @@ export class Handaxe extends Attachable{
             this.stamina = this.stamina + 0;
             this.magic = this.magic + 0;
             this.hpRecovery = this.hpRecovery + 0;
-            this.staminaRecovery = this.staminaRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 1;
             this.magicRecovery = this.magicRecovery + 0;
             this.bluntAttack = this.bluntAttack + 1;
             this.pierceAttack = this.pierceAttack + 3;
@@ -301,14 +301,14 @@ export class Shortbow extends Attachable{
             name: 'shortbow',
             description: `A wooden shortbow. A standard issue shortbow among scouts and archers of the Altus kingdom. "Shortbows are good at evening the odds in unfair fights. They are also particuarlily popular among those bad at playing the violin." - Commander Mentoras.`,
             imageSrc:  './assets/media/icons/high-shot.png',
-            price: 100,
+            price: 200,
             slot: 'twoHand',
             level: 1,
             hp: 0,
             stamina: 0,
             magic: 0,
             hpRecovery: 0,
-            staminaRecovery: 0,
+            staminaRecovery: 4,
             magicRecovery: 0,
             bluntAttack: 1,
             pierceAttack: 5,
@@ -337,7 +337,7 @@ export class Shortbow extends Attachable{
             this.stamina = this.stamina + 0;
             this.magic = this.magic + 0;
             this.hpRecovery = this.hpRecovery + 0;
-            this.staminaRecovery = this.staminaRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 3;
             this.magicRecovery = this.magicRecovery + 0;
             this.bluntAttack = this.bluntAttack + 0;
             this.pierceAttack = this.pierceAttack + 3;
@@ -367,7 +367,7 @@ export class ArcaneStaff extends Attachable{
             magic: 0,
             hpRecovery: 0,
             staminaRecovery: 0,
-            magicRecovery: 0,
+            magicRecovery: 2,
             bluntAttack: 1,
             pierceAttack: 1,
             arcaneAttack: 3,
@@ -396,7 +396,7 @@ export class ArcaneStaff extends Attachable{
             this.magic = this.magic + 0;
             this.hpRecovery = this.hpRecovery + 0;
             this.staminaRecovery = this.staminaRecovery + 0;
-            this.magicRecovery = this.magicRecovery + 0;
+            this.magicRecovery = this.magicRecovery + 1;
             this.bluntAttack = this.bluntAttack + 1;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 3;
@@ -425,7 +425,7 @@ export class LightStaff extends Attachable{
             magic: 0,
             hpRecovery: 0,
             staminaRecovery: 0,
-            magicRecovery: 0,
+            magicRecovery: 2,
             bluntAttack: 1,
             pierceAttack: 1,
             arcaneAttack: 3,
@@ -454,7 +454,65 @@ export class LightStaff extends Attachable{
             this.magic = this.magic + 0;
             this.hpRecovery = this.hpRecovery + 0;
             this.staminaRecovery = this.staminaRecovery + 0;
-            this.magicRecovery = this.magicRecovery + 0;
+            this.magicRecovery = this.magicRecovery + 1;
+            this.bluntAttack = this.bluntAttack + 1;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 3;
+            this.elementalAttack = this.elementalAttack + 1;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 0;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+            this.critical = this.critical + 0;
+        }
+    }
+}
+export class DarkStaff extends Attachable{
+    constructor(config){
+        super({
+            name: 'dark staff',
+            description: "A wooden staff imbued with darkness. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time",
+            imageSrc:  './assets/media/icons/wizard-staff.png',
+            price: 200,
+            slot: 'oneHand',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 0,
+            magicRecovery: 2,
+            bluntAttack: 1,
+            pierceAttack: 1,
+            arcaneAttack: 3,
+            elementalAttack: 0,
+            bluntDefense: 0,
+            pierceDefense: 0,
+            arcaneDefense: 0,
+            elementalDefense: 0,
+            bluntResistance: 0,
+            pierceResistance: 0,
+            arcaneResistance: 0,
+            elementalResistance: 0,
+            speed: 0,
+            evasion: 0,
+            critical: 0,
+            abilityArray: [new Strike({}), new DrainLife({})],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 0;
+            this.magicRecovery = this.magicRecovery + 1;
             this.bluntAttack = this.bluntAttack + 1;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 3;
@@ -483,7 +541,7 @@ export class FireStaff extends Attachable{
             magic: 0,
             hpRecovery: 0,
             staminaRecovery: 0,
-            magicRecovery: 0,
+            magicRecovery: 2,
             bluntAttack: 1,
             pierceAttack: 1,
             arcaneAttack: 0,
@@ -512,7 +570,7 @@ export class FireStaff extends Attachable{
             this.magic = this.magic + 0;
             this.hpRecovery = this.hpRecovery + 0;
             this.staminaRecovery = this.staminaRecovery + 0;
-            this.magicRecovery = this.magicRecovery + 0;
+            this.magicRecovery = this.magicRecovery + 1;
             this.bluntAttack = this.bluntAttack + 1;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 1;
@@ -541,7 +599,7 @@ export class LightningStaff extends Attachable{
             magic: 0,
             hpRecovery: 0,
             staminaRecovery: 0,
-            magicRecovery: 0,
+            magicRecovery: 2,
             bluntAttack: 1,
             pierceAttack: 1,
             arcaneAttack: 0,
@@ -570,7 +628,65 @@ export class LightningStaff extends Attachable{
             this.magic = this.magic + 0;
             this.hpRecovery = this.hpRecovery + 0;
             this.staminaRecovery = this.staminaRecovery + 0;
-            this.magicRecovery = this.magicRecovery + 0;
+            this.magicRecovery = this.magicRecovery + 1;
+            this.bluntAttack = this.bluntAttack + 1;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 1;
+            this.elementalAttack = this.elementalAttack + 3;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 0;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+            this.critical = this.critical + 0;
+        }
+    }
+}
+export class IceStaff extends Attachable{
+    constructor(config){
+        super({
+            name: 'ice staff',
+            description: "A wooden staff imbued with ice. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time",
+            imageSrc:  './assets/media/icons/wizard-staff.png',
+            price: 200,
+            slot: 'oneHand',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 0,
+            magicRecovery: 2,
+            bluntAttack: 1,
+            pierceAttack: 1,
+            arcaneAttack: 0,
+            elementalAttack: 3,
+            bluntDefense: 0,
+            pierceDefense: 0,
+            arcaneDefense: 0,
+            elementalDefense: 0,
+            bluntResistance: 0,
+            pierceResistance: 0,
+            arcaneResistance: 0,
+            elementalResistance: 0,
+            speed: 0,
+            evasion: 0,
+            critical: 0,
+            abilityArray: [new Strike({}), new IceShard({})],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 0;
+            this.magicRecovery = this.magicRecovery + 1;
             this.bluntAttack = this.bluntAttack + 1;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 1;
@@ -598,8 +714,8 @@ export class LinenShirt extends Attachable{
             stamina: 0,
             magic: 0,
             hpRecovery: 0,
-            staminaRecovery: 0,
-            magicRecovery: 0,
+            staminaRecovery: 1,
+            magicRecovery: 1,
             bluntAttack: 0,
             pierceAttack: 0,
             arcaneAttack: 0,
@@ -627,8 +743,8 @@ export class LinenShirt extends Attachable{
             this.stamina = this.stamina + 0;
             this.magic = this.magic + 0;
             this.hpRecovery = this.hpRecovery + 0;
-            this.staminaRecovery = this.staminaRecovery + 0;
-            this.magicRecovery = this.magicRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 1;
+            this.magicRecovery = this.magicRecovery + 1;
             this.bluntAttack = this.bluntAttack + 0;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -656,8 +772,8 @@ export class LinenPants extends Attachable{
             hp: 0,
             stamina: 0,
             magic: 0,
-            hpRecovery: 0,
-            staminaRecovery: 0,
+            hpRecovery: 1,
+            staminaRecovery: 1,
             magicRecovery: 0,
             bluntAttack: 0,
             pierceAttack: 0,
@@ -686,8 +802,8 @@ export class LinenPants extends Attachable{
             this.stamina = this.stamina + 0;
             this.magic = this.magic + 0;
             this.hpRecovery = this.hpRecovery + 0;
-            this.staminaRecovery = this.staminaRecovery + 0;
-            this.magicRecovery = this.magicRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 1;
+            this.magicRecovery = this.magicRecovery + 1;
             this.bluntAttack = this.bluntAttack + 0;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -709,15 +825,189 @@ export class LeatherHelmet extends Attachable{
             name: 'leather helmet',
             description: 'A leather helmet. A standard issue helmet among scouts and archers of the Altus kingdom.',
             imageSrc:  './assets/media/icons/light-helm.png',
-            price: 50,
+            price: 100,
             slot: 'head',
             level: 1,
             hp: 0,
             stamina: 0,
             magic: 0,
             hpRecovery: 0,
-            staminaRecovery: 0,
-            magicRecovery: 0,
+            staminaRecovery: 2,
+            magicRecovery: 1,
+            bluntAttack: 0,
+            pierceAttack: 0,
+            arcaneAttack: 0,
+            elementalAttack: 0,
+            bluntDefense: 2,
+            pierceDefense: 2,
+            arcaneDefense: 2,
+            elementalDefense: 2,
+            bluntResistance: 0.02,
+            pierceResistance: 0.02,
+            arcaneResistance: 0.02,
+            elementalResistance: 0.02,
+            speed: 1,
+            evasion: 0.02,
+            critical: 0.02,
+            abilityArray: [],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 2;
+            this.magicRecovery = this.magicRecovery + 1;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 2;
+            this.pierceDefense = this.pierceDefense + 2;
+            this.arcaneDefense = this.arcaneDefense + 2;
+            this.elementalDefense = this.elementalDefense + 2;
+            this.speed = this.speed + 1;
+            this.evasion = this.evasion + 0.01;
+            this.critical = this.critical + 0.01;
+        }
+    }
+}
+export class LeatherHood extends Attachable{
+    constructor(config){
+        super({
+            name: 'leather hood',
+            description: 'A hood that obscures the face made of dark leather. Although most indulged in the discovery of magic, there were a few that found it ominous.',
+            imageSrc:  './assets/media/icons/cloak.png',
+            price: 100,
+            slot: 'head',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 2,
+            magicRecovery: 1,
+            bluntAttack: 0,
+            pierceAttack: 0,
+            arcaneAttack: 0,
+            elementalAttack: 0,
+            bluntDefense: 2,
+            pierceDefense: 2,
+            arcaneDefense: 2,
+            elementalDefense: 2,
+            bluntResistance: 0.01,
+            pierceResistance: 0.01,
+            arcaneResistance: 0.02,
+            elementalResistance: 0.02,
+            speed: 1,
+            evasion: 0.03,
+            critical: 0.03,
+            abilityArray: [],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 2;
+            this.magicRecovery = this.magicRecovery + 1;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 2;
+            this.pierceDefense = this.pierceDefense + 2;
+            this.arcaneDefense = this.arcaneDefense + 2;
+            this.elementalDefense = this.elementalDefense + 2;
+            this.speed = this.speed + 1;
+            this.evasion = this.evasion + 0.01;
+            this.critical = this.critical + 0.01;
+        }
+    }
+}
+export class LeatherChestplate extends Attachable{
+    constructor(config){
+        super({
+            name: 'leather chestplate',
+            description: 'a leather chestplate. A standard issue chestplate among scouts and archers of the Altus kingdom.',
+            imageSrc:  './assets/media/icons/leather-armor.png',
+            price: 100,
+            slot: 'torso',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 2,
+            magicRecovery: 1,
+            bluntAttack: 0,
+            pierceAttack: 0,
+            arcaneAttack: 0,
+            elementalAttack: 0,
+            bluntDefense: 2,
+            pierceDefense: 2,
+            arcaneDefense: 2,
+            elementalDefense: 2,
+            bluntResistance: 0.02,
+            pierceResistance: 0.02,
+            arcaneResistance: 0.02,
+            elementalResistance: 0.02,
+            speed: 1,
+            evasion: 0.02,
+            critical: 0.02,
+            abilityArray: [],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 2;
+            this.magicRecovery = this.magicRecovery + 1;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 2;
+            this.pierceDefense = this.pierceDefense + 2;
+            this.arcaneDefense = this.arcaneDefense + 2;
+            this.elementalDefense = this.elementalDefense + 2;
+            this.speed = this.speed + 1;
+            this.evasion = this.evasion + 0.01;
+            this.critical = this.critical + 0.01;
+        }
+    }
+}
+export class LeatherGloves extends Attachable{
+    constructor(config){
+        super({
+            name: 'leather chest piece',
+            description: 'leather gloves. A common article of clothing among worker of the Altus kingdom. With the discovery of magic, many in the altus kingdom lost appreciation for common safety practices like hand protection.',
+            imageSrc:  './assets/media/icons/gloves.png',
+            price: 100,
+            slot: 'arms',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 2,
+            magicRecovery: 1,
             bluntAttack: 0,
             pierceAttack: 0,
             arcaneAttack: 0,
@@ -751,31 +1041,31 @@ export class LeatherHelmet extends Attachable{
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
             this.elementalAttack = this.elementalAttack + 0;
-            this.bluntDefense = this.bluntDefense + 1;
-            this.pierceDefense = this.pierceDefense + 1;
-            this.arcaneDefense = this.arcaneDefense + 1;
-            this.elementalDefense = this.elementalDefense + 1;
+            this.bluntDefense = this.bluntDefense + 2;
+            this.pierceDefense = this.pierceDefense + 2;
+            this.arcaneDefense = this.arcaneDefense + 2;
+            this.elementalDefense = this.elementalDefense + 2;
             this.speed = this.speed + 1;
             this.evasion = this.evasion + 0.01;
             this.critical = this.critical + 0.01;
         }
     }
 }
-export class LeatherHood extends Attachable{
+export class LeatherGreaves extends Attachable{
     constructor(config){
         super({
-            name: 'leather hood',
-            description: 'A hood that obscures the face made of dark leather. Although most indulged in the discovery of magic, there were a few that found it ominous.',
-            imageSrc:  './assets/media/icons/cloak.png',
-            price: 50,
-            slot: 'head',
+            name: 'leather greaves',
+            description: 'leather greaves. Standard issue greaves among scouts and archers of the Altus kingdom.',
+            imageSrc:  './assets/media/icons/armor-cuisses.png',
+            price: 100,
+            slot: 'legs',
             level: 1,
             hp: 0,
             stamina: 0,
             magic: 0,
             hpRecovery: 0,
-            staminaRecovery: 0,
-            magicRecovery: 0,
+            staminaRecovery: 2,
+            magicRecovery: 1,
             bluntAttack: 0,
             pierceAttack: 0,
             arcaneAttack: 0,
@@ -784,13 +1074,13 @@ export class LeatherHood extends Attachable{
             pierceDefense: 2,
             arcaneDefense: 2,
             elementalDefense: 2,
-            bluntResistance: 0.01,
-            pierceResistance: 0.01,
+            bluntResistance: 0.02,
+            pierceResistance: 0.02,
             arcaneResistance: 0.02,
             elementalResistance: 0.02,
             speed: 1,
-            evasion: 0.03,
-            critical: 0.03,
+            evasion: 0.02,
+            critical: 0.02,
             abilityArray: [],
         })
         this.upgrade(config.level-this.level);
@@ -803,8 +1093,66 @@ export class LeatherHood extends Attachable{
             this.stamina = this.stamina + 0;
             this.magic = this.magic + 0;
             this.hpRecovery = this.hpRecovery + 0;
-            this.staminaRecovery = this.staminaRecovery + 0;
-            this.magicRecovery = this.magicRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 2;
+            this.magicRecovery = this.magicRecovery + 1;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 2;
+            this.pierceDefense = this.pierceDefense + 2;
+            this.arcaneDefense = this.arcaneDefense + 2;
+            this.elementalDefense = this.elementalDefense + 2;
+            this.speed = this.speed + 1;
+            this.evasion = this.evasion + 0.01;
+            this.critical = this.critical + 0.01;
+        }
+    }
+}
+export class LeatherBoots extends Attachable{
+    constructor(config){
+        super({
+            name: 'leather greaves',
+            description: 'reliable leather boots. After discovery of magic, travelers from all over came to Altus kingdom. Few ever left.',
+            imageSrc:  './assets/media/icons/boots.png',
+            price: 100,
+            slot: 'feet',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 2,
+            magicRecovery: 1,
+            bluntAttack: 0,
+            pierceAttack: 0,
+            arcaneAttack: 0,
+            elementalAttack: 0,
+            bluntDefense: 2,
+            pierceDefense: 2,
+            arcaneDefense: 2,
+            elementalDefense: 2,
+            bluntResistance: 0.01,
+            pierceResistance: 0.02,
+            arcaneResistance: 0.02,
+            elementalResistance: 0.02,
+            speed: 2,
+            evasion: 0.02,
+            critical: 0.01,
+            abilityArray: [],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 2;
+            this.magicRecovery = this.magicRecovery + 1;
             this.bluntAttack = this.bluntAttack + 0;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;
@@ -832,8 +1180,8 @@ export class Buckler extends Attachable{
             stamina: 0,
             magic: 0,
             hpRecovery: 0,
-            staminaRecovery: 0,
-            magicRecovery: 0,
+            staminaRecovery: 1,
+            magicRecovery: 1,
             bluntAttack: 0,
             pierceAttack: 0,
             arcaneAttack: 0,
@@ -861,8 +1209,8 @@ export class Buckler extends Attachable{
             this.stamina = this.stamina + 0;
             this.magic = this.magic + 0;
             this.hpRecovery = this.hpRecovery + 0;
-            this.staminaRecovery = this.staminaRecovery + 0;
-            this.magicRecovery = this.magicRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 1;
+            this.magicRecovery = this.magicRecovery + 1;
             this.bluntAttack = this.bluntAttack + 0;
             this.pierceAttack = this.pierceAttack + 0;
             this.arcaneAttack = this.arcaneAttack + 0;

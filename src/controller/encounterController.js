@@ -10,27 +10,58 @@ export default class EncounterController{
         this.textTime = 30;
     }
     onSwitchScreen(){
-        this.model.determineCurrentCharater();
-        this.model.initializeCurrentStage();
+        this.model.initialize();
         this.triggerStage();
     }
     triggerStage(){
-        this.model.currentStage.updateMessage(this.model.currentCharacter);
+        this.view.updateEventCard(this.model.currentStage);
         this.view.updateCurrentCharacterAttributes(this.model.currentCharacter);
         this.view.updateCurrentCharacterCardStats(this.model.currentCharacter);
-        this.view.updateEventCard(this.model.currentStage);
-
-        this.printToEncounterConsoleHelpper(this.model.currentStage.message).then(()=>{
+        if(this.model.currentStage.musicSrc != ''){
+            playMusic(this.model.currentStage.musicSrc);
+        }
+        this.printToEncounterConsoleHelpper(this.model.currentStage.messageFunction(this.model.currentCharacter)).then(()=>{
             return this.createDecisionsHelpper();
         })
     }
+    retryStage(removableOptions){
+        if(removableOptions){
+            for(let i = 0; i < this.model.currentStage.decisionArray.length; i++){
+                for(let j= 0; j < removableOptions.length; j++){
+                    if(this.model.currentStage.decisionArray[i].option == removableOptions[j]){//TOOOODOOO
+                        this.model.currentStage.decisionArray.splice(i, 1);
+                    }
+                }
+            }
+        }
+        this.view.updateEventCard(this.model.currentStage);
+        this.view.updateCurrentCharacterAttributes(this.model.currentCharacter);
+        this.view.updateCurrentCharacterCardStats(this.model.currentCharacter)
+        this.createDecisionsHelpper();
+      
+    }
+    switchCurrentCharacter(){
+        return new Promise((resolve)=>{
+            this.props.switchScreen('party-screen');
+            this.props.getPartyController().view.hidePartyToggleBackButton();
+            this.props.getPartyController().createSelectButtons(resolve, this.model.props.getParty(), 'encounter-screen')
+        })
+    }
     printToEncounterConsoleHelpper(message){
-        this.view.encounterConsoleContent.innerText = '';
         this.view.removeDecisionButtons();
         this.textTime = 30;
+        let postTime = message.length*10;
+        if(postTime < 2000){
+            postTime = 2000;
+        }
         let flag = true;
        
         return new Promise((resolve)=>{
+            if(message.length == 0){
+                resolve();
+            }else{
+                this.view.encounterConsoleContent.innerText = '';
+            }
             document.addEventListener('click', this.skipEventHandler = ()=>{
                 if(flag == true){
                     flag = false;
@@ -44,7 +75,11 @@ export default class EncounterController{
                 return chain.then(()=>this.printCharacterHelpper(character))
             }, Promise.resolve()).then(()=>{
                 document.removeEventListener('click', this.skipEventHandler);
-                resolve();
+                return this.wait(postTime)
+                .then(()=>{
+                    document.removeEventListener('click', this.skipEventHandler);
+                    resolve();
+                })
             })
         });  
     }
@@ -67,36 +102,56 @@ export default class EncounterController{
             decisionButton.addEventListener('click', (e)=>{
                 e.preventDefault();
                 e.stopPropagation();
-                this.activateDecision(this.model.currentStage.decisionArray[i]);
+                if(this.model.currentStage.decisionArray[i].goldCost){
+                    if(this.model.checkGoldCost(this.model.currentStage.decisionArray[i].goldCost)){
+                        this.activateDecisionHelpper(this.model.currentStage.decisionArray[i]);
+                    }else{
+                        playSoundEffect('./assets/audio/soundEffects/power-down-45784.mp3');
+                    }
+                }else{
+                    this.activateDecisionHelpper(this.model.currentStage.decisionArray[i]);
+                }
             });
         }
     }
+    activateDecisionHelpper(decision){
+        if(decision.messageFunction){
+            this.printToEncounterConsoleHelpper(decision.messageFunction(this.model.currentCharacter)).then(()=>{
+                this.activateDecision(decision)
+            })
+        }else{
+            this.activateDecision(decision)
+        }
+  
+    }
     activateDecision(decision){
-        this.printToEncounterConsoleHelpper(decision.messageFunction(this.model.currentCharacter)).then(()=>{
-            return this.wait(2000)
-        }).then(()=>{
-            document.querySelector('body').classList.remove('battle-wipe');//Temp should change to unigue encounter wipe
-            if(decision.roll){
-                let attributeBonuseScore = this.model.calculateAttributeBonusScore(decision);
-                this.view.updateEncounterRollerBonusAndThreshold(attributeBonuseScore, decision.successThreshold);
-                this.view.displayEncounterRoller();
-                this.view.rollButton.addEventListener('click', this.rollButtonHandler = ()=>{
-                    this.onRoll(attributeBonuseScore, decision, 30)
-                    this.view.rollButton.removeEventListener('click', this.rollButtonHandler)
-                    this.view.hideRollButtons()
-                })
-            }else{
-                let outcome = this.model.calculateDecisionOutcome(true, decision)
+        document.querySelector('body').classList.remove('battle-wipe');//Temp should change to unigue encounter wipe
+        if(decision.roll){
+            let attributeBonuseScore = this.model.calculateAttributeBonusScore(decision);
+            this.view.updateEncounterRollerBonusAndThreshold(attributeBonuseScore, decision.successThreshold);
+            this.view.displayEncounterRoller();
+            this.view.rollButton.addEventListener('click', this.rollButtonHandler = ()=>{
+                this.onRoll(attributeBonuseScore, decision, 30)
+                this.view.rollButton.removeEventListener('click', this.rollButtonHandler)
+                this.view.hideRollButtons()
+            })
+        }else{
+            let outcome = this.model.calculateDecisionOutcome(true, decision)
+            if(outcome.imageSrc){
+                this.view.eventCard.style.backgroundImage = `url(${outcome.imageSrc})`;
+            }
+            if(outcome.musicSrc){
+                playMusic(outcome.musicSrc);
+            }
+            if(outcome.messageFunction){
+                
                 this.printToEncounterConsoleHelpper(outcome.messageFunction(this.model.currentCharacter)).then(()=>{
-                    return this.wait(2000);
-                }).then(()=>{
                     this.triggerOutcome(outcome);
                 })
-                
+            }else{
+                this.triggerOutcome(outcome);
             }
-            
-            
-        })
+        }
     }
     wait(miliseconds){
         let flag = true;
@@ -115,11 +170,20 @@ export default class EncounterController{
         });  
     }
     triggerOutcome(outcome){
+        if(outcome.onActivate){
+            outcome.onActivate(this.model.currentCharacter);
+        }
         switch(outcome.result){
             case 'battle':
                 this.model.toggleBattle(outcome.createBattle(this.model.props.calcHighestPartyLevel(), this.model.props.getMap().biome))
                 this.model.updateTileBattle(this.props.getOverworldController().model.currentPartyPosition);
-                playMusic(this.model.props.getMap().biome.battleMusicSrc);
+                if(outcome.createNextStage){
+                    this.model.changeStage(outcome.createNextStage(this.model.currentCharacter));
+                    this.model.updateTileBattle(this.props.getOverworldController().model.currentPartyPosition);
+                }else{
+                    this.model.props.setEncounter('');
+                    this.model.updateTileEncounter(this.props.getOverworldController().model.currentPartyPosition);
+                }
                 this.view.playBattleTransition().then(()=>{ 
                     this.props.switchScreen('battle-screen');
                 });
@@ -143,14 +207,12 @@ export default class EncounterController{
                 let message = '';
                 if(loot.length > 0){
                     for(let i = 0; i < loot.length; i++){
-                        message += `${capiltalizeAllFirstLetters(loot[i].name)}\n`
-                        
+                        message += '\n';
+                        message += `${capiltalizeAllFirstLetters(loot[i].name)}`;                      
                     }
                 }
                 this.model.lootStage(loot);
                 this.printToEncounterConsoleHelpper(`${this.model.currentCharacter.name}'s party loots:\n` + message).then(()=>{
-                    return this.wait(2000)
-                }).then(()=>{
                     outcome.result = 'complete';
                     this.triggerOutcome(outcome);
                 })
@@ -159,10 +221,21 @@ export default class EncounterController{
                 let recruit = outcome.createRecruit(this.model.props.calcHighestPartyLevel());
                 this.model.props.getParty().push(recruit);
                 this.printToEncounterConsoleHelpper(`${recruit.name} joins ${this.model.currentCharacter.name}'s party.`).then(()=>{
-                    return this.wait(2000)
-                }).then(()=>{
                     outcome.result = 'complete';
                     this.triggerOutcome(outcome);
+                })
+                return;
+            case 'retry':
+                this.retryStage()
+                return;
+            case 'removeDecisions':
+                this.retryStage(outcome.removableDecisions)
+                return;
+            case 'switchCharacter':
+                this.switchCurrentCharacter().then((selectedEntity)=>{
+                    this.model.makePartySelectable();
+                    this.model.currentCharacter = selectedEntity;
+                    this.triggerStage();
                 })
                 return;
             case 'complete':
@@ -189,25 +262,35 @@ export default class EncounterController{
             return;
         }else{
             this.wait(2000).then(()=>{
-                return this.addAttributebonusAnimation(rollValue, attributeBonuseScore);
+                return this.addAttributebonusAnimation(rollValue, attributeBonuseScore, decision.successThreshold);
             }).then(()=>{
                 return this.wait(2000)
             }).then(()=>{
                 let success = this.model.checkDecisionSuccess((rollValue + attributeBonuseScore), decision.successThreshold);//TODO
                 outcome = this.model.calculateDecisionOutcome(success, decision)
+                if(outcome.imageSrc){
+                    this.view.eventCard.style.backgroundImage = `url(${outcome.imageSrc})`;
+                }
+                if(outcome.musicSrc){
+                    playMusic(outcome.musicSrc);
+                }
+                this.view.updateCurrentCharacterAttributes(this.model.currentCharacter);
+                this.view.updateCurrentCharacterCardStats(this.model.currentCharacter);
                 this.view.removeAttributebonusAnimation();
                 this.view.hideEncounterRoller();
-                return this.printToEncounterConsoleHelpper(outcome.messageFunction(this.model.currentCharacter))
-            }).then(()=>{
-                return this.wait(2000)
-            }).then(()=>{
-                this.triggerOutcome(outcome);
-            });
+                if(outcome.messageFunction){
+                    this.printToEncounterConsoleHelpper(outcome.messageFunction(this.model.currentCharacter)).then(()=>{
+                        this.triggerOutcome(outcome);
+                    });
+                }else{
+                    this.triggerOutcome(outcome);
+                }
+            })
         }
     }
-    addAttributebonusAnimation(value, attributeBonuseScore){
+    addAttributebonusAnimation(rollValue, attributeBonuseScore, threshold){
         return new Promise((resolve)=>{
-            this.view.addAttributebonusAnimation(value, attributeBonuseScore)
+            this.view.addAttributebonusAnimation(rollValue, attributeBonuseScore, threshold)
             resolve();
         })
 

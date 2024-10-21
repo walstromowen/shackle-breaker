@@ -72,11 +72,6 @@ export default class EncounterView{
     }
     appendToEncounterConsole(character){
         this.encounterConsoleContent.textContent += character;
-        
-
-        //this.encounterConsoleContent.classList.remove('typing-animation');
-        //this.encounterConsoleContent.offsetWidth;
-        //this.encounterConsoleContent.classList.add('typing-animation');
     }
     printToEncounterConsole(message){
         this.encounterConsoleContent.innerText = '';
@@ -116,13 +111,22 @@ export default class EncounterView{
     hideRollButtons(){
         this.rollButton.style.display = 'none';
     }
-    addAttributebonusAnimation(value, attributeBonuseScore){
-        this.rollerAttributeBonus.classList.add('animate-atrribute-bonus');
+    addAttributebonusAnimation(value, attributeBonuseScore, threshold){
+        let root = document.querySelector(':root');
+        if((value + attributeBonuseScore) >= threshold){
+            playSoundEffect('./assets/audio/soundEffects/mixkit-light-spell-873.wav');
+            root.style.setProperty('--animate-attribute-bonus', 'animate-attribute-bonus-success');
+        }else{
+            playSoundEffect('./assets/audio/soundEffects/power-down-45784.mp3');
+            root.style.setProperty('--animate-attribute-bonus', 'animate-attribute-bonus-failure');
+        }
+        this.rollerAttributeBonus.classList.add('animate-attribute-bonus');
+        this.rollerValue.classList.add('animate-attribute-bonus');
         this.rollerValue.innerText = value + attributeBonuseScore;
-        playSoundEffect('./assets/audio/soundEffects/magic-spell-6005.mp3')
     }
     removeAttributebonusAnimation(){
-        this.rollerAttributeBonus.classList.remove('animate-atrribute-bonus');
+        this.rollerAttributeBonus.classList.remove('animate-attribute-bonus');
+        this.rollerValue.classList.remove('animate-attribute-bonus');
     }
 }
 

@@ -1,4 +1,4 @@
-import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown} from "./statusEffects.js";
+import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen} from "./statusEffects.js";
 
 export class Ability{
     constructor(config){
@@ -100,7 +100,7 @@ export class Ability{
         attacker.currentMagic -= this.magicCost;
     }
     checkTargetEvade(target){
-        if(this.name == 'switchCombatant' || 'retreat'){
+        if(this.name == 'switchCombatant' || this.name == 'retreat'){
             return false;
         }
         if(target.currentEvasion > this.accuracy * Math.random()){
@@ -539,6 +539,39 @@ export class LesserHeal extends Ability{
         }
     }
 }
+export class DrainLife extends Ability{
+    constructor(config){
+        super({
+            name: 'drain life',
+            iconSrc: './assets/media/icons/tentacle-heart.png',
+            speedModifier: config.speedModifier || 0.75,
+            damageModifier: config.damageModifier || 1,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 12,
+            accuracy: config.accuracy || 0.80,
+            damageTypes: config.damageTypes || ['arcane'],
+            soundEffectSrc: "./assets/audio/soundEffects/totem-strike-96497.wav",
+
+            attackerAnimation: config.attackerAnimation || 'ally-evade',
+            abilityAnimation: config.abilityAnimation || 'implode',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/tentacle-heart.png',
+            targetAnimation: config.targetAnimation || 'shake',
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+
+        let healthRestore = this.checkRestore(attacker, rawDamage*0.5, 'health');
+        attacker.currentHP += healthRestore;
+        
+    }
+    updateMessage(attacker, target){
+       this.message = `${attacker.name} drains the life of ${target.name}.`;
+    }
+}
 export class Bite extends Ability{
     constructor(config){
         super({
@@ -617,7 +650,7 @@ export class LightningBolt extends Ability{
             speedModifier: config.speedModifier || 0.75,
             damageModifier: config.damageModifier || 1.25,
             healthCost: config.healthCost || 0,
-            staminaCost: config.staminaCost || 12,
+            staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 12,
             accuracy: config.accuracy || 0.80,
             damageTypes: config.damageTypes || ['elemental'],
@@ -643,6 +676,41 @@ export class LightningBolt extends Ability{
     }
     updateMessage(attacker, target){
         this.message = `${attacker.name} shoots lightning at ${target.name}.`;
+    }
+}
+export class IceShard extends Ability{
+    constructor(config){
+        super({
+            name: 'ice shard',
+            iconSrc: './assets/media/icons/ice-spear.png',
+            speedModifier: config.speedModifier || 0.75,
+            damageModifier: config.damageModifier || 1.25,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 12,
+            accuracy: config.accuracy || 0.80,
+            damageTypes: config.damageTypes || ['elemental'],
+            soundEffectSrc: "./assets/audio/soundEffects/cold-wind-fade.wav",
+
+            attackerAnimation: config.attackerAnimation || 'ally-evade',
+            abilityAnimation: config.abilityAnimation || 'swipe-right',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/ice-spear.png',
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            if(Math.random()*6 < 1){
+                this.inflictStatus(new Frozen({holder: target}), target);
+            }
+            this.triggerOnDeliverDamage(attacker);
+            this.triggerOnRecieveDamage(target);
+        }
+    }
+    updateMessage(attacker, target){
+       this.message = `${attacker.name} shoots an ice shard at ${target.name}.`;
     }
 }
 export class Earthquake extends Ability{

@@ -83,7 +83,7 @@ export default class PartyController{
             });
         });
     }
-    createSelectButtons(resolveFn, allyReinforcements){
+    createSelectButtons(resolveFn, allyReinforcements, screen){
         document.querySelectorAll('.party-character-slot-data').forEach((node)=>{
             for(let i = 0; i < allyReinforcements.length; i++){
                 if(allyReinforcements[i].partyId == node.id && allyReinforcements[i].isSelectable == true){
@@ -93,7 +93,7 @@ export default class PartyController{
                         e.stopPropagation();
                         let selectedEntity = this.model.getEntity(node.id);
                         resolveFn(selectedEntity);
-                        this.props.switchScreen('battle-screen');
+                        this.props.switchScreen(screen);
                         playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
                     });
                     break;
