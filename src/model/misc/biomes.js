@@ -1,4 +1,4 @@
-import { Skeleton, SkeletonCultist, Wolf, Spider, GroveGuardian, Madman} from "./entities.js";
+import { Skeleton, SkeletonCultist, Wolf, Spider, GroveGuardian, Madman, MadMage, SandStalker} from "./entities.js";
 import Encounter from "./encounters/encounter.js";
 import { MadmanAhead} from "./encounters/madmanAhead.js";
 import {WanderingMercenary} from "./encounters/wanderingMercenary.js";
@@ -25,15 +25,18 @@ export class Plains extends Biome{
     generateEnemies(partyLevel, count){
         let enemyArray = [];
         for(let i = 0; i < count; i ++){
-            switch(Math.floor(Math.random()*3)){ 
+            switch(Math.floor(Math.random()*4)){ 
                 case 0:
                     enemyArray.push(new Madman({level: partyLevel}));
                     break;
                 case 1:
-                    enemyArray.push(new GroveGuardian({level: partyLevel}));
+                    enemyArray.push(new MadMage({level: partyLevel}));
                     break;
                 case 2:
                     enemyArray.push(new Wolf({level: partyLevel}));
+                    break;
+                case 3:
+                    enemyArray.push(new GroveGuardian({level: partyLevel}));
                     break;
             }
         }
@@ -91,12 +94,44 @@ export class Cave extends Biome{
     }
 }
 
+export class Desert extends Biome{
+    constructor(config){
+        super({
+            name: 'desert',
+            terrainSrc: './assets/media/terrain/desert.png',
+            backgroundMusicSrc: "./assets/audio/musicTracks/TimTaj - Desert Prince.mp3",
+            battleMusicSrc: "./assets/audio/musicTracks/TimTaj - Desert Hunt.mp3",
+        });
+    }
+    generateEnemies(partyLevel, count){
+        let enemyArray = [];
+        for(let i = 0; i < count; i ++){
+            switch(Math.floor(Math.random()*1)){ 
+                case 0:
+                    enemyArray.push(new SandStalker({level: partyLevel}));
+                    break;
+            }
+        }
+        return enemyArray;
+    }
+    generateEncounter(wanderingCompanionFn){
+        let chance = Math.floor(Math.random() * 1)
+        switch(chance){ 
+            case 0:
+                let wanderingCompanion = wanderingCompanionFn();
+                return new Encounter(new WanderingMercenary({entity: wanderingCompanion}), false)
+        }
+    }
+}
+
 export function generateBiome(){
-    let chance = Math.floor(Math.random()*2);
+    let chance = Math.floor(Math.random()*3);
     switch(chance){
         case 0:
             return new Plains({});
         case 1:
             return new Cave({});
+        case 2:
+            return new Desert({});
     }
 }

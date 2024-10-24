@@ -1,6 +1,6 @@
 import Stage from "./stage.js";
 import Battle from "../battle.js";
-import { Wolf, Madman} from "../entities.js";
+import { Wolf, Madman, MadMage} from "../entities.js";
 import { Bleed } from "../statusEffects.js";
 
 export class MadmanAhead extends Stage{
@@ -17,10 +17,12 @@ export class MadmanAhead extends Stage{
                             result: 'battle',
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
                             createBattle: (partyLevel, biome)=>{
-                                let hostileArray = [];
-                                let count = Math.ceil(Math.random()*4);
+                                let hostileArray = [new Madman({level: partyLevel})];
+                                let count = Math.ceil(Math.random()*3);
                                 for(let i = 0; i < count; i++){
-                                    hostileArray.push(new Madman({level: partyLevel}))
+                                    let chance = Math.floor(Math.random()*3);
+                                    if(chance < 2) hostiles.push(new Madman({level: partyLevel}))
+                                    if(chance == 2) hostiles.push(new MadMage({level: partyLevel}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
@@ -62,12 +64,14 @@ export class MadmanAhead extends Stage{
                             imageSrc: './assets/media/entities/cursed-villager-1.jpg',
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
                             createBattle: (partyLevel, biome)=>{
-                                let hostiles = [];
-                                let count = Math.ceil(Math.random()*4);
+                                let hostileArray = [new Madman({level: partyLevel})];
+                                let count = Math.ceil(Math.random()*3);
                                 for(let i = 0; i < count; i++){
-                                    hostiles.push(new Madman({level: partyLevel}))
+                                    let chance = Math.floor(Math.random()*3);
+                                    if(chance < 2) hostiles.push(new Madman({level: partyLevel}))
+                                    if(chance == 2) hostiles.push(new MadMage({level: partyLevel}))
                                 }
-                                return new Battle({hostiles: hostiles, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `The Madman is startled by ${currentCharacter.name}'s approach and draws his weapon!`
@@ -79,14 +83,17 @@ export class MadmanAhead extends Stage{
                             imageSrc: './assets/media/entities/cursed-villager-1.jpg',
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
                             createBattle: (partyLevel, biome)=>{
-                                let hostiles = [];
-                                let count = Math.ceil(Math.random()*4);
+                                let hostileArray = [new Madman({level: partyLevel})];
+                                let count = Math.ceil(Math.random()*3);
                                 for(let i = 0; i < count; i++){
-                                    hostiles.push(new Madman({level: partyLevel}))
+                                    let chance = Math.floor(Math.random()*3);
+                                    if(chance < 2) hostiles.push(new Madman({level: partyLevel}))
+                                    if(chance == 2) hostiles.push(new MadMage({level: partyLevel}))
                                 }
+
                                 hostiles[0].currentHP = hostiles[0].currentHP*0.5;
                                 hostiles[0].statusArray.push(new Bleed({holder: hostiles[0]}))
-                                return new Battle({hostiles: hostiles, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
                             messageFunction: (currentCharacter)=>{
                                  return `${currentCharacter.name} plunges a dagger into the side of the Madman side leaving him bleeding profusely! The Madman then sends a howl into the air alerting the nearby villagers!`
@@ -140,12 +147,14 @@ export class MadmanAhead extends Stage{
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
                             imageSrc: './assets/media/entities/cursed-villager-1.jpg',
                             createBattle: (partyLevel, biome)=>{
-                                let hostiles = [];
-                                let count = Math.ceil(Math.random()*4);
+                                let hostileArray = [new Madman({level: partyLevel})];
+                                let count = Math.ceil(Math.random()*3);
                                 for(let i = 0; i < count; i++){
-                                    hostiles.push(new Madman({level: partyLevel}))
+                                    let chance = Math.floor(Math.random()*3);
+                                    if(chance < 2) hostiles.push(new Madman({level: partyLevel}))
+                                    if(chance == 2) hostiles.push(new MadMage({level: partyLevel}))
                                 }
-                                return new Battle({hostiles: hostiles, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `The rock goes far over the Madman's head and startles the Madman. The Madman then draws his weapon and rushes at ${currentCharacter.name}!`
@@ -279,12 +288,14 @@ export class ConversationWithMadman extends Stage{
                             result: 'battle',
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
                             createBattle: (partyLevel, biome)=>{
-                                let hostiles = [];
-                                let count = Math.ceil(Math.random()*4);
+                                let hostileArray = [new Madman({level: partyLevel})];
+                                let count = Math.ceil(Math.random()*3);
                                 for(let i = 0; i < count; i++){
-                                    hostiles.push(new Madman({level: partyLevel}))
+                                    let chance = Math.floor(Math.random()*3);
+                                    if(chance < 2) hostiles.push(new Madman({level: partyLevel}))
+                                    if(chance == 2) hostiles.push(new MadMage({level: partyLevel}))
                                 }
-                                return new Battle({hostiles: hostiles, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `"Freak? .. Friend! Magic know many freak friend! You be freak friend too!"`
@@ -318,7 +329,14 @@ export class ConversationWithMadman extends Stage{
                             result: 'battle',
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
                             createBattle: (partyLevel, biome)=>{
-                                return new Battle({hostiles: [new Madman({level: partyLevel})], battleMusicSrc: biome.battleMusicSrc});
+                                let hostileArray = [new Madman({level: partyLevel})];
+                                let count = Math.ceil(Math.random()*3);
+                                for(let i = 0; i < count; i++){
+                                    let chance = Math.floor(Math.random()*3);
+                                    if(chance < 2) hostiles.push(new Madman({level: partyLevel}))
+                                    if(chance == 2) hostiles.push(new MadMage({level: partyLevel}))
+                                }
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `"Hahaha! Magic no like you! So me no like you neither!"`
@@ -352,7 +370,14 @@ export class ConversationWithMadman extends Stage{
                             result: 'battle',
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
                             createBattle: (partyLevel, biome)=>{
-                                return new Battle({hostiles: [new Madman({level: partyLevel})], battleMusicSrc: biome.battleMusicSrc});
+                                let hostileArray = [new Madman({level: partyLevel})];
+                                let count = Math.ceil(Math.random()*3);
+                                for(let i = 0; i < count; i++){
+                                    let chance = Math.floor(Math.random()*3);
+                                    if(chance < 2) hostiles.push(new Madman({level: partyLevel}))
+                                    if(chance == 2) hostiles.push(new MadMage({level: partyLevel}))
+                                }
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `"You no hear magic! Me hurt you now!"`

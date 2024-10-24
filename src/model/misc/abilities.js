@@ -130,7 +130,7 @@ export class Ability{
             case 'chain':
                 this.triggerOnAttemptAbility(attacker);
                 this.triggerOnOpponentAttemptAbility(targets[0]);
-                if(this.checkTargetEvade(targets[0])){
+                if(this.checkTargetEvade(targets[0]) && attacker.battleId != targets[0].battleId){
                     resolveObject.evade = true;
                 }else{
                     this.activate(attacker, targets[0]);
@@ -140,7 +140,11 @@ export class Ability{
                 this.triggerOnAttemptAbility(attacker);
                 for(let i = 0; i < targets.length; i++){
                     this.triggerOnOpponentAttemptAbility(targets[0]);
-                    this.activate(attacker, targets[i])
+                    if(this.checkTargetEvade(targets[i]) && attacker.battleId != targets[i].battleId){//may be issue with evading splash attacks
+                        resolveObject.evade = true;
+                    }else{
+                        this.activate(attacker, targets[i]);
+                    }
                 }
                 break;
         }
@@ -713,7 +717,7 @@ export class IceShard extends Ability{
        this.message = `${attacker.name} shoots an ice shard at ${target.name}.`;
     }
 }
-export class Earthquake extends Ability{
+export class Earthquake extends Ability{//Needs Work targeting same targets twice?
     constructor(config){
         super({
             name: 'earthquake',
@@ -840,6 +844,41 @@ export class Block extends Ability{
     }
     updateMessage(attacker, target){
         this.message = `${attacker.name} raises a shield.`;
+    }
+}
+export class VineLash extends Ability{
+    constructor(config){
+        super({
+            name: 'vine lash',
+            iconSrc: './assets/media/icons/vine-whip.png',
+            speedModifier: config.speedModifier || 1,
+            damageModifier: config.damageModifier || 1,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 15,
+            magicCost: config.magicCost || 0,
+            damageTypes: config.damageTypes || ['blunt'],
+            soundEffectSrc: "./assets/audio/soundEffects/whip_lash.wav",
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimation: config.abilityAnimation || 'stick-right',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/thorny-vine.png',
+            targetAnimation: config.targetAnimation || 'hostile-evade',
+           
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            if(Math.random()*3 < 1){
+                this.inflictStatus(new Bind({holder: target}), target);
+            }
+            this.triggerOnDeliverDamage(attacker);
+            this.triggerOnRecieveDamage(target);
+        }
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} summons vines to lash ${target.name}.`;
     }
 }
 export class ThrowPosionedKnife extends Ability{

@@ -3,7 +3,7 @@ import {Rest, Struggle} from './abilities.js';
 class StatusEffect{
     constructor(config){
         this.name = config.name;
-        this.iconSrc = config.iconSrc;
+        this.iconSrc = config.iconSrc || null;
         this.holder = config.holder;
         this.maxCharges = config.maxCharges;
         this.currentCharges = this.maxCharges;
@@ -432,5 +432,29 @@ export class KnockedDown extends StatusEffect{
                 vitalsUpdate: true,
             }
         );
+    }
+}
+export class InstaDeath extends StatusEffect{
+    constructor(config){
+        super({
+            name:'instaDeath',
+            holder: config.holder,
+            maxCharges: 99,
+            soundEffectSrc: "./assets/audio/soundEffects/cold-wind-fade.wav",
+            targetAnimation: 'shake',
+            abilityAnimation: 'none',
+        });
+    }
+    onRemove(){
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == this.name){
+                this.holder.statusArray.splice(i, 1);
+                break;
+            }
+        }
+    }
+    onRecieveDamage(){
+        this.holder.currentHP = 0;
+        this.onRemove();
     }
 }

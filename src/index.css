@@ -843,6 +843,54 @@ img{
         scale: 1.02;
     }   
 }
+@keyframes twister{
+    0% {
+        translate:-5%;
+        transform: rotateY(0deg);
+    }
+    10% {
+        translate:5%;
+    }
+    20% {
+        translate:-5%;
+    }
+    30% {
+        translate:5%;
+    }
+    40% {
+        translate:-5%   
+    }
+    50% {
+        translate:5%;
+    }
+    60% {
+        translate:-5%;
+    }
+    70% {
+        translate:5%;
+    }
+    80% {
+        filter: blur(20px);
+        translate:-5%  
+    }
+    90% {
+        translate:5%;
+    }
+    100% {
+        transform: rotateY(3600deg);
+        filter: blur(0px);
+        translate:0%
+    }
+}
+@keyframes sand-vortex{
+    from{
+        background-color: sandybrown;
+    }
+    to{
+        background-color: sandybrown;
+    }
+}
+
 .possible-target:hover{
     filter: brightness(1.5);
     box-shadow: 0px 0px 0px black;

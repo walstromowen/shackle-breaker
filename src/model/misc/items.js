@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash} from "./abilities.js";
 import { DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, UseAntidote, UseAloeRemedy, UseParalysisTonic, UseBandage, DrinkKurtussBrewOfMadness} from "./abilities.js";
 
 let counter = 0;
@@ -701,6 +701,64 @@ export class IceStaff extends Attachable{
         }
     }
 }
+export class ForestStaff extends Attachable{
+    constructor(config){
+        super({
+            name: 'forest staff',
+            description: "A carved walking staff made from the branch of a tree. The discovery of the artifact released the potential of many ordinary things like this former tree branch.",
+            imageSrc:  './assets/media/icons/wizard-staff.png',
+            price: 200,
+            slot: 'oneHand',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 0,
+            magicRecovery: 2,
+            bluntAttack: 1,
+            pierceAttack: 1,
+            arcaneAttack: 0,
+            elementalAttack: 3,
+            bluntDefense: 0,
+            pierceDefense: 0,
+            arcaneDefense: 0,
+            elementalDefense: 0,
+            bluntResistance: 0,
+            pierceResistance: 0,
+            arcaneResistance: 0,
+            elementalResistance: 0,
+            speed: 0,
+            evasion: 0,
+            critical: 0,
+            abilityArray: [new Strike({}), new VineLash({})],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 0;
+            this.magicRecovery = this.magicRecovery + 1;
+            this.bluntAttack = this.bluntAttack + 1;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 1;
+            this.elementalAttack = this.elementalAttack + 3;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 0;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+            this.critical = this.critical + 0;
+        }
+    }
+}
 export class LinenShirt extends Attachable{
     constructor(config){
         super({
@@ -939,7 +997,7 @@ export class LeatherChestplate extends Attachable{
     constructor(config){
         super({
             name: 'leather chestplate',
-            description: 'a leather chestplate. A standard issue chestplate among scouts and archers of the Altus kingdom.',
+            description: 'A leather chestplate. A standard issue chestplate among scouts and archers of the Altus kingdom.',
             imageSrc:  './assets/media/icons/leather-armor.png',
             price: 100,
             slot: 'torso',
@@ -996,8 +1054,8 @@ export class LeatherChestplate extends Attachable{
 export class LeatherGloves extends Attachable{
     constructor(config){
         super({
-            name: 'leather chest piece',
-            description: 'leather gloves. A common article of clothing among worker of the Altus kingdom. With the discovery of magic, many in the altus kingdom lost appreciation for common safety practices like hand protection.',
+            name: 'leather gloves',
+            description: 'Leather gloves. A common article of clothing among worker of the Altus kingdom. With the discovery of magic, many in the altus kingdom lost appreciation for common safety practices like hand protection.',
             imageSrc:  './assets/media/icons/gloves.png',
             price: 100,
             slot: 'arms',
@@ -1055,7 +1113,7 @@ export class LeatherGreaves extends Attachable{
     constructor(config){
         super({
             name: 'leather greaves',
-            description: 'leather greaves. Standard issue greaves among scouts and archers of the Altus kingdom.',
+            description: 'Leather greaves. Standard issue greaves among scouts and archers of the Altus kingdom.',
             imageSrc:  './assets/media/icons/armor-cuisses.png',
             price: 100,
             slot: 'legs',
@@ -1112,8 +1170,8 @@ export class LeatherGreaves extends Attachable{
 export class LeatherBoots extends Attachable{
     constructor(config){
         super({
-            name: 'leather greaves',
-            description: 'reliable leather boots. After discovery of magic, travelers from all over came to Altus kingdom. Few ever left.',
+            name: 'leather boots',
+            description: 'Reliable leather boots. After discovery of magic, travelers from all over came to Altus kingdom. Few ever left.',
             imageSrc:  './assets/media/icons/boots.png',
             price: 100,
             slot: 'feet',

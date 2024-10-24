@@ -19,6 +19,7 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 * 3 target splash attacks targeting buggy
 * If an item is not used it "in use" value never goes away
 * After switching characters in encounter stage message cannot be skipped by clicking
+* encounters not going away after battle
 
 
 # Planned Quality of Life Improvements

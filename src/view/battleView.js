@@ -110,9 +110,11 @@ export default class BattleView{
         });
         let statusContainer = card.querySelector('.battle-status-icon-container')
         for(let i = 0; i < combatant.statusArray.length; i++){
-            let statusIcon = createElement('img', 'battle-status-icon'); 
-            statusIcon.src = combatant.statusArray[i].iconSrc;
-            statusContainer.append(statusIcon);
+            if(combatant.statusArray[i].iconSrc){
+                let statusIcon = createElement('img', 'battle-status-icon'); 
+                statusIcon.src = combatant.statusArray[i].iconSrc;
+                statusContainer.append(statusIcon);
+            }
         }
         
     }
@@ -217,8 +219,6 @@ export default class BattleView{
     playAbilityAnimations(attacker, targets, resolveObject){
         //update CSS
         let root = document.querySelector(':root');
-        
-        
         root.style.setProperty('--battle-attacker-animation', attacker.nextAbility.attackerAnimation);
         root.style.setProperty('--battle-target-animation', attacker.nextAbility.targetAnimation);
         root.style.setProperty('--battle-ability-animation', attacker.nextAbility.abilityAnimation);
@@ -257,67 +257,6 @@ export default class BattleView{
             });
         }
         playSoundEffect(attacker.nextAbility.soundEffectSrc);
-            
-
-
-
-/*OLD
-        let attackerCard;
-        let root = document.querySelector(':root');
-        root.style.setProperty('--ability-animation-image', `url(${attacker.nextAbility.iconSrc})`);
-        root.style.setProperty('--ability-animation-name', attacker.nextAbility.animationName);
-        root.style.setProperty(' --ability-animation-duration', attacker.nextAbility.animationDuration);
-        if(attacker.isHostile == false){
-            if(resolveObject.switchCombatant == false && resolveObject.retreat == false){
-                root.style.setProperty('--animate-attacker-name', 'ally-attack');
-            }else{
-                if(resolveObject.retreat){
-                    root.style.setProperty('--animate-attacker-name', 'ally-retreat');
-                }
-                if(resolveObject.switchCombatant){
-                    root.style.setProperty('--animate-attacker-name', 'ally-switch');
-                }
-            }
-        }else{
-            if(resolveObject.switchCombatant == false && resolveObject.retreat == false){
-                root.style.setProperty('--animate-attacker-name', 'hostile-attack');
-            }else{
-                if(resolveObject.retreat){
-                    root.style.setProperty('--animate-attacker-name', 'hostile-retreat');
-                }
-                if(resolveObject.switchCombatant){
-                    root.style.setProperty('--animate-attacker-name', 'hostile-switch');
-                }
-            }
-        }
-        Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
-            if(card.id == attacker.battleId){
-                attackerCard = card;
-            }
-        });
-        if(resolveObject.switchCombatant == false && resolveObject.retreat == false){
-            for(let i = 0; i < targets.length; i++){
-                let targetCard;
-                Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
-                    if(card.id == targets[i].battleId){
-                        targetCard = card;
-                    }
-                });
-                if(resolveObject.evade){
-                    if(targets[i].isHostile == false){
-                        root.style.setProperty('--animate-target-name', 'ally-evade');
-                    }else{
-                        root.style.setProperty('--animate-target-name', 'hostile-evade');
-                    }
-                }else{
-                    root.style.setProperty('--animate-target-name', 'none');
-                }
-                targetCard.classList.add('animate-target');
-            }
-        }
-        attackerCard.classList.add('animate-attacker');
-        playSoundEffect(attacker.nextAbility.soundEffectSrc);
-        */
     }
     removeAbilityAnimations(){
         Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
@@ -332,7 +271,6 @@ export default class BattleView{
                 holderCard = card;
             }
         });
-        //TODO
         let root = document.querySelector(':root');
         root.style.setProperty('--battle-target-animation', status.targetAnimation);
         root.style.setProperty('--battle-ability-animation', status.abilityAnimation);
@@ -341,24 +279,25 @@ export default class BattleView{
 
         holderCard.classList.add('battle-target-animation');
         playSoundEffect(status.soundEffectSrc);
-
-/*OLD
+    }
+    playFormChangeAnimations(target){
         let root = document.querySelector(':root');
-        root.style.setProperty('--ability-animation-image', `url(${status.iconSrc})`);
-        root.style.setProperty('--ability-animation-name', status.animationName);
-        root.style.setProperty(' --ability-animation-duration', status.animationDuration);
-        root.style.setProperty('--animate-target-name', 'none');
-        holderCard.classList.add('animate-target');
-        playSoundEffect(status.soundEffectSrc);
-*/
+        root.style.setProperty('--battle-target-animation', target.nextForm.animation);
+        root.style.setProperty(' --battle-ability-animation-duration', target.nextForm.animationDuration);
+        root.style.setProperty('--battle-ability-animation-image', 'none');
+        Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
+            if(card.id == target.battleId){
+                let targetCard = card;
+                targetCard.classList.add('battle-target-animation');
+            }
+        });
     }
     removeStatusAnimations(){
         Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
             card.classList.remove('battle-target-animation');
         });
     }
-    replaceCombatantCard(combatant){
-        let newCombatant = combatant.nextAbility.newCombatant
+    replaceCombatantCard(combatant, newCombatant, addDefaultAnimaiton){
         const card = document.getElementById(combatant.battleId);
         card.style.backgroundImage = `url(${newCombatant.apperance})`;
         card.querySelector('.battle-character-slot-name-header').innerText = capiltalizeAllFirstLetters(newCombatant.name);
@@ -371,8 +310,11 @@ export default class BattleView{
         card.querySelector('.battle-magic-progress').style.width = Math.floor(newCombatant.currentMagic/newCombatant.maxMagic*100) + "%";
         card.querySelector('.magic-icon').src = './assets/media/icons/crystalize.png';
         card.querySelector('.battle-current-magic').innerText = newCombatant.currentMagic;
+        this.updateStatusIcons(card, combatant);
         card.id = newCombatant.battleId;
-        this.addEntraceAnimation(combatant, card, false);
+        if(addDefaultAnimaiton){
+            this.addEntraceAnimation(combatant, card, false);
+        }
     }
     glowRed(combatant, lackingResources){
         const card = document.getElementById(combatant.battleId);

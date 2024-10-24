@@ -396,36 +396,102 @@ export default class BattleController{
                 if(flag == true){
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
-                    if(combatant.isHostile == true){
-                        this.model.defeatedHostiles.push(combatant);
-                        this.model.pileLoot(combatant)
-                        this.model.distributeXP(combatant);
-                        this.model.pileGold(combatant);
+                    if(combatant.nextForm){
+                        this.view.printToBattleConsole(combatant.nextForm.messageFn());
+                        this.playFormChangeAnimation(combatant).then(()=>{
+                            return this.activateCombatantFormChange(combatant);
+                        }).then(()=>{
+                            resolve();
+                        })
                     }else{
-                        this.model.defeatedAllies.push(combatant);
-                    }
-                    this.model.activeCombatants.splice(this.model.activeCombatants.indexOf(combatant), 1);
-                    this.view.printToBattleConsole(`${combatant.name} has been slain!`)
-                    this.removeCombatantCard(combatant).then(()=>{
-                        resolve();
-                    })
+                        if(combatant.isHostile == true){
+                            this.model.defeatedHostiles.push(combatant);
+                            this.model.pileLoot(combatant)
+                            this.model.distributeXP(combatant);
+                            this.model.pileGold(combatant);
+                        }else{
+                            this.model.defeatedAllies.push(combatant);
+                        }
+                        this.model.activeCombatants.splice(this.model.activeCombatants.indexOf(combatant), 1);
+                        this.view.printToBattleConsole(`${combatant.name} has been slain!`)
+                        this.removeCombatantCard(combatant).then(()=>{
+                            resolve();
+                        })
+                    } 
+                }
+            })
+            setTimeout(()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);   
+                    if(combatant.nextForm){
+                        this.view.printToBattleConsole(combatant.nextForm.messageFn());
+                        this.playFormChangeAnimation(combatant).then(()=>{
+                            return this.activateCombatantFormChange(combatant);
+                        }).then(()=>{
+                            resolve();
+                        })
+                    }else{
+                        if(combatant.isHostile == true){
+                            this.model.defeatedHostiles.push(combatant);
+                            this.model.pileLoot(combatant)
+                            this.model.distributeXP(combatant);
+                            this.model.pileGold(combatant);
+                        }else{
+                            this.model.defeatedAllies.push(combatant);
+                        }
+                        this.model.activeCombatants.splice(this.model.activeCombatants.indexOf(combatant), 1);
+                        this.view.printToBattleConsole(`${combatant.name} has been slain!`)
+                        this.removeCombatantCard(combatant).then(()=>{
+                            resolve();
+                        })
+                    } 
+                }
+            }, 2000)
+        })
+    }
+    playFormChangeAnimation(combatant){
+        let flag = true;
+        return new Promise((resolve)=>{
+            document.addEventListener('click', this.skipEventHandler = ()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.view.playFormChangeAnimations(combatant);
+                    resolve();
                 }
             })
             setTimeout(()=>{
                 if(flag == true){
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
-                    if(combatant.isHostile == true){
-                        this.model.defeatedHostiles.push(combatant);
-                        this.model.pileLoot(combatant)
-                    }else{
-                        this.model.defeatedAllies.push(combatant);
-                    }
-                    this.model.activeCombatants.splice(this.model.activeCombatants.indexOf(combatant), 1);
-                    this.view.printToBattleConsole(`${combatant.name} has been slain!`)
-                    this.removeCombatantCard(combatant).then(()=>{
-                        resolve();
-                    })
+                    this.view.playFormChangeAnimations(combatant);
+                    resolve();
+                }
+            }, 2000)
+        })
+    }
+    activateCombatantFormChange(combatant){
+        let flag = true;
+        return new Promise((resolve)=>{
+            document.addEventListener('click', this.skipEventHandler = ()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    let nextForm = this.model.formChange(combatant, combatant.nextForm.createNextForm());
+                    this.view.replaceCombatantCard(combatant, nextForm);
+                    this.view.removeAbilityAnimations()
+                    resolve();
+                }
+            })
+            setTimeout(()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    let nextForm = this.model.formChange(combatant, combatant.nextForm.createNextForm());
+                    this.view.replaceCombatantCard(combatant, nextForm);
+                    this.view.removeAbilityAnimations()
+                    resolve();
                 }
             }, 2000)
         })
@@ -495,7 +561,7 @@ export default class BattleController{
             }).then((resolveObject)=>{
                 return this.playAbilityAnimationHelpper(cycleTargets, resolveObject);
             }).then((resolveObject)=>{
-                if(resolveObject.switchCombatant){
+                if(resolveObject.switchCombatant){//TODO
                     return this.switchCombatantAnimationHelpper(resolveObject);
                 }else{
                     return this.postAbilityAnimationsHelpper(resolveObject);
@@ -581,7 +647,7 @@ export default class BattleController{
                         this.view.removeCombatantCard(this.currentAttacker.battleId);
                     }else{
                         if(resolveObject.switchCombatant == true){
-                            this.view.replaceCombatantCard(this.currentAttacker);
+                            this.view.replaceCombatantCard(this.currentAttacker, this.currentAttacker.nextAbility.newCombatant, true);
                         }else{
                             if(resolveObject.evade){
                                 if(this.currentAttacker.nextAbility.sequenceType == 'chain'){
@@ -604,7 +670,7 @@ export default class BattleController{
                         this.view.removeCombatantCard(this.currentAttacker.battleId);
                     }else{
                         if(resolveObject.switchCombatant == true){
-                            this.view.replaceCombatantCard(this.currentAttacker);
+                            this.view.replaceCombatantCard(this.currentAttacker, this.currentAttacker.nextAbility.newCombatant, true);
                         }else{
                             if(resolveObject.evade){
                                 if(this.currentAttacker.nextAbility.sequenceType == 'chain'){
@@ -652,7 +718,7 @@ export default class BattleController{
             document.addEventListener('click', this.skipEventHandler = ()=>{
                 if(flag == true){
                     flag = false;
-                    this.view.replaceCombatantCard(this.currentAttacker);
+                    this.view.replaceCombatantCard(this.currentAttacker, this.currentAttacker.nextAbility.newCombatant, true);
                     document.removeEventListener('click', this.skipEventHandler);
                     resolve(resolveObject)
                 }
@@ -660,7 +726,7 @@ export default class BattleController{
             setTimeout(()=>{
                 if(flag == true){
                     flag = false;
-                    this.view.replaceCombatantCard(this.currentAttacker);
+                    this.view.replaceCombatantCard(this.currentAttacker, this.currentAttacker.nextAbility.newCombatant, true);
                     document.removeEventListener('click', this.skipEventHandler);
                     resolve(resolveObject)
                 }

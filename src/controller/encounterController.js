@@ -240,6 +240,8 @@ export default class EncounterController{
                 return;
             case 'complete':
                 setTimeout(()=>{
+                    this.model.props.setEncounter('');
+                    this.model.updateTileEncounter(this.props.getOverworldController().model.currentPartyPosition);
                     this.model.updateTileBattle(this.props.getOverworldController().model.currentPartyPosition);
                     this.props.getOverworldController().model.currentPartyPosition[0][1]
                     this.model.props.setSituation('overworld')

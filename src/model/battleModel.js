@@ -113,7 +113,7 @@ export default class BattleModel{
                 this.activeCombatants[i].abilityTargets=[];
                 this.activeCombatants[i].nextAbility = getRandomArrayElement(this.getCombinedAbilities(this.activeCombatants[i]));
                 for(let j = 0; j < this.activeCombatants[i].nextAbility.targetCount; j++){
-                    this.getRandomTarget(this.activeCombatants[i]);
+                    this.activeCombatants[i].abilityTargets.push(this.getRandomTarget(this.activeCombatants[i]));
                 }
             }
         }
@@ -132,10 +132,7 @@ export default class BattleModel{
                 if(availableTargets.length == 0){
                     return;
                 }
-                possibleTarget = getRandomArrayElement(this.activeCombatants);
-                while(possibleTarget.currentHP <= 0 || possibleTarget.isHostile != attacker.isHostile){
-                    possibleTarget = getRandomArrayElement(this.activeCombatants);
-                }
+                possibleTarget = getRandomArrayElement(availableTargets);
             break;
             case 'opponent': 
                 availableTargets = this.activeCombatants.filter((combatant)=>{
@@ -144,13 +141,10 @@ export default class BattleModel{
                 if(availableTargets.length == 0){
                     return;
                 }
-                possibleTarget = getRandomArrayElement(this.activeCombatants);
-                while(possibleTarget.currentHP <= 0 || possibleTarget.isHostile == attacker.isHostile){
-                    possibleTarget = getRandomArrayElement(this.activeCombatants);
-                }
+                possibleTarget = getRandomArrayElement(availableTargets);
             break;
         }
-        attacker.abilityTargets.push(possibleTarget);
+        return(possibleTarget);
     }
 
 
@@ -355,6 +349,12 @@ export default class BattleModel{
         mergedAbility.updateMessage = ability1.updateMessage;
         mergedAbility.activate = ability1.activate;
         return mergedAbility;
+    }
+    formChange(combatant, nextForm){
+        nextForm.battleId = combatant.battleId;
+        this.activeCombatants[this.activeCombatants.indexOf(combatant)] = nextForm;
+        this.allCombatants[this.allCombatants.indexOf(combatant)] = nextForm;
+        return nextForm;
     }
 }
 
