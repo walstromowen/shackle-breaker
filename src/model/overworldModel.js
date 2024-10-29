@@ -62,7 +62,7 @@ export default class OverworldModel{
                 return;
             }
             let chance = Math.floor(Math.random()*20);
-            if(chance == 30){
+            if(chance == 0){
                 let biome = this.props.getMap().biome;
                 nextRoom.battle = new Battle(
                     {
