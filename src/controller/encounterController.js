@@ -233,6 +233,7 @@ export default class EncounterController{
                 return;
             case 'switchCharacter':
                 this.switchCurrentCharacter().then((selectedEntity)=>{
+                    this.props.getPartyController().view.revealPartyToggleBackButton();
                     this.model.makePartySelectable();
                     this.model.currentCharacter = selectedEntity;
                     this.triggerStage();

@@ -423,7 +423,7 @@ export class Tripleshot extends Ability{
             staminaCost: config.staminaCost || 20,
             magicCost: config.magicCost || 0,
             damageTypes: config.damageTypes || ['pierce'],
-            targetCount: 2,
+            targetCount: 3,
             soundEffectSrc: "./assets/audio/soundEffects/arrow-body-impact-146419.mp3",
             sequenceType: 'splash',
             attackerAnimation: config.attackerAnimation || 'ally-attack',
@@ -717,6 +717,74 @@ export class IceShard extends Ability{
        this.message = `${attacker.name} shoots an ice shard at ${target.name}.`;
     }
 }
+export class Shockwave extends Ability{
+    constructor(config){
+        super({
+            name: 'shockwave',
+            iconSrc: './assets/media/icons/wind-slap.png',
+            speedModifier: config.speedModifier || 1.25,
+            damageModifier: config.damageModifier || 0.25,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 15,
+            damageTypes: config.damageTypes || ['blunt', 'elemental'],
+            soundEffectSrc: "./assets/audio/soundEffects/supernatural-explosion-104295.wav",
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimation: config.abilityAnimation || 'swipe-right',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/wind-slap.png',
+            targetAnimation: config.targetAnimation || 'hostile-evade',
+           
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            if(Math.random()*2 < 1){
+                this.inflictStatus(new KnockedDown({holder: target}), target);
+            }
+            this.triggerOnDeliverDamage(attacker);
+            this.triggerOnRecieveDamage(target);
+        }
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} blasts ${target.name} with a shockwave.`;
+    }
+}
+export class Siphon extends Ability{
+    constructor(config){
+        super({
+            name: 'siphon',
+            iconSrc: './assets/media/icons/body-swapping.png',
+            speedModifier: config.speedModifier || 1.0,
+            damageModifier: config.damageModifier || 1.5,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 10,
+            accuracy: config.accuracy || 1.0,
+            damageTypes: config.damageTypes || ['arcane'],
+            soundEffectSrc: "./assets/audio/soundEffects/cold-wind-fade.wav",
+
+            attackerAnimation: config.attackerAnimation || 'implode',
+            abilityAnimation: config.abilityAnimation || 'sink',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/tentacle-heart.png',
+            targetAnimation: config.targetAnimation || 'sink',
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        let damage = this.checkDamage(target, rawDamage, 'magic');
+        target.currentMagic = target.currentMagic - damage;
+
+        let magicRestore = this.checkRestore(attacker, rawDamage*0.75, 'magic');
+        attacker.currentMagic += magicRestore;
+        
+    }
+    updateMessage(attacker, target){
+       this.message = `${attacker.name} siphons the magic of ${target.name}.`;
+    }
+}
 export class Earthquake extends Ability{//Needs Work targeting same targets twice?
     constructor(config){
         super({
@@ -734,6 +802,7 @@ export class Earthquake extends Ability{//Needs Work targeting same targets twic
             attackerAnimation: config.attackerAnimation || 'explode',
             abilityAnimation: config.abilityAnimation || 'sink',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/earth-split.png',
+            targetAnimation: config.targetAnimation || 'shake',
             
         })
     }

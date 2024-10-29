@@ -125,8 +125,8 @@
         width: 100% !important;
     }
     #lobby-screen, #character-summary-screen{
-        
-       
+        min-height: 100dvh;
+        height: auto;
     }
     .typing-animation{
         animation: 
@@ -1180,6 +1180,9 @@ img{
 .battle-attacker-animation{
     animation:var(--battle-attacker-animation) var(--battle-ability-animation-duration);
     
+}
+.large-combatant-card{
+    height: 50% !important;
 }
 @keyframes none{
     0%{}

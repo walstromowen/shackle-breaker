@@ -91,9 +91,9 @@ export default class OverworldController{
     }
     afterMove(){
         this.view.draw(this.model.props.getMap(), this.model.currentPartyPosition);
+        //playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
         if(this.model.props.getScreen() == 'battle-screen'){
             playMusic(this.model.props.getBattle().battleMusicSrc);
-            //document.getElementById('music-player').pause();//temp
             this.view.hideOverWorldUi();
             this.view.playBattleTransition().then(()=>{
                 

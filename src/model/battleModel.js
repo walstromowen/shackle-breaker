@@ -146,7 +146,22 @@ export default class BattleModel{
         }
         return(possibleTarget);
     }
-
+getAvailableTargets(attacker){
+    let availableTargets = [];
+    switch(attacker.nextAbility.defaultTarget){
+        case 'ally': 
+            availableTargets = this.activeCombatants.filter((combatant)=>{
+                return (combatant.isHostile == attacker.isHostile && combatant.currentHP > 0);
+            })
+        break;
+        case 'opponent': 
+            availableTargets = this.activeCombatants.filter((combatant)=>{
+                return (combatant.isHostile != attacker.isHostile && combatant.currentHP > 0);
+            })
+        break;
+    }
+    return availableTargets;
+}
 
     /*
     getRandomTarget(attacker){//modify for buffs and healing attacks and possible splash attacks
@@ -250,6 +265,14 @@ export default class BattleModel{
      
         return consumableAbilities;
 
+    }
+    makeConsumableItemsNoLongerInProgress(){
+        let currentInventory = this.props.getInventory();
+        for(let i = 0; i < currentInventory.length; i++){
+            if(currentInventory[i].inProgess){
+                currentInventory[i].inProgess = false;
+            }
+        }
     }
     getConsumables(){
         let consumables = [];

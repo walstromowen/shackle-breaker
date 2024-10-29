@@ -45,6 +45,11 @@ export default class OverworldModel{
         }
     }
     movePartyTile(nextRoom){
+        if(nextRoom.type == 'exit'){
+            this.generateNewMap();
+            this.currentPartyPosition = this.props.getMap().getEntrancePosition();
+            return;
+        }
         if(nextRoom.type != 'wall'){
             this.previousPartyPosition = this.currentPartyPosition;
             this.currentPartyPosition = nextRoom.position;
@@ -57,7 +62,7 @@ export default class OverworldModel{
                 return;
             }
             let chance = Math.floor(Math.random()*20);
-            if(chance == 0){
+            if(chance == 30){
                 let biome = this.props.getMap().biome;
                 nextRoom.battle = new Battle(
                     {

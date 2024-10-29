@@ -28,6 +28,7 @@ export default class BattleController{
             this.model.initialize();
             this.view.createActiveCombatantCards(this.model.activeCombatants);
             this.activatePreround().then(()=>{
+                this.model.makeConsumableItemsNoLongerInProgress();
                 this.activateRound();
             })
         }
@@ -182,9 +183,21 @@ export default class BattleController{
             }
             selectedCard.classList.add('targeted');//view
             ally.abilityTargets.push(this.model.getCombatant(selectedCard.id));
-            if(ally.abilityTargets.length == ally.nextAbility.targetCount || 
-               ally.nextAbility.targetCount - ally.abilityTargets.length == this.model.getActiveHostiles().length){
+            let availableTargets = this.model.getAvailableTargets(ally);
+
+            if(ally.abilityTargets.length == ally.nextAbility.targetCount){
                 this.toggleConfirmTargetsTab(ally, resolveFn);
+            }
+            if(ally.abilityTargets.length >= availableTargets.length){
+                let appropriateTargetCount = 0;
+                for(let i = 0; i < ally.abilityTargets.length; i++){
+                    if(availableTargets.contains(ally.abilityTargets[i])){
+                        appropriateTargetCount++;
+                    }
+                }
+                if(appropriateTargetCount == availableTargets.length){
+                    this.toggleConfirmTargetsTab(ally, resolveFn);
+                }
             }
         }
     }
@@ -458,6 +471,7 @@ export default class BattleController{
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
                     this.view.playFormChangeAnimations(combatant);
+                    playSoundEffect(combatant.nextForm.animationSoundEffect);
                     resolve();
                 }
             })
@@ -466,6 +480,7 @@ export default class BattleController{
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
                     this.view.playFormChangeAnimations(combatant);
+                    playSoundEffect(combatant.nextForm.animationSoundEffect);
                     resolve();
                 }
             }, 2000)

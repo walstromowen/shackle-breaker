@@ -3,6 +3,7 @@ import Encounter from "./encounters/encounter.js";
 import { MadmanAhead} from "./encounters/madmanAhead.js";
 import {WanderingMercenary} from "./encounters/wanderingMercenary.js";
 import { MysteriousAltar } from "./encounters/mysteriousAltar.js";
+import { ShiftingSands } from "./encounters/shiftingSands.js";
 
 
 export default class Biome{
@@ -25,7 +26,7 @@ export class Plains extends Biome{
     generateEnemies(partyLevel, count){
         let enemyArray = [];
         for(let i = 0; i < count; i ++){
-            switch(Math.floor(Math.random()*4)){ 
+            switch(Math.floor(Math.random()*3)){ 
                 case 0:
                     enemyArray.push(new Madman({level: partyLevel}));
                     break;
@@ -115,9 +116,11 @@ export class Desert extends Biome{
         return enemyArray;
     }
     generateEncounter(wanderingCompanionFn){
-        let chance = Math.floor(Math.random() * 1)
+        let chance = Math.floor(Math.random() * 2)
         switch(chance){ 
             case 0:
+                return new Encounter(new ShiftingSands({}), true)
+            case 1:
                 let wanderingCompanion = wanderingCompanionFn();
                 return new Encounter(new WanderingMercenary({entity: wanderingCompanion}), false)
         }
@@ -128,8 +131,10 @@ export function generateBiome(){
     let chance = Math.floor(Math.random()*3);
     switch(chance){
         case 0:
+            //return new Desert({});
             return new Plains({});
         case 1:
+            //return new Desert({});
             return new Cave({});
         case 2:
             return new Desert({});

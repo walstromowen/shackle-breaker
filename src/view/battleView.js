@@ -71,6 +71,9 @@ export default class BattleView{
         magicLabelContainer.appendChild(magicLabel);
 
         combatantCard.id = combatant.battleId;
+        if(combatant.size == 'large'){
+            combatantCard.classList.add('large-combatant-card')
+        }
         this.addEntraceAnimation(combatant, combatantCard, true)
         
         this.updateCombatantStats(combatant);
@@ -310,7 +313,7 @@ export default class BattleView{
         card.querySelector('.battle-magic-progress').style.width = Math.floor(newCombatant.currentMagic/newCombatant.maxMagic*100) + "%";
         card.querySelector('.magic-icon').src = './assets/media/icons/crystalize.png';
         card.querySelector('.battle-current-magic').innerText = newCombatant.currentMagic;
-        this.updateStatusIcons(card, combatant);
+        this.updateStatusIcons(card, newCombatant);
         card.id = newCombatant.battleId;
         if(addDefaultAnimaiton){
             this.addEntraceAnimation(combatant, card, false);
