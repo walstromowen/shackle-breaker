@@ -3,7 +3,7 @@ import Encounter from "./encounters/encounter.js";
 import { MadmanAhead} from "./encounters/madmanAhead.js";
 import {WanderingMercenary} from "./encounters/wanderingMercenary.js";
 import { MysteriousAltar } from "./encounters/mysteriousAltar.js";
-import { ShiftingSands } from "./encounters/shiftingSands.js";
+import { ShiftingSands, SandCastleEntrance} from "./encounters/shiftingSands.js";
 
 
 export default class Biome{
@@ -119,8 +119,10 @@ export class Desert extends Biome{
         let chance = Math.floor(Math.random() * 2)
         switch(chance){ 
             case 0:
+                return new Encounter(new SandCastleEntrance({}), false);
                 return new Encounter(new ShiftingSands({}), true)
             case 1:
+                return new Encounter(new SandCastleEntrance({}), false);
                 let wanderingCompanion = wanderingCompanionFn();
                 return new Encounter(new WanderingMercenary({entity: wanderingCompanion}), false)
         }

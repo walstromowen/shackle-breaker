@@ -1,4 +1,4 @@
-import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen} from "./statusEffects.js";
+import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen, Blessed, Cursed} from "./statusEffects.js";
 
 export class Ability{
     constructor(config){
@@ -791,7 +791,7 @@ export class Earthquake extends Ability{//Needs Work targeting same targets twic
             name: 'earthquake',
             iconSrc: './assets/media/icons/earth-split.png',
             speedModifier: config.speedModifier || 0.5,
-            damageModifier: config.damageModifier || 3.5,
+            damageModifier: config.damageModifier || 1.5,
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 30,
             magicCost: config.magicCost || 0,
@@ -923,8 +923,8 @@ export class VineLash extends Ability{
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 1,
             healthCost: config.healthCost || 0,
-            staminaCost: config.staminaCost || 15,
-            magicCost: config.magicCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 15,
             damageTypes: config.damageTypes || ['blunt'],
             soundEffectSrc: "./assets/audio/soundEffects/whip_lash.wav",
             attackerAnimation: config.attackerAnimation || 'ally-attack',
@@ -948,6 +948,58 @@ export class VineLash extends Ability{
     }
     updateMessage(attacker, target){
         this.message = `${attacker.name} summons vines to lash ${target.name}.`;
+    }
+}
+export class Bless extends Ability{
+    constructor(config){
+        super({
+            name: 'bless',
+            iconSrc: './assets/media/icons/cherish.png',
+            speedModifier: config.speedModifier || 1.0,
+            damageModifier: config.damageModifier || 0,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 25,
+            damageTypes: config.damageTypes || ['arcane'],
+            soundEffectSrc: "./assets/audio/soundEffects/mixkit-light-spell-873 copy.wav",
+            attackerAnimation: config.attackerAnimation || 'none',
+            targetAnimation: 'ally-evade',
+            abilityAnimation: config.abilityAnimation || 'none',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/cherish.png',
+            defaultTarget: 'ally',
+        })
+    }
+    activate(attacker, target){
+        this.inflictStatus(new Blessed({holder: target}), target);
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} blesses ${target.name}.`;
+    }
+}
+export class Curse extends Ability{
+    constructor(config){
+        super({
+            name: 'curse',
+            iconSrc: './assets/media/icons/cursed-star.png',
+            speedModifier: config.speedModifier || 1.0,
+            damageModifier: config.damageModifier || 0,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 25,
+            damageTypes: config.damageTypes || ['arcane'],
+            soundEffectSrc: "./assets/audio/soundEffects/totem-strike-96497.wav",
+            attackerAnimation: config.attackerAnimation || 'none',
+            targetAnimation: 'ally-evade',
+            abilityAnimation: config.abilityAnimation || 'none',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/cursed-star.png',
+            defaultTarget: 'ally',
+        })
+    }
+    activate(attacker, target){
+        this.inflictStatus(new Cursed({holder: target, inflicter: attacker}), target);
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} curses ${target.name}.`;
     }
 }
 export class ThrowPosionedKnife extends Ability{

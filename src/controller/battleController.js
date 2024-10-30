@@ -191,7 +191,7 @@ export default class BattleController{
             if(ally.abilityTargets.length >= availableTargets.length){
                 let appropriateTargetCount = 0;
                 for(let i = 0; i < ally.abilityTargets.length; i++){
-                    if(availableTargets.contains(ally.abilityTargets[i])){
+                    if(availableTargets.includes(ally.abilityTargets[i])){
                         appropriateTargetCount++;
                     }
                 }
@@ -321,6 +321,9 @@ export default class BattleController{
                 }
             }).then((resolveObject)=>{
                 this.view.updateCombatantStats(status.holder);
+                if(status.inflicter){
+                    this.view.updateCombatantStats(status.inflicter);//Error when retreating
+                }
                 resolve();
             });
         });

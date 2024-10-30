@@ -114,7 +114,7 @@ export default class LobbyModel{
         let keepsake = document.getElementById('lobby-keepsake-selection').value;
         switch(keepsake){
             case 'hunters-tools':
-                this.props.setInventory([new HealthPotion()]);
+                this.props.setInventory([new HealthPotion(), new DarkStaff({level: 1})]);
                 break;
             case 'bag-of-potions':
                 this.props.setInventory([new HealthPotion(), new StaminaPotion(), new MagicPotion()]);
@@ -148,10 +148,6 @@ export default class LobbyModel{
             case "none":
                 break;
             case "dog":
-                this.props.getParty().push(new Dog({}));
-                this.props.getParty().push(new Dog({}));
-                this.props.getParty().push(new Dog({}));
-                this.props.getParty().push(new Dog({}));
                 this.props.getParty().push(new Dog({}));
                 break;
             case "hawk":

@@ -458,3 +458,62 @@ export class InstaDeath extends StatusEffect{
         this.onRemove();
     }
 }
+
+export class Blessed extends StatusEffect{
+    constructor(config){
+        super({
+            name:'blessed',
+            iconSrc: "./assets/media/icons/blessed.png",
+            holder: config.holder,
+            maxCharges: 5,
+            soundEffectSrc: "./assets/audio/soundEffects/mixkit-light-spell-873.wav",
+        });
+    }
+    onEndTurn(){
+        return this.activateHelpper(
+            ()=>{
+                let healthRestore = this.checkRestore(this.holder, this.holder.maxHP * 0.1, 'health');
+                this.holder.currentHP += healthRestore;
+                this.message = `${this.holder.name} restores health from blessings.`;
+                this.currentCharges --;
+            }, 
+            {
+                text: true,
+                animation: true,
+                vitalsUpdate: true,
+            }
+        );
+    }
+}
+
+export class Cursed extends StatusEffect{
+    constructor(config){
+        super({
+            name:'cursed',
+            iconSrc: "./assets/media/icons/cursed.png",
+            holder: config.holder,
+            maxCharges: 5,
+            soundEffectSrc: "./assets/audio/soundEffects/totem-strike-96497.wav",
+        });
+        this.inflicter = config.inflicter;
+    }
+    onEndTurn(){
+        return this.activateHelpper(
+            ()=>{
+                let damage = this.checkDamage(this.holder, this.holder.maxHP * 0.05, 'health');
+                this.holder.currentHP = this.holder.currentHP - damage;
+
+                let healthRestore = this.checkRestore(this.inflicter, damage, 'health');
+                this.inflicter.currentHP += healthRestore;
+                
+                this.message = `${this.holder.name} suffers from curse.`;
+                this.currentCharges --;
+            }, 
+            {
+                text: true,
+                animation: true,
+                vitalsUpdate: true,
+            }
+        );
+    }
+}

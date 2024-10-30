@@ -874,9 +874,11 @@ export class SandStalker extends Entity{
             animationDuration: 3000,
             animationSoundEffect: './assets/audio/soundEffects/tornado.wav',
             createNextForm: ()=>{
-                let chance = Math.random()*3;
+                let chance = Math.random()*1;
                 if(chance < 1){
-                    return new SandStalker({level: this.level, statusArray: [], nextForm: false});
+                    let hostile = new SandStalker({level: this.level, statusArray: [], nextForm: false});
+                    hostile.nextForm = false;//have to do don't know why
+                    return hostile
                 }else{
                     return new SandStalker({level: this.level});
                 }
@@ -932,7 +934,7 @@ export class TheSandShade extends Entity{
                 feet: '',
             },
             isHostile: config.isHostile || true,
-            abilityArray: [new Slash({}), new DrainLife({}), new Earthquake({}), new Siphon({})],
+            abilityArray: [new Slash({}), new DrainLife({}), new Siphon({})],
             lootTable: [],
         });
         this.nextForm = config.nextForm || {
@@ -940,7 +942,10 @@ export class TheSandShade extends Entity{
             animationDuration: 6000,
             animationSoundEffect: './assets/audio/soundEffects/tornado.wav',
             createNextForm: ()=>{
-                return new TheSandShade({level: this.level, nextForm: false});
+                let hostile = new TheSandShade({level: this.level, nextForm: false, abilityArray: [new Slash({}), new DrainLife({}), new Earthquake({}), new Siphon({})],});
+                hostile.nextForm = false;//have to do don't know why
+                return hostile
+           
                 
             },
             messageFn: ()=>{
@@ -949,7 +954,7 @@ export class TheSandShade extends Entity{
         }
     }
     scaleAttributes(){
-        this.maxHP = (this.vigor * 10)  + (this.strength * 10) + (this.dexterity * 10) + (this.intelligence * 10) + (this.attunement * 10);
+        this.maxHP = (this.vigor * 10)  + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 5) + (this.attunement * 5);
         this.maxStamina = (this.vigor * 5) + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 5) + (this.attunement * 5);
         this.maxMagic = (this.vigor * 5)  + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 5) + (this.attunement * 5);
         this.baseHpRecovery = 0;
