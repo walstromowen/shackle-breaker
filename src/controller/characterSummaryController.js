@@ -108,6 +108,7 @@ export default class CharacterSummaryController{
         //slotData
         this.view.screen.querySelectorAll('.inventory-slot-data').forEach((node)=>{
             if(this.model.props.getSituation() == 'overworld'){
+                let touchCoordinates = [null, null];
                 node.addEventListener('dragstart', ()=>{ 
                     node.classList.add('dragging');
                     document.getElementById('inventory-mini-menu').style.display = 'none';
@@ -116,6 +117,68 @@ export default class CharacterSummaryController{
                 node.addEventListener('dragend', ()=>{
                     node.classList.remove('dragging');
                 });
+                //MOBILE
+                node.addEventListener('touchstart', (e)=>{ 
+                    let touchLocation = e.targetTouches[0];
+                    let clone = e.target.cloneNode(true);
+                    clone.style.position = 'absolute';
+                    clone.classList.add('clone');
+                    e.target.classList.add('dragging');
+                    clone.style.left = touchLocation.pageX - e.target.clientWidth/2 + 'px';
+                    clone.style.top = touchLocation.pageY - e.target.clientHeight/2 + 'px';
+                    this.view.screen.appendChild(clone);
+                });
+                node.addEventListener('touchmove',  (e)=>{ 
+                    e.preventDefault();
+                    let touchLocation = e.targetTouches[0];
+                    let clone = document.getElementsByClassName('clone')[0];
+                    
+                    clone.style.left = touchLocation.pageX - clone.clientWidth/2 + 'px';
+                    clone.style.top = touchLocation.pageY - clone.clientHeight/2 + 'px';
+                   
+                    touchCoordinates = [touchLocation.pageX, touchLocation.pageY];
+                });
+                node.addEventListener('touchend',  (e)=>{
+                    let clone = document.getElementsByClassName('clone')[0];
+                    
+                    let touchLocations = document.elementsFromPoint(touchCoordinates[0], touchCoordinates[1]);
+                    touchCoordinates = [null, null];
+                    
+                    for(let i = 0; i < touchLocations.length; i++){
+                        if(touchLocations[i].classList.contains('character-summary-equipped-slot' || 'inventory-slot') || touchLocations[i].id == 'character-summary-inventory-container'){
+                            let event = new Event('drop');
+                            touchLocations[i].dispatchEvent(event)
+                            break;
+                        }
+                    }
+                        
+                    clone.remove();
+                });
+                        
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             }
             node.addEventListener('click', (e)=>{
                 e.preventDefault();
@@ -221,47 +284,7 @@ export default class CharacterSummaryController{
             
             });
         });
-            /*
-            node.addEventListener('click', ()=>{
-                //if mouse not over boundaries of minimenu or node then hide minimenu
-                //alert('leave')
-                let miniMenu = document.getElementById('inventory-mini-menu');
-                miniMenu.addEventListener('mouseleave', this.inventoryMiniMenuMouseMoveEventHandler = (e)=>{
-                    this.view.screen.removeEventListener('mousemove', this.inventoryMiniMenuMouseMoveEventHandler);
-                    document.getElementById('inventory-mini-menu').style.display = 'none';
-                })
 
-
-
-                
-                this.view.screen.addEventListener('mousemove', this.inventoryMiniMenuMouseMoveEventHandler = (e)=>{
-                    if(
-                        (
-                            e.clientX < miniMenu.getBoundingClientRect().x ||
-                            e.clientX > miniMenu.getBoundingClientRect().x + miniMenu.getBoundingClientRect().width ||
-                            e.clientY < miniMenu.getBoundingClientRect().y ||
-                            e.clientY > miniMenu.getBoundingClientRect().y + miniMenu.getBoundingClientRect().height
-                        )
-                        &&
-                        (
-                            e.clientX < node.getBoundingClientRect().x ||
-                            e.clientX > node.getBoundingClientRect().x + node.getBoundingClientRect().width ||
-                            e.clientY < node.getBoundingClientRect().y ||
-                            e.clientY > node.getBoundingClientRect().y + node.getBoundingClientRect().height
-                        )
-                    ){
-                        this.view.screen.removeEventListener('mousemove', this.inventoryMiniMenuMouseMoveEventHandler);
-                        document.getElementById('inventory-mini-menu').style.display = 'none';
-                   
-                        
-                    }
-                })
-                
-            })
-        });
-        */
-        
-        //Switch Buttons
     }
     addSlotDragListeners(nodeList, dropLocation){
         nodeList.forEach((node)=>{

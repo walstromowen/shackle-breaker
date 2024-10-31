@@ -941,6 +941,9 @@ img{
     width: 25%;
     height: 100%;
 }
+.dragging{
+    z-index: 1;
+}
 #title-screen{
     background: url('./assets/media/screens/title-screen.jpg');
     background-repeat: no-repeat;

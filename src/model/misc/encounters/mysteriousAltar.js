@@ -207,6 +207,19 @@ export class ASkeletalAbomination extends Stage{
                             weight: 1,
                         },
                     ],
+                    negativeOutcomes: [
+                        {
+                            result: 'battle',
+                            createBattle: (partyLevel, biome)=>{
+                                let hostiles = [new SkeletonColossus({level: partyLevel})];
+                                return new Battle({hostiles: hostiles, battleMusicSrc: "./assets/audio/musicTracks/2022-03-16_-_Escape_Route_-_www.FesliyanStudios.com.mp3", canRetreat: false});
+                            },
+                            messageFunction: (currentCharacter)=>{
+                                return `${currentCharacter.name} attacks!`
+                            }, 
+                            weight: 1,
+                        },
+                    ],
                     messageFunction: (currentCharacter)=>{
                         return `${currentCharacter.name} attempts to flee!`
                     }, 
