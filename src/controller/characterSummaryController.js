@@ -108,7 +108,6 @@ export default class CharacterSummaryController{
         //slotData
         this.view.screen.querySelectorAll('.inventory-slot-data').forEach((node)=>{
             if(this.model.props.getSituation() == 'overworld'){
-                let touchCoordinates = [null, null];
                 node.addEventListener('dragstart', ()=>{ 
                     node.classList.add('dragging');
                     document.getElementById('inventory-mini-menu').style.display = 'none';
@@ -117,69 +116,51 @@ export default class CharacterSummaryController{
                 node.addEventListener('dragend', ()=>{
                     node.classList.remove('dragging');
                 });
-                //MOBILE
+                //MOBILE TODO
+                let touchCoordinates = [null, null];
+                let timer;
                 node.addEventListener('touchstart', (e)=>{ 
-                    let touchLocation = e.targetTouches[0];
-                    let clone = e.target.cloneNode(true);
-                    clone.style.position = 'absolute';
-                    clone.classList.add('clone');
-                    e.target.classList.add('dragging');
-                    clone.style.left = touchLocation.pageX - e.target.clientWidth/2 + 'px';
-                    clone.style.top = touchLocation.pageY - e.target.clientHeight/2 + 'px';
-                    this.view.screen.appendChild(clone);
+                    node.classList.add('dragging');
+                    timer = setTimeout(()=>{
+                        document.getElementById('inventory-mini-menu').style.display = 'none';
+                            let touchLocation = e.targetTouches[0];    
+                            let clone = node.cloneNode(true);
+                            clone.classList.add('clone');
+                            clone.style.position = 'absolute';
+                            clone.style.left = touchLocation.pageX - e.target.clientWidth/2 + 'px';
+                            clone.style.top = touchLocation.pageY - e.target.clientHeight/2 + 'px';
+                            this.view.screen.append(clone);
+                    },1000)
                 });
                 node.addEventListener('touchmove',  (e)=>{ 
                     e.preventDefault();
-                    let touchLocation = e.targetTouches[0];
-                    let clone = document.getElementsByClassName('clone')[0];
                     
-                    clone.style.left = touchLocation.pageX - clone.clientWidth/2 + 'px';
-                    clone.style.top = touchLocation.pageY - clone.clientHeight/2 + 'px';
-                   
-                    touchCoordinates = [touchLocation.pageX, touchLocation.pageY];
+                    if(document.getElementsByClassName('clone')[0]){
+                        let clone = document.getElementsByClassName('clone')[0];
+                        let touchLocation = e.targetTouches[0];  
+                        clone.style.left = touchLocation.pageX - e.target.clientWidth/2 + 'px';
+                        clone.style.top = touchLocation.pageY - e.target.clientHeight/2 + 'px';           
+                        touchCoordinates = [touchLocation.pageX, touchLocation.pageY];
+                    }
                 });
                 node.addEventListener('touchend',  (e)=>{
-                    let clone = document.getElementsByClassName('clone')[0];
-                    
-                    let touchLocations = document.elementsFromPoint(touchCoordinates[0], touchCoordinates[1]);
-                    touchCoordinates = [null, null];
-                    
-                    for(let i = 0; i < touchLocations.length; i++){
-                        if(touchLocations[i].classList.contains('character-summary-equipped-slot' || 'inventory-slot') || touchLocations[i].id == 'character-summary-inventory-container'){
-                            let event = new Event('drop');
-                            touchLocations[i].dispatchEvent(event)
-                            break;
+                    if(document.getElementsByClassName('clone')[0]){
+                        let clone = document.getElementsByClassName('clone')[0];
+                        let touchLocations = document.elementsFromPoint(touchCoordinates[0], touchCoordinates[1]);
+                        touchCoordinates = [null, null];
+                        for(let i = 0; i < touchLocations.length; i++){
+                            if(touchLocations[i].classList.contains('character-summary-equipped-slot' || 'inventory-slot') || touchLocations[i].id == 'character-summary-inventory-container'){
+                                let event = new Event('drop');
+                                touchLocations[i].dispatchEvent(event)
+                                break;
+                            }
                         }
+                        clone.remove();
                     }
-                        
-                    clone.remove();
+                    clearInterval(timer);
                 });
-                        
-                
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             }
+             //MOBILE
             node.addEventListener('click', (e)=>{
                 e.preventDefault();
                 e.stopPropagation();

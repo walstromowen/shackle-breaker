@@ -71,6 +71,51 @@ export default class PartyController{
                 node.addEventListener('dragend', ()=>{ //dragend targets the element that has stopped dragging dragged
                     node.classList.remove('dragging');
                 });
+                /*
+                 //MOBILE
+                let touchCoordinates = [null, null];
+                node.addEventListener('touchstart', (e)=>{ 
+                    let touchLocation = e.targetTouches[0];
+                    let clone = e.target.cloneNode(false);
+                    clone.style.position = 'absolute';
+                    clone.classList.add('clone');
+                    e.target.classList.add('dragging');
+                    clone.style.left = touchLocation.pageX - e.target.clientWidth/2 + 'px';
+                    clone.style.top = touchLocation.pageY - e.target.clientHeight/2 + 'px';
+                    this.view.screen.appendChild(clone);
+                });
+                node.addEventListener('touchmove',  (e)=>{ 
+                    e.preventDefault();
+                    let touchLocation = e.targetTouches[0];
+                    let clone = document.getElementsByClassName('clone')[0];
+                    
+                    clone.style.left = touchLocation.pageX - clone.clientWidth/2 + 'px';
+                    clone.style.top = touchLocation.pageY - clone.clientHeight/2 + 'px';
+                   
+                    touchCoordinates = [touchLocation.pageX, touchLocation.pageY];
+                });
+                node.addEventListener('touchend',  (e)=>{
+                    let clone = document.getElementsByClassName('clone')[0];
+                    
+                    let touchLocations = document.elementsFromPoint(touchCoordinates[0], touchCoordinates[1]);
+                    touchCoordinates = [null, null];
+                    
+                    for(let i = 0; i < touchLocations.length; i++){
+                        if(touchLocations[i].classList.contains('party-character-slot-data')){
+                            let event = new Event('drop');
+                            touchLocations[i].dispatchEvent(event)
+                            break;
+                        }
+                    }
+                        
+                    clone.remove();
+                });
+                 //MOBILE
+                */
+
+
+
+
             }
             node.addEventListener('click', (e)=>{ 
                 e.stopPropagation();
