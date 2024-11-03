@@ -236,8 +236,7 @@ export class ShiftingSands2 extends Stage{
                         {
                             result: 'complete',
                             onActivate(target){
-                                target.currentStamina *= 0.25;
-                                target.currentMagic *= 0.25;
+                                Math.floor(target.currentStamina *= 0.5);
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name}'s party walks for hours in vain, only to realize they have been chasing a mirage. Discouraged, the party turns back tired and exhausted.`
@@ -284,7 +283,7 @@ export class ShiftingSands3 extends Stage{
                         {
                             result: 'nextStage',
                             onActivate(target){
-                                target.currentStamina *= 0.75;
+                                Math.floor(target.currentStamina *= 0.75);
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new ShiftingSands4({});;
@@ -297,7 +296,7 @@ export class ShiftingSands3 extends Stage{
                         {
                             result: 'nextStage',
                             onActivate(target){
-                                target.currentStamina *= 0.75;
+                                Math.floor(target.currentStamina *= 0.75);
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new StatuesInTheSand({nextStage: new ShiftingSands4({})});
@@ -307,7 +306,7 @@ export class ShiftingSands3 extends Stage{
                         {
                             result: 'complete',
                             onActivate(target){
-                                target.currentStamina *= 0.25;
+                                Math.floor(target.currentStamina *= 0.75);
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name}'s party walks for hours in vain, only to realize they have been chasing a mirage. Discouraged, the party turns back tired and exhausted.`
@@ -353,7 +352,7 @@ export class ShiftingSands4 extends Stage{
                         {
                             result: 'nextStage',
                             onActivate(target){
-                                target.currentStamina *= 0.75;
+                                Math.floor(target.currentStamina *= 0.75);
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new SandCastleEntrance({});;
@@ -365,7 +364,7 @@ export class ShiftingSands4 extends Stage{
                         {
                             result: 'complete',
                             onActivate(target){
-                                target.currentStamina *= 0.25;
+                                Math.floor(target.currentStamina *= 0.25);
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name}'s party approaches the object, only to realize the object is just a large rock. Discouraged, the party takes refuge against the rock tired and exhausted.`

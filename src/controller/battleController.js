@@ -427,6 +427,12 @@ export default class BattleController{
                             this.model.pileGold(combatant);
                         }else{
                             this.model.defeatedAllies.push(combatant);
+                            let remainingAllies = this.model.allCombatants.filter((combatant)=>{
+                                return (combatant.isHostile == false && combatant.currentHP > 0);
+                            })
+                            if(remainingAllies.length < this.model.props.getBattle().currentAllyLimit){
+                                this.model.props.getBattle().currentAllyLimit = remainingAllies.length;
+                            }
                         }
                         this.model.activeCombatants.splice(this.model.activeCombatants.indexOf(combatant), 1);
                         this.view.printToBattleConsole(`${combatant.name} has been slain!`)
@@ -671,7 +677,7 @@ export default class BattleController{
                                 if(this.currentAttacker.nextAbility.sequenceType == 'chain'){
                                     this.view.printToBattleConsole(`${this.currentAttacker.abilityTargets[0].name} evades ${this.currentAttacker.name}'s ${this.currentAttacker.nextAbility.name}!`);
                                 }else{
-                                    this.view.printToBattleConsole(`${this.currentAttacker.name}'s misses!`);
+                                    this.view.printToBattleConsole(`${this.currentAttacker.name}'s attack misses!`);
                                 }
                             }
                         }

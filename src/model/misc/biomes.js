@@ -18,7 +18,7 @@ export default class Biome{
         this.battleMusicSrc = config.battleMusicSrc || "";
         this.possibleHostiles = config.possibleHostiles || [];
         this.possibleEncounters = config.possibleEncounters || [];
-        this.lootTable = config.possibleEncounters || [
+        this.lootTable = config.lootTable || [
             {item: ()=>{return new ArcaneStaff({level: 1})}, weight: 1},
             {item: ()=>{return new LightStaff({level: 1})}, weight: 1},
             {item: ()=>{return new DarkStaff({level: 1})}, weight: 1},
@@ -90,7 +90,7 @@ export class Plains extends Biome{
                 {entity: ()=>{return new GroveGuardian({})}, weight: 1},
             ],
             possibleEncounters: [
-                {startingStage: ()=>{return new WanderingMercenary({})}, resetOnLeave: false, weight: 1},
+                //{startingStage: ()=>{return new WanderingMercenary({})}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new TreasureChest({})}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new MadmanAhead({})}, resetOnLeave: false, weight: 1},
             ],
@@ -130,7 +130,7 @@ export class Desert extends Biome{
                 {entity: ()=>{return new SandStalker({})}, weight: 3},
             ],
             possibleEncounters: [
-                {startingStage: ()=>{return new WanderingMercenary({})}, resetOnLeave: false, weight: 1},
+                //{startingStage: ()=>{return new WanderingMercenary({})}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new TreasureChest({})}, resetOnLeave: false, weight: 2},
                 {startingStage: ()=>{return new SandCastleEntrance({})}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new ShiftingSands({})}, resetOnLeave: false, weight: 3},
