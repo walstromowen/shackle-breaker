@@ -1370,7 +1370,7 @@ img{
     padding: var(--ui-pannel-padding);
     height: 100%
 }
-#inventory-mini-menu-img{
+#inventory-mini-menu-img, #ability-mini-menu-img{
     padding: 4px;
     width: 60px;
     height:  60px;
@@ -1380,6 +1380,22 @@ img{
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+}
+#ability-mini-menu{
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    display: none;
+    width: var(--inventory-mini-menu-width);
+    height: var(--inventory-mini-menu-height);
+    min-height: var(--inventory-mini-menu-height);
+    flex-direction:column;
+    box-shadow: 4px 8px 20px black;
+    background: radial-gradient( var(--color-4), var(--color-1));
+    display: none;
+    gap: 8px;
+    padding: 4px;
+    overflow-y: auto;
 }
 #inventory-mini-menu{
     position:absolute;

@@ -104,10 +104,22 @@ export class AtTheAltar extends Stage{
                                 }
                                 target.statusArray = [];
                                 target.currentHP = target.maxHP;
+                                target.currentMagic = target.maxMagic;
+                                target.currentStamina = target.maxStamina;
                                 
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `As ${currentCharacter.name} reaches to examine the skull, the skull's eyes begin to glow blue filling the whole room with a blinding light! Upon opening their eye's ${currentCharacter}, realizes that the skull has disappered and feels a sense of newly found strength.`
+                            }, 
+                            weight: 1,
+                        },
+                        {
+                            result: 'loot',
+                            createLoot: (partyLevel, biome)=>{
+                                return  [getRandomArrayElementWeighted(biome.lootTable).item(), getRandomArrayElementWeighted(biome.lootTable).item()];
+                            },
+                            messageFunction: (currentCharacter)=>{
+                                return `As ${currentCharacter.name} reaches to examine the skull, the skull's eyes begin to glow green. Suddenly, mysterious objects materialize on the altar just waiting for ${currentCharacter.name} to grab them.`
                             }, 
                             weight: 1,
                         },

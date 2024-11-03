@@ -7,6 +7,7 @@ export default class BattleController{
         this.model = model;
         this.view = view;
         this.currentAttacker;
+        this.AbilityMiniMenuExitEventHandler;
         this.selectTargetEventHandler;
         this.removeTargetEventHandler;
         this.confirmTargetEventHandler;
@@ -114,6 +115,24 @@ export default class BattleController{
                     playSoundEffect("./assets/audio/soundEffects/power-down-45784.mp3");
                 }
             })
+            abilityButtons[i].addEventListener('contextmenu', (e)=>{
+                e.preventDefault();
+                let abilityMenu = document.getElementById('ability-mini-menu');
+                abilityMenu.style.display = 'flex';
+                this.props.updateAbilityMenu(combinedAbilities[i], ally);
+                this.props.positionPopUpElement(abilityMenu, abilityButtons[i]);
+                this.view.screen.addEventListener('click', this.abilityMiniMenuExitEventHandler = (ev)=>{
+                    this.view.screen.removeEventListener('click', this.abilityMiniMenuExitEventHandler);
+                    if(
+                        ev.clientX < abilityMenu.getBoundingClientRect().x ||
+                        ev.clientX > abilityMenu.getBoundingClientRect().x + abilityMenu.getBoundingClientRect().width ||
+                        ev.clientY < abilityMenu.getBoundingClientRect().y ||
+                        ev.clientY > abilityMenu.getBoundingClientRect().y + abilityMenu.getBoundingClientRect().height
+                    ){
+                        abilityMenu.style.display = 'none';
+                    }
+                });
+            })  
         } 
         //consumable abilities
         let consumableAbilities = this.model.getAvailableConsumableAbilities();

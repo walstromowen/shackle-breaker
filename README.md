@@ -26,7 +26,7 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 * Mobile event listener support
 * XP and gold calculation refinements
 * Animations dpendent on hostile vs ally
-* Labels for ability sources / colored coated for damage types / merged abilities
+* Ability colored coated for damage types / merged abilities
 * Enemy level up stats refinement
 * Shielded Tweak
 * critical and damage notifications

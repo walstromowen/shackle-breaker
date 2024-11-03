@@ -21,6 +21,8 @@ export default class GameController{
             getCharacterSummaryController: this.getCharacterSummaryController.bind(this),
             getEncounterController: this.getEncounterController.bind(this),
             updateMiniMenu: this.updateMiniMenu.bind(this),
+            updateAbilityMenu: this.updateAbilityMenu.bind(this),
+            positionPopUpElement: this.positionPopUpElement.bind(this),
         }
         this.model = model;
         this.view = view;
@@ -35,6 +37,9 @@ export default class GameController{
         this.initialize();
     }
     initialize(){
+        window.addEventListener('resize', ()=>{
+            this.view.resize();
+        });
         document.getElementById('inventory-mini-menu-overview-button').addEventListener('click', ()=>{
             document.getElementById('inventory-mini-menu-stats-tab').style.display = 'none';
             document.getElementById('inventory-mini-menu-abilities-tab').style.display = 'none';
@@ -113,5 +118,11 @@ export default class GameController{
     }
     updateMiniMenu(item){
         this.view.updateMiniMenu(item);
+    }
+    updateAbilityMenu(ability, entity){
+        this.view.updateAbilityMenu(ability, entity);
+    }
+    positionPopUpElement(popUpElement, relativeElement){
+        this.view.positionPopUpElement(popUpElement, relativeElement)
     }
 }

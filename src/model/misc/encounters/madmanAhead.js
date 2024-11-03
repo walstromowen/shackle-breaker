@@ -47,10 +47,7 @@ export class MadmanAhead extends Stage{
                             result: 'loot',
                             imageSrc: './assets/media/entities/cursed-villager-1.jpg',
                             createLoot: (partyLevel, biome)=>{
-                                let hostile = new Madman({level: partyLevel})
-                               
-                                let loot = hostile.dropLoot(1);
-                                return loot;
+                                return  [getRandomArrayElementWeighted(biome.lootTable).item()];
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} sneaks up behind the Madman and plunges a dagger into it side leaving the Madman lifeless on the ground. If it even was alive...`
@@ -116,10 +113,7 @@ export class MadmanAhead extends Stage{
                             result: 'loot',
                             imageSrc: './assets/media/entities/cursed-villager-1.jpg',
                             createLoot: (partyLevel, biome)=>{
-                                let hostile = new Madman({level: partyLevel})
-                               
-                                let loot = hostile.dropLoot(1);
-                                return loot;
+                                return  [getRandomArrayElementWeighted(biome.lootTable).item()];
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `The rock hits the Madman right in head leaving the Madman lifeless on the ground. If it even was alive...`
@@ -201,9 +195,7 @@ export class MadmanAhead extends Stage{
                             result: 'loot',
                             imageSrc: './assets/media/entities/cursed-villager-1.jpg',
                             createLoot: (partyLevel, biome)=>{
-                                let hostile = new Madman({level: partyLevel})
-                                let loot = hostile.dropLoot(2);
-                                return loot;
+                                return  [getRandomArrayElementWeighted(biome.lootTable).item()];
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} converses with the Madman about the dilusional rants one might expect from a man who has lost his mind. Finally, the Madman smiles, and with tears in his eyes gives ${currentCharacter.name} a his backpack. Just before darting off, he mutters, "It's really you .... Shackle Breaker...".`
@@ -272,10 +264,7 @@ export class ConversationWithMadman extends Stage{
                         {
                             result: 'loot',
                             createLoot: (partyLevel, biome)=>{
-                                let hostile = new Madman({level: partyLevel})
-                               
-                                let loot = hostile.dropLoot(1);
-                                return loot;
+                                return  [getRandomArrayElementWeighted(biome.lootTable).item()];
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `Upon hearing ${currentCharacter.name}, the Madman falls back and hisses. The Madman then gets up and runs away leaving behind his knapsack in the process.`
@@ -314,9 +303,7 @@ export class ConversationWithMadman extends Stage{
                         {
                             result: 'loot',
                             createLoot: (partyLevel, biome)=>{
-                                let hostile = new Madman({level: partyLevel})
-                                let loot = hostile.dropLoot(3);
-                                return loot;
+                                return  [getRandomArrayElementWeighted(biome.lootTable).item()];
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `"Magic like you! So me like you! Hahahaha! Me give you these now!"`

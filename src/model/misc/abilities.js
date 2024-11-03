@@ -3,12 +3,14 @@ import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen, Bl
 export class Ability{
     constructor(config){
         this.name = config.name;
+        this.description = config.description || 'Radda Radda Radda Radda Radda heh heh Rada!',
         this.iconSrc = config.iconSrc;
         this.targetCount = config.targetCount || 1;
         this.accuracy = config.accuracy || 1;
         this.speedModifier = config.speedModifier || 1;
         this.damageModifier = config.damageModifier || 1;
-        this.criticalModifier = config.criticalModifier || 1.5;
+        this.criticalDamageModifier = config.criticalDamageModifier || 1.5;
+        this.criticalChanceModifier = config.criticalChance|| 0.05;
         this.healthCost = config.healthCost || 0;
         this.staminaCost = config.staminaCost || 0;
         this.magicCost = config.magicCost || 0;
@@ -109,8 +111,8 @@ export class Ability{
         }
     }
     checkCritical(attacker, rawDamage){
-        if(Math.random() < attacker.currentCritical){
-            return rawDamage * this.criticalModifier;
+        if(Math.random() < attacker.currentCritical + this.criticalChanceModifier){
+            return rawDamage * this.criticalDamageModifier;
         }else{
             return rawDamage;
         }
@@ -234,8 +236,10 @@ export class Retreat extends Ability{
     constructor(config){
         super({
             name: 'retreat',
+            description: 'Allows current character to escape battle. Sometimes, living to fight another day is more nobel than facing a foolish fate.',
             iconSrc: './assets/media/icons/run.png',
             speedModifier: config.speedModifier || 1,
+            damageModifier: config.speedModifier || 0,
             soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
             targetAnimation: 'ally-retreat',
             defaultTarget: 'self',
@@ -254,8 +258,10 @@ export class Rest extends Ability{
     constructor(config){
         super({
             name: 'rest',
+            description: 'Allows current character to recover health, stamina, and magic based on recovery values.',
             iconSrc: './assets/media/icons/despair.png',
             speedModifier: config.speedModifier || 1,
+            damageModifier: config.speedModifier || 0,
             soundEffectSrc: "./assets/audio/soundEffects/power-down-45784.mp3",
             abilityAnimation: 'sink',
             abilityAnimationImage: './assets/media/icons/despair.png',
@@ -277,8 +283,10 @@ export class Struggle extends Ability{
     constructor(config){
         super({
             name: 'struggle',
+            description: 'Help!',
             iconSrc: './assets/media/icons/despair.png',
             speedModifier: config.speedModifier || 1,
+            damageModifier: config.speedModifier || 0,
             soundEffectSrc: "./assets/audio/soundEffects/power-down-45784.mp3",
             targetAnimation: 'shake',
             defaultTarget: 'self',
@@ -294,6 +302,7 @@ export class Slash extends Ability{
     constructor(config){
         super({
             name: 'slash',
+            description: 'Strike a target with a deadly slash. Has a chance to cause bleeding.',
             iconSrc: './assets/media/icons/quick-slash.png',
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 1,
@@ -330,6 +339,7 @@ export class Punch extends Ability{
     constructor(config){
         super({
             name: 'strike',
+            description: "Strike a target with one's fist.",
             iconSrc: './assets/media/icons/punch.png',
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 0.33,
@@ -362,6 +372,7 @@ export class Strike extends Ability{
     constructor(config){
         super({
             name: 'strike',
+            description: "Strike a target with the blunt edge of one's weapon.",
             iconSrc: './assets/media/icons/hammer-drop.png',
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 1,
@@ -394,6 +405,7 @@ export class ShootArrow extends Ability{
     constructor(config){
         super({
             name: 'shoot arrow',
+            description: "Shoot a target with an arrow. Has a chance to cause bleeding",
             iconSrc: './assets/media/icons/broadhead-arrow.png',
             speedModifier: config.speedModifier || 1.25,
             damageModifier: config.damageModifier || 1,
@@ -430,10 +442,11 @@ export class Tripleshot extends Ability{
     constructor(config){
         super({
             name: 'triple shot',
+            description: "Shoot up to three arrows simultaneously at different targets.",
             iconSrc: './assets/media/icons/striking-arrows.png',
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 1,
-            criticalModifier: config.criticalModifier || 1.2,
+            criticalDamageModifier: config.criticalDamageModifier || 1.2,
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 20,
             magicCost: config.magicCost || 0,
@@ -465,6 +478,7 @@ export class Cleave extends Ability{
     constructor(config){
         super({
             name: 'cleave',
+            description: "Cleave up to two different targets.",
             iconSrc: './assets/media/icons/serrated-slash.png',
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 1,
@@ -499,6 +513,7 @@ export class MagicMissile extends Ability{
     constructor(config){
         super({
             name: 'magic missle',
+            description: "Fire a magic missile made of powerful arcane energy at three targets.",
             iconSrc: './assets/media/icons/frayed-arrow.png',
             speedModifier: config.speedModifier || 0.75,
             damageModifier: config.damageModifier || 1.5,
@@ -533,6 +548,7 @@ export class LesserHeal extends Ability{
     constructor(config){
         super({
             name: 'lesser heal',
+            description: "Restore a target's hitpoints using arcane magic.",
             iconSrc: './assets/media/icons/heart-plus.png',
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 1,
@@ -565,6 +581,7 @@ export class DrainLife extends Ability{
     constructor(config){
         super({
             name: 'drain life',
+            description: "Absorb the hitpoints of another target using dark arcane magic.",
             iconSrc: './assets/media/icons/tentacle-heart.png',
             speedModifier: config.speedModifier || 0.75,
             damageModifier: config.damageModifier || 1,
@@ -599,6 +616,7 @@ export class Bite extends Ability{
     constructor(config){
         super({
             name: 'bite',
+            description: "Bite a target with a powerful jaw. More effective with larger creatures. Has a chance to cause bleeding.",
             iconSrc: './assets/media/icons/sharp-lips.png',
             speedModifier: config.speedModifier || 1.25,
             damageModifier: config.damageModifier || 0.75,
@@ -635,6 +653,7 @@ export class Fireball extends Ability{
     constructor(config){
         super({
             name: 'fireball',
+            description: "Shoot a target with a ball of fire made with elemental magic. Has a chance to burn the target.",
             iconSrc: './assets/media/icons/fireball.png',
             speedModifier: config.speedModifier || 0.75,
             damageModifier: config.damageModifier || 1.25,
@@ -671,6 +690,7 @@ export class LightningBolt extends Ability{
     constructor(config){
         super({
             name: 'lightning bolt',
+            description: "Blast a target with a lightning bolt made with elemental magic. Has a chance to paralyze the target.",
             iconSrc: './assets/media/icons/lightning-tree.png',
             speedModifier: config.speedModifier || 0.75,
             damageModifier: config.damageModifier || 1.25,
@@ -708,6 +728,7 @@ export class IceShard extends Ability{
     constructor(config){
         super({
             name: 'ice shard',
+            description: "Blast a target with a shard of ice made with elemental magic. Has a chance to freeze the target causing a variety of negative effects.",
             iconSrc: './assets/media/icons/ice-spear.png',
             speedModifier: config.speedModifier || 0.75,
             damageModifier: config.damageModifier || 1.25,
@@ -744,6 +765,7 @@ export class Shockwave extends Ability{
     constructor(config){
         super({
             name: 'shockwave',
+            description: "Blast a target with a wave of elemental magic. Has a chance to knock over the target.",
             iconSrc: './assets/media/icons/wind-slap.png',
             speedModifier: config.speedModifier || 1.25,
             damageModifier: config.damageModifier || 0.25,
@@ -780,6 +802,7 @@ export class Siphon extends Ability{
     constructor(config){
         super({
             name: 'siphon',
+            description: "Absorb a target's magic points using dark arcane magic.",
             iconSrc: './assets/media/icons/body-swapping.png',
             speedModifier: config.speedModifier || 1.0,
             damageModifier: config.damageModifier || 1.5,
@@ -814,14 +837,15 @@ export class Earthquake extends Ability{//Needs Work targeting same targets twic
     constructor(config){
         super({
             name: 'earthquake',
+            description: "Shake the ground using elemental magic and strength to summon an earthquake over an enemy party. Has a chance to knock over targets.",
             iconSrc: './assets/media/icons/earth-split.png',
             speedModifier: config.speedModifier || 0.5,
             damageModifier: config.damageModifier || 1.5,
-            criticalModifier: config.criticalModifier || 1.1,
+            criticalDamageModifier: config.criticalDamageModifier || 1.1,
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 30,
             magicCost: config.magicCost || 0,
-            damageTypes: config.damageTypes || ['blunt'],
+            damageTypes: config.damageTypes || ['blunt', 'elemental'],
             targetCount: 3,
             soundEffectSrc: "./assets/audio/soundEffects/supernatural-explosion-104295.wav",
             sequenceType: 'splash',
@@ -838,6 +862,9 @@ export class Earthquake extends Ability{//Needs Work targeting same targets twic
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
+            if(Math.random()*4 < 1){
+                this.inflictStatus(new KnockedDown({holder: target}), target);
+            }
             this.triggerOnDeliverDamage(attacker);
             this.triggerOnRecieveDamage(target);
         }
@@ -850,6 +877,7 @@ export class ShootWeb extends Ability{
     constructor(config){
         super({
             name: 'shoot web',
+            description: "Summon a web from elemental magic to surround a target. Has a chance of binding a target",
             iconSrc: './assets/media/icons/wep-spit.png',
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 0.25,
@@ -885,6 +913,7 @@ export class Pounce extends Ability{
     constructor(config){
         super({
             name: 'pounce',
+            description: "Leap onto a target. Has a chance of knocking over smaller targets.",
             iconSrc: './assets/media/icons/paw-print.png',
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 1,
@@ -921,6 +950,7 @@ export class Block extends Ability{
     constructor(config){
         super({
             name: 'block',
+            description: "Raise a sheild in defence. Protects oneself until their next attack or blocking a attack.",
             iconSrc: './assets/media/icons/shield.png',
             speedModifier: config.speedModifier || 1.25,
             damageModifier: config.damageModifier || 1.0,
@@ -948,6 +978,7 @@ export class VineLash extends Ability{
     constructor(config){
         super({
             name: 'vine lash',
+            description: "Summon a magical vine to constrict a target. Has a chance of binding the target.",
             iconSrc: './assets/media/icons/vine-whip.png',
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 1,
@@ -984,6 +1015,7 @@ export class Bless extends Ability{
     constructor(config){
         super({
             name: 'bless',
+            description: "Grant a blessing upon a target restoring the target's health every turn using light arcane magic.",
             iconSrc: './assets/media/icons/cherish.png',
             speedModifier: config.speedModifier || 1.0,
             damageModifier: config.damageModifier || 0,
@@ -1010,6 +1042,7 @@ export class Curse extends Ability{
     constructor(config){
         super({
             name: 'curse',
+            description: "Curse a target to absorb the target's health every turn using dark arcane magic.",
             iconSrc: './assets/media/icons/cursed-star.png',
             speedModifier: config.speedModifier || 1.0,
             damageModifier: config.damageModifier || 0,
@@ -1060,6 +1093,7 @@ export class ThrowPosionedKnife extends Ability{
     constructor(config){
         super({
             name: 'throw posioned knife',
+            description: "Throw a posioned knife at a target. Posions the target.",
             iconSrc: './assets/media/icons/flying-dagger.png',
             background: config.background || 'grey',
             speedModifier: config.speedModifier || 1.25,
@@ -1097,6 +1131,7 @@ export class DrinkHealthPotion extends Ability{
     constructor(config){
         super({
             name: 'drink health potion',
+            description: "Drink a potion of health restoring half of one's hitpoints. Can be thrown at another target.",
             iconSrc: './assets/media/icons/standing-potion.png',
             speedModifier: config.speedModifier || 1,
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-light-spell-873 copy.wav",
@@ -1123,6 +1158,7 @@ export class DrinkStaminaPotion extends Ability{
     constructor(config){
         super({
             name: 'drink stamina potion',
+            description: "Drink a potion of stamina restoring half of one's stamina points. Can be thrown at another target.",
             iconSrc: './assets/media/icons/square-bottle.png',
             speedModifier: config.speedModifier || 1,
             soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
@@ -1149,6 +1185,7 @@ export class DrinkMagicPotion extends Ability{
     constructor(config){
         super({
             name: 'drink magic potion',
+            description: "Drink a potion of magic restoring half of one's magic points. Can be thrown at another target.",
             iconSrc: './assets/media/icons/potion-ball.png',
             speedModifier: config.speedModifier || 1,
             soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
@@ -1175,6 +1212,7 @@ export class UseAntidote extends Ability{
     constructor(config){
         super({
             name: 'use antidote',
+            description: "Ingest an antidote removing the poison effect. Can be thrown at another target.",
             iconSrc: './assets/media/icons/corked-tube.png',
             speedModifier: config.speedModifier || 1,
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-light-spell-873.wav",
@@ -1199,6 +1237,7 @@ export class UseAloeRemedy extends Ability{
     constructor(config){
         super({
             name: 'use aloe remedy',
+            description: "Apply an aloe remedy removing the burn effect. Can be thrown at another target.",
             iconSrc: './assets/media/icons/curled-leaf.png',
             speedModifier: config.speedModifier || 1,
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-light-spell-873.wav",
@@ -1223,6 +1262,7 @@ export class UseBandage extends Ability{
     constructor(config){
         super({
             name: 'use bandage',
+            description: "Apply a bandage healting a small amount of hitpoints and removing the bleeding effect. Can be thrown at another target.",
             iconSrc: './assets/media/icons/bandage-roll.png',
             speedModifier: config.speedModifier || 1,
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-light-spell-873.wav",
@@ -1249,6 +1289,7 @@ export class UseParalysisTonic extends Ability{
     constructor(config){
         super({
             name: 'use paralysis tonic',
+            description: "Apply a bandage healting a moderate amount of stamina points and removing the paralysis effect. Can be thrown at another target.",
             iconSrc: './assets/media/icons/round-bottom-flask.png',
             speedModifier: config.speedModifier || 1,
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-light-spell-873.wav",
@@ -1272,11 +1313,11 @@ export class UseParalysisTonic extends Ability{
     }
 }
 
-
 export class DrinkKurtussBrewOfMadness extends Ability{
     constructor(config){
         super({
             name: 'drink kurtuss brew of madness',
+            description: "Bottoms up...",
             iconSrc: './assets/media/icons/standing-potion.png',
             background: config.background || 'red',
             speedModifier: config.speedModifier || 1,

@@ -203,7 +203,7 @@ export default class EncounterController{
                 }, 2000);
                 return
             case 'loot':
-                let loot = outcome.createLoot(this.model.calcHighestPartyLevel(), this.model.getMap().biome);
+                let loot = outcome.createLoot(this.model.props.calcHighestPartyLevel(), this.model.props.getMap().biome);
                 let message = '';
                 if(loot.length > 0){
                     for(let i = 0; i < loot.length; i++){

@@ -248,8 +248,7 @@ export default class CharacterSummaryController{
                 document.getElementById('inventory-mini-menu-abilities-tab').style.display = 'none';
                 let miniMenu = document.getElementById('inventory-mini-menu');
                 miniMenu.style.display = 'flex';
-                miniMenu.style.left = node.getBoundingClientRect().x  + node.getBoundingClientRect().width + "px";
-                miniMenu.style.top = node.getBoundingClientRect().y   + "px";
+                this.props.positionPopUpElement(miniMenu, node);
                 this.view.screen.addEventListener('click', this.inventoryMiniMenuExitEventHandler = (ev)=>{
                     this.view.screen.removeEventListener('click', this.inventoryMiniMenuExitEventHandler);
                     let miniMenu = document.getElementById('inventory-mini-menu');

@@ -20,7 +20,7 @@ export class TreasureChest extends Stage{
                         {
                             result: 'loot',
                             createLoot: (partyLevel, biome)=>{
-                                return  getRandomArrayElementWeighted(biome.lootTable).item();
+                                return  [getRandomArrayElementWeighted(biome.lootTable).item()];
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} sucessfully prys the chest open!`
@@ -70,7 +70,7 @@ export class TreasureChest extends Stage{
                         {
                             result: 'loot',
                             createLoot: (partyLevel, biome)=>{
-                                return  getRandomArrayElementWeighted(biome.lootTable).item();
+                                return  [[getRandomArrayElementWeighted(biome.lootTable).item()]];
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} sucessfully picks the lock!`
@@ -120,7 +120,7 @@ export class TreasureChest extends Stage{
                         {
                             result: 'loot',
                             createLoot: (partyLevel, biome)=>{
-                                return  getRandomArrayElementWeighted(biome.lootTable).item();
+                                return  [getRandomArrayElementWeighted(biome.lootTable).item()];
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} sucessfully picks the lock!`

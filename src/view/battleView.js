@@ -2,6 +2,7 @@ import { loadCanvasImages, createElement, capiltalizeAllFirstLetters, playSoundE
 
 export default class BattleView{
     constructor(){
+        this.screen = document.getElementById('battle-screen');
         this.allyContainer = document.getElementById('ally-party-display');
         this.hostileContainer = document.getElementById('hostile-party-display');
         this.abilityTab = document.getElementById('battle-controls-abilities-tab');

@@ -95,7 +95,7 @@ export default class GameView{
             const imgNameContainer = createElement('div', 'flex');
                 const abilityImg = createElement('img', 'utility-button');
                 const abilityName = createElement('p', 'stat-label');
-
+        /*
             const hpCostContainer = createElement('div', 'stat-cell');
                 const hpCostImgLabelContainer = createElement('div', 'flex');
                     const hpCostImg = createElement('img', 'icon');
@@ -139,10 +139,10 @@ export default class GameView{
                 const currentAccuracy = createElement('p', 'stat-value');
 
             const damageTypesContainer = createElement('div', 'stat-cell');
-      
+        */
             abilityImg.src = ability.iconSrc;
             abilityName.innerText = capiltalizeAllFirstLetters(ability.name);
-
+        /*
             hpCostImg.src = './assets/media/icons/swirl-string.png';
             hpCostLabel.innerText = 'HP COST';
             currentHpCost.innerText = ability.healthCost;
@@ -170,11 +170,12 @@ export default class GameView{
             accuracyImg.src = './assets/media/icons/swirl-string.png';
             accuracyLabel.innerText = 'ACCURACY';
             currentAccuracy.innerText = ability.accuracy;
-
+        */
 
             imgNameContainer.appendChild(abilityImg);
             imgNameContainer.appendChild(abilityName);
             slot.appendChild(imgNameContainer);
+            /*
             slot.appendChild(hpCostContainer);
             slot.appendChild(staminaCostContainer);
             slot.appendChild(magicCostContainer);
@@ -182,8 +183,80 @@ export default class GameView{
             slot.appendChild(speedModifierContainer);
             slot.appendChild(damageModifierContainer);
             slot.appendChild(accuracyContainer);
-      
+        */
 
         document.getElementById('inventory-mini-menu-abilities-tab').appendChild(slot);
+    }
+    updateAbilityMenu(ability, entity){
+        document.getElementById('ability-mini-menu-ability-name').innerText = ability.name.toUpperCase();
+        document.getElementById('ability-mini-menu-img').src = ability.iconSrc;
+        document.getElementById('ability-mini-menu-description').innerText = ability.description;
+
+        document.getElementById('ability-mini-menu-hp-cost').innerText = ability.healthCost;
+        document.getElementById('ability-mini-menu-speed').innerText = ability.speedModifier * entity.currentSpeed;
+        document.getElementById('ability-mini-menu-stamina-cost').innerText = ability.staminaCost;
+        document.getElementById('ability-mini-menu-accuracy').innerText = ability.accuracy;
+        document.getElementById('ability-mini-menu-magic-cost').innerText = ability.magicCost;
+        document.getElementById('ability-mini-menu-critical').innerText = (ability.criticalChanceModifier + entity.currentCritical) + '%';
+        document.getElementById('ability-mini-menu-damage').innerText = ability.damageModifier * entity.currentBluntAttack;//TODO
+        document.getElementById('ability-mini-menu-targets').innerText = `${ability.targetLock} x ${ability.targetCount}`;
+       
+    }
+    positionPopUpElement(popUpElement, relativeElement){
+        let topLeftCoordinates = [0,0];
+        //try bottom right
+        topLeftCoordinates[0] = relativeElement.getBoundingClientRect().x  + relativeElement.getBoundingClientRect().width ;
+        topLeftCoordinates[1] = relativeElement.getBoundingClientRect().y
+        if(this.checkFitsOnScreen(popUpElement, topLeftCoordinates)){
+            popUpElement.style.left = topLeftCoordinates[0] + "px";
+            popUpElement.style.top = topLeftCoordinates[1] + "px";
+            return;
+        }
+        //try top right
+        topLeftCoordinates[0] = relativeElement.getBoundingClientRect().x  + relativeElement.getBoundingClientRect().width;
+        topLeftCoordinates[1] = relativeElement.getBoundingClientRect().y + relativeElement.getBoundingClientRect().height - popUpElement.getBoundingClientRect().height;
+        if(this.checkFitsOnScreen(popUpElement, topLeftCoordinates)){
+            popUpElement.style.left = topLeftCoordinates[0] + "px";
+            popUpElement.style.top = topLeftCoordinates[1] + "px";
+            return;
+        }
+        //try top left
+        topLeftCoordinates[0] = relativeElement.getBoundingClientRect().x  - popUpElement.getBoundingClientRect().width;
+        topLeftCoordinates[1] = relativeElement.getBoundingClientRect().y - (popUpElement.getBoundingClientRect().height - relativeElement.getBoundingClientRect().width);
+        if(this.checkFitsOnScreen(popUpElement, topLeftCoordinates)){
+            popUpElement.style.left = topLeftCoordinates[0] + "px";
+            popUpElement.style.top = topLeftCoordinates[1] + "px";
+            return;
+        }
+        //try Bottom left
+        topLeftCoordinates[0] = relativeElement.getBoundingClientRect().x  - popUpElement.getBoundingClientRect().width;
+        topLeftCoordinates[1] = relativeElement.getBoundingClientRect().y;
+        if(this.checkFitsOnScreen(popUpElement, topLeftCoordinates)){
+            popUpElement.style.left = topLeftCoordinates[0] + "px";
+            popUpElement.style.top = topLeftCoordinates[1] + "px";
+            return;
+        }
+    }
+    checkFitsOnScreen(element, topLeftCoordinates){
+        let elementBoundary = element.getBoundingClientRect()
+        //alert(`Popup: ${topLeftCoordinates[0] + elementBoundary.width} : ${topLeftCoordinates[1] + elementBoundary.height} \n
+            //  Screen: ${window.screen.width} : ${window.screen.height}`
+            //)
+             //alert(`compare: ${topLeftCoordinates[1] + elementBoundary.height} : ${window.innerHeight}` )
+            
+        if(
+            topLeftCoordinates[0] + elementBoundary.width > window.innerWidth ||
+            topLeftCoordinates[1] + elementBoundary.height > window.innerHeight ||
+            topLeftCoordinates[0] < 0 ||
+            topLeftCoordinates[1] < 0
+        ){
+            return false;
+        }else{
+            return true;
+        }
+    }
+    resize(){
+        document.getElementById('ability-mini-menu').style.display = 'none';
+        document.getElementById('inventory-mini-menu').style.display = 'none';
     }
 }
