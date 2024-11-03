@@ -11,6 +11,7 @@ export default class MapChangeController{
             playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
             playMusic(this.props.getOverworldController().model.props.getMap().biome.backgroundMusicSrc);
             document.querySelector('body').classList.remove('battle-wipe');
+            this.props.getOverworldController().view.revealOverworldUi();
         });
     }
 }
