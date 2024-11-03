@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower} from "./abilities.js";
 import { DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, UseAntidote, UseAloeRemedy, UseParalysisTonic, UseBandage, DrinkKurtussBrewOfMadness} from "./abilities.js";
 
 let counter = 0;
@@ -499,7 +499,7 @@ export class DarkStaff extends Attachable{
             speed: 0,
             evasion: 0,
             critical: 0,
-            abilityArray: [new Strike({}), new DrainLife({}), new Curse({})],
+            abilityArray: [new Strike({}), new DrainLife({})],
         })
         this.upgrade(config.level-this.level);
     }
@@ -1418,3 +1418,16 @@ export class KurtussBrewOfMadness extends Consumable{
         });
     }
 }
+export class Meteorite extends Consumable{
+    constructor(){
+        super({
+            name: 'meteorite',
+            description: 'a framgment of a meteor. The artifact is rumored to have come from another world. Much like this meteorite. Use to summon a meteor shower.',
+            imageSrc: './assets/media/icons/asteroid.png',
+            price: 300,
+            abilityArray: [],
+            useSituations: ['overworld'],
+        });
+    }
+}
+

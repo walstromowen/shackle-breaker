@@ -120,16 +120,16 @@ export default class CharacterSummaryController{
                 let touchCoordinates = [null, null];
                 let timer;
                 node.addEventListener('touchstart', (e)=>{ 
-                    node.classList.add('dragging');
                     timer = setTimeout(()=>{
+                        node.classList.add('dragging');
                         document.getElementById('inventory-mini-menu').style.display = 'none';
-                            let touchLocation = e.targetTouches[0];    
-                            let clone = node.cloneNode(true);
-                            clone.classList.add('clone');
-                            clone.style.position = 'absolute';
-                            clone.style.left = touchLocation.pageX - e.target.clientWidth/2 + 'px';
-                            clone.style.top = touchLocation.pageY - e.target.clientHeight/2 + 'px';
-                            this.view.screen.append(clone);
+                        let touchLocation = e.targetTouches[0];    
+                        let clone = node.cloneNode(true);
+                        clone.classList.add('clone');
+                        clone.style.position = 'absolute';
+                        clone.style.left = touchLocation.pageX - e.target.clientWidth/2 + 'px';
+                        clone.style.top = touchLocation.pageY - e.target.clientHeight/2 + 'px';
+                        this.view.screen.append(clone);
                     },1000)
                 });
                 node.addEventListener('touchmove',  (e)=>{ 

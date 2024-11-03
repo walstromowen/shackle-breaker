@@ -47,9 +47,11 @@ export default class Map{
                         break;
                     case 2:
                         this.tileLayout[y][x] = new Tile('entrance');
+                        this.tileLayout[y][x].imageCoordinates = [0, 2];
                         break;
                     case 3:
                         this.tileLayout[y][x] = new Tile('exit');
+                        this.tileLayout[y][x].imageCoordinates = [0, 2];
                         break;
                 }
                 this.tileLayout[y][x].position = [x, y];

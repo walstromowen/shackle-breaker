@@ -8,6 +8,7 @@ export class Ability{
         this.accuracy = config.accuracy || 1;
         this.speedModifier = config.speedModifier || 1;
         this.damageModifier = config.damageModifier || 1;
+        this.criticalModifier = config.criticalModifier || 1.5;
         this.healthCost = config.healthCost || 0;
         this.staminaCost = config.staminaCost || 0;
         this.magicCost = config.magicCost || 0;
@@ -107,6 +108,13 @@ export class Ability{
             return true; //true means target evades
         }
     }
+    checkCritical(attacker, rawDamage){
+        if(Math.random() < attacker.currentCritical){
+            return rawDamage * this.criticalModifier;
+        }else{
+            return rawDamage;
+        }
+    }
     inflictStatus(status, target){
         for(let i = 0; i < target.statusArray.length; i++){
             if(target.statusArray[i].name == status.name){
@@ -133,6 +141,7 @@ export class Ability{
                 if(this.checkTargetEvade(targets[0]) && attacker.battleId != targets[0].battleId){
                     resolveObject.evade = true;
                 }else{
+                    this.checkCritical(attacker);
                     this.activate(attacker, targets[0]);
                 }
                 break;
@@ -143,6 +152,7 @@ export class Ability{
                     if(this.checkTargetEvade(targets[i]) && attacker.battleId != targets[i].battleId){//may be issue with evading splash attacks
                         resolveObject.evade = true;
                     }else{
+                        this.checkCritical(attacker);
                         this.activate(attacker, targets[i]);
                     }
                 }
@@ -301,6 +311,7 @@ export class Slash extends Ability{
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
@@ -335,6 +346,7 @@ export class Punch extends Ability{
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
@@ -366,6 +378,7 @@ export class Strike extends Ability{
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
@@ -398,6 +411,7 @@ export class ShootArrow extends Ability{
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
@@ -419,6 +433,7 @@ export class Tripleshot extends Ability{
             iconSrc: './assets/media/icons/striking-arrows.png',
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 1,
+            criticalModifier: config.criticalModifier || 1.2,
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 20,
             magicCost: config.magicCost || 0,
@@ -434,6 +449,7 @@ export class Tripleshot extends Ability{
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
@@ -467,6 +483,7 @@ export class Cleave extends Ability{
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
@@ -484,10 +501,10 @@ export class MagicMissile extends Ability{
             name: 'magic missle',
             iconSrc: './assets/media/icons/frayed-arrow.png',
             speedModifier: config.speedModifier || 0.75,
-            damageModifier: config.damageModifier || 1.25,
+            damageModifier: config.damageModifier || 1.5,
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 0,
-            magicCost: config.magicCost || 10,
+            magicCost: config.magicCost || 15,
             accuracy: config.accuracy || 0.75,
             damageTypes: config.damageTypes || ['arcane'],
             targetCount: 3,
@@ -500,6 +517,7 @@ export class MagicMissile extends Ability{
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
@@ -565,6 +583,7 @@ export class DrainLife extends Ability{
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
 
@@ -597,6 +616,7 @@ export class Bite extends Ability{
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
@@ -632,6 +652,7 @@ export class Fireball extends Ability{
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
@@ -668,6 +689,7 @@ export class LightningBolt extends Ability{
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
@@ -703,6 +725,7 @@ export class IceShard extends Ability{
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
@@ -738,6 +761,7 @@ export class Shockwave extends Ability{
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
@@ -774,6 +798,7 @@ export class Siphon extends Ability{
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
         let damage = this.checkDamage(target, rawDamage, 'magic');
         target.currentMagic = target.currentMagic - damage;
 
@@ -792,6 +817,7 @@ export class Earthquake extends Ability{//Needs Work targeting same targets twic
             iconSrc: './assets/media/icons/earth-split.png',
             speedModifier: config.speedModifier || 0.5,
             damageModifier: config.damageModifier || 1.5,
+            criticalModifier: config.criticalModifier || 1.1,
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 30,
             magicCost: config.magicCost || 0,
@@ -808,6 +834,7 @@ export class Earthquake extends Ability{//Needs Work targeting same targets twic
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
@@ -839,6 +866,7 @@ export class ShootWeb extends Ability{
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
@@ -874,6 +902,7 @@ export class Pounce extends Ability{
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
@@ -936,6 +965,7 @@ export class VineLash extends Ability{
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
@@ -1002,6 +1032,30 @@ export class Curse extends Ability{
         this.message = `${attacker.name} curses ${target.name}.`;
     }
 }
+export class MeteorShower extends Ability{
+    //random amount of targets
+}
+export class Fly extends Ability{
+
+}
+export class CastShadow extends Ability{
+
+}
+export class Eviscerate extends Ability{
+    //High Critical
+}
+export class Thrust extends Ability{
+
+}
+export class Flurry extends Ability{
+
+}
+export class Rispote extends Ability{
+
+}
+export class MarkTarget extends Ability{
+
+}
 export class ThrowPosionedKnife extends Ability{
     constructor(config){
         super({
@@ -1027,6 +1081,7 @@ export class ThrowPosionedKnife extends Ability{
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         this.triggerOnDeliverDamage(attacker);

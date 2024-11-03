@@ -53,7 +53,7 @@ export class MadmanAhead extends Stage{
                                 return loot;
                             },
                             messageFunction: (currentCharacter)=>{
-                                return `${currentCharacter.name} sneaks up behind the Madman and plunges a dagger into it side leaving the the Madman lifelessly on the ground. If it even was alive...`
+                                return `${currentCharacter.name} sneaks up behind the Madman and plunges a dagger into it side leaving the Madman lifeless on the ground. If it even was alive...`
                             }, 
                             weight: 1,
                         },
@@ -87,12 +87,12 @@ export class MadmanAhead extends Stage{
                                 let count = Math.ceil(Math.random()*3);
                                 for(let i = 0; i < count; i++){
                                     let chance = Math.floor(Math.random()*3);
-                                    if(chance < 2) hostiles.push(new Madman({level: partyLevel}))
-                                    if(chance == 2) hostiles.push(new MadMage({level: partyLevel}))
+                                    if(chance < 2) hostileArray.push(new Madman({level: partyLevel}))
+                                    if(chance == 2) hostileArray.push(new MadMage({level: partyLevel}))
                                 }
 
-                                hostiles[0].currentHP = hostiles[0].currentHP*0.5;
-                                hostiles[0].statusArray.push(new Bleed({holder: hostiles[0]}))
+                                hostileArray[0].currentHP = hostileArray[0].currentHP*0.5;
+                                hostileArray[0].statusArray.push(new Bleed({holder: hostileArray[0]}))
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
                             messageFunction: (currentCharacter)=>{
@@ -122,7 +122,7 @@ export class MadmanAhead extends Stage{
                                 return loot;
                             },
                             messageFunction: (currentCharacter)=>{
-                                return `The rock hits the Madman right in head leaving the the Madman lifeless on the ground. If it even was alive...`
+                                return `The rock hits the Madman right in head leaving the Madman lifeless on the ground. If it even was alive...`
                             }, 
                             weight: 1,
                         },
@@ -151,8 +151,8 @@ export class MadmanAhead extends Stage{
                                 let count = Math.ceil(Math.random()*3);
                                 for(let i = 0; i < count; i++){
                                     let chance = Math.floor(Math.random()*3);
-                                    if(chance < 2) hostiles.push(new Madman({level: partyLevel}))
-                                    if(chance == 2) hostiles.push(new MadMage({level: partyLevel}))
+                                    if(chance < 2) hostileArray.push(new Madman({level: partyLevel}))
+                                    if(chance == 2) hostileArray.push(new MadMage({level: partyLevel}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
@@ -173,12 +173,12 @@ export class MadmanAhead extends Stage{
                             imageSrc: './assets/media/entities/wolf.jpg',
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
                             createBattle: (partyLevel, biome)=>{
-                                let hostiles = [];
+                                let hostileArray = [];
                                 let count = Math.ceil(Math.random()*5);
                                 for(let i = 0; i < count; i++){
-                                    hostiles.push(new Wolf({level: partyLevel}))
+                                    hostileArray.push(new Wolf({level: partyLevel}))
                                 }
-                                return new Battle({hostiles: hostiles, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `The rock goes nowhere near the Madman and instead lands right in the middle of a pack of wolves! The wolves turn and glare at ${currentCharacter.name}!`
@@ -292,8 +292,8 @@ export class ConversationWithMadman extends Stage{
                                 let count = Math.ceil(Math.random()*3);
                                 for(let i = 0; i < count; i++){
                                     let chance = Math.floor(Math.random()*3);
-                                    if(chance < 2) hostiles.push(new Madman({level: partyLevel}))
-                                    if(chance == 2) hostiles.push(new MadMage({level: partyLevel}))
+                                    if(chance < 2) hostileArray.push(new Madman({level: partyLevel}))
+                                    if(chance == 2) hostileArray.push(new MadMage({level: partyLevel}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
@@ -333,8 +333,8 @@ export class ConversationWithMadman extends Stage{
                                 let count = Math.ceil(Math.random()*3);
                                 for(let i = 0; i < count; i++){
                                     let chance = Math.floor(Math.random()*3);
-                                    if(chance < 2) hostiles.push(new Madman({level: partyLevel}))
-                                    if(chance == 2) hostiles.push(new MadMage({level: partyLevel}))
+                                    if(chance < 2) hostileArray.push(new Madman({level: partyLevel}))
+                                    if(chance == 2) hostileArray.push(new MadMage({level: partyLevel}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
@@ -374,8 +374,8 @@ export class ConversationWithMadman extends Stage{
                                 let count = Math.ceil(Math.random()*3);
                                 for(let i = 0; i < count; i++){
                                     let chance = Math.floor(Math.random()*3);
-                                    if(chance < 2) hostiles.push(new Madman({level: partyLevel}))
-                                    if(chance == 2) hostiles.push(new MadMage({level: partyLevel}))
+                                    if(chance < 2) hostileArray.push(new Madman({level: partyLevel}))
+                                    if(chance == 2) hostileArray.push(new MadMage({level: partyLevel}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },

@@ -50,8 +50,8 @@ export class MysteriousAltar extends Stage{
                         {
                             result: 'nextStage',
                             onActivate(target){
-                                target.currentStamina *= 0.5;
-                                target.currentMagic *= 0.5;
+                                Math.floor(target.currentStamina *= 0.75);
+                                Math.floor(target.currentMagic *= 0.75);
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new AtTheAltar({});

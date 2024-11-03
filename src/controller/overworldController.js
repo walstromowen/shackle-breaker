@@ -91,12 +91,10 @@ export default class OverworldController{
     }
     afterMove(){
         this.view.draw(this.model.props.getMap(), this.model.currentPartyPosition);
-        //playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
         if(this.model.props.getScreen() == 'battle-screen'){
             playMusic(this.model.props.getBattle().battleMusicSrc);
             this.view.hideOverWorldUi();
             this.view.playBattleTransition().then(()=>{
-                
                 this.props.switchScreen('battle-screen');
             });
             return;
@@ -104,11 +102,22 @@ export default class OverworldController{
         if(this.model.props.getScreen() == 'encounter-screen'){
             this.view.hideOverWorldUi();
             this.view.playBattleTransition().then(()=>{
-                
                 this.props.switchScreen('encounter-screen');
             });
             return;
         }
+        if(this.model.props.getScreen() == 'map-change-screen'){
+            this.view.hideOverWorldUi();
+            this.view.playBattleTransition().then(()=>{
+                this.props.switchScreen('map-change-screen');
+                this.model.changeMap();
+                document.getElementById('music-player').pause();
+            });
+            return;
+        }
+
+
+        //playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
     }
 }
 

@@ -944,7 +944,7 @@ img{
 .dragging{
     z-index: 1;
 }
-#title-screen{
+#title-screen, #map-change-screen{
     background: url('./assets/media/screens/title-screen.jpg');
     background-repeat: no-repeat;
     background-position: top;

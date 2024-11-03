@@ -500,12 +500,12 @@ export class MadMage extends Entity{
             intelligence: config.intelligence || 7,
             attunement: config.attunement || 7,
             equipment: config.equipment || {
-                mainHand: new FireStaff({level: this.level}),
+                mainHand: new FireStaff({level: 1}),
                 offhand: '',
                 head: '',
-                torso: new LinenShirt({level: this.level}),
+                torso: new LinenShirt({level: 1}),
                 arms: '',
-                legs: new LinenPants({level: this.level}),
+                legs: new LinenPants({level: 1}),
                 feet: '',
             },
             isHostile: config.isHostile || true,
@@ -658,6 +658,7 @@ export class SkeletonColossus extends Entity{
     constructor(config){
         super({
             name: 'skeleton colossus',
+            size: 'large',
             level: config.level || 1,
             apperance: config.apperance || './assets/media/entities/skeleton-colossus.jpg',
             vigor: config.vigor || 5,
@@ -707,6 +708,7 @@ export class GroveGuardian extends Entity{
     constructor(config){
         super({
             name: 'Grove Guardian',
+            size: 'large',
             level: config.level || 1,
             apperance: config.apperance || './assets/media/entities/grove-guardian.jpg',
             vigor: config.vigor || 8,
@@ -818,7 +820,7 @@ export class Spider extends Entity{
         })
     }
     scaleAttributes(){
-        this.maxHP = (this.vigor * 5)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
+        this.maxHP = (this.vigor * 3)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
         this.maxStamina = (this.vigor * 1) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
         this.maxMagic = (this.vigor * 1)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
         this.baseHpRecovery = 0;
@@ -853,7 +855,7 @@ export class SandStalker extends Entity{
             baseArcaneResistance: config.baseArcaneResistance || 0.1,
             baseElementalResistance: config.baseElementalResistance || 0.1,
             equipment: config.equipment || {
-                mainHand: '',
+                mainHand: new ShortSword({level: 1}),
                 offhand: '',
                 head: '',
                 torso: '',
@@ -862,9 +864,15 @@ export class SandStalker extends Entity{
                 feet: '',
             },
             isHostile: config.isHostile || true,
-            abilityArray: [new Slash({damageModifier:0.75})],
+            abilityArray: [],
             lootTable: [
-                {item: new Bandage(), weight: 1},
+                {item: new LeatherHood({level: 1}), weight: 1},
+                {item: new LeatherHelmet({level: 1}), weight: 1},
+                {item: new LeatherChestplate({level: 1}), weight: 1},
+                {item: new LeatherGreaves({level: 1}), weight: 1},
+                {item: new LeatherBoots({level: 1}), weight: 1},
+                {item: new HealthPotion({level: 1}), weight: 2},
+                {item: new Bandage(), weight: 3},
                 
             ],
         });
@@ -889,7 +897,7 @@ export class SandStalker extends Entity{
         }
     }
     scaleAttributes(){
-        this.maxHP = (this.vigor * 8)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
+        this.maxHP = (this.vigor * 2)  + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
         this.maxStamina = (this.vigor * 1) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
         this.maxMagic = (this.vigor * 1)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
         this.baseHpRecovery = 0;
@@ -906,6 +914,51 @@ export class SandStalker extends Entity{
         this.baseSpeed = 30;
         this.baseEvasion = 0.20;
         this.baseCritical = 0.10;
+    }
+}
+export class DryShark extends Entity{
+    constructor(config){
+        super({
+            name: 'Dry Shark',
+            size: 'large',
+            level: config.level || 1,
+            apperance: config.apperance || './assets/media/entities/dry-shark.jpg',
+            vigor: config.vigor || 6,
+            strength: config.strength || 6,
+            dexterity: config.dexterity || 5,
+            intelligence: config.intelligence || 3,
+            attunement: config.attunement || 5,
+            baseBluntResistance: config.baseBluntResistance || 0.2,
+            basePierceResistance: config.basePierceResistance || 0.05,
+            baseArcaneResistance: config.baseArcaneResistance || 0.05,
+            baseElementalResistance: config.baseElementalResistance || 0.1,
+            isHostile: config.isHostile || true,
+            equipment: {},
+            abilityArray: [new Bite({})],
+            lootTable: [
+                {item: new HealthPotion({level: 1}), weight: 2},
+                {item: new Hide(), weight: 2}
+            ],
+        })
+    }
+    scaleAttributes(){
+        this.maxHP = (this.vigor * 10)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
+        this.maxStamina = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
+        this.maxMagic = (this.vigor * 2)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
+        this.baseHpRecovery = 0;
+        this.baseStaminaRecovery = 5;
+        this.baseMagicRecovery = 5;
+        this.baseBluntAttack = (this.vigor * 1) + (this.strength * 3) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
+        this.basePierceAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 3) + (this.intelligence * 2) + (this.attunement * 2);
+        this.baseArcaneAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 3) + (this.attunement * 2);
+        this.baseElementalAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 3);
+        this.baseBluntDefense = (this.vigor * 1)  + (this.strength * 2) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 1);
+        this.basePierceDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 2) + (this.intelligence * 0) + (this.attunement * 0);
+        this.baseArcaneDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 2) + (this.attunement * 1);
+        this.baseElementalDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 0) + (this.attunement * 1);
+        this.baseSpeed = 20;
+        this.baseEvasion = 0.05;
+        this.baseCritical = 0.20;
     }
 }
 export class TheSandShade extends Entity{

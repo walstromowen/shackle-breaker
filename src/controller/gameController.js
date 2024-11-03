@@ -7,6 +7,7 @@ import BattleController from "./battleController.js";
 import PartyController from "./partyController.js";
 import CharacterSummaryController from "./characterSummaryController.js";
 import EncounterController from "./encounterController.js";
+import MapChangeController from "./mapChangeController.js";
 
 export default class GameController{
     constructor(model, view){
@@ -30,6 +31,7 @@ export default class GameController{
         this.partyController = new PartyController(this.props, this.model.partyModel, this.view.partyView);
         this.characterSummaryController = new CharacterSummaryController(this.props, this.model.characterSummaryModel, this.view.characterSummaryView);
         this.encounterController = new EncounterController(this.props, this.model.encounterModel, this.view.encounterView);
+        this.mapChangeController = new MapChangeController(this.props);
         this.initialize();
     }
     initialize(){
@@ -80,6 +82,9 @@ export default class GameController{
                 if(this.model.getScreen() != 'party-screen'){
                     this.encounterController.onSwitchScreen();
                 }
+                break;
+            case 'map-change-screen':
+                //no model
                 break;
         }
         this.model.switchScreen(screenId);

@@ -1,5 +1,4 @@
 import Map from './misc/map.js';
-import Battle from './misc/battle.js';
 
 export default class OverworldModel{
     constructor(props){
@@ -45,11 +44,6 @@ export default class OverworldModel{
         }
     }
     movePartyTile(nextRoom){
-        if(nextRoom.type == 'exit'){
-            this.generateNewMap();
-            this.currentPartyPosition = this.props.getMap().getEntrancePosition();
-            return;
-        }
         if(nextRoom.type != 'wall'){
             this.previousPartyPosition = this.currentPartyPosition;
             this.currentPartyPosition = nextRoom.position;
@@ -61,15 +55,14 @@ export default class OverworldModel{
                 this.toggleEncounter(nextRoom.encounter);
                 return;
             }
+            if(nextRoom.type == 'exit'){
+                this.toggleMapChange()
+                return;
+            }
             let chance = Math.floor(Math.random()*20);
             if(chance == 0){
                 let biome = this.props.getMap().biome;
-                nextRoom.battle = new Battle(
-                    {
-                        hostiles: biome.generateEnemies(this.props.calcHighestPartyLevel(), Math.ceil(Math.random()*4)), 
-                        battleMusicSrc: biome.battleMusicSrc,
-                    }
-                ); 
+                nextRoom.battle = biome.generateBattle(this.props.calcHighestPartyLevel());
                 this.toggleBattle(nextRoom.battle);
                 return;
             }
@@ -89,6 +82,13 @@ export default class OverworldModel{
     toggleEncounter(encounter){
         this.props.setEncounter(encounter);
         this.props.setScreen('encounter-screen');
+    }
+    toggleMapChange(){
+        this.props.setScreen('map-change-screen');
+    }
+    changeMap(){
+        this.generateNewMap();
+        this.currentPartyPosition = this.props.getMap().getEntrancePosition();
     }
     //TODO
     determineCurrentCharater(){
