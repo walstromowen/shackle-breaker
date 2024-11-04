@@ -2,6 +2,7 @@ import Stage from "./stage.js";
 import Battle from "../battle.js";
 import { Wolf, Madman, MadMage} from "../entities.js";
 import { Bleed } from "../statusEffects.js";
+import { getRandomArrayElementWeighted } from "../../../utility.js";
 
 export class MadmanAhead extends Stage{
     constructor(config){

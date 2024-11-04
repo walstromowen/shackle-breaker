@@ -124,6 +124,9 @@
     .character-summary-stats-attributes-container{
         width: 100% !important;
     }
+    .battle-status-icon{
+        height: 20px;
+    }
     #lobby-screen, #character-summary-screen{
         min-height: 100dvh;
         height: auto;
@@ -206,7 +209,6 @@
     .battle-character-card{
         width: 100px !important;
     }
-   
 }
 
 

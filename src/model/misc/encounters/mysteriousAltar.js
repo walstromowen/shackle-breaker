@@ -2,6 +2,7 @@ import Stage from "./stage.js";
 import Battle from "../battle.js";
 import { Wolf, Madman, Skeleton, SkeletonCultist, SkeletonColossus} from "../entities.js";
 import { Bleed, Poison } from "../statusEffects.js";
+import { getRandomArrayElementWeighted } from "../../../utility.js";
 
 export class MysteriousAltar extends Stage{
     constructor(config){

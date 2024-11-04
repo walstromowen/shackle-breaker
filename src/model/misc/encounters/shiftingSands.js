@@ -2,6 +2,7 @@ import Stage from "./stage.js";
 import Battle from "../battle.js";
 import { SandStalker, TheSandShade} from "../entities.js";
 import { Bleed, Poison } from "../statusEffects.js";
+import { getRandomArrayElementWeighted } from "../../../utility.js";
 
 export class ShiftingSands extends Stage{
     constructor(config){
@@ -10,8 +11,8 @@ export class ShiftingSands extends Stage{
             imageSrc: './assets/media/encounters/shifting-sands-1.jpg',
             decisionArray: config.decisionArray || [
                 {
-                    description: 'Walk towards the anomaly.',
-                    attributes: ['none'],
+                    description: 'Walk towards the anomaly.[VIG]',
+                    attributes: ['vigor'],
                     successThreshold: 12,
                     roll: true,
                     successfulOutcomes: [
@@ -99,7 +100,7 @@ export class StatuesInTheSand extends Stage{
                                 return new Battle({hostiles: hostiles, battleMusicSrc: biome.battleMusicSrc});
                             },
                             createNextStage: (partyLevel, biome)=>{
-                                return config.nextStage;
+                                return new ShiftingSands4({});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `While on the first shift to watch the statues, ${currentCharacter.name} trips and gets back up only to realize the statues have surrounded the party! And this time, they don't look like statues!`
@@ -211,15 +212,15 @@ export class ShiftingSands2 extends Stage{
             imageSrc: './assets/media/encounters/shifting-sands-2.jpg',
             decisionArray: config.decisionArray || [
                 {
-                    description: 'Press on.',
-                    attributes: ['none'],
+                    description: 'Press on [VIG].',
+                    attributes: ['vigor'],
                     successThreshold: 12,
                     roll: true,
                     successfulOutcomes: [
                         {
                             result: 'nextStage',
                             createNextStage: (partyLevel, biome)=>{
-                                return new ShiftingSands3({});;
+                                return new ShiftingSands3({});
                             },
                             
                             weight: 1,
@@ -229,7 +230,7 @@ export class ShiftingSands2 extends Stage{
                         {
                             result: 'nextStage',
                             createNextStage: (partyLevel, biome)=>{
-                                return new StatuesInTheSand({nextStage: new ShiftingSands3({})});
+                                return new StatuesInTheSand({});
                             },
                             weight: 1,
                         },
@@ -275,7 +276,7 @@ export class ShiftingSands3 extends Stage{
             imageSrc: './assets/media/encounters/shifting-sands-3.jpg',
             decisionArray: config.decisionArray || [
                 {
-                    description: 'Keep going.',
+                    description: 'Keep going. [VIG]',
                     attributes: ['vigor'],
                     successThreshold: 15,
                     roll: true,
@@ -299,7 +300,7 @@ export class ShiftingSands3 extends Stage{
                                 Math.floor(target.currentStamina *= 0.75);
                             },
                             createNextStage: (partyLevel, biome)=>{
-                                return new StatuesInTheSand({nextStage: new ShiftingSands4({})});
+                                return new StatuesInTheSand({});
                             },
                             weight: 1,
                         },
@@ -344,7 +345,7 @@ export class ShiftingSands4 extends Stage{
             imageSrc: './assets/media/encounters/shifting-sands-4.jpg',
             decisionArray: config.decisionArray || [
                 {
-                    description: 'Keep going!',
+                    description: 'Keep going! [VIG]',
                     attributes: ['vigor'],
                     successThreshold: 15,
                     roll: true,
@@ -421,7 +422,7 @@ export class SandCastleEntrance extends Stage{
                             messageFunction: (currentCharacter)=>{
                                 return `Tho shea-ath katan.... (Murmoring in an unknown language)`
                             }, 
-                            weight: 10,
+                            weight: 100,
                         },//TEMP
                     ],
                     messageFunction: (currentCharacter)=>{
