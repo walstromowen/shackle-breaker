@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl} from "./abilities.js";
 import { Poison, Burn, Bleed, Shielded, InstaDeath} from "./statusEffects.js";
 import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Hide} from "./items.js";
@@ -397,7 +397,7 @@ export class Dog extends Entity{
             equipment: {
                 mediumAnimalArmor: '',
             },
-            abilityArray: [new Bite({}), new Pounce({})],
+            abilityArray: [new Bite({}), new Pounce({}), new Howl({})],
         })
     }
 }
@@ -443,7 +443,7 @@ export class Tiger extends Entity{
             equipment: {
                 mediumAnimalArmor: '',
             },
-            abilityArray: [new Bite({}), new Pounce({})],
+            abilityArray: [new Bite({}), new Pounce({}), new Roar({})],
         })
     }
 }
@@ -668,7 +668,7 @@ export class SkeletonColossus extends Entity{
             attunement: config.attunement || 5,
             equipment: config.equipment || {},
             isHostile: config.isHostile || true,
-            abilityArray: [new Punch({damageModifier: 1}), new Pounce({}), new DrainLife({})],
+            abilityArray: [new Punch({damageModifier: 1}), new Pounce({}), new DrainLife({}), new Roar({})],
             baseBluntResistance: config.baseBluntResistance || 0.05,
             basePierceResistance: config.basePierceResistance || 0.1,
             baseArcaneResistance: config.baseArcaneResistance || 0.1,
@@ -722,7 +722,7 @@ export class GroveGuardian extends Entity{
             baseElementalResistance: config.baseElementalResistance || 0.05,
             isHostile: config.isHostile || true,
             equipment: {},
-            abilityArray: [new Bite({}), new VineLash({}), new Earthquake({})],
+            abilityArray: [new Bite({}), new VineLash({}), new Earthquake({}), new Roar({})],
             lootTable: [
                 {item: new ForestStaff({level: 1}), weight: 1},
                 {item: new HealthPotion({level: 1}), weight: 2},
@@ -769,7 +769,7 @@ export class Wolf extends Entity{
             equipment: {
                 mediumAnimalArmor: '',
             },
-            abilityArray: [new Bite({}), new Pounce({})],
+            abilityArray: [new Bite({}), new Pounce({}), new Howl({})],
             lootTable: [
                 {item: new Hide({level: 1}), weight: 1}
             ],
@@ -934,7 +934,7 @@ export class DryShark extends Entity{
             baseElementalResistance: config.baseElementalResistance || 0.1,
             isHostile: config.isHostile || true,
             equipment: {},
-            abilityArray: [new Bite({})],
+            abilityArray: [new Bite({}), new Roar({})],
             lootTable: [
                 {item: new HealthPotion({level: 1}), weight: 2},
                 {item: new Hide(), weight: 2}

@@ -865,7 +865,10 @@ export default class BattleController{
             }).then(()=>{
                 document.querySelector('body').classList.remove('battle-wipe');
                 setTimeout(()=>{
-                    if(this.model.props.getMap().tileLayout[this.props.getOverworldController().model.currentPartyPosition[1]][0].encounter != ''){
+                    this.model.removeRemovableStatusEffects();
+                    let partyPosition = this.props.getOverworldController().model.currentPartyPosition;
+                    if(this.model.props.getMap().tileLayout[partyPosition[1]][partyPosition[0]].encounter != ''){
+                        this.model.props.getMap().tileLayout[partyPosition[1]][partyPosition[0]].battle = ''
                         this.props.switchScreen('encounter-screen');
                         playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
                     }else{

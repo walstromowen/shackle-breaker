@@ -1,4 +1,4 @@
-import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen, Blessed, Cursed} from "./statusEffects.js";
+import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen, Blessed, Cursed, PhysicalAttackDebuff, PhysicalAttackBuff} from "./statusEffects.js";
 
 export class Ability{
     constructor(config){
@@ -120,6 +120,9 @@ export class Ability{
     inflictStatus(status, target){
         for(let i = 0; i < target.statusArray.length; i++){
             if(target.statusArray[i].name == status.name){
+                if(target.statusArray[i].stackable){
+                    target.statusArray[i].onApplied();
+                }
                 return
             }
         }
@@ -316,6 +319,44 @@ export class Slash extends Ability{
             abilityAnimation: config.abilityAnimation || 'swipe-right',
            
             
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            this.triggerOnDeliverDamage(attacker);
+            this.triggerOnRecieveDamage(target);
+            if(Math.random()*10 < 1){
+                this.inflictStatus(new Bleed({holder: target}), target);
+            } 
+        }
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} slashes ${target.name}.`;
+    }
+}
+export class Thrust extends Ability{
+    constructor(config){
+        super({
+            name: 'thrust',
+            description: 'Thurst a target with a piercing attack. Has a high critical chance and a chance to cause bleeding.',
+            iconSrc: './assets/media/icons/thrust.png',
+            speedModifier: config.speedModifier || 0.75,
+            damageModifier: config.damageModifier || 1,
+            criticalDamageModifier: config.criticalDamageModifier || 1.5,
+            criticalChanceModifier: config.criticalChance|| 0.2,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 10,
+            magicCost: config.magicCost || 0,
+            accuracy: config.accuracy || 0.80,
+            damageTypes: config.damageTypes || ['pierce'],
+            soundEffectSrc: "./assets/audio/soundEffects/mixkit-metal-hit-woosh-1485.wav",
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/thrust.png',
+            abilityAnimation: config.abilityAnimation || 'stick-right',
         })
     }
     activate(attacker, target){
@@ -1055,7 +1096,6 @@ export class Curse extends Ability{
             targetAnimation: 'ally-evade',
             abilityAnimation: config.abilityAnimation || 'none',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/cursed-star.png',
-            defaultTarget: 'ally',
         })
     }
     activate(attacker, target){
@@ -1065,29 +1105,102 @@ export class Curse extends Ability{
         this.message = `${attacker.name} curses ${target.name}.`;
     }
 }
+export class Roar extends Ability{
+    constructor(config){
+        super({
+            name: 'roar',
+            description: `Let out an intimidating roar lowering enemy physical attack or raising an ally's physical attack.`,
+            iconSrc: './assets/media/icons/sonic-shout.png',
+            speedModifier: config.speedModifier || 1.5,
+            damageModifier: config.damageModifier || 0,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 10,
+            magicCost: config.magicCost || 0,
+            damageTypes: config.damageTypes || ['blunt', 'pierce'],
+            soundEffectSrc: "./assets/audio/soundEffects/leopard-roar-deep-pitched-195922.mp3",
+            attackerAnimation: config.attackerAnimation || 'shake',
+            targetAnimation: 'shake',
+            abilityAnimation: config.abilityAnimation || 'shake',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/resonance.png',
+        })
+    }
+    activate(attacker, target){
+        if(attacker == target){
+            this.inflictStatus(new PhysicalAttackBuff({holder: target}), target);
+        }else{
+            this.inflictStatus(new PhysicalAttackDebuff({holder: target}), target);
+        }
+    }
+    updateMessage(attacker, target){
+        if(attacker == target){
+            this.message = `${attacker.name} roars.`;
+        }
+        else{
+            this.message = `${attacker.name} roars at ${target.name}.`;
+        }
+    }
+}
+export class Howl extends Ability{
+    constructor(config){
+        super({
+            name: 'howl',
+            description: `Howl at the sky, raising a target's physical attack.`,
+            iconSrc: './assets/media/icons/sonic-shout.png',
+            speedModifier: config.speedModifier || 1.5,
+            damageModifier: config.damageModifier || 0,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 10,
+            magicCost: config.magicCost || 0,
+            damageTypes: config.damageTypes || ['pierce'],
+            soundEffectSrc: "./assets/audio/soundEffects/wolves-howling-1-225304.wav",
+            attackerAnimation: config.attackerAnimation || 'shake',
+            targetAnimation: 'none',
+            abilityAnimation: config.abilityAnimation || 'none',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/resonance.png',
+            defaultTarget: 'ally',
+        })
+    }
+    activate(attacker, target){
+        this.inflictStatus(new PhysicalAttackBuff({holder: target}), target);
+    }
+    updateMessage(attacker, target){
+        if(attacker == target){
+            this.message = `${attacker.name} howls at the sky.`;
+        }
+        else{
+            this.message = `${attacker.name} howls at ${target.name}.`;
+        }
+    }
+}
 export class MeteorShower extends Ability{
     //random amount of targets
 }
 export class Fly extends Ability{
-
+    //character is airborne (can only be attack with attacks with certain range)
 }
 export class CastShadow extends Ability{
+    //grants character type of shadowy oversheild //current vs base apperance?
+}
+export class Tunnel extends Ability{
 
 }
 export class Eviscerate extends Ability{
     //High Critical
 }
-export class Thrust extends Ability{
-
-}
 export class Flurry extends Ability{
 
 }
-export class Rispote extends Ability{
+export class Parry extends Ability{
 
 }
 export class MarkTarget extends Ability{
-
+    //lowers physical defense
+}
+export class Hex extends Ability{
+    //lower magical attack
+}
+export class Detonate extends Ability{
+    //lower physical attack
 }
 export class ThrowPosionedKnife extends Ability{
     constructor(config){

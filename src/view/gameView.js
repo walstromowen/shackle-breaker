@@ -197,7 +197,7 @@ export default class GameView{
         document.getElementById('ability-mini-menu-stamina-cost').innerText = ability.staminaCost;
         document.getElementById('ability-mini-menu-accuracy').innerText = ability.accuracy;
         document.getElementById('ability-mini-menu-magic-cost').innerText = ability.magicCost;
-        document.getElementById('ability-mini-menu-critical').innerText = (ability.criticalChanceModifier + entity.currentCritical) + '%';
+        document.getElementById('ability-mini-menu-critical').innerText = Math.floor((ability.criticalChanceModifier + entity.currentCritical) * 100)/100 + '%';
         document.getElementById('ability-mini-menu-damage').innerText = ability.damageModifier * entity.currentBluntAttack;//TODO
         document.getElementById('ability-mini-menu-targets').innerText = `${ability.targetLock} x ${ability.targetCount}`;
        

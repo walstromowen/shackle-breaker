@@ -379,6 +379,15 @@ getAvailableTargets(attacker){
         this.allCombatants[this.allCombatants.indexOf(combatant)] = nextForm;
         return nextForm;
     }
+    removeRemovableStatusEffects(){
+        for(let i = 0; i < this.allCombatants.length; i++){
+            for(let j = 0; j < this.allCombatants[i].statusArray.length; j++){
+                if(this.allCombatants[i].statusArray[j].removeOnBattleEnd){
+                    this.allCombatants[i].statusArray[j].onRemove();
+                }
+            }
+        }
+    }
 }
 
 

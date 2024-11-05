@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower, Thrust} from "./abilities.js";
 import { DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, UseAntidote, UseAloeRemedy, UseParalysisTonic, UseBandage, DrinkKurtussBrewOfMadness} from "./abilities.js";
 
 let counter = 0;
@@ -151,7 +151,7 @@ export class ShortSword extends Attachable{
             speed: 0,
             evasion: 0,
             critical: 0,
-            abilityArray: [new Slash({})],
+            abilityArray: [new Slash({}), new Thrust({})],
         })
         this.upgrade(config.level-this.level);
     }

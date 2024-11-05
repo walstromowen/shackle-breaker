@@ -7,6 +7,8 @@ class StatusEffect{
         this.holder = config.holder;
         this.maxCharges = config.maxCharges;
         this.currentCharges = this.maxCharges;
+        this.stackable = config.stackable || false;
+        this.removeOnBattleEnd = config.removeOnBattleEnd || false;
         this.activate = this.activate.bind(this);
         this.soundEffectSrc = config.soundEffectSrc || "./assets/audio/soundEffects/power-down-45784.mp3",
         this.message = '';
@@ -200,10 +202,10 @@ export class Bleed extends StatusEffect{
             name:'bleed',
             iconSrc: "./assets/media/icons/bleeding-wound.png",
             holder: config.holder,
-            maxCharges: 5,
+            maxCharges: 4,
             soundEffectSrc: "./assets/audio/soundEffects/platzender-kopf_nachschlag-91637.mp3",
         });
-        this.severityMofifier = 0.08;
+        this.severityMofifier = 0.12;
     }
     onEndTurn(){
         return this.activateHelpper(
@@ -244,6 +246,7 @@ export class Bind extends StatusEffect{
             soundEffectSrc: "./assets/audio/soundEffects/power-down-45784.mp3",
             targetAnimation: 'shake',
             abilityAnimation: 'none',
+            removeOnBattleEnd: true,
         });
         this.escapethreshold = config.escapethreshold || 0.75;
     }
@@ -365,6 +368,7 @@ export class Shielded extends StatusEffect{
             maxCharges: 1,
             targetAnimation: 'none',
             abilityAnimation: 'none',
+            removeOnBattleEnd: true,
         });
     }
     onApplied(){
@@ -494,6 +498,7 @@ export class Cursed extends StatusEffect{
             holder: config.holder,
             maxCharges: 5,
             soundEffectSrc: "./assets/audio/soundEffects/totem-strike-96497.wav",
+            removeOnBattleEnd: true,
         });
         this.inflicter = config.inflicter;
     }
@@ -515,5 +520,117 @@ export class Cursed extends StatusEffect{
                 vitalsUpdate: true,
             }
         );
+    }
+}
+export class PhysicalAttackBuff extends StatusEffect{
+    constructor(config){
+        super({
+            name:'physical attack buff',
+            iconSrc: "./assets/media/icons/physical-attack-buff-1.png",
+            holder: config.holder,
+            maxCharges: 99,
+            stackable: true,
+            targetAnimation: 'none',
+            abilityAnimation: 'none',
+            removeOnBattleEnd: true,
+        });
+        this.currentLevel = config.level || 0;
+        this.currentBluntAttackBuff = 0;
+        this.currentPierceAttackBuff = 0;
+    }
+    onApplied(){
+        this.holder.currentBluntAttack -= this.currentBluntAttackBuff;
+        this.holder.currentPierceAttack -= this.currentPierceAttackBuff;
+        switch(this.currentLevel){
+            case 0:
+                this.currentBluntAttackBuff = Math.floor(0.2 * this.holder.baseBluntAttack);
+                this.currentPierceAttackBuff = Math.floor(0.2 * this.holder.basePierceAttack);
+                this.iconSrc = "./assets/media/icons/physical-attack-buff-1.png";
+                this.currentLevel++
+            break;
+            case 1:
+                this.currentBluntAttackBuff = Math.floor(0.4 * this.holder.baseBluntAttack);
+                this.currentPierceAttackBuff = Math.floor(0.4 * this.holder.basePierceAttack);
+                this.iconSrc = "./assets/media/icons/physical-attack-buff-2.png";
+                this.currentLevel++
+            break;
+            case 2:
+                this.currentBluntAttackBuff = Math.floor(0.6 * this.holder.baseBluntAttack);
+                this.currentPierceAttackBuff = Math.floor(0.6 * this.holder.basePierceAttack);
+                this.iconSrc = "./assets/media/icons/physical-attack-buff-3.png";
+                this.currentLevel++
+            break;
+            default:
+            break;
+        }
+        this.holder.currentBluntAttack += this.currentBluntAttackBuff;
+        this.holder.currentPierceAttack += this.currentPierceAttackBuff;
+        this.currentCharges++;
+    }
+    onRemove(){
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == this.name){
+                this.holder.statusArray.splice(i, 1);
+                break;
+            }
+        }
+        this.holder.currentBluntAttack -= this.currentBluntAttackBuff;
+        this.holder.currentPierceAttack -= this.currentPierceAttackBuff;
+    }
+}
+export class PhysicalAttackDebuff extends StatusEffect{
+    constructor(config){
+        super({
+            name:'physical attack debuff',
+            iconSrc: "./assets/media/icons/physical-attack-debuff-1.png",
+            holder: config.holder,
+            maxCharges: 99,
+            stackable: true,
+            targetAnimation: 'none',
+            abilityAnimation: 'none',
+            removeOnBattleEnd: true,
+        });
+        this.currentLevel = config.level || 0;
+        this.currentBluntAttackDebuff = 0;
+        this.currentPierceAttackDebuff = 0;
+    }
+    onApplied(){
+        this.holder.currentBluntAttack += this.currentBluntAttackDebuff;
+        this.holder.currentPierceAttack += this.currentPierceAttackDebuff;
+        switch(this.currentLevel){
+            case 0:
+                this.currentBluntAttackDebuff = Math.floor(0.2 * this.holder.baseBluntAttack);
+                this.currentPierceAttackDebuff = Math.floor(0.2 * this.holder.basePierceAttack);
+                this.iconSrc = "./assets/media/icons/physical-attack-debuff-1.png";
+                this.currentLevel++
+            break;
+            case 1:
+                this.currentBluntAttackDebuff = Math.floor(0.4 * this.holder.baseBluntAttack);
+                this.currentPierceAttackDebuff = Math.floor(0.4 * this.holder.basePierceAttack);
+                this.iconSrc = "./assets/media/icons/physical-attack-debuff-2.png";
+                this.currentLevel++
+            break;
+            case 2:
+                this.currentBluntAttackDebuff = Math.floor(0.6 * this.holder.baseBluntAttack);
+                this.currentPierceAttackDebuff = Math.floor(0.6 * this.holder.basePierceAttack);
+                this.iconSrc = "./assets/media/icons/physical-attack-debuff-3.png";
+                this.currentLevel++
+            break;
+            default:
+            break;
+        }
+        this.holder.currentBluntAttack -= this.currentBluntAttackDebuff;
+        this.holder.currentPierceAttack -= this.currentPierceAttackDebuff;
+        this.currentCharges++;
+    }
+    onRemove(){
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == this.name){
+                this.holder.statusArray.splice(i, 1);
+                break;
+            }
+        }
+        this.holder.currentBluntAttack += this.currentBluntAttackDebuff;
+        this.holder.currentPierceAttack += this.currentPierceAttackDebuff;
     }
 }

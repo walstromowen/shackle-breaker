@@ -11,8 +11,8 @@ export class MysteriousAltar extends Stage{
             imageSrc: './assets/media/encounters/mysterious-altar.jpg',
             decisionArray: config.decisionArray || [
                 {
-                    description: 'Approach the altar.',
-                    attributes: ['none'],
+                    description: 'Approach the altar. [VIG]',
+                    attributes: ['vigor'],
                     successThreshold: 12,
                     roll: true,
                     successfulOutcomes: [
@@ -51,8 +51,8 @@ export class MysteriousAltar extends Stage{
                         {
                             result: 'nextStage',
                             onActivate(target){
-                                Math.floor(target.currentStamina *= 0.75);
-                                Math.floor(target.currentMagic *= 0.75);
+                                target.currentStamina = Math.floor(target.currentStamina * 0.75);
+                                target.currentMagic = Math.floor(target.currentMagic * 0.75);
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new AtTheAltar({});
@@ -60,7 +60,7 @@ export class MysteriousAltar extends Stage{
                             messageFunction: (currentCharacter)=>{
                                 return `As ${currentCharacter.name} approaches the altar, the altar releases a cloud of smoke, making ${currentCharacter.name} feel fatigued.`
                             }, 
-                            weight: 3,
+                            weight: 1,
                         },
                     ], 
                     messageFunction: (currentCharacter)=>{
@@ -92,7 +92,7 @@ export class AtTheAltar extends Stage{
             imageSrc: './assets/media/encounters/at-the-altar.jpg',
             decisionArray: [
                 {//Decision
-                    description: 'Examine the Skull',
+                    description: 'Examine the Skull. [INT]',
                     attributes: ['intelligence'],
                     successThreshold: 15,
                     roll: true,
@@ -110,7 +110,7 @@ export class AtTheAltar extends Stage{
                                 
                             },
                             messageFunction: (currentCharacter)=>{
-                                return `As ${currentCharacter.name} reaches to examine the skull, the skull's eyes begin to glow blue filling the whole room with a blinding light! Upon opening their eye's ${currentCharacter}, realizes that the skull has disappered and feels a sense of newly found strength.`
+                                return `As ${currentCharacter.name} reaches to examine the skull, the skull's eyes begin to glow blue filling the whole room with a blinding light! Upon opening their eye's ${currentCharacter.name}, realizes that the skull has disappered and feels a sense of newly found strength.`
                             }, 
                             weight: 1,
                         },
@@ -150,7 +150,7 @@ export class AtTheAltar extends Stage{
                         },
                         {
                             result: 'nextStage',
-                            createNextStage(){
+                            createNextStage: ()=>{
                                 return new ASkeletalAbomination({});
                             },
                             messageFunction: (currentCharacter)=>{

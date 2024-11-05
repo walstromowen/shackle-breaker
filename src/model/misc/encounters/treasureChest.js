@@ -123,7 +123,7 @@ export class TreasureChest extends Stage{
                                 return  [getRandomArrayElementWeighted(biome.lootTable).item()];
                             },
                             messageFunction: (currentCharacter)=>{
-                                return `${currentCharacter.name} sucessfully picks the lock!`
+                                return `${currentCharacter.name} finds the key!`
                             }, 
                             weight: 1,
                         },
