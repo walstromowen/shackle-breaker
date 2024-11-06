@@ -22,8 +22,8 @@ export class MadmanAhead extends Stage{
                                 let count = Math.ceil(Math.random()*3);
                                 for(let i = 0; i < count; i++){
                                     let chance = Math.floor(Math.random()*3);
-                                    if(chance < 2) hostiles.push(new Madman({level: partyLevel}))
-                                    if(chance == 2) hostiles.push(new MadMage({level: partyLevel}))
+                                    if(chance < 2) hostileArray.push(new Madman({level: partyLevel}))
+                                    if(chance == 2) hostileArray.push(new MadMage({level: partyLevel}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
@@ -66,8 +66,8 @@ export class MadmanAhead extends Stage{
                                 let count = Math.ceil(Math.random()*3);
                                 for(let i = 0; i < count; i++){
                                     let chance = Math.floor(Math.random()*3);
-                                    if(chance < 2) hostiles.push(new Madman({level: partyLevel}))
-                                    if(chance == 2) hostiles.push(new MadMage({level: partyLevel}))
+                                    if(chance < 2) hostileArray.push(new Madman({level: partyLevel}))
+                                    if(chance == 2) hostileArray.push(new MadMage({level: partyLevel}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
@@ -126,9 +126,16 @@ export class MadmanAhead extends Stage{
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
                             imageSrc: './assets/media/entities/cursed-villager-1.jpg',
                             createBattle: (partyLevel, biome)=>{
-                                let hostile = new Madman({level: partyLevel})
-                                hostile.currentHP = hostile.maxHP*0.8;
-                                return new Battle({hostiles: [hostile], battleMusicSrc: biome.battleMusicSrc});
+                                let hostileArray = [new Madman({level: partyLevel})];
+                                let count = Math.ceil(Math.random()*3);
+                                for(let i = 0; i < count; i++){
+                                    let chance = Math.floor(Math.random()*3);
+                                    if(chance < 2) hostileArray.push(new Madman({level: partyLevel}))
+                                    if(chance == 2) hostileArray.push(new MadMage({level: partyLevel}))
+                                }
+
+                                hostileArray[0].currentHP = hostileArray[0].currentHP*0.6;
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `The rock hits the Madman's body injuring him. After wincing from his wound, the Madman looks up and runs at ${currentCharacter.name}!`
@@ -220,7 +227,14 @@ export class MadmanAhead extends Stage{
                             imageSrc: './assets/media/entities/cursed-villager-1.jpg',
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
                             createBattle: (partyLevel, biome)=>{
-                                return new Battle({hostiles: [new Madman({level: partyLevel})], battleMusicSrc: biome.battleMusicSrc});
+                                let hostileArray = [new Madman({level: partyLevel})];
+                                let count = Math.ceil(Math.random()*3);
+                                for(let i = 0; i < count; i++){
+                                    let chance = Math.floor(Math.random()*3);
+                                    if(chance < 2) hostileArray.push(new Madman({level: partyLevel}))
+                                    if(chance == 2) hostileArray.push(new MadMage({level: partyLevel}))
+                                }
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `The Madman laughs at ${currentCharacter.name} and draws his weapon!`

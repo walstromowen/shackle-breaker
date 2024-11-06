@@ -1,5 +1,5 @@
 import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower, Thrust} from "./abilities.js";
-import { DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, UseAntidote, UseAloeRemedy, UseParalysisTonic, UseBandage, DrinkKurtussBrewOfMadness} from "./abilities.js";
+import { DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, UseAntidote, UseAloeRemedy, UseParalysisTonic, UseBandage, DrinkKurtussBrewOfMadness, SetBearTrap} from "./abilities.js";
 
 let counter = 0;
 
@@ -823,7 +823,6 @@ export class LinenShirt extends Attachable{
         }
     }
 }
-
 export class LinenPants extends Attachable{
     constructor(config){
         super({
@@ -882,7 +881,6 @@ export class LinenPants extends Attachable{
         }
     }
 }
-
 export class LeatherHelmet extends Attachable{
     constructor(config){
         super({
@@ -1231,6 +1229,412 @@ export class LeatherBoots extends Attachable{
         }
     }
 }
+export class IronHelm extends Attachable{
+    constructor(config){
+        super({
+            name: 'iron helm',
+            description: `A heavy iron helm. A standard issue helm among soldiers and guards of the Altus kingdom.`,
+            imageSrc:  './assets/media/icons/barbute.png',
+            price: 100,
+            slot: 'head',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 1,
+            magicRecovery: 1,
+            bluntAttack: 0,
+            pierceAttack: 0,
+            arcaneAttack: 0,
+            elementalAttack: 0,
+            bluntDefense: 4,
+            pierceDefense: 4,
+            arcaneDefense: 1,
+            elementalDefense: 1,
+            bluntResistance: 0.04,
+            pierceResistance: 0.03,
+            arcaneResistance: 0.03,
+            elementalResistance: 0.02,
+            speed: -1,
+            evasion: -0.01,
+            critical: 0.00,
+            abilityArray: [],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 1;
+            this.magicRecovery = this.magicRecovery + 1;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 3;
+            this.pierceDefense = this.pierceDefense + 3;
+            this.arcaneDefense = this.arcaneDefense + 2;
+            this.elementalDefense = this.elementalDefense + 2;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0.00;
+            this.critical = this.critical + 0.00;
+        }
+    }
+}
+export class IronChainmail extends Attachable{
+    constructor(config){
+        super({
+            name: 'iron chainmail',
+            description: `Heavy iron chainmail. Standard issue chainmail among soldiers and guards of the Altus kingdom.`,
+            imageSrc:  './assets/media/icons/chain-mail.png',
+            price: 100,
+            slot: 'torso',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 1,
+            magicRecovery: 1,
+            bluntAttack: 0,
+            pierceAttack: 0,
+            arcaneAttack: 0,
+            elementalAttack: 0,
+            bluntDefense: 4,
+            pierceDefense: 4,
+            arcaneDefense: 1,
+            elementalDefense: 1,
+            bluntResistance: 0.04,
+            pierceResistance: 0.03,
+            arcaneResistance: 0.03,
+            elementalResistance: 0.02,
+            speed: -1,
+            evasion: -0.01,
+            critical: 0.00,
+            abilityArray: [],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 1;
+            this.magicRecovery = this.magicRecovery + 1;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 3;
+            this.pierceDefense = this.pierceDefense + 3;
+            this.arcaneDefense = this.arcaneDefense + 2;
+            this.elementalDefense = this.elementalDefense + 2;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0.00;
+            this.critical = this.critical + 0.00;
+        }
+    }
+}
+export class IronGauntlets extends Attachable{
+    constructor(config){
+        super({
+            name: 'iron gauntlets',
+            description: `Heavy iron gauntlets. Standard issue gauntlets among soldiers and guards of the Altus kingdom.`,
+            imageSrc:  './assets/media/icons/gauntlet.png',
+            price: 100,
+            slot: 'arms',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 1,
+            magicRecovery: 1,
+            bluntAttack: 0,
+            pierceAttack: 0,
+            arcaneAttack: 0,
+            elementalAttack: 0,
+            bluntDefense: 4,
+            pierceDefense: 4,
+            arcaneDefense: 1,
+            elementalDefense: 1,
+            bluntResistance: 0.04,
+            pierceResistance: 0.03,
+            arcaneResistance: 0.03,
+            elementalResistance: 0.02,
+            speed: -1,
+            evasion: -0.01,
+            critical: 0.00,
+            abilityArray: [],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 1;
+            this.magicRecovery = this.magicRecovery + 1;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 3;
+            this.pierceDefense = this.pierceDefense + 3;
+            this.arcaneDefense = this.arcaneDefense + 2;
+            this.elementalDefense = this.elementalDefense + 2;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0.00;
+            this.critical = this.critical + 0.00;
+        }
+    }
+}
+export class IronGreaves extends Attachable{
+    constructor(config){
+        super({
+            name: 'iron greaves',
+            description: `Heavy iron greaves. Standard issue greaves among soldiers and guards of the Altus kingdom.`,
+            imageSrc:  './assets/media/icons/armored-pants.png',
+            price: 100,
+            slot: 'legs',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 1,
+            magicRecovery: 1,
+            bluntAttack: 0,
+            pierceAttack: 0,
+            arcaneAttack: 0,
+            elementalAttack: 0,
+            bluntDefense: 4,
+            pierceDefense: 4,
+            arcaneDefense: 1,
+            elementalDefense: 1,
+            bluntResistance: 0.04,
+            pierceResistance: 0.03,
+            arcaneResistance: 0.03,
+            elementalResistance: 0.02,
+            speed: -1,
+            evasion: -0.01,
+            critical: 0.00,
+            abilityArray: [],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 1;
+            this.magicRecovery = this.magicRecovery + 1;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 3;
+            this.pierceDefense = this.pierceDefense + 3;
+            this.arcaneDefense = this.arcaneDefense + 2;
+            this.elementalDefense = this.elementalDefense + 2;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0.00;
+            this.critical = this.critical + 0.00;
+        }
+    }
+}
+export class IronBoots extends Attachable{
+    constructor(config){
+        super({
+            name: 'iron boots',
+            description: `Heavy iron boots. Standard issue boots among soldiers and guards of the Altus kingdom.`,
+            imageSrc:  './assets/media/icons/leg-armor.png',
+            price: 100,
+            slot: 'feet',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 1,
+            magicRecovery: 1,
+            bluntAttack: 0,
+            pierceAttack: 0,
+            arcaneAttack: 0,
+            elementalAttack: 0,
+            bluntDefense: 4,
+            pierceDefense: 4,
+            arcaneDefense: 1,
+            elementalDefense: 1,
+            bluntResistance: 0.04,
+            pierceResistance: 0.03,
+            arcaneResistance: 0.03,
+            elementalResistance: 0.02,
+            speed: -1,
+            evasion: -0.01,
+            critical: 0.00,
+            abilityArray: [],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 1;
+            this.magicRecovery = this.magicRecovery + 1;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 3;
+            this.pierceDefense = this.pierceDefense + 3;
+            this.arcaneDefense = this.arcaneDefense + 2;
+            this.elementalDefense = this.elementalDefense + 2;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0.00;
+            this.critical = this.critical + 0.00;
+        }
+    }
+}
+export class ClothHood extends Attachable{
+    constructor(config){
+        super({
+            name: 'cloth hood',
+            description: `A thick cloth hood. Garmets like this were common among the many seeking to gain quick riches from the discovery of magic in the Altus kingdom.`,
+            imageSrc:  './assets/media/icons/cowled.png',
+            price: 100,
+            slot: 'head',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 1,
+            magicRecovery: 3,
+            bluntAttack: 0,
+            pierceAttack: 0,
+            arcaneAttack: 0,
+            elementalAttack: 0,
+            bluntDefense: 1,
+            pierceDefense: 1,
+            arcaneDefense: 1,
+            elementalDefense: 1,
+            bluntResistance: 0.01,
+            pierceResistance: 0.01,
+            arcaneResistance: 0.03,
+            elementalResistance: 0.02,
+            speed: 0,
+            evasion: 0.01,
+            critical: 0,
+            abilityArray: [],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 1;
+            this.magicRecovery = this.magicRecovery + 2;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 1;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0.01;
+            this.critical = this.critical + 0;
+        }
+    }
+}
+export class ClothRobe extends Attachable{
+    constructor(config){
+        super({
+            name: 'cloth hood',
+            description: `A thick cloth robe. Garmets like this were common among the many seeking to gain quick riches from the discovery of magic in the Altus kingdom.`,
+            imageSrc:  './assets/media/icons/robe.png',
+            price: 100,
+            slot: 'torso',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 1,
+            magicRecovery: 3,
+            bluntAttack: 0,
+            pierceAttack: 0,
+            arcaneAttack: 0,
+            elementalAttack: 0,
+            bluntDefense: 1,
+            pierceDefense: 1,
+            arcaneDefense: 1,
+            elementalDefense: 1,
+            bluntResistance: 0.01,
+            pierceResistance: 0.01,
+            arcaneResistance: 0.03,
+            elementalResistance: 0.02,
+            speed: 0,
+            evasion: 0.01,
+            critical: 0,
+            abilityArray: [],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 1;
+            this.magicRecovery = this.magicRecovery + 2;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 1;
+            this.arcaneDefense = this.arcaneDefense + 1;
+            this.elementalDefense = this.elementalDefense + 1;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0.01;
+            this.critical = this.critical + 0;
+        }
+    }
+}
 export class Buckler extends Attachable{
     constructor(config){
         super({
@@ -1405,7 +1809,18 @@ export class PoisonedKnife extends Consumable{
         });
     }
 }
-
+export class BearTrap extends Consumable{
+    constructor(){
+        super({
+            name: 'bear trap',
+            description: 'A trap used for catching small game and keeping away bears or other large beasts',
+            imageSrc: './assets/media/icons/man-trap.png',
+            price: 50,
+            abilityArray: [new SetBearTrap({})],
+            useSituations: ['battle', 'overworld'],
+        });
+    }
+}
 export class KurtussBrewOfMadness extends Consumable{
     constructor(){
         super({
@@ -1430,4 +1845,7 @@ export class Meteorite extends Consumable{
         });
     }
 }
+//smoke bomb
+//tome of 
+//gold bag
 

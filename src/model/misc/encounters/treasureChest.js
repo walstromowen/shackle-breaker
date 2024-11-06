@@ -36,7 +36,7 @@ export class TreasureChest extends Stage{
                                 return biome.generateBattle(partyLevel);
                             },
                             messageFunction: (currentCharacter)=>{
-                                return `Something approaches ${currentCharacter.name} position!`
+                                return `Something approaches ${currentCharacter.name}'s position!`
                             }, 
                             weight: 2,
                         },
@@ -70,7 +70,7 @@ export class TreasureChest extends Stage{
                         {
                             result: 'loot',
                             createLoot: (partyLevel, biome)=>{
-                                return  [[getRandomArrayElementWeighted(biome.lootTable).item()]];
+                                return  [getRandomArrayElementWeighted(biome.lootTable).item()];
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} sucessfully picks the lock!`
@@ -86,7 +86,7 @@ export class TreasureChest extends Stage{
                                 return biome.generateBattle(partyLevel);
                             },
                             messageFunction: (currentCharacter)=>{
-                                return `Something approaches ${currentCharacter.name} position!`
+                                return `Something approaches ${currentCharacter.name}'s position!`
                             }, 
                             weight: 2,
                         },
@@ -136,7 +136,7 @@ export class TreasureChest extends Stage{
                                 return biome.generateBattle(partyLevel);
                             },
                             messageFunction: (currentCharacter)=>{
-                                return `Something approaches ${currentCharacter.name} position!`
+                                return `Something approaches ${currentCharacter.name}'s position!`
                             }, 
                             weight: 2,
                         },

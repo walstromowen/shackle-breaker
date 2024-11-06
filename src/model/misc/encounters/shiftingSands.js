@@ -78,7 +78,7 @@ export class StatuesInTheSand extends Stage{
                         {
                             result: 'nextStage',
                             createNextStage: (partyLevel, biome)=>{
-                                return config.nextStage;
+                                return new ShiftingSands3({});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `After maintaining careful eye contact and backing away slowly, ${currentCharacter.name}'s party sees the statues disipate into the desert winds.`
@@ -92,15 +92,15 @@ export class StatuesInTheSand extends Stage{
                             imageSrc: './assets/media/entities/sand-stalker.jpg',
                             musicSrc: "./assets/audio/musicTracks/TimTaj - Desert Hunt.mp3",
                             createBattle: (partyLevel, biome)=>{
-                                let hostiles = [];
+                                let hostileArray = [];
                                 let count = Math.ceil(Math.random()*4);
                                 for(let i = 0; i < count; i++){
-                                    hostiles.push(new SandStalker({level: partyLevel}))
+                                    hostileArray.push(new SandStalker({level: partyLevel}))
                                 }
-                                return new Battle({hostiles: hostiles, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
                             createNextStage: (partyLevel, biome)=>{
-                                return new ShiftingSands4({});
+                                return new ShiftingSands3({});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `While on the first shift to watch the statues, ${currentCharacter.name} trips and gets back up only to realize the statues have surrounded the party! And this time, they don't look like statues!`
@@ -135,12 +135,12 @@ export class StatuesInTheSand extends Stage{
                             imageSrc: './assets/media/entities/sand-stalker.jpg',
                             musicSrc: "./assets/audio/musicTracks/TimTaj - Desert Hunt.mp3",
                             createBattle: (partyLevel, biome)=>{
-                                let hostiles = [];
+                                let hostileArray = [];
                                 let count = Math.ceil(Math.random()*4);
                                 for(let i = 0; i < count; i++){
-                                    hostiles.push(new SandStalker({level: partyLevel}))
+                                    hostileArray.push(new SandStalker({level: partyLevel}))
                                 }
-                                return new Battle({hostiles: hostiles, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return config.nextStage;
@@ -175,12 +175,12 @@ export class StatuesInTheSand extends Stage{
                             imageSrc: './assets/media/entities/sand-stalker.jpg',
                             musicSrc: "./assets/audio/musicTracks/TimTaj - Desert Hunt.mp3",
                             createBattle: (partyLevel, biome)=>{
-                                let hostiles = [];
+                                let hostileArray = [];
                                 let count = Math.ceil(Math.random()*4);
                                 for(let i = 0; i < count; i++){
-                                    hostiles.push(new SandStalker({level: partyLevel}))
+                                    hostileArray.push(new SandStalker({level: partyLevel}))
                                 }
-                                return new Battle({hostiles: hostiles, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return config.nextStage;
@@ -237,7 +237,7 @@ export class ShiftingSands2 extends Stage{
                         {
                             result: 'complete',
                             onActivate(target){
-                                Math.floor(target.currentStamina *= 0.5);
+                                target.currentStamina = Math.floor(target.currentStamina * 0.75);
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name}'s party walks for hours in vain, only to realize they have been chasing a mirage. Discouraged, the party turns back tired and exhausted.`
@@ -284,7 +284,7 @@ export class ShiftingSands3 extends Stage{
                         {
                             result: 'nextStage',
                             onActivate(target){
-                                Math.floor(target.currentStamina *= 0.75);
+                                target.currentStamina = Math.floor(target.currentStamina * 0.75);
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new ShiftingSands4({});;
@@ -297,7 +297,7 @@ export class ShiftingSands3 extends Stage{
                         {
                             result: 'nextStage',
                             onActivate(target){
-                                Math.floor(target.currentStamina *= 0.75);
+                                target.currentStamina = Math.floor(target.currentStamina * 0.75);
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new StatuesInTheSand({});
@@ -307,7 +307,7 @@ export class ShiftingSands3 extends Stage{
                         {
                             result: 'complete',
                             onActivate(target){
-                                Math.floor(target.currentStamina *= 0.75);
+                                target.currentStamina = Math.floor(target.currentStamina * 0.75);
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name}'s party walks for hours in vain, only to realize they have been chasing a mirage. Discouraged, the party turns back tired and exhausted.`
@@ -353,7 +353,7 @@ export class ShiftingSands4 extends Stage{
                         {
                             result: 'nextStage',
                             onActivate(target){
-                                Math.floor(target.currentStamina *= 0.75);
+                                target.currentStamina = Math.floor(target.currentStamina * 0.75);
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new SandCastleEntrance({});;
@@ -365,7 +365,7 @@ export class ShiftingSands4 extends Stage{
                         {
                             result: 'complete',
                             onActivate(target){
-                                Math.floor(target.currentStamina *= 0.25);
+                                target.currentStamina = Math.floor(target.currentStamina * 0.75);
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name}'s party approaches the object, only to realize the object is just a large rock. Discouraged, the party takes refuge against the rock tired and exhausted.`

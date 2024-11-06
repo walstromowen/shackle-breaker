@@ -1,6 +1,6 @@
 import { getRandomArrayElementWeighted } from "../../utility.js";
-import { Skeleton, SkeletonCultist, Wolf, Spider, GroveGuardian, Madman, MadMage, SandStalker, DryShark} from "./entities.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff} from "./items.js";
+import { Skeleton, SkeletonCultist, Wolf, Spider, GroveGuardian, Madman, MadMage, SandStalker, DryShark, Dog} from "./entities.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Hide} from "./items.js";
 import Encounter from "./encounters/encounter.js";
 import Battle from "./battle.js";
@@ -9,6 +9,7 @@ import {WanderingMercenary} from "./encounters/wanderingMercenary.js";
 import { MysteriousAltar } from "./encounters/mysteriousAltar.js";
 import { ShiftingSands, SandCastleEntrance} from "./encounters/shiftingSands.js";
 import { TreasureChest } from "./encounters/treasureChest.js";
+import { CaveIn } from "./encounters/caveIn.js";
 
 export default class Biome{
     constructor(config){
@@ -33,14 +34,23 @@ export default class Biome{
             {item: ()=>{return new LeatherGreaves({level: 1})}, weight: 1},
             {item: ()=>{return new LeatherBoots({level: 1})}, weight: 1},
 
+            {item: ()=>{return new IronHelm({level: 1})}, weight: 1},
+            {item: ()=>{return new IronChainmail({level: 1})}, weight: 1},
+            {item: ()=>{return new IronGauntlets({level: 1})}, weight: 1},
+            {item: ()=>{return new IronGreaves({level: 1})}, weight: 1},
+            {item: ()=>{return new IronBoots({level: 1})}, weight: 1},
+
+            {item: ()=>{return new ClothHood({level: 1})}, weight: 1},
+            {item: ()=>{return new ClothRobe({level: 1})}, weight: 1},
+
+            {item: ()=>{return new LinenShirt({level: 1})}, weight: 2},
+            {item: ()=>{return new LinenPants({level: 1})}, weight: 2},
+
             {item: ()=>{return new ShortSword({level: 1})}, weight: 1},
             {item: ()=>{return new Handaxe({level: 1})}, weight: 1},
             {item: ()=>{return new Buckler({level: 1})}, weight: 1},
             {item: ()=>{return new Dagger({level: 1})}, weight: 1},
             {item: ()=>{return new BlacksmithHammer({level: 1})}, weight: 1},
-
-            {item: ()=>{return new LinenShirt({level: 1})}, weight: 2},
-            {item: ()=>{return new LinenPants({level: 1})}, weight: 2},
 
             {item: ()=>{return new KurtussBrewOfMadness()}, weight: 1},
             {item: ()=>{return new PoisonedKnife()}, weight: 1},
@@ -71,7 +81,11 @@ export default class Biome{
         let encounter = getRandomArrayElementWeighted(this.possibleEncounters)
         let startingStage = encounter.startingStage();
         if(startingStage.name == 'Wandering Mercenary'){
-            startingStage.entity = fn();
+            let entity = fn()
+            if(entity == false){
+                entity = new Skeleton({name: 'Undead Traveler', isHostile: false});
+            }
+            return new Encounter(new WanderingMercenary({entity: entity}), encounter.resetOnLeave) 
         }
         return new Encounter(startingStage, encounter.resetOnLeave)   
     }
@@ -90,7 +104,7 @@ export class Plains extends Biome{
                 {entity: ()=>{return new GroveGuardian({})}, weight: 1},
             ],
             possibleEncounters: [
-                //{startingStage: ()=>{return new WanderingMercenary({})}, resetOnLeave: false, weight: 1},
+                {startingStage: ()=>{return {name: 'Wandering Mercenary'}}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new TreasureChest({})}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new MadmanAhead({})}, resetOnLeave: false, weight: 1},
             ],
@@ -106,11 +120,12 @@ export class Cave extends Biome{
             backgroundMusicSrc: "./assets/audio/musicTracks/gathering-darkness-kevin-macleod-main-version-04-22-8459.mp3",
             battleMusicSrc: "./assets/audio/musicTracks/battle-sword-139313.mp3",
             possibleHostiles: [
-                {entity: ()=>{return new Skeleton({})}, weight: 2},
+                {entity: ()=>{return new Skeleton({})}, weight: 3},
                 {entity: ()=>{return new SkeletonCultist({})}, weight: 1},
-                {entity: ()=>{return new Spider({})}, weight: 1},
+                {entity: ()=>{return new Spider({})}, weight: 2},
             ],
             possibleEncounters: [
+                {startingStage: ()=>{return new CaveIn({})}, resetOnLeave: false, weight: 2},
                 {startingStage: ()=>{return new TreasureChest({})}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new MysteriousAltar({})}, resetOnLeave: false, weight: 1},
             ],
@@ -130,7 +145,7 @@ export class Desert extends Biome{
                 {entity: ()=>{return new SandStalker({})}, weight: 3},
             ],
             possibleEncounters: [
-                //{startingStage: ()=>{return new WanderingMercenary({})}, resetOnLeave: false, weight: 1},
+                {startingStage: ()=>{return {name: 'Wandering Mercenary'}}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new TreasureChest({})}, resetOnLeave: false, weight: 2},
                 {startingStage: ()=>{return new SandCastleEntrance({})}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new ShiftingSands({})}, resetOnLeave: false, weight: 3},

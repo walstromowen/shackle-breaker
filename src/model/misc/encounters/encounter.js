@@ -5,3 +5,6 @@ export default class Encounter{
         this.resetOnLeave = resetOnLeave || false;
     }
 }
+//Wounded Mut
+//cave in
+//binfire

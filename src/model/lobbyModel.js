@@ -1,6 +1,6 @@
 import { getRandomArrayElement } from "../utility.js";
 import {Entity, Dog, Hawk, Tiger} from "./misc/entities.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LightningStaff, DarkStaff, IceStaff, ForestStaff, Meteorite} from "./misc/items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LightningStaff, DarkStaff, IceStaff, ForestStaff, Meteorite, ClothHood, LeatherBoots, BearTrap} from "./misc/items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, AloeRemedy, ParalysisTonic, Bandage, PineWood} from "./misc/items.js";
 
 
@@ -39,10 +39,11 @@ export default class LobbyModel{
         switch(background){
             case 'traveler':
                 equipment = [
-                    new LeatherHood({level: 1}),
+                    new LeatherHelmet({level: 1}),
                     new ShortSword({level: 1}),
                     new LinenShirt({level: 1}),
                     new LinenPants({level: 1}),
+                    new LeatherBoots({level: 1}),
                 ];
                 this.props.getParty()[0].setAttributes({vigor: 5, strength: 5, dexterity: 5, intelligence: 5, attunement: 5});
                 this.props.setGold(300);
@@ -53,52 +54,62 @@ export default class LobbyModel{
                     new Buckler({level: 1}),
                     new LinenShirt({level: 1}),
                     new LinenPants({level: 1}),
+                    new LeatherBoots({level: 1}),
                 ];
                 this.props.getParty()[0].setAttributes({vigor: 9, strength: 4, dexterity: 4, intelligence: 4, attunement: 4});
                 this.props.setGold(250);
                 break;
             case 'ranger':
                 equipment = [
+                    new LeatherHood({level: 1}),
                     new Shortbow({level: 1}),
                     new LinenShirt({level: 1}),
                     new LinenPants({level: 1}),
+                    new LeatherBoots({level: 1}),
                 ];
                 this.props.getParty()[0].setAttributes({vigor: 5, strength: 4, dexterity: 6, intelligence: 4, attunement: 6});
-                this.props.setGold(300);
+                this.props.setGold(200);
                 break;
             case 'scholar':
                 equipment = [
+                    new ClothHood({level: 1}),
                     new ArcaneStaff({level: 1}),
                     new LinenShirt({level: 1}),
                     new LinenPants({level: 1}),
+                    new LeatherBoots({level: 1}),
                 ];
                 this.props.getParty()[0].setAttributes({vigor: 5, strength: 5, dexterity: 5, intelligence: 7, attunement: 3});
                 this.props.setGold(250);
                 break;
             case 'warrior':
                 equipment = [
+                    new LeatherHelmet({level: 1}),
                     new Handaxe({level: 1}),
                     new LinenShirt({level: 1}),
                     new LinenPants({level: 1}),
+                    new LeatherBoots({level: 1}),
                 ];
                 this.props.getParty()[0].setAttributes({vigor: 5, strength: 7, dexterity: 3, intelligence: 5, attunement: 5});
                 this.props.setGold(250);
                 break;
             case 'thief':
                 equipment = [
-                    new Dagger({level: 1}),
+                    new LeatherHood({level: 1}),
                     new Dagger({level: 1}),
                     new LinenShirt({level: 1}),
                     new LinenPants({level: 1}),
+                    new LeatherBoots({level: 1}),
                 ];
                 this.props.getParty()[0].setAttributes({vigor: 5, strength: 3, dexterity: 7, intelligence: 5, attunement: 5});
                 this.props.setGold(250);
                 break;
             case 'hermit':
                 equipment = [
+                    new ClothHood({level: 1}),
                     new ForestStaff({level: 1}),
                     new LinenShirt({level: 1}),
                     new LinenPants({level: 1}),
+                    new LeatherBoots({level: 1}),
                 ];
                 this.props.getParty()[0].setAttributes({vigor: 5, strength: 5, dexterity: 5, intelligence: 3, attunement: 7});
                 this.props.setGold(250);
@@ -114,7 +125,7 @@ export default class LobbyModel{
         let keepsake = document.getElementById('lobby-keepsake-selection').value;
         switch(keepsake){
             case 'hunters-tools':
-                this.props.setInventory([new HealthPotion()]);
+                this.props.setInventory([new HealthPotion(), new BearTrap()]);
                 break;
             case 'bag-of-potions':
                 this.props.setInventory([new HealthPotion(), new StaminaPotion(), new MagicPotion()]);
@@ -135,7 +146,7 @@ export default class LobbyModel{
                 this.props.setInventory([new HealthPotion(), new Bandage()]);
                 break;
             case 'meteorite':
-                this.props.setInventory([new Meteorite()]);
+                this.props.setInventory([new HealthPotion()]);
             break;
         }
     }

@@ -31,14 +31,14 @@ export class MysteriousAltar extends Stage{
                             imageSrc: './assets/media/entities/skeleton.jpg',
                             musicSrc: "./assets/audio/musicTracks/battle-sword-139313.mp3",
                             createBattle: (partyLevel, biome)=>{
-                                let hostiles = [];
+                                let hostileArray = [];
                                 let count = Math.ceil(Math.random()*4);
                                 for(let i = 0; i < count; i++){
                                     let chance = Math.floor(Math.random()*3);
-                                    if(chance < 2) hostiles.push(new Skeleton({level: partyLevel}))
-                                    if(chance == 2) hostiles.push(new SkeletonCultist({level: partyLevel}))
+                                    if(chance < 2) hostileArray.push(new Skeleton({level: partyLevel}))
+                                    if(chance == 2) hostileArray.push(new SkeletonCultist({level: partyLevel}))
                                 }
-                                return new Battle({hostiles: hostiles, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new AtTheAltar({});
@@ -131,14 +131,14 @@ export class AtTheAltar extends Stage{
                             imageSrc: './assets/media/entities/skeleton.jpg',
                             musicSrc: "./assets/audio/musicTracks/battle-sword-139313.mp3",
                             createBattle: (partyLevel, biome)=>{
-                                let hostiles = [];
+                                let hostileArray = [];
                                 let count = Math.ceil(Math.random()*4);
                                 for(let i = 0; i < count; i++){
                                     let chance = Math.floor(Math.random()*3);
-                                    if(chance < 2) hostiles.push(new Skeleton({level: partyLevel}))
-                                    if(chance == 2) hostiles.push(new SkeletonCultist({level: partyLevel}))
+                                    if(chance < 2) hostileArray.push(new Skeleton({level: partyLevel}))
+                                    if(chance == 2) hostileArray.push(new SkeletonCultist({level: partyLevel}))
                                 }
-                                return new Battle({hostiles: hostiles, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new AtTheAltar({});
@@ -196,8 +196,8 @@ export class ASkeletalAbomination extends Stage{
                         {
                             result: 'battle',
                             createBattle: (partyLevel, biome)=>{
-                                let hostiles = [new SkeletonColossus({level: partyLevel})];
-                                return new Battle({hostiles: hostiles, battleMusicSrc: "./assets/audio/musicTracks/2022-03-16_-_Escape_Route_-_www.FesliyanStudios.com.mp3", canRetreat: false});
+                                let hostileArray = [new SkeletonColossus({level: partyLevel})];
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: "./assets/audio/musicTracks/2022-03-16_-_Escape_Route_-_www.FesliyanStudios.com.mp3", canRetreat: false});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} attacks!`
@@ -224,8 +224,8 @@ export class ASkeletalAbomination extends Stage{
                         {
                             result: 'battle',
                             createBattle: (partyLevel, biome)=>{
-                                let hostiles = [new SkeletonColossus({level: partyLevel})];
-                                return new Battle({hostiles: hostiles, battleMusicSrc: "./assets/audio/musicTracks/2022-03-16_-_Escape_Route_-_www.FesliyanStudios.com.mp3", canRetreat: false});
+                                let hostileArray = [new SkeletonColossus({level: partyLevel})];
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: "./assets/audio/musicTracks/2022-03-16_-_Escape_Route_-_www.FesliyanStudios.com.mp3", canRetreat: false});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} attacks!`

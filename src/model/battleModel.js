@@ -346,6 +346,7 @@ getAvailableTargets(attacker){
     createdMergedAbility(ability1, ability2){
         let mergedAbility = new Ability({
             name: ability1.name,
+            description: ability1.description,
             iconSrc: ability1.iconSrc,
             targetCount: ability1.targetCount,
             accuracy: ((ability1.accuracy + ability2.accuracy) / 2)*1.1,

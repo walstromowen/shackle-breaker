@@ -111,7 +111,7 @@ class StatusEffect{
         }
     )}
     //apply / remove events
-    onApplied(){
+    onApplied(attacker, target){
         
     }
     onRemove(){
@@ -123,17 +123,17 @@ class StatusEffect{
         }
     }
     //to target events
-    onRecieveDamage(){
+    onRecieveDamage(attacker, target){
         
     }
-    onOpponentAttemptAbility(){
+    onOpponentAttemptAbility(attacker, target){
         
     }
     //to attacker
-    onDeliverDamage(){
+    onDeliverDamage(attacker, target){
         
     }
-    onAttemptAbility(){
+    onAttemptAbility(attacker, target){
         
     }
    
@@ -310,7 +310,7 @@ export class Frozen extends StatusEffect{
             abilityAnimation: 'none',
         });
     }
-    onApplied(){
+    onApplied(attacker, target){
         this.holder.currentSpeed -= this.holder.baseSpeed * 0.5;
         
     }
@@ -371,7 +371,7 @@ export class Shielded extends StatusEffect{
             removeOnBattleEnd: true,
         });
     }
-    onApplied(){
+    onApplied(attacker, target){
         this.holder.currentBluntResistance = (this.holder.currentBluntResistance + 0.5);
         this.holder.currentPierceResistance = (this.holder.currentPierceResistance + 0.5);
         this.holder.currentArcaneResistance = (this.holder.currentArcaneResistance + 0.5);
@@ -390,10 +390,10 @@ export class Shielded extends StatusEffect{
         this.holder.currentArcaneResistance = (this.holder.currentArcaneResistance - 0.5);
         this.holder.currentElementalResistance = (this.holder.currentElementalResistance - 0.5);
     }
-    onDeliverDamage(){
+    onDeliverDamage(attacker, target){
         this.onRemove();
     }
-    onRecieveDamage(){
+    onRecieveDamage(attacker, target){
         this.onRemove();
     }
     onEndTurn(){
@@ -457,7 +457,7 @@ export class InstaDeath extends StatusEffect{
             }
         }
     }
-    onRecieveDamage(){
+    onRecieveDamage(attacker, target){
         this.holder.currentHP = 0;
         this.onRemove();
     }
@@ -522,6 +522,25 @@ export class Cursed extends StatusEffect{
         );
     }
 }
+export class BearTrapSet extends StatusEffect{
+    constructor(config){
+        super({
+            name:'bear trap set',
+            iconSrc: "./assets/media/icons/man-trap.png",
+            holder: config.holder,
+            maxCharges: 99,
+            soundEffectSrc: "./assets/audio/soundEffects/mixkit-metal-medieval-construction-818.wav",
+            removeOnBattleEnd: false,
+        });
+    }
+    onRecieveDamage(attacker, target){
+        attacker.currentHP -= attacker.currentHP*0.2
+        if(attacker.currentHP < 0){
+            attacker.currentHP = 0;
+        }
+        this.onRemove();
+    }
+}
 export class PhysicalAttackBuff extends StatusEffect{
     constructor(config){
         super({
@@ -538,9 +557,20 @@ export class PhysicalAttackBuff extends StatusEffect{
         this.currentBluntAttackBuff = 0;
         this.currentPierceAttackBuff = 0;
     }
-    onApplied(){
+    onApplied(attacker, target){
         this.holder.currentBluntAttack -= this.currentBluntAttackBuff;
         this.holder.currentPierceAttack -= this.currentPierceAttackBuff;
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name = 'physical attack debuff'){
+                this.holder.statusArray[i].currentLevel = this.holder.statusArray[i].currentLevel - 2
+                if(this.holder.statusArray[i].currentLevel < 0){
+                    this.holder.statusArray[i].onRemove();
+                }else{
+                    this.holder.statusArray[i].onApplied(attacker, target);
+                }
+                return;
+            }
+        }
         switch(this.currentLevel){
             case 0:
                 this.currentBluntAttackBuff = Math.floor(0.2 * this.holder.baseBluntAttack);
@@ -594,9 +624,20 @@ export class PhysicalAttackDebuff extends StatusEffect{
         this.currentBluntAttackDebuff = 0;
         this.currentPierceAttackDebuff = 0;
     }
-    onApplied(){
+    onApplied(attacker, target){
         this.holder.currentBluntAttack += this.currentBluntAttackDebuff;
         this.holder.currentPierceAttack += this.currentPierceAttackDebuff;
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name = 'physical attack buff'){
+                this.holder.statusArray[i].currentLevel = this.holder.statusArray[i].currentLevel - 2
+                if(this.holder.statusArray[i].currentLevel < 0){
+                    this.holder.statusArray[i].onRemove();
+                }else{
+                    this.holder.statusArray[i].onApplied(attacker, target);
+                }
+                return;
+            }
+        }
         switch(this.currentLevel){
             case 0:
                 this.currentBluntAttackDebuff = Math.floor(0.2 * this.holder.baseBluntAttack);

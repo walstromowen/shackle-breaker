@@ -1,6 +1,6 @@
 import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl} from "./abilities.js";
 import { Poison, Burn, Bleed, Shielded, InstaDeath} from "./statusEffects.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff} from "./items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Hide} from "./items.js";
 
 
@@ -553,6 +553,11 @@ export class Skeleton extends Entity{
             isHostile: config.isHostile || true,
             abilityArray: [],
             lootTable: [
+                {item: new IronHelm({level: 1}), weight: 1},
+                {item: new IronChainmail({level: 1}), weight: 1},
+                {item: new IronGauntlets({level: 1}), weight: 1},
+                {item: new IronGreaves({level: 1}), weight: 1},
+                {item: new IronBoots({level: 1}), weight: 1},
                 {item: new LeatherHood({level: 1}), weight: 1},
                 {item: new LeatherHelmet({level: 1}), weight: 1},
                 {item: new LeatherChestplate({level: 1}), weight: 1},
@@ -619,11 +624,8 @@ export class SkeletonCultist extends Entity{
                 {item: new LightningStaff({level: 1}), weight: 1},
                 {item: new IceStaff({level: 1}), weight: 1},
 
-                {item: new LeatherHood({level: 1}), weight: 1},
-                {item: new LeatherHelmet({level: 1}), weight: 1},
-                {item: new LeatherChestplate({level: 1}), weight: 1},
-                {item: new LeatherGreaves({level: 1}), weight: 1},
-                {item: new LeatherBoots({level: 1}), weight: 1},
+                {item: new ClothHood({level: 1}), weight: 1},
+                {item: new ClothRobe({level: 1}), weight: 1},
 
                 {item: new LinenShirt({level: 1}), weight: 1},
                 {item: new LinenPants({level: 1}), weight: 1},
@@ -675,11 +677,7 @@ export class SkeletonColossus extends Entity{
             baseElementalResistance: config.baseElementalResistance || 0.1,
             lootTable: [
                 {item: new DarkStaff({level: 1}), weight: 1},
-                {item: new LeatherHood({level: 1}), weight: 1},
-                {item: new LeatherHelmet({level: 1}), weight: 1},
-                {item: new LeatherChestplate({level: 1}), weight: 1},
-                {item: new LeatherGreaves({level: 1}), weight: 1},
-                {item: new LeatherBoots({level: 1}), weight: 1}
+                {item: new HealthPotion({level: 1}), weight: 1},
                 
             ],
         });
@@ -815,7 +813,7 @@ export class Spider extends Entity{
             abilityArray: [new Bite({}), new ShootWeb({})],
             lootTable: [
                 {item: new ParalysisTonic({level: 1}), weight: 1},
-                {item: new StaminaPotion({level: 1}), weight: 3}
+                {item: new PoisonedKnife({level: 1}), weight: 3}
             ],
         })
     }

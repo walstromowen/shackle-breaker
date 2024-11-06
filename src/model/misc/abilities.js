@@ -1,4 +1,4 @@
-import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen, Blessed, Cursed, PhysicalAttackDebuff, PhysicalAttackBuff} from "./statusEffects.js";
+import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen, Blessed, Cursed, PhysicalAttackDebuff, PhysicalAttackBuff, BearTrapSet} from "./statusEffects.js";
 
 export class Ability{
     constructor(config){
@@ -11,10 +11,11 @@ export class Ability{
         this.damageModifier = config.damageModifier || 1;
         this.criticalDamageModifier = config.criticalDamageModifier || 1.5;
         this.criticalChanceModifier = config.criticalChance|| 0.05;
+        this.range = config.range || 1; //measured in meters
         this.healthCost = config.healthCost || 0;
         this.staminaCost = config.staminaCost || 0;
         this.magicCost = config.magicCost || 0;
-        this.damageTypes = config.damageTypes || '';
+        this.damageTypes = config.damageTypes || ['blunt'];
         this.defaultTarget = config.defaultTarget || 'opponent';
         this.targetLock = config.targetLock || '';
 
@@ -102,8 +103,14 @@ export class Ability{
         attacker.currentStamina -= this.staminaCost;
         attacker.currentMagic -= this.magicCost;
     }
-    checkTargetEvade(target){
+    checkTargetEvade(attacker, target){
         if(this.name == 'switchCombatant' || this.name == 'retreat'){
+            return false;
+        }
+        if(attacker.battleId == target.battleId){
+            return false;
+        }
+        if(attacker.isHostile == target.isHostile && (this.defaultTarget == 'ally' || this.defaultTarget == 'self')){
             return false;
         }
         if(target.currentEvasion > this.accuracy * Math.random()){
@@ -117,17 +124,17 @@ export class Ability{
             return rawDamage;
         }
     }
-    inflictStatus(status, target){
+    inflictStatus(status, attacker, target){
         for(let i = 0; i < target.statusArray.length; i++){
             if(target.statusArray[i].name == status.name){
                 if(target.statusArray[i].stackable){
-                    target.statusArray[i].onApplied();
+                    target.statusArray[i].onApplied(attacker, target);
                 }
                 return
             }
         }
         target.statusArray.push(status);
-        status.onApplied();
+        status.onApplied(attacker, target);
     }
     removeStatus(statusName, target){
         for(let i = 0; i < target.statusArray.length; i++){
@@ -141,9 +148,9 @@ export class Ability{
         let resolveObject = {evade: false, switchCombatant: false, retreat: false, rest: false}
         switch(this.sequenceType){
             case 'chain':
-                this.triggerOnAttemptAbility(attacker);
-                this.triggerOnOpponentAttemptAbility(targets[0]);
-                if(this.checkTargetEvade(targets[0]) && attacker.battleId != targets[0].battleId){
+                this.triggerOnAttemptAbility(attacker, targets[0]);
+                this.triggerOnOpponentAttemptAbility(attacker, targets[0]);
+                if(this.checkTargetEvade(attacker, targets[0]) && attacker.battleId != targets[0].battleId){
                     resolveObject.evade = true;
                 }else{
                     this.checkCritical(attacker);
@@ -151,9 +158,9 @@ export class Ability{
                 }
                 break;
             case 'splash':
-                this.triggerOnAttemptAbility(attacker);
+                this.triggerOnAttemptAbility(attacker, targets[0]);
                 for(let i = 0; i < targets.length; i++){
-                    this.triggerOnOpponentAttemptAbility(targets[0]);
+                    this.triggerOnOpponentAttemptAbility(attacker, targets[0]);
                     if(this.checkTargetEvade(targets[i]) && attacker.battleId != targets[i].battleId){//may be issue with evading splash attacks
                         resolveObject.evade = true;
                     }else{
@@ -193,25 +200,25 @@ export class Ability{
         this.message = message;
     }
     //to target events
-    triggerOnRecieveDamage(target){
+    triggerOnRecieveDamage(attacker, target){
         for(let i = 0; i < target.statusArray.length; i++){
-            target.statusArray[i].onRecieveDamage();
+            target.statusArray[i].onRecieveDamage(attacker, target);
         }
     }
-    triggerOnOpponentAttemptAbility(target){
+    triggerOnOpponentAttemptAbility(attacker, target){
         for(let i = 0; i < target.statusArray.length; i++){
-            target.statusArray[i].onOpponentAttemptAbility();
+            target.statusArray[i].onOpponentAttemptAbility(attacker, target);
         }
     }
-    //to attacker (target is attacker)
-    triggerOnDeliverDamage(target){
-        for(let i = 0; i < target.statusArray.length; i++){
-            target.statusArray[i].onDeliverDamage();
+    //to attacker events
+    triggerOnDeliverDamage(attacker, target){
+        for(let i = 0; i < attacker.statusArray.length; i++){
+            attacker.statusArray[i].onDeliverDamage(attacker, target);
         }
     }
-    triggerOnAttemptAbility(target){
-        for(let i = 0; i < target.statusArray.length; i++){
-            target.statusArray[i].onAttemptAbility();
+    triggerOnAttemptAbility(attacker, target){
+        for(let i = 0; i < attacker.statusArray.length; i++){
+            attacker.statusArray[i].onAttemptAbility(attacker, target);
         }
     }
 }
@@ -327,10 +334,10 @@ export class Slash extends Ability{
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
-            this.triggerOnDeliverDamage(attacker);
-            this.triggerOnRecieveDamage(target);
-            if(Math.random()*10 < 1){
-                this.inflictStatus(new Bleed({holder: target}), target);
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
+            if(Math.random()*15 < 1){
+                this.inflictStatus(new Bleed({holder: target}), attacker, target);
             } 
         }
     }
@@ -365,15 +372,15 @@ export class Thrust extends Ability{
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
-            this.triggerOnDeliverDamage(attacker);
-            this.triggerOnRecieveDamage(target);
-            if(Math.random()*10 < 1){
-                this.inflictStatus(new Bleed({holder: target}), target);
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
+            if(Math.random()*15 < 1){
+                this.inflictStatus(new Bleed({holder: target}), attacker, target);
             } 
         }
     }
     updateMessage(attacker, target){
-        this.message = `${attacker.name} slashes ${target.name}.`;
+        this.message = `${attacker.name} stabs ${target.name} with a thrust attack.`;
     }
 }
 export class Punch extends Ability{
@@ -401,8 +408,8 @@ export class Punch extends Ability{
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
-            this.triggerOnDeliverDamage(attacker);
-            this.triggerOnRecieveDamage(target);
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
         }
     }
     updateMessage(attacker, target){
@@ -434,8 +441,8 @@ export class Strike extends Ability{
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
-            this.triggerOnDeliverDamage(attacker);
-            this.triggerOnRecieveDamage(target);
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
         }
     }
     updateMessage(attacker, target){
@@ -468,10 +475,10 @@ export class ShootArrow extends Ability{
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
-            this.triggerOnDeliverDamage(attacker);
-            this.triggerOnRecieveDamage(target);
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
             if(Math.random()*20 < 1){
-                this.inflictStatus(new Bleed({holder: target}), target);
+                this.inflictStatus(new Bleed({holder: target}), attacker, target);
             } 
         }
     }
@@ -507,8 +514,8 @@ export class Tripleshot extends Ability{
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
-            this.triggerOnDeliverDamage(attacker);
-            this.triggerOnRecieveDamage(target);
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
         }
     }
     updateMessage(attacker){
@@ -542,8 +549,8 @@ export class Cleave extends Ability{
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
-            this.triggerOnDeliverDamage(attacker);
-            this.triggerOnRecieveDamage(target);
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
         }
     }
     updateMessage(attacker){
@@ -577,8 +584,8 @@ export class MagicMissile extends Ability{
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
-            this.triggerOnDeliverDamage(attacker);
-            this.triggerOnRecieveDamage(target);
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
         }
     }
     updateMessage(attacker, target){
@@ -679,10 +686,10 @@ export class Bite extends Ability{
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
-            this.triggerOnDeliverDamage(attacker);
-            this.triggerOnRecieveDamage(target);
-            if(Math.random()*6 < 1){
-                this.inflictStatus(new Bleed({holder: target}), target);
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
+            if(Math.random()*15 < 1){
+                this.inflictStatus(new Bleed({holder: target}), attacker, target);
             }
         }
     }
@@ -717,10 +724,10 @@ export class Fireball extends Ability{
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
             if(Math.random()*6 < 1){
-                this.inflictStatus(new Burn({holder: target}), target);
+                this.inflictStatus(new Burn({holder: target}), attacker, target);
             }
-            this.triggerOnDeliverDamage(attacker);
-            this.triggerOnRecieveDamage(target);
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
         }
     }
     updateMessage(attacker, target){
@@ -754,10 +761,10 @@ export class LightningBolt extends Ability{
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
-            this.triggerOnDeliverDamage(attacker);
-            this.triggerOnRecieveDamage(target);
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
             if(Math.random()*6 < 1){
-                this.inflictStatus(new Paralyzed({holder: target}), target);
+                this.inflictStatus(new Paralyzed({holder: target}), attacker, target);
             } 
         }
     }
@@ -792,10 +799,10 @@ export class IceShard extends Ability{
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
             if(Math.random()*6 < 1){
-                this.inflictStatus(new Frozen({holder: target}), target);
+                this.inflictStatus(new Frozen({holder: target}), attacker, target);
             }
-            this.triggerOnDeliverDamage(attacker);
-            this.triggerOnRecieveDamage(target);
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
         }
     }
     updateMessage(attacker, target){
@@ -829,10 +836,10 @@ export class Shockwave extends Ability{
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
             if(Math.random()*2 < 1){
-                this.inflictStatus(new KnockedDown({holder: target}), target);
+                this.inflictStatus(new KnockedDown({holder: target}), attacker, target);
             }
-            this.triggerOnDeliverDamage(attacker);
-            this.triggerOnRecieveDamage(target);
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
         }
     }
     updateMessage(attacker, target){
@@ -904,10 +911,10 @@ export class Earthquake extends Ability{//Needs Work targeting same targets twic
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
             if(Math.random()*4 < 1){
-                this.inflictStatus(new KnockedDown({holder: target}), target);
+                this.inflictStatus(new KnockedDown({holder: target}), attacker, target);
             }
-            this.triggerOnDeliverDamage(attacker);
-            this.triggerOnRecieveDamage(target);
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
         }
     }
     updateMessage(attacker){
@@ -940,10 +947,10 @@ export class ShootWeb extends Ability{
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
             if(Math.random()*3 < 1){
-                this.inflictStatus(new Bind({holder: target}), target);
+                this.inflictStatus(new Bind({holder: target}), attacker, target);
             }
-            this.triggerOnDeliverDamage(attacker);
-            this.triggerOnRecieveDamage(target);
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
         }
     }
     updateMessage(attacker, target){
@@ -977,10 +984,10 @@ export class Pounce extends Ability{
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
             if(Math.random()*3 < 1){
-                this.inflictStatus(new KnockedDown({holder: target}), target);
+                this.inflictStatus(new KnockedDown({holder: target}), attacker, target);
             }
-            this.triggerOnDeliverDamage(attacker);
-            this.triggerOnRecieveDamage(target);
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
         }
     }
     updateMessage(attacker, target){
@@ -1009,7 +1016,7 @@ export class Block extends Ability{
         })
     }
     activate(attacker, target){
-        this.inflictStatus(new Shielded({holder: target}), target);
+        this.inflictStatus(new Shielded({holder: target}), attacker, target);
     }
     updateMessage(attacker, target){
         this.message = `${attacker.name} raises a shield.`;
@@ -1042,10 +1049,10 @@ export class VineLash extends Ability{
         target.currentHP = target.currentHP - damage;
         if(damage > 0){
             if(Math.random()*3 < 1){
-                this.inflictStatus(new Bind({holder: target}), target);
+                this.inflictStatus(new Bind({holder: target}), attacker, target);
             }
-            this.triggerOnDeliverDamage(attacker);
-            this.triggerOnRecieveDamage(target);
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
         }
     }
     updateMessage(attacker, target){
@@ -1073,7 +1080,7 @@ export class Bless extends Ability{
         })
     }
     activate(attacker, target){
-        this.inflictStatus(new Blessed({holder: target}), target);
+        this.inflictStatus(new Blessed({holder: target}), attacker, target);
     }
     updateMessage(attacker, target){
         this.message = `${attacker.name} blesses ${target.name}.`;
@@ -1099,7 +1106,7 @@ export class Curse extends Ability{
         })
     }
     activate(attacker, target){
-        this.inflictStatus(new Cursed({holder: target, inflicter: attacker}), target);
+        this.inflictStatus(new Cursed({holder: target, inflicter: attacker}), attacker, target);
     }
     updateMessage(attacker, target){
         this.message = `${attacker.name} curses ${target.name}.`;
@@ -1126,9 +1133,9 @@ export class Roar extends Ability{
     }
     activate(attacker, target){
         if(attacker == target){
-            this.inflictStatus(new PhysicalAttackBuff({holder: target}), target);
+            this.inflictStatus(new PhysicalAttackBuff({holder: target}), attacker, target);
         }else{
-            this.inflictStatus(new PhysicalAttackDebuff({holder: target}), target);
+            this.inflictStatus(new PhysicalAttackDebuff({holder: target}), attacker, target);
         }
     }
     updateMessage(attacker, target){
@@ -1161,7 +1168,7 @@ export class Howl extends Ability{
         })
     }
     activate(attacker, target){
-        this.inflictStatus(new PhysicalAttackBuff({holder: target}), target);
+        this.inflictStatus(new PhysicalAttackBuff({holder: target}), attacker, target);
     }
     updateMessage(attacker, target){
         if(attacker == target){
@@ -1172,6 +1179,7 @@ export class Howl extends Ability{
         }
     }
 }
+
 export class MeteorShower extends Ability{
     //random amount of targets
 }
@@ -1206,7 +1214,7 @@ export class ThrowPosionedKnife extends Ability{
     constructor(config){
         super({
             name: 'throw posioned knife',
-            description: "Throw a posioned knife at a target. Posions the target.",
+            description: "Throw a posioned knife at a target. Poions the target.",
             iconSrc: './assets/media/icons/flying-dagger.png',
             background: config.background || 'grey',
             speedModifier: config.speedModifier || 1.25,
@@ -1217,9 +1225,6 @@ export class ThrowPosionedKnife extends Ability{
             damageTypes: config.damageTypes || ['pierce'],
             targetCount: 1,
             soundEffectSrc: "./assets/audio/soundEffects/arrow-body-impact-146419.mp3",
-            animationName: 'swipe-right',
-
-
             attackerAnimation: config.attackerAnimation || 'ally-attack',
             abilityAnimation: config.abilityAnimation || 'swipe-right',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/flying-dagger.png',
@@ -1231,15 +1236,45 @@ export class ThrowPosionedKnife extends Ability{
         rawDamage = this.checkCritical(attacker, rawDamage);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
-        this.triggerOnDeliverDamage(attacker);
-        this.triggerOnRecieveDamage(target);
-        this.inflictStatus(new Poison({holder: target}), target);
+        this.triggerOnDeliverDamage(attacker, target);
+        this.triggerOnRecieveDamage(attacker, target);
+        this.inflictStatus(new Poison({holder: target}), attacker, target);
     }
     updateMessage(attacker, target){
         this.message = `${attacker.name} throws a posioned knife at ${target.name}.`;
     }
 }
+export class SetBearTrap extends Ability{
+    constructor(config){
+        super({
+            name: 'set bear trap',
+            description: "Set a bear trap that has a chance to spring upon an enemy attack.",
+            iconSrc: './assets/media/icons/man-trap.png',
+            background: config.background || 'grey',
+            speedModifier: config.speedModifier || 1.25,
+            damageModifier: config.damageModifier || 0,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 10,
+            magicCost: config.magicCost || 0,
+            damageTypes: config.damageTypes || ['pierce'],
+            targetCount: 1,
+            soundEffectSrc: "./assets/audio/soundEffects/mixkit-metal-medieval-construction-818.wav",
+            defaultTarget: 'self',
+            targetLock: 'self',
 
+            attackerAnimation: config.attackerAnimation || 'none',
+            abilityAnimation: config.abilityAnimation || 'implode',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/man-trap.png',
+
+        })
+    }
+    activate(attacker, target){
+        this.inflictStatus(new BearTrapSet({holder: target}), attacker, target);
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} sets a bear trap.`;
+    }
+}
 export class DrinkHealthPotion extends Ability{
     constructor(config){
         super({
