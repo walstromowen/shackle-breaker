@@ -101,9 +101,8 @@ export class AtTheAltar extends Stage{
                             result: 'complete',
                             onActivate(target){
                                 for(let i = 0; i < target.statusArray.length; i++){
-                                    target.statusArray[i].name.onRemove();
+                                    target.statusArray[i].onRemove();
                                 }
-                                target.statusArray = [];
                                 target.currentHP = target.maxHP;
                                 target.currentMagic = target.maxMagic;
                                 target.currentStamina = target.maxStamina;

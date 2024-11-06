@@ -193,12 +193,12 @@ export default class GameView{
         document.getElementById('ability-mini-menu-description').innerText = ability.description;
 
         document.getElementById('ability-mini-menu-hp-cost').innerText = ability.healthCost;
-        document.getElementById('ability-mini-menu-speed').innerText = ability.speedModifier * entity.currentSpeed;
+        document.getElementById('ability-mini-menu-speed').innerText = Math.floor(ability.speedModifier * entity.currentSpeed);
         document.getElementById('ability-mini-menu-stamina-cost').innerText = ability.staminaCost;
-        document.getElementById('ability-mini-menu-accuracy').innerText = ability.accuracy;
+        document.getElementById('ability-mini-menu-accuracy').innerText = parseFloat(ability.accuracy).toFixed(2);
         document.getElementById('ability-mini-menu-magic-cost').innerText = ability.magicCost;
-        document.getElementById('ability-mini-menu-critical').innerText = Math.floor((ability.criticalChanceModifier + entity.currentCritical) * 100)/100 + '%';
-        document.getElementById('ability-mini-menu-damage').innerText = ability.damageModifier * entity.currentBluntAttack;//TODO
+        document.getElementById('ability-mini-menu-critical').innerText = parseFloat(ability.criticalChanceModifier + entity.currentCritical).toFixed(2) + '%';
+        document.getElementById('ability-mini-menu-damage').innerText = Math.floor(ability.damageModifier * entity.currentBluntAttack) + 'BNT'//TODO
         document.getElementById('ability-mini-menu-targets').innerText = `${ability.targetLock} x ${ability.targetCount}`;
        
     }
