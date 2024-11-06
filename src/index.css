@@ -125,7 +125,7 @@
         width: 100% !important;
     }
     .battle-status-icon{
-        height: 20px;
+        height: 20px !important;
     }
     #lobby-screen, #character-summary-screen{
         min-height: 100dvh;
