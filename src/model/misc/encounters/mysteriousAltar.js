@@ -1,6 +1,6 @@
 import Stage from "./stage.js";
 import Battle from "../battle.js";
-import { Wolf, Madman, Skeleton, SkeletonCultist, SkeletonColossus, FloatingSkull} from "../entities.js";
+import { Wolf, Madman, Skeleton, SkeletonCultist, SkeletonColossus, FloatingSkull, ArmoredSkeleton} from "../entities.js";
 import { Bleed, Poison } from "../statusEffects.js";
 import { getRandomArrayElementWeighted } from "../../../utility.js";
 
@@ -13,7 +13,7 @@ export class MysteriousAltar extends Stage{
                 {
                     description: 'Approach the altar. [VIG]',
                     attributes: ['vigor'],
-                    successThreshold: 0,
+                    successThreshold: 12,
                     roll: true,
                     successfulOutcomes: [
                         {
@@ -34,9 +34,11 @@ export class MysteriousAltar extends Stage{
                                 let hostileArray = [];
                                 let count = Math.ceil(Math.random()*4);
                                 for(let i = 0; i < count; i++){
-                                    let chance = Math.floor(Math.random()*3);
+                                    let chance = Math.floor(Math.random()*5);
                                     if(chance < 2) hostileArray.push(new Skeleton({level: partyLevel}))
                                     if(chance == 2) hostileArray.push(new SkeletonCultist({level: partyLevel}))
+                                    if(chance == 3) hostileArray.push(new FloatingSkull({level: partyLevel}))
+                                    if(chance == 4) hostileArray.push(new ArmoredSkeleton({level: partyLevel}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
@@ -94,7 +96,7 @@ export class AtTheAltar extends Stage{
                 {//Decision
                     description: 'Examine the Skull. [INT]',
                     attributes: ['intelligence'],
-                    successThreshold: 0,
+                    successThreshold: 15,
                     roll: true,
                     successfulOutcomes: [
                         {
@@ -133,9 +135,11 @@ export class AtTheAltar extends Stage{
                                 let hostileArray = [];
                                 let count = Math.ceil(Math.random()*4);
                                 for(let i = 0; i < count; i++){
-                                    let chance = Math.floor(Math.random()*3);
+                                    let chance = Math.floor(Math.random()*5);
                                     if(chance < 2) hostileArray.push(new Skeleton({level: partyLevel}))
                                     if(chance == 2) hostileArray.push(new SkeletonCultist({level: partyLevel}))
+                                    if(chance == 3) hostileArray.push(new FloatingSkull({level: partyLevel}))
+                                    if(chance == 4) hostileArray.push(new ArmoredSkeleton({level: partyLevel}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
@@ -197,10 +201,11 @@ export class ASkeletalAbomination extends Stage{
                             createBattle: (partyLevel, biome)=>{
                                 let hostileArray = [new SkeletonColossus({level: partyLevel})];
                                 for(let i = 0; i < 2; i++){
-                                    let chance = Math.floor(Math.random()*4);
+                                    let chance = Math.floor(Math.random()*5);
                                     if(chance < 2) hostileArray.push(new Skeleton({level: partyLevel}))
                                     if(chance == 2) hostileArray.push(new SkeletonCultist({level: partyLevel}))
                                     if(chance == 3) hostileArray.push(new FloatingSkull({level: partyLevel}))
+                                    if(chance == 4) hostileArray.push(new ArmoredSkeleton({level: partyLevel}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: "./assets/audio/musicTracks/2022-03-16_-_Escape_Route_-_www.FesliyanStudios.com.mp3", gold: (20*partyLevel), canRetreat: false});
                             },
@@ -231,10 +236,11 @@ export class ASkeletalAbomination extends Stage{
                             createBattle: (partyLevel, biome)=>{
                                 let hostileArray = [new SkeletonColossus({level: partyLevel})];
                                 for(let i = 0; i < 2; i++){
-                                    let chance = Math.floor(Math.random()*4);
+                                    let chance = Math.floor(Math.random()*5);
                                     if(chance < 2) hostileArray.push(new Skeleton({level: partyLevel}))
                                     if(chance == 2) hostileArray.push(new SkeletonCultist({level: partyLevel}))
                                     if(chance == 3) hostileArray.push(new FloatingSkull({level: partyLevel}))
+                                    if(chance == 4) hostileArray.push(new ArmoredSkeleton({level: partyLevel}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: "./assets/audio/musicTracks/2022-03-16_-_Escape_Route_-_www.FesliyanStudios.com.mp3", gold: (20*partyLevel), canRetreat: false});
                             },
