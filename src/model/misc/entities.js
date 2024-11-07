@@ -1095,7 +1095,7 @@ export class DryEll extends Entity{
             baseElementalResistance: config.baseElementalResistance || 0.2,
             isHostile: config.isHostile || true,
             equipment: {},
-            abilityArray: [new Bite({}), new LightningBolt({}), new Siphon({})],
+            abilityArray: [new Bite({}), new LightningBolt({})],
             lootTable: [
                 {item: new ParalysisTonic({level: 1}), weight: 2},
                 {item: new Hide(), weight: 2}
@@ -1148,7 +1148,7 @@ export class TheSandShade extends Entity{
                 feet: '',
             },
             isHostile: config.isHostile || true,
-            abilityArray: [new Slash({}), new DrainLife({}), new DarkOrb({}), new Siphon({})],
+            abilityArray: [new Slash({}), new DrainLife({}), new DarkOrb({})],
             lootTable: [],
         });
         this.nextForm = config.nextForm || {
@@ -1168,7 +1168,7 @@ export class TheSandShade extends Entity{
         }
     }
     scaleAttributes(){
-        this.maxHP = (this.vigor * 12)  + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 5) + (this.attunement * 5);
+        this.maxHP = (this.vigor * 20)  + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 5) + (this.attunement * 5);
         this.maxStamina = (this.vigor * 5) + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 5) + (this.attunement * 5);
         this.maxMagic = (this.vigor * 5)  + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 5) + (this.attunement * 5);
         this.baseHpRecovery = 0;
