@@ -727,7 +727,7 @@ export class DarkOrb extends Ability{
             this.triggerOnDeliverDamage(attacker, target);
             this.triggerOnRecieveDamage(attacker, target);
             if(Math.random()*5 < 1){
-                this.inflictStatus(new Hex({holder: target}), attacker, target);
+                this.inflictStatus(new MagicalAttackDebuff({holder: target}), attacker, target);
             } 
         }
         
