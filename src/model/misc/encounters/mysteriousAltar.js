@@ -1,6 +1,6 @@
 import Stage from "./stage.js";
 import Battle from "../battle.js";
-import { Wolf, Madman, Skeleton, SkeletonCultist, SkeletonColossus} from "../entities.js";
+import { Wolf, Madman, Skeleton, SkeletonCultist, SkeletonColossus, FloatingSkull} from "../entities.js";
 import { Bleed, Poison } from "../statusEffects.js";
 import { getRandomArrayElementWeighted } from "../../../utility.js";
 
@@ -13,7 +13,7 @@ export class MysteriousAltar extends Stage{
                 {
                     description: 'Approach the altar. [VIG]',
                     attributes: ['vigor'],
-                    successThreshold: 12,
+                    successThreshold: 0,
                     roll: true,
                     successfulOutcomes: [
                         {
@@ -94,7 +94,7 @@ export class AtTheAltar extends Stage{
                 {//Decision
                     description: 'Examine the Skull. [INT]',
                     attributes: ['intelligence'],
-                    successThreshold: 15,
+                    successThreshold: 0,
                     roll: true,
                     successfulOutcomes: [
                         {
@@ -106,12 +106,12 @@ export class AtTheAltar extends Stage{
                                 target.currentHP = target.maxHP;
                                 target.currentMagic = target.maxMagic;
                                 target.currentStamina = target.maxStamina;
-                                
+  
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `As ${currentCharacter.name} reaches to examine the skull, the skull's eyes begin to glow blue filling the whole room with a blinding light! Upon opening their eye's ${currentCharacter.name}, realizes that the skull has disappered and feels a sense of newly found strength.`
                             }, 
-                            weight: 1,
+                            weight: 100,
                         },
                         {
                             result: 'loot',
@@ -196,7 +196,13 @@ export class ASkeletalAbomination extends Stage{
                             result: 'battle',
                             createBattle: (partyLevel, biome)=>{
                                 let hostileArray = [new SkeletonColossus({level: partyLevel})];
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: "./assets/audio/musicTracks/2022-03-16_-_Escape_Route_-_www.FesliyanStudios.com.mp3", canRetreat: false});
+                                for(let i = 0; i < 2; i++){
+                                    let chance = Math.floor(Math.random()*4);
+                                    if(chance < 2) hostileArray.push(new Skeleton({level: partyLevel}))
+                                    if(chance == 2) hostileArray.push(new SkeletonCultist({level: partyLevel}))
+                                    if(chance == 3) hostileArray.push(new FloatingSkull({level: partyLevel}))
+                                }
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: "./assets/audio/musicTracks/2022-03-16_-_Escape_Route_-_www.FesliyanStudios.com.mp3", gold: (20*partyLevel), canRetreat: false});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} attacks!`
@@ -224,10 +230,16 @@ export class ASkeletalAbomination extends Stage{
                             result: 'battle',
                             createBattle: (partyLevel, biome)=>{
                                 let hostileArray = [new SkeletonColossus({level: partyLevel})];
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: "./assets/audio/musicTracks/2022-03-16_-_Escape_Route_-_www.FesliyanStudios.com.mp3", canRetreat: false});
+                                for(let i = 0; i < 2; i++){
+                                    let chance = Math.floor(Math.random()*4);
+                                    if(chance < 2) hostileArray.push(new Skeleton({level: partyLevel}))
+                                    if(chance == 2) hostileArray.push(new SkeletonCultist({level: partyLevel}))
+                                    if(chance == 3) hostileArray.push(new FloatingSkull({level: partyLevel}))
+                                }
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: "./assets/audio/musicTracks/2022-03-16_-_Escape_Route_-_www.FesliyanStudios.com.mp3", gold: (20*partyLevel), canRetreat: false});
                             },
                             messageFunction: (currentCharacter)=>{
-                                return `${currentCharacter.name} attacks!`
+                                return `As ${currentCharacter.name} attempts to escape, the Skeleton Colossus blocks the exit!`
                             }, 
                             weight: 1,
                         },

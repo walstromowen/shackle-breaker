@@ -1,4 +1,4 @@
-import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen, Blessed, Cursed, PhysicalAttackDebuff, PhysicalAttackBuff, BearTrapSet} from "./statusEffects.js";
+import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen, Blessed, Cursed, PhysicalAttackDebuff, PhysicalAttackBuff, BearTrapSet, MagicalAttackBuff, MagicalAttackDebuff} from "./statusEffects.js";
 
 export class Ability{
     constructor(config){
@@ -128,13 +128,13 @@ export class Ability{
         for(let i = 0; i < target.statusArray.length; i++){
             if(target.statusArray[i].name == status.name){
                 if(target.statusArray[i].stackable){
-                    target.statusArray[i].onApplied(attacker, target);
+                    target.statusArray[i].onApplied(attacker, target, status);
                 }
                 return
             }
         }
-        target.statusArray.push(status);
-        status.onApplied(attacker, target);
+        //target.statusArray.push(status);
+        status.onApplied(attacker, target, status);
     }
     removeStatus(statusName, target){
         for(let i = 0; i < target.statusArray.length; i++){
@@ -161,7 +161,7 @@ export class Ability{
                 this.triggerOnAttemptAbility(attacker, targets[0]);
                 for(let i = 0; i < targets.length; i++){
                     this.triggerOnOpponentAttemptAbility(attacker, targets[0]);
-                    if(this.checkTargetEvade(targets[i]) && attacker.battleId != targets[i].battleId){//may be issue with evading splash attacks
+                    if(this.checkTargetEvade(attacker, targets[i]) && attacker.battleId != targets[i].battleId){//may be issue with evading splash attacks
                         resolveObject.evade = true;
                     }else{
                         this.checkCritical(attacker);
@@ -381,6 +381,43 @@ export class Thrust extends Ability{
     }
     updateMessage(attacker, target){
         this.message = `${attacker.name} stabs ${target.name} with a thrust attack.`;
+    }
+}
+export class Eviscerate extends Ability{
+    constructor(config){
+        super({
+            name: 'eviscerate',
+            description: 'Eviscerate a target with a powerful piercing attack. Has a high chance to cause bleeding and deal bonus damage to enemies at full health.',
+            iconSrc: './assets/media/icons/ragged-wound.png',
+            speedModifier: config.speedModifier || 0.75,
+            damageModifier: config.damageModifier || 1.25,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 18,
+            magicCost: config.magicCost || 0,
+            accuracy: config.accuracy || 0.80,
+            damageTypes: config.damageTypes || ['pierce'],
+            soundEffectSrc: "./assets/audio/soundEffects/platzender-kopf_nachschlag-91637.mp3",
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/quick-slash.png',
+            abilityAnimation: config.abilityAnimation || 'swipe-right',
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        if(target.currentHP = target.maxHP) rawDamage *= 1.2;
+        rawDamage = this.checkCritical(attacker, rawDamage);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
+            if(Math.random()*3 < 1){
+                this.inflictStatus(new Bleed({holder: target}), attacker, target);
+            } 
+        }
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} eviscrates ${target.name}.`;
     }
 }
 export class Punch extends Ability{
@@ -658,6 +695,45 @@ export class DrainLife extends Ability{
     }
     updateMessage(attacker, target){
        this.message = `${attacker.name} drains the life of ${target.name}.`;
+    }
+}
+export class DarkOrb extends Ability{
+    constructor(config){
+        super({
+            name: 'dark orb',
+            description: "Blast a target with an orb of dark arcane energy. Has a chance to hex a target, lowering magical attack",
+            iconSrc: './assets/media/icons/rolling-energy.png',
+            speedModifier: config.speedModifier || 1,
+            damageModifier: config.damageModifier || 1.25,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 12,
+            accuracy: config.accuracy || 0.80,
+            damageTypes: config.damageTypes || ['arcane'],
+            soundEffectSrc: "./assets/audio/soundEffects/totem-strike-96497.wav",
+
+            attackerAnimation: config.attackerAnimation || 'ally-evade',
+            abilityAnimation: config.abilityAnimation || 'swipe-right',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/rolling-energy.png',
+            targetAnimation: config.targetAnimation || 'none',
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
+            if(Math.random()*5 < 1){
+                this.inflictStatus(new Hex({holder: target}), attacker, target);
+            } 
+        }
+        
+    }
+    updateMessage(attacker, target){
+       this.message = `${attacker.name} shoots ${target.name} with an orb of dark energy.`;
     }
 }
 export class Bite extends Ability{
@@ -1179,7 +1255,64 @@ export class Howl extends Ability{
         }
     }
 }
-
+export class ChannelMagic extends Ability{
+    constructor(config){
+        super({
+            name: 'channel magic',
+            description: `Channel nearby arcane and elemental magic into a more pure and dangerous form. Increases one's magical attack.`,
+            iconSrc: './assets/media/icons/mighty-force.png',
+            speedModifier: config.speedModifier || 1.5,
+            damageModifier: config.damageModifier || 0,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 10,
+            damageTypes: config.damageTypes || ['arcane'],
+            soundEffectSrc: "./assets/audio/soundEffects/mixkit-magic-astral-sweep-effect-2629.wav",
+            attackerAnimation: config.attackerAnimation || 'none',
+            targetAnimation: 'explode',
+            abilityAnimation: config.abilityAnimation || 'none',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/mighty-force.png',
+            defaultTarget: 'self',
+        })
+    }
+    activate(attacker, target){
+        this.inflictStatus(new MagicalAttackBuff({holder: target}), attacker, target);
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} channels magic.`;
+    }
+}
+export class Hex extends Ability{
+    constructor(config){
+        super({
+            name: 'hex',
+            description: `Hex a target with arcane magic. Lower's a target's magical attack.`,
+            iconSrc: './assets/media/icons/dripping-star.png',
+            speedModifier: config.speedModifier || 1.5,
+            damageModifier: config.damageModifier || 0,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 10,
+            damageTypes: config.damageTypes || ['arcane'],
+            soundEffectSrc: "./assets/audio/soundEffects/totem-strike-96497.wav",
+            attackerAnimation: config.attackerAnimation || 'none',
+            targetAnimation: 'shake',
+            abilityAnimation: config.abilityAnimation || 'implode',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/dripping-star.png',
+        })
+    }
+    activate(attacker, target){
+        this.inflictStatus(new MagicalAttackDebuff({holder: target}), attacker, target);
+    }
+    updateMessage(attacker, target){
+        if(attacker == target){
+            this.message = `${attacker.name} casts a hex.`;
+        }
+        else{
+            this.message = `${attacker.name} hexes ${target.name}.`;
+        }
+    }
+}
 export class MeteorShower extends Ability{
     //random amount of targets
 }
@@ -1192,9 +1325,6 @@ export class CastShadow extends Ability{
 export class Tunnel extends Ability{
 
 }
-export class Eviscerate extends Ability{
-    //High Critical
-}
 export class Flurry extends Ability{
 
 }
@@ -1204,11 +1334,8 @@ export class Parry extends Ability{
 export class MarkTarget extends Ability{
     //lowers physical defense
 }
-export class Hex extends Ability{
-    //lower magical attack
-}
 export class Detonate extends Ability{
-    //lower physical attack
+    
 }
 export class ThrowPosionedKnife extends Ability{
     constructor(config){

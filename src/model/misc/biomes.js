@@ -1,6 +1,6 @@
 import { getRandomArrayElementWeighted } from "../../utility.js";
-import { Skeleton, SkeletonCultist, Wolf, Spider, GroveGuardian, Madman, MadMage, SandStalker, DryShark, Dog} from "./entities.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe} from "./items.js";
+import { Skeleton, SkeletonCultist, Wolf, Spider, GroveGuardian, Madman, MadMage, SandStalker, DryShark, Dog, ArmoredSkeleton, MadBandit, FloatingSkull, DryEll} from "./entities.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, BearTrap} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Hide} from "./items.js";
 import Encounter from "./encounters/encounter.js";
 import Battle from "./battle.js";
@@ -54,6 +54,7 @@ export default class Biome{
 
             {item: ()=>{return new KurtussBrewOfMadness()}, weight: 1},
             {item: ()=>{return new PoisonedKnife()}, weight: 1},
+            {item: ()=>{return new BearTrap()}, weight: 1},
 
             {item: ()=>{return new HealthPotion()}, weight: 3},
             {item: ()=>{return new StaminaPotion()}, weight: 3},
@@ -98,10 +99,11 @@ export class Plains extends Biome{
             backgroundMusicSrc: "./assets/audio/musicTracks/deep-in-the-dell-126916.mp3",
             battleMusicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
             possibleHostiles: [
-                {entity: ()=>{return new Madman({})}, weight: 4},
+                {entity: ()=>{return new Madman({})}, weight: 5},
                 {entity: ()=>{return new MadMage({})}, weight: 3},
+                {entity: ()=>{return new MadBandit({})}, weight: 3},
                 {entity: ()=>{return new Wolf({})}, weight: 2},
-                {entity: ()=>{return new GroveGuardian({})}, weight: 1},
+                
             ],
             possibleEncounters: [
                 {startingStage: ()=>{return {name: 'Wandering Mercenary'}}, resetOnLeave: false, weight: 1},
@@ -121,7 +123,9 @@ export class Cave extends Biome{
             battleMusicSrc: "./assets/audio/musicTracks/battle-sword-139313.mp3",
             possibleHostiles: [
                 {entity: ()=>{return new Skeleton({})}, weight: 3},
-                {entity: ()=>{return new SkeletonCultist({})}, weight: 1},
+                {entity: ()=>{return new FloatingSkull({})}, weight: 3},
+                {entity: ()=>{return new ArmoredSkeleton({})}, weight: 2},
+                {entity: ()=>{return new SkeletonCultist({})}, weight: 2},
                 {entity: ()=>{return new Spider({})}, weight: 2},
             ],
             possibleEncounters: [
@@ -142,6 +146,7 @@ export class Desert extends Biome{
             battleMusicSrc: "./assets/audio/musicTracks/TimTaj - Desert Hunt.mp3",
             possibleHostiles: [
                 {entity: ()=>{return new DryShark({})}, weight: 1},
+                {entity: ()=>{return new DryEll({})}, weight: 3},
                 {entity: ()=>{return new SandStalker({})}, weight: 3},
             ],
             possibleEncounters: [

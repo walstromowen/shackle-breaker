@@ -111,8 +111,8 @@ class StatusEffect{
         }
     )}
     //apply / remove events
-    onApplied(attacker, target){
-        
+    onApplied(attacker, target, status){
+        target.statusArray.push(status);
     }
     onRemove(){
         for(let i = 0; i < this.holder.statusArray.length; i++){
@@ -310,9 +310,9 @@ export class Frozen extends StatusEffect{
             abilityAnimation: 'none',
         });
     }
-    onApplied(attacker, target){
+    onApplied(attacker, target, status){
+        target.statusArray.push(status);
         this.holder.currentSpeed -= this.holder.baseSpeed * 0.5;
-        
     }
     onRemove(){
         for(let i = 0; i < this.holder.statusArray.length; i++){
@@ -371,7 +371,8 @@ export class Shielded extends StatusEffect{
             removeOnBattleEnd: true,
         });
     }
-    onApplied(attacker, target){
+    onApplied(attacker, target, status){
+        target.statusArray.push(status);
         this.holder.currentBluntResistance = (this.holder.currentBluntResistance + 0.5);
         this.holder.currentPierceResistance = (this.holder.currentPierceResistance + 0.5);
         this.holder.currentArcaneResistance = (this.holder.currentArcaneResistance + 0.5);
@@ -557,22 +558,23 @@ export class PhysicalAttackBuff extends StatusEffect{
         this.currentBluntAttackBuff = 0;
         this.currentPierceAttackBuff = 0;
     }
-    onApplied(attacker, target){
+    onApplied(attacker, target, status){
         this.holder.currentBluntAttack -= this.currentBluntAttackBuff;
         this.holder.currentPierceAttack -= this.currentPierceAttackBuff;
         for(let i = 0; i < this.holder.statusArray.length; i++){
-            if(this.holder.statusArray[i].name = 'physical attack debuff'){
+            if(this.holder.statusArray[i].name == 'physical attack debuff'){
                 this.holder.statusArray[i].currentLevel = this.holder.statusArray[i].currentLevel - 2
                 if(this.holder.statusArray[i].currentLevel < 0){
                     this.holder.statusArray[i].onRemove();
                 }else{
-                    this.holder.statusArray[i].onApplied(attacker, target);
+                    this.holder.statusArray[i].onApplied(attacker, target, status);
                 }
                 return;
             }
         }
         switch(this.currentLevel){
             case 0:
+                target.statusArray.push(status);
                 this.currentBluntAttackBuff = Math.floor(0.2 * this.holder.baseBluntAttack);
                 this.currentPierceAttackBuff = Math.floor(0.2 * this.holder.basePierceAttack);
                 this.iconSrc = "./assets/media/icons/physical-attack-buff-1.png";
@@ -624,22 +626,23 @@ export class PhysicalAttackDebuff extends StatusEffect{
         this.currentBluntAttackDebuff = 0;
         this.currentPierceAttackDebuff = 0;
     }
-    onApplied(attacker, target){
+    onApplied(attacker, target, status){
         this.holder.currentBluntAttack += this.currentBluntAttackDebuff;
         this.holder.currentPierceAttack += this.currentPierceAttackDebuff;
         for(let i = 0; i < this.holder.statusArray.length; i++){
-            if(this.holder.statusArray[i].name = 'physical attack buff'){
+            if(this.holder.statusArray[i].name == 'physical attack buff'){
                 this.holder.statusArray[i].currentLevel = this.holder.statusArray[i].currentLevel - 2
                 if(this.holder.statusArray[i].currentLevel < 0){
                     this.holder.statusArray[i].onRemove();
                 }else{
-                    this.holder.statusArray[i].onApplied(attacker, target);
+                    this.holder.statusArray[i].onApplied(attacker, target, status);
                 }
                 return;
             }
         }
         switch(this.currentLevel){
             case 0:
+                target.statusArray.push(status);
                 this.currentBluntAttackDebuff = Math.floor(0.2 * this.holder.baseBluntAttack);
                 this.currentPierceAttackDebuff = Math.floor(0.2 * this.holder.basePierceAttack);
                 this.iconSrc = "./assets/media/icons/physical-attack-debuff-1.png";
@@ -673,5 +676,141 @@ export class PhysicalAttackDebuff extends StatusEffect{
         }
         this.holder.currentBluntAttack += this.currentBluntAttackDebuff;
         this.holder.currentPierceAttack += this.currentPierceAttackDebuff;
+    }
+}
+export class MagicalAttackBuff extends StatusEffect{
+    constructor(config){
+        super({
+            name:'magical attack buff',
+            iconSrc: "./assets/media/icons/magical-attack-buff-1.png",
+            holder: config.holder,
+            maxCharges: 99,
+            stackable: true,
+            targetAnimation: 'none',
+            abilityAnimation: 'none',
+            removeOnBattleEnd: true,
+        });
+        this.currentLevel = config.level || 0;
+        this.currentArcaneAttackBuff = 0;
+        this.currentElementalAttackBuff = 0;
+    }
+    onApplied(attacker, target, status){
+        this.holder.currentArcaneAttack -= this.currentArcaneAttackBuff;
+        this.holder.currentElementalAttack -= this.currentElementalAttackBuff;
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == 'magical attack debuff'){
+                this.holder.statusArray[i].currentLevel = this.holder.statusArray[i].currentLevel - 2
+                if(this.holder.statusArray[i].currentLevel < 0){
+                    this.holder.statusArray[i].onRemove();
+                }else{
+                    this.holder.statusArray[i].onApplied(attacker, target, status);
+                }
+                return;
+            }
+        }
+        switch(this.currentLevel){
+            case 0:
+                target.statusArray.push(status);
+                this.currentArcaneAttackBuff = Math.floor(0.2 * this.holder.baseArcaneAttack);
+                this.currentElementalAttackBuff = Math.floor(0.2 * this.holder.baseElementalAttack);
+                this.iconSrc = "./assets/media/icons/magical-attack-buff-1.png";
+                this.currentLevel++
+            break;
+            case 1:
+                this.currentArcaneAttackBuff = Math.floor(0.4 * this.holder.baseArcaneAttack);
+                this.currentElementalAttackBuff = Math.floor(0.4 * this.holder.baseElementalAttack);
+                this.iconSrc = "./assets/media/icons/magical-attack-buff-2.png";
+                this.currentLevel++
+            break;
+            case 2:
+                this.currentArcaneAttackBuff = Math.floor(0.6 * this.holder.baseArcaneAttack);
+                this.currentElementalAttackBuff = Math.floor(0.6 * this.holder.baseElementalAttack);
+                this.iconSrc = "./assets/media/icons/magical-attack-buff-3.png";
+                this.currentLevel++
+            break;
+            default:
+            break;
+        }
+        this.holder.currentArcaneAttack += this.currentArcaneAttackBuff;
+        this.holder.currentElementalAttack += this.currentElementalAttackBuff;
+        this.currentCharges++;
+    }
+    onRemove(){
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == this.name){
+                this.holder.statusArray.splice(i, 1);
+                break;
+            }
+        }
+        this.holder.currentArcaneAttack -= this.currentBluntAttackBuff;
+        this.holder.currentElementalAttack -= this.currentElementalAttackBuff;
+    }
+}
+export class MagicalAttackDebuff extends StatusEffect{
+    constructor(config){
+        super({
+            name:'magical attack debuff',
+            iconSrc: "./assets/media/icons/magical-attack-debuff-1.png",
+            holder: config.holder,
+            maxCharges: 99,
+            stackable: true,
+            targetAnimation: 'none',
+            abilityAnimation: 'none',
+            removeOnBattleEnd: true,
+        });
+        this.currentLevel = config.level || 0;
+        this.currentArcaneAttackDebuff = 0;
+        this.currentElementalAttackDebuff = 0;
+    }
+    onApplied(attacker, target, status){
+        this.holder.currentArcaneAttack += this.currentArcaneAttackDebuff;
+        this.holder.currentElementalAttack += this.currentElementalAttackDebuff;
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == 'magical attack buff'){
+                this.holder.statusArray[i].currentLevel = this.holder.statusArray[i].currentLevel - 2
+                if(this.holder.statusArray[i].currentLevel < 0){
+                    this.holder.statusArray[i].onRemove();
+                }else{
+                    this.holder.statusArray[i].onApplied(attacker, target, status);
+                }
+                return;
+            }
+        }
+        switch(this.currentLevel){
+            case 0:
+                target.statusArray.push(status);
+                this.currentArcaneAttackDebuff = Math.floor(0.2 * this.holder.baseArcaneAttack);
+                this.currentElementalAttackDebuff = Math.floor(0.2 * this.holder.baseElementalAttack);
+                this.iconSrc = "./assets/media/icons/magical-attack-debuff-1.png";
+                this.currentLevel++
+            break;
+            case 1:
+                this.currentArcaneAttackDebuff = Math.floor(0.4 * this.holder.baseArcaneAttack);
+                this.currentElementalAttackDebuff = Math.floor(0.4 * this.holder.baseElementalAttack);
+                this.iconSrc = "./assets/media/icons/magical-attack-debuff-2.png";
+                this.currentLevel++
+            break;
+            case 2:
+                this.currentArcaneAttackDebuff = Math.floor(0.6 * this.holder.baseArcaneAttack);
+                this.currentElementalAttackDebuff = Math.floor(0.6 * this.holder.baseElementalAttack);
+                this.iconSrc = "./assets/media/icons/magical-attack-debuff-3.png";
+                this.currentLevel++
+            break;
+            default:
+            break;
+        }
+        this.holder.currentArcaneAttack -= this.currentArcaneAttackDebuff;
+        this.holder.currentElementalAttack -= this.currentElementalAttackDebuff;
+        this.currentCharges++;
+    }
+    onRemove(){
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == this.name){
+                this.holder.statusArray.splice(i, 1);
+                break;
+            }
+        }
+        this.holder.currentArcaneAttack += this.currentArcaneAttackDebuff;
+        this.holder.currentElementalAttack += this.currentElementalAttackDebuff;
     }
 }

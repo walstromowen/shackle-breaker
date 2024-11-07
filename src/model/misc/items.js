@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower, Thrust} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower, Thrust, ChannelMagic, Siphon, Eviscerate, DarkOrb} from "./abilities.js";
 import { DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, UseAntidote, UseAloeRemedy, UseParalysisTonic, UseBandage, DrinkKurtussBrewOfMadness, SetBearTrap} from "./abilities.js";
 
 let counter = 0;
@@ -118,6 +118,9 @@ export class Dagger extends Attachable{
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
             this.critical = this.critical + 0;
+            if(this.level == 3){
+                this.abilityArray.push(new Eviscerate({}));
+            }
         }
     }
 }
@@ -408,6 +411,9 @@ export class ArcaneStaff extends Attachable{
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
             this.critical = this.critical + 0;
+            if(this.level == 3){
+                this.abilityArray.push(new ChannelMagic({}));
+            }
         }
     }
 }
@@ -441,7 +447,7 @@ export class LightStaff extends Attachable{
             speed: 0,
             evasion: 0,
             critical: 0,
-            abilityArray: [new Strike({}), new LesserHeal({}), new Bless({})],
+            abilityArray: [new Strike({}), new LesserHeal({})],
         })
         this.upgrade(config.level-this.level);
     }
@@ -466,6 +472,9 @@ export class LightStaff extends Attachable{
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
             this.critical = this.critical + 0;
+            if(this.level == 3){
+                this.abilityArray.push(new Bless({}));
+            }
         }
     }
 }
@@ -499,7 +508,7 @@ export class DarkStaff extends Attachable{
             speed: 0,
             evasion: 0,
             critical: 0,
-            abilityArray: [new Strike({}), new DrainLife({})],
+            abilityArray: [new Strike({}), new DarkOrb({})],
         })
         this.upgrade(config.level-this.level);
     }
@@ -524,6 +533,9 @@ export class DarkStaff extends Attachable{
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
             this.critical = this.critical + 0;
+            if(this.level == 3){
+                this.abilityArray.push(new DrainLife({}));
+            }
         }
     }
 }

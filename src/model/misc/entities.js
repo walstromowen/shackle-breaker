@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl, Eviscerate, ChannelMagic, DarkOrb} from "./abilities.js";
 import { Poison, Burn, Bleed, Shielded, InstaDeath} from "./statusEffects.js";
 import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Hide} from "./items.js";
@@ -488,6 +488,48 @@ export class Madman extends Entity{
         });
     }
 }
+export class MadBandit extends Entity{
+    constructor(config){
+        super({
+            name: 'Mad Bandit',
+            level: config.level || 1,
+            apperance: config.apperance || './assets/media/entities/mad-bandit.jpg',
+            vigor: config.vigor || 5,
+            strength: config.strength || 5,
+            dexterity: config.dexterity || 7,
+            intelligence: config.intelligence || 3,
+            attunement: config.attunement || 5,
+            equipment: config.equipment || {
+                mainHand: new Dagger({level: 1}),
+                offhand: '',
+                head: '',
+                torso: new LeatherChestplate({level: 1}),
+                arms: '',
+                legs: new LeatherGreaves({level: 1}),
+                feet: '',
+            },
+            isHostile: config.isHostile || true,
+            abilityArray: [new Eviscerate({})],
+            lootTable: [
+                {item: new LeatherHood({level: 1}), weight: 1},
+                {item: new LeatherHelmet({level: 1}), weight: 1},
+                {item: new LeatherChestplate({level: 1}), weight: 1},
+                {item: new LeatherGreaves({level: 1}), weight: 1},
+                {item: new LeatherBoots({level: 1}), weight: 1},
+
+                {item: new LinenShirt({level: 1}), weight: 1},
+                {item: new LinenPants({level: 1}), weight: 1},
+
+                {item: new Dagger({level: 1}), weight: 2},
+                {item: new PoisonedKnife({level: 1}), weight: 2},
+                {item: new HealthPotion(), weight: 2},
+                {item: new StaminaPotion(), weight: 1},
+                {item: new Bandage(), weight: 3},
+                
+            ],
+        });
+    }
+}
 export class MadMage extends Entity{
     constructor(config){
         super({
@@ -533,16 +575,16 @@ export class MadMage extends Entity{
 export class Skeleton extends Entity{
     constructor(config){
         super({
-            name: 'Skeleton',
+            name: config.name || 'Skeleton',
             level: config.level || 1,
-            apperance: config.skeleton || './assets/media/entities/skeleton.jpg',
+            apperance: config.apperance || './assets/media/entities/skeleton.jpg',
             vigor: config.vigor || 5,
             strength: config.strength || 5,
             dexterity: config.dexterity || 5,
             intelligence: config.intelligence || 5,
             attunement: config.attunement || 5,
             equipment: config.equipment || {
-                mainHand: new ShortSword({level: 1}),
+                mainHand: new Handaxe({level: 1}),
                 offhand: new Buckler({level: 1}),
                 head: '',
                 torso: '',
@@ -592,6 +634,83 @@ export class Skeleton extends Entity{
         this.baseSpeed = 15;
         this.baseEvasion = 0.05;
         this.baseCritical = 0.10;
+    }
+}
+export class ArmoredSkeleton extends Skeleton{
+    constructor(config){
+        super({
+            name: config.name || 'Armored Skeleton',
+            level: config.level || 1,
+            apperance: config.apperance || './assets/media/entities/armored-skeleton.jpg',
+            equipment: config.equipment || {
+                mainHand: new ShortSword({level: 1}),
+                offhand: new Buckler({level: 1}),
+                head: '',
+                torso: new IronChainmail({level: 1}),
+                arms: '',
+                legs: new IronGreaves({level: 1}),
+                feet: '',
+            },
+            isHostile: config.isHostile || true,
+            lootTable: [
+                {item: new IronHelm({level: 1}), weight: 1},
+                {item: new IronChainmail({level: 1}), weight: 1},
+                {item: new IronGauntlets({level: 1}), weight: 1},
+                {item: new IronGreaves({level: 1}), weight: 1},
+                {item: new IronBoots({level: 1}), weight: 1},
+                {item: new Handaxe({level: 1}), weight: 1},
+                {item: new Buckler({level: 1}), weight: 1},
+                {item: new HealthPotion(), weight: 2},
+                {item: new StaminaPotion(), weight: 2},
+                {item: new MagicPotion(), weight: 2},
+                {item: new Bandage(), weight: 3},
+                
+            ],
+        });
+    }
+}
+export class FloatingSkull extends Entity{
+    constructor(config){
+        super({
+            name: 'Floating Skull',
+            level: config.level || 1,
+            apperance: config.apperance || './assets/media/entities/floating-skull.jpg',
+            vigor: config.vigor || 3,
+            strength: config.strength || 4,
+            dexterity: config.dexterity || 4,
+            intelligence: config.intelligence || 7,
+            attunement: config.attunement || 7,
+            baseBluntResistance: config.baseBluntResistance || 0.1,
+            basePierceResistance: config.basePierceResistance || 0.1,
+            baseArcaneResistance: config.baseArcaneResistance || 0.1,
+            baseElementalResistance: config.baseElementalResistance || 0.1,
+            isHostile: config.isHostile || true,
+            equipment: {},
+            abilityArray: [new ChannelMagic({}), new DarkOrb({})],
+            lootTable: [
+                {item: new HealthPotion({level: 1}), weight: 1},
+                {item: new MagicPotion({level: 1}), weight: 3}
+            ],
+        })
+    }
+    scaleAttributes(){
+        this.maxHP = (this.vigor * 3)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 1);
+        this.maxStamina = (this.vigor * 1) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
+        this.maxMagic = (this.vigor * 1)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
+        this.baseHpRecovery = 0;
+        this.baseStaminaRecovery = 5;
+        this.baseMagicRecovery = 5;
+        this.baseBluntAttack = (this.vigor * 1) + (this.strength * 3) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
+        this.basePierceAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 3) + (this.intelligence * 2) + (this.attunement * 2);
+        this.baseArcaneAttack = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 4) + (this.attunement * 3);
+        this.baseElementalAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 3);
+        this.baseBluntDefense = (this.vigor * 1)  + (this.strength * 2) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 1);
+        this.basePierceDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 2) + (this.intelligence * 0) + (this.attunement * 0);
+        this.baseArcaneDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 2) + (this.attunement * 1);
+        this.baseElementalDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 0) + (this.attunement * 1);
+        this.baseSpeed = 30;
+        this.baseEvasion = 0.5;
+        this.baseCritical = 0.15;
     }
 }
 export class SkeletonCultist extends Entity{
@@ -932,7 +1051,7 @@ export class DryShark extends Entity{
             baseElementalResistance: config.baseElementalResistance || 0.1,
             isHostile: config.isHostile || true,
             equipment: {},
-            abilityArray: [new Bite({}), new Roar({})],
+            abilityArray: [new Bite({damageModifier: 1.5}), new Roar({})],
             lootTable: [
                 {item: new HealthPotion({level: 1}), weight: 2},
                 {item: new Hide(), weight: 2}
@@ -957,6 +1076,50 @@ export class DryShark extends Entity{
         this.baseSpeed = 20;
         this.baseEvasion = 0.05;
         this.baseCritical = 0.20;
+    }
+}
+export class DryEll extends Entity{
+    constructor(config){
+        super({
+            name: 'Dry Ell',
+            level: config.level || 1,
+            apperance: config.apperance || './assets/media/entities/dry-eel.jpg',
+            vigor: config.vigor || 3,
+            strength: config.strength || 5,
+            dexterity: config.dexterity || 5,
+            intelligence: config.intelligence || 5,
+            attunement: config.attunement || 7,
+            baseBluntResistance: config.baseBluntResistance || 0.2,
+            basePierceResistance: config.basePierceResistance || 0.1,
+            baseArcaneResistance: config.baseArcaneResistance || 0.1,
+            baseElementalResistance: config.baseElementalResistance || 0.2,
+            isHostile: config.isHostile || true,
+            equipment: {},
+            abilityArray: [new Bite({}), new LightningBolt({}), new Siphon({})],
+            lootTable: [
+                {item: new ParalysisTonic({level: 1}), weight: 2},
+                {item: new Hide(), weight: 2}
+            ],
+        })
+    }
+    scaleAttributes(){
+        this.maxHP = (this.vigor * 2)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
+        this.maxStamina = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
+        this.maxMagic = (this.vigor * 2)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
+        this.baseHpRecovery = 0;
+        this.baseStaminaRecovery = 5;
+        this.baseMagicRecovery = 5;
+        this.baseBluntAttack = (this.vigor * 1) + (this.strength * 3) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
+        this.basePierceAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 3) + (this.intelligence * 2) + (this.attunement * 2);
+        this.baseArcaneAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 3) + (this.attunement * 2);
+        this.baseElementalAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 3);
+        this.baseBluntDefense = (this.vigor * 1)  + (this.strength * 2) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 1);
+        this.basePierceDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 2) + (this.intelligence * 0) + (this.attunement * 0);
+        this.baseArcaneDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 2) + (this.attunement * 1);
+        this.baseElementalDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 0) + (this.attunement * 1);
+        this.baseSpeed = 25;
+        this.baseEvasion = 0.1;
+        this.baseCritical = 0.1;
     }
 }
 export class TheSandShade extends Entity{
@@ -985,7 +1148,7 @@ export class TheSandShade extends Entity{
                 feet: '',
             },
             isHostile: config.isHostile || true,
-            abilityArray: [new Slash({}), new DrainLife({}), new Siphon({})],
+            abilityArray: [new Slash({}), new DrainLife({}), new DarkOrb({}), new Siphon({})],
             lootTable: [],
         });
         this.nextForm = config.nextForm || {
@@ -993,7 +1156,7 @@ export class TheSandShade extends Entity{
             animationDuration: 6000,
             animationSoundEffect: './assets/audio/soundEffects/tornado.wav',
             createNextForm: ()=>{
-                let hostile = new TheSandShade({level: this.level, nextForm: false, abilityArray: [new Slash({}), new DrainLife({}), new Earthquake({}), new Siphon({})],});
+                let hostile = new TheSandShade({level: this.level, nextForm: false, abilityArray: [new Slash({}), new DrainLife({}), new Earthquake({}), new DarkOrb({})],});
                 hostile.nextForm = false;//have to do don't know why
                 return hostile
            
@@ -1005,12 +1168,12 @@ export class TheSandShade extends Entity{
         }
     }
     scaleAttributes(){
-        this.maxHP = (this.vigor * 10)  + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 5) + (this.attunement * 5);
+        this.maxHP = (this.vigor * 12)  + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 5) + (this.attunement * 5);
         this.maxStamina = (this.vigor * 5) + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 5) + (this.attunement * 5);
         this.maxMagic = (this.vigor * 5)  + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 5) + (this.attunement * 5);
         this.baseHpRecovery = 0;
-        this.baseStaminaRecovery = 25;
-        this.baseMagicRecovery = 25;
+        this.baseStaminaRecovery = 15;
+        this.baseMagicRecovery = 15;
         this.baseBluntAttack = (this.vigor * 2) + (this.strength * 4) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
         this.basePierceAttack = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 4) + (this.intelligence * 3) + (this.attunement * 3);
         this.baseArcaneAttack = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 4) + (this.attunement * 3);
