@@ -1148,7 +1148,7 @@ export class TheSandShade extends Entity{
                 feet: '',
             },
             isHostile: config.isHostile || true,
-            abilityArray: [new Slash({}), new DrainLife({}), new DarkOrb({})],
+            abilityArray: [new Slash({}), new DrainLife({}), new DarkOrb({}), new ChannelMagic({})],
             lootTable: [],
         });
         this.nextForm = config.nextForm || {
