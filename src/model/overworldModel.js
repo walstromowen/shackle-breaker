@@ -8,7 +8,11 @@ export default class OverworldModel{
         this.generateNewMap();
     }
     generateNewMap(){//want this to execute after lobby start happens
-        this.props.setMap(new Map());
+        if(this.props.calcHighestPartyLevel() > 9){
+            this.props.setMap(new Map('altus capital', 'throne room'));
+        }else{
+            this.props.setMap(new Map());
+        }
         this.currentPartyPosition = this.props.getMap().getEntrancePosition();
     }
     movePartyUp(){
@@ -47,6 +51,7 @@ export default class OverworldModel{
         if(nextRoom.type != 'wall'){
             this.previousPartyPosition = this.currentPartyPosition;
             this.currentPartyPosition = nextRoom.position;
+            let biome = this.props.getMap().biome;
             if(nextRoom.battle != ''){
                 this.toggleBattle(nextRoom.battle);
                 return; 
@@ -59,18 +64,23 @@ export default class OverworldModel{
                 this.toggleMapChange()
                 return;
             }
-            let chance = Math.floor(Math.random()*20);
-            if(chance == 0){
-                let biome = this.props.getMap().biome;
-                nextRoom.battle = biome.generateBattle(this.props.calcHighestPartyLevel());
-                this.toggleBattle(nextRoom.battle);
-                return;
-            }
-            if(chance == 1){
-                let biome = this.props.getMap().biome;
-                nextRoom.encounter = biome.generateEncounter(this.props.recruitWanderingCompanion);
+            if(nextRoom.type == 'boss'){
+                nextRoom.encounter = biome.generateStoryEncounter();
                 this.toggleEncounter(nextRoom.encounter);
                 return;
+            }
+            if(nextRoom.type != 'blank'){
+                let chance = Math.floor(Math.random()*20);
+                if(chance == 0){
+                    nextRoom.battle = biome.generateBattle(this.props.calcHighestPartyLevel());
+                    this.toggleBattle(nextRoom.battle);
+                    return;
+                }
+                if(chance == 1){
+                    nextRoom.encounter = biome.generateEncounter(this.props.recruitWanderingCompanion);
+                    this.toggleEncounter(nextRoom.encounter);
+                    return;
+                }
             }
         }
     }

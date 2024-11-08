@@ -10,6 +10,7 @@ import { MysteriousAltar } from "./encounters/mysteriousAltar.js";
 import { ShiftingSands, SandCastleEntrance} from "./encounters/shiftingSands.js";
 import { TreasureChest } from "./encounters/treasureChest.js";
 import { CaveIn } from "./encounters/caveIn.js";
+import { TheArtifact } from "./encounters/theArtifact.js";
 
 export default class Biome{
     constructor(config){
@@ -19,6 +20,7 @@ export default class Biome{
         this.battleMusicSrc = config.battleMusicSrc || "";
         this.possibleHostiles = config.possibleHostiles || [];
         this.possibleEncounters = config.possibleEncounters || [];
+        this.storyEncounters = config.storyEncounters || [];
         this.lootTable = config.lootTable || [
             {item: ()=>{return new ArcaneStaff({level: 1})}, weight: 1},
             {item: ()=>{return new LightStaff({level: 1})}, weight: 1},
@@ -90,6 +92,12 @@ export default class Biome{
         }
         return new Encounter(startingStage, encounter.resetOnLeave)   
     }
+    generateStoryEncounter(){
+        let encounter = this.storyEncounters[0];
+        this.storyEncounters.splice(0, 1);
+        let startingStage = encounter.startingStage();
+        return new Encounter(startingStage, encounter.resetOnLeave)   
+    }
 }
 export class Plains extends Biome{
     constructor(config){
@@ -159,7 +167,29 @@ export class Desert extends Biome{
     }
 }
 
-export function generateBiome(){
+export class AltusCapital extends Biome{
+    constructor(config){
+        super({
+            name: 'altus capital',
+            terrainSrc: './assets/media/terrain/altus-capital.png',
+            backgroundMusicSrc: "./assets/audio/musicTracks/Alex-Productions - Epic Cinematic Adventure Vlog _ Eglair.mp3",
+            battleMusicSrc: "./assets/audio/musicTracks/battle-sword-139313.mp3",
+            possibleHostiles: [
+                {entity: ()=>{return new ArmoredSkeleton({})}, weight: 1},
+            ],
+            possibleEncounters: [],
+            storyEncounters: [
+                {startingStage: ()=>{return new TheArtifact({})}, resetOnLeave: false},
+            ]
+        });
+    }
+}
+export function generateBiome(biome){
+    if(biome){
+        if(biome == 'altus capital'){
+            return new AltusCapital({})
+        }
+    }
     let chance = Math.floor(Math.random()*3);
     switch(chance){
         case 0:

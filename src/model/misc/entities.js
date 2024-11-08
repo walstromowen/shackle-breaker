@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl, Eviscerate, ChannelMagic, DarkOrb} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl, Eviscerate, ChannelMagic, DarkOrb, Bless, Brace} from "./abilities.js";
 import { Poison, Burn, Bleed, Shielded, InstaDeath} from "./statusEffects.js";
 import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Hide} from "./items.js";
@@ -1184,6 +1184,71 @@ export class TheSandShade extends Entity{
         this.baseElementalDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 0) + (this.attunement * 1);
         this.baseSpeed = 25;
         this.baseEvasion = 0.20;
+        this.baseCritical = 0.10;
+    }
+}
+export class EmperorDolos extends Entity{
+    constructor(config){
+        super({
+            name: 'Emperor Dolos',
+            size: 'large',
+            level: config.level || 1,
+            apperance: config.apperance || './assets/media/entities/emperor-dolos.jpg',
+            vigor: config.vigor || 5,
+            strength: config.strength || 5,
+            dexterity: config.dexterity || 5,
+            intelligence: config.intelligence || 5,
+            attunement: config.attunement || 5,
+            baseBluntResistance: config.baseBluntResistance || 0.2,
+            basePierceResistance: config.basePierceResistance || 0.2,
+            baseArcaneResistance: config.baseArcaneResistance || 0.2,
+            baseElementalResistance: config.baseElementalResistance || 0.2,
+            equipment: config.equipment || {
+                mainHand: '',
+                offhand: '',
+                head: '',
+                torso: '',
+                arms: '',
+                legs: '',
+                feet: '',
+            },
+            isHostile: config.isHostile || true,
+            abilityArray: [new DrainLife({}), new DarkOrb({}), new ChannelMagic({}), new LightningBolt({}), new Siphon({}), new Bless({})],
+            lootTable: [],
+        });
+        this.nextForm = config.nextForm || {
+            animation: 'twister',
+            animationDuration: 6000,
+            animationSoundEffect: './assets/audio/soundEffects/tornado.wav',
+            createNextForm: ()=>{
+                let hostile = new EmperorDolos({level: this.level, nextForm: false, abilityArray: [new DrainLife({}), new DarkOrb({}), new ChannelMagic({}), new LightningBolt({}), new Siphon({}), new Bless({})],});
+                hostile.nextForm = false;//have to do don't know why
+                return hostile
+           
+                
+            },
+            messageFn: ()=>{
+                return `"Hope.... is an illusion....."`;
+            }
+        }
+    }
+    scaleAttributes(){
+        this.maxHP = (this.vigor * 30)  + (this.strength * 30) + (this.dexterity * 30) + (this.intelligence * 30) + (this.attunement * 30);
+        this.maxStamina = (this.vigor * 10) + (this.strength * 10) + (this.dexterity * 10) + (this.intelligence * 10) + (this.attunement * 10);
+        this.maxMagic = (this.vigor * 10)  + (this.strength * 10) + (this.dexterity * 10) + (this.intelligence * 10) + (this.attunement * 10);
+        this.baseHpRecovery = 0;
+        this.baseStaminaRecovery = 15;
+        this.baseMagicRecovery = 15;
+        this.baseBluntAttack = (this.vigor * 1) + (this.strength * 3) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
+        this.basePierceAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 3) + (this.intelligence * 2) + (this.attunement * 2);
+        this.baseArcaneAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 3) + (this.attunement * 2);
+        this.baseElementalAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 3);
+        this.baseBluntDefense = (this.vigor * 1)  + (this.strength * 2) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 1);
+        this.basePierceDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 2) + (this.intelligence * 1) + (this.attunement * 1);
+        this.baseArcaneDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 2) + (this.attunement * 1);
+        this.baseElementalDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 2);
+        this.baseSpeed = 20;
+        this.baseEvasion = 0.10;
         this.baseCritical = 0.10;
     }
 }

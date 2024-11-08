@@ -1,4 +1,4 @@
-import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen, Blessed, Cursed, PhysicalAttackDebuff, PhysicalAttackBuff, BearTrapSet, MagicalAttackBuff, MagicalAttackDebuff} from "./statusEffects.js";
+import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen, Blessed, Cursed, PhysicalAttackDebuff, PhysicalAttackBuff, BearTrapSet, MagicalAttackBuff, MagicalAttackDebuff, PhysicalDefenseBuff} from "./statusEffects.js";
 
 export class Ability{
     constructor(config){
@@ -1096,6 +1096,34 @@ export class Block extends Ability{
     }
     updateMessage(attacker, target){
         this.message = `${attacker.name} raises a shield.`;
+    }
+}
+export class Brace extends Ability{
+    constructor(config){
+        super({
+            name: 'brace',
+            description: "Prepare for physical attack. Raises one's physical defense.",
+            iconSrc: './assets/media/icons/shield.png',
+            speedModifier: config.speedModifier || 1.25,
+            damageModifier: config.damageModifier || 0,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 10,
+            magicCost: config.magicCost || 0,
+            damageTypes: config.damageTypes || ['blunt'],
+            soundEffectSrc: "./assets/audio/soundEffects/anvil-hit-2-14845.mp3",
+            attackerAnimation: config.attackerAnimation || 'none',
+            targetAnimation: 'none',
+            abilityAnimation: config.abilityAnimation || 'none',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/shield.png',
+            defaultTarget: 'self',
+            targetLock: 'self',
+        })
+    }
+    activate(attacker, target){
+        this.inflictStatus(new PhysicalDefenseBuff({holder: target}), attacker, target);
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} braces.`;
     }
 }
 export class VineLash extends Ability{

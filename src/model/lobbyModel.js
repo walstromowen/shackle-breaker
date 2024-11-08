@@ -133,7 +133,7 @@ export default class LobbyModel{
             case 'herbal-medicine':
                 this.props.setInventory([new HealthPotion(), new Antidote(), new AloeRemedy()]);
                 break;
-            case 'assasians-belt':
+            case 'assassins-belt':
                 this.props.setInventory([new HealthPotion(), new PoisonedKnife(), new PoisonedKnife()]);
                 break;
             case 'artisans-tools':

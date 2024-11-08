@@ -3,19 +3,9 @@ import {generateBiome} from './biomes.js';
 import { generateLayout } from './mapLayouts.js';
 
 export default class Map{
-    constructor(biome){
+    constructor(biome, layout){
         this.biome = generateBiome(biome);
-        /*
-        this.tileLayout = [
-            [0,0,0,0,0],
-            [0,0,0,0,0],
-            [0,0,2,0,0],
-            [0,0,0,1,0],
-            [0,0,0,0,0],
-
-        ]
-        */
-        this.tileLayout = generateLayout();
+        this.tileLayout = generateLayout(layout);
         this.generateTiles();
     }
     generateTiles(){
@@ -35,6 +25,13 @@ export default class Map{
                         break;
                     case 3:
                         this.tileLayout[y][x] = new Tile('exit');
+                        this.tileLayout[y][x].imageCoordinates = [0, 2];
+                        break;
+                    case 4:
+                        this.tileLayout[y][x] = new Tile('blank');
+                        break;
+                    case 'b':
+                        this.tileLayout[y][x] = new Tile('boss');
                         this.tileLayout[y][x].imageCoordinates = [0, 2];
                         break;
                 }

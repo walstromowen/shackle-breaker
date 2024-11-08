@@ -814,3 +814,139 @@ export class MagicalAttackDebuff extends StatusEffect{
         this.holder.currentElementalAttack += this.currentElementalAttackDebuff;
     }
 }
+export class PhysicalDefenseBuff extends StatusEffect{
+    constructor(config){
+        super({
+            name:'physical defense buff',
+            iconSrc: "./assets/media/icons/physical-defense-buff-1.png",
+            holder: config.holder,
+            maxCharges: 99,
+            stackable: true,
+            targetAnimation: 'none',
+            abilityAnimation: 'none',
+            removeOnBattleEnd: true,
+        });
+        this.currentLevel = config.level || 0;
+        this.currentBluntDefenseBuff = 0;
+        this.currentPierceDefenseBuff = 0;
+    }
+    onApplied(attacker, target, status){
+        this.holder.currentBluntDefense -= this.currentBluntDefenseBuff;
+        this.holder.currentPierceDefense -= this.currentPierceDefenseBuff;
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == 'physical defense debuff'){
+                this.holder.statusArray[i].currentLevel = this.holder.statusArray[i].currentLevel - 2
+                if(this.holder.statusArray[i].currentLevel < 0){
+                    this.holder.statusArray[i].onRemove();
+                }else{
+                    this.holder.statusArray[i].onApplied(attacker, target, status);
+                }
+                return;
+            }
+        }
+        switch(this.currentLevel){
+            case 0:
+                target.statusArray.push(status);
+                this.currentBluntDefenseBuff = Math.floor(0.2 * this.holder.baseBluntDefense);
+                this.currentPierceDefenseBuff = Math.floor(0.2 * this.holder.basePierceDefense);
+                this.iconSrc = "./assets/media/icons/physical-defense-buff-1.png";
+                this.currentLevel++
+            break;
+            case 1:
+                this.currentBluntDefenseBuff = Math.floor(0.4 * this.holder.baseBluntDefense);
+                this.currentPierceDefenseBuff = Math.floor(0.4 * this.holder.basePierceDefense);
+                this.iconSrc = "./assets/media/icons/physical-defense-buff-2.png";
+                this.currentLevel++
+            break;
+            case 2:
+                this.currentBluntDefenseBuff = Math.floor(0.6 * this.holder.baseBluntDefense);
+                this.currentPierceDefenseBuff = Math.floor(0.6 * this.holder.basePierceDefense);
+                this.iconSrc = "./assets/media/icons/physical-defense-buff-3.png";
+                this.currentLevel++
+            break;
+            default:
+            break;
+        }
+        this.holder.currentBluntDefense += this.currentBluntDefenseBuff;
+        this.holder.currentPierceDefense += this.currentPierceDefenseBuff;
+        this.currentCharges++;
+    }
+    onRemove(){
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == this.name){
+                this.holder.statusArray.splice(i, 1);
+                break;
+            }
+        }
+        this.holder.currentBluntDefense -= this.currentBluntDefenseBuff;
+        this.holder.currentPierceDefense -= this.currentPierceDefenseBuff;
+    }
+}
+export class PhysicalDefenseDebuff extends StatusEffect{
+    constructor(config){
+        super({
+            name:'physical defense debuff',
+            iconSrc: "./assets/media/icons/physical-defense-debuff-1.png",
+            holder: config.holder,
+            maxCharges: 99,
+            stackable: true,
+            targetAnimation: 'none',
+            abilityAnimation: 'none',
+            removeOnBattleEnd: true,
+        });
+        this.currentLevel = config.level || 0;
+        this.currentBluntDefenseDebuff = 0;
+        this.currentPierceDefenseDebuff = 0;
+    }
+    onApplied(attacker, target, status){
+        this.holder.currentBluntDefense += this.currentBluntDefenseDebuff;
+        this.holder.currentPierceDefense += this.currentPierceDefenseDebuff;
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == 'physical defense buff'){
+                this.holder.statusArray[i].currentLevel = this.holder.statusArray[i].currentLevel - 2
+                if(this.holder.statusArray[i].currentLevel < 0){
+                    this.holder.statusArray[i].onRemove();
+                }else{
+                    this.holder.statusArray[i].onApplied(attacker, target, status);
+                }
+                return;
+            }
+        }
+        switch(this.currentLevel){
+            case 0:
+                target.statusArray.push(status);
+                this.currentBluntDefenseDebuff = Math.floor(0.2 * this.holder.baseBluntDefense);
+                this.currentPierceDefenseDebuff = Math.floor(0.2 * this.holder.basePierceDefense);
+                this.iconSrc = "./assets/media/icons/physical-defense-debuff-1.png";
+                this.currentLevel++
+            break;
+            case 1:
+                this.currentBluntDefenseDebuff = Math.floor(0.4 * this.holder.baseBluntDefense);
+                this.currentPierceDefenseDebuff = Math.floor(0.4 * this.holder.basePierceDefense);
+                this.iconSrc = "./assets/media/icons/physical-defense-debuff-2.png";
+                this.currentLevel++
+            break;
+            case 2:
+                this.currentBluntDefenseDebuff = Math.floor(0.6 * this.holder.baseBluntDefense);
+                this.currentPierceDefenseDebuff = Math.floor(0.6 * this.holder.basePierceDefense);
+                this.iconSrc = "./assets/media/icons/physical-defense-debuff-3.png";
+                this.currentLevel++
+            break;
+            default:
+            break;
+        }
+        this.holder.currentBluntDefense -= this.currentBluntDefenseDebuff;
+        this.holder.currentPierceDefense -= this.currentPierceDefenseDebuff;
+        this.currentCharges++;
+    }
+    onRemove(){
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == this.name){
+                this.holder.statusArray.splice(i, 1);
+                break;
+            }
+        }
+        this.holder.currentBluntDefense += this.currentBluntDefenseDebuff;
+        this.holder.currentPierceDefense += this.currentPierceDefenseDebuff;
+    }
+}
