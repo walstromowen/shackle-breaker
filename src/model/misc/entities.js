@@ -1,6 +1,6 @@
 import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl, Eviscerate, ChannelMagic, DarkOrb, Bless, Brace} from "./abilities.js";
 import { Poison, Burn, Bleed, Shielded, InstaDeath} from "./statusEffects.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe} from "./items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, LeatherGloves} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Hide} from "./items.js";
 
 
@@ -389,16 +389,35 @@ export class Dog extends Entity{
             dexterity: config.dexterity || 5,
             intelligence: config.intelligence || 5,
             attunement: config.attunement || 5,
-            baseBluntResistance: config.baseBluntResistance || 0.1,
-            basePierceResistance: config.basePierceResistance || 0.1,
-            baseArcaneResistance: config.baseArcaneResistance || 0.1,
-            baseElementalResistance: config.baseElementalResistance || 0.1,
+            baseBluntResistance: config.baseBluntResistance || 0.2,
+            basePierceResistance: config.basePierceResistance || 0.2,
+            baseArcaneResistance: config.baseArcaneResistance || 0.2,
+            baseElementalResistance: config.baseElementalResistance || 0.2,
             isHostile: config.isHostile || false,
             equipment: {
                 mediumAnimalArmor: '',
             },
             abilityArray: [new Bite({}), new Pounce({}), new Howl({})],
         })
+    }
+    scaleAttributes(){
+        this.maxHP = (this.vigor * 6)  + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
+        this.maxStamina = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
+        this.maxMagic = (this.vigor * 2)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
+        this.baseHpRecovery = 0;
+        this.baseStaminaRecovery = 8;
+        this.baseMagicRecovery = 8;
+        this.baseBluntAttack = (this.vigor * 1) + (this.strength * 3) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
+        this.basePierceAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 3) + (this.intelligence * 2) + (this.attunement * 2);
+        this.baseArcaneAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 3) + (this.attunement * 2);
+        this.baseElementalAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 3);
+        this.baseBluntDefense = (this.vigor * 1)  + (this.strength * 2) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 1);
+        this.basePierceDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 2) + (this.intelligence * 1) + (this.attunement * 1);
+        this.baseArcaneDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 2) + (this.attunement * 1);
+        this.baseElementalDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 2);
+        this.baseSpeed = 25;
+        this.baseEvasion = 0.10;
+        this.baseCritical = 0.10;
     }
 }
 
@@ -502,11 +521,11 @@ export class MadBandit extends Entity{
             equipment: config.equipment || {
                 mainHand: new Dagger({level: 1}),
                 offhand: '',
-                head: '',
+                head: new LeatherHood({level: 1}),
                 torso: new LeatherChestplate({level: 1}),
-                arms: '',
+                arms: new LeatherGloves({level: 1}),
                 legs: new LeatherGreaves({level: 1}),
-                feet: '',
+                feet: new LeatherBoots({level: 1}),
             },
             isHostile: config.isHostile || true,
             abilityArray: [new Eviscerate({})],
@@ -652,6 +671,7 @@ export class ArmoredSkeleton extends Skeleton{
                 feet: '',
             },
             isHostile: config.isHostile || true,
+            abilityArray: [new Brace({})],
             lootTable: [
                 {item: new IronHelm({level: 1}), weight: 1},
                 {item: new IronChainmail({level: 1}), weight: 1},
@@ -728,7 +748,7 @@ export class SkeletonCultist extends Entity{
                 mainHand: new LightStaff({level: 1}),
                 offhand: new FireStaff({level: 1}),
                 head: '',
-                torso: new LinenShirt({level: 1}),
+                torso: new ClothRobe({level: 1}),
                 arms: '',
                 legs:  new LinenPants({level: 1}),
                 feet: '',
@@ -789,7 +809,7 @@ export class SkeletonColossus extends Entity{
             attunement: config.attunement || 5,
             equipment: config.equipment || {},
             isHostile: config.isHostile || true,
-            abilityArray: [new Punch({damageModifier: 1}), new Pounce({}), new DrainLife({}), new Roar({})],
+            abilityArray: [new Punch({damageModifier: 1}), new Pounce({}), new Roar({})],
             baseBluntResistance: config.baseBluntResistance || 0.05,
             basePierceResistance: config.basePierceResistance || 0.1,
             baseArcaneResistance: config.baseArcaneResistance || 0.1,
@@ -1221,7 +1241,7 @@ export class EmperorDolos extends Entity{
             animationDuration: 6000,
             animationSoundEffect: './assets/audio/soundEffects/tornado.wav',
             createNextForm: ()=>{
-                let hostile = new EmperorDolos({level: this.level, nextForm: false, abilityArray: [new DrainLife({}), new DarkOrb({}), new ChannelMagic({}), new LightningBolt({}), new Siphon({}), new Bless({})],});
+                let hostile = new EmperorDolos({level: this.level, nextForm: false, abilityArray: [new DrainLife({}), new MagicMissile({}), new ChannelMagic({}), new LightningBolt({}), new Siphon({}), new Bless({})],});
                 hostile.nextForm = false;//have to do don't know why
                 return hostile
            

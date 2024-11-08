@@ -810,6 +810,44 @@ export class Fireball extends Ability{
        this.message = `${attacker.name} shoots a fireball ${target.name}.`;
     }
 }
+export class Inferno extends Ability{
+    constructor(config){
+        super({
+            name: 'inferno',
+            description: "Blast enemies with a firery inferno made with elemental magic. Has a chance to burn targets.",
+            iconSrc: './assets/media/icons/wildfires.png',
+            speedModifier: config.speedModifier || 0.5,
+            damageModifier: config.damageModifier || 1.00,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 35,
+            accuracy: config.accuracy || 0.80,
+            damageTypes: config.damageTypes || ['elemental'],
+            soundEffectSrc: "./assets/audio/soundEffects/short-fireball-woosh-6146.mp3",
+            targetCount: 3,
+            sequenceType: 'splash',
+            attackerAnimation: config.attackerAnimation || 'ally-evade',
+            abilityAnimation: config.abilityAnimation || 'explode',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/wildfires.png',
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            if(Math.random()*10 < 1){
+                this.inflictStatus(new Burn({holder: target}), attacker, target);
+            }
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
+        }
+    }
+    updateMessage(attacker, target){
+       this.message = `${attacker.name} shoots a fireball ${target.name}.`;
+    }
+}
 export class LightningBolt extends Ability{
     constructor(config){
         super({
@@ -929,7 +967,7 @@ export class Siphon extends Ability{
             description: "Absorb a target's magic points using dark arcane magic.",
             iconSrc: './assets/media/icons/body-swapping.png',
             speedModifier: config.speedModifier || 1.0,
-            damageModifier: config.damageModifier || 1.5,
+            damageModifier: config.damageModifier || 4,
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 10,
@@ -937,7 +975,7 @@ export class Siphon extends Ability{
             damageTypes: config.damageTypes || ['arcane'],
             soundEffectSrc: "./assets/audio/soundEffects/cold-wind-fade.wav",
 
-            attackerAnimation: config.attackerAnimation || 'implode',
+            attackerAnimation: config.attackerAnimation || 'none',
             abilityAnimation: config.abilityAnimation || 'sink',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/tentacle-heart.png',
             targetAnimation: config.targetAnimation || 'sink',
@@ -949,7 +987,7 @@ export class Siphon extends Ability{
         let damage = this.checkDamage(target, rawDamage, 'magic');
         target.currentMagic = target.currentMagic - damage;
 
-        let magicRestore = this.checkRestore(attacker, rawDamage*0.75, 'magic');
+        let magicRestore = this.checkRestore(attacker, rawDamage*0.25, 'magic');
         attacker.currentMagic += magicRestore;
         
     }

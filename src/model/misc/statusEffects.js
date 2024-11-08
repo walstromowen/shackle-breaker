@@ -202,7 +202,7 @@ export class Bleed extends StatusEffect{
             name:'bleed',
             iconSrc: "./assets/media/icons/bleeding-wound.png",
             holder: config.holder,
-            maxCharges: 4,
+            maxCharges: 5,
             soundEffectSrc: "./assets/audio/soundEffects/platzender-kopf_nachschlag-91637.mp3",
         });
         this.severityMofifier = 0.12;
@@ -564,7 +564,7 @@ export class PhysicalAttackBuff extends StatusEffect{
         for(let i = 0; i < this.holder.statusArray.length; i++){
             if(this.holder.statusArray[i].name == 'physical attack debuff'){
                 this.holder.statusArray[i].currentLevel = this.holder.statusArray[i].currentLevel - 2
-                if(this.holder.statusArray[i].currentLevel < 0){
+                if(this.holder.statusArray[i].currentLevel <= 0){
                     this.holder.statusArray[i].onRemove();
                 }else{
                     this.holder.statusArray[i].onApplied(attacker, target, status);
@@ -632,7 +632,7 @@ export class PhysicalAttackDebuff extends StatusEffect{
         for(let i = 0; i < this.holder.statusArray.length; i++){
             if(this.holder.statusArray[i].name == 'physical attack buff'){
                 this.holder.statusArray[i].currentLevel = this.holder.statusArray[i].currentLevel - 2
-                if(this.holder.statusArray[i].currentLevel < 0){
+                if(this.holder.statusArray[i].currentLevel <= 0){
                     this.holder.statusArray[i].onRemove();
                 }else{
                     this.holder.statusArray[i].onApplied(attacker, target, status);
@@ -700,7 +700,7 @@ export class MagicalAttackBuff extends StatusEffect{
         for(let i = 0; i < this.holder.statusArray.length; i++){
             if(this.holder.statusArray[i].name == 'magical attack debuff'){
                 this.holder.statusArray[i].currentLevel = this.holder.statusArray[i].currentLevel - 2
-                if(this.holder.statusArray[i].currentLevel < 0){
+                if(this.holder.statusArray[i].currentLevel <= 0){
                     this.holder.statusArray[i].onRemove();
                 }else{
                     this.holder.statusArray[i].onApplied(attacker, target, status);
@@ -768,7 +768,7 @@ export class MagicalAttackDebuff extends StatusEffect{
         for(let i = 0; i < this.holder.statusArray.length; i++){
             if(this.holder.statusArray[i].name == 'magical attack buff'){
                 this.holder.statusArray[i].currentLevel = this.holder.statusArray[i].currentLevel - 2
-                if(this.holder.statusArray[i].currentLevel < 0){
+                if(this.holder.statusArray[i].currentLevel <= 0){
                     this.holder.statusArray[i].onRemove();
                 }else{
                     this.holder.statusArray[i].onApplied(attacker, target, status);
@@ -836,7 +836,7 @@ export class PhysicalDefenseBuff extends StatusEffect{
         for(let i = 0; i < this.holder.statusArray.length; i++){
             if(this.holder.statusArray[i].name == 'physical defense debuff'){
                 this.holder.statusArray[i].currentLevel = this.holder.statusArray[i].currentLevel - 2
-                if(this.holder.statusArray[i].currentLevel < 0){
+                if(this.holder.statusArray[i].currentLevel <= 0){
                     this.holder.statusArray[i].onRemove();
                 }else{
                     this.holder.statusArray[i].onApplied(attacker, target, status);
@@ -904,7 +904,7 @@ export class PhysicalDefenseDebuff extends StatusEffect{
         for(let i = 0; i < this.holder.statusArray.length; i++){
             if(this.holder.statusArray[i].name == 'physical defense buff'){
                 this.holder.statusArray[i].currentLevel = this.holder.statusArray[i].currentLevel - 2
-                if(this.holder.statusArray[i].currentLevel < 0){
+                if(this.holder.statusArray[i].currentLevel <= 0){
                     this.holder.statusArray[i].onRemove();
                 }else{
                     this.holder.statusArray[i].onApplied(attacker, target, status);
@@ -940,7 +940,7 @@ export class PhysicalDefenseDebuff extends StatusEffect{
         this.currentCharges++;
     }
     onRemove(){
-        for(let i = 0; i < this.holder.statusArray.length; i++){
+        for(let i = 0; i <= this.holder.statusArray.length; i++){
             if(this.holder.statusArray[i].name == this.name){
                 this.holder.statusArray.splice(i, 1);
                 break;
