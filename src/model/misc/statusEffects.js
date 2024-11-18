@@ -742,7 +742,7 @@ export class MagicalAttackBuff extends StatusEffect{
                 break;
             }
         }
-        this.holder.currentArcaneAttack -= this.currentBluntAttackBuff;
+        this.holder.currentArcaneAttack -= this.currentArcaneAttackBuff;
         this.holder.currentElementalAttack -= this.currentElementalAttackBuff;
     }
 }
