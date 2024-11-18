@@ -143,7 +143,7 @@ export class StatuesInTheSand extends Stage{
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
                             createNextStage: (partyLevel, biome)=>{
-                                return config.nextStage;
+                                return new ShiftingSands3({});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `Just as ${currentCharacter.name} withdraws from pile of sand that used to be statues, the sand erupts into an ominous vortex! From the vortex emerges a cloaked figure ready to fight!`

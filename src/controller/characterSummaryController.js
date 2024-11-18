@@ -22,18 +22,6 @@ export default class CharacterSummaryController{
             document.getElementById('sound-effect-player').src = './assets/audio/soundEffects/cinematic-boom-6872.mp3';
             document.getElementById('sound-effect-player').play();
         });
-        /*
-        document.getElementById('character-summary-screen').querySelectorAll('.stat-cell-hoverable').forEach((node)=>{
-            node.addEventListener('mouseenter', (e)=>{
-                const miniMenu =  node.querySelector('.stat-cell-hover-menu');
-                miniMenu.style.display='flex';
-            });
-            node.addEventListener('mouseleave', (e)=>{
-                const miniMenu =  node.querySelector('.stat-cell-hover-menu');
-                miniMenu.style.display = 'none';
-            });
-        });
-        */
         this.view.inventoryPannel.addEventListener('dragover', (e)=>{ 
             e.preventDefault();
             e.stopPropagation();

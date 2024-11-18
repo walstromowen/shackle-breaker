@@ -223,7 +223,7 @@ export class Bleed extends StatusEffect{
                 }
                 this.holder.currentStamina = this.holder.currentStamina - staminaDamage;
                 this.holder.currentHP = this.holder.currentHP - healthDamage;
-                this.severityMofifier += 0.02;
+                this.severityMofifier += 0.03;
                 this.currentCharges --;
                 
             }, 

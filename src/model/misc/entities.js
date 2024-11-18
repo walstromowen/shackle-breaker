@@ -1,6 +1,6 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl, Eviscerate, ChannelMagic, DarkOrb, Bless, Brace} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl, Eviscerate, ChannelMagic, DarkOrb, Bless, Brace, Inferno} from "./abilities.js";
 import { Poison, Burn, Bleed, Shielded, InstaDeath} from "./statusEffects.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, LeatherGloves} from "./items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, LeatherGloves, GreatSword} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Hide} from "./items.js";
 
 
@@ -678,6 +678,7 @@ export class ArmoredSkeleton extends Skeleton{
                 {item: new IronGauntlets({level: 1}), weight: 1},
                 {item: new IronGreaves({level: 1}), weight: 1},
                 {item: new IronBoots({level: 1}), weight: 1},
+                {item: new GreatSword({level: 1}), weight: 1},
                 {item: new Handaxe({level: 1}), weight: 1},
                 {item: new Buckler({level: 1}), weight: 1},
                 {item: new HealthPotion(), weight: 2},
@@ -1003,6 +1004,8 @@ export class SandStalker extends Entity{
             isHostile: config.isHostile || true,
             abilityArray: [],
             lootTable: [
+                {item: new GreatSword({level: 1}), weight: 1},
+                {item: new ShortSword({level: 1}), weight: 1},
                 {item: new LeatherHood({level: 1}), weight: 1},
                 {item: new LeatherHelmet({level: 1}), weight: 1},
                 {item: new LeatherChestplate({level: 1}), weight: 1},
@@ -1098,10 +1101,10 @@ export class DryShark extends Entity{
         this.baseCritical = 0.20;
     }
 }
-export class DryEll extends Entity{
+export class DryEel extends Entity{
     constructor(config){
         super({
-            name: 'Dry Ell',
+            name: 'Dry Eel',
             level: config.level || 1,
             apperance: config.apperance || './assets/media/entities/dry-eel.jpg',
             vigor: config.vigor || 3,
@@ -1233,7 +1236,7 @@ export class EmperorDolos extends Entity{
                 feet: '',
             },
             isHostile: config.isHostile || true,
-            abilityArray: [new DrainLife({}), new DarkOrb({}), new ChannelMagic({}), new LightningBolt({}), new Siphon({}), new Bless({})],
+            abilityArray: [new DrainLife({}), new DarkOrb({}), new Inferno({}), new ChannelMagic({}), new LightningBolt({}), new Siphon({}), new Bless({})],
             lootTable: [],
         });
         this.nextForm = config.nextForm || {
@@ -1241,7 +1244,7 @@ export class EmperorDolos extends Entity{
             animationDuration: 6000,
             animationSoundEffect: './assets/audio/soundEffects/tornado.wav',
             createNextForm: ()=>{
-                let hostile = new EmperorDolos({level: this.level, nextForm: false, abilityArray: [new DrainLife({}), new MagicMissile({}), new ChannelMagic({}), new LightningBolt({}), new Siphon({}), new Bless({})],});
+                let hostile = new EmperorDolos({level: this.level, nextForm: false, abilityArray: [new DrainLife({}), new Inferno({}), new MagicMissile({}), new ChannelMagic({}), new LightningBolt({}), new Siphon({}), new Bless({})],});
                 hostile.nextForm = false;//have to do don't know why
                 return hostile
            

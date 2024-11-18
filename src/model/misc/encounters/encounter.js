@@ -6,5 +6,3 @@ export default class Encounter{
     }
 }
 //Wounded Mut
-//cave in
-//binfire

@@ -202,6 +202,141 @@ export default class GameView{
         document.getElementById('ability-mini-menu-targets').innerText = `${ability.targetLock} x ${ability.targetCount}`;
        
     }
+    updateAttributeStatPopUp(statCell){
+        document.getElementById('attribute-stat-pop-up-menu-img').src = statCell.querySelector('.icon').src
+        let stat = statCell.querySelector('.stat-label')
+        let description = '';
+        let name = '';
+        switch(stat.innerText){
+            case 'LVL:':
+                description = "Vaule determining one's overall power. Higher Levels will result in more dangerous encounter and foes.";        
+                name = 'Level';
+                break;
+            case 'VIG:':
+                description = "A measure of how many hits one can take. Affects max health points as well as one's resistance to status effects. Also determines the effectiveness of decisions that require one to endure hardship.\n\nEffected Stats:\nMAX HP";        
+                name = 'Vigor';
+                break;
+            case 'STR:':
+                description = "A measure of ones's physical prowess. Affects blunt damage and defense as well as one's maxium stamina. Also determines the effectiveness of decisions that require one to utilize strength.\n\nEffected Stats:\nMAX STM\nBLT ATK\nBLT DEF";      
+                name = 'Strength';
+                break;
+            case 'DEX:':
+                description = "A measure of ones's finesse. Affects piercing damage and defense as well as one's maximum stamina. Also determines the effectiveness of decisions that require sleight of hand, stealth, and mobility.\n\nEffected Stats:\nMAX STM\nPIR ATK\nPIR DEF";        
+                name = 'Dexterity';
+                break;
+            case 'INT:':
+                description = "A measure of ones's knowledge. Affects arcane damage and defense as well as one's maximum magic. Also determines the effectiveness of decisions that require problem solving, academica, and logical reasoning.\n\nEffected Stats:\nMAX MAG\nARC ATK\nARC DEF";           
+                name = 'Intelligence';
+                break;
+            case 'ATN:':
+                description = "A measure of ones's attachment to the elements. Affects elemental damage and defense as well as ones maximum magic. Also determines the effectiveness of decisions that utilize perception, intuition, and nature.\n\nEffected Stats:\nMAX MAG\nELM ATK\nELM DEF";             
+                name = 'Attunement';
+                break;
+                
+            case 'G:':
+                description = "Amount of gold held by a party. Can be used to buy and upgrade items, as well as barter with others.";             
+                name = 'Gold';
+                break;
+            case 'SKL PT:':
+                description = "Amount of Skill Points available to current character. Rasises the value of one attribute and corresponding stats.";             
+                name = 'Skill Points';
+                break;
+
+            case 'HP:':
+                description = "Value measuring one life.";             
+                name = 'Max Health';
+                break;
+            case 'STA:':
+                description = "Value measuring one's ability to perform physical abilities.";             
+                name = 'Max Stamina';
+                break;
+            case 'MAG:':
+                description = "Value measuring one's ability to perform magical abilities.";             
+                name = 'Max Magical';
+                break;
+
+            case 'HP RC:':
+                description = 'Health recovered at the end of a round of combat.'
+                name = 'Health Recovery';
+                break;
+            case 'STA RC:':
+                description = 'Stamina recovered at the end of a round of combat.'
+                name = 'Stamina Recovery';
+                break;
+            case 'MAG RC:':
+                description = 'Magic recovered at the end of a round of combat.'
+                name = 'Magic Recovery';
+                break;
+            case 'BLT ATK:':
+                description = 'Raw damage delivered to a target as a result of a blunt attack.';
+                name = 'Blunt Attack';
+                break;
+            case 'PIR ATK:':
+                description = 'Raw damage delivered to a target as a result of a pierce attack.';
+                name = 'Pirece Attack';
+                break;
+            case 'ARC ATK:':
+                description = 'Raw damage delivered to a target as a result of an arcane attack.';
+                name = 'Arcane Attack';
+                break;
+            case 'ELM ATK:':
+                description = 'Raw damage delivered to a target as a result of an elemental attack.';
+                name = 'Elemental Attack';
+                break;
+            case 'BLT DEF:':
+                description = 'Additive value negated on recieving a blunt attack.';
+                name = 'Blunt Defense';
+                break;
+            case 'PIR DEF:':
+                description = 'Additive value negated on recieving a pierce attack.';
+                name = 'Pirece Defense';
+                break;
+            case 'ARC DEF:':
+                description = 'Additive value negated on recieving an arcane attack.';
+                name = 'Arcane Defense';
+                break;
+            case 'ELM DEF:':
+                description = 'Additive value negated on recieving an elemental attack.';
+                name = 'Elemental Defense';
+                break;
+            case 'BLT RES:':
+                description = 'Multiplicative value negated on recieving a blunt attack.';
+                name = 'Blunt Resistance';
+                break;
+            case 'PIR RES:':
+                description = 'Multiplicative value negated on recieving a pierce attack.';
+                name = 'Pirece Resistance';
+                break;
+            case 'ARC RES:':
+                description = 'Multiplicative value negated on recieving an arcane attack.';
+                name = 'Arcane Resistance';
+                break;
+            case 'ELM RES:':
+                description = 'Multiplicative value negated on recieving an elemental attack.';
+                name = 'Elemental Resistance';
+                break;
+
+            case 'SPD:':
+                description = 'Additive value impacting ability turn order.';
+                name = 'Speed';
+                break;
+            case 'EVA:':
+                description = 'Multiplicative value impacting if a hostile ability lands.';
+                name = 'Evasion';
+                break;
+            case 'CRIT:':
+                description = 'Multiplicative value impacting if an ability will land a critical hit dealing bonus damage.';
+                name = 'Critical';
+                break;
+         
+
+            default:
+                description='default'
+                break;
+        }
+        document.getElementById('attribute-stat-pop-up-menu-name').innerText = name.toUpperCase();
+        document.getElementById('attribute-stat-pop-up-menu-description').innerText = description;
+    }
     positionPopUpElement(popUpElement, relativeElement){
         let topLeftCoordinates = [0,0];
         //try bottom right
@@ -222,7 +357,7 @@ export default class GameView{
         }
         //try top left
         topLeftCoordinates[0] = relativeElement.getBoundingClientRect().x  - popUpElement.getBoundingClientRect().width;
-        topLeftCoordinates[1] = relativeElement.getBoundingClientRect().y - (popUpElement.getBoundingClientRect().height - relativeElement.getBoundingClientRect().width);
+        topLeftCoordinates[1] = relativeElement.getBoundingClientRect().y;
         if(this.checkFitsOnScreen(popUpElement, topLeftCoordinates)){
             popUpElement.style.left = topLeftCoordinates[0] + "px";
             popUpElement.style.top = topLeftCoordinates[1] + "px";

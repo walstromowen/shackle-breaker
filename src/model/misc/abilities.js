@@ -50,7 +50,7 @@ export class Ability{
                     break;
             }
         }
-        rawDamage = rawDamage / this.damageTypes.length / this.targetCount;
+        rawDamage = rawDamage / this.damageTypes.length;
         return rawDamage;
     }
     checkDamage(target, rawDamage, stat){
@@ -404,7 +404,7 @@ export class Eviscerate extends Ability{
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
-        if(target.currentHP = target.maxHP) rawDamage *= 1.2;
+        if(target.currentHP == target.maxHP) rawDamage *= 1.2;
         rawDamage = this.checkCritical(attacker, rawDamage);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
@@ -566,7 +566,7 @@ export class Cleave extends Ability{
             description: "Cleave up to two different targets.",
             iconSrc: './assets/media/icons/serrated-slash.png',
             speedModifier: config.speedModifier || 1,
-            damageModifier: config.damageModifier || 1,
+            damageModifier: config.damageModifier || 0.75,
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 10,
             magicCost: config.magicCost || 0,
@@ -594,6 +594,81 @@ export class Cleave extends Ability{
         this.message = (`${attacker.name} uses cleave.`);
     }
 }
+export class Flurry extends Ability{
+    constructor(config){
+        super({
+            name: 'flurry',
+            description: "Slash a target with a series of quick slashes.",
+            iconSrc: './assets/media/icons/crossed-slashes.png',
+            speedModifier: config.speedModifier || 1.0,
+            damageModifier: config.damageModifier || 0.75,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 7,
+            magicCost: config.magicCost || 0,
+            accuracy: config.accuracy || 0.75,
+            damageTypes: config.damageTypes || ['blunt', 'pierce'],
+            soundEffectSrc: "./assets/audio/soundEffects/mixkit-metal-hit-woosh-1485.wav",
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            targetCount: 3,
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/quick-slash.png',
+            abilityAnimation: config.abilityAnimation || 'swipe-right',
+
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
+            if(Math.random()*30 < 1){
+                this.inflictStatus(new Bleed({holder: target}), attacker, target);
+            } 
+        }
+    }
+    updateMessage(attacker, target){
+       this.message = `${attacker.name} performs a flurry on ${target.name}.`;
+    }
+}
+export class Uppercut extends Ability{
+    constructor(config){
+        super({
+            name: 'uppercut',
+            description: "Strike a target with an upwards motion. Has a chance to knock over a target.",
+            iconSrc: './assets/media/icons/uppercut.png',
+            speedModifier: config.speedModifier || 1.0,
+            damageModifier: config.damageModifier || 1.25,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 18,
+            magicCost: config.magicCost || 0,
+            accuracy: config.accuracy || 0.75,
+            damageTypes: config.damageTypes || ['blunt'],
+            soundEffectSrc: "./assets/audio/soundEffects/mixkit-metallic-sword-strike-2160.wav",
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimation: config.abilityAnimation || 'swipe-up',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/uppercut.png',
+
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
+            if(Math.random()*10 < 1){
+                this.inflictStatus(new KnockedDown({holder: target}), attacker, target);
+            } 
+        }
+    }
+    updateMessage(attacker, target){
+       this.message = `${attacker.name} hits ${target.name} with an uppercut.`;
+    }
+}
 export class MagicMissile extends Ability{
     constructor(config){
         super({
@@ -601,10 +676,10 @@ export class MagicMissile extends Ability{
             description: "Fire a magic missile made of powerful arcane energy at three targets.",
             iconSrc: './assets/media/icons/frayed-arrow.png',
             speedModifier: config.speedModifier || 0.75,
-            damageModifier: config.damageModifier || 1.5,
+            damageModifier: config.damageModifier || 1.00,
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 0,
-            magicCost: config.magicCost || 15,
+            magicCost: config.magicCost || 8,
             accuracy: config.accuracy || 0.75,
             damageTypes: config.damageTypes || ['arcane'],
             targetCount: 3,
@@ -817,7 +892,7 @@ export class Inferno extends Ability{
             description: "Blast enemies with a firery inferno made with elemental magic. Has a chance to burn targets.",
             iconSrc: './assets/media/icons/wildfires.png',
             speedModifier: config.speedModifier || 0.5,
-            damageModifier: config.damageModifier || 1.00,
+            damageModifier: config.damageModifier || 1.25,
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 35,
@@ -845,7 +920,7 @@ export class Inferno extends Ability{
         }
     }
     updateMessage(attacker, target){
-       this.message = `${attacker.name} shoots a fireball ${target.name}.`;
+       this.message = `${attacker.name} summons an inferno.`;
     }
 }
 export class LightningBolt extends Ability{
@@ -1002,7 +1077,7 @@ export class Earthquake extends Ability{//Needs Work targeting same targets twic
             description: "Shake the ground using elemental magic and strength to summon an earthquake over an enemy party. Has a chance to knock over targets.",
             iconSrc: './assets/media/icons/earth-split.png',
             speedModifier: config.speedModifier || 0.5,
-            damageModifier: config.damageModifier || 1.5,
+            damageModifier: config.damageModifier || 1.0,
             criticalDamageModifier: config.criticalDamageModifier || 1.1,
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 30,
@@ -1389,9 +1464,6 @@ export class CastShadow extends Ability{
     //grants character type of shadowy oversheild //current vs base apperance?
 }
 export class Tunnel extends Ability{
-
-}
-export class Flurry extends Ability{
 
 }
 export class Parry extends Ability{

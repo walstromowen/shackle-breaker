@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower, Thrust, ChannelMagic, Siphon, Eviscerate, DarkOrb, Brace, Inferno} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower, Thrust, ChannelMagic, Siphon, Eviscerate, DarkOrb, Brace, Inferno, Flurry, Uppercut} from "./abilities.js";
 import { DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, UseAntidote, UseAloeRemedy, UseParalysisTonic, UseBandage, DrinkKurtussBrewOfMadness, SetBearTrap} from "./abilities.js";
 
 let counter = 0;
@@ -179,6 +179,9 @@ export class ShortSword extends Attachable{
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
             this.critical = this.critical + 0;
+            if(this.level == 3){
+                this.abilityArray.push(new Flurry({}));
+            }
         }
     }
 }
@@ -237,6 +240,9 @@ export class BlacksmithHammer extends Attachable{
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
             this.critical = this.critical + 0;
+            if(this.level == 3){
+                this.abilityArray.push(new Uppercut({}));
+            }
         }
     }
 }
@@ -793,8 +799,8 @@ export class LinenShirt extends Attachable{
             stamina: 0,
             magic: 0,
             hpRecovery: 0,
-            staminaRecovery: 1,
-            magicRecovery: 1,
+            staminaRecovery: 0,
+            magicRecovery: 0,
             bluntAttack: 0,
             pierceAttack: 0,
             arcaneAttack: 0,
@@ -850,8 +856,8 @@ export class LinenPants extends Attachable{
             hp: 0,
             stamina: 0,
             magic: 0,
-            hpRecovery: 1,
-            staminaRecovery: 1,
+            hpRecovery: 0,
+            staminaRecovery: 0,
             magicRecovery: 0,
             bluntAttack: 0,
             pierceAttack: 0,
@@ -1729,6 +1735,67 @@ export class Buckler extends Attachable{
         }
     }
 }
+export class GreatSword extends Attachable{
+    constructor(config){
+        super({
+            name: 'greatsword',
+            description: 'A standard greatsword. Greatsword weilded by captains of the Royal Altus Guard. "A personal favorite of mine. It is like a regular sword just greater." - Commander Mentoras.',
+            imageSrc:  './assets/media/icons/croc-sword.png',
+            price: 200,
+            slot: 'twoHand',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 3,
+            magicRecovery: 0,
+            bluntAttack: 6,
+            pierceAttack: 6,
+            arcaneAttack: 0,
+            elementalAttack: 0,
+            bluntDefense: 0,
+            pierceDefense: 0,
+            arcaneDefense: 0,
+            elementalDefense: 0,
+            bluntResistance: 0,
+            pierceResistance: 0,
+            arcaneResistance: 0,
+            elementalResistance: 0,
+            speed: -1,
+            evasion: -1,
+            critical: 0,
+            abilityArray: [new Slash({}), new Thrust({}), new Cleave({})],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 1;
+            this.magicRecovery = this.magicRecovery + 0;
+            this.bluntAttack = this.bluntAttack + 3;
+            this.pierceAttack = this.pierceAttack + 3;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 1;
+            this.pierceDefense = this.pierceDefense + 1;
+            this.arcaneDefense = this.arcaneDefense + 0;
+            this.elementalDefense = this.elementalDefense + 0;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+            this.critical = this.critical + 0;
+            if(this.level == 2){
+                this.abilityArray.push(new Uppercut({}));
+            }
+        }
+    }
+}
 export class PineWood extends Material{
     constructor(){
         super({
@@ -1824,7 +1891,7 @@ export class Bandage extends Consumable{
 export class ParalysisTonic extends Consumable{
     constructor(){
         super({
-            name: 'bandage',
+            name: 'paralysis tonic',
             description: `a tonic used to treat paralysis. Although the power of the artifact drove many mad, a select few used its power for good resulting in major breakthroughs in medicine.`,
             imageSrc: './assets/media/icons/round-bottom-flask.png',
             price: 30,

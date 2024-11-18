@@ -34,11 +34,27 @@ export default class GameController{
         this.characterSummaryController = new CharacterSummaryController(this.props, this.model.characterSummaryModel, this.view.characterSummaryView);
         this.encounterController = new EncounterController(this.props, this.model.encounterModel, this.view.encounterView);
         this.mapChangeController = new MapChangeController(this.props);
+
+        this.attributeStatPopUpExitEventHandler;
+
         this.initialize();
     }
     initialize(){
         window.addEventListener('resize', ()=>{
             this.view.resize();
+        });
+        document.querySelectorAll('.attribute-stat-pop-up').forEach((node)=>{
+            node.addEventListener('mouseenter', (e)=>{
+                e.preventDefault()
+                let popUpMenu = document.getElementById('attribute-stat-pop-up-menu');
+                this.view.updateAttributeStatPopUp(node);
+                popUpMenu.style.display = 'flex';
+                this.positionPopUpElement(popUpMenu, node);
+                node.addEventListener('mouseleave', this.attributeStatPopUpExitEventHandler = (ev)=>{
+                    node.removeEventListener('mouseleave', this.attributeStatPopUpExitEventHandler);
+                    popUpMenu.style.display = 'none';
+                });
+            });
         });
         document.getElementById('inventory-mini-menu-overview-button').addEventListener('click', ()=>{
             document.getElementById('inventory-mini-menu-stats-tab').style.display = 'none';

@@ -1,6 +1,6 @@
 import Stage from "./stage.js";
 import Battle from "../battle.js";
-import { Wolf, Madman, MadMage} from "../entities.js";
+import { Wolf, Madman, MadMage, MadBandit} from "../entities.js";
 import { Bleed } from "../statusEffects.js";
 import { getRandomArrayElementWeighted } from "../../../utility.js";
 
@@ -19,11 +19,12 @@ export class MadmanAhead extends Stage{
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
                             createBattle: (partyLevel, biome)=>{
                                 let hostileArray = [new Madman({level: partyLevel})];
-                                let count = Math.ceil(Math.random()*3);
+                                let count = Math.ceil(Math.random()*4);
                                 for(let i = 0; i < count; i++){
-                                    let chance = Math.floor(Math.random()*3);
+                                    let chance = Math.floor(Math.random()*4);
                                     if(chance < 2) hostileArray.push(new Madman({level: partyLevel}))
                                     if(chance == 2) hostileArray.push(new MadMage({level: partyLevel}))
+                                    if(chance == 3) hostileArray.push(new MadBandit({level: partyLevel}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
@@ -63,11 +64,12 @@ export class MadmanAhead extends Stage{
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
                             createBattle: (partyLevel, biome)=>{
                                 let hostileArray = [new Madman({level: partyLevel})];
-                                let count = Math.ceil(Math.random()*3);
+                                let count = Math.ceil(Math.random()*4);
                                 for(let i = 0; i < count; i++){
-                                    let chance = Math.floor(Math.random()*3);
+                                    let chance = Math.floor(Math.random()*4);
                                     if(chance < 2) hostileArray.push(new Madman({level: partyLevel}))
                                     if(chance == 2) hostileArray.push(new MadMage({level: partyLevel}))
+                                    if(chance == 3) hostileArray.push(new MadBandit({level: partyLevel}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
@@ -82,11 +84,12 @@ export class MadmanAhead extends Stage{
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
                             createBattle: (partyLevel, biome)=>{
                                 let hostileArray = [new Madman({level: partyLevel})];
-                                let count = Math.ceil(Math.random()*3);
+                                let count = Math.ceil(Math.random()*4);
                                 for(let i = 0; i < count; i++){
-                                    let chance = Math.floor(Math.random()*3);
+                                    let chance = Math.floor(Math.random()*4);
                                     if(chance < 2) hostileArray.push(new Madman({level: partyLevel}))
                                     if(chance == 2) hostileArray.push(new MadMage({level: partyLevel}))
+                                    if(chance == 3) hostileArray.push(new MadBandit({level: partyLevel}))
                                 }
 
                                 hostileArray[0].currentHP = hostileArray[0].currentHP*0.5;
@@ -127,11 +130,12 @@ export class MadmanAhead extends Stage{
                             imageSrc: './assets/media/entities/cursed-villager-1.jpg',
                             createBattle: (partyLevel, biome)=>{
                                 let hostileArray = [new Madman({level: partyLevel})];
-                                let count = Math.ceil(Math.random()*3);
+                                let count = Math.ceil(Math.random()*4);
                                 for(let i = 0; i < count; i++){
-                                    let chance = Math.floor(Math.random()*3);
+                                    let chance = Math.floor(Math.random()*4);
                                     if(chance < 2) hostileArray.push(new Madman({level: partyLevel}))
                                     if(chance == 2) hostileArray.push(new MadMage({level: partyLevel}))
+                                    if(chance == 3) hostileArray.push(new MadBandit({level: partyLevel}))
                                 }
 
                                 hostileArray[0].currentHP = hostileArray[0].currentHP*0.6;
@@ -150,11 +154,12 @@ export class MadmanAhead extends Stage{
                             imageSrc: './assets/media/entities/cursed-villager-1.jpg',
                             createBattle: (partyLevel, biome)=>{
                                 let hostileArray = [new Madman({level: partyLevel})];
-                                let count = Math.ceil(Math.random()*3);
+                                let count = Math.ceil(Math.random()*4);
                                 for(let i = 0; i < count; i++){
-                                    let chance = Math.floor(Math.random()*3);
+                                    let chance = Math.floor(Math.random()*4);
                                     if(chance < 2) hostileArray.push(new Madman({level: partyLevel}))
                                     if(chance == 2) hostileArray.push(new MadMage({level: partyLevel}))
+                                    if(chance == 3) hostileArray.push(new MadBandit({level: partyLevel}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
@@ -228,11 +233,12 @@ export class MadmanAhead extends Stage{
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
                             createBattle: (partyLevel, biome)=>{
                                 let hostileArray = [new Madman({level: partyLevel})];
-                                let count = Math.ceil(Math.random()*3);
+                                let count = Math.ceil(Math.random()*4);
                                 for(let i = 0; i < count; i++){
-                                    let chance = Math.floor(Math.random()*3);
+                                    let chance = Math.floor(Math.random()*4);
                                     if(chance < 2) hostileArray.push(new Madman({level: partyLevel}))
                                     if(chance == 2) hostileArray.push(new MadMage({level: partyLevel}))
+                                    if(chance == 3) hostileArray.push(new MadBandit({level: partyLevel}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
@@ -293,11 +299,12 @@ export class ConversationWithMadman extends Stage{
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
                             createBattle: (partyLevel, biome)=>{
                                 let hostileArray = [new Madman({level: partyLevel})];
-                                let count = Math.ceil(Math.random()*3);
+                                let count = Math.ceil(Math.random()*4);
                                 for(let i = 0; i < count; i++){
-                                    let chance = Math.floor(Math.random()*3);
+                                    let chance = Math.floor(Math.random()*4);
                                     if(chance < 2) hostileArray.push(new Madman({level: partyLevel}))
                                     if(chance == 2) hostileArray.push(new MadMage({level: partyLevel}))
+                                    if(chance == 3) hostileArray.push(new MadBandit({level: partyLevel}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
@@ -332,11 +339,12 @@ export class ConversationWithMadman extends Stage{
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
                             createBattle: (partyLevel, biome)=>{
                                 let hostileArray = [new Madman({level: partyLevel})];
-                                let count = Math.ceil(Math.random()*3);
+                                let count = Math.ceil(Math.random()*4);
                                 for(let i = 0; i < count; i++){
-                                    let chance = Math.floor(Math.random()*3);
+                                    let chance = Math.floor(Math.random()*4);
                                     if(chance < 2) hostileArray.push(new Madman({level: partyLevel}))
                                     if(chance == 2) hostileArray.push(new MadMage({level: partyLevel}))
+                                    if(chance == 3) hostileArray.push(new MadBandit({level: partyLevel}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
@@ -373,11 +381,12 @@ export class ConversationWithMadman extends Stage{
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
                             createBattle: (partyLevel, biome)=>{
                                 let hostileArray = [new Madman({level: partyLevel})];
-                                let count = Math.ceil(Math.random()*3);
+                                let count = Math.ceil(Math.random()*4);
                                 for(let i = 0; i < count; i++){
-                                    let chance = Math.floor(Math.random()*3);
+                                    let chance = Math.floor(Math.random()*4);
                                     if(chance < 2) hostileArray.push(new Madman({level: partyLevel}))
                                     if(chance == 2) hostileArray.push(new MadMage({level: partyLevel}))
+                                    if(chance == 3) hostileArray.push(new MadBandit({level: partyLevel}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
