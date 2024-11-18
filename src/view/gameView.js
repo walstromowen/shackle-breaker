@@ -198,7 +198,24 @@ export default class GameView{
         document.getElementById('ability-mini-menu-accuracy').innerText = parseFloat(ability.accuracy).toFixed(2);
         document.getElementById('ability-mini-menu-magic-cost').innerText = ability.magicCost;
         document.getElementById('ability-mini-menu-critical').innerText = parseFloat(ability.criticalChanceModifier + entity.currentCritical).toFixed(2) + '%';
-        document.getElementById('ability-mini-menu-damage').innerText = Math.floor(ability.damageModifier * entity.currentBluntAttack) + 'BNT'//TODO
+        let damage = 0;
+        for(let i = 0; i < ability.damageTypes.length; i++){
+            switch(ability.damageTypes[i]){
+                case 'blunt':
+                    damage += entity.currentBluntAttack;
+                    break;
+                case 'pierce':
+                    damage += entity.currentPierceAttack;
+                    break;
+                case 'arcane':
+                    damage += entity.currentArcaneAttack;
+                    break;
+                case 'elemental':
+                    damage += entity.currentElementalAttack;
+                    break;
+            }
+        }
+        document.getElementById('ability-mini-menu-damage').innerText = Math.floor(ability.damageModifier * damage / ability.damageTypes.length);
         document.getElementById('ability-mini-menu-targets').innerText = `${ability.targetLock} x ${ability.targetCount}`;
        
     }
