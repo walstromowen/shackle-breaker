@@ -7,7 +7,7 @@ import EncounterModel from "./encounterModel.js";
 
 import { Entity } from "./misc/entities.js";
 import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt} from "./misc/abilities.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler} from "./misc/items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherBoots, LeatherChestplate, LeatherGloves, ClothHood, IronHelm} from "./misc/items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, AloeRemedy, Bandage, PineWood} from "./misc/items.js";
 
 
@@ -70,7 +70,7 @@ export default class GameModel{
                     torso: new LinenShirt({level: 1}),
                     arms: '',
                     legs: new LinenPants({level: 1}),
-                    feet: '',
+                    feet: new LeatherBoots({level: 1}),
                 },
             }),
             new Entity({
@@ -84,11 +84,11 @@ export default class GameModel{
                 equipment: {
                     mainHand: new Handaxe({level: 1}),
                     offhand: '',
-                    head: '',
-                    torso: new LinenShirt({level: 1}),
+                    head: new IronHelm({level: 1}),
+                    torso: new LeatherChestplate({level: 1}),
                     arms: '',
                     legs: new LinenPants({level: 1}),
-                    feet: '',
+                    feet: new LeatherBoots({level: 1}),
                 },
             }),
             new Entity({
@@ -102,11 +102,11 @@ export default class GameModel{
                 equipment: {
                     mainHand: new LightStaff({level: 1}),
                     offhand: '',
-                    head: '',
+                    head: new ClothHood({level: 1}),
                     torso: new LinenShirt({level: 1}),
                     arms: '',
                     legs: new LinenPants({level: 1}),
-                    feet: '',
+                    feet: new LeatherBoots({level: 1}),
                 },
             }),
             new Entity({
@@ -121,10 +121,10 @@ export default class GameModel{
                     mainHand: new Dagger({level: 1}),
                     offhand: '',
                     head: '',
-                    torso: new LinenShirt({level: 1}),
-                    arms: '',
+                    torso: new LeatherChestplate({level: 1}),
+                    arms: new LeatherGloves({level: 1}),
                     legs: new LinenPants({level: 1}),
-                    feet: '',
+                    feet: new LeatherBoots({level: 1}),
                 },
             }),
             new Entity({
@@ -137,12 +137,12 @@ export default class GameModel{
                 attunement: 5,
                 equipment: {
                     mainHand: new Shortbow({level: 1}),
-                    offhand: '',
-                    head: '',
+                    offhand: new Shortbow({level: 1}),
+                    head: new LeatherHood({level: 1}),
                     torso: new LinenShirt({level: 1}),
                     arms: '',
                     legs: new LinenPants({level: 1}),
-                    feet: '',
+                    feet: new LeatherBoots({level: 1}),
                 },
             }),
         ];
