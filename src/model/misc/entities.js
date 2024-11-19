@@ -501,7 +501,7 @@ export class Madman extends Entity{
                 {item: new HealthPotion(), weight: 2},
                 {item: new StaminaPotion(), weight: 1},
                 {item: new MagicPotion(), weight: 1},
-                {item: new Bandage(), weight: 3},
+                {item: new Bandage(), weight: 1},
                 
             ],
         });
@@ -543,7 +543,7 @@ export class MadBandit extends Entity{
                 {item: new PoisonedKnife({level: 1}), weight: 2},
                 {item: new HealthPotion(), weight: 2},
                 {item: new StaminaPotion(), weight: 1},
-                {item: new Bandage(), weight: 3},
+                {item: new Bandage(), weight: 1},
                 
             ],
         });
@@ -585,7 +585,7 @@ export class MadMage extends Entity{
                 {item: new HealthPotion(), weight: 2},
                 {item: new StaminaPotion(), weight: 1},
                 {item: new MagicPotion(), weight: 1},
-                {item: new Bandage(), weight: 3},
+                {item: new Bandage(), weight: 1},
                 
             ],
         });
@@ -630,7 +630,7 @@ export class Skeleton extends Entity{
                 {item: new HealthPotion(), weight: 2},
                 {item: new StaminaPotion(), weight: 2},
                 {item: new MagicPotion(), weight: 2},
-                {item: new Bandage(), weight: 3},
+                {item: new Bandage(), weight: 1},
                 
             ],
         });
@@ -684,7 +684,7 @@ export class ArmoredSkeleton extends Skeleton{
                 {item: new HealthPotion(), weight: 2},
                 {item: new StaminaPotion(), weight: 2},
                 {item: new MagicPotion(), weight: 2},
-                {item: new Bandage(), weight: 3},
+                {item: new Bandage(), weight: 1},
                 
             ],
         });
@@ -772,7 +772,7 @@ export class SkeletonCultist extends Entity{
 
                 {item: new HealthPotion(), weight: 2},
                 {item: new MagicPotion(), weight: 2},
-                {item: new Bandage(), weight: 3},
+                {item: new Bandage(), weight: 1},
             ],
         });
     }
@@ -1012,7 +1012,7 @@ export class SandStalker extends Entity{
                 {item: new LeatherGreaves({level: 1}), weight: 1},
                 {item: new LeatherBoots({level: 1}), weight: 1},
                 {item: new HealthPotion({level: 1}), weight: 2},
-                {item: new Bandage(), weight: 3},
+                {item: new Bandage(), weight: 1},
                 
             ],
         });
@@ -1243,7 +1243,7 @@ export class PanzerianKnight extends Entity{
                 {item: new Buckler({level: 1}), weight: 1},
                 {item: new HealthPotion(), weight: 2},
                 {item: new StaminaPotion(), weight: 2},
-                {item: new Bandage(), weight: 3},
+                {item: new Bandage(), weight: 1},
                 
             ],
         });
