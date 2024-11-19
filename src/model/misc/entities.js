@@ -1,6 +1,6 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl, Eviscerate, ChannelMagic, DarkOrb, Bless, Brace, Inferno} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl, Eviscerate, ChannelMagic, DarkOrb, Bless, Brace, Inferno, SetBearTrap, Uppercut} from "./abilities.js";
 import { Poison, Burn, Bleed, Shielded, InstaDeath} from "./statusEffects.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, LeatherGloves, GreatSword} from "./items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, LeatherGloves, GreatSword, Flintlock} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Hide} from "./items.js";
 
 
@@ -1208,6 +1208,98 @@ export class TheSandShade extends Entity{
         this.baseSpeed = 25;
         this.baseEvasion = 0.20;
         this.baseCritical = 0.10;
+    }
+}
+export class PanzerianKnight extends Entity{
+    constructor(config){
+        super({
+            name: config.name || 'Panzerian Knight',
+            level: config.level || 1,
+            apperance: config.apperance || './assets/media/entities/panzerian-knight.jpg',
+            vigor: config.vigor || 5,
+            strength: config.strength || 7,
+            dexterity: config.dexterity || 5,
+            intelligence: config.intelligence || 4,
+            attunement: config.attunement || 4,
+            equipment: config.equipment || {
+                mainHand: new GreatSword({level: 1}),
+                offhand: new GreatSword({level: 1}),
+                head: '',
+                torso: new IronChainmail({level: 1}),
+                arms: '',
+                legs: new IronGreaves({level: 1}),
+                feet: '',
+            },
+            isHostile: config.isHostile || true,
+            abilityArray: [new Brace({}), new Uppercut({})],
+            lootTable: [
+                {item: new IronHelm({level: 1}), weight: 1},
+                {item: new IronChainmail({level: 1}), weight: 1},
+                {item: new IronGauntlets({level: 1}), weight: 1},
+                {item: new IronGreaves({level: 1}), weight: 1},
+                {item: new IronBoots({level: 1}), weight: 1},
+                {item: new GreatSword({level: 1}), weight: 1},
+                {item: new Handaxe({level: 1}), weight: 1},
+                {item: new Buckler({level: 1}), weight: 1},
+                {item: new HealthPotion(), weight: 2},
+                {item: new StaminaPotion(), weight: 2},
+                {item: new Bandage(), weight: 3},
+                
+            ],
+        });
+    }
+    scaleAttributes(){
+        this.maxHP = (this.vigor * 10)  + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
+        this.maxStamina = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
+        this.maxMagic = (this.vigor * 2)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
+        this.baseHpRecovery = 0;
+        this.baseStaminaRecovery = 8;
+        this.baseMagicRecovery = 2;
+        this.baseBluntAttack = (this.vigor * 1) + (this.strength * 4) + (this.dexterity * 3) + (this.intelligence * 2) + (this.attunement * 2);
+        this.basePierceAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
+        this.baseArcaneAttack = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 2) + (this.intelligence * 3) + (this.attunement * 2);
+        this.baseElementalAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 3);
+        this.baseBluntDefense = (this.vigor * 1)  + (this.strength * 2) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 1);
+        this.basePierceDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 2) + (this.intelligence * 1) + (this.attunement * 1);
+        this.baseArcaneDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 2) + (this.attunement * 1);
+        this.baseElementalDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 2);
+        this.baseSpeed = 20;
+        this.baseEvasion = 0.5;
+        this.baseCritical = 0.10;
+    }
+}
+export class MadEngineer extends Entity{
+    constructor(config){
+        super({
+            name: 'Mad Engineer',
+            level: config.level || 1,
+            apperance: config.apperance || './assets/media/entities/mad-engineer.jpg',
+            vigor: config.vigor || 5,
+            strength: config.strength || 6,
+            dexterity: config.dexterity || 6,
+            intelligence: config.intelligence || 4,
+            attunement: config.attunement || 4,
+            equipment: config.equipment || {
+                mainHand: new Flintlock({level: 1}),
+                offhand: '',
+                head: '',
+                torso: new LinenShirt({level: 1}),
+                arms: '',
+                legs: new LinenPants({level: 1}),
+                feet: new LeatherBoots({level: 1}),
+            },
+            isHostile: config.isHostile || true,
+            abilityArray: [new SetBearTrap({})],
+            lootTable: [
+
+                {item: new LinenShirt({level: 1}), weight: 1},
+                {item: new LinenPants({level: 1}), weight: 1},
+
+                {item: new HealthPotion(), weight: 2},
+                {item: new Bandage(), weight: 1},
+                
+            ],
+        });
     }
 }
 export class EmperorDolos extends Entity{

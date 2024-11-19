@@ -95,6 +95,7 @@ export default class OverworldModel{
     }
     toggleMapChange(){
         this.props.setScreen('map-change-screen');
+        this.props.setSituation('');
     }
     changeMap(){
         this.generateNewMap();

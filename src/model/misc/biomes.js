@@ -1,6 +1,6 @@
 import { getRandomArrayElementWeighted } from "../../utility.js";
-import { Skeleton, SkeletonCultist, Wolf, Spider, GroveGuardian, Madman, MadMage, SandStalker, DryShark, Dog, ArmoredSkeleton, MadBandit, FloatingSkull, DryEel} from "./entities.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, GreatSword, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, BearTrap} from "./items.js";
+import { Skeleton, SkeletonCultist, Wolf, Spider, GroveGuardian, Madman, MadMage, SandStalker, DryShark, Dog, ArmoredSkeleton, MadBandit, FloatingSkull, DryEel, PanzerianKnight, MadEngineer} from "./entities.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, GreatSword, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, BearTrap, Flintlock} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Hide} from "./items.js";
 import Encounter from "./encounters/encounter.js";
 import Battle from "./battle.js";
@@ -49,6 +49,8 @@ export default class Biome{
             {item: ()=>{return new LinenShirt({level: 1})}, weight: 2},
             {item: ()=>{return new LinenPants({level: 1})}, weight: 2},
 
+
+            {item: ()=>{return new Flintlock({level: 1})}, weight: 1},
             {item: ()=>{return new GreatSword({level: 1})}, weight: 1},
             {item: ()=>{return new ShortSword({level: 1})}, weight: 1},
             {item: ()=>{return new Handaxe({level: 1})}, weight: 1},
@@ -104,7 +106,7 @@ export default class Biome{
 export class Plains extends Biome{
     constructor(config){
         super({
-            name: 'plains',
+            name: config.name || 'plains',
             terrainSrc: './assets/media/terrain/plains.png',
             backgroundMusicSrc: "./assets/audio/musicTracks/deep-in-the-dell-126916.mp3",
             battleMusicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
@@ -128,7 +130,7 @@ export class Plains extends Biome{
 export class Cave extends Biome{
     constructor(config){
         super({
-            name: 'cave',
+            name: config.name || 'cave',
             terrainSrc: './assets/media/terrain/cave.png',
             backgroundMusicSrc: "./assets/audio/musicTracks/gathering-darkness-kevin-macleod-main-version-04-22-8459.mp3",
             battleMusicSrc: "./assets/audio/musicTracks/battle-sword-139313.mp3",
@@ -151,7 +153,7 @@ export class Cave extends Biome{
 export class Desert extends Biome{
     constructor(config){
         super({
-            name: 'desert',
+            name: config.name || 'desert',
             terrainSrc: './assets/media/terrain/desert.png',
             backgroundMusicSrc: "./assets/audio/musicTracks/TimTaj - Desert Prince.mp3",
             battleMusicSrc: "./assets/audio/musicTracks/TimTaj - Desert Hunt.mp3",
@@ -165,6 +167,27 @@ export class Desert extends Biome{
                 {startingStage: ()=>{return new TreasureChest({})}, resetOnLeave: false, weight: 2},
                 {startingStage: ()=>{return new SandCastleEntrance({})}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new ShiftingSands({})}, resetOnLeave: false, weight: 3},
+            ],
+        });
+    }
+}
+
+export class SnowyMountains extends Biome{
+    constructor(config){
+        super({
+            name: config.name || 'snowy mountains',
+            terrainSrc: './assets/media/terrain/snowy-mountains.png',
+            backgroundMusicSrc: "./assets/audio/musicTracks/nocturne-roman-main-version-16841-01-45.mp3",
+            battleMusicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
+            possibleHostiles: [
+                {entity: ()=>{return new MadEngineer({})}, weight: 1},
+                {entity: ()=>{return new PanzerianKnight({})}, weight: 1},
+                {entity: ()=>{return new Wolf({})}, weight: 1},
+                
+            ],
+            possibleEncounters: [
+                {startingStage: ()=>{return {name: 'Wandering Mercenary'}}, resetOnLeave: false, weight: 1},
+                {startingStage: ()=>{return new TreasureChest({})}, resetOnLeave: false, weight: 1},
             ],
         });
     }
@@ -193,15 +216,14 @@ export function generateBiome(biome){
             return new AltusCapital({})
         }
     }
-    let chance = Math.floor(Math.random()*3);
+    let chance = Math.floor(Math.random()*1);
     switch(chance){
         case 0:
-            //return new Desert({});
-            return new Plains({});
+            return new SnowyMountains({name: 'Panzeria'});
+            return new Plains({name: 'Altus Kingdom'});
         case 1:
-            //return new Desert({});
-            return new Cave({});
+            return new Cave({name: 'Infernus Valley'});
         case 2:
-            return new Desert({});
+            return new Desert({name: 'The Dry Sea'});
     }
 }

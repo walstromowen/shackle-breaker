@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower, Thrust, ChannelMagic, Siphon, Eviscerate, DarkOrb, Brace, Inferno, Flurry, Uppercut} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower, Thrust, ChannelMagic, Siphon, Eviscerate, DarkOrb, Brace, Inferno, Flurry, Uppercut, ShootBullet} from "./abilities.js";
 import { DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, UseAntidote, UseAloeRemedy, UseParalysisTonic, UseBandage, DrinkKurtussBrewOfMadness, SetBearTrap} from "./abilities.js";
 
 let counter = 0;
@@ -783,6 +783,64 @@ export class ForestStaff extends Attachable{
             if(this.level == 3){
                 this.abilityArray.push(new Earthquake({}));
             }
+        }
+    }
+}
+export class Flintlock extends Attachable{
+    constructor(config){
+        super({
+            name: 'flintlock',
+            description: 'A flintlock pistol commonly held by Panzerian engineers. Firearms were first invented by Panzerians and although often considered more intimidating than bows, they are often less acurate. That being said, a well placed bullet can reach places that no arrow can.',
+            imageSrc:  './assets/media/icons/sawed-off-shotgun.png',
+            price: 100,
+            slot: 'oneHand',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 1,
+            magicRecovery: 0,
+            bluntAttack: 2,
+            pierceAttack: 2,
+            arcaneAttack: 0,
+            elementalAttack: 0,
+            bluntDefense: 0,
+            pierceDefense: 0,
+            arcaneDefense: 0,
+            elementalDefense: 0,
+            bluntResistance: 0,
+            pierceResistance: 0,
+            arcaneResistance: 0,
+            elementalResistance: 0,
+            speed: 1,
+            evasion: 0.01,
+            critical: 0.05,
+            abilityArray: [new ShootBullet({})],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 1;
+            this.magicRecovery = this.magicRecovery + 0;
+            this.bluntAttack = this.bluntAttack + 2;
+            this.pierceAttack = this.pierceAttack + 2;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 0;
+            this.pierceDefense = this.pierceDefense + 0;
+            this.arcaneDefense = this.arcaneDefense + 0;
+            this.elementalDefense = this.elementalDefense + 0;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+            this.critical = this.critical + 0;
         }
     }
 }
@@ -1765,7 +1823,7 @@ export class GreatSword extends Attachable{
             speed: -1,
             evasion: -1,
             critical: 0,
-            abilityArray: [new Slash({}), new Thrust({}), new Cleave({})],
+            abilityArray: [new Slash({}), new Cleave({})],
         })
         this.upgrade(config.level-this.level);
     }

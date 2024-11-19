@@ -532,10 +532,11 @@ export class BearTrapSet extends StatusEffect{
             maxCharges: 99,
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-metal-medieval-construction-818.wav",
             removeOnBattleEnd: false,
+            stackable: true,
         });
     }
     onRecieveDamage(attacker, target){
-        attacker.currentHP -= attacker.currentHP*0.2
+        attacker.currentHP -= Math.floor(attacker.maxHP*0.15)
         if(attacker.currentHP < 0){
             attacker.currentHP = 0;
         }
@@ -548,7 +549,7 @@ export class PhysicalAttackBuff extends StatusEffect{
             name:'physical attack buff',
             iconSrc: "./assets/media/icons/physical-attack-buff-1.png",
             holder: config.holder,
-            maxCharges: 99,
+            maxCharges: 5,
             stackable: true,
             targetAnimation: 'none',
             abilityAnimation: 'none',
@@ -616,7 +617,7 @@ export class PhysicalAttackDebuff extends StatusEffect{
             name:'physical attack debuff',
             iconSrc: "./assets/media/icons/physical-attack-debuff-1.png",
             holder: config.holder,
-            maxCharges: 99,
+            maxCharges: 5,
             stackable: true,
             targetAnimation: 'none',
             abilityAnimation: 'none',
@@ -684,7 +685,7 @@ export class MagicalAttackBuff extends StatusEffect{
             name:'magical attack buff',
             iconSrc: "./assets/media/icons/magical-attack-buff-1.png",
             holder: config.holder,
-            maxCharges: 99,
+            maxCharges: 5,
             stackable: true,
             targetAnimation: 'none',
             abilityAnimation: 'none',
@@ -752,7 +753,7 @@ export class MagicalAttackDebuff extends StatusEffect{
             name:'magical attack debuff',
             iconSrc: "./assets/media/icons/magical-attack-debuff-1.png",
             holder: config.holder,
-            maxCharges: 99,
+            maxCharges: 5,
             stackable: true,
             targetAnimation: 'none',
             abilityAnimation: 'none',
@@ -820,7 +821,7 @@ export class PhysicalDefenseBuff extends StatusEffect{
             name:'physical defense buff',
             iconSrc: "./assets/media/icons/physical-defense-buff-1.png",
             holder: config.holder,
-            maxCharges: 99,
+            maxCharges: 5,
             stackable: true,
             targetAnimation: 'none',
             abilityAnimation: 'none',
@@ -888,7 +889,7 @@ export class PhysicalDefenseDebuff extends StatusEffect{
             name:'physical defense debuff',
             iconSrc: "./assets/media/icons/physical-defense-debuff-1.png",
             holder: config.holder,
-            maxCharges: 99,
+            maxCharges: 5,
             stackable: true,
             targetAnimation: 'none',
             abilityAnimation: 'none',

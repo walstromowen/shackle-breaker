@@ -53,7 +53,7 @@ export default class GameModel{
         this.partyModel = new PartyModel(this.props);
         this.characterSummaryModel = new CharacterSummaryModel(this.props);
         this.encounterModel = new EncounterModel(this.props);
-        this.situation = 'overworld';
+        this.situation = '';
         this.wanderingCompanions = [
             new Entity({
                 name: 'Ragnar Ironson',

@@ -4,6 +4,8 @@ export default class OverworldView{
     constructor(){
         this.screen = document.getElementById('overworld-screen');
         this.overworldCanvas = document.getElementById('overworld-canvas');
+        this.mapTileContainer = document.getElementById('overworld-map-title-container');
+        this.mapTile = document.getElementById('overworld-map-title');
         this.tileWidth = 64;
         this.tileHeight = 64;
         this.ctx = this.overworldCanvas.getContext('2d');
@@ -97,6 +99,17 @@ export default class OverworldView{
     }
     revealOverworldUi(){
         document.getElementById('overworld-ui-container').style.display = 'flex';
+    }
+    revealMapTitle(){
+        this.mapTileContainer.style.display = 'flex';
+        this.mapTileContainer.classList.add('animate-map-title');
+    }
+    hideMapTitle(){
+        this.mapTileContainer.style.display = 'none';
+        this.screen.classList.remove('animate-map-title')
+    }
+    updateMapTitle(biomeName){
+        this.mapTile.innerText = biomeName.toUpperCase();
     }
 }
 

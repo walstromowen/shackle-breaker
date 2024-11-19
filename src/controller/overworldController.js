@@ -84,10 +84,22 @@ export default class OverworldController{
         });
     }
     onSwitchScreen(){
+        if(this.model.props.getSituation() == ''){//only if coming from a new map
+            this.triggerMapTitleSequence(this.model.props.getMap().biome.name);
+        }
         this.model.props.setSituation('overworld');
         this.view.draw(this.model.props.getMap(), this.model.currentPartyPosition);
         
+
+        
      
+    }
+    triggerMapTitleSequence(biomeName){
+        this.view.updateMapTitle(biomeName)
+        this.view.revealMapTitle();
+        setTimeout(()=>{
+            this.view.hideMapTitle();
+        }, 4000);
     }
     afterMove(){
         this.view.draw(this.model.props.getMap(), this.model.currentPartyPosition);

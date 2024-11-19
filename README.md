@@ -2,6 +2,17 @@
 Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Walstrom
 
 # Planned Features
+* Additional notification for double targeting (like on magic missile)
+* overworld map smooth transitioning between tiles
+* Mobile event listener support
+* XP and gold calculation refinements
+* Animations dpendent on hostile vs ally
+* Ability colored coated for damage types / merged abilities
+* Enemy level up stats refinement
+* critical and damage notifications
+* battle and console typing animation wait time and fix
+* fix battle text content
+
 * Map abilities
 * Wheather
 * Darkness
@@ -21,18 +32,6 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 
 
 # Planned Quality of Life Improvements
-* Additional notification for double targeting (like on magic missile)
-* overworld map smooth transitioning between tiles
-* Mobile event listener support
-* XP and gold calculation refinements
-* Animations dpendent on hostile vs ally
-* Ability colored coated for damage types / merged abilities
-* Enemy level up stats refinement
-* Shielded Tweak
-* critical and damage notifications
 
-* Alphabetize CSS rules
-* Move all status effect Promises to controller
-* battle and console typing animation wait time and fix
 
 # MISC notes

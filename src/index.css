@@ -148,7 +148,6 @@
     }
     #battle-console-content{
         width: 100% !important;
-        white-space: normal ;
     }
     #battle-typing-container, #encounter-typing-container{
         width:100% !important;
@@ -959,11 +958,33 @@ img{
     background-color: transparent;
     
 }
+#overworld-map-title-container{
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    width: 100%;
+    display:flex;
+    height: 100%;
+    background:radial-gradient(var(--color-2-transparent), var(--color-2));
+    display:none;
+}
+#overworld-map-title{
+    width: 100%;
+    margin: auto;
+    font-family: papyrus, fantasy;
+    text-align: center;
+    color: var(--color-5);
+    font-size: var( --font-size-0);
+    text-shadow: 10px 10px 10px black;
+    word-spacing: 10%;
+  
+}
 #overworld-ui-container{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    z-index: 1;
 }
 #overworld-escape-menu, #encounter-roller-menu{
     position: absolute;
@@ -1006,6 +1027,7 @@ img{
     border-right: 4px solid white;
     width: 100%;
     white-space: nowrap;
+    word-wrap: break-word;
     overflow: hidden;
 }
 #battle-typing-container{
@@ -1018,6 +1040,17 @@ img{
 
     flex: 1;
 
+}
+#battle-screen-remaining-targets-counter-container{
+    position:absolute;
+    margin: 10px;
+    top:0px;
+    right:0px;
+    background: radial-gradient(var(--color-3), var(--color-1));
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 20px;
+    font-size: var(--font-size-2)
 }
 .glow-red{
     animation: glow-red 1s;
@@ -1233,7 +1266,12 @@ img{
     }  
     100% { scale: 1.0}  
 }
-
+@keyframes fade-in-and-out{
+    0%  { opacity: 0}
+    20% { opacity: 1} 
+    80% { opacity: 1} 
+    100%{ opacity: 0}  
+}
 .inventory-mini-menu-tab-button{
     flex:1;
     padding: 4px;
@@ -1315,6 +1353,9 @@ img{
 }
 .animate-attribute-bonus{
     animation:var(--animate-attribute-bonus) 2s;
+}
+.animate-map-title{
+    animation:fade-in-and-out 4s;
 }
 #party-grid-container{
     display: grid;
@@ -1450,7 +1491,7 @@ img{
     letter-spacing: 2px;
     font-family: Monospace;
     word-wrap: break-word;
-   
+ 
     
 }
 #encounter-choices-console-container{

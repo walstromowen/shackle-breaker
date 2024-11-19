@@ -1454,6 +1454,44 @@ export class Hex extends Ability{
         }
     }
 }
+
+export class ShootBullet extends Ability{
+    constructor(config){
+        super({
+            name: 'shoot bullet',
+            description: "Shoot a target with a round bullet. Has a high critical chance.",
+            iconSrc: './assets/media/icons/gunshot.png',
+            speedModifier: config.speedModifier || 1.25,
+            damageModifier: config.damageModifier || 1,
+            criticalDamageModifier: config.criticalDamageModifier || 1.5,
+            criticalChanceModifier: config.criticalChance|| 0.2,
+            accuracy: config.accuracy || 0.80,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 12,
+            magicCost: config.magicCost || 0,
+            damageTypes: config.damageTypes || ['strength', 'pierce'],
+            soundEffectSrc: "./assets/audio/soundEffects/supernatural-explosion-104295.wav",
+            attackerAnimation: config.attackerAnimation || 'ally-evade',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/falling-blob.png',
+            abilityAnimation: config.abilityAnimation || 'swipe-right',
+           
+            
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
+        }
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} shoots ${target.name} with a bullet.`;
+    }
+}
 export class MeteorShower extends Ability{
     //random amount of targets
 }
