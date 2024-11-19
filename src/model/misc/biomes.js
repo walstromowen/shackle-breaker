@@ -216,14 +216,15 @@ export function generateBiome(biome){
             return new AltusCapital({})
         }
     }
-    let chance = Math.floor(Math.random()*1);
+    let chance = Math.floor(Math.random()*5);
     switch(chance){
         case 0:
-            return new SnowyMountains({name: 'Panzeria'});
             return new Plains({name: 'Altus Kingdom'});
         case 1:
             return new Cave({name: 'Infernus Valley'});
         case 2:
             return new Desert({name: 'The Dry Sea'});
+        case 3:
+            return new SnowyMountains({name: 'Panzeria'});
     }
 }
