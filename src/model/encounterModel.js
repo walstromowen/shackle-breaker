@@ -13,7 +13,7 @@ export default class EncounterModel{
     }
     determineCurrentCharater(){
         if(this.currentCharacter == ''){
-            this.currentCharacter = getRandomArrayElement(this.props.getParty());
+            this.currentCharacter = this.props.getParty()[0];
             if(this.currentCharacter.currentHP <= 0){
                 this.determineCurrentCharater();
             }
