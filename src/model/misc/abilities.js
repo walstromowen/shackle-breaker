@@ -1750,7 +1750,7 @@ export class UseParalysisTonic extends Ability{
         })
     }
     activate(attacker, target){
-        letstaminaRestore = this.checkRestore(target, target.maxStamina * 0.3, 'stamina');
+        let staminaRestore = this.checkRestore(target, target.maxStamina * 0.3, 'stamina');
         target.currentHP += staminaRestore;
         this.removeStatus('paralyzed', target);
     }

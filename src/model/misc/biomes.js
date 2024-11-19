@@ -76,7 +76,8 @@ export default class Biome{
         let hostileArray = [];
         for(let i = 0; i < count; i ++){
             let hostile = getRandomArrayElementWeighted(this.possibleHostiles).entity();
-            hostile.autoLevel(partyLevel);
+            hostile.level = partyLevel
+            hostile.autoLevel();
             hostileArray.push(hostile);
         }
         return hostileArray;
