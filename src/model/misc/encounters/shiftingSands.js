@@ -183,7 +183,7 @@ export class StatuesInTheSand extends Stage{
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
                             createNextStage: (partyLevel, biome)=>{
-                                return config.nextStage;
+                                return new ShiftingSands3({});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `As ${currentCharacter.name}'s party retreats the statues suddenly come to life an almost instantly are upon the party!`

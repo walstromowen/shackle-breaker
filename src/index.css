@@ -809,8 +809,36 @@ img{
         translate: 0%;
     }
 }
-.targeted{
-    border: 2px solid red !important;
+.targeted, .targeted-twice, .targeted-thrice{
+    border: 2px solid red;
+}
+.targeted::after, .targeted-twice::after, .targeted-thrice::after{
+    z-index: 1;
+    content: ' ';
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top:0px;
+    left: 0px;
+    background-image: url("./assets/media/icons/targeted.png") ;
+    background-position: center;
+    background-size: cover;
+   
+}
+.targeted::after{
+    background-repeat: no-repeat;
+    
+}
+.targeted-twice::after{
+    background-size: 50%;
+    background-repeat: repeat-x;
+    background-position-x: 5%;
+   
+}
+.targeted-thrice::after{
+    background-size: 33.3%;
+    background-repeat: repeat-x;
+    background-position-x: 2%;
 }
 .selected{
     border: 2px solid white;

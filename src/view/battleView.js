@@ -162,7 +162,7 @@ export default class BattleView{
     }
     removeCardTargets(){
         Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
-            card.classList.remove('targeted');
+            this.removeTargeted(card, 3)
         });
     }
     highlightAttacker(battleId){
@@ -337,6 +337,38 @@ export default class BattleView{
         card.querySelector('.battle-current-stamina').classList.remove('glow-red');
         card.querySelector('.battle-current-magic').classList.remove('glow-red');
         card.offsetWidth;
+    }
+    addTargeted(selectedCard){
+        if(selectedCard.classList.contains('targeted')){
+            selectedCard.classList.remove('targeted')
+            selectedCard.classList.add('targeted-twice')
+            return;
+        }
+        if(selectedCard.classList.contains('targeted-twice')){
+            selectedCard.classList.remove('targeted-twice')
+            selectedCard.classList.add('targeted-thrice')
+            return;
+        }
+        selectedCard.classList.add('targeted')
+    }
+    removeTargeted(selectedCard, count){
+        if(count == 1){
+            if(selectedCard.classList.contains('targeted-thrice')){
+                selectedCard.classList.remove('targeted-thrice');
+                selectedCard.classList.add('targeted-twice');
+                return;
+            }
+            if(selectedCard.classList.contains('targeted-twice')){
+                selectedCard.classList.remove('targeted-twice');
+                selectedCard.classList.add('targeted');
+                return;
+            }
+            selectedCard.classList.remove('targeted');
+        }else{
+            selectedCard.classList.remove('targeted-thrice');
+            selectedCard.classList.remove('targeted-twice');
+            selectedCard.classList.remove('targeted');
+        }
     }
 }
 

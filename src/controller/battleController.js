@@ -160,7 +160,8 @@ export default class BattleController{
             Array.from(container.getElementsByClassName('battle-character-card')).forEach((card)=>{
                 if(e.target.id == card.id){
                     let selectedCard = e.target;
-                    selectedCard.classList.remove('targeted');//view
+                    this.view.removeTargeted(selectedCard, 1)
+                    //selectedCard.classList.remove('targeted');//view
                     for(let i = 0; i < ally.abilityTargets.length; i++){
                         if(ally.abilityTargets[i].battleId == selectedCard.id){
                             ally.abilityTargets.splice(i, 1);
@@ -181,7 +182,8 @@ export default class BattleController{
     }
     validateTarget(ally, selectedCard, resolveFn){
         if(ally.nextAbility.sequenceType == 'chain'){
-            selectedCard.classList.add('targeted');//view
+            this.view.addTargeted(selectedCard)
+            //selectedCard.classList.add('targeted');//view
             ally.abilityTargets.push(this.model.getCombatant(selectedCard.id));
             if(ally.abilityTargets.length == ally.nextAbility.targetCount){
                 this.toggleConfirmTargetsTab(ally, resolveFn);//create submit choice button
@@ -193,7 +195,8 @@ export default class BattleController{
                     return;
                 }
             }
-            selectedCard.classList.add('targeted');//view
+            this.view.addTargeted(selectedCard)
+            //selectedCard.classList.add('targeted');//view
             ally.abilityTargets.push(this.model.getCombatant(selectedCard.id));
             let availableTargets = this.model.getAvailableTargets(ally);
 

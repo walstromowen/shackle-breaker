@@ -2,7 +2,6 @@
 Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Walstrom
 
 # Planned Features
-* Additional notification for double targeting (like on magic missile)
 * overworld map smooth transitioning between tiles
 * Mobile event listener support
 * XP and gold calculation refinements

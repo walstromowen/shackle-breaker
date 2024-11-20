@@ -179,7 +179,7 @@ export class SnowyMountains extends Biome{
             name: config.name || 'snowy mountains',
             terrainSrc: './assets/media/terrain/snowy-mountains.png',
             backgroundMusicSrc: "./assets/audio/musicTracks/nocturne-roman-main-version-16841-01-45.mp3",
-            battleMusicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
+            battleMusicSrc: "./assets/audio/musicTracks/battle-sword-139313.mp3",
             possibleHostiles: [
                 {entity: ()=>{return new MadEngineer({})}, weight: 1},
                 {entity: ()=>{return new PanzerianKnight({})}, weight: 1},
