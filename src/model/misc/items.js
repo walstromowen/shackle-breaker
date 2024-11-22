@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower, Thrust, ChannelMagic, Siphon, Eviscerate, DarkOrb, Brace, Inferno, Flurry, Uppercut, ShootBullet} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower, Thrust, ChannelMagic, Siphon, Eviscerate, DarkOrb, Brace, Inferno, Flurry, Uppercut, ShootBullet, ThrowNet, ThrowSmokeBomb} from "./abilities.js";
 import { DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, UseAntidote, UseAloeRemedy, UseParalysisTonic, UseBandage, DrinkKurtussBrewOfMadness, SetBearTrap} from "./abilities.js";
 
 let counter = 0;
@@ -1979,6 +1979,30 @@ export class BearTrap extends Consumable{
             price: 50,
             abilityArray: [new SetBearTrap({})],
             useSituations: ['battle', 'overworld'],
+        });
+    }
+}
+export class Net extends Consumable{
+    constructor(){
+        super({
+            name: 'net',
+            description: 'A net used for trapping small creatures',
+            imageSrc: './assets/media/icons/fishing-net.png',
+            price: 50,
+            abilityArray: [new ThrowNet({})],
+            useSituations: ['battle'],
+        });
+    }
+}
+export class SmokeBomb extends Consumable{
+    constructor(){
+        super({
+            name: 'smokebomb',
+            description: 'A smokebomb for hasty escapes or dramatic entrances.',
+            imageSrc: './assets/media/icons/smoke-bomb.png',
+            price: 50,
+            abilityArray: [new ThrowSmokeBomb({})],
+            useSituations: ['battle'],
         });
     }
 }

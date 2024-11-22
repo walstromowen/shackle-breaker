@@ -91,11 +91,11 @@ export class StatuesInTheSand extends Stage{
                             result: 'battle',
                             imageSrc: './assets/media/entities/sand-stalker.jpg',
                             musicSrc: "./assets/audio/musicTracks/TimTaj - Desert Hunt.mp3",
-                            createBattle: (partyLevel, biome)=>{
+                            createBattle: (partyLevel, biome, difficulty)=>{
                                 let hostileArray = [];
                                 let count = Math.ceil(Math.random()*4);
                                 for(let i = 0; i < count; i++){
-                                    hostileArray.push(new SandStalker({level: partyLevel}))
+                                    hostileArray.push(new SandStalker({level: partyLevel, difficulty: difficulty}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
@@ -121,7 +121,7 @@ export class StatuesInTheSand extends Stage{
                         {
                             result: 'nextStage',
                             createNextStage: (partyLevel, biome)=>{
-                                return config.nextStage;
+                                return new ShiftingSands3({});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `As ${currentCharacter.name} smashes the statues, the statues turn into piles of sand and are blown away by the desert wind.`
@@ -134,11 +134,11 @@ export class StatuesInTheSand extends Stage{
                             result: 'battle',
                             imageSrc: './assets/media/entities/sand-stalker.jpg',
                             musicSrc: "./assets/audio/musicTracks/TimTaj - Desert Hunt.mp3",
-                            createBattle: (partyLevel, biome)=>{
+                            createBattle: (partyLevel, biome, difficulty)=>{
                                 let hostileArray = [];
                                 let count = Math.ceil(Math.random()*4);
                                 for(let i = 0; i < count; i++){
-                                    hostileArray.push(new SandStalker({level: partyLevel}))
+                                    hostileArray.push(new SandStalker({level: partyLevel, difficulty: difficulty}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
@@ -174,11 +174,11 @@ export class StatuesInTheSand extends Stage{
                             result: 'battle',
                             imageSrc: './assets/media/entities/sand-stalker.jpg',
                             musicSrc: "./assets/audio/musicTracks/TimTaj - Desert Hunt.mp3",
-                            createBattle: (partyLevel, biome)=>{
+                            createBattle: (partyLevel, biome, difficulty)=>{
                                 let hostileArray = [];
                                 let count = Math.ceil(Math.random()*4);
                                 for(let i = 0; i < count; i++){
-                                    hostileArray.push(new SandStalker({level: partyLevel}))
+                                    hostileArray.push(new SandStalker({level: partyLevel, difficulty: difficulty}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
@@ -416,8 +416,8 @@ export class SandCastleEntrance extends Stage{
                             result: 'battle',
                             imageSrc: './assets/media/entities/the-sand-shade.jpg',
                             musicSrc: "./assets/audio/musicTracks/adrenaline-roger-gabalda-main-version-02-23-11021.mp3",
-                            createBattle: (partyLevel, biome)=>{
-                                return new Battle({hostiles: [ new TheSandShade({level: partyLevel})], battleMusicSrc: biome.battleMusicSrc});
+                            createBattle: (partyLevel, biome, difficulty)=>{
+                                return new Battle({hostiles: [ new TheSandShade({level: partyLevel, difficulty: difficulty})], battleMusicSrc: biome.battleMusicSrc});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `Tho shea-ath katan.... (Murmoring in an unknown language)`

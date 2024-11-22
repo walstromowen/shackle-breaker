@@ -54,14 +54,14 @@ export class Bonfire extends Stage{
                             result: 'battle',
                             imageSrc: './assets/media/entities/cursed-villager-1.jpg',
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
-                            createBattle: (partyLevel, biome)=>{
+                            createBattle: (partyLevel, biome, difficulty)=>{
                                 let hostileArray = [];
                                 let count = Math.ceil(Math.random()*4);
                                 for(let i = 0; i < count; i++){
                                     let chance = Math.floor(Math.random()*3);
-                                    if(chance == 0) hostileArray.push(new Madman({level: partyLevel}))
-                                    if(chance == 1) hostileArray.push(new MadMage({level: partyLevel}))
-                                    if(chance == 2) hostileArray.push(new MadBandit({level: partyLevel}))
+                                    if(chance == 0) hostileArray.push(new Madman({level: partyLevel, difficulty: difficulty}))
+                                    if(chance == 1) hostileArray.push(new MadMage({level: partyLevel, difficulty: difficulty}))
+                                    if(chance == 2) hostileArray.push(new MadBandit({level: partyLevel, difficulty: difficulty}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
@@ -77,11 +77,11 @@ export class Bonfire extends Stage{
                             result: 'battle',
                             imageSrc: './assets/media/entities/mad-bandit.jpg',
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
-                            createBattle: (partyLevel, biome)=>{
+                            createBattle: (partyLevel, biome, difficulty)=>{
                                 let hostileArray = [];
                                 let count = Math.ceil(Math.random()*5);
                                 for(let i = 0; i < count; i++){
-                                    hostileArray.push(new MadBandit({level: partyLevel}))
+                                    hostileArray.push(new MadBandit({level: partyLevel, difficulty: difficulty}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
@@ -101,11 +101,11 @@ export class Bonfire extends Stage{
                             result: 'battle',
                             imageSrc: './assets/media/entities/wolf.jpg',
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
-                            createBattle: (partyLevel, biome)=>{
+                            createBattle: (partyLevel, biome, difficulty)=>{
                                 let hostileArray = [];
                                 let count = Math.ceil(Math.random()*5);
                                 for(let i = 0; i < count; i++){
-                                   hostileArray.push(new Wolf({level: partyLevel}));
+                                   hostileArray.push(new Wolf({level: partyLevel, difficulty: difficulty}));
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },

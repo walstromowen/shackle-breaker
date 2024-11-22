@@ -145,8 +145,66 @@ export default class BattleView{
     }
     createAbilityButton(ability, location){
         const abilityButton = createElement('div', 'battle-ability-button');
-        abilityButton.style.backgroundImage = `url(${ability.iconSrc})`;
-
+        /*
+        let damageTypes = '';
+        for(let i = 0; i < ability.damageTypes.length; i++){
+            damageTypes += ability.damageTypes[i]
+        }
+        switch(damageTypes){
+            case 'blunt':
+            //abilityButton.style.backgroundImage = `url(${ability.iconSrc})`;
+                abilityButton.style.backgroundImage = `url(${ability.iconSrc}), linear-gradient(steelblue, darkslategrey)`;
+                break;
+            case 'pierce':
+                abilityButton.style.backgroundImage = `url(${ability.iconSrc}), linear-gradient(crimson, darkslategrey)`;
+                break;
+            case 'arcane':
+                abilityButton.style.backgroundImage = `url(${ability.iconSrc}), linear-gradient(magenta, navy)`;
+                break;
+            case 'elemental':
+                let damageSubTypes = '';
+                for(let j = 0; j < ability.damageSubTypes.length; j++){
+                    damageTypes += ability.damageSubTypes[j]
+                }
+                switch(damageSubTypes){
+                    case 'fire':
+                        abilityButton.style.backgroundImage = `url(${ability.iconSrc}), linear-gradient(navy, orangered, forestgreen)`;
+                    break
+                    case 'eletric':
+                        abilityButton.style.backgroundImage = `url(${ability.iconSrc}), conic-gradient(navy, orangered, forestgreen)`;
+                    break
+                    case 'ice':
+                        abilityButton.style.backgroundImage = `url(${ability.iconSrc}), conic-gradient(navy, orangered, forestgreen)`;
+                    break
+                    case 'earth':
+                        abilityButton.style.backgroundImage = `url(${ability.iconSrc}), conic-gradient(navy, orangered, forestgreen)`;
+                    break
+                    case 'wind':
+                }
+                break;
+            case 'bluntpierce':
+                abilityButton.style.backgroundImage = `url(${ability.iconSrc}), conic-gradient(steelblue, darkslategrey, darkslategrey, steelblue)`;
+                break;
+            case 'bluntarcane':
+                abilityButton.style.backgroundImage = `url(${ability.iconSrc}), conic-gradient(darkgrey, magenta, darkgrey)`;
+                break;
+            case 'bluntelemental':
+                abilityButton.style.backgroundImage = `url(${ability.iconSrc}), conic-gradient(darkgrey, whitesmoke, darkgrey)`;
+                break;
+            case 'piercearcane':
+                abilityButton.style.backgroundImage = `url(${ability.iconSrc}), conic-gradient(orange, magenta, orange)`;
+                break;
+            case 'pierceelemental':
+                abilityButton.style.backgroundImage = `url(${ability.iconSrc}), conic-gradient(orange, whitesmoke, orange)`;
+                break;
+            case 'arcaneelemetnal':
+                abilityButton.style.backgroundImage = `url(${ability.iconSrc}), conic-gradient(magenta, whitesmoke, magenta)`;
+                break;
+            default:
+                abilityButton.style.backgroundImage = `url(${ability.iconSrc})`;
+        }
+                */
+        abilityButton.style.backgroundImage = ability.background;
         if(location == 'equipment'){
             this.abilityTab.appendChild(abilityButton);
         }else{

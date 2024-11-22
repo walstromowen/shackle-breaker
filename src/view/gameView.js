@@ -91,100 +91,16 @@ export default class GameView{
     }
     createAbilitySlot(ability){
         const slot = createElement('div', 'inventory-mini-menu-ability-slot');
-
             const imgNameContainer = createElement('div', 'flex');
                 const abilityImg = createElement('img', 'utility-button');
                 const abilityName = createElement('p', 'stat-label');
-        /*
-            const hpCostContainer = createElement('div', 'stat-cell');
-                const hpCostImgLabelContainer = createElement('div', 'flex');
-                    const hpCostImg = createElement('img', 'icon');
-                    const hpCostLabel = createElement('p', 'stat-label');
-                const currentHpCost = createElement('p', 'stat-value');
-
-            const staminaCostContainer = createElement('div', 'stat-cell');
-                const staminaCostImgLabelContainer = createElement('div', 'flex');
-                    const staminaCostImg = createElement('img', 'icon');
-                    const staminaCostLabel = createElement('p', 'stat-label');
-                const currentStaminaCost = createElement('p', 'stat-value');
-
-            const magicCostContainer = createElement('div', 'stat-cell');
-                const magicCostImgLabelContainer = createElement('div', 'flex');
-                    const magicCostImg = createElement('img', 'icon');
-                    const magicCostLabel = createElement('p', 'stat-label');
-                const currentMagicCost = createElement('p', 'stat-value');
-
-            const targetCountContainer = createElement('div', 'stat-cell');
-                const targetCountImgLabelContainer = createElement('div', 'flex');
-                    const targetCountImg = createElement('img', 'icon');
-                    const targetCountLabel = createElement('p', 'stat-label');
-                const currentTargetCount = createElement('p', 'stat-value');
-
-            const speedModifierContainer = createElement('div', 'stat-cell');
-                const speedModifierImgLabelContainer = createElement('div', 'flex');
-                    const speedModifierImg = createElement('img', 'icon');
-                    const speedModifierLabel = createElement('p', 'stat-label');
-                const currentSpeedModifier = createElement('p', 'stat-value');
-
-            const damageModifierContainer = createElement('div', 'stat-cell');
-                const damageModifierImgLabelContainer = createElement('div', 'flex');
-                    const damageModifierImg = createElement('img', 'icon');
-                    const damageModifierLabel = createElement('p', 'stat-label');
-                const currentDamageModifier = createElement('p', 'stat-value');
-
-            const accuracyContainer = createElement('div', 'stat-cell');
-                const accuracyImgLabelContainer = createElement('div', 'flex');
-                    const accuracyImg = createElement('img', 'icon');
-                    const accuracyLabel = createElement('p', 'stat-label');
-                const currentAccuracy = createElement('p', 'stat-value');
-
-            const damageTypesContainer = createElement('div', 'stat-cell');
-        */
             abilityImg.src = ability.iconSrc;
             abilityName.innerText = capiltalizeAllFirstLetters(ability.name);
-        /*
-            hpCostImg.src = './assets/media/icons/swirl-string.png';
-            hpCostLabel.innerText = 'HP COST';
-            currentHpCost.innerText = ability.healthCost;
-
-            staminaCostImg.src = './assets/media/icons/swirl-string.png';
-            staminaCostLabel.innerText = 'STM COST';
-            currentStaminaCost.innerText = ability.staminaCost;
-
-            magicCostImg.src = './assets/media/icons/swirl-string.png';
-            magicCostLabel.innerText = 'MAG COST';
-            currentMagicCost.innerText = ability.magicCost;
-
-            targetCountImg.src = './assets/media/icons/swirl-string.png';
-            targetCountLabel.innerText = 'TARGETS';
-            currentTargetCount.innerText = ability.targetCount;
-
-            speedModifierImg.src = './assets/media/icons/swirl-string.png';
-            speedModifierLabel.innerText = 'SPD MOD';
-            currentSpeedModifier.innerText = ability.speedModifier;
-
-            damageModifierImg.src = './assets/media/icons/swirl-string.png';
-            damageModifierLabel.innerText = 'DMG MOD';
-            currentDamageModifier.innerText = ability.damageModifier;
-
-            accuracyImg.src = './assets/media/icons/swirl-string.png';
-            accuracyLabel.innerText = 'ACCURACY';
-            currentAccuracy.innerText = ability.accuracy;
-        */
-
+        
             imgNameContainer.appendChild(abilityImg);
             imgNameContainer.appendChild(abilityName);
             slot.appendChild(imgNameContainer);
-            /*
-            slot.appendChild(hpCostContainer);
-            slot.appendChild(staminaCostContainer);
-            slot.appendChild(magicCostContainer);
-            slot.appendChild(targetCountContainer);
-            slot.appendChild(speedModifierContainer);
-            slot.appendChild(damageModifierContainer);
-            slot.appendChild(accuracyContainer);
-        */
-
+    
         document.getElementById('inventory-mini-menu-abilities-tab').appendChild(slot);
     }
     updateAbilityMenu(ability, entity){
@@ -390,12 +306,7 @@ export default class GameView{
         }
     }
     checkFitsOnScreen(element, topLeftCoordinates){
-        let elementBoundary = element.getBoundingClientRect()
-        //alert(`Popup: ${topLeftCoordinates[0] + elementBoundary.width} : ${topLeftCoordinates[1] + elementBoundary.height} \n
-            //  Screen: ${window.screen.width} : ${window.screen.height}`
-            //)
-             //alert(`compare: ${topLeftCoordinates[1] + elementBoundary.height} : ${window.innerHeight}` )
-            
+        let elementBoundary = element.getBoundingClientRect();      
         if(
             topLeftCoordinates[0] + elementBoundary.width > window.innerWidth ||
             topLeftCoordinates[1] + elementBoundary.height > window.innerHeight ||

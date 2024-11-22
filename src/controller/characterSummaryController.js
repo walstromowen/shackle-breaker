@@ -149,7 +149,7 @@ export default class CharacterSummaryController{
                 });
             }
              //MOBILE
-            node.addEventListener('click', (e)=>{
+            node.addEventListener('mouseenter', (e)=>{
                 e.preventDefault();
                 e.stopPropagation();
                 //remove event listeners from mini-menu buttons
@@ -168,7 +168,7 @@ export default class CharacterSummaryController{
                                     this.model.currentCharacter.subtractAttachableStats([this.model.getInventoryItemSlotTypeFromClassList(node.parentNode.classList)]);
                                     item.upgrade(1);
                                     this.model.currentCharacter.addAttachableStats([this.model.getInventoryItemSlotTypeFromClassList(node.parentNode.classList)]);
-                                    this.props.updateMiniMenu(item);
+                                    this.props.updateMiniMenu(item, this.model.currentCharacter);
                                     this.onSwitchScreen();
                                     playSoundEffect('./assets/audio/soundeffects/mixkit-metal-medieval-construction-818.wav');
                                 }
@@ -176,7 +176,7 @@ export default class CharacterSummaryController{
                         }else{
                             document.getElementById('inventory-mini-menu-attatchable-upgrade-button').style.display = 'none';
                         }
-                        this.props.updateMiniMenu(item);
+                        this.props.updateMiniMenu(item, this.model.currentCharacter);
                     }else{
                         document.getElementById('inventory-mini-menu').style.display = 'none';
                         return;
@@ -191,7 +191,7 @@ export default class CharacterSummaryController{
                                     if(this.model.props.getGold() >= Math.floor(item.price*1.5)){
                                         this.model.props.setGold(this.model.props.getGold() - Math.floor(item.price*1.5))
                                         item.upgrade(1);
-                                        this.props.updateMiniMenu(item);
+                                        this.props.updateMiniMenu(item, this.model.currentCharacter);
                                         this.onSwitchScreen();
                                         playSoundEffect('./assets/audio/soundeffects/mixkit-metal-medieval-construction-818.wav');
                                     }
@@ -227,7 +227,7 @@ export default class CharacterSummaryController{
                             document.getElementById('inventory-mini-menu-attatchable-upgrade-button').style.display = 'none';
                             break;
                     }
-                    this.props.updateMiniMenu(item);
+                    this.props.updateMiniMenu(item, this.model.currentCharacter);
                 } 
                 
 
@@ -237,15 +237,24 @@ export default class CharacterSummaryController{
                 let miniMenu = document.getElementById('inventory-mini-menu');
                 miniMenu.style.display = 'flex';
                 this.props.positionPopUpElement(miniMenu, node);
-                this.view.screen.addEventListener('click', this.inventoryMiniMenuExitEventHandler = (ev)=>{
-                    this.view.screen.removeEventListener('click', this.inventoryMiniMenuExitEventHandler);
+                this.view.screen.addEventListener('mouseover', this.inventoryMiniMenuExitEventHandler = (ev)=>{
                     let miniMenu = document.getElementById('inventory-mini-menu');
                     if(
+                        (
                         ev.clientX < miniMenu.getBoundingClientRect().x ||
                         ev.clientX > miniMenu.getBoundingClientRect().x + miniMenu.getBoundingClientRect().width ||
                         ev.clientY < miniMenu.getBoundingClientRect().y ||
                         ev.clientY > miniMenu.getBoundingClientRect().y + miniMenu.getBoundingClientRect().height
+                        )
+                        &&
+                        (
+                            ev.clientX < node.getBoundingClientRect().x ||
+                            ev.clientX > node.getBoundingClientRect().x + node.getBoundingClientRect().width ||
+                            ev.clientY < node.getBoundingClientRect().y ||
+                            ev.clientY > node.getBoundingClientRect().y + node.getBoundingClientRect().height
+                        )
                     ){
+                        this.view.screen.removeEventListener('mouseover', this.inventoryMiniMenuExitEventHandler);
                         miniMenu.style.display = 'none';
                     }
                 });

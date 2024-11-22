@@ -1,10 +1,11 @@
-import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen, Blessed, Cursed, PhysicalAttackDebuff, PhysicalAttackBuff, BearTrapSet, MagicalAttackBuff, MagicalAttackDebuff, PhysicalDefenseBuff} from "./statusEffects.js";
+import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen, Blessed, Cursed, PhysicalAttackDebuff, PhysicalAttackBuff, BearTrapSet, MagicalAttackBuff, MagicalAttackDebuff, PhysicalDefenseBuff, EvasionBuff} from "./statusEffects.js";
 
 export class Ability{
     constructor(config){
         this.name = config.name;
         this.description = config.description || 'Radda Radda Radda Radda Radda heh heh Rada!',
         this.iconSrc = config.iconSrc;
+        this.background = config.background || `url(${config.iconSrc})`,
         this.targetCount = config.targetCount || 1;
         this.accuracy = config.accuracy || 1;
         this.speedModifier = config.speedModifier || 1;
@@ -314,6 +315,7 @@ export class Slash extends Ability{
             name: 'slash',
             description: 'Strike a target with a deadly slash. Has a chance to cause bleeding.',
             iconSrc: './assets/media/icons/quick-slash.png',
+            background: `url(./assets/media/icons/quick-slash.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 1,
             healthCost: config.healthCost || 0,
@@ -351,6 +353,7 @@ export class Thrust extends Ability{
             name: 'thrust',
             description: 'Thurst a target with a piercing attack. Has a high critical chance and a chance to cause bleeding.',
             iconSrc: './assets/media/icons/thrust.png',
+            background: `url(./assets/media/icons/thrust.png), linear-gradient(crimson, darkslategrey)`,
             speedModifier: config.speedModifier || 0.75,
             damageModifier: config.damageModifier || 1,
             criticalDamageModifier: config.criticalDamageModifier || 1.5,
@@ -389,6 +392,7 @@ export class Eviscerate extends Ability{
             name: 'eviscerate',
             description: 'Eviscerate a target with a powerful piercing attack. Has a high chance to cause bleeding and deal bonus damage to enemies at full health.',
             iconSrc: './assets/media/icons/ragged-wound.png',
+            background: `url(./assets/media/icons/ragged-wound.png), linear-gradient(crimson, darkslategrey)`,
             speedModifier: config.speedModifier || 0.75,
             damageModifier: config.damageModifier || 1.25,
             healthCost: config.healthCost || 0,
@@ -426,6 +430,7 @@ export class Punch extends Ability{
             name: 'strike',
             description: "Strike a target with one's fist.",
             iconSrc: './assets/media/icons/punch.png',
+            background: `url(./assets/media/icons/punch.png), linear-gradient(steelblue, darkslategrey)`,
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 0.33,
             healthCost: config.healthCost || 0,
@@ -459,6 +464,7 @@ export class Strike extends Ability{
             name: 'strike',
             description: "Strike a target with the blunt edge of one's weapon.",
             iconSrc: './assets/media/icons/hammer-drop.png',
+            background: `url(./assets/media/icons/hammer-drop.png), linear-gradient(steelblue, darkslategrey)`,
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 1,
             healthCost: config.healthCost || 0,
@@ -492,6 +498,7 @@ export class ShootArrow extends Ability{
             name: 'shoot arrow',
             description: "Shoot a target with an arrow. Has a chance to cause bleeding",
             iconSrc: './assets/media/icons/broadhead-arrow.png',
+            background: `url(./assets/media/icons/broadhead-arrow.png), linear-gradient(crimson, darkslategrey)`,
             speedModifier: config.speedModifier || 1.25,
             damageModifier: config.damageModifier || 1,
             healthCost: config.healthCost || 0,
@@ -529,6 +536,7 @@ export class Tripleshot extends Ability{
             name: 'triple shot',
             description: "Shoot up to three arrows simultaneously at different targets.",
             iconSrc: './assets/media/icons/striking-arrows.png',
+            background: `url(./assets/media/icons/striking-arrows.png), linear-gradient(crimson, darkslategrey)`,
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 1,
             criticalDamageModifier: config.criticalDamageModifier || 1.2,
@@ -565,12 +573,13 @@ export class Cleave extends Ability{
             name: 'cleave',
             description: "Cleave up to two different targets.",
             iconSrc: './assets/media/icons/serrated-slash.png',
+            background: `url(./assets/media/icons/serrated-slash.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 0.75,
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 10,
             magicCost: config.magicCost || 0,
-            damageTypes: config.damageTypes || ['blunt'],
+            damageTypes: config.damageTypes || ['blunt', 'pierce'],
             targetCount: 2,
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-metal-hit-woosh-1485.wav",
             sequenceType: 'splash',
@@ -600,6 +609,7 @@ export class Flurry extends Ability{
             name: 'flurry',
             description: "Slash a target with a series of quick slashes.",
             iconSrc: './assets/media/icons/crossed-slashes.png',
+            background: `url(./assets/media/icons/crossed-slashes.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
             speedModifier: config.speedModifier || 1.0,
             damageModifier: config.damageModifier || 0.75,
             healthCost: config.healthCost || 0,
@@ -638,13 +648,14 @@ export class Uppercut extends Ability{
             name: 'uppercut',
             description: "Strike a target with an upwards motion. Has a chance to knock over a target.",
             iconSrc: './assets/media/icons/uppercut.png',
+            background: `url(./assets/media/icons/uppercut.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
             speedModifier: config.speedModifier || 1.0,
             damageModifier: config.damageModifier || 1.25,
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 18,
             magicCost: config.magicCost || 0,
             accuracy: config.accuracy || 0.75,
-            damageTypes: config.damageTypes || ['blunt'],
+            damageTypes: config.damageTypes || ['blunt', 'pierce'],
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-metallic-sword-strike-2160.wav",
             attackerAnimation: config.attackerAnimation || 'ally-attack',
             abilityAnimation: config.abilityAnimation || 'swipe-up',
@@ -675,6 +686,7 @@ export class MagicMissile extends Ability{
             name: 'magic missle',
             description: "Fire a magic missile made of powerful arcane energy at three targets.",
             iconSrc: './assets/media/icons/frayed-arrow.png',
+            background: `url(./assets/media/icons/frayed-arrow.png), linear-gradient(magenta, navy)`,
             speedModifier: config.speedModifier || 0.75,
             damageModifier: config.damageModifier || 1.00,
             healthCost: config.healthCost || 0,
@@ -710,6 +722,7 @@ export class LesserHeal extends Ability{
             name: 'lesser heal',
             description: "Restore a target's hitpoints using arcane magic.",
             iconSrc: './assets/media/icons/heart-plus.png',
+            background: `url(./assets/media/icons/heart-plus.png), linear-gradient(gold, navy)`,
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 1,
             healthCost: config.healthCost || 0,
@@ -743,6 +756,7 @@ export class DrainLife extends Ability{
             name: 'drain life',
             description: "Absorb the hitpoints of another target using dark arcane magic.",
             iconSrc: './assets/media/icons/tentacle-heart.png',
+            background: `url(./assets/media/icons/tentacle-heart.png), linear-gradient(indigo, navy)`,
             speedModifier: config.speedModifier || 0.75,
             damageModifier: config.damageModifier || 1,
             healthCost: config.healthCost || 0,
@@ -778,6 +792,7 @@ export class DarkOrb extends Ability{
             name: 'dark orb',
             description: "Blast a target with an orb of dark arcane energy. Has a chance to hex a target, lowering magical attack",
             iconSrc: './assets/media/icons/rolling-energy.png',
+            background: `url(./assets/media/icons/rolling-energy.png), linear-gradient(indigo, navy)`,
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 1.25,
             healthCost: config.healthCost || 0,
@@ -817,6 +832,7 @@ export class Bite extends Ability{
             name: 'bite',
             description: "Bite a target with a powerful jaw. More effective with larger creatures. Has a chance to cause bleeding.",
             iconSrc: './assets/media/icons/sharp-lips.png',
+            background: `url(./assets/media/icons/sharp-lips.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
             speedModifier: config.speedModifier || 1.25,
             damageModifier: config.damageModifier || 0.75,
             healthCost: config.healthCost || 0,
@@ -854,6 +870,7 @@ export class Fireball extends Ability{
             name: 'fireball',
             description: "Shoot a target with a ball of fire made with elemental magic. Has a chance to burn the target.",
             iconSrc: './assets/media/icons/fireball.png',
+            background: `url(./assets/media/icons/fireball.png), linear-gradient(orangered, silver)`,
             speedModifier: config.speedModifier || 0.75,
             damageModifier: config.damageModifier || 1.25,
             healthCost: config.healthCost || 0,
@@ -891,6 +908,7 @@ export class Inferno extends Ability{
             name: 'inferno',
             description: "Blast enemies with a firery inferno made with elemental magic. Has a chance to burn targets.",
             iconSrc: './assets/media/icons/wildfires.png',
+            background: `url(./assets/media/icons/wildfires.png), linear-gradient(orangered, silver)`,
             speedModifier: config.speedModifier || 0.5,
             damageModifier: config.damageModifier || 1.25,
             healthCost: config.healthCost || 0,
@@ -929,6 +947,7 @@ export class LightningBolt extends Ability{
             name: 'lightning bolt',
             description: "Blast a target with a lightning bolt made with elemental magic. Has a chance to paralyze the target.",
             iconSrc: './assets/media/icons/lightning-tree.png',
+            background: `url(./assets/media/icons/lightning-tree.png), linear-gradient(blue, silver)`,
             speedModifier: config.speedModifier || 0.75,
             damageModifier: config.damageModifier || 1.25,
             healthCost: config.healthCost || 0,
@@ -967,6 +986,7 @@ export class IceShard extends Ability{
             name: 'ice shard',
             description: "Blast a target with a shard of ice made with elemental magic. Has a chance to freeze the target causing a variety of negative effects.",
             iconSrc: './assets/media/icons/ice-spear.png',
+            background: `url(./assets/media/icons/ice-spear.png), linear-gradient(cyan, silver)`,
             speedModifier: config.speedModifier || 0.75,
             damageModifier: config.damageModifier || 1.25,
             healthCost: config.healthCost || 0,
@@ -1004,6 +1024,7 @@ export class Shockwave extends Ability{
             name: 'shockwave',
             description: "Blast a target with a wave of elemental magic. Has a chance to knock over the target.",
             iconSrc: './assets/media/icons/wind-slap.png',
+            background: `url(./assets/media/icons/wind-slap.png), linear-gradient(grey, silver)`,
             speedModifier: config.speedModifier || 1.25,
             damageModifier: config.damageModifier || 0.25,
             healthCost: config.healthCost || 0,
@@ -1041,6 +1062,7 @@ export class Siphon extends Ability{
             name: 'siphon',
             description: "Absorb a target's magic points using dark arcane magic.",
             iconSrc: './assets/media/icons/body-swapping.png',
+            background: `url(./assets/media/icons/rolling-energy.png), linear-gradient(indigo, navy)`,
             speedModifier: config.speedModifier || 1.0,
             damageModifier: config.damageModifier || 4,
             healthCost: config.healthCost || 0,
@@ -1076,6 +1098,7 @@ export class Earthquake extends Ability{//Needs Work targeting same targets twic
             name: 'earthquake',
             description: "Shake the ground using elemental magic and strength to summon an earthquake over an enemy party. Has a chance to knock over targets.",
             iconSrc: './assets/media/icons/earth-split.png',
+            background: `url(./assets/media/icons/earth-split.png), conic-gradient(steelblue, darkslategrey, brown, silver)`,
             speedModifier: config.speedModifier || 0.5,
             damageModifier: config.damageModifier || 1.0,
             criticalDamageModifier: config.criticalDamageModifier || 1.1,
@@ -1116,6 +1139,7 @@ export class ShootWeb extends Ability{
             name: 'shoot web',
             description: "Summon a web from elemental magic to surround a target. Has a chance of binding a target",
             iconSrc: './assets/media/icons/wep-spit.png',
+            background: `url(./assets/media/icons/wep-spit.png), linear-gradient(olive, silver)`,
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 0.25,
             healthCost: config.healthCost || 0,
@@ -1152,6 +1176,7 @@ export class Pounce extends Ability{
             name: 'pounce',
             description: "Leap onto a target. Has a chance of knocking over smaller targets.",
             iconSrc: './assets/media/icons/paw-print.png',
+            background: `url(./assets/media/icons/paw-print.png), linear-gradient(steelblue, darkslategrey)`,
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 1,
             healthCost: config.healthCost || 0,
@@ -1189,6 +1214,7 @@ export class Block extends Ability{
             name: 'block',
             description: "Raise a sheild in defence. Protects oneself until their next attack or blocking a attack.",
             iconSrc: './assets/media/icons/shield.png',
+            background: `url(./assets/media/icons/shield.png), linear-gradient(steelblue, darkslategrey)`,
             speedModifier: config.speedModifier || 1.25,
             damageModifier: config.damageModifier || 1.0,
             healthCost: config.healthCost || 0,
@@ -1217,6 +1243,7 @@ export class Brace extends Ability{
             name: 'brace',
             description: "Prepare for physical attack. Raises one's physical defense.",
             iconSrc: './assets/media/icons/shield.png',
+            background: `url(./assets/media/icons/shield.png), linear-gradient(steelblue, darkslategrey)`,
             speedModifier: config.speedModifier || 1.25,
             damageModifier: config.damageModifier || 0,
             healthCost: config.healthCost || 0,
@@ -1245,12 +1272,13 @@ export class VineLash extends Ability{
             name: 'vine lash',
             description: "Summon a magical vine to constrict a target. Has a chance of binding the target.",
             iconSrc: './assets/media/icons/vine-whip.png',
+            background: `url(./assets/media/icons/vine-whip.png), conic-gradient(steelblue, darkslategrey, forestgreen, silver)`,
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 1,
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 15,
-            damageTypes: config.damageTypes || ['blunt'],
+            damageTypes: config.damageTypes || ['blunt', 'elemental'],
             soundEffectSrc: "./assets/audio/soundEffects/whip_lash.wav",
             attackerAnimation: config.attackerAnimation || 'ally-attack',
             abilityAnimation: config.abilityAnimation || 'stick-right',
@@ -1282,6 +1310,7 @@ export class Bless extends Ability{
             name: 'bless',
             description: "Grant a blessing upon a target restoring the target's health every turn using light arcane magic.",
             iconSrc: './assets/media/icons/cherish.png',
+            background: `url(./assets/media/icons/cherish.png), linear-gradient(gold, navy)`,
             speedModifier: config.speedModifier || 1.0,
             damageModifier: config.damageModifier || 0,
             healthCost: config.healthCost || 0,
@@ -1309,6 +1338,7 @@ export class Curse extends Ability{
             name: 'curse',
             description: "Curse a target to absorb the target's health every turn using dark arcane magic.",
             iconSrc: './assets/media/icons/cursed-star.png',
+            background: `url(./assets/media/icons/cursed-star.png), linear-gradient(indigo, navy)`,
             speedModifier: config.speedModifier || 1.0,
             damageModifier: config.damageModifier || 0,
             healthCost: config.healthCost || 0,
@@ -1335,6 +1365,7 @@ export class Roar extends Ability{
             name: 'roar',
             description: `Let out an intimidating roar lowering enemy physical attack or raising an ally's physical attack.`,
             iconSrc: './assets/media/icons/sonic-shout.png',
+            background: `url(./assets/media/icons/sonic-shout.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
             speedModifier: config.speedModifier || 1.5,
             damageModifier: config.damageModifier || 0,
             healthCost: config.healthCost || 0,
@@ -1370,6 +1401,7 @@ export class Howl extends Ability{
             name: 'howl',
             description: `Howl at the sky, raising a target's physical attack.`,
             iconSrc: './assets/media/icons/sonic-shout.png',
+            background: `url(./assets/media/icons/sonic-shout.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
             speedModifier: config.speedModifier || 1.5,
             damageModifier: config.damageModifier || 0,
             healthCost: config.healthCost || 0,
@@ -1402,6 +1434,7 @@ export class ChannelMagic extends Ability{
             name: 'channel magic',
             description: `Channel nearby arcane and elemental magic into a more pure and dangerous form. Increases one's magical attack.`,
             iconSrc: './assets/media/icons/mighty-force.png',
+            background: `url(./assets/media/icons/mighty-force.png), linear-gradient(magenta, navy)`,
             speedModifier: config.speedModifier || 1.5,
             damageModifier: config.damageModifier || 0,
             healthCost: config.healthCost || 0,
@@ -1429,6 +1462,7 @@ export class Hex extends Ability{
             name: 'hex',
             description: `Hex a target with arcane magic. Lower's a target's magical attack.`,
             iconSrc: './assets/media/icons/dripping-star.png',
+            background: `url(./assets/media/icons/dripping-star.png), linear-gradient(indigo, navy)`,
             speedModifier: config.speedModifier || 1.5,
             damageModifier: config.damageModifier || 0,
             healthCost: config.healthCost || 0,
@@ -1461,6 +1495,7 @@ export class ShootBullet extends Ability{
             name: 'shoot bullet',
             description: "Shoot a target with a round bullet. Has a high critical chance.",
             iconSrc: './assets/media/icons/gunshot.png',
+            background: `url(./assets/media/icons/gunshot.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
             speedModifier: config.speedModifier || 1.25,
             damageModifier: config.damageModifier || 1,
             criticalDamageModifier: config.criticalDamageModifier || 1.5,
@@ -1519,7 +1554,7 @@ export class ThrowPosionedKnife extends Ability{
             name: 'throw posioned knife',
             description: "Throw a posioned knife at a target. Poions the target.",
             iconSrc: './assets/media/icons/flying-dagger.png',
-            background: config.background || 'grey',
+            background: `url(./assets/media/icons/flying-dagger.png), linear-gradient(crimson, darkslategrey, olive, silver)`,
             speedModifier: config.speedModifier || 1.25,
             damageModifier: config.damageModifier || 0.25,
             healthCost: config.healthCost || 0,
@@ -1553,7 +1588,7 @@ export class SetBearTrap extends Ability{
             name: 'set bear trap',
             description: "Set a bear trap that has a chance to spring upon an enemy attack.",
             iconSrc: './assets/media/icons/man-trap.png',
-            background: config.background || 'grey',
+            background: `url(./assets/media/icons/man-trap.png), linear-gradient(steelblue, darkslategrey)`,
             speedModifier: config.speedModifier || 1.25,
             damageModifier: config.damageModifier || 0,
             healthCost: config.healthCost || 0,
@@ -1576,6 +1611,65 @@ export class SetBearTrap extends Ability{
     }
     updateMessage(attacker, target){
         this.message = `${attacker.name} sets a bear trap.`;
+    }
+}
+export class ThrowNet extends Ability{
+    constructor(config){
+        super({
+            name: 'throw net',
+            description: "Throw a net at a target. Binds the target.",
+            iconSrc: './assets/media/icons/fishing-net.png',
+            background: `url(./assets/media/icons/fishing-net.png), linear-gradient(crimson, darkslategrey)`,
+            speedModifier: config.speedModifier || 1.25,
+            damageModifier: config.damageModifier || 0,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 10,
+            magicCost: config.magicCost || 0,
+            damageTypes: config.damageTypes || ['pierce'],
+            targetCount: 1,
+            soundEffectSrc: "./assets/audio/soundEffects/arrow-body-impact-146419.mp3",
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimation: config.abilityAnimation || 'stick-right',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/fishing-net.png',
+
+        })
+    }
+    activate(attacker, target){
+        this.inflictStatus(new Bind({holder: target}), attacker, target);
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} throws a net at ${target.name}.`;
+    }
+}
+export class ThrowSmokeBomb extends Ability{
+    constructor(config){
+        super({
+            name: 'throw smoke bomb',
+            description: "Throw a smokebomb at a target. Raises target target evasion.",
+            iconSrc: './assets/media/icons/smoke-bomb.png',
+            speedModifier: config.speedModifier || 1.25,
+            damageModifier: config.damageModifier || 0,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 6,
+            magicCost: config.magicCost || 0,
+            damageTypes: config.damageTypes || ['pierce'],
+            targetCount: 1,
+            soundEffectSrc: "./assets/audio/soundEffects/supernatural-explosion-104295.wav",
+            abilityAnimation: config.abilityAnimation || 'explode',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/smoke-bomb.png',
+
+        })
+    }
+    activate(attacker, target){
+        this.inflictStatus(new EvasionBuff({holder: target}), attacker, target);
+    }
+    updateMessage(attacker, target){
+        if(attacker == target){
+            this.message = `${attacker.name} throws a smokebomb.`;
+        }
+        else{
+            this.message = `${attacker.name} throws a smokebomb at ${target.name}.`;
+        }
     }
 }
 export class DrinkHealthPotion extends Ability{

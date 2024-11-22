@@ -30,15 +30,15 @@ export class MysteriousAltar extends Stage{
                             result: 'battle',
                             imageSrc: './assets/media/entities/skeleton.jpg',
                             musicSrc: "./assets/audio/musicTracks/battle-sword-139313.mp3",
-                            createBattle: (partyLevel, biome)=>{
+                            createBattle: (partyLevel, biome, difficulty)=>{
                                 let hostileArray = [];
                                 let count = Math.ceil(Math.random()*4);
                                 for(let i = 0; i < count; i++){
                                     let chance = Math.floor(Math.random()*5);
-                                    if(chance < 2) hostileArray.push(new Skeleton({level: partyLevel}))
-                                    if(chance == 2) hostileArray.push(new SkeletonCultist({level: partyLevel}))
-                                    if(chance == 3) hostileArray.push(new FloatingSkull({level: partyLevel}))
-                                    if(chance == 4) hostileArray.push(new ArmoredSkeleton({level: partyLevel}))
+                                    if(chance < 2) hostileArray.push(new Skeleton({level: partyLevel, difficulty: difficulty}))
+                                    if(chance == 2) hostileArray.push(new SkeletonCultist({level: partyLevel, difficulty: difficulty}))
+                                    if(chance == 3) hostileArray.push(new FloatingSkull({level: partyLevel, difficulty: difficulty}))
+                                    if(chance == 4) hostileArray.push(new ArmoredSkeleton({level: partyLevel, difficulty: difficulty}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
@@ -131,15 +131,15 @@ export class AtTheAltar extends Stage{
                             result: 'battle',
                             imageSrc: './assets/media/entities/skeleton.jpg',
                             musicSrc: "./assets/audio/musicTracks/battle-sword-139313.mp3",
-                            createBattle: (partyLevel, biome)=>{
+                            createBattle: (partyLevel, biome, difficulty)=>{
                                 let hostileArray = [];
                                 let count = Math.ceil(Math.random()*4);
                                 for(let i = 0; i < count; i++){
                                     let chance = Math.floor(Math.random()*5);
-                                    if(chance < 2) hostileArray.push(new Skeleton({level: partyLevel}))
-                                    if(chance == 2) hostileArray.push(new SkeletonCultist({level: partyLevel}))
-                                    if(chance == 3) hostileArray.push(new FloatingSkull({level: partyLevel}))
-                                    if(chance == 4) hostileArray.push(new ArmoredSkeleton({level: partyLevel}))
+                                    if(chance < 2) hostileArray.push(new Skeleton({level: partyLevel, difficulty: difficulty}))
+                                    if(chance == 2) hostileArray.push(new SkeletonCultist({level: partyLevel, difficulty: difficulty}))
+                                    if(chance == 3) hostileArray.push(new FloatingSkull({level: partyLevel, difficulty: difficulty}))
+                                    if(chance == 4) hostileArray.push(new ArmoredSkeleton({level: partyLevel, difficulty: difficulty}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
@@ -198,14 +198,14 @@ export class ASkeletalAbomination extends Stage{
                     successfulOutcomes: [
                         {
                             result: 'battle',
-                            createBattle: (partyLevel, biome)=>{
-                                let hostileArray = [new SkeletonColossus({level: partyLevel})];
+                            createBattle: (partyLevel, biome, difficulty)=>{
+                                let hostileArray = [new SkeletonColossus({level: partyLevel, difficulty: difficulty})];
                                 for(let i = 0; i < 2; i++){
                                     let chance = Math.floor(Math.random()*5);
-                                    if(chance < 2) hostileArray.push(new Skeleton({level: partyLevel}))
-                                    if(chance == 2) hostileArray.push(new SkeletonCultist({level: partyLevel}))
-                                    if(chance == 3) hostileArray.push(new FloatingSkull({level: partyLevel}))
-                                    if(chance == 4) hostileArray.push(new ArmoredSkeleton({level: partyLevel}))
+                                    if(chance < 2) hostileArray.push(new Skeleton({level: partyLevel, difficulty: difficulty}))
+                                    if(chance == 2) hostileArray.push(new SkeletonCultist({level: partyLevel, difficulty: difficulty}))
+                                    if(chance == 3) hostileArray.push(new FloatingSkull({level: partyLevel, difficulty: difficulty}))
+                                    if(chance == 4) hostileArray.push(new ArmoredSkeleton({level: partyLevel, difficulty: difficulty}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: "./assets/audio/musicTracks/2022-03-16_-_Escape_Route_-_www.FesliyanStudios.com.mp3", gold: (20*partyLevel), canRetreat: false});
                             },
@@ -233,14 +233,14 @@ export class ASkeletalAbomination extends Stage{
                     negativeOutcomes: [
                         {
                             result: 'battle',
-                            createBattle: (partyLevel, biome)=>{
-                                let hostileArray = [new SkeletonColossus({level: partyLevel})];
+                            createBattle: (partyLevel, biome, difficulty)=>{
+                                let hostileArray = [new SkeletonColossus({level: partyLevel, difficulty: difficulty})];
                                 for(let i = 0; i < 2; i++){
                                     let chance = Math.floor(Math.random()*5);
-                                    if(chance < 2) hostileArray.push(new Skeleton({level: partyLevel}))
-                                    if(chance == 2) hostileArray.push(new SkeletonCultist({level: partyLevel}))
-                                    if(chance == 3) hostileArray.push(new FloatingSkull({level: partyLevel}))
-                                    if(chance == 4) hostileArray.push(new ArmoredSkeleton({level: partyLevel}))
+                                    if(chance < 2) hostileArray.push(new Skeleton({level: partyLevel, difficulty: difficulty}))
+                                    if(chance == 2) hostileArray.push(new SkeletonCultist({level: partyLevel, difficulty: difficulty}))
+                                    if(chance == 3) hostileArray.push(new FloatingSkull({level: partyLevel, difficulty: difficulty}))
+                                    if(chance == 4) hostileArray.push(new ArmoredSkeleton({level: partyLevel, difficulty: difficulty}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: "./assets/audio/musicTracks/2022-03-16_-_Escape_Route_-_www.FesliyanStudios.com.mp3", gold: (20*partyLevel), canRetreat: false});
                             },

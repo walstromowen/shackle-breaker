@@ -32,7 +32,7 @@ export class TreasureChest extends Stage{
                         {
                             result: 'battle',
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
-                            createBattle: (partyLevel, biome)=>{
+                            createBattle: (partyLevel, biome, difficulty)=>{
                                 return biome.generateBattle(partyLevel);
                             },
                             messageFunction: (currentCharacter)=>{
@@ -82,7 +82,7 @@ export class TreasureChest extends Stage{
                         {
                             result: 'battle',
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
-                            createBattle: (partyLevel, biome)=>{
+                            createBattle: (partyLevel, biome, difficulty)=>{
                                 return biome.generateBattle(partyLevel);
                             },
                             messageFunction: (currentCharacter)=>{
@@ -132,7 +132,7 @@ export class TreasureChest extends Stage{
                         {
                             result: 'battle',
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
-                            createBattle: (partyLevel, biome)=>{
+                            createBattle: (partyLevel, biome, difficulty)=>{
                                 return biome.generateBattle(partyLevel);
                             },
                             messageFunction: (currentCharacter)=>{

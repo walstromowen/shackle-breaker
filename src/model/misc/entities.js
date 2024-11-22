@@ -1,6 +1,6 @@
 import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl, Eviscerate, ChannelMagic, DarkOrb, Bless, Brace, Inferno, SetBearTrap, Uppercut} from "./abilities.js";
 import { Poison, Burn, Bleed, Shielded, InstaDeath} from "./statusEffects.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, LeatherGloves, GreatSword, Flintlock} from "./items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, LeatherGloves, GreatSword, Flintlock, SmokeBomb} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Hide} from "./items.js";
 
 
@@ -37,7 +37,8 @@ export class Entity{
         this.baseSpeed = config.baseSpeed || 0;
         this.baseEvasion = config.baseEvasion || 0;
         this.baseCritical = config.baseCritical || 0;
-        this.scaleAttributes();
+        this.isHostile = config.isHostile || false;
+        this.scaleAttributes(config.difficulty || 'normal');
         this.currentHP = this.maxHP;
         this.currentStamina = this.maxStamina;
         this.currentMagic = this.maxMagic;
@@ -78,7 +79,7 @@ export class Entity{
         
         this.partyId = '';
         this.battleId = '';
-        this.isHostile = config.isHostile || false;
+       
         this.isSelectable = true;
         this.nextAbility = '';
         this.abilityTargets = [];
@@ -93,7 +94,7 @@ export class Entity{
         this.intelligence = props.intelligence || this.intelligence ;
         this.attunement = props.attunement || this.attunement;
     }
-    scaleAttributes(){
+    scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 10)  + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
         this.maxStamina = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
         this.maxMagic = (this.vigor * 2)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
@@ -111,6 +112,43 @@ export class Entity{
         this.baseSpeed = 25;
         this.baseEvasion = 0.10;
         this.baseCritical = 0.10;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
+    }
+    applyDifficultyMultiplier(difficulty){
+        let difficultyMultiplier = 1.0;
+        switch(difficulty){
+            case 'easy':
+                difficultyMultiplier = 0.75;
+                break;
+            case 'normal':
+                difficultyMultiplier = 1.0;
+                break;
+            case 'hard':
+                difficultyMultiplier = 1.25;
+                break;
+            case 'nightmare':
+                difficultyMultiplier = 1.5;
+                break;
+        }
+        this.maxHP = Math.floor(this.maxHP * difficultyMultiplier);
+        this.maxStamina = Math.floor(this.maxStamina * difficultyMultiplier);
+        this.maxMagic = Math.floor(this.maxMagic * difficultyMultiplier);
+        this.baseHpRecovery = Math.floor(this.baseHpRecovery * difficultyMultiplier);
+        this.baseStaminaRecovery = Math.floor(this.baseStaminaRecovery * difficultyMultiplier);
+        this.baseMagicRecovery = Math.floor(this.baseMagicRecovery * difficultyMultiplier);
+        this.baseBluntAttack = Math.floor(this.baseBluntAttack * difficultyMultiplier);
+        this.basePierceAttack = Math.floor(this.basePierceAttack * difficultyMultiplier);
+        this.baseArcaneAttack = Math.floor(this.baseArcaneAttack * difficultyMultiplier);
+        this.baseElementalAttack = Math.floor(this.baseElementalAttack * difficultyMultiplier);
+        this.baseBluntDefense = Math.floor(this.baseBluntDefense * difficultyMultiplier);
+        this.basePierceDefense = Math.floor(this.basePierceDefense * difficultyMultiplier);
+        this.baseArcaneDefense = Math.floor(this.baseArcaneDefense * difficultyMultiplier);
+        this.baseElementalDefense = Math.floor(this.baseElementalDefense * difficultyMultiplier);
+        this.baseSpeed = Math.floor( this.baseSpeed * difficultyMultiplier);
+        this.baseEvasion = Math.floor(this.baseEvasion * difficultyMultiplier); 
+        this.baseCritical = Math.floor(this.baseCritical * difficultyMultiplier);
     }
     getEquipment(slots){
         let currentlyEquippedArray = [];
@@ -383,6 +421,7 @@ export class Dog extends Entity{
         super({
             name: 'Dog',
             level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
             apperance: './assets/media/entities/dog.jpg',
             vigor: config.vigor || 5,
             strength: config.strength || 5,
@@ -400,7 +439,7 @@ export class Dog extends Entity{
             abilityArray: [new Bite({}), new Pounce({}), new Howl({})],
         })
     }
-    scaleAttributes(){
+    scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 6)  + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
         this.maxStamina = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
         this.maxMagic = (this.vigor * 2)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
@@ -418,6 +457,9 @@ export class Dog extends Entity{
         this.baseSpeed = 25;
         this.baseEvasion = 0.10;
         this.baseCritical = 0.10;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
     }
 }
 
@@ -426,6 +468,7 @@ export class Hawk extends Entity{
         super({
             name: 'Hawk',
             level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
             apperance: './assets/media/entities/hawk.jpg',
             vigor: config.vigor || 5,
             strength: config.strength || 5,
@@ -448,6 +491,7 @@ export class Tiger extends Entity{
         super({
             name: 'Tiger',
             level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
             apperance: config.apperance ||'./assets/media/entities/tiger.jpg',
             vigor: config.vigor || 5,
             strength: config.strength || 6,
@@ -471,6 +515,7 @@ export class Madman extends Entity{
         super({
             name: 'Madman',
             level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
             apperance: config.apperance || './assets/media/entities/cursed-villager-1.jpg',
             vigor: config.vigor || 5,
             strength: config.strength || 7,
@@ -512,6 +557,7 @@ export class MadBandit extends Entity{
         super({
             name: 'Mad Bandit',
             level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
             apperance: config.apperance || './assets/media/entities/mad-bandit.jpg',
             vigor: config.vigor || 5,
             strength: config.strength || 5,
@@ -541,6 +587,7 @@ export class MadBandit extends Entity{
 
                 {item: new Dagger({level: 1}), weight: 2},
                 {item: new PoisonedKnife({level: 1}), weight: 2},
+                {item: new SmokeBomb({level: 1}), weight: 2},
                 {item: new HealthPotion(), weight: 2},
                 {item: new StaminaPotion(), weight: 1},
                 {item: new Bandage(), weight: 1},
@@ -554,6 +601,7 @@ export class MadMage extends Entity{
         super({
             name: 'Mad Mage',
             level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
             apperance: config.apperance || './assets/media/entities/mad-mage.jpg',
             vigor: config.vigor || 5,
             strength: config.strength || 3,
@@ -596,6 +644,7 @@ export class Skeleton extends Entity{
         super({
             name: config.name || 'Skeleton',
             level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
             apperance: config.apperance || './assets/media/entities/skeleton.jpg',
             vigor: config.vigor || 5,
             strength: config.strength || 5,
@@ -635,7 +684,7 @@ export class Skeleton extends Entity{
             ],
         });
     }
-    scaleAttributes(){
+    scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 8)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
         this.maxStamina = (this.vigor * 1) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
         this.maxMagic = (this.vigor * 1)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
@@ -653,6 +702,9 @@ export class Skeleton extends Entity{
         this.baseSpeed = 15;
         this.baseEvasion = 0.05;
         this.baseCritical = 0.10;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
     }
 }
 export class ArmoredSkeleton extends Skeleton{
@@ -660,6 +712,7 @@ export class ArmoredSkeleton extends Skeleton{
         super({
             name: config.name || 'Armored Skeleton',
             level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
             apperance: config.apperance || './assets/media/entities/armored-skeleton.jpg',
             equipment: config.equipment || {
                 mainHand: new ShortSword({level: 1}),
@@ -695,6 +748,7 @@ export class FloatingSkull extends Entity{
         super({
             name: 'Floating Skull',
             level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
             apperance: config.apperance || './assets/media/entities/floating-skull.jpg',
             vigor: config.vigor || 3,
             strength: config.strength || 4,
@@ -714,7 +768,7 @@ export class FloatingSkull extends Entity{
             ],
         })
     }
-    scaleAttributes(){
+    scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 3)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 1);
         this.maxStamina = (this.vigor * 1) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
         this.maxMagic = (this.vigor * 1)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
@@ -732,6 +786,9 @@ export class FloatingSkull extends Entity{
         this.baseSpeed = 30;
         this.baseEvasion = 0.5;
         this.baseCritical = 0.15;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
     }
 }
 export class SkeletonCultist extends Entity{
@@ -739,6 +796,7 @@ export class SkeletonCultist extends Entity{
         super({
             name: 'Skeleton Cultist',
             level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
             apperance: config.skeleton || './assets/media/entities/skeleton-light-mage.jpg',
             vigor: config.vigor || 4,
             strength: config.strength || 4,
@@ -776,7 +834,7 @@ export class SkeletonCultist extends Entity{
             ],
         });
     }
-    scaleAttributes(){
+    scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 8)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
         this.maxStamina = (this.vigor * 1) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
         this.maxMagic = (this.vigor * 1)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
@@ -794,6 +852,9 @@ export class SkeletonCultist extends Entity{
         this.baseSpeed = 15;
         this.baseEvasion = 0.05;
         this.baseCritical = 0.10;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
     }
 }
 export class SkeletonColossus extends Entity{
@@ -802,6 +863,7 @@ export class SkeletonColossus extends Entity{
             name: 'skeleton colossus',
             size: 'large',
             level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
             apperance: config.apperance || './assets/media/entities/skeleton-colossus.jpg',
             vigor: config.vigor || 5,
             strength: config.strength || 5,
@@ -822,7 +884,7 @@ export class SkeletonColossus extends Entity{
             ],
         });
     }
-    scaleAttributes(){
+    scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 12)  + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 5) + (this.attunement * 5);
         this.maxStamina = (this.vigor * 3) + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 3) + (this.attunement * 3);
         this.maxMagic = (this.vigor * 3)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 5) + (this.attunement * 5);
@@ -840,6 +902,9 @@ export class SkeletonColossus extends Entity{
         this.baseSpeed = 10;
         this.baseEvasion = 0.05;
         this.baseCritical = 0.10;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
     }
 }
 export class GroveGuardian extends Entity{
@@ -848,6 +913,7 @@ export class GroveGuardian extends Entity{
             name: 'Grove Guardian',
             size: 'large',
             level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
             apperance: config.apperance || './assets/media/entities/grove-guardian.jpg',
             vigor: config.vigor || 8,
             strength: config.strength || 6,
@@ -868,7 +934,7 @@ export class GroveGuardian extends Entity{
             ],
         })
     }
-    scaleAttributes(){
+    scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 10)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
         this.maxStamina = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
         this.maxMagic = (this.vigor * 2)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
@@ -886,6 +952,9 @@ export class GroveGuardian extends Entity{
         this.baseSpeed = 15;
         this.baseEvasion = 0.05;
         this.baseCritical = 0.10;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
     }
 }
 export class Wolf extends Entity{
@@ -893,6 +962,7 @@ export class Wolf extends Entity{
         super({
             name: 'Wolf',
             level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
             apperance: config.apperance || './assets/media/entities/wolf.jpg',
             vigor: config.vigor || 5,
             strength: config.strength || 5,
@@ -913,7 +983,7 @@ export class Wolf extends Entity{
             ],
         })
     }
-    scaleAttributes(){
+    scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 5)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
         this.maxStamina = (this.vigor * 1) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
         this.maxMagic = (this.vigor * 1)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
@@ -931,6 +1001,9 @@ export class Wolf extends Entity{
         this.baseSpeed = 15;
         this.baseEvasion = 0.05;
         this.baseCritical = 0.10;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
     }
 }
 export class Spider extends Entity{
@@ -938,6 +1011,7 @@ export class Spider extends Entity{
         super({
             name: 'Spider',
             level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
             apperance: config.apperance || './assets/media/entities/spider.jpg',
             vigor: config.vigor || 4,
             strength: config.strength || 4,
@@ -957,7 +1031,7 @@ export class Spider extends Entity{
             ],
         })
     }
-    scaleAttributes(){
+    scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 3)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
         this.maxStamina = (this.vigor * 1) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
         this.maxMagic = (this.vigor * 1)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
@@ -975,6 +1049,9 @@ export class Spider extends Entity{
         this.baseSpeed = 15;
         this.baseEvasion = 0.05;
         this.baseCritical = 0.10;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
     }
 }
 export class SandStalker extends Entity{
@@ -982,6 +1059,7 @@ export class SandStalker extends Entity{
         super({
             name: 'Sand Stalker',
             level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
             apperance: config.apperance || './assets/media/entities/sand-stalker.jpg',
             vigor: config.vigor || 5,
             strength: config.strength || 5,
@@ -1024,7 +1102,7 @@ export class SandStalker extends Entity{
             createNextForm: ()=>{
                 let chance = Math.random()*1;
                 if(chance < 1){
-                    let hostile = new SandStalker({level: this.level, statusArray: [], nextForm: false});
+                    let hostile = new SandStalker({level: this.level, statusArray: [], nextForm: false, difficulty: config.difficulty});
                     hostile.nextForm = false;//have to do don't know why
                     return hostile
                 }else{
@@ -1036,7 +1114,7 @@ export class SandStalker extends Entity{
             }
         }
     }
-    scaleAttributes(){
+    scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 2)  + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
         this.maxStamina = (this.vigor * 1) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
         this.maxMagic = (this.vigor * 1)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
@@ -1054,6 +1132,9 @@ export class SandStalker extends Entity{
         this.baseSpeed = 30;
         this.baseEvasion = 0.20;
         this.baseCritical = 0.10;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
     }
 }
 export class DryShark extends Entity{
@@ -1062,6 +1143,7 @@ export class DryShark extends Entity{
             name: 'Dry Shark',
             size: 'large',
             level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
             apperance: config.apperance || './assets/media/entities/dry-shark.jpg',
             vigor: config.vigor || 6,
             strength: config.strength || 6,
@@ -1081,7 +1163,7 @@ export class DryShark extends Entity{
             ],
         })
     }
-    scaleAttributes(){
+    scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 10)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
         this.maxStamina = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
         this.maxMagic = (this.vigor * 2)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
@@ -1099,6 +1181,9 @@ export class DryShark extends Entity{
         this.baseSpeed = 20;
         this.baseEvasion = 0.05;
         this.baseCritical = 0.20;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
     }
 }
 export class DryEel extends Entity{
@@ -1106,6 +1191,7 @@ export class DryEel extends Entity{
         super({
             name: 'Dry Eel',
             level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
             apperance: config.apperance || './assets/media/entities/dry-eel.jpg',
             vigor: config.vigor || 3,
             strength: config.strength || 5,
@@ -1125,7 +1211,7 @@ export class DryEel extends Entity{
             ],
         })
     }
-    scaleAttributes(){
+    scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 2)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
         this.maxStamina = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
         this.maxMagic = (this.vigor * 2)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
@@ -1143,6 +1229,9 @@ export class DryEel extends Entity{
         this.baseSpeed = 25;
         this.baseEvasion = 0.1;
         this.baseCritical = 0.1;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
     }
 }
 export class TheSandShade extends Entity{
@@ -1151,6 +1240,7 @@ export class TheSandShade extends Entity{
             name: 'The Sand Shade',
             size: 'large',
             level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
             apperance: config.apperance || './assets/media/entities/the-sand-shade.jpg',
             vigor: config.vigor || 5,
             strength: config.strength || 5,
@@ -1179,7 +1269,7 @@ export class TheSandShade extends Entity{
             animationDuration: 6000,
             animationSoundEffect: './assets/audio/soundEffects/tornado.wav',
             createNextForm: ()=>{
-                let hostile = new TheSandShade({level: this.level, nextForm: false, abilityArray: [new Slash({}), new DrainLife({}), new Earthquake({}), new DarkOrb({})],});
+                let hostile = new TheSandShade({level: this.level, difficulty: config.difficulty, nextForm: false, abilityArray: [new Slash({}), new DrainLife({}), new Earthquake({}), new DarkOrb({})],});
                 hostile.nextForm = false;//have to do don't know why
                 return hostile
            
@@ -1190,7 +1280,7 @@ export class TheSandShade extends Entity{
             }
         }
     }
-    scaleAttributes(){
+    scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 20)  + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 5) + (this.attunement * 5);
         this.maxStamina = (this.vigor * 5) + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 5) + (this.attunement * 5);
         this.maxMagic = (this.vigor * 5)  + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 5) + (this.attunement * 5);
@@ -1208,6 +1298,9 @@ export class TheSandShade extends Entity{
         this.baseSpeed = 25;
         this.baseEvasion = 0.20;
         this.baseCritical = 0.10;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
     }
 }
 export class PanzerianKnight extends Entity{
@@ -1215,6 +1308,7 @@ export class PanzerianKnight extends Entity{
         super({
             name: config.name || 'Panzerian Knight',
             level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
             apperance: config.apperance || './assets/media/entities/panzerian-knight.jpg',
             vigor: config.vigor || 5,
             strength: config.strength || 7,
@@ -1248,7 +1342,7 @@ export class PanzerianKnight extends Entity{
             ],
         });
     }
-    scaleAttributes(){
+    scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 10)  + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
         this.maxStamina = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
         this.maxMagic = (this.vigor * 2)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
@@ -1266,6 +1360,9 @@ export class PanzerianKnight extends Entity{
         this.baseSpeed = 20;
         this.baseEvasion = 0.5;
         this.baseCritical = 0.10;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
     }
 }
 export class MadEngineer extends Entity{
@@ -1273,6 +1370,7 @@ export class MadEngineer extends Entity{
         super({
             name: 'Mad Engineer',
             level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
             apperance: config.apperance || './assets/media/entities/mad-engineer.jpg',
             vigor: config.vigor || 5,
             strength: config.strength || 6,
@@ -1308,6 +1406,7 @@ export class EmperorDolos extends Entity{
             name: 'Emperor Dolos',
             size: 'large',
             level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
             apperance: config.apperance || './assets/media/entities/emperor-dolos.jpg',
             vigor: config.vigor || 5,
             strength: config.strength || 5,
@@ -1336,7 +1435,7 @@ export class EmperorDolos extends Entity{
             animationDuration: 6000,
             animationSoundEffect: './assets/audio/soundEffects/tornado.wav',
             createNextForm: ()=>{
-                let hostile = new EmperorDolos({level: this.level, nextForm: false, abilityArray: [new DrainLife({}), new Inferno({}), new MagicMissile({}), new ChannelMagic({}), new LightningBolt({}), new Siphon({}), new Bless({})],});
+                let hostile = new EmperorDolos({level: this.level, difficulty: config.difficulty, nextForm: false, abilityArray: [new DrainLife({}), new Inferno({}), new MagicMissile({}), new ChannelMagic({}), new LightningBolt({}), new Siphon({}), new Bless({})],});
                 hostile.nextForm = false;//have to do don't know why
                 return hostile
            
@@ -1347,7 +1446,7 @@ export class EmperorDolos extends Entity{
             }
         }
     }
-    scaleAttributes(){
+    scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 30)  + (this.strength * 30) + (this.dexterity * 30) + (this.intelligence * 30) + (this.attunement * 30);
         this.maxStamina = (this.vigor * 10) + (this.strength * 10) + (this.dexterity * 10) + (this.intelligence * 10) + (this.attunement * 10);
         this.maxMagic = (this.vigor * 10)  + (this.strength * 10) + (this.dexterity * 10) + (this.intelligence * 10) + (this.attunement * 10);
@@ -1365,5 +1464,8 @@ export class EmperorDolos extends Entity{
         this.baseSpeed = 20;
         this.baseEvasion = 0.10;
         this.baseCritical = 0.10;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
     }
 }

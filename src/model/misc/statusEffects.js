@@ -951,3 +951,64 @@ export class PhysicalDefenseDebuff extends StatusEffect{
         this.holder.currentPierceDefense += this.currentPierceDefenseDebuff;
     }
 }
+export class EvasionBuff extends StatusEffect{
+    constructor(config){
+        super({
+            name:'evasion buff',
+            iconSrc: "./assets/media/icons/evasion-defense-buff-1.png",
+            holder: config.holder,
+            maxCharges: 5,
+            stackable: true,
+            targetAnimation: 'none',
+            abilityAnimation: 'none',
+            removeOnBattleEnd: true,
+        });
+        this.currentLevel = config.level || 0;
+        this.currentEvasionBuff = config.level || 0;
+    }
+    onApplied(attacker, target, status){
+        this.holder.currentEvasion -= this.currentEvasionBuff;
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == 'evasion debuff'){
+                this.holder.statusArray[i].currentLevel = this.holder.statusArray[i].currentLevel - 2
+                if(this.holder.statusArray[i].currentLevel <= 0){
+                    this.holder.statusArray[i].onRemove();
+                }else{
+                    this.holder.statusArray[i].onApplied(attacker, target, status);
+                }
+                return;
+            }
+        }
+        switch(this.currentLevel){
+            case 0:
+                target.statusArray.push(status);
+                this.currentEvasionBuff = 0.2;
+                this.iconSrc = "./assets/media/icons/evasion-buff-1.png";
+                this.currentLevel++
+            break;
+            case 1:
+                this.currentEvasionBuff = 0.4;
+                this.iconSrc = "./assets/media/icons/evasion-buff-2.png";
+                this.currentLevel++
+            break;
+            case 2:
+                this.currentEvasionBuff = 0.6;
+                this.iconSrc = "./assets/media/icons/evasion-buff-3.png";
+                this.currentLevel++
+            break;
+            default:
+            break;
+        }
+        this.holder.currentEvasion += this.currentEvasionBuff;
+        this.currentCharges++;
+    }
+    onRemove(){
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == this.name){
+                this.holder.statusArray.splice(i, 1);
+                break;
+            }
+        }
+        this.holder.currentEvasion -= this.currentEvasionBuff;
+    }
+}

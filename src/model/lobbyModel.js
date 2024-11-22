@@ -1,6 +1,6 @@
 import { getRandomArrayElement } from "../utility.js";
 import {Entity, Dog, Hawk, Tiger} from "./misc/entities.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LightningStaff, DarkStaff, IceStaff, ForestStaff, Meteorite, ClothHood, LeatherBoots, BearTrap, ClothRobe, IronHelm, LeatherChestplate} from "./misc/items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LightningStaff, DarkStaff, IceStaff, ForestStaff, Meteorite, ClothHood, LeatherBoots, BearTrap, ClothRobe, IronHelm, LeatherChestplate, Hide, Net, SmokeBomb} from "./misc/items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, AloeRemedy, ParalysisTonic, Bandage, PineWood} from "./misc/items.js";
 
 
@@ -127,7 +127,7 @@ export default class LobbyModel{
         let keepsake = document.getElementById('lobby-keepsake-selection').value;
         switch(keepsake){
             case 'hunters-tools':
-                this.props.setInventory([new HealthPotion(), new BearTrap()]);
+                this.props.setInventory([new HealthPotion(), new BearTrap(), new Net()]);
                 break;
             case 'bag-of-potions':
                 this.props.setInventory([new HealthPotion(), new StaminaPotion(), new MagicPotion()]);
@@ -136,13 +136,13 @@ export default class LobbyModel{
                 this.props.setInventory([new HealthPotion(), new Antidote(), new AloeRemedy()]);
                 break;
             case 'assassins-belt':
-                this.props.setInventory([new HealthPotion(), new PoisonedKnife(), new PoisonedKnife()]);
+                this.props.setInventory([new HealthPotion(), new PoisonedKnife(), new SmokeBomb()]);
                 break;
             case 'artisans-tools':
-                this.props.setInventory([new HealthPotion(), new PineWood()]);
+                this.props.setInventory([new HealthPotion(), new PineWood(), new Hide()]);
                 break;
             case 'alchemists-vials':
-                this.props.setInventory([new HealthPotion(), new ParalysisTonic()]);
+                this.props.setInventory([new HealthPotion(), new ParalysisTonic(), new SmokeBomb()]);
                 break;
             case 'first-aid-kit':
                 this.props.setInventory([new HealthPotion(), new Bandage()]);

@@ -1,6 +1,6 @@
 import { getRandomArrayElementWeighted } from "../../utility.js";
 import { Skeleton, SkeletonCultist, Wolf, Spider, GroveGuardian, Madman, MadMage, SandStalker, DryShark, Dog, ArmoredSkeleton, MadBandit, FloatingSkull, DryEel, PanzerianKnight, MadEngineer} from "./entities.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, GreatSword, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, BearTrap, Flintlock} from "./items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, GreatSword, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, BearTrap, Flintlock, SmokeBomb} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Hide} from "./items.js";
 import Encounter from "./encounters/encounter.js";
 import Battle from "./battle.js";
@@ -61,6 +61,7 @@ export default class Biome{
             {item: ()=>{return new KurtussBrewOfMadness()}, weight: 1},
             {item: ()=>{return new PoisonedKnife()}, weight: 1},
             {item: ()=>{return new BearTrap()}, weight: 1},
+            {item: ()=>{return new SmokeBomb()}, weight: 1},
 
             {item: ()=>{return new HealthPotion()}, weight: 3},
             {item: ()=>{return new StaminaPotion()}, weight: 3},
@@ -72,18 +73,16 @@ export default class Biome{
             
         ];
     }
-    generateEnemies(partyLevel, count){
+    generateEnemies(partyLevel, count, difficulty){
         let hostileArray = [];
         for(let i = 0; i < count; i ++){
-            let hostile = getRandomArrayElementWeighted(this.possibleHostiles).entity();
-            hostile.level = partyLevel
-            hostile.autoLevel();
+            let hostile = getRandomArrayElementWeighted(this.possibleHostiles).entity(partyLevel, difficulty);
             hostileArray.push(hostile);
         }
         return hostileArray;
     }
-    generateBattle(partyLevel){
-        return new Battle({hostiles: this.generateEnemies(partyLevel, Math.ceil(Math.random()*3)), battleMusicSrc: this.battleMusicSrc,}); 
+    generateBattle(partyLevel, difficulty){
+        return new Battle({hostiles: this.generateEnemies(partyLevel, Math.ceil(Math.random()*3), difficulty), battleMusicSrc: this.battleMusicSrc,}); 
     }
     generateEncounter(fn){
         let encounter = getRandomArrayElementWeighted(this.possibleEncounters)
@@ -112,10 +111,10 @@ export class Plains extends Biome{
             backgroundMusicSrc: "./assets/audio/musicTracks/deep-in-the-dell-126916.mp3",
             battleMusicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
             possibleHostiles: [
-                {entity: ()=>{return new Madman({})}, weight: 2},
-                {entity: ()=>{return new MadMage({})}, weight: 1},
-                {entity: ()=>{return new MadBandit({})}, weight: 1},
-                {entity: ()=>{return new Wolf({})}, weight: 1},
+                {entity: (partyLevel, difficulty)=>{return new Madman({level: partyLevel, difficulty: difficulty})}, weight: 2},
+                {entity: (partyLevel, difficulty)=>{return new MadMage({level: partyLevel, difficulty: difficulty})}, weight: 1},
+                {entity: (partyLevel, difficulty)=>{return new MadBandit({level: partyLevel, difficulty: difficulty})}, weight: 1},
+                {entity: (partyLevel, difficulty)=>{return new Wolf({level: partyLevel, difficulty: difficulty})}, weight: 1},
                 
             ],
             possibleEncounters: [
@@ -136,11 +135,11 @@ export class Cave extends Biome{
             backgroundMusicSrc: "./assets/audio/musicTracks/gathering-darkness-kevin-macleod-main-version-04-22-8459.mp3",
             battleMusicSrc: "./assets/audio/musicTracks/battle-sword-139313.mp3",
             possibleHostiles: [
-                {entity: ()=>{return new Skeleton({})}, weight: 3},
-                {entity: ()=>{return new FloatingSkull({})}, weight: 3},
-                {entity: ()=>{return new ArmoredSkeleton({})}, weight: 2},
-                {entity: ()=>{return new SkeletonCultist({})}, weight: 2},
-                {entity: ()=>{return new Spider({})}, weight: 2},
+                {entity: (partyLevel, difficulty)=>{return new Skeleton({level: partyLevel, difficulty: difficulty})}, weight: 3},
+                {entity: (partyLevel, difficulty)=>{return new FloatingSkull({level: partyLevel, difficulty: difficulty})}, weight: 3},
+                {entity: (partyLevel, difficulty)=>{return new ArmoredSkeleton({level: partyLevel, difficulty: difficulty})}, weight: 2},
+                {entity: (partyLevel, difficulty)=>{return new SkeletonCultist({level: partyLevel, difficulty: difficulty})}, weight: 2},
+                {entity: (partyLevel, difficulty)=>{return new Spider({level: partyLevel, difficulty: difficulty})}, weight: 2},
             ],
             possibleEncounters: [
                 {startingStage: ()=>{return new CaveIn({})}, resetOnLeave: false, weight: 2},
@@ -159,9 +158,9 @@ export class Desert extends Biome{
             backgroundMusicSrc: "./assets/audio/musicTracks/TimTaj - Desert Prince.mp3",
             battleMusicSrc: "./assets/audio/musicTracks/TimTaj - Desert Hunt.mp3",
             possibleHostiles: [
-                {entity: ()=>{return new DryShark({})}, weight: 1},
-                {entity: ()=>{return new DryEel({})}, weight: 2},
-                {entity: ()=>{return new SandStalker({})}, weight: 3},
+                {entity: (partyLevel, difficulty)=>{return new DryShark({level: partyLevel, difficulty: difficulty})}, weight: 1},
+                {entity: (partyLevel, difficulty)=>{return new DryEel({level: partyLevel, difficulty: difficulty})}, weight: 2},
+                {entity: (partyLevel, difficulty)=>{return new SandStalker({level: partyLevel, difficulty: difficulty})}, weight: 3},
             ],
             possibleEncounters: [
                 {startingStage: ()=>{return {name: 'Wandering Mercenary'}}, resetOnLeave: false, weight: 1},
@@ -181,9 +180,9 @@ export class SnowyMountains extends Biome{
             backgroundMusicSrc: "./assets/audio/musicTracks/nocturne-roman-main-version-16841-01-45.mp3",
             battleMusicSrc: "./assets/audio/musicTracks/battle-sword-139313.mp3",
             possibleHostiles: [
-                {entity: ()=>{return new MadEngineer({})}, weight: 1},
-                {entity: ()=>{return new PanzerianKnight({})}, weight: 1},
-                {entity: ()=>{return new Wolf({})}, weight: 1},
+                {entity: (partyLevel, difficulty)=>{return new MadEngineer({level: partyLevel, difficulty: difficulty})}, weight: 1},
+                {entity: (partyLevel, difficulty)=>{return new PanzerianKnight({level: partyLevel, difficulty: difficulty})}, weight: 1},
+                {entity: (partyLevel, difficulty)=>{return new Wolf({level: partyLevel, difficulty: difficulty})}, weight: 1},
                 
             ],
             possibleEncounters: [
@@ -202,7 +201,7 @@ export class AltusCapital extends Biome{
             backgroundMusicSrc: "./assets/audio/musicTracks/Alex-Productions - Epic Cinematic Adventure Vlog _ Eglair.mp3",
             battleMusicSrc: "./assets/audio/musicTracks/battle-sword-139313.mp3",
             possibleHostiles: [
-                {entity: ()=>{return new ArmoredSkeleton({})}, weight: 1},
+                {entity: (partyLevel, difficulty)=>{return new ArmoredSkeleton({level: partyLevel, difficulty: difficulty})}, weight: 1},
             ],
             possibleEncounters: [],
             storyEncounters: [

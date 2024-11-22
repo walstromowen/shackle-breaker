@@ -348,6 +348,7 @@ getAvailableTargets(attacker){
             name: ability1.name,
             description: ability1.description,
             iconSrc: ability1.iconSrc,
+            background: ability1.background,
             targetCount: ability1.targetCount,
             accuracy: ((ability1.accuracy + ability2.accuracy) / 2)*1.1,
             speedModifier:((ability1.speedModifier + ability2.speedModifier) / 2)*1.1,

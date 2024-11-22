@@ -132,8 +132,22 @@ export default class GameController{
     getEncounterController(){
         return this.encounterController;
     }
-    updateMiniMenu(item){
+    updateMiniMenu(item, currentCharacter){
         this.view.updateMiniMenu(item);
+        let abilityCount = 0;
+        let abilitySlots =  document.querySelectorAll('.inventory-mini-menu-ability-slot');
+        for(let i = 0; i < item.abilityArray.length; i++){
+            abilitySlots[i].addEventListener('mouseenter', ()=>{
+                let abilityMenu = document.getElementById('ability-mini-menu')
+                this.updateAbilityMenu(item.abilityArray[i], currentCharacter)
+                this.positionPopUpElement(abilityMenu, abilitySlots[i])
+                abilityMenu.style.display = 'flex';
+                abilitySlots[i].addEventListener('mouseleave', ()=>{
+                    abilityMenu.style.display = 'none';
+                });
+            });
+        }
+ 
     }
     updateAbilityMenu(ability, entity){
         this.view.updateAbilityMenu(ability, entity);

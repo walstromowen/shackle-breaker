@@ -66,11 +66,11 @@ export class CaveIn extends Stage{
                             result: 'battle',
                             imageSrc: './assets/media/entities/spider.jpg',
                             musicSrc: "./assets/audio/musicTracks/battle-sword-139313.mp3",
-                            createBattle: (partyLevel, biome)=>{
+                            createBattle: (partyLevel, biome, difficulty)=>{
                                 let hostileArray = [];
                                 let count = Math.ceil(Math.random()*3);
                                 for(let i = -2; i < count; i++){
-                                    hostileArray.push(new Spider({level: partyLevel}))
+                                    hostileArray.push(new Spider({level: partyLevel, difficulty: difficulty}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },

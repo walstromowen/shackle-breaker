@@ -175,7 +175,7 @@ export default class EncounterController{
         }
         switch(outcome.result){
             case 'battle':
-                this.model.toggleBattle(outcome.createBattle(this.model.props.calcHighestPartyLevel(), this.model.props.getMap().biome))
+                this.model.toggleBattle(outcome.createBattle(this.model.props.calcHighestPartyLevel(), this.model.props.getMap().biome), this.model.props.getDifficulty())
                 this.model.updateTileBattle(this.props.getOverworldController().model.currentPartyPosition);
                 if(outcome.createNextStage){
                     this.model.changeStage(outcome.createNextStage(this.model.currentCharacter));
