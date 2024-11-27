@@ -220,15 +220,12 @@ export function generateBiome(biome){
     let chance = Math.floor(Math.random()*4);
     switch(chance){
         case 0:
-            return new Desert({name: 'The Dry Sea'});
             return new Plains({name: 'Altus Kingdom'});
         case 1:
-            return new Desert({name: 'The Dry Sea'});
             return new Cave({name: 'Infernus Valley'});
         case 2:
             return new Desert({name: 'The Dry Sea'});
         case 3:
-            return new Desert({name: 'The Dry Sea'});
             return new SnowyMountains({name: 'Panzeria'});
     }
 }
