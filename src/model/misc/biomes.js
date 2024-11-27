@@ -12,6 +12,7 @@ import { TreasureChest } from "./encounters/treasureChest.js";
 import { CaveIn } from "./encounters/caveIn.js";
 import { TheArtifact } from "./encounters/theArtifact.js";
 import { Bonfire } from "./encounters/bonfire.js";
+import { DesertHorror, Sinkhole } from "./encounters/sinkhole.js";
 
 export default class Biome{
     constructor(config){
@@ -165,8 +166,8 @@ export class Desert extends Biome{
             possibleEncounters: [
                 {startingStage: ()=>{return {name: 'Wandering Mercenary'}}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new TreasureChest({})}, resetOnLeave: false, weight: 2},
-                {startingStage: ()=>{return new SandCastleEntrance({})}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new ShiftingSands({})}, resetOnLeave: false, weight: 3},
+                {startingStage: ()=>{return new Sinkhole({})}, resetOnLeave: false, weight: 2},
             ],
         });
     }
@@ -219,12 +220,15 @@ export function generateBiome(biome){
     let chance = Math.floor(Math.random()*4);
     switch(chance){
         case 0:
+            return new Desert({name: 'The Dry Sea'});
             return new Plains({name: 'Altus Kingdom'});
         case 1:
+            return new Desert({name: 'The Dry Sea'});
             return new Cave({name: 'Infernus Valley'});
         case 2:
             return new Desert({name: 'The Dry Sea'});
         case 3:
+            return new Desert({name: 'The Dry Sea'});
             return new SnowyMountains({name: 'Panzeria'});
     }
 }

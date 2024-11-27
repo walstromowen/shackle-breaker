@@ -71,7 +71,7 @@ export default class OverworldModel{
             }
             if(nextRoom.type != 'blank'){
                 let chance = Math.floor(Math.random()*20);
-                if(chance == 0){
+                if(chance == 99){
                     nextRoom.battle = biome.generateBattle(this.props.calcHighestPartyLevel(), this.props.getDifficulty());
                     this.toggleBattle(nextRoom.battle);
                     return;

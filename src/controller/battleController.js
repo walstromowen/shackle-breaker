@@ -337,7 +337,10 @@ export default class BattleController{
             }).then((resolveObject)=>{
                 this.view.updateCombatantStats(status.holder);
                 if(status.inflicter){
-                    this.view.updateCombatantStats(status.inflicter);//Error when retreating
+                    let isActive = this.model.activeCombatants.includes(status.inflicter);
+                    if(status.inflicter.currentHP > 0 && isActive){
+                        this.view.updateCombatantStats(status.inflicter);//Error when retreating
+                    }
                 }
                 resolve();
             });
@@ -812,9 +815,8 @@ export default class BattleController{
             return (combatant.isHostile == false && combatant.currentHP > 0);
         })
         if(remainingAllies.length == 0){
-            this.view.printToBattleConsole('Party has been slain...');
+            this.view.printToBattleConsole('Party has been slain... Please refresh page');
             //TODO GAME OVER SCREEN
-            alert('you lose! Please refresh page');
             endBattleFlag = true;
             return;
         }

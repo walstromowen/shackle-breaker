@@ -172,10 +172,11 @@ export default class EncounterController{
     triggerOutcome(outcome){
         if(outcome.onActivate){
             outcome.onActivate(this.model.currentCharacter);
+            this.view.updateCurrentCharacterCardStats(this.model.currentCharacter)
         }
         switch(outcome.result){
             case 'battle':
-                this.model.toggleBattle(outcome.createBattle(this.model.props.calcHighestPartyLevel(), this.model.props.getMap().biome), this.model.props.getDifficulty())
+                this.model.toggleBattle(outcome.createBattle(this.model.props.calcHighestPartyLevel(), this.model.props.getMap().biome, this.model.props.getDifficulty()))
                 this.model.updateTileBattle(this.props.getOverworldController().model.currentPartyPosition);
                 if(outcome.createNextStage){
                     this.model.changeStage(outcome.createNextStage(this.model.currentCharacter));
@@ -247,7 +248,7 @@ export default class EncounterController{
                     this.props.getOverworldController().model.currentPartyPosition[0][1]
                     this.model.props.setSituation('overworld')
                     this.props.switchScreen('overworld-screen');
-                    //playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
+                    playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
                     this.props.getOverworldController().view.revealOverworldUi();
                 }, 2000);
                 return;

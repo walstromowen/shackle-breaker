@@ -24,13 +24,7 @@ class StatusEffect{
     }
     activate(turnPhase){
         if(this.holder.currentHP <= 0){
-            return new Promise((resolve)=>{
-                resolve({
-                    text: false,
-                    animation: false,
-                    vitalsUpdate: false,
-                });
-            });
+            return this.onDeath();
         }
         if(turnPhase == 'start'){
             return this.onStartTurn();
@@ -110,6 +104,14 @@ class StatusEffect{
             vitalsUpdate: false,
         }
     )}
+    onDeath(){
+        return this.activateHelpper(()=>{}, 
+        {
+            text: false,
+            animation: false,
+            vitalsUpdate: false,
+        }
+    )}
     //apply / remove events
     onApplied(attacker, target, status){
         target.statusArray.push(status);
@@ -135,8 +137,7 @@ class StatusEffect{
     }
     onAttemptAbility(attacker, target){
         
-    }
-   
+    }   
 }
 export class Poison extends StatusEffect{
     constructor(config){
@@ -541,6 +542,24 @@ export class BearTrapSet extends StatusEffect{
             attacker.currentHP = 0;
         }
         this.onRemove();
+    }
+}
+export class SoulLinked extends StatusEffect{
+    constructor(config){
+        super({
+            name:'soul linked',
+            holder: config.holder,
+            maxCharges: 99,
+            removeOnBattleEnd: false,
+            stackable: true,
+        });
+        this.inflicter = config.inflicter;
+    }
+    onRecieveDamage(){
+        if(this.holder.currentHP <= 0){//kraken holder tentacle inflicter
+            this.inflicter.currentHP = 0;
+            this.onRemove();
+        }
     }
 }
 export class PhysicalAttackBuff extends StatusEffect{

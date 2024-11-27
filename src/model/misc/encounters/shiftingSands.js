@@ -278,7 +278,7 @@ export class ShiftingSands3 extends Stage{
                 {
                     description: 'Keep going. [VIG]',
                     attributes: ['vigor'],
-                    successThreshold: 15,
+                    successThreshold: 12,
                     roll: true,
                     successfulOutcomes: [
                         {

@@ -1,3 +1,4 @@
+import { deepCopyArray } from "../../utility.js";
 import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen, Blessed, Cursed, PhysicalAttackDebuff, PhysicalAttackBuff, BearTrapSet, MagicalAttackBuff, MagicalAttackDebuff, PhysicalDefenseBuff, EvasionBuff} from "./statusEffects.js";
 
 export class Ability{
@@ -202,24 +203,28 @@ export class Ability{
     }
     //to target events
     triggerOnRecieveDamage(attacker, target){
-        for(let i = 0; i < target.statusArray.length; i++){
-            target.statusArray[i].onRecieveDamage(attacker, target);
+        let iteratedArray = deepCopyArray(target.statusArray)
+        for(let i = 0; i < iteratedArray.length; i++){
+            iteratedArray[i].onRecieveDamage(attacker, target);
         }
     }
     triggerOnOpponentAttemptAbility(attacker, target){
-        for(let i = 0; i < target.statusArray.length; i++){
-            target.statusArray[i].onOpponentAttemptAbility(attacker, target);
+        let iteratedArray = deepCopyArray(target.statusArray)
+        for(let i = 0; i < iteratedArray.length; i++){
+            iteratedArray[i].onOpponentAttemptAbility(attacker, target);
         }
     }
     //to attacker events
     triggerOnDeliverDamage(attacker, target){
-        for(let i = 0; i < attacker.statusArray.length; i++){
-            attacker.statusArray[i].onDeliverDamage(attacker, target);
+        let iteratedArray = deepCopyArray(attacker.statusArray)
+        for(let i = 0; i < iteratedArray.length; i++){
+            iteratedArray[i].onDeliverDamage(attacker, target);
         }
     }
     triggerOnAttemptAbility(attacker, target){
-        for(let i = 0; i < attacker.statusArray.length; i++){
-            attacker.statusArray[i].onAttemptAbility(attacker, target);
+        let iteratedArray = deepCopyArray(attacker.statusArray);
+        for(let i = 0; i < iteratedArray.length; i++){
+            iteratedArray[i].onAttemptAbility(attacker, target);
         }
     }
 }

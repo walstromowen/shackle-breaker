@@ -1,5 +1,5 @@
 import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl, Eviscerate, ChannelMagic, DarkOrb, Bless, Brace, Inferno, SetBearTrap, Uppercut} from "./abilities.js";
-import { Poison, Burn, Bleed, Shielded, InstaDeath} from "./statusEffects.js";
+import { Poison, Burn, Bleed, Shielded, InstaDeath, SoulLinked} from "./statusEffects.js";
 import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, LeatherGloves, GreatSword, Flintlock, SmokeBomb} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Hide} from "./items.js";
 
@@ -1228,6 +1228,100 @@ export class DryEel extends Entity{
         this.baseElementalDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 0) + (this.attunement * 1);
         this.baseSpeed = 25;
         this.baseEvasion = 0.1;
+        this.baseCritical = 0.1;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
+    }
+}
+export class DryKraken extends Entity{
+    constructor(config){
+        super({
+            name: 'Dry Kraken',
+            size: 'large',
+            level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
+            apperance: config.apperance || './assets/media/entities/dry-kraken.jpg',
+            vigor: config.vigor || 0,
+            strength: config.strength || 6,
+            dexterity: config.dexterity || 5,
+            intelligence: config.intelligence || 3,
+            attunement: config.attunement || 3,
+            baseBluntResistance: config.baseBluntResistance || 0.2,
+            basePierceResistance: config.basePierceResistance || 0.05,
+            baseArcaneResistance: config.baseArcaneResistance || 0.05,
+            baseElementalResistance: config.baseElementalResistance || 0.1,
+            isHostile: config.isHostile || true,
+            equipment: {},
+            abilityArray: [new Bite({damageModifier: 1.5}), new Roar({}), new Earthquake({})],
+            lootTable: [
+                {item: new HealthPotion({level: 1}), weight: 2},
+                {item: new Hide(), weight: 2}
+            ],
+        })
+    }
+    scaleAttributes(difficulty){
+        this.maxHP = (this.vigor * 20)  + (this.strength * 20) + (this.dexterity * 20) + (this.intelligence * 20) + (this.attunement * 20);
+        this.maxStamina = (this.vigor * 20) + (this.strength * 20) + (this.dexterity * 20) + (this.intelligence * 20) + (this.attunement * 20);
+        this.maxMagic = (this.vigor * 10)  + (this.strength * 10) + (this.dexterity * 10) + (this.intelligence * 30) + (this.attunement * 30);
+        this.baseHpRecovery = 0;
+        this.baseStaminaRecovery = 15;
+        this.baseMagicRecovery = 5;
+        this.baseBluntAttack = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 2) + (this.attunement * 2);
+        this.basePierceAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 3) + (this.intelligence * 2) + (this.attunement * 2);
+        this.baseArcaneAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 3) + (this.attunement * 2);
+        this.baseElementalAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 3);
+        this.baseBluntDefense = (this.vigor * 1)  + (this.strength * 2) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 1);
+        this.basePierceDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 0) + (this.attunement * 0);
+        this.baseArcaneDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 2) + (this.attunement * 1);
+        this.baseElementalDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 0) + (this.attunement * 1);
+        this.baseSpeed = 15;
+        this.baseEvasion = 0.05;
+        this.baseCritical = 0.1;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
+    }
+}
+export class DryKrakenTentacle extends Entity{
+    constructor(config){
+        super({
+            name: 'Tentacle',
+            level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
+            apperance: config.apperance || './assets/media/entities/dry-kraken-tentacle.jpg',
+            vigor: config.vigor || 8,
+            strength: config.strength || 7,
+            dexterity: config.dexterity || 5,
+            intelligence: config.intelligence || 5,
+            attunement: config.attunement || 5,
+            baseBluntResistance: config.baseBluntResistance || 0.2,
+            basePierceResistance: config.basePierceResistance || 0.1,
+            baseArcaneResistance: config.baseArcaneResistance || 0.1,
+            baseElementalResistance: config.baseElementalResistance || 0.2,
+            isHostile: config.isHostile || true,
+            equipment: {},
+            abilityArray: [new Strike({})],
+            lootTable: [],
+        })
+    }
+    scaleAttributes(difficulty){
+        this.maxHP = (this.vigor * 2)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
+        this.maxStamina = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
+        this.maxMagic = (this.vigor * 2)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
+        this.baseHpRecovery = 0;
+        this.baseStaminaRecovery = 5;
+        this.baseMagicRecovery = 5;
+        this.baseBluntAttack = (this.vigor * 1) + (this.strength * 3) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
+        this.basePierceAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 3) + (this.intelligence * 2) + (this.attunement * 2);
+        this.baseArcaneAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 3) + (this.attunement * 2);
+        this.baseElementalAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 3);
+        this.baseBluntDefense = (this.vigor * 1)  + (this.strength * 2) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 1);
+        this.basePierceDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 2) + (this.intelligence * 0) + (this.attunement * 0);
+        this.baseArcaneDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 2) + (this.attunement * 1);
+        this.baseElementalDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 0) + (this.attunement * 1);
+        this.baseSpeed = 25;
+        this.baseEvasion = 0.05;
         this.baseCritical = 0.1;
         if(this.isHostile){
             this.applyDifficultyMultiplier(difficulty)
