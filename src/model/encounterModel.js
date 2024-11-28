@@ -120,4 +120,30 @@ export default class EncounterModel{
             return false;
         }
     }
+    checkRequiredItems(requiredItems){
+        let removedItems = []
+        let inventory = this.props.getInventory()
+        for(let i = 0; i < requiredItems.length; i++){
+            for(let j = 0; j < inventory.length; j++){
+                if(requiredItems[i] == inventory[j].name){
+                    removedItems.push(inventory[j]);
+                    break;
+                }
+            }
+        }
+        if(removedItems.length == requiredItems.length){
+            for(let i = 0; i < removedItems.length; i++){
+                for(let j = 0; j < inventory.length; j++){
+                    if(removedItems[i].itemId == inventory[j].itemId){
+                        inventory.splice(j, 1);
+                        i--;
+                        break;
+                    }
+                }
+            }
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

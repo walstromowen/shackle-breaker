@@ -1,5 +1,5 @@
 import { getRandomArrayElementWeighted } from "../../utility.js";
-import { Skeleton, SkeletonCultist, Wolf, Spider, GroveGuardian, Madman, MadMage, SandStalker, DryShark, Dog, ArmoredSkeleton, MadBandit, FloatingSkull, DryEel, PanzerianKnight, MadEngineer} from "./entities.js";
+import { Skeleton, SkeletonCultist, Wolf, Spider, GroveGuardian, Madman, MadMage, SandStalker, DryShark, Dog, ArmoredSkeleton, MadBandit, FloatingSkull, DryEel, PanzerianKnight, MadEngineer, IcePheonix} from "./entities.js";
 import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, GreatSword, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, BearTrap, Flintlock, SmokeBomb} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Hide} from "./items.js";
 import Encounter from "./encounters/encounter.js";
@@ -13,6 +13,7 @@ import { CaveIn } from "./encounters/caveIn.js";
 import { TheArtifact } from "./encounters/theArtifact.js";
 import { Bonfire } from "./encounters/bonfire.js";
 import { DesertHorror, Sinkhole } from "./encounters/sinkhole.js";
+import { TracksInTheSnow, WoundedTiger } from "./encounters/tracksInTheSnow.js";
 
 export default class Biome{
     constructor(config){
@@ -181,14 +182,16 @@ export class SnowyMountains extends Biome{
             backgroundMusicSrc: "./assets/audio/musicTracks/nocturne-roman-main-version-16841-01-45.mp3",
             battleMusicSrc: "./assets/audio/musicTracks/battle-sword-139313.mp3",
             possibleHostiles: [
-                {entity: (partyLevel, difficulty)=>{return new MadEngineer({level: partyLevel, difficulty: difficulty})}, weight: 1},
+                {entity: (partyLevel, difficulty)=>{return new MadEngineer({level: partyLevel, difficulty: difficulty})}, weight: 2},
                 {entity: (partyLevel, difficulty)=>{return new PanzerianKnight({level: partyLevel, difficulty: difficulty})}, weight: 1},
                 {entity: (partyLevel, difficulty)=>{return new Wolf({level: partyLevel, difficulty: difficulty})}, weight: 1},
+                {entity: (partyLevel, difficulty)=>{return new IcePheonix({level: partyLevel, difficulty: difficulty})}, weight: 1},
                 
             ],
             possibleEncounters: [
                 {startingStage: ()=>{return {name: 'Wandering Mercenary'}}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new TreasureChest({})}, resetOnLeave: false, weight: 1},
+                {startingStage: ()=>{return new TracksInTheSnow({})}, resetOnLeave: true, weight: 1},
             ],
         });
     }

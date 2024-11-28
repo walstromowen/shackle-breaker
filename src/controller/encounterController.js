@@ -102,13 +102,22 @@ export default class EncounterController{
             decisionButton.addEventListener('click', (e)=>{
                 e.preventDefault();
                 e.stopPropagation();
-                if(this.model.currentStage.decisionArray[i].goldCost){
-                    if(this.model.checkGoldCost(this.model.currentStage.decisionArray[i].goldCost)){
-                        this.activateDecisionHelpper(this.model.currentStage.decisionArray[i]);
+                if(this.model.currentStage.decisionArray[i].goldCost || this.model.currentStage.decisionArray[i].requiredItems){
+                    if(this.model.currentStage.decisionArray[i].goldCost){
+                        if(this.model.checkGoldCost(this.model.currentStage.decisionArray[i].goldCost)){
+                            this.activateDecisionHelpper(this.model.currentStage.decisionArray[i]);
+                        }else{
+                            playSoundEffect('./assets/audio/soundEffects/power-down-45784.mp3');
+                        }
                     }else{
-                        playSoundEffect('./assets/audio/soundEffects/power-down-45784.mp3');
+                        if(this.model.checkRequiredItems(this.model.currentStage.decisionArray[i].requiredItems)){
+                            this.activateDecisionHelpper(this.model.currentStage.decisionArray[i]);
+                        }else{
+                            playSoundEffect('./assets/audio/soundEffects/power-down-45784.mp3');
+                        }
                     }
-                }else{
+                }
+                else{
                     this.activateDecisionHelpper(this.model.currentStage.decisionArray[i]);
                 }
             });

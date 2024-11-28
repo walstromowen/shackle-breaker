@@ -5,9 +5,9 @@ import PartyModel from "./partyModel.js";
 import CharacterSummaryModel from "./characterSummaryModel.js";
 import EncounterModel from "./encounterModel.js";
 
-import { Entity } from "./misc/entities.js";
+import { Entity, Traveler } from "./misc/entities.js";
 import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt} from "./misc/abilities.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherBoots, LeatherChestplate, LeatherGloves, ClothHood, IronHelm} from "./misc/items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherBoots, LeatherChestplate, LeatherGloves, ClothHood, IronHelm, ForestStaff} from "./misc/items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, AloeRemedy, Bandage, PineWood} from "./misc/items.js";
 
 
@@ -93,14 +93,14 @@ export default class GameModel{
             }),
             new Entity({
                 name: 'Julian Memira',
-                apperance: './assets/media/entities/companion-warrior-3.jpg',
+                apperance: './assets/media/entities/companion-mage-2.jpg',
                 vigor: 5,
                 strength: 3,
                 dexterity: 5,
-                intelligence: 7,
-                attunement: 5,
+                intelligence: 5,
+                attunement: 7,
                 equipment: {
-                    mainHand: new LightStaff({level: 1}),
+                    mainHand: new ForestStaff({level: 1}),
                     offhand: '',
                     head: new ClothHood({level: 1}),
                     torso: new LinenShirt({level: 1}),
@@ -139,6 +139,24 @@ export default class GameModel{
                     mainHand: new Shortbow({level: 1}),
                     offhand: new Shortbow({level: 1}),
                     head: new LeatherHood({level: 1}),
+                    torso: new LinenShirt({level: 1}),
+                    arms: '',
+                    legs: new LinenPants({level: 1}),
+                    feet: new LeatherBoots({level: 1}),
+                },
+            }),
+            new Entity({
+                name: 'Doctor Micolash',
+                apperance: './assets/media/entities/companion-mage-3.jpg',
+                vigor: 5,
+                strength: 3,
+                dexterity: 7,
+                intelligence: 7,
+                attunement: 3,
+                equipment: {
+                    mainHand: new ArcaneStaff({level: 1}),
+                    offhand: new Dagger({level: 1}),
+                    head: '',
                     torso: new LinenShirt({level: 1}),
                     arms: '',
                     legs: new LinenPants({level: 1}),
@@ -207,8 +225,13 @@ export default class GameModel{
     recruitWanderingCompanion(){
         let index = Math.floor(Math.random()* this.wanderingCompanions.length)
         let companion = this.wanderingCompanions[index];
-        this.wanderingCompanions.splice(index, 1);
-        return companion;
+        if(companion){
+            this.wanderingCompanions.splice(index, 1);
+            return companion;
+        }
+        else{
+            return new Traveler({level: 1})
+        }
     }
     calcHighestPartyLevel(){
         let highestLevel = 0;

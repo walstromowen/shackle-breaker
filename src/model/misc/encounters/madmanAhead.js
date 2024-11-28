@@ -364,7 +364,7 @@ export class ConversationWithMadman extends Stage{
                     successfulOutcomes: [
                         {
                             result: 'recruit',
-                            createRecruit: (partyLevel, biome)=>{
+                            createRecruit: (partyLevel, biome, difficulty)=>{
                                 let recruit = new Madman({level: partyLevel, difficulty: difficulty})
                                 recruit.isHostile = false;
                                 return recruit;
