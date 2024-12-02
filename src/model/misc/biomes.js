@@ -24,6 +24,7 @@ export default class Biome{
         this.possibleHostiles = config.possibleHostiles || [];
         this.possibleEncounters = config.possibleEncounters || [];
         this.storyEncounters = config.storyEncounters || [];
+        this.weather = config.weather || 'clear';
         this.lootTable = config.lootTable || [
             {item: ()=>{return new ArcaneStaff({level: 1})}, weight: 1},
             {item: ()=>{return new LightStaff({level: 1})}, weight: 1},
@@ -91,9 +92,6 @@ export default class Biome{
         let startingStage = encounter.startingStage();
         if(startingStage.name == 'Wandering Mercenary'){
             let entity = fn()
-            if(entity == false){
-                entity = new Skeleton({name: 'Undead Traveler', isHostile: false});
-            }
             return new Encounter(new WanderingMercenary({entity: entity}), encounter.resetOnLeave) 
         }
         return new Encounter(startingStage, encounter.resetOnLeave)   
@@ -200,7 +198,7 @@ export class SnowyMountains extends Biome{
 export class AltusCapital extends Biome{
     constructor(config){
         super({
-            name: 'altus capital',
+            name: 'Altus Capital',
             terrainSrc: './assets/media/terrain/altus-capital.png',
             backgroundMusicSrc: "./assets/audio/musicTracks/Alex-Productions - Epic Cinematic Adventure Vlog _ Eglair.mp3",
             battleMusicSrc: "./assets/audio/musicTracks/battle-sword-139313.mp3",

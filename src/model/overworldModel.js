@@ -5,6 +5,7 @@ export default class OverworldModel{
         this.props = props;
         this.currentPartyPosition = [0,0];//in Tiles
         this.previousPartyPosition = [0,0];//in Tiles
+        this.nextPartyPosition = [0,0];
         this.generateNewMap();
     }
     generateNewMap(){//want this to execute after lobby start happens
@@ -14,12 +15,13 @@ export default class OverworldModel{
             this.props.setMap(new Map());
         }
         this.currentPartyPosition = this.props.getMap().getEntrancePosition();
+        this.nextPartyPosition = this.currentPartyPosition;
     }
     movePartyUp(){
         let map = this.props.getMap();
         if(this.currentPartyPosition[1]-1 >= 0){
             if(map.tileLayout[this.currentPartyPosition[1]-1][this.currentPartyPosition[0]].type != 'wall'){
-                this.movePartyTile(map.tileLayout[this.currentPartyPosition[1]-1][this.currentPartyPosition[0]]);
+                this.nextPartyPosition = map.tileLayout[this.currentPartyPosition[1]-1][this.currentPartyPosition[0]].position;
             }
         }   
     }
@@ -27,7 +29,7 @@ export default class OverworldModel{
         let map = this.props.getMap();
         if(this.currentPartyPosition[1]+1 < map.tileLayout.length){
             if(map.tileLayout[this.currentPartyPosition[1]+1][this.currentPartyPosition[0]].type != 'wall'){
-                this.movePartyTile(map.tileLayout[this.currentPartyPosition[1]+1][this.currentPartyPosition[0]]);
+               this.nextPartyPosition = map.tileLayout[this.currentPartyPosition[1]+1][this.currentPartyPosition[0]].position;
             }
         }
     }
@@ -35,7 +37,7 @@ export default class OverworldModel{
         let map = this.props.getMap();
         if(this.currentPartyPosition[0]-1 >= 0){
             if(map.tileLayout[this.currentPartyPosition[1]][this.currentPartyPosition[0]-1].type != 'wall'){
-                this.movePartyTile(map.tileLayout[this.currentPartyPosition[1]][this.currentPartyPosition[0]-1])
+                this.nextPartyPosition = map.tileLayout[this.currentPartyPosition[1]][this.currentPartyPosition[0]-1].position;
             }
         }
     }
@@ -43,44 +45,46 @@ export default class OverworldModel{
         let map = this.props.getMap();
         if(this.currentPartyPosition[0]+1 < map.tileLayout[this.currentPartyPosition[1]].length){
             if(map.tileLayout[this.currentPartyPosition[1]][this.currentPartyPosition[0]+1].type != 'wall'){
-                this.movePartyTile(map.tileLayout[this.currentPartyPosition[1]][this.currentPartyPosition[0]+1])
+                this.nextPartyPosition = map.tileLayout[this.currentPartyPosition[1]][this.currentPartyPosition[0]+1].position;
             }
         }
     }
-    movePartyTile(nextRoom){
-        if(nextRoom.type != 'wall'){
-            this.previousPartyPosition = this.currentPartyPosition;
-            this.currentPartyPosition = nextRoom.position;
-            let biome = this.props.getMap().biome;
-            if(nextRoom.battle != ''){
-                this.toggleBattle(nextRoom.battle);
-                return; 
-            }
-            if(nextRoom.encounter != ''){
-                this.toggleEncounter(nextRoom.encounter);
+    movePartyTile(){
+        this.previousPartyPosition = this.currentPartyPosition;
+        this.currentPartyPosition = this.nextPartyPosition;
+        this.props.getMap().tileLayout[this.currentPartyPosition[1]][this.currentPartyPosition[0]].status = 'visited';
+    }
+    determineRoomEvent(){
+        let biome = this.props.getMap().biome;
+        let tileEntered = this.props.getMap().tileLayout[this.currentPartyPosition[1]][this.currentPartyPosition[0]]
+        if(tileEntered.battle != ''){
+            this.toggleBattle(tileEntered.battle);
+            return; 
+        }
+        if(tileEntered.encounter != ''){
+            this.toggleEncounter(tileEntered.encounter);
+            return;
+        }
+        if(tileEntered.type == 'exit'){
+            this.toggleMapChange()
+            return;
+        }
+        if(tileEntered.type == 'boss'){
+            tileEntered.encounter = biome.generateStoryEncounter();
+            this.toggleEncounter(tileEntered.encounter);
+            return;
+        }
+        if(tileEntered.type != 'blank'){
+            let chance = Math.floor(Math.random()*20);
+            if(chance == 0){
+                tileEntered.battle = biome.generateBattle(this.props.calcHighestPartyLevel(), this.props.getDifficulty());
+                this.toggleBattle(tileEntered.battle);
                 return;
             }
-            if(nextRoom.type == 'exit'){
-                this.toggleMapChange()
+            if(chance == 1){
+                tileEntered.encounter = biome.generateEncounter(this.props.recruitWanderingCompanion);
+                this.toggleEncounter(tileEntered.encounter);
                 return;
-            }
-            if(nextRoom.type == 'boss'){
-                nextRoom.encounter = biome.generateStoryEncounter();
-                this.toggleEncounter(nextRoom.encounter);
-                return;
-            }
-            if(nextRoom.type != 'blank'){
-                let chance = Math.floor(Math.random()*20);
-                if(chance == 0){
-                    nextRoom.battle = biome.generateBattle(this.props.calcHighestPartyLevel(), this.props.getDifficulty());
-                    this.toggleBattle(nextRoom.battle);
-                    return;
-                }
-                if(chance == 1){
-                    nextRoom.encounter = biome.generateEncounter(this.props.recruitWanderingCompanion);
-                    this.toggleEncounter(nextRoom.encounter);
-                    return;
-                }
             }
         }
     }

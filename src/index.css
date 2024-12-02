@@ -973,7 +973,7 @@ img{
 }
 #overworld-canvas{
     background-color:black;
-    image-rendering: crisp-edges;
+    image-rendering:auto;
     position: absolute;
     top: 0;
     left: 0;
@@ -982,6 +982,7 @@ img{
     height: 100dvh;
     pointer-events: all;
 }
+
 #overworld-screen{
     background-color: transparent;
     
@@ -1032,7 +1033,7 @@ img{
 }
 #battle-battlefield-container{
     background: radial-gradient(var(--color-3), var(--color-1));
-    flex: 2.5;
+    flex: 4;
     display: flex;
     justify-content: space-between;
     padding: 10px;

@@ -30,7 +30,7 @@ export class Sinkhole extends Stage{
                             createNextStage: (partyLevel, biome)=>{
                                 return new GaintTentacle({});
                             },
-                            weight: 1,
+                            weight: 2,
                         },
                         {
                             result: 'battle',
@@ -57,7 +57,7 @@ export class Sinkhole extends Stage{
                 {
                     description: 'Grab onto something. [STR/ATN]',
                     attributes: ['strength', 'attunement'],
-                    successThreshold: 122,
+                    successThreshold: 12,
                     roll: true,
                     successfulOutcomes: [
                         {
@@ -74,7 +74,7 @@ export class Sinkhole extends Stage{
                             createNextStage: (partyLevel, biome)=>{
                                 return new GaintTentacle({});
                             },
-                            weight: 11,
+                            weight: 2,
                         },
                         {
                             result: 'battle',
@@ -143,7 +143,7 @@ export class GaintTentacle extends Stage{
                 {
                     description: 'Swing at the tentacle. [STR]',
                     attributes: ['vigor'],
-                    successThreshold: 22,
+                    successThreshold: 16,
                     roll: true,
                     successfulOutcomes: [
                         {

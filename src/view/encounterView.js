@@ -103,13 +103,13 @@ export default class EncounterView{
     }
     displayEncounterRoller(){
         this.rollerMenu.style.display = 'flex';
-        this.rollButton.style.display = 'block';
+        this.rollButton.style.visibility = 'visible';
     }
     hideEncounterRoller(){
         this.rollerMenu.style.display = 'none';
     }
     hideRollButtons(){
-        this.rollButton.style.display = 'none';
+        this.rollButton.style.visibility = 'hidden';
     }
     addAttributebonusAnimation(value, attributeBonuseScore, threshold){
         let root = document.querySelector(':root');

@@ -31,16 +31,16 @@ export function getRandomArrayElement(array){
 }
 
 export function getRandomArrayElementWeighted(array){
-        for(let i = 0; i < array.length; i++){
-            let allWeightSum = array.reduce((ac, elementProbability)=> ac + elementProbability.weight, 0);
-            let threshold = Math.random() * allWeightSum;
-            for(let elementProbability of array){
-                threshold -= elementProbability.weight;
-                if(threshold < 0){
-                    return elementProbability;
-                }
+    for(let i = 0; i < array.length; i++){
+        let allWeightSum = array.reduce((ac, elementProbability)=> ac + elementProbability.weight, 0);
+        let threshold = Math.random() * allWeightSum;
+        for(let elementProbability of array){
+            threshold -= elementProbability.weight;
+            if(threshold < 0){
+                return elementProbability;
             }
         }
+    }
 }
 
 export function createElement(type, className){

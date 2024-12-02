@@ -6,6 +6,7 @@ export default class TitleController{
         this.initialize();
     }
     initialize(){
+       
         document.getElementById('title-start-button').addEventListener('click', ()=>{
             if(document.querySelector('body').requestFullscreen) {
                 document.querySelector('body').requestFullscreen();
@@ -20,3 +21,4 @@ export default class TitleController{
         });
     }
 }
+

@@ -117,5 +117,15 @@ export function generateLayout(layout){
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ];
     }
+    if(layout == 'test'){
+        return [
+            [2, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0],
+            [3, 0, 0, 0, 0, 0],
+            
+        ];
+    }
     return getRandomArrayElement(layouts);
 }

@@ -78,7 +78,7 @@ export class Entity{
         this.abilityArray = config.abilityArray || [];//new Strike(), new MagicMissile(), new ThrowPosionedKnife(),
         
         this.partyId = '';
-        this.battleId = '';
+        this.battleId = config.battleId || '';
        
         this.isSelectable = true;
         this.nextAbility = '';

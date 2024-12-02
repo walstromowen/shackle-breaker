@@ -1,5 +1,6 @@
 import { deepCopyArray } from "../../utility.js";
-import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen, Blessed, Cursed, PhysicalAttackDebuff, PhysicalAttackBuff, BearTrapSet, MagicalAttackBuff, MagicalAttackDebuff, PhysicalDefenseBuff, EvasionBuff} from "./statusEffects.js";
+import { Tiger } from "./entities.js";
+import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen, Blessed, Cursed, PhysicalAttackDebuff, PhysicalAttackBuff, BearTrapSet, MagicalAttackBuff, MagicalAttackDebuff, PhysicalDefenseBuff, EvasionBuff, Polymorphed} from "./statusEffects.js";
 
 export class Ability{
     constructor(config){
@@ -147,7 +148,7 @@ export class Ability{
         }
     }
     prepareAbilitiy(attacker, targets){
-        let resolveObject = {evade: false, switchCombatant: false, retreat: false, rest: false}
+        let resolveObject = {evade: false, switchCombatant: false, retreat: false, rest: false, newForm: false}
         switch(this.sequenceType){
             case 'chain':
                 this.triggerOnAttemptAbility(attacker, targets[0]);
@@ -180,6 +181,9 @@ export class Ability{
         }
         if(attacker.nextAbility.name == 'rest'){
             resolveObject.rest = true;
+        }
+        if(this.newForm){
+            resolveObject.newForm = this.newForm;
         }
         this.spendResources(attacker);
         this.updateMessage(attacker, targets[0]);
@@ -1309,6 +1313,52 @@ export class VineLash extends Ability{
         this.message = `${attacker.name} summons vines to lash ${target.name}.`;
     }
 }
+//TODO
+export class Shapeshift extends Ability{
+    constructor(config){
+        super({
+            name: 'Shapeshift',
+            description: "Use elemental magic to take the form of wild animal. Will return to normal form upon death or leaving battle.",
+            iconSrc: './assets/media/icons/vine-whip.png',
+            background: `url(./assets/media/icons/mighty-force.png), linear-gradient(forestgreen, silver)`,
+            speedModifier: config.speedModifier || 1,
+            damageModifier: config.damageModifier || 1,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 50,
+            damageTypes: config.damageTypes || ['elemental'],
+            soundEffectSrc: "./assets/audio/soundEffects/mixkit-magic-astral-sweep-effect-2629.wav",
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimation: config.abilityAnimation || 'shake',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/mighty-force.png',
+            targetAnimation: config.targetAnimation || 'shake',
+
+            defaultTarget: 'self',
+            targetLock: 'self',
+            
+        })
+        this.newForm;
+    }
+    activate(attacker, target){
+        this.newForm = new Tiger({level: target.level});
+        let originalForm = {
+            animation: 'twister',
+            animationDuration: 2000,
+            animationSoundEffect: './assets/audio/soundEffects/tornado.wav',
+            createNextForm: ()=>{
+                return target;
+            },
+            messageFn: ()=>{
+                return `${target.name} returns to normal form.`;
+            }
+        }
+        this.inflictStatus(new Polymorphed({holder: this.newForm, originalForm: originalForm}), this.newFrom, this.newForm);
+    }
+    updateMessage(attacker, target){
+        this.message = `${target.name} transforms into a Tiger.`;
+    }
+}
+//TODO
 export class Bless extends Ability{
     constructor(config){
         super({
@@ -1509,7 +1559,7 @@ export class ShootBullet extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 15,
             magicCost: config.magicCost || 0,
-            damageTypes: config.damageTypes || ['strength', 'intelligence'],
+            damageTypes: config.damageTypes || ['strength', 'arcane'],
             soundEffectSrc: "./assets/audio/soundEffects/supernatural-explosion-104295.wav",
             attackerAnimation: config.attackerAnimation || 'ally-evade',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/falling-blob.png',

@@ -532,8 +532,6 @@ export class BearTrapSet extends StatusEffect{
             holder: config.holder,
             maxCharges: 99,
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-metal-medieval-construction-818.wav",
-            removeOnBattleEnd: false,
-            stackable: true,
         });
     }
     onRecieveDamage(attacker, target){
@@ -560,6 +558,42 @@ export class SoulLinked extends StatusEffect{
             this.inflicter.currentHP = 0;
             this.onRemove();
         }
+    }
+}
+export class Polymorphed extends StatusEffect{
+    constructor(config){
+        super({
+            name:'polymorphed',
+            holder: config.holder,
+            maxCharges: 6,
+            removeOnBattleEnd: true,
+        });
+        this.originalForm = config.originalForm;
+    }
+    onEndTurn(){
+        return this.activateHelpper(
+            ()=>{
+                this.currentCharges --;
+            }, 
+            {
+                text: false,
+                animation: false,
+                vitalsUpdate: false,
+            }
+        );
+    }
+    onApplied(attacker, target, status){
+        target.statusArray.push(status);
+        this.holder.nextForm = this.originalForm;
+    }
+    onRemove(){
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == this.name){
+                this.holder.statusArray.splice(i, 1);
+                break;
+            }
+        }
+        this.holder.currentHP = 0;
     }
 }
 export class PhysicalAttackBuff extends StatusEffect{

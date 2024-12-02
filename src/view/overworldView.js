@@ -10,13 +10,22 @@ export default class OverworldView{
         this.tileHeight = 64;
         this.ctx = this.overworldCanvas.getContext('2d');
         this.viewport = {
-           viewportWidth: 0, //in tiles
-           viewportHeight: 0, //in tiles
-           startTileCoordinates: [0,0],
-           endTileCoordinates: [0,0],
-           offset: [0,0],
+            viewportWidth: 0, //in tiles
+            viewportHeight: 0, //in tiles
+            startTileCoordinates: [0,0],
+            endTileCoordinates: [0,0],
+            offset: [0,0],
+            movementOffset: [0, 0],
         }
         this.resize();
+    }
+    processMovement(currentPosition, nextPosition, fpsInterval, playerMovementDelay){
+        let diff = this.tileWidth/(playerMovementDelay/fpsInterval);
+        //let diff = Math.floor(this.tileWidth/(playerMovementDelay/fpsInterval));
+        if(currentPosition[1] > nextPosition[1]) this.viewport.movementOffset[1] += diff //up
+        if(currentPosition[1] < nextPosition[1]) this.viewport.movementOffset[1] -= diff //down
+        if(currentPosition[0] > nextPosition[0]) this.viewport.movementOffset[0] += diff///left
+        if(currentPosition[0] < nextPosition[0]) this.viewport.movementOffset[0] -= diff///right
     }
     updateViewport(map, partyPosition){
         this.viewport.offset[0] = Math.floor((this.overworldCanvas.width/2)-(partyPosition[0]*this.tileWidth)-(this.tileWidth/2)); //viewport width  - camera horizontal offset (px)
@@ -51,35 +60,48 @@ export default class OverworldView{
     }
     draw(map, partyPosition){//partyPosition is an array [x,y]
         this.updateViewport(map, partyPosition);
-        loadCanvasImages([map.biome.terrainSrc, './assets/media/icons/hero.png']).then((images)=>{
+        loadCanvasImages([map.biome.terrainSrc, './assets/media/icons/hero.png', './assets/media/icons/battle-present.png', './assets/media/icons/encounter-present.png']).then((images)=>{
             this.ctx.clearRect(0, 0, this.overworldCanvas.width, this.overworldCanvas.height); 
-            let image = images[0];
-            let heroIcon = images[1];
             for(let y = this.viewport.startTileCoordinates[1]; y <= this.viewport.endTileCoordinates[1]; y++){
                 for(let x = this.viewport.startTileCoordinates[0]; x <= this.viewport.endTileCoordinates[0]; x++){
-                   
+                    this.ctx.drawImage(
+                        images[0], 
+                        1 + (64 + 2)*map.tileLayout[y][x].imageCoordinates[0], 
+                        1 + (64 + 2)*map.tileLayout[y][x].imageCoordinates[1], 
+                        64, 
+                        64, 
+                        x*this.tileWidth + this.viewport.offset[0] + (this.viewport.movementOffset[0]), 
+                        y*this.tileHeight + this.viewport.offset[1] + (this.viewport.movementOffset[1]), 
+                        this.tileWidth, 
+                        this.tileHeight
+                    );
+                    if(map.tileLayout[y][x].status == 'visited' && (map.tileLayout[y][x].encounter != '' || map.tileLayout[y][x].battle != '')){
+                        let icon;
+                        if(map.tileLayout[y][x].battle != ''){
+                            icon = images[2];
+                        }else{
+                            icon = images[3]
+                        }
                         this.ctx.drawImage(
-                            image, 
-                            64*map.tileLayout[y][x].imageCoordinates[0], 
-                            64*map.tileLayout[y][x].imageCoordinates[1], 
-                            64, 
-                            64, 
-                            x*this.tileWidth + this.viewport.offset[0], 
-                            y*this.tileHeight + this.viewport.offset[1], 
+                            icon, 
+                            x*this.tileWidth + this.viewport.offset[0] + (this.viewport.movementOffset[0]), 
+                            y*this.tileHeight + this.viewport.offset[1] + (this.viewport.movementOffset[1]), 
                             this.tileWidth, 
                             this.tileHeight
                         );
+                    }
                     
                 }
             }
             //console.log("x: " + partyPosition[0] + " " + partyPosition[0]%(this.overworldCanvas.width/this.tileWidth)*this.tileWidth + " " + this.overworldCanvas.width);
             //console.log("y: " + partyPosition[1] + " " +partyPosition[1]%(this.overworldCanvas.height/this.tileHeight)*this.tileHeight + " " + this.overworldCanvas.height)
             this.ctx.drawImage(
-                heroIcon, 
+                images[1], 
                 partyPosition[0]*this.tileWidth + this.viewport.offset[0], 
                 partyPosition[1]*this.tileHeight + this.viewport.offset[1], 
                 this.tileWidth, 
-                this.tileHeight); 
+                this.tileHeight
+            ); 
         });
 
     }
@@ -117,3 +139,4 @@ export default class OverworldView{
 	context.drawImage(image, frameX, frameY, frameWidth, frameHeight, canvasX, canvasY, canvasWidth, canvasHeight);
 
 */
+

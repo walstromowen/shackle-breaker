@@ -5,12 +5,34 @@ export default class OverworldController{
         this.props = props;
         this.model = model;
         this.view = view;
+
+        this.keysDown = {
+            w: false,
+            s: false,
+            a: false,
+            d: false,
+            shift: false,
+        }
+
+        this.loopID;
+        this.isLooping = true;
+        this.fps = 0;
+        this.fpsInterval = 0;
+        this.startTime
+        this.now;
+        this.then;
+        this.elapsed;
+
+        this.playerMoveDelay = 300;
+        this.playerTimeMoved = 0;
+        this.isMoving = false;
+        this.count = 0;
+       
         this.initialize();
     }
     initialize(){
         window.addEventListener('resize', ()=>{
             this.view.resize();
-            this.view.draw(this.model.props.getMap(), this.model.currentPartyPosition);
         });
         document.getElementById('overworld-toggle-party-screen-button').addEventListener('click', ()=>{
             this.props.switchScreen('party-screen');
@@ -40,23 +62,12 @@ export default class OverworldController{
             document.getElementById('music-player').pause();
         });
         window.addEventListener("keydown", (e) => {
-            if(this.model.props.getScreen() == 'overworld-screen'){
-                switch(e.key){
-                    case 'w':
-                        this.model.movePartyUp();
-                        break;
-                    case 's':
-                        this.model.movePartyDown();
-                        break;
-                    case 'a':
-                        this.model.movePartyLeft();
-                        break;
-                    case 'd':
-                        this.model.movePartyRight();
-                        break;
-                }
-                this.afterMove();
+            if(this.model.props.getScreen() == 'overworld-screen' && this.isMoving == false){
+                this.keysDown[e.key] = true;
             }
+        });
+        window.addEventListener("keyup", (e) =>{
+            this.keysDown[e.key] = false; 
         });
         document.getElementById('mobile-up-button').addEventListener('click', ()=>{
             if(this.model.props.getScreen() == 'overworld-screen'){
@@ -88,22 +99,68 @@ export default class OverworldController{
             this.triggerMapTitleSequence(this.model.props.getMap().biome.name);
         }
         this.model.props.setSituation('overworld');
-        this.view.draw(this.model.props.getMap(), this.model.currentPartyPosition);
-        
-
-        
-     
+        this.isLooping = true;
+        this.model.nextPartyPosition = this.model.currentPartyPosition;
+      
+        this.startOverworldLoop(60);
     }
-    triggerMapTitleSequence(biomeName){
-        this.view.updateMapTitle(biomeName)
-        this.view.revealMapTitle();
-        setTimeout(()=>{
-            this.view.hideMapTitle();
-        }, 4000);
+    startOverworldLoop(desiredFPS){
+        this.fpsInterval = 1000 / desiredFPS;
+        this.then = Date.now();
+        this.startTime = this.then;
+        this.isMoving = false;
+        this.loopID = requestAnimationFrame(this.loopOverworld.bind(this));
+    }
+    loopOverworld(){     
+        this.now = Date.now();
+        this.elapsed = this.now - this.then;//time between now and last then update (see if statement)
+        if(this.isMoving == false){
+            this.playerTimeMoved = this.now;
+            if(this.keysDown['w']){
+                this.model.movePartyUp();//just updates next party Position
+            }
+            if(this.keysDown['s']){
+                this.model.movePartyDown();
+            }
+            if(this.keysDown['a']){
+               this.model.movePartyLeft();
+            }
+            if(this.keysDown['d']){
+                this.model.movePartyRight();
+            }
+        }
+        if(this.elapsed > this.fpsInterval){
+            this.processMovement();
+            this.then = this.now - (this.elapsed % this.fpsInterval);
+            this.view.draw(this.model.props.getMap(), this.model.currentPartyPosition);
+            console.log((Math.floor((this.now - this.startTime)/1000)))
+        } 
+        if(this.isLooping){
+            requestAnimationFrame(this.loopOverworld.bind(this));
+        }else{
+            cancelAnimationFrame(this.loopID)
+        } 
+    }
+    processMovement(){
+        if(this.model.currentPartyPosition[0] == this.model.nextPartyPosition[0] && this.model.currentPartyPosition[1] == this.model.nextPartyPosition[1]){
+            return false;
+        }
+        if(this.now - this.playerTimeMoved <= this.playerMoveDelay){
+            this.isMoving = true;
+            this.view.processMovement(this.model.currentPartyPosition, this.model.nextPartyPosition, this.fpsInterval, this.playerMoveDelay)
+            this.count++;
+        }else{
+            this.view.viewport.movementOffset = [0,0];
+           
+            this.isMoving = false;
+            this.model.movePartyTile()
+            this.model.determineRoomEvent();
+            this.afterMove();
+        }
     }
     afterMove(){
-        this.view.draw(this.model.props.getMap(), this.model.currentPartyPosition);
         if(this.model.props.getScreen() == 'battle-screen'){
+            this.isLooping = false;
             playMusic(this.model.props.getBattle().battleMusicSrc);
             this.view.hideOverWorldUi();
             this.view.playBattleTransition().then(()=>{
@@ -112,6 +169,7 @@ export default class OverworldController{
             return;
         }
         if(this.model.props.getScreen() == 'encounter-screen'){
+            this.isLooping = false;
             this.view.hideOverWorldUi();
             this.view.playBattleTransition().then(()=>{
                 this.props.switchScreen('encounter-screen');
@@ -119,6 +177,7 @@ export default class OverworldController{
             return;
         }
         if(this.model.props.getScreen() == 'map-change-screen'){
+            this.isLooping = false;
             this.view.hideOverWorldUi();
             this.view.playBattleTransition().then(()=>{
                 this.props.switchScreen('map-change-screen');
@@ -127,13 +186,15 @@ export default class OverworldController{
             });
             return;
         }
-
-
-        //playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
+    }
+    triggerMapTitleSequence(biomeName){
+        this.view.updateMapTitle(biomeName)
+        this.view.revealMapTitle();
+        setTimeout(()=>{
+            this.view.hideMapTitle();
+        }, 4000);
     }
 }
-
-
 
 
 

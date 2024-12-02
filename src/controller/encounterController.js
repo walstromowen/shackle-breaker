@@ -206,9 +206,10 @@ export default class EncounterController{
                 setTimeout(()=>{
                     this.props.getOverworldController().model.currentPartyPosition = this.props.getOverworldController().model.previousPartyPosition;
                     this.model.checkResetEncounter();
+                    this.props.getOverworldController().model.currentPartyPosition = this.props.getOverworldController().model.previousPartyPosition
+                    this.props.getOverworldController().model.nextPartyPosition = this.props.getOverworldController().model.currentPartyPosition
                     this.model.props.setSituation('overworld')
                     this.props.switchScreen('overworld-screen');
-                    //playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
                     this.props.getOverworldController().view.revealOverworldUi();
                 }, 2000);
                 return
@@ -254,7 +255,7 @@ export default class EncounterController{
                     this.model.props.setEncounter('');
                     this.model.updateTileEncounter(this.props.getOverworldController().model.currentPartyPosition);
                     this.model.updateTileBattle(this.props.getOverworldController().model.currentPartyPosition);
-                    this.props.getOverworldController().model.currentPartyPosition[0][1]
+                    
                     this.model.props.setSituation('overworld')
                     this.props.switchScreen('overworld-screen');
                     playMusic(this.model.props.getMap().biome.backgroundMusicSrc);

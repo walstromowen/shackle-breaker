@@ -697,6 +697,12 @@ export default class BattleController{
                                 }else{
                                     this.view.printToBattleConsole(`${this.currentAttacker.name}'s attack misses!`);
                                 }
+                            }else{
+                                if(resolveObject.newForm){//replace this?
+                                    for(let i = 0; i < this.currentAttacker.abilityTargets.length; i++){
+                                        this.model.formChange(this.currentAttacker.abilityTargets[i], this.currentAttacker.nextAbility.newForm)
+                                    }
+                                }
                             }
                         }
                     }
@@ -719,6 +725,12 @@ export default class BattleController{
                                     this.view.printToBattleConsole(`${this.currentAttacker.abilityTargets[0].name} evades ${this.currentAttacker.name}'s ${this.currentAttacker.nextAbility.name}!`);
                                 }else{
                                     this.view.printToBattleConsole(`${this.currentAttacker.name}'s misses!`);
+                                }
+                            }else{
+                                if(resolveObject.newForm){// replace this?
+                                    for(let i = 0; i < this.currentAttacker.abilityTargets.length; i++){
+                                        this.model.formChange(this.currentAttacker.abilityTargets[i], this.currentAttacker.nextAbility.newForm)
+                                    }
                                 }
                             }
                         }
