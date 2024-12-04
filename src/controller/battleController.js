@@ -627,6 +627,27 @@ export default class BattleController{
             })
         });
     }
+    printImmunityMessage(message, resolveObject){
+        let flag = true;
+        return new Promise((resolve)=>{
+            document.addEventListener('click', this.skipEventHandler = ()=>{
+                if(flag == true){
+                    flag = false;
+                    this.view.printToBattleConsole(message);
+                    document.removeEventListener('click', this.skipEventHandler);
+                    resolve(resolveObject);
+                }
+            })
+            setTimeout(()=>{
+                if(flag == true){
+                    flag = false;
+                    document.removeEventListener('click', this.skipEventHandler);
+                    this.view.printToBattleConsole(message);
+                    resolve(resolveObject);
+                }
+            }, 2000);
+        });
+    }
     prepareAbilitiyHelpper(targets){
         return new Promise((resolve)=>{
             if(this.currentAttacker.nextAbility.checkLackingResources(this.currentAttacker).length != 0){
@@ -691,16 +712,23 @@ export default class BattleController{
                         if(resolveObject.switchCombatant == true){
                             this.view.replaceCombatantCard(this.currentAttacker, this.currentAttacker.nextAbility.newCombatant, true);
                         }else{
-                            if(resolveObject.evade){
-                                if(this.currentAttacker.nextAbility.sequenceType == 'chain'){
-                                    this.view.printToBattleConsole(`${this.currentAttacker.abilityTargets[0].name} evades ${this.currentAttacker.name}'s ${this.currentAttacker.nextAbility.name}!`);
-                                }else{
-                                    this.view.printToBattleConsole(`${this.currentAttacker.name}'s attack misses!`);
-                                }
+                            if(resolveObject.immune){
+                                let message = this.currentAttacker.nextAbility.name;
+                                message = message.charAt(0).toUpperCase() + message.slice(1) + ' is ineffective against' + this.model.getImmuneTargetNames(this.currentAttacker);
+                  
+                                this.view.printToBattleConsole(message);
                             }else{
-                                if(resolveObject.newForm){//replace this?
-                                    for(let i = 0; i < this.currentAttacker.abilityTargets.length; i++){
-                                        this.model.formChange(this.currentAttacker.abilityTargets[i], this.currentAttacker.nextAbility.newForm)
+                                if(resolveObject.evade){
+                                    if(this.currentAttacker.nextAbility.sequenceType == 'chain'){
+                                        this.view.printToBattleConsole(`${this.currentAttacker.abilityTargets[0].name} evades ${this.currentAttacker.name}'s ${this.currentAttacker.nextAbility.name}!`);
+                                    }else{
+                                        this.view.printToBattleConsole(`${this.currentAttacker.name}'s attack misses!`);
+                                    }
+                                }else{
+                                    if(resolveObject.newForm){//replace this?
+                                        for(let i = 0; i < this.currentAttacker.abilityTargets.length; i++){
+                                            this.model.formChange(this.currentAttacker.abilityTargets[i], this.currentAttacker.nextAbility.newForm)
+                                        }
                                     }
                                 }
                             }
@@ -720,16 +748,23 @@ export default class BattleController{
                         if(resolveObject.switchCombatant == true){
                             this.view.replaceCombatantCard(this.currentAttacker, this.currentAttacker.nextAbility.newCombatant, true);
                         }else{
-                            if(resolveObject.evade){
-                                if(this.currentAttacker.nextAbility.sequenceType == 'chain'){
-                                    this.view.printToBattleConsole(`${this.currentAttacker.abilityTargets[0].name} evades ${this.currentAttacker.name}'s ${this.currentAttacker.nextAbility.name}!`);
-                                }else{
-                                    this.view.printToBattleConsole(`${this.currentAttacker.name}'s misses!`);
-                                }
+                            if(resolveObject.immune){
+                                let message = this.currentAttacker.nextAbility.name;
+                                message = message.charAt(0).toUpperCase() + message.slice(1) + ' is ineffective against' + this.model.getImmuneTargetNames(this.currentAttacker);
+                  
+                                this.view.printToBattleConsole(message);
                             }else{
-                                if(resolveObject.newForm){// replace this?
-                                    for(let i = 0; i < this.currentAttacker.abilityTargets.length; i++){
-                                        this.model.formChange(this.currentAttacker.abilityTargets[i], this.currentAttacker.nextAbility.newForm)
+                                if(resolveObject.evade){
+                                    if(this.currentAttacker.nextAbility.sequenceType == 'chain'){
+                                        this.view.printToBattleConsole(`${this.currentAttacker.abilityTargets[0].name} evades ${this.currentAttacker.name}'s ${this.currentAttacker.nextAbility.name}!`);
+                                    }else{
+                                        this.view.printToBattleConsole(`${this.currentAttacker.name}'s attack misses!`);
+                                    }
+                                }else{
+                                    if(resolveObject.newForm){//replace this?
+                                        for(let i = 0; i < this.currentAttacker.abilityTargets.length; i++){
+                                            this.model.formChange(this.currentAttacker.abilityTargets[i], this.currentAttacker.nextAbility.newForm)
+                                        }
                                     }
                                 }
                             }

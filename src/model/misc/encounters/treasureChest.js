@@ -41,15 +41,8 @@ export class TreasureChest extends Stage{
                             weight: 2,
                         },
                         {
-                            result: 'retry',
-                            messageFunction: (currentCharacter)=>{
-                                return `${currentCharacter.name}'s weapon bounces off of the treasure chest.`
-                            },
-                            weight: 1,
-                        },
-                        {
                             result: 'removeDecisions',
-                            removableDecisions: ['B'],
+                            removableDecisions: ['A'],
                             messageFunction: (currentCharacter)=>{
                                 return `The chest wont budge.`
                             }, 
@@ -89,13 +82,6 @@ export class TreasureChest extends Stage{
                                 return `Something approaches ${currentCharacter.name}'s position!`
                             }, 
                             weight: 2,
-                        },
-                        {
-                            result: 'retry',
-                            messageFunction: (currentCharacter)=>{
-                                return `${currentCharacter.name}'s breaks a lockpick.`
-                            },
-                            weight: 1,
                         },
                         {
                             result: 'removeDecisions',
@@ -139,13 +125,6 @@ export class TreasureChest extends Stage{
                                 return `Something approaches ${currentCharacter.name}'s position!`
                             }, 
                             weight: 2,
-                        },
-                        {
-                            result: 'retry',
-                            messageFunction: (currentCharacter)=>{
-                                return `${currentCharacter.name}'s searches for the key in vain.`
-                            },
-                            weight: 1,
                         },
                         {
                             result: 'removeDecisions',

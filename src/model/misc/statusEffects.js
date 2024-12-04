@@ -440,6 +440,56 @@ export class KnockedDown extends StatusEffect{
         );
     }
 }
+export class Flying extends StatusEffect{
+    constructor(config){
+        super({
+            name:'flying',
+            iconSrc: "./assets/media/icons/wing-cloak.png",
+            holder: config.holder,
+            maxCharges: 3,
+            soundEffectSrc: "./assets/audio/soundEffects/cold-wind-fade.wav",
+            targetAnimation: 'float',
+            abilityAnimation: 'float',
+            removeOnBattleEnd: true,
+        });
+    }
+    onApplied(attacker, target, status){
+        target.immunities.push('melee');
+        target.immunities.push('earth'); 
+        target.statusArray.push(status); 
+    }
+    onRemove(){
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == this.name){
+                this.holder.statusArray.splice(i, 1);
+                break;
+            }
+        }
+        for(let i = 0; i < this.holder.immunities.length; i++){
+            if(this.holder.immunities[i] == 'melee'){
+                this.holder.immunities.splice(i, 1);
+            }
+        }
+        for(let i = 0; i < this.holder.immunities.length; i++){
+            if(this.holder.immunities[i] == 'earth'){
+                this.holder.immunities.splice(i, 1);
+            }
+        }
+    }
+    onEndTurn(){
+        return this.activateHelpper(
+            ()=>{
+                this.message = `${this.holder.name} is in the air.`;
+                this.currentCharges --;
+            }, 
+            {
+                text: true,
+                animation: true,
+                vitalsUpdate: true,
+            }
+        );
+    }
+}
 export class InstaDeath extends StatusEffect{
     constructor(config){
         super({
@@ -565,6 +615,7 @@ export class Polymorphed extends StatusEffect{
         super({
             name:'polymorphed',
             holder: config.holder,
+            iconSrc: "./assets/media/icons/polymorphed.png",
             maxCharges: 6,
             removeOnBattleEnd: true,
         });

@@ -287,7 +287,7 @@ export default class BattleView{
         root.style.setProperty('--battle-ability-animation-image', `url(${attacker.nextAbility.abilityAnimationImage})`);
         root.style.setProperty(' --battle-ability-animation-duration', attacker.nextAbility.abilityAnimationDuration);
         
-        //get attacker card and 
+        //get attacker card
         Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
             if(card.id == attacker.battleId){
                 let attackerCard = card;
@@ -301,6 +301,18 @@ export default class BattleView{
 
         //get target cards 
         for(let i = 0; i < targets.length; i++){
+            let isImmune = false;
+            for(let j = 0; j < attacker.nextAbility.damageTypes.length; j++){
+                for(let k = 0; k < targets[i].immunities.length; k++){
+                    if(attacker.nextAbility.damageTypes[j] == targets[i].immunities[k]){
+                        isImmune = true;
+                        break;
+                    }
+                }
+                if(isImmune){
+                    break;
+                }
+            }
             let targetCard;
             Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
                 if(card.id == targets[i].battleId){
@@ -314,7 +326,11 @@ export default class BattleView{
                             root.style.setProperty('--battle-target-animation', 'hostile-evade');
                         }
                     }
-                    targetCard.classList.add('battle-target-animation');
+                    if(isImmune){
+                        targetCard.classList.add('battle-target-immune-animation');
+                    }else{
+                        targetCard.classList.add('battle-target-animation');
+                    }
                 }
             });
         }
@@ -324,6 +340,7 @@ export default class BattleView{
         Array.from(document.getElementsByClassName('battle-character-card')).forEach((card)=>{
             card.classList.remove('battle-attacker-animation');
             card.classList.remove('battle-target-animation');
+            card.classList.remove('battle-target-immune-animation');
         });
     }
     playStatusAnimation(status){

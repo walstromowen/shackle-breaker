@@ -609,7 +609,7 @@ export class FireStaff extends Attachable{
 export class LightningStaff extends Attachable{
     constructor(config){
         super({
-            name: 'fire staff',
+            name: 'lightning staff',
             description: "A wooden staff imbued with lightning. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time",
             imageSrc:  './assets/media/icons/wizard-staff.png',
             price: 200,

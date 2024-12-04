@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl, Eviscerate, ChannelMagic, DarkOrb, Bless, Brace, Inferno, SetBearTrap, Uppercut, Flurry, IceShard} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl, Eviscerate, ChannelMagic, DarkOrb, Bless, Brace, Inferno, SetBearTrap, Uppercut, Flurry, IceShard, Fly} from "./abilities.js";
 import { Poison, Burn, Bleed, Shielded, InstaDeath, SoulLinked} from "./statusEffects.js";
 import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, LeatherGloves, GreatSword, Flintlock, SmokeBomb} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Hide} from "./items.js";
@@ -83,6 +83,7 @@ export class Entity{
         this.isSelectable = true;
         this.nextAbility = '';
         this.abilityTargets = [];
+        this.immunities = config.immunities || [];
         this.lootTable = config.lootTable || {};
         this.addAttachableStats(Object.keys(this.equipment));
         
@@ -510,8 +511,30 @@ export class Hawk extends Entity{
             baseElementalResistance: config.baseElementalResistance || 0.1,
             equipment: {},
             isHostile: config.isHostile || false,
-            abilityArray: [new Slash({})],
+            abilityArray: [new Slash({}), new Fly({})],
         });
+    }
+    scaleAttributes(difficulty){
+        this.maxHP = (this.vigor * 6)  + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
+        this.maxStamina = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
+        this.maxMagic = (this.vigor * 2)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
+        this.baseHpRecovery = 0;
+        this.baseStaminaRecovery = 15;
+        this.baseMagicRecovery = 5;
+        this.baseBluntAttack = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
+        this.basePierceAttack = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 4) + (this.intelligence * 2) + (this.attunement * 2);
+        this.baseArcaneAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 3) + (this.attunement * 2);
+        this.baseElementalAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 3);
+        this.baseBluntDefense = (this.vigor * 1)  + (this.strength * 2) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 1);
+        this.basePierceDefense = (this.vigor * 2) + (this.strength * 1) + (this.dexterity * 2) + (this.intelligence * 1) + (this.attunement * 1);
+        this.baseArcaneDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 2) + (this.attunement * 1);
+        this.baseElementalDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 2);
+        this.baseSpeed = 35;
+        this.baseEvasion = 0.30;
+        this.baseCritical = 0.15;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
     }
 }
 
@@ -600,6 +623,7 @@ export class Madman extends Entity{
                 {item: new Bandage(), weight: 1},
                 
             ],
+            
         });
     }
 }
@@ -641,6 +665,7 @@ export class MadBandit extends Entity{
                 {item: new Bandage(), weight: 1},
                 
             ],
+            
         });
     }
 }
@@ -684,6 +709,7 @@ export class MadMage extends Entity{
                 {item: new Bandage(), weight: 1},
                 
             ],
+            
         });
     }
 }
@@ -729,6 +755,7 @@ export class Skeleton extends Entity{
                 {item: new Bandage(), weight: 1},
                 
             ],
+            
         });
     }
     scaleAttributes(difficulty){
@@ -1557,7 +1584,7 @@ export class IcePheonix extends Entity{
             baseElementalResistance: config.baseElementalResistance || 0.15,
             isHostile: config.isHostile || true,
             equipment: {},
-            abilityArray: [new IceShard({}), new ChannelMagic({})],
+            abilityArray: [new Fly({}), new IceShard({}), new ChannelMagic({})],
             lootTable: [
                 {item: new IceStaff({level: 1}), weight: 1},
                 {item: new HealthPotion(), weight: 1}

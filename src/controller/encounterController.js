@@ -206,6 +206,8 @@ export default class EncounterController{
                 setTimeout(()=>{
                     this.props.getOverworldController().model.currentPartyPosition = this.props.getOverworldController().model.previousPartyPosition;
                     this.model.checkResetEncounter();
+                    this.model.props.setBattle('');
+                    this.model.updateTileBattle(this.props.getOverworldController().model.currentPartyPosition);
                     this.props.getOverworldController().model.currentPartyPosition = this.props.getOverworldController().model.previousPartyPosition
                     this.props.getOverworldController().model.nextPartyPosition = this.props.getOverworldController().model.currentPartyPosition
                     this.model.props.setSituation('overworld')

@@ -1,6 +1,6 @@
-import { deepCopyArray } from "../../utility.js";
-import { Tiger } from "./entities.js";
-import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen, Blessed, Cursed, PhysicalAttackDebuff, PhysicalAttackBuff, BearTrapSet, MagicalAttackBuff, MagicalAttackDebuff, PhysicalDefenseBuff, EvasionBuff, Polymorphed} from "./statusEffects.js";
+import { deepCopyArray} from "../../utility.js";
+import { Dog, Hawk, Tiger } from "./entities.js";
+import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen, Blessed, Cursed, PhysicalAttackDebuff, PhysicalAttackBuff, BearTrapSet, MagicalAttackBuff, MagicalAttackDebuff, PhysicalDefenseBuff, EvasionBuff, Polymorphed, Flying} from "./statusEffects.js";
 
 export class Ability{
     constructor(config){
@@ -18,7 +18,7 @@ export class Ability{
         this.healthCost = config.healthCost || 0;
         this.staminaCost = config.staminaCost || 0;
         this.magicCost = config.magicCost || 0;
-        this.damageTypes = config.damageTypes || ['blunt'];
+        this.damageTypes = config.damageTypes || [];
         this.defaultTarget = config.defaultTarget || 'opponent';
         this.targetLock = config.targetLock || '';
 
@@ -37,23 +37,38 @@ export class Ability{
     }
     calculateDamage(attacker, target){
         let rawDamage = 0;
+        let damageTypeCount = 0;
         for(let i = 0; i < this.damageTypes.length; i++){
             switch(this.damageTypes[i]){
                 case 'blunt':
                     rawDamage += (attacker.currentBluntAttack * (1 - target.currentBluntResistance) - target.currentBluntDefense) * this.damageModifier;
+                    damageTypeCount++;
                     break;
                 case 'pierce':
                     rawDamage += (attacker.currentPierceAttack * (1 - target.currentPierceResistance) - target.currentPierceDefense) * this.damageModifier;
+                    damageTypeCount++;
                     break;
                 case 'arcane':
+                    case 'dark':
+                    case 'light':
                     rawDamage += (attacker.currentArcaneAttack * (1 - target.currentArcaneResistance) - target.currentArcaneDefense) * this.damageModifier;
+                    damageTypeCount++;
                     break;
                 case 'elemental':
+                    case 'fire':
+                    case 'lightning':
+                    case 'ice':
+                    case 'air':
+                    case 'earth':
+                    case 'chemical':
                     rawDamage += (attacker.currentElementalAttack * (1 - target.currentElementalResistance) - target.currentElementalDefense) * this.damageModifier;
+                    damageTypeCount++;
+                    break;
+                default:
                     break;
             }
         }
-        rawDamage = rawDamage / this.damageTypes.length;
+        rawDamage = rawDamage / damageTypeCount;
         return rawDamage;
     }
     checkDamage(target, rawDamage, stat){
@@ -120,6 +135,28 @@ export class Ability{
             return true; //true means target evades
         }
     }
+    checkTargetImmune(attacker, targets){
+    //TODO problem currently retreats and maybe switch combatants are seen as immune
+    //however splash attacks need to be seen as immune only if ALL targets are immune
+        let immuneScore = 0;
+        for(let i = 0; i < targets.length; i++){
+            if(attacker.nextAbility.damageTypes.length == 0 || targets[i].immunities.length == 0){//ability will be not be considered immune if a target has no innumities or nextAbility has no damageTypes
+                return false; 
+            }
+            for(let j = 0; j < attacker.nextAbility.damageTypes.length; j++){
+                for(let k = 0; k < targets[i].immunities.length; k++){
+                    if(attacker.nextAbility.damageTypes[k] == targets[i].immunities[k]){//as soon as one target who is not immune
+                        immuneScore++; 
+                        break;
+                    }
+                }
+            }
+        }
+        if(immuneScore < targets.length){
+            return false; //False means at least one target is not immune
+        }
+        return true //true means alls target are immune;
+    }
     checkCritical(attacker, rawDamage){
         if(Math.random() < attacker.currentCritical + this.criticalChanceModifier){
             return rawDamage * this.criticalDamageModifier;
@@ -148,27 +185,36 @@ export class Ability{
         }
     }
     prepareAbilitiy(attacker, targets){
-        let resolveObject = {evade: false, switchCombatant: false, retreat: false, rest: false, newForm: false}
+        let resolveObject = {evade: false, switchCombatant: false, retreat: false, rest: false, newForm: false, immune: false}
         switch(this.sequenceType){
             case 'chain':
                 this.triggerOnAttemptAbility(attacker, targets[0]);
                 this.triggerOnOpponentAttemptAbility(attacker, targets[0]);
-                if(this.checkTargetEvade(attacker, targets[0]) && attacker.battleId != targets[0].battleId){
-                    resolveObject.evade = true;
+                if(this.checkTargetImmune(attacker, targets)){
+                    resolveObject.immune = true;
                 }else{
-                    this.checkCritical(attacker);
-                    this.activate(attacker, targets[0]);
+                    if(this.checkTargetEvade(attacker, targets[0]) && attacker.battleId != targets[0].battleId){
+                        resolveObject.evade = true;
+                    }else{
+                        this.checkCritical(attacker);
+                        this.activate(attacker, targets[0]);
+                    }
                 }
                 break;
             case 'splash':
                 this.triggerOnAttemptAbility(attacker, targets[0]);
+                if(this.checkTargetImmune(attacker, targets)){//checks if the ability is ineffective
+                    resolveObject.immune = true;//true if ALL targets immune will not trigger if even one target is NOT immune
+                }
                 for(let i = 0; i < targets.length; i++){
                     this.triggerOnOpponentAttemptAbility(attacker, targets[0]);
-                    if(this.checkTargetEvade(attacker, targets[i]) && attacker.battleId != targets[i].battleId){//may be issue with evading splash attacks
-                        resolveObject.evade = true;
-                    }else{
-                        this.checkCritical(attacker);
-                        this.activate(attacker, targets[i]);
+                    if(!this.checkTargetImmune(attacker, [targets[i]])){//checks if ability hits each target
+                        if(this.checkTargetEvade(attacker, targets[i]) && attacker.battleId != targets[i].battleId){//may be issue with evading splash attacks
+                            resolveObject.evade = true;
+                        }else{
+                            this.checkCritical(attacker);
+                            this.activate(attacker, targets[i]);
+                        }
                     }
                 }
                 break;
@@ -256,7 +302,7 @@ export class Retreat extends Ability{
     constructor(config){
         super({
             name: 'retreat',
-            description: 'Allows current character to escape battle. Sometimes, living to fight another day is more nobel than facing a foolish fate.',
+            description: 'Allows current character to escape battle. Sometimes, living to fight another day is more nobel than facing a foolish end.',
             iconSrc: './assets/media/icons/run.png',
             speedModifier: config.speedModifier || 1,
             damageModifier: config.speedModifier || 0,
@@ -330,7 +376,7 @@ export class Slash extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 10,
             magicCost: config.magicCost || 0,
-            damageTypes: config.damageTypes || ['blunt', 'pierce'],
+            damageTypes: config.damageTypes || ['melee','blunt', 'pierce'],
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-metal-hit-woosh-1485.wav",
             attackerAnimation: config.attackerAnimation || 'ally-attack',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/quick-slash.png',
@@ -371,7 +417,7 @@ export class Thrust extends Ability{
             staminaCost: config.staminaCost || 10,
             magicCost: config.magicCost || 0,
             accuracy: config.accuracy || 0.80,
-            damageTypes: config.damageTypes || ['pierce'],
+            damageTypes: config.damageTypes || ['melee', 'pierce'],
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-metal-hit-woosh-1485.wav",
             attackerAnimation: config.attackerAnimation || 'ally-attack',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/thrust.png',
@@ -408,7 +454,7 @@ export class Eviscerate extends Ability{
             staminaCost: config.staminaCost || 18,
             magicCost: config.magicCost || 0,
             accuracy: config.accuracy || 0.80,
-            damageTypes: config.damageTypes || ['pierce'],
+            damageTypes: config.damageTypes || ['melee', 'pierce'],
             soundEffectSrc: "./assets/audio/soundEffects/platzender-kopf_nachschlag-91637.mp3",
             attackerAnimation: config.attackerAnimation || 'ally-attack',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/quick-slash.png',
@@ -445,7 +491,7 @@ export class Punch extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 4,
             magicCost: config.magicCost || 0,
-            damageTypes: config.damageTypes || ['blunt'],
+            damageTypes: config.damageTypes || ['melee', 'blunt'],
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-metallic-sword-strike-2160.wav",
             attackerAnimation: config.attackerAnimation || 'ally-attack',
             abilityAnimation: config.abilityAnimation || 'swipe-right',
@@ -479,7 +525,7 @@ export class Strike extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 10,
             magicCost: config.magicCost || 0,
-            damageTypes: config.damageTypes || ['blunt'],
+            damageTypes: config.damageTypes || ['melee', 'blunt'],
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-metallic-sword-strike-2160.wav",
             attackerAnimation: config.attackerAnimation || 'ally-attack',
             abilityAnimation: config.abilityAnimation || 'swipe-down',
@@ -513,7 +559,7 @@ export class ShootArrow extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 12,
             magicCost: config.magicCost || 0,
-            damageTypes: config.damageTypes || ['pierce'],
+            damageTypes: config.damageTypes || ['ranged', 'pierce'],
             soundEffectSrc: "./assets/audio/soundEffects/arrow-body-impact-146419.mp3",
             attackerAnimation: config.attackerAnimation || 'ally-evade',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/broadhead-arrow.png',
@@ -552,7 +598,7 @@ export class Tripleshot extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 20,
             magicCost: config.magicCost || 0,
-            damageTypes: config.damageTypes || ['pierce'],
+            damageTypes: config.damageTypes || ['ranged', 'pierce'],
             targetCount: 3,
             soundEffectSrc: "./assets/audio/soundEffects/arrow-body-impact-146419.mp3",
             sequenceType: 'splash',
@@ -588,7 +634,7 @@ export class Cleave extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 10,
             magicCost: config.magicCost || 0,
-            damageTypes: config.damageTypes || ['blunt', 'pierce'],
+            damageTypes: config.damageTypes || ['melee', 'blunt', 'pierce'],
             targetCount: 2,
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-metal-hit-woosh-1485.wav",
             sequenceType: 'splash',
@@ -625,7 +671,7 @@ export class Flurry extends Ability{
             staminaCost: config.staminaCost || 7,
             magicCost: config.magicCost || 0,
             accuracy: config.accuracy || 0.75,
-            damageTypes: config.damageTypes || ['blunt', 'pierce'],
+            damageTypes: config.damageTypes || ['melee', 'blunt', 'pierce'],
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-metal-hit-woosh-1485.wav",
             attackerAnimation: config.attackerAnimation || 'ally-attack',
             targetCount: 3,
@@ -664,7 +710,7 @@ export class Uppercut extends Ability{
             staminaCost: config.staminaCost || 18,
             magicCost: config.magicCost || 0,
             accuracy: config.accuracy || 0.75,
-            damageTypes: config.damageTypes || ['blunt', 'pierce'],
+            damageTypes: config.damageTypes || ['melee', 'blunt', 'pierce'],
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-metallic-sword-strike-2160.wav",
             attackerAnimation: config.attackerAnimation || 'ally-attack',
             abilityAnimation: config.abilityAnimation || 'swipe-up',
@@ -702,7 +748,7 @@ export class MagicMissile extends Ability{
             staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 8,
             accuracy: config.accuracy || 0.75,
-            damageTypes: config.damageTypes || ['arcane'],
+            damageTypes: config.damageTypes || ['ranged', 'arcane'],
             targetCount: 3,
             soundEffectSrc: "./assets/audio/soundEffects/magic-missile-made-with-Voicemod-technology.mp3",
 
@@ -737,7 +783,7 @@ export class LesserHeal extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 12,
-            damageTypes: config.damageTypes || ['arcane'],
+            damageTypes: config.damageTypes || ['light'],
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-light-spell-873.wav",
             attackerAnimation: config.attackerAnimation || 'none',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/heart-plus.png',
@@ -772,7 +818,7 @@ export class DrainLife extends Ability{
             staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 12,
             accuracy: config.accuracy || 0.80,
-            damageTypes: config.damageTypes || ['arcane'],
+            damageTypes: config.damageTypes || ['ranged', 'dark'],
             soundEffectSrc: "./assets/audio/soundEffects/totem-strike-96497.wav",
 
             attackerAnimation: config.attackerAnimation || 'ally-evade',
@@ -808,7 +854,7 @@ export class DarkOrb extends Ability{
             staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 12,
             accuracy: config.accuracy || 0.80,
-            damageTypes: config.damageTypes || ['arcane'],
+            damageTypes: config.damageTypes || ['ranged', 'dark'],
             soundEffectSrc: "./assets/audio/soundEffects/totem-strike-96497.wav",
 
             attackerAnimation: config.attackerAnimation || 'ally-evade',
@@ -847,7 +893,7 @@ export class Bite extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 10,
             magicCost: config.magicCost || 0,
-            damageTypes: config.damageTypes || ['blunt', 'pierce'],
+            damageTypes: config.damageTypes || ['melee', 'blunt', 'pierce'],
             soundEffectSrc: "./assets/audio/soundEffects/chomp1.mp3",
             attackerAnimation: config.attackerAnimation || 'ally-attack',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/sharp-lips.png',
@@ -886,7 +932,7 @@ export class Fireball extends Ability{
             staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 12,
             accuracy: config.accuracy || 0.80,
-            damageTypes: config.damageTypes || ['elemental'],
+            damageTypes: config.damageTypes || ['ranged', 'fire'],
             soundEffectSrc: "./assets/audio/soundEffects/short-fireball-woosh-6146.mp3",
 
             attackerAnimation: config.attackerAnimation || 'ally-evade',
@@ -924,7 +970,7 @@ export class Inferno extends Ability{
             staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 35,
             accuracy: config.accuracy || 0.80,
-            damageTypes: config.damageTypes || ['elemental'],
+            damageTypes: config.damageTypes || ['ranged', 'fire'],
             soundEffectSrc: "./assets/audio/soundEffects/short-fireball-woosh-6146.mp3",
             targetCount: 3,
             sequenceType: 'splash',
@@ -963,7 +1009,7 @@ export class LightningBolt extends Ability{
             staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 12,
             accuracy: config.accuracy || 0.80,
-            damageTypes: config.damageTypes || ['elemental'],
+            damageTypes: config.damageTypes || ['ranged', 'lightning'],
             soundEffectSrc: "./assets/audio/soundEffects/075681_electric-shock-33018.wav",
             attackerAnimation: config.attackerAnimation || 'ally-evade',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/lightning-tree.png',
@@ -1002,7 +1048,7 @@ export class IceShard extends Ability{
             staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 12,
             accuracy: config.accuracy || 0.80,
-            damageTypes: config.damageTypes || ['elemental'],
+            damageTypes: config.damageTypes || ['ranged', 'ice'],
             soundEffectSrc: "./assets/audio/soundEffects/cold-wind-fade.wav",
 
             attackerAnimation: config.attackerAnimation || 'ally-evade',
@@ -1039,7 +1085,7 @@ export class Shockwave extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 15,
-            damageTypes: config.damageTypes || ['blunt', 'elemental'],
+            damageTypes: config.damageTypes || ['ranged', 'air'],
             soundEffectSrc: "./assets/audio/soundEffects/supernatural-explosion-104295.wav",
             attackerAnimation: config.attackerAnimation || 'ally-attack',
             abilityAnimation: config.abilityAnimation || 'swipe-right',
@@ -1078,7 +1124,7 @@ export class Siphon extends Ability{
             staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 10,
             accuracy: config.accuracy || 1.0,
-            damageTypes: config.damageTypes || ['arcane'],
+            damageTypes: config.damageTypes || ['ranged', 'dark'],
             soundEffectSrc: "./assets/audio/soundEffects/cold-wind-fade.wav",
 
             attackerAnimation: config.attackerAnimation || 'none',
@@ -1114,7 +1160,7 @@ export class Earthquake extends Ability{//Needs Work targeting same targets twic
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 30,
             magicCost: config.magicCost || 0,
-            damageTypes: config.damageTypes || ['blunt', 'elemental'],
+            damageTypes: config.damageTypes || ['ranged', 'blunt', 'earth'],
             targetCount: 3,
             soundEffectSrc: "./assets/audio/soundEffects/supernatural-explosion-104295.wav",
             sequenceType: 'splash',
@@ -1154,7 +1200,7 @@ export class ShootWeb extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 12,
             magicCost: config.magicCost || 0,
-            damageTypes: config.damageTypes || ['elemental'],
+            damageTypes: config.damageTypes || ['ranged', 'chemical'],
             soundEffectSrc: "./assets/audio/soundEffects/platzender-kopf_nachschlag-91637.mp3",
             attackerAnimation: config.attackerAnimation || 'ally-attack',
             abilityAnimation: config.abilityAnimation || 'stick-right',
@@ -1191,7 +1237,7 @@ export class Pounce extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 15,
             magicCost: config.magicCost || 0,
-            damageTypes: config.damageTypes || ['blunt'],
+            damageTypes: config.damageTypes || ['melee', 'blunt'],
             soundEffectSrc: "./assets/audio/soundEffects/platzender-kopf_nachschlag-91637.mp3",
             attackerAnimation: config.attackerAnimation || 'ally-attack',
             abilityAnimation: config.abilityAnimation || 'stick-right',
@@ -1229,7 +1275,7 @@ export class Block extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 12,
             magicCost: config.magicCost || 0,
-            damageTypes: config.damageTypes || ['blunt'],
+            damageTypes: config.damageTypes || [],
             soundEffectSrc: "./assets/audio/soundEffects/anvil-hit-2-14845.mp3",
             attackerAnimation: config.attackerAnimation || 'none',
             targetAnimation: 'ally-evade',
@@ -1258,7 +1304,7 @@ export class Brace extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 10,
             magicCost: config.magicCost || 0,
-            damageTypes: config.damageTypes || ['blunt'],
+            damageTypes: config.damageTypes || [],
             soundEffectSrc: "./assets/audio/soundEffects/anvil-hit-2-14845.mp3",
             attackerAnimation: config.attackerAnimation || 'none',
             targetAnimation: 'none',
@@ -1287,7 +1333,7 @@ export class VineLash extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 15,
-            damageTypes: config.damageTypes || ['blunt', 'elemental'],
+            damageTypes: config.damageTypes || ['ranged', 'blunt', 'earth'],
             soundEffectSrc: "./assets/audio/soundEffects/whip_lash.wav",
             attackerAnimation: config.attackerAnimation || 'ally-attack',
             abilityAnimation: config.abilityAnimation || 'stick-right',
@@ -1319,18 +1365,18 @@ export class Shapeshift extends Ability{
         super({
             name: 'Shapeshift',
             description: "Use elemental magic to take the form of wild animal. Will return to normal form upon death or leaving battle.",
-            iconSrc: './assets/media/icons/vine-whip.png',
-            background: `url(./assets/media/icons/mighty-force.png), linear-gradient(forestgreen, silver)`,
+            iconSrc: './assets/media/icons/werewolf.png',
+            background: `url(./assets/media/icons/werewolf.png), linear-gradient(forestgreen, silver)`,
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 1,
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 50,
-            damageTypes: config.damageTypes || ['elemental'],
+            damageTypes: config.damageTypes || [],
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-magic-astral-sweep-effect-2629.wav",
             attackerAnimation: config.attackerAnimation || 'ally-attack',
             abilityAnimation: config.abilityAnimation || 'shake',
-            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/mighty-force.png',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/werewolf.png',
             targetAnimation: config.targetAnimation || 'shake',
 
             defaultTarget: 'self',
@@ -1340,7 +1386,17 @@ export class Shapeshift extends Ability{
         this.newForm;
     }
     activate(attacker, target){
-        this.newForm = new Tiger({level: target.level});
+        switch(this.newForm){
+            case 0:
+                this.newForm = new Hawk({level: target.level});
+            break;
+            case 1:
+                this.newForm = new Dog({level: target.level});
+            break;
+            case 2:
+                this.newForm = new Tiger({level: target.level});
+            break;
+        }
         let originalForm = {
             animation: 'twister',
             animationDuration: 2000,
@@ -1355,7 +1411,18 @@ export class Shapeshift extends Ability{
         this.inflictStatus(new Polymorphed({holder: this.newForm, originalForm: originalForm}), this.newFrom, this.newForm);
     }
     updateMessage(attacker, target){
-        this.message = `${target.name} transforms into a Tiger.`;
+        this.newForm = Math.floor(Math.random()*3)
+        switch(this.newForm){
+            case 0:
+                this.message = `${target.name} transforms into a Hawk.`;
+            break;
+            case 1:
+                this.message = `${target.name} transforms into a Dog.`;
+            break;
+            case 2:
+                this.message = `${target.name} transforms into a Tiger.`;
+            break;
+        }
     }
 }
 //TODO
@@ -1371,7 +1438,7 @@ export class Bless extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 25,
-            damageTypes: config.damageTypes || ['arcane'],
+            damageTypes: config.damageTypes || ['light'],
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-light-spell-873 copy.wav",
             attackerAnimation: config.attackerAnimation || 'none',
             targetAnimation: 'ally-evade',
@@ -1399,7 +1466,7 @@ export class Curse extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 25,
-            damageTypes: config.damageTypes || ['arcane'],
+            damageTypes: config.damageTypes || ['dark'],
             soundEffectSrc: "./assets/audio/soundEffects/totem-strike-96497.wav",
             attackerAnimation: config.attackerAnimation || 'none',
             targetAnimation: 'ally-evade',
@@ -1426,7 +1493,7 @@ export class Roar extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 10,
             magicCost: config.magicCost || 0,
-            damageTypes: config.damageTypes || ['blunt', 'pierce'],
+            damageTypes: config.damageTypes || [],
             soundEffectSrc: "./assets/audio/soundEffects/leopard-roar-deep-pitched-195922.mp3",
             attackerAnimation: config.attackerAnimation || 'shake',
             targetAnimation: 'shake',
@@ -1462,7 +1529,7 @@ export class Howl extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 10,
             magicCost: config.magicCost || 0,
-            damageTypes: config.damageTypes || ['pierce'],
+            damageTypes: config.damageTypes || [],
             soundEffectSrc: "./assets/audio/soundEffects/wolves-howling-1-225304.wav",
             attackerAnimation: config.attackerAnimation || 'shake',
             targetAnimation: 'none',
@@ -1523,7 +1590,7 @@ export class Hex extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 10,
-            damageTypes: config.damageTypes || ['arcane'],
+            damageTypes: config.damageTypes || ['ranged', 'dark'],
             soundEffectSrc: "./assets/audio/soundEffects/totem-strike-96497.wav",
             attackerAnimation: config.attackerAnimation || 'none',
             targetAnimation: 'shake',
@@ -1559,7 +1626,7 @@ export class ShootBullet extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 15,
             magicCost: config.magicCost || 0,
-            damageTypes: config.damageTypes || ['strength', 'arcane'],
+            damageTypes: config.damageTypes || ['ranged', 'blunt', 'arcane'],
             soundEffectSrc: "./assets/audio/soundEffects/supernatural-explosion-104295.wav",
             attackerAnimation: config.attackerAnimation || 'ally-evade',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/falling-blob.png',
@@ -1582,11 +1649,36 @@ export class ShootBullet extends Ability{
         this.message = `${attacker.name} shoots ${target.name} with a bullet.`;
     }
 }
+export class Fly extends Ability{
+    constructor(config){
+        super({
+            name: 'fly',
+            description: "Fly into the air making one immune to melee and earth attacks.",
+            iconSrc: './assets/media/icons/wing-cloak.png',
+            background: `url(./assets/media/icons/wing-cloak.png), linear-gradient(grey, silver)`,
+            speedModifier: config.speedModifier || 1.25,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 30,
+            magicCost: config.magicCost || 0,
+            damageTypes: config.damageTypes || ['air'],
+            soundEffectSrc: "./assets/audio/soundEffects/cold-wind-fade.wav",
+            attackerAnimation: config.attackerAnimation || 'float',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/wing-cloak.png',
+            abilityAnimation: config.abilityAnimation || 'float',
+            defaultTarget: 'self',
+            targetLock: 'self',
+            
+        })
+    }
+    activate(attacker, target){
+        this.inflictStatus(new Flying({holder: target}), attacker, target);
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} flys into the air.`;
+    }
+}
 export class MeteorShower extends Ability{
     //random amount of targets
-}
-export class Fly extends Ability{
-    //character is airborne (can only be attack with attacks with certain range)
 }
 export class CastShadow extends Ability{
     //grants character type of shadowy oversheild //current vs base apperance?
@@ -1615,7 +1707,7 @@ export class ThrowPosionedKnife extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 10,
             magicCost: config.magicCost || 0,
-            damageTypes: config.damageTypes || ['pierce'],
+            damageTypes: config.damageTypes || ['ranged', 'pierce', 'chemical'],
             targetCount: 1,
             soundEffectSrc: "./assets/audio/soundEffects/arrow-body-impact-146419.mp3",
             attackerAnimation: config.attackerAnimation || 'ally-attack',
@@ -1680,7 +1772,7 @@ export class ThrowNet extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 10,
             magicCost: config.magicCost || 0,
-            damageTypes: config.damageTypes || ['pierce'],
+            damageTypes: config.damageTypes || ['ranged'],
             targetCount: 1,
             soundEffectSrc: "./assets/audio/soundEffects/arrow-body-impact-146419.mp3",
             attackerAnimation: config.attackerAnimation || 'ally-attack',
@@ -1707,7 +1799,7 @@ export class ThrowSmokeBomb extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 6,
             magicCost: config.magicCost || 0,
-            damageTypes: config.damageTypes || ['pierce'],
+            damageTypes: config.damageTypes || ['ranged'],
             targetCount: 1,
             soundEffectSrc: "./assets/audio/soundEffects/supernatural-explosion-104295.wav",
             abilityAnimation: config.abilityAnimation || 'explode',

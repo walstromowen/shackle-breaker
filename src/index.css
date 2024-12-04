@@ -1230,7 +1230,36 @@ img{
     overflow: hidden;
  
 }
+.battle-target-immune-animation{
+    animation: shake 2s;
+}
+.battle-target-immune-animation::before{
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    background-color: transparent;
 
+}
+.battle-target-immune-animation::after{
+    content: '';
+    background-image: url('./assets/media/icons/cancel.png');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    animation: none 2s;
+    overflow: hidden;
+ 
+}
 .battle-attacker-animation{
     animation:var(--battle-attacker-animation) var(--battle-ability-animation-duration);
     

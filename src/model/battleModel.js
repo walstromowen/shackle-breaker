@@ -390,6 +390,25 @@ getAvailableTargets(attacker){
             }
         }
     }
+    getImmuneTargetNames(attacker){
+        let message = '';
+        for(let i = 0; i < attacker.abilityTargets.length; i++){
+            let isImmune = false;
+            for(let j = 0; j < attacker.nextAbility.damageTypes.length; j++){
+                for(let k = 0; k < attacker.abilityTargets[i].immunities.length; k++){
+                    if(attacker.nextAbility.damageTypes[j] == attacker.abilityTargets[i].immunities[k]){
+                        message += ` ${attacker.abilityTargets[i].name} `
+                        isImmune = true;
+                        break;
+                    }
+                }
+                if(isImmune){
+                    break;
+                }
+            }
+        }
+        return message;
+    }
 }
 
 
