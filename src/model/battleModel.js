@@ -397,7 +397,12 @@ getAvailableTargets(attacker){
         for(let i = 0; i < this.allCombatants.length; i++){
             for(let j = 0; j < this.allCombatants[i].statusArray.length; j++){
                 if(this.allCombatants[i].statusArray[j].name == 'polymorphed'){
-                    this.allCombatants[i] = this.allCombatants[i].nextForm.entity
+                    for(let k = 0; k < this.allCombatants[i].nextForm.entity.statusArray.length; k++){
+                        if(this.allCombatants[i].nextForm.entity.statusArray[k].removeOnBattleEnd){
+                            this.allCombatants[i].nextForm.entity.statusArray[k].onRemove();
+                            k--;
+                        }
+                    }
                 }
                 if(this.allCombatants[i].statusArray[j].removeOnBattleEnd){
                     this.allCombatants[i].statusArray[j].onRemove();

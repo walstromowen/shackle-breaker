@@ -275,7 +275,7 @@ export class WoundedTiger extends Stage{
                             createBattle: (partyLevel, biome, difficulty)=>{
                                 let hostileArray = [];
                                 hostileArray.push(new Tiger({level: partyLevel, difficulty: difficulty, isHostile: true}))
-                                hostileArray[0].currentHP *= 0.5
+                                hostileArray[0].currentHP = Math.floor(hostileArray[0].currentHP * 0.5)
                                 hostileArray[0].statusArray.push(new Bleed({holder: hostileArray[0]}))
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
@@ -291,7 +291,7 @@ export class WoundedTiger extends Stage{
                             createBattle: (partyLevel, biome, difficulty)=>{
                                 let hostileArray = [];
                                 hostileArray.push(new Tiger({level: partyLevel, difficulty: difficulty, isHostile: true}))
-                                hostileArray[0].currentHP *= 0.5
+                                hostileArray[0].currentHP = Math.floor(hostileArray[0].currentHP * 0.5)
                                 hostileArray[0].statusArray.push(new Bleed({holder: hostileArray[0]}))
                                 let count = Math.ceil(Math.random()*4);
                                 for(let i = 0; i < count; i++){
@@ -348,7 +348,7 @@ export class WoundedTiger extends Stage{
                             createBattle: (partyLevel, biome, difficulty)=>{
                                 let hostileArray = [];
                                 hostileArray.push(new Tiger({level: partyLevel, difficulty: difficulty, isHostile: true}))
-                                hostileArray[0].currentHP *= 0.5
+                                hostileArray[0].currentHP = Math.floor(hostileArray[0].currentHP * 0.5)
                                 hostileArray[0].statusArray.push(new Bleed({holder: hostileArray[0]}))
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
