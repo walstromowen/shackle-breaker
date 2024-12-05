@@ -1170,12 +1170,13 @@ export class SandStalker extends Entity{
             animation: 'twister',
             animationDuration: 3000,
             animationSoundEffect: './assets/audio/soundEffects/tornado.wav',
+            entity: '',
             createNextForm: ()=>{
                 let chance = Math.random()*1;
                 if(chance < 1){
-                    let hostile = new SandStalker({level: this.level, statusArray: [], nextForm: false, difficulty: config.difficulty});
-                    hostile.nextForm = false;//have to do don't know why
-                    return hostile
+                    this.entity = new SandStalker({level: this.level, statusArray: [], nextForm: false, difficulty: config.difficulty});
+                    this.entity.nextForm = false;//have to do don't know why
+                    return this.entity
                 }else{
                     return new SandStalker({level: this.level});
                 }
@@ -1433,10 +1434,11 @@ export class TheSandShade extends Entity{
             animation: 'twister',
             animationDuration: 6000,
             animationSoundEffect: './assets/audio/soundEffects/tornado.wav',
+            entity: '',
             createNextForm: ()=>{
-                let hostile = new TheSandShade({level: this.level, difficulty: config.difficulty, nextForm: false, abilityArray: [new Slash({}), new DrainLife({}), new Earthquake({}), new DarkOrb({})],});
-                hostile.nextForm = false;//have to do don't know why
-                return hostile
+                this.entity = new TheSandShade({level: this.level, difficulty: config.difficulty, nextForm: false, abilityArray: [new Slash({}), new DrainLife({}), new Earthquake({}), new DarkOrb({})],});
+                this.entity.nextForm = false;//have to do don't know why
+                return this.entity
            
                 
             },
@@ -1648,10 +1650,11 @@ export class EmperorDolos extends Entity{
             animation: 'twister',
             animationDuration: 6000,
             animationSoundEffect: './assets/audio/soundEffects/tornado.wav',
+            entity: '',
             createNextForm: ()=>{
-                let hostile = new EmperorDolos({level: this.level, difficulty: config.difficulty, nextForm: false, abilityArray: [new Flurry({}), new DrainLife({}), new Inferno({}), new MagicMissile({}), new ChannelMagic({}), new LightningBolt({}), new Siphon({}), new Bless({})],});
-                hostile.nextForm = false;//have to do don't know why
-                return hostile
+                this.entity = new EmperorDolos({level: this.level, difficulty: config.difficulty, nextForm: false, abilityArray: [new Flurry({}), new DrainLife({}), new Inferno({}), new MagicMissile({}), new ChannelMagic({}), new LightningBolt({}), new Siphon({}), new Bless({})],});
+                this.entity.nextForm = false;//have to do don't know why
+                return this.entity
            
                 
             },

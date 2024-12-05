@@ -531,7 +531,8 @@ export default class BattleController{
                 if(flag == true){
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
-                    let nextForm = this.model.formChange(combatant, combatant.nextForm.entity);
+                    
+                    let nextForm = this.model.formChange(combatant, combatant.nextForm.createNextForm());
                     this.view.replaceCombatantCard(combatant, nextForm);
                     this.view.removeAbilityAnimations()
                     resolve();
@@ -541,7 +542,7 @@ export default class BattleController{
                 if(flag == true){
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
-                    let nextForm = this.model.formChange(combatant, combatant.nextForm.entity);
+                    let nextForm = this.model.formChange(combatant, combatant.nextForm.createNextForm());
                     this.view.replaceCombatantCard(combatant, nextForm);
                     this.view.removeAbilityAnimations()
                     resolve();
