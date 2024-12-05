@@ -14,7 +14,7 @@ export class TracksInTheSnow extends Stage{
                 {
                     description: 'Follow the tracks [ATN]',
                     attributes: ['attunement'],
-                    successThreshold: 1,
+                    successThreshold: 12,
                     roll: true,
                     successfulOutcomes: [
                         {
@@ -379,7 +379,7 @@ export class WoundedTiger extends Stage{
                         },
                     ],
                     messageFunction: (currentCharacter)=>{
-                        return `${currentCharacter.name} attempts to bandage the Tiger.`
+                        return `${currentCharacter.name} approaches the Tiger.`
                     }, 
                 },
                 {

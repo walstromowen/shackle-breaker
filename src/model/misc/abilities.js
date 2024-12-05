@@ -1378,6 +1378,7 @@ export class Shapeshift extends Ability{
             abilityAnimation: config.abilityAnimation || 'shake',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/werewolf.png',
             targetAnimation: config.targetAnimation || 'shake',
+            abilityAnimationDuration: 0,
 
             defaultTarget: 'self',
             targetLock: 'self',
@@ -1386,6 +1387,7 @@ export class Shapeshift extends Ability{
         this.newForm;
     }
     activate(attacker, target){
+        this.newForm = Math.floor(Math.random()*3)
         switch(this.newForm){
             case 0:
                 this.newForm = new Hawk({level: target.level});
@@ -1397,12 +1399,14 @@ export class Shapeshift extends Ability{
                 this.newForm = new Tiger({level: target.level});
             break;
         }
+        this.newForm.nextAbility = target.nextAbility;
         let originalForm = {
             animation: 'twister',
             animationDuration: 2000,
             animationSoundEffect: './assets/audio/soundEffects/tornado.wav',
+            entity: target,
             createNextForm: ()=>{
-                return target;
+                return entity;
             },
             messageFn: ()=>{
                 return `${target.name} returns to normal form.`;
@@ -1411,18 +1415,7 @@ export class Shapeshift extends Ability{
         this.inflictStatus(new Polymorphed({holder: this.newForm, originalForm: originalForm}), this.newFrom, this.newForm);
     }
     updateMessage(attacker, target){
-        this.newForm = Math.floor(Math.random()*3)
-        switch(this.newForm){
-            case 0:
-                this.message = `${target.name} transforms into a Hawk.`;
-            break;
-            case 1:
-                this.message = `${target.name} transforms into a Dog.`;
-            break;
-            case 2:
-                this.message = `${target.name} transforms into a Tiger.`;
-            break;
-        }
+         this.message = `${target.name} transforms into a ${this.newForm.name}.`;
     }
 }
 //TODO

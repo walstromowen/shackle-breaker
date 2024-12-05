@@ -8,6 +8,7 @@ export default class CharacterSummaryController{
         this.inventoryMiniMenuExitEventHandler;
         this.inventoryMiniMenuUseButtonHandler;
         this.inventoryMiniMenuUpgradeButtonHandler;
+        this.inventoryMiniMenuScrapButtonHandler;
         this.vigorIncreaseHandler;
         this.strengthIncreaseHandler;
         this.dexterityIncreaseHandler;
@@ -155,11 +156,13 @@ export default class CharacterSummaryController{
                 //remove event listeners from mini-menu buttons
                 document.getElementById('inventory-mini-menu-consumable-use-button').removeEventListener('click', this.inventoryMiniMenuUseButtonHandler);
                 document.getElementById('inventory-mini-menu-attatchable-upgrade-button').removeEventListener('click', this.inventoryMiniMenuUpgradeButtonHandler);
+                document.getElementById('inventory-mini-menu-scrap-button').removeEventListener('click', this.inventoryMiniMenuScrapButtonHandler);
                 if(node.parentNode.classList.contains('character-summary-equipped-slot')){
                     let slot = this.model.getInventoryItemSlotTypeFromClassList(node.parentNode.classList);
                     if(this.model.currentCharacter.equipment[slot] != ''){
                         let item = this.model.currentCharacter.equipment[slot];
                         document.getElementById('inventory-mini-menu-consumable-use-button').style.display = 'none';
+                        document.getElementById('inventory-mini-menu-scrap-button').style.display = 'none';
                         if(this.model.props.getSituation() == 'overworld'){
                             document.getElementById('inventory-mini-menu-attatchable-upgrade-button').style.display = 'block';
                             document.getElementById('inventory-mini-menu-attatchable-upgrade-button').addEventListener('click', this.inventoryMiniMenuUpgradeButtonHandler = ()=>{
@@ -183,6 +186,18 @@ export default class CharacterSummaryController{
                     }
                 }else{
                     let item = this.model.getInventoryItemFromItemId(node.id);
+                    if(this.model.props.getSituation() == 'overworld'){
+                        document.getElementById('inventory-mini-menu-scrap-button').style.display = 'block';
+                        document.getElementById('inventory-mini-menu-scrap-button').addEventListener('click', this.inventoryMiniMenuScrapButtonHandler = ()=>{
+                            this.model.props.setGold(this.model.props.getGold() + Math.floor(item.price/4))
+                            this.model.removeItemFromInventoryByItemId(item.itemId);
+                            document.getElementById('inventory-mini-menu').style.display = 'none';
+                            this.onSwitchScreen();
+                            playSoundEffect('./assets/audio/soundeffects/mixkit-metal-medieval-construction-818.wav');
+                            
+                            
+                        })
+                    }
                     switch(item.itemType){
                         case 'attachable':
                             if(this.model.props.getSituation() == 'overworld'){

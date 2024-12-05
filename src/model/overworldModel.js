@@ -81,7 +81,7 @@ export default class OverworldModel{
                 this.toggleBattle(tileEntered.battle);
                 return;
             }
-            if(chance == 199){
+            if(chance == 1){
                 tileEntered.encounter = biome.generateEncounter(this.props.recruitWanderingCompanion);
                 this.toggleEncounter(tileEntered.encounter);
                 return;

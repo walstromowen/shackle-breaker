@@ -448,8 +448,8 @@ export class Flying extends StatusEffect{
             holder: config.holder,
             maxCharges: 3,
             soundEffectSrc: "./assets/audio/soundEffects/cold-wind-fade.wav",
-            targetAnimation: 'float',
-            abilityAnimation: 'float',
+            targetAnimation: 'fly',
+            abilityAnimation: 'none',
             removeOnBattleEnd: true,
         });
     }
@@ -629,7 +629,7 @@ export class Polymorphed extends StatusEffect{
             {
                 text: false,
                 animation: false,
-                vitalsUpdate: false,
+                vitalsUpdate: true,
             }
         );
     }

@@ -9,7 +9,7 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 * critical and damage notifications
 * weakness
 * ability ranges
-* evasion on spash attacks
+* evasion on splash attacks
 * battle and console typing animation wait time and fix
 * fix battle text content
 * Music not restarting on encounter ending

@@ -30,6 +30,7 @@ export default class GameView{
         document.getElementById('inventory-mini-menu-img').src = item.imageSrc;
         document.getElementById('inventory-mini-menu-item-price').innerText = item.price +'g';
         document.getElementById('inventory-mini-menu-item-description').innerText = item.description;
+        document.getElementById('inventory-mini-menu-scrap-value').innerText = Math.floor(item.price/4);
         switch(item.itemType){
             case 'attachable':
                 document.getElementById('inventory-mini-menu-item-level').innerText = item.level;

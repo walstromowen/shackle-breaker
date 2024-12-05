@@ -145,6 +145,17 @@ export default class BattleController{
                 ally.nextAbility.consumable = consumable;
                 this.createTargetListeners(ally, resolveFn);
             });
+            consumableAbilityButtons[i].addEventListener('mouseenter', (e)=>{
+                e.preventDefault();
+                let abilityMenu = document.getElementById('ability-mini-menu');
+                abilityMenu.style.display = 'flex';
+                this.props.updateAbilityMenu(consumableAbilities[i], ally);
+                this.props.positionPopUpElement(abilityMenu, consumableAbilityButtons[i]);
+                consumableAbilityButtons[i].addEventListener('mouseleave', this.abilityMiniMenuExitEventHandler = (ev)=>{
+                    consumableAbilityButtons[i].removeEventListener('mouseleave', this.abilityMiniMenuExitEventHandler);
+                    abilityMenu.style.display = 'none';
+                });
+            }) 
         } 
     }
     createTargetListeners(ally, resolveFn){
@@ -520,7 +531,7 @@ export default class BattleController{
                 if(flag == true){
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
-                    let nextForm = this.model.formChange(combatant, combatant.nextForm.createNextForm());
+                    let nextForm = this.model.formChange(combatant, combatant.nextForm.entity);
                     this.view.replaceCombatantCard(combatant, nextForm);
                     this.view.removeAbilityAnimations()
                     resolve();
@@ -530,7 +541,7 @@ export default class BattleController{
                 if(flag == true){
                     flag = false;
                     document.removeEventListener('click', this.skipEventHandler);
-                    let nextForm = this.model.formChange(combatant, combatant.nextForm.createNextForm());
+                    let nextForm = this.model.formChange(combatant, combatant.nextForm.entity);
                     this.view.replaceCombatantCard(combatant, nextForm);
                     this.view.removeAbilityAnimations()
                     resolve();
@@ -616,6 +627,12 @@ export default class BattleController{
                         return this.resolvePause(resolve);
                     }else{
                         if(resolveObject.retreat == false){
+                            if(resolveObject.newForm){
+                                for(let i = 0; i < this.currentAttacker.abilityTargets.length; i++){
+                                    this.model.formChange(this.currentAttacker.abilityTargets[i], this.currentAttacker.nextAbility.newForm);
+                                    this.currentAttacker = this.currentAttacker.nextAbility.newForm;
+                                }
+                            }
                             this.view.updateCombatantStats(this.currentAttacker);
                             for(let i = 0; i < cycleTargets.length; i++){
                                 this.view.updateCombatantStats(cycleTargets[i]);
@@ -724,12 +741,6 @@ export default class BattleController{
                                     }else{
                                         this.view.printToBattleConsole(`${this.currentAttacker.name}'s attack misses!`);
                                     }
-                                }else{
-                                    if(resolveObject.newForm){//replace this?
-                                        for(let i = 0; i < this.currentAttacker.abilityTargets.length; i++){
-                                            this.model.formChange(this.currentAttacker.abilityTargets[i], this.currentAttacker.nextAbility.newForm)
-                                        }
-                                    }
                                 }
                             }
                         }
@@ -759,12 +770,6 @@ export default class BattleController{
                                         this.view.printToBattleConsole(`${this.currentAttacker.abilityTargets[0].name} evades ${this.currentAttacker.name}'s ${this.currentAttacker.nextAbility.name}!`);
                                     }else{
                                         this.view.printToBattleConsole(`${this.currentAttacker.name}'s attack misses!`);
-                                    }
-                                }else{
-                                    if(resolveObject.newForm){//replace this?
-                                        for(let i = 0; i < this.currentAttacker.abilityTargets.length; i++){
-                                            this.model.formChange(this.currentAttacker.abilityTargets[i], this.currentAttacker.nextAbility.newForm)
-                                        }
                                     }
                                 }
                             }

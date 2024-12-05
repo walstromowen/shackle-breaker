@@ -328,11 +328,23 @@ getAvailableTargets(attacker){
         this.props.setGold(this.props.getGold() + this.props.getBattle().gold);
     }
     distributeXP(combatant){
-        let activeAllys = this.activeCombatants.filter((combatant)=>{
-            return combatant.isHostile == false;
-        })
-        for(let i = 0; i < activeAllys.length; i++){
-            activeAllys[i].currentXP += Math.floor(combatant.dropXP()/activeAllys.length);
+        let activeAllies = []
+        for(let i = 0; i < this.activeCombatants.length; i++){
+            if(this.activeCombatants[i].isHostile == false){
+                let flag = true
+                for(let j = 0; j < this.activeCombatants[i].statusArray.length; j++){
+                    if(this.activeCombatants[i].statusArray[j].name == 'polymorphed')
+                    activeAllies.push(this.activeCombatants[i].nextForm.entity)        
+                    flag = false;
+                }
+                if(flag){
+                    activeAllies.push(this.activeCombatants[i])
+                }
+            }
+        }
+        let xpDrop = combatant.dropXP();
+        for(let k = 0; k < activeAllies.length; k++){
+            activeAllies[k].currentXP += Math.floor(xpDrop/activeAllies.length);
         }
     }
     pileGold(combatant){
@@ -384,8 +396,12 @@ getAvailableTargets(attacker){
     removeRemovableStatusEffects(){
         for(let i = 0; i < this.allCombatants.length; i++){
             for(let j = 0; j < this.allCombatants[i].statusArray.length; j++){
+                if(this.allCombatants[i].statusArray[j].name == 'polymorphed'){
+                    this.allCombatants[i] = this.allCombatants[i].nextForm.entity
+                }
                 if(this.allCombatants[i].statusArray[j].removeOnBattleEnd){
                     this.allCombatants[i].statusArray[j].onRemove();
+                    j--;
                 }
             }
         }

@@ -785,6 +785,7 @@ img{
     animation:ally-enter-battle;
     animation-duration: 2s;
     animation-delay: 0s;
+  
 
 }
 .battle-hostile-enter-battle{
@@ -795,9 +796,11 @@ img{
 }
 @keyframes ally-enter-battle{
     0% {
+        transform-origin: 50%;
         translate: -300%;
     }
     50% {
+        transform-origin: 20% 40%;
         translate: 0%;
     }
 }
@@ -1110,11 +1113,18 @@ img{
 
 }
 @keyframes float{
-    0% {translate:0 1000%}
+    0% {transform: translate(0%, 30%)}
     
-    25% {translate:0 0%}
 
-    100% {translate:0 0%}
+    100% {transform: translate(0%, 0%)}
+
+}
+
+@keyframes fly{
+    0% {transform: translate(0, 0%)}
+    33% {transform: translate(-20%, -10%) rotate(15deg)}
+    66% {transform: translate(20%, -10%) rotate(-15deg)}
+    100% {transform: translate(0%, 0%) rotate(0deg)}
 
 }
 #loading-screen{
