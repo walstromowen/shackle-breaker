@@ -1406,7 +1406,7 @@ export class Shapeshift extends Ability{
             animationSoundEffect: './assets/audio/soundEffects/tornado.wav',
             entity: target,
             createNextForm: ()=>{
-                return entity;
+                return originalForm.entity;
             },
             messageFn: ()=>{
                 return `${target.name} returns to normal form.`;
