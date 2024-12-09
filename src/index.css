@@ -49,7 +49,7 @@
         --stat-cell-width: 50%;
         --lobby-input-width: calc(100% - 180px);
         --medium-size-button-width: 400px;
-        --inventory-mini-menu-width: 400px;
+        --inventory-mini-menu-width: 500px;
         --inventory-mini-menu-height: 300px;
         --lobby-apperance-image-width: 300px;
     }

@@ -21,7 +21,7 @@ export class Ability{
         this.damageTypes = config.damageTypes || [];
         this.defaultTarget = config.defaultTarget || 'opponent';
         this.targetLock = config.targetLock || '';
-
+        this.randomTargeting = config.randomTargeting || false;
         this.attackerAnimation = config.attackerAnimation || 'none';
         this.targetAnimation = config.targetAnimation || 'none';
         this.abilityAnimation = config.abilityAnimation || 'none';
@@ -237,10 +237,10 @@ export class Ability{
     }
     checkLackingResources(attacker){
         let lackingResources = [];
-        if(attacker.currentStamina - this.staminaCost < 0){
+        if(attacker.currentStamina - (this.staminaCost * this.targetCount) < 0){
             lackingResources.push('stamina')
         }
-        if(attacker.currentMagic - this.magicCost < 0){
+        if(attacker.currentMagic - (this.magicCost * this.targetCount) < 0){
             lackingResources.push('magic')
         }
         return lackingResources;
@@ -589,22 +589,24 @@ export class Tripleshot extends Ability{
     constructor(config){
         super({
             name: 'triple shot',
-            description: "Shoot up to three arrows simultaneously at different targets.",
+            description: "Shoot up to three arrows simultaneously at opponents.",
             iconSrc: './assets/media/icons/striking-arrows.png',
             background: `url(./assets/media/icons/striking-arrows.png), linear-gradient(crimson, darkslategrey)`,
             speedModifier: config.speedModifier || 1,
-            damageModifier: config.damageModifier || 1,
+            damageModifier: config.damageModifier || 0.75,
             criticalDamageModifier: config.criticalDamageModifier || 1.2,
             healthCost: config.healthCost || 0,
-            staminaCost: config.staminaCost || 20,
+            staminaCost: config.staminaCost || 7,
             magicCost: config.magicCost || 0,
             damageTypes: config.damageTypes || ['ranged', 'pierce'],
-            targetCount: 3,
             soundEffectSrc: "./assets/audio/soundEffects/arrow-body-impact-146419.mp3",
             sequenceType: 'splash',
             attackerAnimation: config.attackerAnimation || 'ally-attack',
             abilityAnimation: config.abilityAnimation || 'swipe-right',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/broadhead-arrow.png',
+            defaultTarget: 'opponent',
+            targetLock: 'all opponents',
+            targetCount: 3,
 
         })
     }
@@ -632,7 +634,7 @@ export class Cleave extends Ability{
             speedModifier: config.speedModifier || 1,
             damageModifier: config.damageModifier || 0.75,
             healthCost: config.healthCost || 0,
-            staminaCost: config.staminaCost || 10,
+            staminaCost: config.staminaCost || 5,
             magicCost: config.magicCost || 0,
             damageTypes: config.damageTypes || ['melee', 'blunt', 'pierce'],
             targetCount: 2,
@@ -965,18 +967,20 @@ export class Inferno extends Ability{
             iconSrc: './assets/media/icons/wildfires.png',
             background: `url(./assets/media/icons/wildfires.png), linear-gradient(orangered, silver)`,
             speedModifier: config.speedModifier || 0.5,
-            damageModifier: config.damageModifier || 1.25,
+            damageModifier: config.damageModifier || 1.15,
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 0,
-            magicCost: config.magicCost || 35,
+            magicCost: config.magicCost || 13,
             accuracy: config.accuracy || 0.80,
             damageTypes: config.damageTypes || ['ranged', 'fire'],
             soundEffectSrc: "./assets/audio/soundEffects/short-fireball-woosh-6146.mp3",
-            targetCount: 3,
             sequenceType: 'splash',
             attackerAnimation: config.attackerAnimation || 'ally-evade',
             abilityAnimation: config.abilityAnimation || 'explode',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/wildfires.png',
+            defaultTarget: 'opponent',
+            targetLock: 'all opponents',
+            targetCount: 3,
         })
     }
     activate(attacker, target){
@@ -1155,10 +1159,10 @@ export class Earthquake extends Ability{//Needs Work targeting same targets twic
             iconSrc: './assets/media/icons/earth-split.png',
             background: `url(./assets/media/icons/earth-split.png), conic-gradient(steelblue, darkslategrey, brown, silver)`,
             speedModifier: config.speedModifier || 0.5,
-            damageModifier: config.damageModifier || 1.0,
+            damageModifier: config.damageModifier || 0.9,
             criticalDamageModifier: config.criticalDamageModifier || 1.1,
             healthCost: config.healthCost || 0,
-            staminaCost: config.staminaCost || 30,
+            staminaCost: config.staminaCost || 10,
             magicCost: config.magicCost || 0,
             damageTypes: config.damageTypes || ['ranged', 'blunt', 'earth'],
             targetCount: 3,
@@ -1168,7 +1172,9 @@ export class Earthquake extends Ability{//Needs Work targeting same targets twic
             abilityAnimation: config.abilityAnimation || 'sink',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/earth-split.png',
             targetAnimation: config.targetAnimation || 'shake',
-            
+            defaultTarget: 'opponent',
+            targetLock: 'all opponents',
+            targetCount: 3,
         })
     }
     activate(attacker, target){
@@ -1626,6 +1632,47 @@ export class ShootBullet extends Ability{
             abilityAnimation: config.abilityAnimation || 'swipe-right',
            
             
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
+        }
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} shoots ${target.name} with a bullet.`;
+    }
+}
+export class Barrage extends Ability{
+    constructor(config){
+        super({
+            name: 'barrage',
+            description: "Fire a barrage of explosives at enemy targets. ",
+            iconSrc: './assets/media/icons/gunshot.png',
+            background: `url(./assets/media/icons/gunshot.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
+            sequenceType: 'chain',
+            speedModifier: config.speedModifier || 1.25,
+            damageModifier: config.damageModifier || 0.75,
+            criticalDamageModifier: config.criticalDamageModifier || 1.5,
+            criticalChanceModifier: config.criticalChance|| 0.25,
+            accuracy: config.accuracy || 0.60,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 6,
+            magicCost: config.magicCost || 6,
+            damageTypes: config.damageTypes || ['ranged', 'blunt', 'arcane'],
+            soundEffectSrc: "./assets/audio/soundEffects/supernatural-explosion-104295.wav",
+            attackerAnimation: config.attackerAnimation || 'ally-evade',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/falling-blob.png',
+            abilityAnimation: config.abilityAnimation || 'swipe-right',
+            defaultTarget: 'opponent',
+            targetLock: 'all opponents',
+            targetCount: 5,
+            randomTargeting: true,
         })
     }
     activate(attacker, target){

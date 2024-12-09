@@ -112,6 +112,11 @@ export default class BattleModel{
             if(this.activeCombatants[i].isHostile == true){
                 this.activeCombatants[i].abilityTargets=[];
                 this.activeCombatants[i].nextAbility = getRandomArrayElement(this.getCombinedAbilities(this.activeCombatants[i]));
+                let lackingResources = this.activeCombatants[i].nextAbility.checkLackingResources(this.activeCombatants[i]);
+                while(lackingResources.length > 0){
+                    this.activeCombatants[i].nextAbility = getRandomArrayElement(this.getCombinedAbilities(this.activeCombatants[i]));
+                    lackingResources = this.activeCombatants[i].nextAbility.checkLackingResources(this.activeCombatants[i]);
+                }
                 for(let j = 0; j < this.activeCombatants[i].nextAbility.targetCount; j++){
                     this.activeCombatants[i].abilityTargets.push(this.getRandomTarget(this.activeCombatants[i]));
                 }

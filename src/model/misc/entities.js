@@ -121,16 +121,16 @@ export class Entity{
         let difficultyMultiplier = 1.0;
         switch(difficulty){
             case 'easy':
-                difficultyMultiplier = 0.75;
+                difficultyMultiplier = 0.9;
                 break;
             case 'normal':
                 difficultyMultiplier = 1.0;
                 break;
             case 'hard':
-                difficultyMultiplier = 1.25;
+                difficultyMultiplier = 1.1;
                 break;
             case 'nightmare':
-                difficultyMultiplier = 1.5;
+                difficultyMultiplier = 1.2;
                 break;
         }
         this.maxHP = Math.floor(this.maxHP * difficultyMultiplier);
@@ -147,9 +147,9 @@ export class Entity{
         this.basePierceDefense = Math.floor(this.basePierceDefense * difficultyMultiplier);
         this.baseArcaneDefense = Math.floor(this.baseArcaneDefense * difficultyMultiplier);
         this.baseElementalDefense = Math.floor(this.baseElementalDefense * difficultyMultiplier);
-        this.baseSpeed = Math.floor( this.baseSpeed * difficultyMultiplier);
-        this.baseEvasion = Math.floor(this.baseEvasion * difficultyMultiplier); 
-        this.baseCritical = Math.floor(this.baseCritical * difficultyMultiplier);
+        this.baseSpeed = Math.floor(this.baseSpeed * difficultyMultiplier);
+        this.baseEvasion = Math.floor(this.baseEvasion * difficultyMultiplier * 100)/100; 
+        this.baseCritical = Math.floor(this.baseCritical * difficultyMultiplier * 100)/100;
     }
     getEquipment(slots){
         let currentlyEquippedArray = [];
@@ -1525,7 +1525,7 @@ export class PanzerianKnight extends Entity{
         this.baseArcaneDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 2) + (this.attunement * 1);
         this.baseElementalDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 2);
         this.baseSpeed = 20;
-        this.baseEvasion = 0.5;
+        this.baseEvasion = 0.05;
         this.baseCritical = 0.10;
         if(this.isHostile){
             this.applyDifficultyMultiplier(difficulty)
@@ -1611,6 +1611,51 @@ export class IcePheonix extends Entity{
         this.baseSpeed = 20;
         this.baseEvasion = 0.15;
         this.baseCritical = 0.20;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
+    }
+}
+export class Panzerkampfer extends Entity{
+    constructor(config){
+        super({
+            name: config.name || 'Panzerkampfer',
+            level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
+            apperance: config.apperance || './assets/media/entities/panzerkampfer.jpg',
+            vigor: config.vigor || 5,
+            strength: config.strength || 6,
+            dexterity: config.dexterity || 5,
+            intelligence: config.intelligence || 6,
+            attunement: config.attunement || 3,
+            equipment: {
+                mediumAnimalArmor: '',
+            },
+            isHostile: config.isHostile || true,
+            abilityArray: [new Pounce({}), new Roar({})],
+            lootTable: [
+                {item: new IronHelm({level: 1}), weight: 1},
+            ],
+        });
+    }
+    scaleAttributes(difficulty){
+        this.maxHP = (this.vigor * 20)  + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 5) + (this.attunement * 5);
+        this.maxStamina = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
+        this.maxMagic = (this.vigor * 2)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
+        this.baseHpRecovery = 0;
+        this.baseStaminaRecovery = 10;
+        this.baseMagicRecovery = 10;
+        this.baseBluntAttack = (this.vigor * 2) + (this.strength * 4) + (this.dexterity * 3) + (this.intelligence * 2) + (this.attunement * 2);
+        this.basePierceAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
+        this.baseArcaneAttack = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 3) + (this.intelligence * 4) + (this.attunement * 2);
+        this.baseElementalAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 3);
+        this.baseBluntDefense = (this.vigor * 1)  + (this.strength * 2) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 1);
+        this.basePierceDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 2) + (this.intelligence * 1) + (this.attunement * 1);
+        this.baseArcaneDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 2) + (this.attunement * 1);
+        this.baseElementalDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 2);
+        this.baseSpeed = 20;
+        this.baseEvasion = 0.1;
+        this.baseCritical = 0.10;
         if(this.isHostile){
             this.applyDifficultyMultiplier(difficulty)
         }

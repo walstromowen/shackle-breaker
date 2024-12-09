@@ -30,10 +30,6 @@ export class CaveIn extends Stage{
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name}'s party digs through the rubble!`
                             }, 
-                            onActivate(target){
-                                target.currentStamina = Math.floor(target.currentStamina * 0.75);
-                                target.currentMagic = Math.floor(target.currentMagic * 0.75);
-                            },
                             weight: 2,
                         },
                     ],

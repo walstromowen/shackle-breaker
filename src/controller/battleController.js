@@ -159,12 +159,22 @@ export default class BattleController{
         } 
     }
     createTargetListeners(ally, resolveFn){
+        let selectedCard
         let container = document.getElementById('battle-battlefield-container');
         if(ally.nextAbility.targetLock == 'self'){//can also be used on self targeting moves or auto targeting moves
-            let selectedCard = document.getElementById(ally.battleId);
+           selectedCard = document.getElementById(ally.battleId);
             this.validateTarget(ally, selectedCard, resolveFn);
             return;
         }
+        if(ally.nextAbility.targetLock == 'all opponents'){//can also be used on self targeting moves or auto targeting moves
+            let hostiles = this.model.getActiveHostiles()
+            for(let i = 0; i < hostiles.length; i++){
+                selectedCard = document.getElementById(hostiles[i].battleId)
+                this.validateTarget(ally, selectedCard, resolveFn);
+            }
+            return;
+        }
+        
         this.view.highlightPossibleTargets(ally.battleId)
         container.addEventListener('contextmenu', this.removeTargetEventHandler = (e)=>{
             e.preventDefault()
@@ -194,9 +204,8 @@ export default class BattleController{
     validateTarget(ally, selectedCard, resolveFn){
         if(ally.nextAbility.sequenceType == 'chain'){
             this.view.addTargeted(selectedCard)
-            //selectedCard.classList.add('targeted');//view
             ally.abilityTargets.push(this.model.getCombatant(selectedCard.id));
-            if(ally.abilityTargets.length == ally.nextAbility.targetCount){
+            if(ally.abilityTargets.length == ally.nextAbility.targetCount || (ally.abilityTargets.length == this.model.getActiveHostiles().length && ally.nextAbility.targetLock == 'all opponents')){
                 this.toggleConfirmTargetsTab(ally, resolveFn);//create submit choice button
             }
         }
@@ -244,6 +253,13 @@ export default class BattleController{
             this.view.battleConfirmTargetsContainer.style.display = 'none';
             if(ally.nextAbility.consumable != ''){
                 ally.nextAbility.consumable.inProgress = true;
+            }
+            if(ally.nextAbility.randomTargeting){
+                let newTargets = [];
+                for(let i = 0; i < ally.nextAbility.targetCount; i ++){
+                    newTargets.push(this.model.getRandomTarget(ally))
+                }
+                ally.abilityTargets = newTargets;
             }
             resolveFn();
         })
@@ -573,6 +589,10 @@ export default class BattleController{
     }
     //Begin Ability Cycles
     determineAbilitySequence(){
+        if(this.currentAttacker.nextAbility.checkLackingResources(this.currentAttacker).length != 0){
+            this.currentAttacker.abilityTargets = [this.currentAttacker];
+            this.currentAttacker.nextAbility = new Rest({});
+        }
         switch( this.currentAttacker.nextAbility.sequenceType){
             case 'splash':
                 return this.activateAbilityCycle(this.currentAttacker.abilityTargets);
@@ -668,10 +688,6 @@ export default class BattleController{
     }
     prepareAbilitiyHelpper(targets){
         return new Promise((resolve)=>{
-            if(this.currentAttacker.nextAbility.checkLackingResources(this.currentAttacker).length != 0){
-                this.currentAttacker.abilityTargets = [this.currentAttacker];
-                this.currentAttacker.nextAbility = new Rest({});
-            }
             let resolveObject = this.currentAttacker.nextAbility.prepareAbilitiy(this.currentAttacker, targets);
             this.model.removeConsumableByItemIdFromInventory(this.currentAttacker.nextAbility.consumable.itemId);
             resolve(resolveObject);

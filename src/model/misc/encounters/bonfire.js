@@ -21,7 +21,7 @@ export class Bonfire extends Stage{
                                 return  [getRandomArrayElementWeighted(biome.lootTable).item()];
                             },
                             messageFunction: (currentCharacter)=>{
-                                return `As ${currentCharacter.name}'s party enjoys a long rest. ${currentCharacter.name} find something beside the fire. `
+                                return `As ${currentCharacter.name}'s party enjoys a long rest. ${currentCharacter.name} finds something beside the fire. `
                             }, 
                             onActivate(target){
                                 target.currentHP += Math.floor(target.maxHP * 0.5);

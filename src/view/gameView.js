@@ -109,31 +109,46 @@ export default class GameView{
         document.getElementById('ability-mini-menu-img').src = ability.iconSrc;
         document.getElementById('ability-mini-menu-description').innerText = ability.description;
 
-        document.getElementById('ability-mini-menu-hp-cost').innerText = ability.healthCost;
+        document.getElementById('ability-mini-menu-hp-cost').innerText = ability.healthCost + ' each';
         document.getElementById('ability-mini-menu-speed').innerText = Math.floor(ability.speedModifier * entity.currentSpeed);
-        document.getElementById('ability-mini-menu-stamina-cost').innerText = ability.staminaCost;
+        document.getElementById('ability-mini-menu-stamina-cost').innerText = ability.staminaCost + ' each';
         document.getElementById('ability-mini-menu-accuracy').innerText = parseFloat(ability.accuracy).toFixed(2);
-        document.getElementById('ability-mini-menu-magic-cost').innerText = ability.magicCost;
+        document.getElementById('ability-mini-menu-magic-cost').innerText = ability.magicCost + ' each';
         document.getElementById('ability-mini-menu-critical').innerText = parseFloat(ability.criticalChanceModifier + entity.currentCritical).toFixed(2) + '%';
         let damage = 0;
+        let typeCount = 0;
         for(let i = 0; i < ability.damageTypes.length; i++){
             switch(ability.damageTypes[i]){
                 case 'blunt':
                     damage += entity.currentBluntAttack;
+                    typeCount++
                     break;
                 case 'pierce':
                     damage += entity.currentPierceAttack;
+                    typeCount++
                     break;
                 case 'arcane':
+                case 'light':
+                case 'dark':
                     damage += entity.currentArcaneAttack;
+                    typeCount++
                     break;
                 case 'elemental':
+                case 'fire':
+                case 'lightning':
+                case 'ice':
+                case 'earth':
+                case 'wind':
+                case 'chemical':
                     damage += entity.currentElementalAttack;
+                    typeCount++
+                    break;
+                default:
                     break;
             }
         }
-        document.getElementById('ability-mini-menu-damage').innerText = Math.floor(ability.damageModifier * damage / ability.damageTypes.length);
-        document.getElementById('ability-mini-menu-targets').innerText = `${ability.targetLock} x ${ability.targetCount}`;
+        document.getElementById('ability-mini-menu-damage').innerText = Math.floor(ability.damageModifier * damage / typeCount) + ' each';
+        document.getElementById('ability-mini-menu-targets').innerText = `${ability.targetCount}`;
        
     }
     updateAttributeStatPopUp(statCell){
