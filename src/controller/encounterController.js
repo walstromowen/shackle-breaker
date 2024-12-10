@@ -213,6 +213,7 @@ export default class EncounterController{
                     this.model.props.setSituation('overworld')
                     this.props.switchScreen('overworld-screen');
                     this.props.getOverworldController().view.revealOverworldUi();
+                    playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
                 }, 2000);
                 return
             case 'loot':

@@ -423,7 +423,7 @@ export class SilentGrove3 extends Stage{
                 {//Decision
                     option: 'D',
                     description: 'leave',
-                    successfulOutcomes: [{result: 'overworld', weight: 1}],
+                    successfulOutcomes: [{result: 'complete', weight: 1}],
                     messageFunction: (currentCharacter)=>{
                         return `${currentCharacter.name} turns back.`
                     }, 
@@ -494,6 +494,6 @@ export class Interloper extends Stage{
         })
     }
     messageFunction(currentCharacter){
-        return `A giant construct glares ${currentCharacter.name} straight in the eyes!`;
+        return `A giant beast glares ${currentCharacter.name} straight in the eyes!`;
     }
 }

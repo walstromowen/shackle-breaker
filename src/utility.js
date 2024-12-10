@@ -7,7 +7,8 @@ export function playSoundEffect(soundEffectPath){
 
 export function playMusic(musicTrackPath){
     let src = document.getElementById('music-player').src
-    if(src == musicTrackPath){
+    let newSrc = musicTrackPath.substring(1);
+    if(src.includes(newSrc)){
         
     }else{
         document.getElementById('music-player').pause();

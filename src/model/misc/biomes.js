@@ -123,7 +123,7 @@ export class Plains extends Biome{
                 {startingStage: ()=>{return new TreasureChest({})}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new MadmanAhead({})}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new Bonfire({})}, resetOnLeave: false, weight: 1},
-                {startingStage: ()=>{return new SilentGrove({})}, resetOnLeave: false, weight: 100},
+                {startingStage: ()=>{return new SilentGrove({})}, resetOnLeave: false, weight: 1},
             ],
         });
     }
@@ -220,7 +220,7 @@ export function generateBiome(biome){
             return new AltusCapital({})
         }
     }
-    let chance = Math.floor(Math.random()*1);
+    let chance = Math.floor(Math.random()*4);
     switch(chance){
         case 0:
             return new Plains({name: 'Altus Kingdom'});

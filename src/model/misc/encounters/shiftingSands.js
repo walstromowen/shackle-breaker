@@ -8,6 +8,7 @@ export class ShiftingSands extends Stage{
     constructor(config){
         super({
             name: 'Shifting Sands',
+            musicSrc: "./assets/audio/musicTracks/desert-whale-159859.mp3",
             imageSrc: './assets/media/encounters/shifting-sands-1.jpg',
             decisionArray: config.decisionArray || [
                 {
@@ -67,6 +68,7 @@ export class StatuesInTheSand extends Stage{
     constructor(config){
         super({
             name: 'Statues in the Sand',
+            musicSrc: "./assets/audio/musicTracks/desert-whale-159859.mp3",
             imageSrc: './assets/media/encounters/statues-in-the-sand.jpg',
             decisionArray: [
                 {//Decision
@@ -209,6 +211,7 @@ export class ShiftingSands2 extends Stage{
     constructor(config){
         super({
             name: 'Shifting Sands',
+            musicSrc: "./assets/audio/musicTracks/desert-whale-159859.mp3",
             imageSrc: './assets/media/encounters/shifting-sands-2.jpg',
             decisionArray: config.decisionArray || [
                 {
@@ -273,6 +276,7 @@ export class ShiftingSands3 extends Stage{
     constructor(config){
         super({
             name: 'Shifting Sands',
+            musicSrc: "./assets/audio/musicTracks/desert-whale-159859.mp3",
             imageSrc: './assets/media/encounters/shifting-sands-3.jpg',
             decisionArray: config.decisionArray || [
                 {
@@ -342,6 +346,7 @@ export class ShiftingSands4 extends Stage{
     constructor(config){
         super({
             name: 'Shifting Sands',
+            musicSrc: "./assets/audio/musicTracks/desert-whale-159859.mp3",
             imageSrc: './assets/media/encounters/shifting-sands-4.jpg',
             decisionArray: config.decisionArray || [
                 {
@@ -400,6 +405,7 @@ export class SandCastleEntrance extends Stage{
     constructor(config){
         super({
             name: 'The Sand Castle',
+            musicSrc: "./assets/audio/musicTracks/desert-whale-159859.mp3",
             imageSrc: './assets/media/encounters/sand-castle.jpg',
             decisionArray: config.decisionArray || [
                 {
