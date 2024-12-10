@@ -76,12 +76,12 @@ export default class OverworldModel{
         }
         if(tileEntered.type != 'blank'){
             let chance = Math.floor(Math.random()*20);
-            if(chance >= 0){
+            if(chance == 0){
                 tileEntered.battle = biome.generateBattle(this.props.calcHighestPartyLevel(), this.props.getDifficulty());
                 this.toggleBattle(tileEntered.battle);
                 return;
             }
-            if(chance == 1){
+            if(chance >= 1){
                 tileEntered.encounter = biome.generateEncounter(this.props.recruitWanderingCompanion);
                 this.toggleEncounter(tileEntered.encounter);
                 return;

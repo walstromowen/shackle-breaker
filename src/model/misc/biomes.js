@@ -14,6 +14,7 @@ import { TheArtifact } from "./encounters/theArtifact.js";
 import { Bonfire } from "./encounters/bonfire.js";
 import { DesertHorror, Sinkhole } from "./encounters/sinkhole.js";
 import { TracksInTheSnow, WoundedTiger } from "./encounters/tracksInTheSnow.js";
+import { SilentGrove } from "./encounters/silentGrove.js";
 
 export default class Biome{
     constructor(config){
@@ -122,6 +123,7 @@ export class Plains extends Biome{
                 {startingStage: ()=>{return new TreasureChest({})}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new MadmanAhead({})}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new Bonfire({})}, resetOnLeave: false, weight: 1},
+                {startingStage: ()=>{return new SilentGrove({})}, resetOnLeave: false, weight: 100},
             ],
         });
     }
@@ -218,7 +220,7 @@ export function generateBiome(biome){
             return new AltusCapital({})
         }
     }
-    let chance = Math.floor(Math.random()*4);
+    let chance = Math.floor(Math.random()*1);
     switch(chance){
         case 0:
             return new Plains({name: 'Altus Kingdom'});

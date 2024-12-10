@@ -1168,7 +1168,7 @@ export class Earthquake extends Ability{//Needs Work targeting same targets twic
             targetCount: 3,
             soundEffectSrc: "./assets/audio/soundEffects/supernatural-explosion-104295.wav",
             sequenceType: 'splash',
-            attackerAnimation: config.attackerAnimation || 'explode',
+            attackerAnimation: config.attackerAnimation || 'none',
             abilityAnimation: config.abilityAnimation || 'sink',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/earth-split.png',
             targetAnimation: config.targetAnimation || 'shake',

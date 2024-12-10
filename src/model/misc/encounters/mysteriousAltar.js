@@ -125,6 +125,16 @@ export class AtTheAltar extends Stage{
                             }, 
                             weight: 1,
                         },
+                        {
+                            result: 'nextStage',
+                            createNextStage: ()=>{
+                                return new ASkeletalAbomination({});
+                            },
+                            messageFunction: (currentCharacter)=>{
+                                return `As ${currentCharacter.name} reaches to examine the skull, the skull begins to shake.. and its eyes begin to glow! Meanwhile, bones begin flying around the room eventually making their way toward the skull on the altar... `
+                            },
+                            weight: 1,
+                        },
                     ],
                     negativeOutcomes: [
                         {
@@ -149,16 +159,6 @@ export class AtTheAltar extends Stage{
                             messageFunction: (currentCharacter)=>{
                                 return `As ${currentCharacter.name} reaches to examine the skull, the skull's eyes begin to glow red filling the whole room with a blinding light! Upon opening their eye's ${currentCharacter.name}, realizes that the skull has disappered and a group of skeletons is quickly appraoching!`
                             }, 
-                            weight: 1,
-                        },
-                        {
-                            result: 'nextStage',
-                            createNextStage: ()=>{
-                                return new ASkeletalAbomination({});
-                            },
-                            messageFunction: (currentCharacter)=>{
-                                return `As ${currentCharacter.name} reaches to examine the skull, the skull begins to shake.. and its eyes begin to glow! Meanwhile, bones begin flying around the room eventually making their way toward the skull on the altar... `
-                            },
                             weight: 1,
                         },
                     ] 

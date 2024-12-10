@@ -6,7 +6,10 @@ export function playSoundEffect(soundEffectPath){
 }
 
 export function playMusic(musicTrackPath){
-    if(document.getElementById('music-player').src != musicTrackPath){
+    let src = document.getElementById('music-player').src
+    if(src == musicTrackPath){
+        
+    }else{
         document.getElementById('music-player').pause();
         document.getElementById('music-player').src = musicTrackPath;
         document.getElementById('music-player').play();

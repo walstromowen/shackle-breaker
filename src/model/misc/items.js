@@ -1793,6 +1793,67 @@ export class Buckler extends Attachable{
         }
     }
 }
+export class PanzerkamferArmor extends Attachable{
+    constructor(config){
+        super({
+            name: 'Panzerkamfer armor',
+            description: `A carefully engineered armor with an array of weapons. The Panzerkamfers were one of the Panzerian army's greatest weapons and held back the cursed Altus Kingdom following its descent into madness. However, as Panzeria began incorporating magic into the Panzerkamfer armor, the beasts themselves went mad, and Panzeria succumbed to the same madness shortly after.`,
+            imageSrc:  './assets/media/icons/leg-armor.png',
+            price: 300,
+            slot: 'mediumAnimalArmor',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 3,
+            staminaRecovery: 5,
+            magicRecovery: 5,
+            bluntAttack: 3,
+            pierceAttack: 0,
+            arcaneAttack: 3,
+            elementalAttack: 0,
+            bluntDefense: 4,
+            pierceDefense: 4,
+            arcaneDefense: 2,
+            elementalDefense: 2,
+            bluntResistance: 0.1,
+            pierceResistance: 0.1,
+            arcaneResistance: 0.05,
+            elementalResistance: 0.05,
+            speed: 1,
+            evasion: 0.02,
+            critical: 0.05,
+            abilityArray: [new Barrage({})],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 1;
+            this.magicRecovery = this.magicRecovery + 1;
+            this.bluntAttack = this.bluntAttack + 2;
+            this.pierceAttack = this.pierceAttack + 2;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 3;
+            this.pierceDefense = this.pierceDefense + 3;
+            this.arcaneDefense = this.arcaneDefense + 2;
+            this.elementalDefense = this.elementalDefense + 2;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0.00;
+            this.critical = this.critical + 0.00;
+            if(this.level == 3){
+                this.abilityArray.push(new Brace({}));
+            }
+        }
+    }
+}
 export class GreatSword extends Attachable{
     constructor(config){
         super({

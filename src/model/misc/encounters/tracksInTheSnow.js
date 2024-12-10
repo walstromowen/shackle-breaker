@@ -1,6 +1,6 @@
 import Stage from "./stage.js";
 import Battle from "../battle.js";
-import { PanzerianKnight, MadEngineer, MadBandit, Tiger } from "../entities.js";
+import { PanzerianKnight, MadEngineer, MadBandit, Tiger, Panzerkampfer } from "../entities.js";
 import { Bleed, Frozen} from "../statusEffects.js";
 import { getRandomArrayElementWeighted } from "../../../utility.js";
 import { Hide } from "../items.js";
@@ -160,6 +160,13 @@ export class CrimsonSnow extends Stage{
                             result: 'nextStage',
                             createNextStage: (partyLevel, biome)=>{
                                 return new WoundedTiger({});
+                            },
+                            weight: 1
+                        },
+                        {
+                            result: 'nextStage',
+                            createNextStage: (partyLevel, biome)=>{
+                                return new ApexPredator({});
                             },
                             weight: 1
                         }
@@ -398,5 +405,67 @@ export class WoundedTiger extends Stage{
     }
     messageFunction(currentCharacter){
         return `${currentCharacter.name} sees a tiger laying in the snow ahead. It appears to be injured.`;
+    }
+}
+
+export class ApexPredator extends Stage{
+    constructor(config){
+        super({
+            name: 'Apex Predator',
+            imageSrc: './assets/media/entities//panzerkampfer.jpg',
+            musicSrc: "./assets/audio/musicTracks/2022-03-16_-_Escape_Route_-_www.FesliyanStudios.com.mp3",
+            decisionArray: [
+                {//Decision
+                    description: 'Attack',
+                    successfulOutcomes: [
+                        {
+                            result: 'battle',
+                            createBattle: (partyLevel, biome, difficulty)=>{
+                                let hostileArray = [new Panzerkampfer({level: partyLevel, difficulty: difficulty})];
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: "./assets/audio/musicTracks/2022-03-16_-_Escape_Route_-_www.FesliyanStudios.com.mp3", gold: (20*partyLevel), canRetreat: false});
+                            },
+                            messageFunction: (currentCharacter)=>{
+                                return `${currentCharacter.name} attacks!`
+                            }, 
+                            weight: 1,
+                        },
+                    ],
+                },
+                {//Decision
+                    description: 'Run [DEX / STR]',
+                    attributes: ['strength','dexterity'],
+                    successThreshold: 15,
+                    roll: true,
+                    successfulOutcomes: [
+                        {
+                            result: 'overworld',
+                            messageFunction: (currentCharacter)=>{
+                                return `${currentCharacter.name} escapes the predator!`
+                            },   
+                            weight: 1,
+                        },
+                    ],
+                    negativeOutcomes: [
+                        {
+                            result: 'battle',
+                            createBattle: (partyLevel, biome, difficulty)=>{
+                                let hostileArray = [new Panzerkampfer({level: partyLevel, difficulty: difficulty})];
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: "./assets/audio/musicTracks/2022-03-16_-_Escape_Route_-_www.FesliyanStudios.com.mp3", gold: (20*partyLevel), canRetreat: false});
+                            },
+                            messageFunction: (currentCharacter)=>{
+                                return `The predator cuts off ${currentCharacter.name}'s escape!`
+                            }, 
+                            weight: 1,
+                        },
+                    ],
+                    messageFunction: (currentCharacter)=>{
+                        return `${currentCharacter.name} attempts to flee!`
+                    }, 
+                },
+            ]
+        })
+    }
+    messageFunction(currentCharacter){
+        return `(An unnatural beast growls...)`;
     }
 }
