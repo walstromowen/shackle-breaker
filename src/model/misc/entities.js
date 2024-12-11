@@ -1,7 +1,7 @@
 import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl, Eviscerate, ChannelMagic, DarkOrb, Bless, Brace, Inferno, SetBearTrap, Uppercut, Flurry, IceShard, Fly, Barrage, Rage} from "./abilities.js";
 import { Poison, Burn, Bleed, Shielded, InstaDeath, SoulLinked} from "./statusEffects.js";
 import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, LeatherGloves, GreatSword, Flintlock, SmokeBomb, PanzerkamferArmor} from "./items.js";
-import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Hide} from "./items.js";
+import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Pelt} from "./items.js";
 
 
 export class Entity{
@@ -84,7 +84,9 @@ export class Entity{
         this.nextAbility = '';
         this.abilityTargets = [];
         this.immunities = config.immunities || [];
-        this.lootTable = config.lootTable || {};
+        this.lootTable = config.lootTable || [
+            {item: new HealthPotion({level: 1}), weight: 1},
+        ];
         this.addAttachableStats(Object.keys(this.equipment));
         
     }
@@ -559,6 +561,9 @@ export class Tiger extends Entity{
                 mediumAnimalArmor: '',
             },
             abilityArray: [new Bite({}), new Pounce({}), new Roar({})],
+            lootTable: [
+                {item: new Pelt({level: 1}), weight: 1},
+            ],
         })
     }
     scaleAttributes(difficulty){
@@ -735,7 +740,7 @@ export class Wolf extends Entity{
             },
             abilityArray: [new Bite({}), new Pounce({}), new Howl({})],
             lootTable: [
-                {item: new Hide({level: 1}), weight: 1}
+                {item: new Pelt({level: 1}), weight: 1}
             ],
         })
     }
@@ -1280,7 +1285,7 @@ export class DryShark extends Entity{
             abilityArray: [new Bite({damageModifier: 1.5}), new Roar({})],
             lootTable: [
                 {item: new HealthPotion({level: 1}), weight: 1},
-                {item: new Hide(), weight: 1}
+                {item: new Pelt(), weight: 1}
             ],
         })
     }
@@ -1328,7 +1333,7 @@ export class DryEel extends Entity{
             abilityArray: [new Bite({}), new LightningBolt({})],
             lootTable: [
                 {item: new ParalysisTonic({level: 1}), weight: 1},
-                {item: new Hide(), weight: 1}
+                {item: new Pelt(), weight: 1}
             ],
         })
     }
@@ -1377,7 +1382,7 @@ export class DryKraken extends Entity{
             abilityArray: [new Bite({damageModifier: 1.5}), new Roar({}), new Earthquake({})],
             lootTable: [
                 {item: new HealthPotion({level: 1}), weight: 1},
-                {item: new Hide(), weight: 1}
+                {item: new Pelt(), weight: 1}
             ],
         })
     }

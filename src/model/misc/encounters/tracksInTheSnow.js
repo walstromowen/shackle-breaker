@@ -3,7 +3,7 @@ import Battle from "../battle.js";
 import { PanzerianKnight, MadEngineer, MadBandit, Tiger, Panzerkampfer } from "../entities.js";
 import { Bleed, Frozen} from "../statusEffects.js";
 import { getRandomArrayElementWeighted } from "../../../utility.js";
-import { Hide } from "../items.js";
+import { Pelt } from "../items.js";
 
 export class TracksInTheSnow extends Stage{
     constructor(config){
@@ -330,7 +330,7 @@ export class WoundedTiger extends Stage{
                         {
                             result: 'complete',
                             createLoot: (partyLevel, biome)=>{
-                                return  [new Hide(), new Hide(), new Hide()];
+                                return  [new Pelt(), new Pelt(), new Pelt()];
                             },
                             xpReward: 5,
                             weight: 1,

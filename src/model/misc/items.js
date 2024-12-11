@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower, Thrust, ChannelMagic, Siphon, Eviscerate, DarkOrb, Brace, Inferno, Flurry, Uppercut, ShootBullet, ThrowNet, ThrowSmokeBomb, Shapeshift, Barrage, ShootFlamingArrow, Rage, HailStorm} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower, Thrust, ChannelMagic, Siphon, Eviscerate, DarkOrb, Brace, Inferno, Flurry, Uppercut, ShootBullet, ThrowNet, ThrowSmokeBomb, Shapeshift, Barrage, ShootFlamingArrow, Rage, HailStorm, Hide} from "./abilities.js";
 import { DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, UseAntidote, UseAloeRemedy, UseParalysisTonic, UseBandage, DrinkKurtussBrewOfMadness, SetBearTrap} from "./abilities.js";
 
 let counter = 0;
@@ -1958,11 +1958,11 @@ export class PineWood extends Material{
         });
     }
 }
-export class Hide extends Material{
+export class Pelt extends Material{
     constructor(){
         super({
-            name: 'hide',
-            description: 'a valuable animal hide. Hide of a common animal.',
+            name: 'pelt',
+            description: 'a valuable animal hide. Pelt of a common animal.',
             imageSrc: './assets/media/icons/animal-hide.png',
             price: 100,
         });

@@ -1,6 +1,7 @@
 import Stage from "./stage.js";
 import Battle from "../battle.js";
 import { } from "../entities.js";
+import { getRandomArrayElementWeighted } from "../../../utility.js";
 
 
 export class WanderingMercenary extends Stage{
