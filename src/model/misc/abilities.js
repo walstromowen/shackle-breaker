@@ -624,6 +624,44 @@ export class Tripleshot extends Ability{
         this.message = (`${attacker.name} fires a triple shot.`);
     }
 }
+export class ShootFlamingArrow extends Ability{
+    constructor(config){
+        super({
+            name: 'shoot flaming arrow',
+            description: "Shoot a target with a firey arrow. Has a high chance to cause burn",
+            iconSrc: './assets/media/icons/flaming-arrow.png',
+            background: `url(./assets/media/icons/flaming-arrow.png), conic-gradient(crimson, darkslategrey, orangered, silver)`,
+            speedModifier: config.speedModifier || 1.25,
+            damageModifier: config.damageModifier || 0.8,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 15,
+            magicCost: config.magicCost || 0,
+            damageTypes: config.damageTypes || ['ranged', 'pierce', 'fire'],
+            soundEffectSrc: "./assets/audio/soundEffects/arrow-body-impact-146419.mp3",
+            attackerAnimation: config.attackerAnimation || 'ally-evade',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/flaming-arrow.png',
+            abilityAnimation: config.abilityAnimation || 'stick-right',
+           
+            
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
+            if(Math.random()*2 < 1){
+                this.inflictStatus(new Burn({holder: target}), attacker, target);
+            } 
+        }
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} shoots ${target.name} with a flaming arrow.`;
+    }
+}
 export class Cleave extends Ability{
     constructor(config){
         super({
@@ -1077,6 +1115,48 @@ export class IceShard extends Ability{
        this.message = `${attacker.name} shoots an ice shard at ${target.name}.`;
     }
 }
+export class HailStorm extends Ability{
+    constructor(config){
+        super({
+            name: 'hailstorm',
+            description: "Summon a hailstorm using elemental magic over an enemy party. Has a chance to low chance to freeze targets.",
+            iconSrc: './assets/media/icons/icicles-fence.png',
+            background: `url(./assets/media/icons/icicles-fence.png), linear-gradient(cyan, silver)`,
+            speedModifier: config.speedModifier || 0.5,
+            damageModifier: config.damageModifier || 0.9,
+            criticalDamageModifier: config.criticalDamageModifier || 1.1,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 15,
+            damageTypes: config.damageTypes || ['ranged', 'ice'],
+            soundEffectSrc: "./assets/audio/soundEffects/windy-blizzard.mp3",
+            sequenceType: 'splash',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/snowflake-1.png',
+            targetAnimation: config.targetAnimation || 'shake',
+            abilityAnimation: config.abilityAnimation || 'swipe-right',
+            attackerAnimation: config.attackerAnimation || 'ally-evade',
+            defaultTarget: 'opponent',
+            targetLock: 'all opponents',
+            targetCount: 3,
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            if(Math.random()*8 < 1){
+                this.inflictStatus(new Frozen({holder: target}), attacker, target);
+            }
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
+        }
+    }
+    updateMessage(attacker){
+        this.message = (`${attacker.name} summons a hailstorm!`);
+    }
+}
 export class Shockwave extends Ability{
     constructor(config){
         super({
@@ -1327,6 +1407,35 @@ export class Brace extends Ability{
         this.message = `${attacker.name} braces.`;
     }
 }
+export class Hide extends Ability{
+    constructor(config){
+        super({
+            name: 'hide',
+            description: "Attempt to hide. Raises one's evasion.",
+            iconSrc: './assets/media/icons/double-face-mask.png',
+            background: `url(./assets/media/icons/double-face-mask.png), linear-gradient(crimson, darkslategrey)`,
+            speedModifier: config.speedModifier || 1.25,
+            damageModifier: config.damageModifier || 0,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 10,
+            magicCost: config.magicCost || 0,
+            damageTypes: config.damageTypes || [],
+            soundEffectSrc: "./assets/audio/soundEffects/anvil-hit-2-14845.mp3",
+            attackerAnimation: config.attackerAnimation || 'none',
+            targetAnimation: 'none',
+            abilityAnimation: config.abilityAnimation || 'none',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/double-face-mask.png',
+            defaultTarget: 'self',
+            targetLock: 'self',
+        })
+    }
+    activate(attacker, target){
+        this.inflictStatus(new EvasionBuff({holder: target}), attacker, target);
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} Hides.`;
+    }
+}
 export class VineLash extends Ability{
     constructor(config){
         super({
@@ -1514,6 +1623,37 @@ export class Roar extends Ability{
         else{
             this.message = `${attacker.name} roars at ${target.name}.`;
         }
+    }
+}
+export class Rage extends Ability{
+    constructor(config){
+        super({
+            name: 'rage',
+            description: `channels one's inner rage raising one's physical attack.`,
+            iconSrc: './assets/media/icons/enrage.png',
+            background: `url(./assets/media/icons/enrage.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
+            speedModifier: config.speedModifier || 1.5,
+            damageModifier: config.damageModifier || 0,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 10,
+            magicCost: config.magicCost || 0,
+            damageTypes: config.damageTypes || [],
+            soundEffectSrc: "./assets/audio/soundEffects/heating-up.mp3",
+            attackerAnimation: config.attackerAnimation || 'shake',
+            targetAnimation: 'shake',
+            abilityAnimation: config.abilityAnimation || 'shake',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/enrage.png',
+            defaultTarget: 'self',
+            targetLock: 'self',
+        })
+    }
+    activate(attacker, target){
+        if(attacker == target){
+            this.inflictStatus(new PhysicalAttackBuff({holder: target}), attacker, target);
+        }
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} becomes enraged.`;
     }
 }
 export class Howl extends Ability{

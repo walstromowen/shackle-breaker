@@ -21,7 +21,7 @@ export class MysteriousAltar extends Stage{
                             createNextStage: (partyLevel, biome)=>{
                                 return new AtTheAltar({});
                             },
-                            
+                            xpReward: 5,
                             weight: 1,
                         },
                     ],
@@ -112,17 +112,19 @@ export class AtTheAltar extends Stage{
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `As ${currentCharacter.name} reaches to examine the skull, the skull's eyes begin to glow blue filling the whole room with a blinding light! Upon opening their eye's ${currentCharacter.name}, realizes that the skull has disappered and feels a sense of newly found strength.`
-                            }, 
-                            weight: 100,
+                            },
+                            xpReward: 5,    
+                            weight: 1,
                         },
                         {
-                            result: 'loot',
+                            result: 'complete',
                             createLoot: (partyLevel, biome)=>{
                                 return  [getRandomArrayElementWeighted(biome.lootTable).item(), getRandomArrayElementWeighted(biome.lootTable).item()];
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `As ${currentCharacter.name} reaches to examine the skull, the skull's eyes begin to glow green. Suddenly, mysterious objects materialize on the altar just waiting for ${currentCharacter.name} to grab them.`
-                            }, 
+                            },
+                            xpReward: 5, 
                             weight: 1,
                         },
                         {
@@ -133,7 +135,8 @@ export class AtTheAltar extends Stage{
                             messageFunction: (currentCharacter)=>{
                                 return `As ${currentCharacter.name} reaches to examine the skull, the skull begins to shake.. and its eyes begin to glow! Meanwhile, bones begin flying around the room eventually making their way toward the skull on the altar... `
                             },
-                            weight: 1,
+                            xpReward: 5,
+                            weight: 2,
                         },
                     ],
                     negativeOutcomes: [

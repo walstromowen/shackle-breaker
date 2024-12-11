@@ -1162,6 +1162,7 @@ img{
 
     100% {translate:0%}
 }
+
 @keyframes drink {
     0% {rotate:0deg}
     25% {rotate: -45deg}

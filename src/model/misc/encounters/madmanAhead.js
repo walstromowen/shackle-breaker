@@ -46,14 +46,15 @@ export class MadmanAhead extends Stage{
                     },
                     successfulOutcomes: [
                         {
-                            result: 'loot',
+                            result: 'complete',
                             imageSrc: './assets/media/entities/cursed-villager-1.jpg',
                             createLoot: (partyLevel, biome)=>{
                                 return  [getRandomArrayElementWeighted(biome.lootTable).item()];
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} sneaks up behind the Madman and plunges a dagger into it side leaving the Madman lifeless on the ground. If it even was alive...`
-                            }, 
+                            },
+                            xpReward: 5, 
                             weight: 1,
                         },
                     ],
@@ -114,14 +115,15 @@ export class MadmanAhead extends Stage{
                     },
                     successfulOutcomes: [
                         {
-                            result: 'loot',
+                            result: 'complete',
                             imageSrc: './assets/media/entities/cursed-villager-1.jpg',
                             createLoot: (partyLevel, biome)=>{
                                 return  [getRandomArrayElementWeighted(biome.lootTable).item()];
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `The rock hits the Madman right in head leaving the Madman lifeless on the ground. If it even was alive...`
-                            }, 
+                            },
+                            xpReward: 5, 
                             weight: 1,
                         },
                         {
@@ -205,14 +207,15 @@ export class MadmanAhead extends Stage{
                     }, 
                     successfulOutcomes: [
                         {
-                            result: 'loot',
+                            result: 'complete',
                             imageSrc: './assets/media/entities/cursed-villager-1.jpg',
                             createLoot: (partyLevel, biome)=>{
                                 return  [getRandomArrayElementWeighted(biome.lootTable).item()];
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} converses with the Madman about the dilusional rants one might expect from a man who has lost his mind. Finally, the Madman smiles, and with tears in his eyes gives ${currentCharacter.name} a his backpack. Just before darting off, he mutters, "It's really you .... Shackle Breaker...".`
-                            }, 
+                            },
+                            xpReward: 5, 
                             weight: 1,
                         },
                         {
@@ -222,7 +225,8 @@ export class MadmanAhead extends Stage{
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} starts a conversation with the Madman.`
-                            }, 
+                            },
+                            xpReward: 5,
                             weight: 2,
                         },
                     ],
@@ -283,13 +287,14 @@ export class ConversationWithMadman extends Stage{
                     roll: true,
                     successfulOutcomes: [
                         {
-                            result: 'loot',
+                            result: 'complete',
                             createLoot: (partyLevel, biome)=>{
                                 return  [getRandomArrayElementWeighted(biome.lootTable).item()];
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `Upon hearing ${currentCharacter.name}, the Madman falls back and hisses. The Madman then gets up and runs away leaving behind his knapsack in the process.`
-                            }, 
+                            },
+                            xpReward: 5, 
                             weight: 1,
                         },
                     ],
@@ -323,13 +328,14 @@ export class ConversationWithMadman extends Stage{
                     roll: true,
                     successfulOutcomes: [
                         {
-                            result: 'loot',
+                            result: 'complete',
                             createLoot: (partyLevel, biome)=>{
                                 return  [getRandomArrayElementWeighted(biome.lootTable).item()];
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `"Magic like you! So me like you! Hahahaha! Me give you these now!"`
-                            }, 
+                            },
+                            xpReward: 5, 
                             weight: 1,
                         },
                     ],

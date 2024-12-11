@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower, Thrust, ChannelMagic, Siphon, Eviscerate, DarkOrb, Brace, Inferno, Flurry, Uppercut, ShootBullet, ThrowNet, ThrowSmokeBomb, Shapeshift, Barrage} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower, Thrust, ChannelMagic, Siphon, Eviscerate, DarkOrb, Brace, Inferno, Flurry, Uppercut, ShootBullet, ThrowNet, ThrowSmokeBomb, Shapeshift, Barrage, ShootFlamingArrow, Rage, HailStorm} from "./abilities.js";
 import { DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, UseAntidote, UseAloeRemedy, UseParalysisTonic, UseBandage, DrinkKurtussBrewOfMadness, SetBearTrap} from "./abilities.js";
 
 let counter = 0;
@@ -301,6 +301,9 @@ export class Handaxe extends Attachable{
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
             this.critical = this.critical + 0;
+            if(this.level == 2){
+                this.abilityArray.push(new Rage({}));
+            }
         }
     }
 }
@@ -359,6 +362,9 @@ export class Shortbow extends Attachable{
             this.speed = this.speed + 0.01;
             this.evasion = this.evasion + 0.01;
             this.critical = this.critical + 0.01;
+            if(this.level == 3){
+                this.abilityArray.push(new ShootFlamingArrow({}));
+            }
         }
     }
 }
@@ -722,6 +728,9 @@ export class IceStaff extends Attachable{
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
             this.critical = this.critical + 0;
+            if(this.level == 3){
+                this.abilityArray.push(new HailStorm({}));
+            }
         }
     }
 }
@@ -755,7 +764,7 @@ export class ForestStaff extends Attachable{
             speed: 0,
             evasion: 0,
             critical: 0,
-            abilityArray: [new Strike({}), new VineLash({}), new Shapeshift({})],
+            abilityArray: [new Strike({}), new VineLash({})],
         })
         this.upgrade(config.level-this.level);
     }
@@ -780,8 +789,11 @@ export class ForestStaff extends Attachable{
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
             this.critical = this.critical + 0;
-            if(this.level == 3){
+            if(this.level == 2){
                 this.abilityArray.push(new Earthquake({}));
+            }
+            if(this.level == 3){
+                this.abilityArray.push(new Shapeshift({}));
             }
         }
     }
@@ -841,6 +853,9 @@ export class Flintlock extends Attachable{
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
             this.critical = this.critical + 0;
+            if(this.level == 3){
+                this.abilityArray.push(new Barrage({}));
+            }
         }
     }
 }
@@ -1015,6 +1030,9 @@ export class LeatherHelmet extends Attachable{
             this.speed = this.speed + 1;
             this.evasion = this.evasion + 0.01;
             this.critical = this.critical + 0.01;
+            if(this.level == 3){
+                this.abilityArray.push(new Hide({}))
+            }
         }
     }
 }
@@ -1073,6 +1091,9 @@ export class LeatherHood extends Attachable{
             this.speed = this.speed + 1;
             this.evasion = this.evasion + 0.01;
             this.critical = this.critical + 0.01;
+            if(this.level == 3){
+                this.abilityArray.push(new Hide({}))
+            }
         }
     }
 }
@@ -1131,6 +1152,9 @@ export class LeatherChestplate extends Attachable{
             this.speed = this.speed + 1;
             this.evasion = this.evasion + 0.01;
             this.critical = this.critical + 0.01;
+            if(this.level == 3){
+                this.abilityArray.push(new Hide({}))
+            }
         }
     }
 }
@@ -1189,6 +1213,9 @@ export class LeatherGloves extends Attachable{
             this.speed = this.speed + 1;
             this.evasion = this.evasion + 0.01;
             this.critical = this.critical + 0.01;
+            if(this.level == 3){
+                this.abilityArray.push(new Hide({}))
+            }
         }
     }
 }
@@ -1247,6 +1274,9 @@ export class LeatherGreaves extends Attachable{
             this.speed = this.speed + 1;
             this.evasion = this.evasion + 0.01;
             this.critical = this.critical + 0.01;
+            if(this.level == 3){
+                this.abilityArray.push(new Hide({}))
+            }
         }
     }
 }
@@ -1305,6 +1335,9 @@ export class LeatherBoots extends Attachable{
             this.speed = this.speed + 1;
             this.evasion = this.evasion + 0.01;
             this.critical = this.critical + 0.01;
+            if(this.level == 3){
+                this.abilityArray.push(new Hide({}))
+            }
         }
     }
 }
@@ -1363,9 +1396,9 @@ export class IronHelm extends Attachable{
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0.00;
             this.critical = this.critical + 0.00;
-        }
-        if(this.level == 3){
-            this.abilityArray.push(new Brace({}));
+            if(this.level == 3){
+                this.abilityArray.push(new Brace({}));
+            }
         }
     }
 }
@@ -1932,6 +1965,26 @@ export class Hide extends Material{
             description: 'a valuable animal hide. Hide of a common animal.',
             imageSrc: './assets/media/icons/animal-hide.png',
             price: 100,
+        });
+    }
+}
+export class IronOre extends Material{
+    constructor(){
+        super({
+            name: 'iron ore',
+            description: 'raw iron ore.',
+            imageSrc: './assets/media/icons/ore.png',
+            price: 150,
+        });
+    }
+}
+export class Diamond extends Material{
+    constructor(){
+        super({
+            name: 'diamond',
+            description: 'a valuable diamond. Rare gems have always captured the hearts of greedy men, perhaps even more so the hearts of madmen.',
+            imageSrc: './assets/media/icons/cut-diamond.png',
+            price: 1000,
         });
     }
 }

@@ -104,15 +104,44 @@ export class TalkWithMercenary extends Stage{
                         },
                     ]
                 },
+                {
+                    option: 'C',
+                    description: "Pickpocket the Mercenary. [DEX]",
+                    attributes: ['dexterity'],
+                    successThreshold: 16,
+                    roll: true,
+                    successfulOutcomes: [
+                        {
+                            result: 'removeDecisions',
+                            removableDecisions: ['C'],
+                            createLoot: (partyLevel, biome)=>{
+                                return  [getRandomArrayElementWeighted(biome.lootTable).item()];
+                            },
+                            weight: 1,
+                        }
+                    ],
+                    negativeOutcomes: [
+                        {
+                            result: 'battle',
+                            musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
+                            createBattle: (partyLevel, biome, difficulty)=>{
+                                config.entity.isHostile = true;
+                                return new Battle({hostiles: [config.entity], battleMusicSrc: biome.battleMusicSrc});
+                            },
+                            messageFunction: (currentCharacter)=>{
+                                return `"Oh now you have done it!"`
+                            }, 
+                            weight: 1,
+                        },
+                    ],
+                    messageFunction: (currentCharacter)=>{
+                        return `${currentCharacter.name} attempts to pickpocket the Mercenary.`
+                    },
+                },
                 {//Decision
                     option: 'C',
                     description: 'Leave',
-                    successfulOutcomes: [
-                        {
-                            result: 'complete',
-                            weight: 1
-                        },
-                    ],
+                    successfulOutcomes: [{result: 'complete', weight: 1},],
                     messageFunction: (currentCharacter)=>{
                         return `${currentCharacter.name} leaves.`
                     }, 

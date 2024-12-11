@@ -16,7 +16,7 @@ export class Bonfire extends Stage{
                     roll: true,
                     successfulOutcomes: [
                         {
-                            result: 'loot',
+                            result: 'complete',
                             createLoot: (partyLevel, biome)=>{
                                 return  [getRandomArrayElementWeighted(biome.lootTable).item()];
                             },
@@ -31,6 +31,7 @@ export class Bonfire extends Stage{
                                 if(target.currentStamina > target.maxStamina) target.currentStamina = target.maxStamina;
                                 if(target.currentMagic > target.maxMagic) target.currentMagic = target.maxMagic;
                             },
+                            xpReward: 5,
                             weight: 1,
                         },
                         {
@@ -46,6 +47,7 @@ export class Bonfire extends Stage{
                                 if(target.currentStamina > target.maxStamina) target.currentStamina = target.maxStamina;
                                 if(target.currentMagic > target.maxMagic) target.currentMagic = target.maxMagic;
                             },
+                            xpReward: 5,
                             weight: 2,
                         },
                     ],
@@ -73,7 +75,7 @@ export class Bonfire extends Stage{
                             }, 
                             weight: 1,
                         },
-                                 {
+                        {
                             result: 'battle',
                             imageSrc: './assets/media/entities/mad-bandit.jpg',
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",

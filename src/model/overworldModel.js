@@ -96,6 +96,7 @@ export default class OverworldModel{
     toggleEncounter(encounter){
         this.props.setEncounter(encounter);
         this.props.setScreen('encounter-screen');
+        
     }
     toggleMapChange(){
         this.props.setScreen('map-change-screen');

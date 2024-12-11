@@ -21,7 +21,8 @@ export class ShiftingSands extends Stage{
                             result: 'nextStage',
                             createNextStage: (partyLevel, biome)=>{
                                 return new ShiftingSands2({});
-                            }, 
+                            },
+                            xpReward: 5, 
                             weight: 1,
                         },
                     ],
@@ -84,7 +85,8 @@ export class StatuesInTheSand extends Stage{
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `After maintaining careful eye contact and backing away slowly, ${currentCharacter.name}'s party sees the statues disipate into the desert winds.`
-                            }, 
+                            },
+                            xpReward: 5, 
                             weight: 1,
                         },
                     ],
@@ -127,7 +129,8 @@ export class StatuesInTheSand extends Stage{
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `As ${currentCharacter.name} smashes the statues, the statues turn into piles of sand and are blown away by the desert wind.`
-                            }, 
+                            },
+                            xpReward: 5, 
                             weight: 1,
                         },
                     ],
@@ -164,10 +167,14 @@ export class StatuesInTheSand extends Stage{
                     roll: true,
                     successfulOutcomes: [
                         {
-                            result: 'complete',
+                            result: 'nextStage',
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name}'s party wastes no time running from the unnatural statues. It appears the statues are nowhere to be seen.`
-                            },   
+                            },
+                            createNextStage: (partyLevel, biome)=>{
+                                return new ShiftingSands3({});
+                            },
+                            xpReward: 5,   
                             weight: 1,
                         },
                     ],
@@ -225,7 +232,7 @@ export class ShiftingSands2 extends Stage{
                             createNextStage: (partyLevel, biome)=>{
                                 return new ShiftingSands3({});
                             },
-                            
+                            xpReward: 5,
                             weight: 1,
                         },
                     ],
@@ -293,7 +300,7 @@ export class ShiftingSands3 extends Stage{
                             createNextStage: (partyLevel, biome)=>{
                                 return new ShiftingSands4({});;
                             },
-                            
+                            xpReward: 5,
                             weight: 1,
                         },
                     ],
@@ -363,6 +370,7 @@ export class ShiftingSands4 extends Stage{
                             createNextStage: (partyLevel, biome)=>{
                                 return new SandCastleEntrance({});;
                             },
+                            xpReward: 5,
                             weight: 1,
                         },
                     ],
@@ -411,13 +419,6 @@ export class SandCastleEntrance extends Stage{
                 {
                     description: 'Enter the castle.',
                     successfulOutcomes: [
-                        {
-                            result: 'complete',
-                            onActivate(target){
-                                target.currentStamina = target.maxStamina;
-                            },
-                            weight: 1,
-                        },
                         {//TEMP
                             result: 'battle',
                             imageSrc: './assets/media/entities/the-sand-shade.jpg',
@@ -428,7 +429,7 @@ export class SandCastleEntrance extends Stage{
                             messageFunction: (currentCharacter)=>{
                                 return `Tho shea-ath katan.... (Murmoring in an unknown language)`
                             }, 
-                            weight: 100,
+                            weight: 1,
                         },//TEMP
                     ],
                     messageFunction: (currentCharacter)=>{

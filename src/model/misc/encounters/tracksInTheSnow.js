@@ -22,6 +22,7 @@ export class TracksInTheSnow extends Stage{
                             createNextStage: (partyLevel, biome)=>{
                                 return new TracksInTheSnow2({});
                             },
+                            xpReward: 5,
                             weight: 1
                         },
                         {
@@ -29,6 +30,7 @@ export class TracksInTheSnow extends Stage{
                             createNextStage: (partyLevel, biome)=>{
                                 return new CrimsonSnow({});
                             },
+                            xpReward: 5,
                             weight: 1
                         }
                     ],
@@ -95,6 +97,7 @@ export class TracksInTheSnow2 extends Stage{
                             createNextStage: (partyLevel, biome)=>{
                                 return new CrimsonSnow({});
                             },
+                            xpReward: 5,
                             weight: 1
                         }
                     ],
@@ -161,6 +164,7 @@ export class CrimsonSnow extends Stage{
                             createNextStage: (partyLevel, biome)=>{
                                 return new WoundedTiger({});
                             },
+                            xpReward: 5,
                             weight: 1
                         },
                         {
@@ -168,6 +172,7 @@ export class CrimsonSnow extends Stage{
                             createNextStage: (partyLevel, biome)=>{
                                 return new ApexPredator({});
                             },
+                            xpReward: 5,
                             weight: 1
                         }
                     ],
@@ -323,10 +328,11 @@ export class WoundedTiger extends Stage{
                     roll: true,
                     successfulOutcomes: [
                         {
-                            result: 'loot',
+                            result: 'complete',
                             createLoot: (partyLevel, biome)=>{
                                 return  [new Hide(), new Hide(), new Hide()];
                             },
+                            xpReward: 5,
                             weight: 1,
                         },
                     ],

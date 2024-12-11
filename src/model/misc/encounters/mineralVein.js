@@ -2,63 +2,52 @@ import Stage from "./stage.js";
 import Battle from "../battle.js";
 import {Spider} from "../entities.js";
 import { getRandomArrayElementWeighted } from "../../../utility.js";
+import { Diamond, IronOre } from "../items.js";
+import { CaveIn } from "./caveIn.js";
 
-export class CaveIn extends Stage{
+export class MineralVein extends Stage{
     constructor(config){
         super({
-            name: 'Cave In',
-            imageSrc: './assets/media/encounters/cave-in.jpg',
+            name: 'Mineral Vein',
+            imageSrc: './assets/media/encounters/mineral-vein.jpg',
             decisionArray: config.decisionArray || [
                 {
-                    description: 'Dig through the rubble. [STR]',
+                    description: 'Mine the mineral vein. [STR]',
                     attributes: ['strength'],
                     successThreshold: 12,
                     roll: true,
                     successfulOutcomes: [
                         {
-                            result: 'complete',
+                            result: 'retry',
                             createLoot: (partyLevel, biome)=>{
-                                return  [getRandomArrayElementWeighted(biome.lootTable).item()];
+                                return [new IronOre()];
                             },
-                            messageFunction: (currentCharacter)=>{
-                                return `While digging, ${currentCharacter.name} finds something in the rubble.`
-                            },
-                            xpReward: 5, 
-                            weight: 1,
+                            xpReward: 2, 
+                            weight: 4,
                         },
                         {
-                            result: 'complete',
-                            messageFunction: (currentCharacter)=>{
-                                return `${currentCharacter.name}'s party digs through the rubble!`
+                            result: 'retry',
+                            createLoot: (partyLevel, biome)=>{
+                                return [new Diamond()];
                             },
-                            xpReward: 5, 
-                            weight: 2,
+                            xpReward: 10, 
+                            weight: 1,
                         },
                     ],
                     negativeOutcomes: [
                         {
                             result: 'complete',
                             messageFunction: (currentCharacter)=>{
-                                return `${currentCharacter.name}'s party digs through the rubble for what feels like hours. Eventually the exhausted party clears a path through.`
+                                return `The mineal vein appears to be empty.`
                             }, 
-                            onActivate(target){
-                                target.currentStamina = Math.floor(target.currentStamina * 0.75);
-                                target.currentMagic = Math.floor(target.currentMagic * 0.75);
-                            },
-                            weight: 1,
+                            weight: 2,
                         },
                         {
                             result: 'retry',
-                            onActivate(target){
-                                target.currentHP -= Math.floor(target.maxHP * 0.25);
-                                if(target.currentHP < 0){
-                                    target.currentHP = 0;
-                                }
-                            },
                             messageFunction: (currentCharacter)=>{
-                                return `As ${currentCharacter.name} works to clear the path, heavy rocks fall on ${currentCharacter.name}!`
+                                return `${currentCharacter.name} mines only worthless stone.`
                             }, 
-                            weight: 2,
+                            weight: 3,
                         },
                         {
                             result: 'battle',
@@ -72,23 +61,45 @@ export class CaveIn extends Stage{
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
-                            createNextStage: (partyLevel, biome)=>{
-                                return new CaveIn({});
-                            },
                             messageFunction: (currentCharacter)=>{
                                 return `While digging, ${currentCharacter.name} breaks into a spider's nest!`
                             }, 
                             weight: 1,
                         },
+                        {
+                            result: 'nextStage',
+                            imageSrc: './assets/media/encounters/cave-in.jpg',
+                            messageFunction: (currentCharacter)=>{
+                                return `The celing collapses on ${currentCharacter.name}!.`
+                            },
+                            createNextStage: (partyLevel, biome)=>{
+                                return new CaveIn({});
+                            },
+                            onActivate(target){
+                                target.currentHP = 1;
+                            },
+                            weight: 1,
+                        },
                     ], 
                     messageFunction: (currentCharacter)=>{
-                        return `${currentCharacter.name} attemps to dig a path through the rubble.`
+                        return `${currentCharacter.name} mines at the mineral vein.`
+                    }, 
+                },
+                {//Decision
+                    description: 'switch character',
+                    successfulOutcomes: [{result: 'switchCharacter', weight: 1}],
+                },
+                {//Decision
+                    description: 'leave',
+                    successfulOutcomes: [{result: 'overworld', weight: 1}],
+                    messageFunction: (currentCharacter)=>{
+                        return `${currentCharacter.name} leaves the mineral vein.`
                     }, 
                 },
             ],
         })
     }
     messageFunction(currentCharacter){
-        return `${currentCharacter.name}'s party encounters a pile of rubble blocking the path.`;
+        return `${currentCharacter.name} spots a mineral vein ahead.`;
     }
 }

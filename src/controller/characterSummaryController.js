@@ -186,7 +186,7 @@ export default class CharacterSummaryController{
                     }
                 }else{
                     let item = this.model.getInventoryItemFromItemId(node.id);
-                    if(this.model.props.getSituation() == 'overworld'){
+                    if(this.model.props.getSituation() == 'overworld' ){
                         document.getElementById('inventory-mini-menu-scrap-button').style.display = 'block';
                         document.getElementById('inventory-mini-menu-scrap-button').addEventListener('click', this.inventoryMiniMenuScrapButtonHandler = ()=>{
                             this.model.props.setGold(this.model.props.getGold() + Math.floor(item.price/4))
@@ -238,6 +238,9 @@ export default class CharacterSummaryController{
                             }
                             break;
                         case 'material':
+                            if(this.model.props.getSituation() != 'overworld'){
+                                document.getElementById('inventory-mini-menu-scrap-button').style.display = 'none';
+                            }
                             document.getElementById('inventory-mini-menu-consumable-use-button').style.display = 'none';
                             document.getElementById('inventory-mini-menu-attatchable-upgrade-button').style.display = 'none';
                             break;

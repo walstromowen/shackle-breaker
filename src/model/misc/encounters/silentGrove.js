@@ -23,7 +23,7 @@ export class SilentGrove extends Stage{
                             createNextStage: (partyLevel, biome)=>{
                                 return new SilentGrove2({});
                             },
-                            
+                            xpReward: 5,
                             weight: 1,
                         },
                     ],
@@ -38,6 +38,9 @@ export class SilentGrove extends Stage{
                                     hostileArray.push(new WoodWhisperer({level: partyLevel, difficulty: difficulty}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                            },
+                            createNextStage: (partyLevel, biome)=>{
+                                return new SilentGrove2({});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} hears something...`
@@ -63,7 +66,7 @@ export class SilentGrove extends Stage{
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} begins to feel sick.`
-                            }, 
+                            },
                             weight: 1,
                         },
                     ], 
@@ -82,7 +85,7 @@ export class SilentGrove extends Stage{
                             createNextStage: (partyLevel, biome)=>{
                                 return new SilentGrove2({});
                             },
-                            
+                            xpReward: 5,
                             weight: 1,
                         },
                     ],
@@ -97,6 +100,9 @@ export class SilentGrove extends Stage{
                                     hostileArray.push(new WoodWhisperer({level: partyLevel, difficulty: difficulty}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                            },
+                            createNextStage: (partyLevel, biome)=>{
+                                return new SilentGrove2({});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} hears something...`
@@ -122,7 +128,7 @@ export class SilentGrove extends Stage{
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} begins to feel sick.`
-                            }, 
+                            },
                             weight: 2,
                         },
                     ], 
@@ -169,7 +175,7 @@ export class SilentGrove2 extends Stage{
                             createNextStage: (partyLevel, biome)=>{
                                 return new SilentGrove3({});
                             },
-                            
+                            xpReward: 5,
                             weight: 1,
                         },
                     ],
@@ -184,6 +190,9 @@ export class SilentGrove2 extends Stage{
                                     hostileArray.push(new WoodWhisperer({level: partyLevel, difficulty: difficulty}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                            },
+                            createNextStage: (partyLevel, biome)=>{
+                                return new SilentGrove3({});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} hears something...`
@@ -209,7 +218,7 @@ export class SilentGrove2 extends Stage{
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} begins to feel weak.`
-                            }, 
+                            },
                             weight: 2,
                         },
                     ], 
@@ -229,7 +238,7 @@ export class SilentGrove2 extends Stage{
                             createNextStage: (partyLevel, biome)=>{
                                 return new SilentGrove3({});
                             },
-                            
+                            xpReward: 5,
                             weight: 1,
                         },
                     ],
@@ -244,6 +253,9 @@ export class SilentGrove2 extends Stage{
                                     hostileArray.push(new WoodWhisperer({level: partyLevel, difficulty: difficulty}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                            },
+                            createNextStage: (partyLevel, biome)=>{
+                                return new SilentGrove3({});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} hears something...`
@@ -269,7 +281,7 @@ export class SilentGrove2 extends Stage{
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} head starts to throb.`
-                            }, 
+                            },
                             weight: 2,
                         },
                     ], 
@@ -289,7 +301,10 @@ export class SilentGrove2 extends Stage{
                             removableDecisions: ['C'],
                             messageFunction: (currentCharacter)=>{
                                 return `While looking around, ${currentCharacter.name} finds something. TODO!`
-                            }, 
+                            },
+                            createLoot: (partyLevel, biome)=>{
+                                return  [getRandomArrayElementWeighted(biome.lootTable).item()];
+                            },
                             weight: 1,
                     
                         },
@@ -355,6 +370,7 @@ export class SilentGrove3 extends Stage{
                             messageFunction: (currentCharacter)=>{
                                 return `Something approaches...`
                             },
+                            xpReward: 5,
                             weight: 1,
                         },
                     ],
@@ -380,7 +396,7 @@ export class SilentGrove3 extends Stage{
                     roll: true,
                     successfulOutcomes: [
                         {
-                            result: 'loot',
+                            result: 'complete',
                             createLoot: (partyLevel, biome)=>{
                                 let loot = [];
                                 for(let i = 0; i < 4; i++){
@@ -396,7 +412,8 @@ export class SilentGrove3 extends Stage{
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `The tree falls with a thud and ${currentCharacter.name} gathers its wood.`
-                            }, 
+                            },
+                            xpReward: 5, 
                             weight: 1,
                         },
                     ],

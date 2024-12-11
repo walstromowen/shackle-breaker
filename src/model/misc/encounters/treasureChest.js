@@ -18,13 +18,19 @@ export class TreasureChest extends Stage{
                     },
                     successfulOutcomes: [
                         {
-                            result: 'loot',
+                            result: 'complete',
                             createLoot: (partyLevel, biome)=>{
-                                return  [getRandomArrayElementWeighted(biome.lootTable).item()];
+                                let rewards = [];
+                                let count = Math.ceil(Math.random()*3);
+                                for(let i = 0; i < count; i++){
+                                    rewards.push(getRandomArrayElementWeighted(biome.lootTable).item())
+                                }
+                                return rewards;
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} sucessfully prys the chest open!`
-                            }, 
+                            },
+                            xpReward: 5, 
                             weight: 1,
                         },
                     ],
@@ -61,13 +67,19 @@ export class TreasureChest extends Stage{
                     },
                     successfulOutcomes: [
                         {
-                            result: 'loot',
+                            result: 'complete',
                             createLoot: (partyLevel, biome)=>{
-                                return  [getRandomArrayElementWeighted(biome.lootTable).item()];
+                                let rewards = [];
+                                let count = Math.ceil(Math.random()*3);
+                                for(let i = 0; i < count; i++){
+                                    rewards.push(getRandomArrayElementWeighted(biome.lootTable).item())
+                                }
+                                return rewards;
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} sucessfully picks the lock!`
-                            }, 
+                            },
+                            xpReward: 5, 
                             weight: 1,
                         },
                     ],
@@ -104,13 +116,19 @@ export class TreasureChest extends Stage{
                     },
                     successfulOutcomes: [
                         {
-                            result: 'loot',
+                            result: 'complete',
                             createLoot: (partyLevel, biome)=>{
-                                return  [getRandomArrayElementWeighted(biome.lootTable).item()];
+                                let rewards = [];
+                                let count = Math.ceil(Math.random()*3);
+                                for(let i = 0; i < count; i++){
+                                    rewards.push(getRandomArrayElementWeighted(biome.lootTable).item())
+                                }
+                                return rewards;
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} finds the key!`
-                            }, 
+                            },
+                            xpReward: 5, 
                             weight: 1,
                         },
                     ],

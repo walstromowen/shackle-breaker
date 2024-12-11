@@ -199,38 +199,28 @@ export default class EncounterController{
                 });
                 return;
             case 'nextStage':
-                this.model.changeStage(outcome.createNextStage(this.model.currentCharacter))
-                this.triggerStage();
+                if(outcome.xpReward)this.model.currentCharacter.currentXP += outcome.xpReward;
+                this.lootDelay(outcome).then(()=>{
+                    this.model.changeStage(outcome.createNextStage(this.model.currentCharacter))
+                    this.triggerStage();
+                });
                 return;
             case 'overworld':
-                setTimeout(()=>{
-                    this.props.getOverworldController().model.currentPartyPosition = this.props.getOverworldController().model.previousPartyPosition;
-                    this.model.checkResetEncounter();
-                    this.model.props.setBattle('');
-                    this.model.updateTileBattle(this.props.getOverworldController().model.currentPartyPosition);
-                    this.props.getOverworldController().model.currentPartyPosition = this.props.getOverworldController().model.previousPartyPosition
-                    this.props.getOverworldController().model.nextPartyPosition = this.props.getOverworldController().model.currentPartyPosition
-                    this.model.props.setSituation('overworld')
-                    this.props.switchScreen('overworld-screen');
-                    this.props.getOverworldController().view.revealOverworldUi();
-                    playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
-                }, 2000);
+                this.lootDelay(outcome).then(()=>{
+                    setTimeout(()=>{
+                        this.props.getOverworldController().model.currentPartyPosition = this.props.getOverworldController().model.previousPartyPosition;
+                        this.model.checkResetEncounter();
+                        this.model.props.setBattle('');
+                        this.model.updateTileBattle(this.props.getOverworldController().model.currentPartyPosition);
+                        this.props.getOverworldController().model.currentPartyPosition = this.props.getOverworldController().model.previousPartyPosition
+                        this.props.getOverworldController().model.nextPartyPosition = this.props.getOverworldController().model.currentPartyPosition
+                        this.model.props.setSituation('overworld')
+                        this.props.switchScreen('overworld-screen');
+                        this.props.getOverworldController().view.revealOverworldUi();
+                        playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
+                    }, 2000);
+                });
                 return
-            case 'loot':
-                let loot = outcome.createLoot(this.model.props.calcHighestPartyLevel(), this.model.props.getMap().biome);
-                let message = '';
-                if(loot.length > 0){
-                    for(let i = 0; i < loot.length; i++){
-                        message += '\n';
-                        message += `${capiltalizeAllFirstLetters(loot[i].name)}`;                      
-                    }
-                }
-                this.model.lootStage(loot);
-                this.printToEncounterConsoleHelpper(`${this.model.currentCharacter.name}'s party loots:\n` + message).then(()=>{
-                    outcome.result = 'complete';
-                    this.triggerOutcome(outcome);
-                })
-                return;
             case 'recruit':
                 let recruit = outcome.createRecruit(this.model.props.calcHighestPartyLevel());
                 this.model.props.getParty().push(recruit);
@@ -240,10 +230,16 @@ export default class EncounterController{
                 })
                 return;
             case 'retry':
-                this.retryStage()
+                if(outcome.xpReward)this.model.currentCharacter.currentXP += outcome.xpReward;
+                this.lootDelay(outcome).then(()=>{
+                    this.retryStage()
+                });
                 return;
             case 'removeDecisions':
-                this.retryStage(outcome.removableDecisions)
+                if(outcome.xpReward)this.model.currentCharacter.currentXP += outcome.xpReward;
+                this.lootDelay(outcome).then(()=>{
+                    this.retryStage(outcome.removableDecisions)
+                });
                 return;
             case 'switchCharacter':
                 this.switchCurrentCharacter().then((selectedEntity)=>{
@@ -254,19 +250,65 @@ export default class EncounterController{
                 })
                 return;
             case 'complete':
-                setTimeout(()=>{
-                    this.model.props.setBattle('');
-                    this.model.props.setEncounter('');
-                    this.model.updateTileEncounter(this.props.getOverworldController().model.currentPartyPosition);
-                    this.model.updateTileBattle(this.props.getOverworldController().model.currentPartyPosition);
-                    
-                    this.model.props.setSituation('overworld')
-                    this.props.switchScreen('overworld-screen');
-                    playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
-                    this.props.getOverworldController().view.revealOverworldUi();
-                }, 2000);
+                if(outcome.xpReward){
+                    this.model.currentCharacter.currentXP += outcome.xpReward;
+                }
+                this.lootDelay(outcome).then(()=>{
+                    return this.cycleLevelUps(outcome)
+                }).then(()=>{
+                    setTimeout(()=>{
+                        this.model.props.setBattle('');
+                        this.model.props.setEncounter('');
+                        this.model.updateTileEncounter(this.props.getOverworldController().model.currentPartyPosition);
+                        this.model.updateTileBattle(this.props.getOverworldController().model.currentPartyPosition);
+                        
+                        this.model.props.setSituation('overworld')
+                        this.props.switchScreen('overworld-screen');
+                        playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
+                        this.props.getOverworldController().view.revealOverworldUi();
+                    }, 2000);
+                })
                 return;
         }
+    }
+    lootDelay(outcome){
+        return new Promise((resolve)=>{
+            if(outcome.createLoot){
+                let loot = outcome.createLoot(this.model.props.calcHighestPartyLevel(), this.model.props.getMap().biome);
+                let message = '';
+                if(loot.length > 0){
+                    for(let i = 0; i < loot.length; i++){
+                        message += '\n';
+                        message += `${capiltalizeAllFirstLetters(loot[i].name)}`;                      
+                    }
+                }
+                this.model.lootStage(loot);
+                this.printToEncounterConsoleHelpper(`${this.model.currentCharacter.name}'s party loots:\n` + message).then(()=>{
+                    resolve();
+                })
+            }else{
+                resolve();
+            }
+        })
+    }
+    cycleLevelUps(outcome){
+        let party = this.model.props.getParty()
+        return party.reduce((chain, ally)=>{
+            return chain.then(()=>this.displayAllyLevelUp(ally, outcome))
+        }, Promise.resolve())  
+    }
+    displayAllyLevelUp(ally, outcome){
+        return new Promise((resolve)=>{
+            if(ally.currentXP >= Math.floor(((ally.level + 10)**2)*0.5)){
+                ally.awardSkillPoints();
+                playSoundEffect("./assets/audio/soundEffects/energy-90321.mp3");
+                this.printToEncounterConsoleHelpper(`${ally.name} is now level ${ally.level}!`).then(()=>{
+                    resolve();
+                })
+            }else{
+                resolve();
+            }
+        })
     }
     onRoll(attributeBonuseScore, decision, remainingUpdates){
         let outcome;

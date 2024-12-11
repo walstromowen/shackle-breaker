@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl, Eviscerate, ChannelMagic, DarkOrb, Bless, Brace, Inferno, SetBearTrap, Uppercut, Flurry, IceShard, Fly, Barrage} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl, Eviscerate, ChannelMagic, DarkOrb, Bless, Brace, Inferno, SetBearTrap, Uppercut, Flurry, IceShard, Fly, Barrage, Rage} from "./abilities.js";
 import { Poison, Burn, Bleed, Shielded, InstaDeath, SoulLinked} from "./statusEffects.js";
 import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, LeatherGloves, GreatSword, Flintlock, SmokeBomb, PanzerkamferArmor} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Hide} from "./items.js";
@@ -1092,7 +1092,7 @@ export class SkeletonColossus extends Entity{
             attunement: config.attunement || 5,
             equipment: config.equipment || {},
             isHostile: config.isHostile || true,
-            abilityArray: [new Punch({damageModifier: 1}), new Pounce({}), new Roar({})],
+            abilityArray: [new Punch({damageModifier: 1}), new Pounce({}), new Rage({})],
             baseBluntResistance: config.baseBluntResistance || 0.05,
             basePierceResistance: config.basePierceResistance || 0.1,
             baseArcaneResistance: config.baseArcaneResistance || 0.1,
@@ -1263,7 +1263,6 @@ export class DryShark extends Entity{
     constructor(config){
         super({
             name: 'Dry Shark',
-            size: 'large',
             level: config.level || 1,
             difficulty: config.difficulty || 'normal',
             apperance: config.apperance || './assets/media/entities/dry-shark.jpg',
@@ -1286,7 +1285,7 @@ export class DryShark extends Entity{
         })
     }
     scaleAttributes(difficulty){
-        this.maxHP = (this.vigor * 10)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
+        this.maxHP = (this.vigor * 8)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 2) + (this.attunement * 2);
         this.maxStamina = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
         this.maxMagic = (this.vigor * 2)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
         this.baseHpRecovery = 0;
@@ -1621,7 +1620,6 @@ export class IcePheonix extends Entity{
     constructor(config){
         super({
             name: 'Ice Pheonix',
-            size: 'large',
             level: config.level || 1,
             difficulty: config.difficulty || 'normal',
             apperance: config.apperance || './assets/media/entities/ice-phoenix.jpg',

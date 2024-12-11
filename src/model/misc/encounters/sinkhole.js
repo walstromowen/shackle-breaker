@@ -20,7 +20,8 @@ export class Sinkhole extends Stage{
                             result: 'complete',
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name}'s party runs out of the sinkhole before it collapses. What could have caused such a thing...`
-                            }, 
+                            },
+                            xpReward: 5, 
                             weight: 1,
                         },
                     ],
@@ -64,7 +65,8 @@ export class Sinkhole extends Stage{
                             result: 'complete',
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name}'s party grabs onto a nearby rock and waits out the sinkhole. What could have caused such a thing...`
-                            }, 
+                            },
+                            xpReward: 5, 
                             weight: 1,
                         },
                     ],
@@ -123,7 +125,8 @@ export class GaintTentacle extends Stage{
                             result: 'complete',
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} quickly runs out of the sinkhole. Soon the tentacle sinks back into the desert.`
-                            }, 
+                            },
+                            xpReward: 5, 
                             weight: 1,
                         },
                     ],
@@ -151,6 +154,7 @@ export class GaintTentacle extends Stage{
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name}'s party swings their weapons at the tentacle. Injured, the tentacle retreats into the desert sand.`
                             },
+                            xpReward: 5,
                             weight: 1,
                         },
                     ],
@@ -322,13 +326,14 @@ export class DesertHorror extends Stage{
                     roll: true,
                     successfulOutcomes: [
                         {
-                            result: 'loot',
+                            result: 'complete',
                             createLoot: (partyLevel, biome)=>{
                                 return  [getRandomArrayElementWeighted(biome.lootTable).item()];
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `With extravagant strength, ${currentCharacter.name} jumps into the monster's mouth and slays the monster from within!`
-                            }, 
+                            },
+                            xpReward: 50, 
                             weight: 1,
                         },
                     ],
@@ -368,7 +373,8 @@ export class DesertHorror extends Stage{
                             result: 'complete',
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} desperately dodges the tentacles reaching for the party. With great strength and plenty of luck, ${currentCharacter.name}'s party barely escapes the monstrosity.`
-                            }, 
+                            },
+                            xpReward: 5, 
                             weight: 1,
                         },
                     ],
