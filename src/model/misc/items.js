@@ -1710,7 +1710,7 @@ export class ClothHood extends Attachable{
 export class ClothRobe extends Attachable{
     constructor(config){
         super({
-            name: 'cloth hood',
+            name: 'cloth robe',
             description: `A thick cloth robe. Garmets like this were common among the many seeking to gain quick riches from the discovery of magic in the Altus kingdom.`,
             imageSrc:  './assets/media/icons/robe.png',
             price: 100,
@@ -1823,6 +1823,67 @@ export class Buckler extends Attachable{
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
             this.critical = this.critical + 0;
+        }
+    }
+}
+export class IronSheild extends Attachable{
+    constructor(config){
+        super({
+            name: 'iron shield',
+            description: 'An iron shield. A heavy shield made of solid iron. Shield weilded by knights of the Royal Altus Guard.',
+            imageSrc:  './assets/media/icons/shield.png',
+            price: 100,
+            slot: 'feet',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 1,
+            magicRecovery: 1,
+            bluntAttack: 0,
+            pierceAttack: 0,
+            arcaneAttack: 0,
+            elementalAttack: 0,
+            bluntDefense: 4,
+            pierceDefense: 4,
+            arcaneDefense: 1,
+            elementalDefense: 1,
+            bluntResistance: 0.04,
+            pierceResistance: 0.03,
+            arcaneResistance: 0.03,
+            elementalResistance: 0.02,
+            speed: -1,
+            evasion: -0.01,
+            critical: 0.00,
+            abilityArray: [new Block({})],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 1;
+            this.magicRecovery = this.magicRecovery + 1;
+            this.bluntAttack = this.bluntAttack + 0;
+            this.pierceAttack = this.pierceAttack + 0;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 3;
+            this.pierceDefense = this.pierceDefense + 3;
+            this.arcaneDefense = this.arcaneDefense + 2;
+            this.elementalDefense = this.elementalDefense + 2;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0.00;
+            this.critical = this.critical + 0.00;
+            if(this.level == 3){
+                this.abilityArray.push(new Brace({}));
+            }
         }
     }
 }
@@ -2117,6 +2178,32 @@ export class SmokeBomb extends Consumable{
             price: 50,
             abilityArray: [new ThrowSmokeBomb({})],
             useSituations: ['battle'],
+        });
+    }
+}
+export class ScrollOfInferno extends Consumable{
+    constructor(){
+        super({
+            name: 'scroll of inferno',
+            description: 'a magical scroll, that when read, summons an inferno to engulf enemies.',
+            imageSrc: './assets/media/icons/tied-scroll.png',
+            price: 100,
+            abilityArray: [new Inferno({})],
+            useSituations: ['battle'],
+            charges: 3,
+        });
+    }
+}
+export class ScrollOfHailStorm extends Consumable{
+    constructor(){
+        super({
+            name: 'scroll of hailstorm',
+            description: 'a magical scroll, that when read, summons a hailstrom to blow against enemies.',
+            imageSrc: './assets/media/icons/tied-scroll.png',
+            price: 100,
+            abilityArray: [new HailStorm({})],
+            useSituations: ['battle'],
+            charges: 3,
         });
     }
 }

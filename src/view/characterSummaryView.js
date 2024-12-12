@@ -108,7 +108,7 @@ export default class CharacterSummaryView{
         this.elementalResistance.innerText = entity.currentElementalResistance;
 
         this.speed.innerText = entity.currentSpeed;
-        this.evasion.innerText = entity.currentEvasion;
+        this.evasion.innerText = entity.currentEvasion.toFixed(2);
         this.critical.innerText = entity.currentCritical;
 
         this.characterImage.src = entity.apperance; 

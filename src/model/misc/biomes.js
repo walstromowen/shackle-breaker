@@ -1,6 +1,6 @@
 import { getRandomArrayElementWeighted } from "../../utility.js";
 import { Skeleton, SkeletonCultist, Wolf, Spider, GroveGuardian, Madman, MadMage, SandStalker, DryShark, Dog, ArmoredSkeleton, MadBandit, FloatingSkull, DryEel, PanzerianKnight, MadEngineer, IcePheonix} from "./entities.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, GreatSword, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, BearTrap, Flintlock, SmokeBomb} from "./items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, GreatSword, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, BearTrap, Flintlock, SmokeBomb, ScrollOfInferno, ScrollOfHailStorm} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Pelt, IronOre, Diamond} from "./items.js";
 import Encounter from "./encounters/encounter.js";
 import Battle from "./battle.js";
@@ -67,6 +67,8 @@ export default class Biome{
             {item: ()=>{return new PoisonedKnife()}, weight: 1},
             {item: ()=>{return new BearTrap()}, weight: 1},
             {item: ()=>{return new SmokeBomb()}, weight: 1},
+            {item: ()=>{return new ScrollOfInferno()}, weight: 1},
+            {item: ()=>{return new ScrollOfHailStorm()}, weight: 1},
 
             {item: ()=>{return new HealthPotion()}, weight: 3},
             {item: ()=>{return new StaminaPotion()}, weight: 3},

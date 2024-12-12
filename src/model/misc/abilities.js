@@ -1420,7 +1420,7 @@ export class Hide extends Ability{
             staminaCost: config.staminaCost || 10,
             magicCost: config.magicCost || 0,
             damageTypes: config.damageTypes || [],
-            soundEffectSrc: "./assets/audio/soundEffects/anvil-hit-2-14845.mp3",
+            soundEffectSrc: "./assets/audio/soundEffects/hide-sound.wav",
             attackerAnimation: config.attackerAnimation || 'none',
             targetAnimation: 'none',
             abilityAnimation: config.abilityAnimation || 'none',
@@ -1826,7 +1826,7 @@ export class Barrage extends Ability{
         }
     }
     updateMessage(attacker, target){
-        this.message = `${attacker.name} shoots ${target.name} with a bullet.`;
+        this.message = `A bullet from ${attacker.name}'s barrage hits ${target.name}.`;
     }
 }
 export class Fly extends Ability{

@@ -300,7 +300,7 @@ export class SilentGrove2 extends Stage{
                             result: 'removeDecisions',
                             removableDecisions: ['C'],
                             messageFunction: (currentCharacter)=>{
-                                return `While looking around, ${currentCharacter.name} finds something. TODO!`
+                                return `While looking around, ${currentCharacter.name} finds something.`
                             },
                             createLoot: (partyLevel, biome)=>{
                                 return  [getRandomArrayElementWeighted(biome.lootTable).item()];

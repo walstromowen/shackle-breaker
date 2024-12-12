@@ -338,9 +338,10 @@ getAvailableTargets(attacker){
             if(this.activeCombatants[i].isHostile == false){
                 let flag = true
                 for(let j = 0; j < this.activeCombatants[i].statusArray.length; j++){
-                    if(this.activeCombatants[i].statusArray[j].name == 'polymorphed')
-                    activeAllies.push(this.activeCombatants[i].nextForm.entity)        
-                    flag = false;
+                    if(this.activeCombatants[i].statusArray[j].name == 'polymorphed'){
+                        activeAllies.push(this.activeCombatants[i].nextForm.entity)        
+                        flag = false;
+                    }
                 }
                 if(flag){
                     activeAllies.push(this.activeCombatants[i])

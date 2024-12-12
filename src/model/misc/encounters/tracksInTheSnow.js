@@ -1,6 +1,6 @@
 import Stage from "./stage.js";
 import Battle from "../battle.js";
-import { PanzerianKnight, MadEngineer, MadBandit, Tiger, Panzerkampfer } from "../entities.js";
+import { PanzerianKnight, MadEngineer, MadBandit, Tiger, Panzerkamfer } from "../entities.js";
 import { Bleed, Frozen} from "../statusEffects.js";
 import { getRandomArrayElementWeighted } from "../../../utility.js";
 import { Pelt } from "../items.js";
@@ -418,7 +418,7 @@ export class ApexPredator extends Stage{
     constructor(config){
         super({
             name: 'Apex Predator',
-            imageSrc: './assets/media/entities//panzerkampfer.jpg',
+            imageSrc: './assets/media/entities//panzerkamfer.jpg',
             musicSrc: "./assets/audio/musicTracks/2022-03-16_-_Escape_Route_-_www.FesliyanStudios.com.mp3",
             decisionArray: [
                 {//Decision
@@ -427,7 +427,7 @@ export class ApexPredator extends Stage{
                         {
                             result: 'battle',
                             createBattle: (partyLevel, biome, difficulty)=>{
-                                let hostileArray = [new Panzerkampfer({level: partyLevel, difficulty: difficulty})];
+                                let hostileArray = [new Panzerkamfer({level: partyLevel, difficulty: difficulty})];
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: "./assets/audio/musicTracks/2022-03-16_-_Escape_Route_-_www.FesliyanStudios.com.mp3", gold: (20*partyLevel), canRetreat: false});
                             },
                             messageFunction: (currentCharacter)=>{
@@ -455,7 +455,7 @@ export class ApexPredator extends Stage{
                         {
                             result: 'battle',
                             createBattle: (partyLevel, biome, difficulty)=>{
-                                let hostileArray = [new Panzerkampfer({level: partyLevel, difficulty: difficulty})];
+                                let hostileArray = [new Panzerkamfer({level: partyLevel, difficulty: difficulty})];
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: "./assets/audio/musicTracks/2022-03-16_-_Escape_Route_-_www.FesliyanStudios.com.mp3", gold: (20*partyLevel), canRetreat: false});
                             },
                             messageFunction: (currentCharacter)=>{

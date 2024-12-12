@@ -38,6 +38,7 @@
     --inventory-mini-menu-height: 300px;
     --icon-height-width: 20px;
     --animate-attribute-bonus: animate-attribute-bonus-success;
+    
 }
 /*large computer styles*/
 @media only screen and (min-width: 1440px) {
@@ -223,17 +224,20 @@
     color: var(--color-5);
     touch-action: manipulation;
     border: none;
+    
 }
-
+body, *:hover, *:active{
+    cursor: url('./assets/media/icons/sword.png'),auto;
+}
 p{
     font-size: var(--font-size-3);
+    
 }
 h5{
     font-size: var(--font-size-2);
 }
 img{
     user-select: none;
-    
 }
 .health-color{
     background-color: var(--health-color);

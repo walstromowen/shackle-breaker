@@ -704,6 +704,14 @@ export class PhysicalAttackBuff extends StatusEffect{
         this.holder.currentPierceAttack += this.currentPierceAttackBuff;
         this.currentCharges++;
     }
+    onEndTurn(){
+        return this.activateHelpper(()=>{this.currentCharges--}, 
+        {
+            text: false,
+            animation: false,
+            vitalsUpdate: false,
+        }
+    )}
     onRemove(){
         for(let i = 0; i < this.holder.statusArray.length; i++){
             if(this.holder.statusArray[i].name == this.name){
@@ -772,6 +780,14 @@ export class PhysicalAttackDebuff extends StatusEffect{
         this.holder.currentPierceAttack -= this.currentPierceAttackDebuff;
         this.currentCharges++;
     }
+    onEndTurn(){
+        return this.activateHelpper(()=>{this.currentCharges--}, 
+        {
+            text: false,
+            animation: false,
+            vitalsUpdate: false,
+        }
+    )}
     onRemove(){
         for(let i = 0; i < this.holder.statusArray.length; i++){
             if(this.holder.statusArray[i].name == this.name){
@@ -840,6 +856,14 @@ export class MagicalAttackBuff extends StatusEffect{
         this.holder.currentElementalAttack += this.currentElementalAttackBuff;
         this.currentCharges++;
     }
+    onEndTurn(){
+        return this.activateHelpper(()=>{this.currentCharges--}, 
+        {
+            text: false,
+            animation: false,
+            vitalsUpdate: false,
+        }
+    )}
     onRemove(){
         for(let i = 0; i < this.holder.statusArray.length; i++){
             if(this.holder.statusArray[i].name == this.name){
@@ -908,6 +932,14 @@ export class MagicalAttackDebuff extends StatusEffect{
         this.holder.currentElementalAttack -= this.currentElementalAttackDebuff;
         this.currentCharges++;
     }
+    onEndTurn(){
+        return this.activateHelpper(()=>{this.currentCharges--}, 
+        {
+            text: false,
+            animation: false,
+            vitalsUpdate: false,
+        }
+    )}
     onRemove(){
         for(let i = 0; i < this.holder.statusArray.length; i++){
             if(this.holder.statusArray[i].name == this.name){
@@ -976,6 +1008,14 @@ export class PhysicalDefenseBuff extends StatusEffect{
         this.holder.currentPierceDefense += this.currentPierceDefenseBuff;
         this.currentCharges++;
     }
+    onEndTurn(){
+        return this.activateHelpper(()=>{this.currentCharges--}, 
+        {
+            text: false,
+            animation: false,
+            vitalsUpdate: false,
+        }
+    )}
     onRemove(){
         for(let i = 0; i < this.holder.statusArray.length; i++){
             if(this.holder.statusArray[i].name == this.name){
@@ -1044,6 +1084,14 @@ export class PhysicalDefenseDebuff extends StatusEffect{
         this.holder.currentPierceDefense -= this.currentPierceDefenseDebuff;
         this.currentCharges++;
     }
+    onEndTurn(){
+        return this.activateHelpper(()=>{this.currentCharges--}, 
+        {
+            text: false,
+            animation: false,
+            vitalsUpdate: false,
+        }
+    )}
     onRemove(){
         for(let i = 0; i <= this.holder.statusArray.length; i++){
             if(this.holder.statusArray[i].name == this.name){
@@ -1091,12 +1139,12 @@ export class EvasionBuff extends StatusEffect{
                 this.currentLevel++
             break;
             case 1:
-                this.currentEvasionBuff = 0.4;
+                this.currentEvasionBuff = 0.3;
                 this.iconSrc = "./assets/media/icons/evasion-buff-2.png";
                 this.currentLevel++
             break;
             case 2:
-                this.currentEvasionBuff = 0.6;
+                this.currentEvasionBuff = 0.4;
                 this.iconSrc = "./assets/media/icons/evasion-buff-3.png";
                 this.currentLevel++
             break;
@@ -1106,6 +1154,14 @@ export class EvasionBuff extends StatusEffect{
         this.holder.currentEvasion += this.currentEvasionBuff;
         this.currentCharges++;
     }
+    onEndTurn(){
+        return this.activateHelpper(()=>{this.currentCharges--}, 
+        {
+            text: false,
+            animation: false,
+            vitalsUpdate: false,
+        }
+    )}
     onRemove(){
         for(let i = 0; i < this.holder.statusArray.length; i++){
             if(this.holder.statusArray[i].name == this.name){
