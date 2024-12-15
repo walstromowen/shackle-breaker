@@ -1,5 +1,5 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower, Thrust, ChannelMagic, Siphon, Eviscerate, DarkOrb, Brace, Inferno, Flurry, Uppercut, ShootBullet, ThrowNet, ThrowSmokeBomb, Shapeshift, Barrage, ShootFlamingArrow, Rage, HailStorm, Hide} from "./abilities.js";
-import { DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, UseAntidote, UseAloeRemedy, UseParalysisTonic, UseBandage, DrinkKurtussBrewOfMadness, SetBearTrap} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower, Thrust, ChannelMagic, Siphon, Eviscerate, DarkOrb, Brace, Inferno, Flurry, Uppercut, ShootBullet, ThrowNet, Shapeshift, Barrage, ShootFlamingArrow, Rage, HailStorm, Hide, CastShadow, AbsorbSoul, ExposeWeakness, GuardBreak, ArcaneBlast, Cleanse} from "./abilities.js";
+import { DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, UseAntidote, UseAloeRemedy, UseParalysisTonic, UseBandage, DrinkKurtussBrewOfMadness, SetBearTrap, ThrowSmokeBomb} from "./abilities.js";
 
 let counter = 0;
 
@@ -93,7 +93,7 @@ export class Dagger extends Attachable{
             speed: 0,
             evasion: 0,
             critical: 0,
-            abilityArray: [new Slash({}), new ThrowPosionedKnife({})],
+            abilityArray: [new Slash({}), new Thrust({})],
         })
         this.upgrade(config.level-this.level);
     }
@@ -118,6 +118,9 @@ export class Dagger extends Attachable{
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
             this.critical = this.critical + 0;
+            if(this.level == 2){
+                this.abilityArray.push(new ThrowPosionedKnife({}));
+            }
             if(this.level == 3){
                 this.abilityArray.push(new Eviscerate({}));
             }
@@ -179,6 +182,9 @@ export class ShortSword extends Attachable{
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
             this.critical = this.critical + 0;
+            if(this.level == 2){
+                this.abilityArray.push(new Uppercut({}));
+            }
             if(this.level == 3){
                 this.abilityArray.push(new Flurry({}));
             }
@@ -240,8 +246,11 @@ export class BlacksmithHammer extends Attachable{
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
             this.critical = this.critical + 0;
+            if(this.level == 2){
+                this.abilityArray.push(new Rage({}));
+            }
             if(this.level == 3){
-                this.abilityArray.push(new Uppercut({}));
+                this.abilityArray.push(new GuardBreak({}));
             }
         }
     }
@@ -304,6 +313,9 @@ export class Handaxe extends Attachable{
             if(this.level == 2){
                 this.abilityArray.push(new Rage({}));
             }
+            if(this.level == 3){
+                this.abilityArray.push(new GuardBreak({}));
+            }
         }
     }
 }
@@ -362,6 +374,9 @@ export class Shortbow extends Attachable{
             this.speed = this.speed + 0.01;
             this.evasion = this.evasion + 0.01;
             this.critical = this.critical + 0.01;
+            if(this.level == 2){
+                this.abilityArray.push(new ExposeWeakness({}));
+            }
             if(this.level == 3){
                 this.abilityArray.push(new ShootFlamingArrow({}));
             }
@@ -423,9 +438,13 @@ export class ArcaneStaff extends Attachable{
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
             this.critical = this.critical + 0;
-            if(this.level == 3){
+            if(this.level == 2){
                 this.abilityArray.push(new ChannelMagic({}));
             }
+            if(this.level == 3){
+                this.abilityArray.push(new ArcaneBlast({}));
+            }
+          
         }
     }
 }
@@ -484,6 +503,9 @@ export class LightStaff extends Attachable{
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
             this.critical = this.critical + 0;
+            if(this.level == 2){
+                this.abilityArray.push(new Cleanse({}));
+            }
             if(this.level == 3){
                 this.abilityArray.push(new Bless({}));
             }
@@ -545,8 +567,14 @@ export class DarkStaff extends Attachable{
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
             this.critical = this.critical + 0;
+            if(this.level == 2){
+                this.abilityArray.push(new Siphon({}));
+            }
             if(this.level == 3){
                 this.abilityArray.push(new DrainLife({}));
+            }
+            if(this.level == 4){
+                this.abilityArray.push(new AbsorbSoul({}));
             }
         }
     }
@@ -667,7 +695,7 @@ export class LightningStaff extends Attachable{
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
             this.critical = this.critical + 0;
-            if(this.level == 3){
+            if(this.level == 2){
                 this.abilityArray.push(new Shockwave({}));
             }
         }
@@ -1978,7 +2006,7 @@ export class GreatSword extends Attachable{
             speed: -1,
             evasion: -1,
             critical: 0,
-            abilityArray: [new Slash({}), new Cleave({})],
+            abilityArray: [new Slash({}), new Cleave({}), new Thrust({})],
         })
         this.upgrade(config.level-this.level);
     }
@@ -2004,6 +2032,9 @@ export class GreatSword extends Attachable{
             this.evasion = this.evasion + 0;
             this.critical = this.critical + 0;
             if(this.level == 2){
+                this.abilityArray.push(new GuardBreak({}));
+            }
+            if(this.level == 3){
                 this.abilityArray.push(new Uppercut({}));
             }
         }
@@ -2023,7 +2054,7 @@ export class Pelt extends Material{
     constructor(){
         super({
             name: 'pelt',
-            description: 'a valuable animal hide. Pelt of a common animal.',
+            description: 'A valuable animal hide. Pelt of a common animal.',
             imageSrc: './assets/media/icons/animal-hide.png',
             price: 100,
         });
@@ -2033,7 +2064,7 @@ export class IronOre extends Material{
     constructor(){
         super({
             name: 'iron ore',
-            description: 'raw iron ore.',
+            description: 'Raw iron ore.',
             imageSrc: './assets/media/icons/ore.png',
             price: 150,
         });
@@ -2043,7 +2074,7 @@ export class Diamond extends Material{
     constructor(){
         super({
             name: 'diamond',
-            description: 'a valuable diamond. Rare gems have always captured the hearts of greedy men, perhaps even more so the hearts of madmen.',
+            description: 'A valuable diamond. Rare gems have always captured the hearts of greedy men, perhaps even more so the hearts of madmen.',
             imageSrc: './assets/media/icons/cut-diamond.png',
             price: 1000,
         });
@@ -2053,7 +2084,7 @@ export class HealthPotion extends Consumable{
     constructor(){
         super({
             name: 'health potion',
-            description: 'a magical brew designed to restore health',
+            description: 'A magical brew designed to restore health',
             imageSrc: './assets/media/icons/standing-potion.png',
             price: 20,
             abilityArray: [new DrinkHealthPotion({})],
@@ -2065,7 +2096,7 @@ export class StaminaPotion extends Consumable{
     constructor(){
         super({
             name: 'stamina potion',
-            description: 'a magical brew designed to restore stamina',
+            description: 'A magical brew designed to restore stamina',
             imageSrc: './assets/media/icons/square-bottle.png',
             price: 20,
             abilityArray: [new DrinkStaminaPotion({})],
@@ -2077,7 +2108,7 @@ export class MagicPotion extends Consumable{
     constructor(){
         super({
             name: 'magic potion',
-            description: 'a magical brew designed to restore magic',
+            description: 'A magical brew designed to restore magic',
             imageSrc: './assets/media/icons/potion-ball.png',
             price: 20,
             abilityArray: [new DrinkMagicPotion({})],
@@ -2089,7 +2120,7 @@ export class Antidote extends Consumable{
     constructor(){
         super({
             name: 'antidote',
-            description: 'an antidote used to treat most poisons.',
+            description: 'An antidote used to treat most poisons.',
             imageSrc: './assets/media/icons/corked-tube.png',
             price: 30,
             abilityArray: [new UseAntidote({})],
@@ -2101,7 +2132,7 @@ export class AloeRemedy extends Consumable{
     constructor(){
         super({
             name: 'aloe remedy',
-            description: 'a remedy used to treat burns.',
+            description: 'A remedy used to treat burns.',
             imageSrc: './assets/media/icons/curled-leaf.png',
             price: 30,
             abilityArray: [new UseAloeRemedy({})],
@@ -2113,7 +2144,7 @@ export class Bandage extends Consumable{
     constructor(){
         super({
             name: 'bandage',
-            description: 'a bandage used to stop bleeding.',
+            description: 'A bandage used to stop bleeding.',
             imageSrc: './assets/media/icons/bandage-roll.png',
             price: 30,
             abilityArray: [new UseBandage({})],
@@ -2125,7 +2156,7 @@ export class ParalysisTonic extends Consumable{
     constructor(){
         super({
             name: 'paralysis tonic',
-            description: `a tonic used to treat paralysis. Although the power of the artifact drove many mad, a select few used its power for good resulting in major breakthroughs in medicine.`,
+            description: `A tonic used to treat paralysis. Although the power of the artifact drove many mad, a select few used its power for good resulting in major breakthroughs in medicine.`,
             imageSrc: './assets/media/icons/round-bottom-flask.png',
             price: 30,
             abilityArray: [new UseParalysisTonic({})],
@@ -2137,7 +2168,7 @@ export class PoisonedKnife extends Consumable{
     constructor(){
         super({
             name: 'poisoned knife',
-            description: 'a small knife, dipped in poison, that can be thrown during combat',
+            description: 'A small knife, dipped in poison, that can be thrown during combat',
             imageSrc: './assets/media/icons/thrown-daggers.png',
             price: 20,
             abilityArray: [new ThrowPosionedKnife({})],
@@ -2185,12 +2216,12 @@ export class ScrollOfInferno extends Consumable{
     constructor(){
         super({
             name: 'scroll of inferno',
-            description: 'a magical scroll, that when read, summons an inferno to engulf enemies.',
+            description: 'A magical scroll, that when read, summons an inferno to engulf enemies.',
             imageSrc: './assets/media/icons/tied-scroll.png',
-            price: 100,
-            abilityArray: [new Inferno({})],
+            price: 200,
+            abilityArray: [new Inferno({damageModifier:2.3, magicCost: 0.1})],
             useSituations: ['battle'],
-            charges: 3,
+            charges: 1,
         });
     }
 }
@@ -2198,12 +2229,25 @@ export class ScrollOfHailStorm extends Consumable{
     constructor(){
         super({
             name: 'scroll of hailstorm',
-            description: 'a magical scroll, that when read, summons a hailstrom to blow against enemies.',
+            description: 'A magical scroll, that when read, summons a hailstrom to blow against enemies.',
             imageSrc: './assets/media/icons/tied-scroll.png',
-            price: 100,
-            abilityArray: [new HailStorm({})],
+            price: 200,
+            abilityArray: [new HailStorm({damageModifier:1.8, magicCost: 0.1})],
             useSituations: ['battle'],
-            charges: 3,
+            charges: 1,
+        });
+    }
+}
+export class ScrollOfCastShadow extends Consumable{
+    constructor(){
+        super({
+            name: 'scroll of cast shadow',
+            description: 'A magical scroll, that when read, allows one to cast their shadow to fight for them. Will return to normal form upon death or leaving battle.',
+            imageSrc: './assets/media/icons/tied-scroll.png',
+            price: 200,
+            abilityArray: [new CastShadow({magicCost: 0.1})],
+            useSituations: ['battle'],
+            charges: 1,
         });
     }
 }
@@ -2223,7 +2267,7 @@ export class Meteorite extends Consumable{
     constructor(){
         super({
             name: 'meteorite',
-            description: 'a framgment of a meteor. The artifact is rumored to have come from another world. Much like this meteorite. Use to summon a meteor shower.',
+            description: 'A framgment of a meteor. The artifact is rumored to have come from another world. Much like this meteorite. Use to summon a meteor shower.',
             imageSrc: './assets/media/icons/asteroid.png',
             price: 300,
             abilityArray: [],
@@ -2231,7 +2275,4 @@ export class Meteorite extends Consumable{
         });
     }
 }
-//smoke bomb
-//tome of 
-//gold bag
 

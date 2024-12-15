@@ -29,7 +29,6 @@ export default class BattleController{
             this.model.initialize();
             this.view.createActiveCombatantCards(this.model.activeCombatants);
             this.activatePreround().then(()=>{
-                this.model.makeConsumableItemsNoLongerInProgress();
                 this.activateRound();
             })
         }
@@ -132,18 +131,26 @@ export default class BattleController{
         let consumableAbilityButtons = this.view.createCombatantAbilityButtons(consumableAbilities, 'consumable');
         for(let i = 0; i < consumableAbilities.length; i++){
             consumableAbilityButtons[i].addEventListener('click', ()=>{
-                let container = document.getElementById('battle-battlefield-container');
-                container.removeEventListener('click', this.selectTargetEventHandler);
-                container.removeEventListener('contextmenu', this.removeTargetEventHandler);
-                this.view.removeCardTargets();
-                this.view.removeEntranceAnimations();
+                let lackingResources = consumableAbilities[i].checkLackingResources(ally);
                 this.view.removeAbilityHighlight();
-                ally.abilityTargets = [];//model
-                consumableAbilityButtons[i].classList.add('selected')//view
-                ally.nextAbility = consumableAbilities[i];//model
-                let consumable = this.model.getConsumables()[i];
-                ally.nextAbility.consumable = consumable;
-                this.createTargetListeners(ally, resolveFn);
+                this.view.removeGlowRed(ally);
+                if(lackingResources.length == 0){
+                    let container = document.getElementById('battle-battlefield-container');
+                    container.removeEventListener('click', this.selectTargetEventHandler);
+                    container.removeEventListener('contextmenu', this.removeTargetEventHandler);
+                    this.view.removeCardTargets();
+                    this.view.removeEntranceAnimations();
+                    this.view.removeAbilityHighlight();
+                    ally.abilityTargets = [];//model
+                    consumableAbilityButtons[i].classList.add('selected')//view
+                    ally.nextAbility = consumableAbilities[i];//model
+                    let consumable = this.model.getConsumables()[i];
+                    ally.nextAbility.consumable = consumable;
+                    this.createTargetListeners(ally, resolveFn);
+                }else{
+                    this.view.glowRed(ally, lackingResources);
+                    playSoundEffect("./assets/audio/soundEffects/power-down-45784.mp3");
+                }
             });
             consumableAbilityButtons[i].addEventListener('mouseenter', (e)=>{
                 e.preventDefault();
@@ -272,6 +279,7 @@ export default class BattleController{
         this.view.battleControlsContainer.style.display = 'none';
         this.view.battleConsole.style.display = 'block';
         this.view.printToBattleConsole('');
+        this.model.makeConsumableItemsNoLongerInProgress();
         this.model.chooseHostileAttacks();
         this.model.determineTurnOrder();
         this.takeTurnHelpper().then(()=>{
@@ -688,8 +696,14 @@ export default class BattleController{
     }
     prepareAbilitiyHelpper(targets){
         return new Promise((resolve)=>{
+
             let resolveObject = this.currentAttacker.nextAbility.prepareAbilitiy(this.currentAttacker, targets);
-            this.model.removeConsumableByItemIdFromInventory(this.currentAttacker.nextAbility.consumable.itemId);
+            if(this.currentAttacker.nextAbility.consumable != '' ){
+                this.currentAttacker.nextAbility.consumable.charges--;
+                if(this.currentAttacker.nextAbility.consumable.charges == 0){
+                    this.model.removeConsumableByItemIdFromInventory(this.currentAttacker.nextAbility.consumable.itemId);
+                }
+            }
             resolve(resolveObject);
         });
     }

@@ -17,7 +17,7 @@ export class TheArtifact extends Stage{
                             musicSrc: "./assets/audio/musicTracks/bloodcry-clemens-ruh-main-version-32174-03-58.mp3",
                             createBattle: (partyLevel, biome, difficulty)=>{
                                 let hostileArray = [new EmperorDolos({level: partyLevel, difficulty: difficulty})];
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: "./assets/audio/musicTracks/javascript/shackle-breaker/src/assets/audio/musicTracks/bloodcry-clemens-ruh-main-version-32174-03-58.mp3", canRetreat: false});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: "./assets/audio/musicTracks/javascript/shackle-breaker/src/assets/audio/musicTracks/bloodcry-clemens-ruh-main-version-32174-03-58.mp3", canRetreat: false, gold:1000});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `"Shackle Breaker...."`

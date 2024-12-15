@@ -1,6 +1,6 @@
 import { getRandomArrayElement } from "../utility.js";
 import {Entity, Dog, Hawk, Tiger} from "./misc/entities.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LightningStaff, DarkStaff, IceStaff, ForestStaff, Meteorite, ClothHood, LeatherBoots, BearTrap, ClothRobe, IronHelm, LeatherChestplate, Pelt, Net, SmokeBomb, IronOre} from "./misc/items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LightningStaff, DarkStaff, IceStaff, ForestStaff, Meteorite, ClothHood, LeatherBoots, BearTrap, ClothRobe, IronHelm, LeatherChestplate, Pelt, Net, SmokeBomb, IronOre, ScrollOfInferno, ScrollOfHailStorm, ScrollOfCastShadow} from "./misc/items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, AloeRemedy, ParalysisTonic, Bandage, PineWood} from "./misc/items.js";
 
 
@@ -147,8 +147,11 @@ export default class LobbyModel{
             case 'first-aid-kit':
                 this.props.setInventory([new HealthPotion(), new Bandage(), new Bandage()]);
                 break;
-            case 'meteorite':
-                this.props.setInventory([new HealthPotion()]);
+            case 'magic-scroll':
+                let chance = Math.floor(Math.random()*3);
+                if(chance == 0)this.props.setInventory([new HealthPotion(), new ScrollOfInferno()]);
+                if(chance == 1)this.props.setInventory([new HealthPotion(), new ScrollOfHailStorm()]);
+                if(chance == 2)this.props.setInventory([new HealthPotion(), new ScrollOfCastShadow()]);
             break;
         }
     }

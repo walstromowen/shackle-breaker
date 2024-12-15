@@ -29,7 +29,7 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 * Multi Target splash attack such as cleave will only allow for targeting of one enemy (not enemy and ally) although this maybe isnt a bug //bypassed by selected non default target first
 
 * After switching characters in encounter stage message cannot be skipped by clicking
-* First player in party not recieving XP?
+
 
 # Balancing
 * Higher level enemies not dealing enough damage on normal difficulty

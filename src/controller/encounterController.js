@@ -278,12 +278,11 @@ export default class EncounterController{
                 let message = '';
                 if(loot.length > 0){
                     for(let i = 0; i < loot.length; i++){
-                        message += '\n';
-                        message += `${capiltalizeAllFirstLetters(loot[i].name)}`;                      
+                        message += `\n${capiltalizeAllFirstLetters(loot[i].name)}`;                      
                     }
                 }
                 this.model.lootStage(loot);
-                this.printToEncounterConsoleHelpper(`${this.model.currentCharacter.name}'s party loots:\n` + message).then(()=>{
+                this.printToEncounterConsoleHelpper(`${this.model.currentCharacter.name}'s party loots:` + message).then(()=>{
                     resolve();
                 })
             }else{

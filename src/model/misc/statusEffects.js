@@ -11,6 +11,7 @@ class StatusEffect{
         this.removeOnBattleEnd = config.removeOnBattleEnd || false;
         this.activate = this.activate.bind(this);
         this.soundEffectSrc = config.soundEffectSrc || "./assets/audio/soundEffects/power-down-45784.mp3",
+        this.isHelpful = config.isHelpful || false;
         this.message = '';
 
         this.attackerAnimation = config.attackerAnimation || 'none';
@@ -370,6 +371,7 @@ export class Shielded extends StatusEffect{
             targetAnimation: 'none',
             abilityAnimation: 'none',
             removeOnBattleEnd: true,
+            isHelpful: true,
         });
     }
     onApplied(attacker, target, status){
@@ -451,6 +453,7 @@ export class Flying extends StatusEffect{
             targetAnimation: 'fly',
             abilityAnimation: 'none',
             removeOnBattleEnd: true,
+            isHelpful: true,
         });
     }
     onApplied(attacker, target, status){
@@ -523,6 +526,7 @@ export class Blessed extends StatusEffect{
             holder: config.holder,
             maxCharges: 5,
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-light-spell-873.wav",
+            isHelpful: true,
         });
     }
     onEndTurn(){
@@ -582,6 +586,7 @@ export class BearTrapSet extends StatusEffect{
             holder: config.holder,
             maxCharges: 99,
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-metal-medieval-construction-818.wav",
+            isHelpful: true,
         });
     }
     onRecieveDamage(attacker, target){
@@ -618,6 +623,7 @@ export class Polymorphed extends StatusEffect{
             iconSrc: "./assets/media/icons/polymorphed.png",
             maxCharges: 6,
             removeOnBattleEnd: true,
+            isHelpful: true,
         });
         this.originalForm = config.originalForm;
     }
@@ -658,6 +664,7 @@ export class PhysicalAttackBuff extends StatusEffect{
             targetAnimation: 'none',
             abilityAnimation: 'none',
             removeOnBattleEnd: true,
+            isHelpful: true,
         });
         this.currentLevel = config.level || 0;
         this.currentBluntAttackBuff = 0;
@@ -810,6 +817,7 @@ export class MagicalAttackBuff extends StatusEffect{
             targetAnimation: 'none',
             abilityAnimation: 'none',
             removeOnBattleEnd: true,
+            isHelpful: true,
         });
         this.currentLevel = config.level || 0;
         this.currentArcaneAttackBuff = 0;
@@ -962,6 +970,7 @@ export class PhysicalDefenseBuff extends StatusEffect{
             targetAnimation: 'none',
             abilityAnimation: 'none',
             removeOnBattleEnd: true,
+            isHelpful: true,
         });
         this.currentLevel = config.level || 0;
         this.currentBluntDefenseBuff = 0;
@@ -1114,6 +1123,7 @@ export class EvasionBuff extends StatusEffect{
             targetAnimation: 'none',
             abilityAnimation: 'none',
             removeOnBattleEnd: true,
+            isHelpful: true,
         });
         this.currentLevel = config.level || 0;
         this.currentEvasionBuff = config.level || 0;

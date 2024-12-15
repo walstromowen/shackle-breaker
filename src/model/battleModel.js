@@ -274,9 +274,7 @@ getAvailableTargets(attacker){
     makeConsumableItemsNoLongerInProgress(){
         let currentInventory = this.props.getInventory();
         for(let i = 0; i < currentInventory.length; i++){
-            if(currentInventory[i].inProgess){
-                currentInventory[i].inProgess = false;
-            }
+            currentInventory[i].inProgress = false;
         }
     }
     getConsumables(){
@@ -371,9 +369,9 @@ getAvailableTargets(attacker){
             accuracy: ((ability1.accuracy + ability2.accuracy) / 2)*1.1,
             speedModifier:((ability1.speedModifier + ability2.speedModifier) / 2)*1.1,
             damageModifier: ((ability1.damageModifier + ability2.damageModifier) / 2)*1.1,
-            healthCost: Math.floor(((ability1.healthCost + ability2.healthCost) / 2)*1.1),
-            staminaCost: Math.floor(((ability1.staminaCost + ability2.staminaCost) / 2)*1.1),
-            magicCost: Math.floor(((ability1.speedModifier + ability2.speedModifier) / 2)*1.1),
+            healthCost: Math.floor(((ability1.healthCost + ability2.healthCost) / 2)),
+            staminaCost: Math.floor(((ability1.staminaCost + ability2.staminaCost) / 2)),
+            magicCost: Math.floor(((ability1.magicCost + ability2.magicCost) / 2)),
 
             damageTypes: ability1.damageTypes.concat(ability2.damageTypes.filter((item) => ability1.damageTypes.indexOf(item) < 0)),//remove duplicate damage types
 

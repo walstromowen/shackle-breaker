@@ -1,6 +1,6 @@
-import { deepCopyArray} from "../../utility.js";
-import { Dog, Hawk, Tiger } from "./entities.js";
-import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen, Blessed, Cursed, PhysicalAttackDebuff, PhysicalAttackBuff, BearTrapSet, MagicalAttackBuff, MagicalAttackDebuff, PhysicalDefenseBuff, EvasionBuff, Polymorphed, Flying} from "./statusEffects.js";
+import { deepCopyArray, getRandomArrayElement} from "../../utility.js";
+import { Dog, Entity, Hawk, Tiger } from "./entities.js";
+import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen, Blessed, Cursed, PhysicalAttackDebuff, PhysicalAttackBuff, BearTrapSet, MagicalAttackBuff, MagicalAttackDebuff, PhysicalDefenseBuff, EvasionBuff, Polymorphed, Flying, PhysicalDefenseDebuff} from "./statusEffects.js";
 
 export class Ability{
     constructor(config){
@@ -15,9 +15,9 @@ export class Ability{
         this.criticalDamageModifier = config.criticalDamageModifier || 1.5;
         this.criticalChanceModifier = config.criticalChance|| 0.05;
         this.range = config.range || 1; //measured in meters
-        this.healthCost = config.healthCost || 0;
-        this.staminaCost = config.staminaCost || 0;
-        this.magicCost = config.magicCost || 0;
+        this.healthCost = Math.floor(config.healthCost) || 0;
+        this.staminaCost = Math.floor(config.staminaCost) || 0;
+        this.magicCost = Math.floor(config.magicCost) || 0;
         this.damageTypes = config.damageTypes || [];
         this.defaultTarget = config.defaultTarget || 'opponent';
         this.targetLock = config.targetLock || '';
@@ -368,7 +368,7 @@ export class Slash extends Ability{
     constructor(config){
         super({
             name: 'slash',
-            description: 'Strike a target with a deadly slash. Has a chance to cause bleeding.',
+            description: 'Attack a target with a deadly slash. Has a chance to cause bleeding.',
             iconSrc: './assets/media/icons/quick-slash.png',
             background: `url(./assets/media/icons/quick-slash.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
             speedModifier: config.speedModifier || 1,
@@ -449,9 +449,9 @@ export class Eviscerate extends Ability{
             iconSrc: './assets/media/icons/ragged-wound.png',
             background: `url(./assets/media/icons/ragged-wound.png), linear-gradient(crimson, darkslategrey)`,
             speedModifier: config.speedModifier || 0.75,
-            damageModifier: config.damageModifier || 1.25,
+            damageModifier: config.damageModifier || 1.5,
             healthCost: config.healthCost || 0,
-            staminaCost: config.staminaCost || 18,
+            staminaCost: config.staminaCost || 25,
             magicCost: config.magicCost || 0,
             accuracy: config.accuracy || 0.80,
             damageTypes: config.damageTypes || ['melee', 'pierce'],
@@ -463,7 +463,7 @@ export class Eviscerate extends Ability{
     }
     activate(attacker, target){
         let rawDamage = this.calculateDamage(attacker, target);
-        if(target.currentHP == target.maxHP) rawDamage *= 1.2;
+        if(target.currentHP == target.maxHP) rawDamage *= 1.5;
         rawDamage = this.checkCritical(attacker, rawDamage);
         let damage = this.checkDamage(target, rawDamage, 'health');
         target.currentHP = target.currentHP - damage;
@@ -708,7 +708,7 @@ export class Flurry extends Ability{
             speedModifier: config.speedModifier || 1.0,
             damageModifier: config.damageModifier || 0.75,
             healthCost: config.healthCost || 0,
-            staminaCost: config.staminaCost || 7,
+            staminaCost: config.staminaCost || 10,
             magicCost: config.magicCost || 0,
             accuracy: config.accuracy || 0.75,
             damageTypes: config.damageTypes || ['melee', 'blunt', 'pierce'],
@@ -745,11 +745,11 @@ export class Uppercut extends Ability{
             iconSrc: './assets/media/icons/uppercut.png',
             background: `url(./assets/media/icons/uppercut.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
             speedModifier: config.speedModifier || 1.0,
-            damageModifier: config.damageModifier || 1.25,
+            damageModifier: config.damageModifier || 1.5,
             healthCost: config.healthCost || 0,
-            staminaCost: config.staminaCost || 18,
+            staminaCost: config.staminaCost || 20,
             magicCost: config.magicCost || 0,
-            accuracy: config.accuracy || 0.75,
+            accuracy: config.accuracy || 0.8,
             damageTypes: config.damageTypes || ['melee', 'blunt', 'pierce'],
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-metallic-sword-strike-2160.wav",
             attackerAnimation: config.attackerAnimation || 'ally-attack',
@@ -766,7 +766,7 @@ export class Uppercut extends Ability{
         if(damage > 0){
             this.triggerOnDeliverDamage(attacker, target);
             this.triggerOnRecieveDamage(attacker, target);
-            if(Math.random()*10 < 1){
+            if(Math.random()*6 < 1){
                 this.inflictStatus(new KnockedDown({holder: target}), attacker, target);
             } 
         }
@@ -786,7 +786,7 @@ export class MagicMissile extends Ability{
             damageModifier: config.damageModifier || 1.00,
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 0,
-            magicCost: config.magicCost || 8,
+            magicCost: config.magicCost || 12,
             accuracy: config.accuracy || 0.75,
             damageTypes: config.damageTypes || ['ranged', 'arcane'],
             targetCount: 3,
@@ -809,6 +809,41 @@ export class MagicMissile extends Ability{
     }
     updateMessage(attacker, target){
        this.message = `${attacker.name} fires a magic missle at ${target.name}.`;
+    }
+}
+export class ArcaneBlast extends Ability{
+    constructor(config){
+        super({
+            name: 'arcane blast',
+            description: "Blast a target with pure arcane magic dealing high damage.",
+            iconSrc: './assets/media/icons/ringed-beam.png',
+            background: `url(./assets/media/icons/ringed-beam.png), linear-gradient(magenta, navy)`,
+            speedModifier: config.speedModifier || 0.5,
+            damageModifier: config.damageModifier || 3.00,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 30,
+            accuracy: config.accuracy || 0.7,
+            damageTypes: config.damageTypes || ['ranged', 'arcane'],
+            soundEffectSrc: "./assets/audio/soundEffects/arcane-blast.wav",
+
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimation: config.abilityAnimation || 'swipe-right',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/ringed-beam.png',
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
+        }
+    }
+    updateMessage(attacker, target){
+       this.message = `${attacker.name} blasts ${target.name} with arcane magic.`;
     }
 }
 export class LesserHeal extends Ability{
@@ -845,6 +880,59 @@ export class LesserHeal extends Ability{
         }
     }
 }
+export class Cleanse extends Ability{
+    constructor(config){
+        super({
+            name: 'cleanse',
+            description: "Remove a negative status effect from a target using light magic.",
+            iconSrc: './assets/media/icons/shiny-omega.png',
+            background: `url(./assets/media/icons/shiny-omega.png), linear-gradient(gold, navy)`,
+            speedModifier: config.speedModifier || 1,
+            damageModifier: config.damageModifier || 1,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 12,
+            damageTypes: config.damageTypes || ['light'],
+            soundEffectSrc: "./assets/audio/soundEffects/mixkit-light-spell-873.wav",
+            attackerAnimation: config.attackerAnimation || 'none',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/shiny-omega.png',
+            abilityAnimation: config.abilityAnimation || 'explode',
+            defaultTarget: 'ally',
+            
+        })
+    }
+    activate(attacker, target){
+        let isNegativePresent = false;
+        for(let i = 0; i < target.statusArray.length; i++){
+            if(target.statusArray[i].isHelpful == false){
+                isNegativePresent = true;
+                break;
+            }
+        }
+        if(isNegativePresent){
+            let flag = true;
+            let status;
+            while(flag){
+                status = getRandomArrayElement(target.statusArray)
+                if(status.isHelpful == false){
+                    flag = false;
+                }
+            }
+            status.onRemove()
+        }else{
+            let healthRestore = this.checkRestore(target, target.maxHP * 0.1, 'health');
+            target.currentHP += healthRestore;
+        }
+    }
+    updateMessage(attacker, target){
+        if(attacker == target){
+            this.message = `${attacker.name} uses cleanse.`;
+        }
+        else{
+            this.message = `${attacker.name} cleanses ${target.name}.`;
+        }
+    }
+}
 export class DrainLife extends Ability{
     constructor(config){
         super({
@@ -859,7 +947,7 @@ export class DrainLife extends Ability{
             magicCost: config.magicCost || 12,
             accuracy: config.accuracy || 0.80,
             damageTypes: config.damageTypes || ['ranged', 'dark'],
-            soundEffectSrc: "./assets/audio/soundEffects/totem-strike-96497.wav",
+            soundEffectSrc: "./assets/audio/soundEffects/dark-spell.wav",
 
             attackerAnimation: config.attackerAnimation || 'ally-evade',
             abilityAnimation: config.abilityAnimation || 'implode',
@@ -895,8 +983,7 @@ export class DarkOrb extends Ability{
             magicCost: config.magicCost || 12,
             accuracy: config.accuracy || 0.80,
             damageTypes: config.damageTypes || ['ranged', 'dark'],
-            soundEffectSrc: "./assets/audio/soundEffects/totem-strike-96497.wav",
-
+            soundEffectSrc: "./assets/audio/soundEffects/dark-spell.wav",
             attackerAnimation: config.attackerAnimation || 'ally-evade',
             abilityAnimation: config.abilityAnimation || 'swipe-right',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/rolling-energy.png',
@@ -1802,8 +1889,8 @@ export class Barrage extends Ability{
             criticalChanceModifier: config.criticalChance|| 0.25,
             accuracy: config.accuracy || 0.60,
             healthCost: config.healthCost || 0,
-            staminaCost: config.staminaCost || 6,
-            magicCost: config.magicCost || 6,
+            staminaCost: config.staminaCost || 7,
+            magicCost: config.magicCost || 7,
             damageTypes: config.damageTypes || ['ranged', 'blunt', 'arcane'],
             soundEffectSrc: "./assets/audio/soundEffects/supernatural-explosion-104295.wav",
             attackerAnimation: config.attackerAnimation || 'ally-evade',
@@ -1857,11 +1944,210 @@ export class Fly extends Ability{
         this.message = `${attacker.name} flys into the air.`;
     }
 }
+export class CastShadow extends Ability{
+    constructor(config){
+        super({
+            name: 'cast shadow',
+            description: "Use dark magic to cast one's shadow to fight for them. Will return to normal form upon death or leaving battle.",
+            iconSrc: './assets/media/icons/shadow-follower.png',
+            background: `url(./assets/media/icons/shadow-follower.png), linear-gradient(indigo, navy)`,
+            speedModifier: config.speedModifier || 1,
+            damageModifier: config.damageModifier || 1,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 50,
+            damageTypes: config.damageTypes || [],
+            soundEffectSrc: "./assets/audio/soundEffects/hide-sound.wav",
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimation: config.abilityAnimation || 'shake',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/shadow-follower.png',
+            targetAnimation: config.targetAnimation || 'shake',
+            abilityAnimationDuration: 0,
+
+            defaultTarget: 'self',
+            targetLock: 'self',
+            
+        })
+        this.newForm;
+    }
+    activate(attacker, target){
+        this.newForm = new Entity({
+            name: target.name,
+            apperance: './assets/media/entities/casted-shadow.jpg',
+    
+            size: target.size,
+            level: target.level,
+            vigor: target.vigor,
+            strength: target.strength,
+            dexterity: target.dexterity,
+            intelligence: target.intelligence,
+            attunement: target.attunement,
+        
+            baseBluntResistance: target.baseBluntResistance,
+            basePierceResistance: target.basePierceResistance,
+            baseArcaneResistance: target.baseArcaneResistance,
+            baseElementalResistance: target.baseElementalResistance,
+           
+            isHostile: target.isHostile,
+            equipment: target.equipment,
+            battleId: target.battleId,
+            nextAbility: target.nextAbility,
+            abilityTargets: target.abilityTargets,
+            immunities: target.immunities,
+            lootTable: target.lootTable,
+        })   
+        let originalForm = {
+            animation: 'twister',
+            animationDuration: 2000,
+            animationSoundEffect: './assets/audio/soundEffects/tornado.wav',
+            entity: target,
+            createNextForm: ()=>{
+                return originalForm.entity;
+            },
+            messageFn: ()=>{
+                return `${target.name}'s shadow disipates.`;
+            }
+        }
+        this.inflictStatus(new Polymorphed({holder: this.newForm, originalForm: originalForm}), this.newFrom, this.newForm);
+    }
+    updateMessage(attacker, target){
+         this.message = `${target.name} casts a shadow.`;
+    }
+}
+export class ExposeWeakness extends Ability{
+    constructor(config){
+        super({
+            name: 'expose weakness',
+            description: "Expose a target's weakness. Lowers a target's physical defense.",
+            iconSrc: './assets/media/icons/eye-target.png',
+            background: `url(./assets/media/icons/eye-target.png), linear-gradient(crimson, darkslategrey)`,
+            speedModifier: config.speedModifier || 1.25,
+            damageModifier: config.damageModifier || 0,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 10,
+            magicCost: config.magicCost || 0,
+            damageTypes: config.damageTypes || [],
+            soundEffectSrc: "./assets/audio/soundEffects/hide-sound.wav",
+            attackerAnimation: config.attackerAnimation || 'none',
+            targetAnimation: 'none',
+            abilityAnimation: config.abilityAnimation || 'none',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/eye-target.png',
+        })
+    }
+    activate(attacker, target){
+        this.inflictStatus(new PhysicalDefenseDebuff({holder: target}), attacker, target);
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} identifies ${target.name}'s weakness.`;
+    }
+}
+export class GuardBreak extends Ability{
+    constructor(config){
+        super({
+            name: 'guard break',
+            description: "Break a target's defense with a powerful blunt attack.",
+            iconSrc: './assets/media/icons/broken-shield.png',
+            background: `url(./assets/media/icons/broken-shield.png), linear-gradient(steelblue, darkslategrey)`,
+            speedModifier: config.speedModifier || 0.75,
+            damageModifier: config.damageModifier || 1.25,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 20,
+            magicCost: config.magicCost || 0,
+            damageTypes: config.damageTypes || ['melee', 'blunt'],
+            soundEffectSrc: "./assets/audio/soundEffects/mixkit-metallic-sword-strike-2160.wav",
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimation: config.abilityAnimation || 'swipe-down',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/hammer-drop.png',
+           
+        })
+    }
+    activate(attacker, target){
+        let flag = false;
+        for(let i = 0; i < target.statusArray.length; i++){
+            if(target.statusArray[i].name = 'shielded' || target.statusArray[i].name == 'physicalDefenseBuff'){
+                target.statusArray[i].onRemove();
+                flag = true;
+                break;
+            }
+        }
+        
+        let rawDamage = this.calculateDamage(attacker, target);
+        if(flag) rawDamage *= 2;
+        rawDamage = this.checkCritical(attacker, rawDamage);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
+        }
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} breaks ${target.name}'s guard.`;
+    }
+}
+export class AbsorbSoul extends Ability{// soul steal, thought steal, mind trick, absorb
+    constructor(config){
+        super({
+            name: 'absorb soul',
+            description: "Use dark magic to absorb part of one's soul. Steals a positive status effect from a target.",
+            iconSrc: './assets/media/icons/body-swapping.png',
+            background: `url(./assets/media/icons/body-swapping.png), linear-gradient(indigo, navy)`,
+            speedModifier: config.speedModifier || 1.25,
+            damageModifier: config.damageModifier || 0.25,
+            criticalDamageModifier: config.criticalDamageModifier || 1.0,
+            criticalChanceModifier: config.criticalChance|| 0,
+            accuracy: config.accuracy || 1,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 25,
+            damageTypes: config.damageTypes || ['ranged', 'dark'],
+            soundEffectSrc: "./assets/audio/soundEffects/dark-spell.wav",
+            attackerAnimation: config.attackerAnimation || 'none',
+            targetAnimation: 'none',
+            abilityAnimation: config.abilityAnimation || 'float',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/body-swapping.png',
+           
+        })
+    }
+    activate(attacker, target){
+        let isHelpfulPresent = false;
+        for(let i = 0; i < target.statusArray.length; i++){
+            if(target.statusArray[i].isHelpful){
+                isHelpfulPresent = true;
+                break;
+            }
+        }
+        if(isHelpfulPresent){
+            let flag = true;
+            let status;
+            while(flag){
+                status = getRandomArrayElement(target.statusArray)
+                if(status.isHelpful){
+                    flag = false;
+                }
+            }
+            status.onRemove()
+            status.currentCharges = status.maxCharges; 
+            status.holder = attacker;
+            this.inflictStatus(status, attacker, attacker)
+        }else{
+            let rawDamage = this.calculateDamage(attacker, target);
+            rawDamage = this.checkCritical(attacker, rawDamage);
+            let damage = this.checkDamage(target, rawDamage, 'health');
+            target.currentHP = target.currentHP - damage;
+            if(damage > 0){
+                this.triggerOnDeliverDamage(attacker, target);
+                this.triggerOnRecieveDamage(attacker, target);
+            }
+        }
+    }
+    updateMessage(attacker, target){
+        this.stolenStatus = getRandomArrayElement(target.statusArray)
+        this.message = `${attacker.name} drains ${target.name}'s soul.`;
+    }
+}
 export class MeteorShower extends Ability{
     //random amount of targets
-}
-export class CastShadow extends Ability{
-    //grants character type of shadowy oversheild //current vs base apperance?
 }
 export class Tunnel extends Ability{
 
@@ -1869,10 +2155,13 @@ export class Tunnel extends Ability{
 export class Parry extends Ability{
 
 }
-export class MarkTarget extends Ability{
-    //lowers physical defense
-}
 export class Detonate extends Ability{
+    
+}
+export class CycloneStrike extends Ability{
+    
+}
+export class Impale extends Ability{
     
 }
 export class ThrowPosionedKnife extends Ability{
