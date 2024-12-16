@@ -74,7 +74,7 @@ export class Entity{
             legs: '',
             feet: '',
         }; 
-        this.statusArray = config.statusArray || [new Burn({holder: this})]; //  new Poison({holder: this}), new Burn({holder: this})
+        this.statusArray = config.statusArray || []; //  new Poison({holder: this}), new Burn({holder: this})
         this.abilityArray = config.abilityArray || [];//new Strike(), new MagicMissile(), new ThrowPosionedKnife(),
         
         this.partyId = '';

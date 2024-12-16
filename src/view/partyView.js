@@ -15,6 +15,7 @@ export default class PartyView{
         const partyGridItem = createElement('div', 'party-grid-item');
             const characterSlotData = createElement('div', 'party-character-slot-data');//dragable true TODO
                 const characterSlotNameHeader = createElement('h3', 'party-character-slot-name-header');
+                const statusIconContainer = createElement('div', 'party-status-icon-container');
                 const allVitalBarsContainer = createElement('div', 'party-all-vital-bars-container');
 
                     const healthBarContainer = createElement('div', 'party-vital-bar-container');
@@ -56,6 +57,7 @@ export default class PartyView{
                     
         partyGridItem.appendChild(characterSlotData);
         characterSlotData.appendChild(characterSlotNameHeader);
+        characterSlotData.appendChild(statusIconContainer);
         characterSlotData.appendChild(allVitalBarsContainer);
         characterSlotData.appendChild(slotButtonContainer );
         allVitalBarsContainer.appendChild(healthBarContainer)
@@ -100,6 +102,9 @@ export default class PartyView{
         slot.style.backgroundImage = `url(${entity.apperance})`;
 
         slot.querySelector('.party-character-slot-name-header').innerText = capiltalizeAllFirstLetters(entity.name);
+
+        slot.querySelector('.party-status-icon-container')
+
         slot.querySelector('.party-health-progress').style.width = Math.floor(entity.currentHP/entity.maxHP*100) + "%";
         slot.querySelector('.health-icon').src = './assets/media/icons/hearts.png';
         slot.querySelector('.party-current-health').innerText = entity.currentHP;
@@ -107,10 +112,11 @@ export default class PartyView{
         slot.querySelector('.party-stamina-progress').style.width = Math.floor(entity.currentStamina/entity.maxStamina*100) + "%";
         slot.querySelector('.stamina-icon').src = './assets/media/icons/despair.png';
         slot.querySelector('.party-current-stamina').innerText = entity.currentStamina;
-        slot.querySelector('.party-magic-progress').style.width = Math.floor(entity.currentMagic/entity.maxMagic*100) + "%";
 
+        slot.querySelector('.party-magic-progress').style.width = Math.floor(entity.currentMagic/entity.maxMagic*100) + "%";
         slot.querySelector('.magic-icon').src = './assets/media/icons/crystalize.png';
         slot.querySelector('.party-current-magic').innerText = entity.currentMagic;
+
         let xpProgress = entity.currentXP/Math.floor(((entity.level + 10)**2)*0.5)*100
         if(Math.floor(entity.currentXP/Math.floor(((entity.level + 10)**2)*0.5)*100 > 100)){
             xpProgress = 100
@@ -122,6 +128,20 @@ export default class PartyView{
             slot.classList.add('greyscale');
         }else{
             slot.classList.remove('greyscale');
+        }
+        this.updateStatusIcons(slot, entity);
+    }
+    updateStatusIcons(card, combatant){
+        Array.from(card.getElementsByClassName('party-status-icon')).forEach((icon)=>{
+            icon.remove();
+        });
+        let statusContainer = card.querySelector('.party-status-icon-container')
+        for(let i = 0; i < combatant.statusArray.length; i++){
+            if(combatant.statusArray[i].iconSrc){
+                let statusIcon = createElement('img', 'party-status-icon'); 
+                statusIcon.src = combatant.statusArray[i].iconSrc;
+                statusContainer.append(statusIcon);
+            }
         }
     }
     removeAllEntitySlots(){

@@ -127,7 +127,7 @@ export class Plains extends Biome{
                 {startingStage: ()=>{return new TreasureChest({})}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new MadmanAhead({})}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new Bonfire({})}, resetOnLeave: false, weight: 1},
-                {startingStage: ()=>{return new SilentGrove({})}, resetOnLeave: false, weight: 1},
+                {startingStage: ()=>{return new SilentGrove({})}, resetOnLeave: false, weight: 100},
             ],
         });
     }

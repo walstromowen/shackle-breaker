@@ -6,6 +6,8 @@ export default class CharacterSummaryView{
             
         this.characterName = document.getElementById('character-summary-character-name');
         
+        this.statusIconContainer = document.getElementById('character-summary-status-icon-container');
+
         this.maxHP = document.getElementById('character-summary-max-health');
         this.maxStamina = document.getElementById('character-summary-max-stamina');
         this.maxMagic = document.getElementById('character-summary-max-magic');
@@ -115,9 +117,21 @@ export default class CharacterSummaryView{
 
         this.currentGold.innerText = gold;
         this.currentSkillPoints.innerText = entity.skillPoints;
-
+       
+        this.updateStatusIcons(entity)
     }
-
+    updateStatusIcons(entity){
+        Array.from(this.statusIconContainer.getElementsByClassName('character-summary-status-icon')).forEach((icon)=>{
+            icon.remove();
+        });
+        for(let i = 0; i < entity.statusArray.length; i++){
+            if(entity.statusArray[i].iconSrc){
+                let statusIcon = createElement('img', 'character-summary-status-icon'); 
+                statusIcon.src = entity.statusArray[i].iconSrc;
+                this.statusIconContainer.append(statusIcon);
+            }
+        }
+    }
     createInventorySlots(inventory){
         this.inventoryContainer.querySelectorAll('.inventory-slot').forEach((node)=>{
             node.remove();

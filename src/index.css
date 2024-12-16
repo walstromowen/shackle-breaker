@@ -125,8 +125,9 @@
     .character-summary-stats-attributes-container{
         width: 100% !important;
     }
-    .battle-status-icon{
-        height: 20px !important;
+    .battle-status-icon, .party-status-icon, .character-summary-status-icon, .battle-status-icon-container, .encounter-status-icon, .encounter-card-status-icon-container, .party-status-icon-container, #character-summary-status-icon-container{
+        height: 40px !important;
+        min-width: 40px !important;
     }
     #lobby-screen, #character-summary-screen{
         min-height: 100dvh;
@@ -156,10 +157,11 @@
     #party-grid-container{
         grid-template-columns: 50% 50% !important;
         grid-template-rows: 33% 33% 33% !important;
-        padding: 0px 10px 10px 10px !important;
+        padding: 0px 00px 10px 0px !important;
     }
     #character-summary-character-image{
         width: 40% !important;
+        height: auto !important;
     }
     #character-summary-inventory-currency-container{
         width: 100% !important;
@@ -208,6 +210,10 @@
     }
     .battle-character-card{
         width: 100px !important;
+    }
+    .battle-status-icon, .party-status-icon, .character-summary-status-icon, .battle-status-icon-container, .encounter-status-icon, .encounter-card-status-icon-container, .party-status-icon-container, #character-summary-status-icon-container{
+        height: 20px !important;
+        min-width: 20px !important;
     }
 }
 
@@ -650,7 +656,8 @@ img{
     overflow-y:auto;
 }
 .character-summary-equipped-character-image-container{
-    margin: 10px auto;
+    flex:1;
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -942,14 +949,18 @@ img{
     background-size: cover;
     
 }
-.battle-status-icon-container, .encounter-card-status-icon-container{
-    height: 40px;
+.battle-status-icon-container, .encounter-card-status-icon-container, .party-status-icon-container, #character-summary-status-icon-container{
     display: flex;
+    margin-top:auto;
+    margin-bottom: 4px;
     justify-content: end;
     flex-wrap: wrap;
+    width:100%;
+ 
 }
-.battle-status-icon{
+.battle-status-icon, .party-status-icon, .character-summary-status-icon, .battle-status-icon-container, .encounter-status-icon, .battle-status-icon-container, .encounter-card-status-icon-container, .party-status-icon-container, #character-summary-status-icon-container{
     height: 40px;
+    min-width: 40px;
 }
 .encounter-roller-menu-header{
     font-size: var(--font-size-0);
@@ -1434,14 +1445,20 @@ img{
     display: grid;
     grid-template-columns: 33% 33% 33%;
     grid-template-rows: 50% 50%;
-    padding: 0px 40px 20px 40px;
+    padding: 0px 0px 10px 0px;
     gap: 10px;
     flex:1;
     width: 100%;
     border-radius: 10px;
 }
 #character-summary-character-image{
+    background: url('./assets/media/entities/knight-1.jpg');
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size: cover;
+    display:flex;
     width: 80%;
+    height: 80%;
     margin: 10px auto;
     
 }

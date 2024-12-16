@@ -58,6 +58,19 @@ export default class EncounterView{
         this.characterCardCurrentMagic.innerText = currentCharacter.currentMagic;
         this.characterCardMaxMagic.innerText = currentCharacter.maxMagic;
         this.characterCardMagicProgress.style.width = Math.floor(currentCharacter.currentMagic/currentCharacter.maxMagic*100) + "%";
+        this.updateStatusIcons(currentCharacter);
+    }
+    updateStatusIcons(entity){
+        Array.from(this.characterCardStatusContainer.getElementsByClassName('encounter-status-icon')).forEach((icon)=>{
+            icon.remove();
+        });
+        for(let i = 0; i < entity.statusArray.length; i++){
+            if(entity.statusArray[i].iconSrc){
+                let statusIcon = createElement('img', 'encounter-status-icon'); 
+                statusIcon.src = entity.statusArray[i].iconSrc;
+                this.characterCardStatusContainer.append(statusIcon);
+            }
+        }
     }
     updateCurrentCharacterAttributes(currentCharacter){
         this.currentCharacterVigor.innerText = '+' + Math.floor(currentCharacter.vigor/3);

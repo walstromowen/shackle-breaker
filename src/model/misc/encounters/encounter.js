@@ -8,5 +8,4 @@ export default class Encounter{
 //Wounded Mut
 //portal
 //graveyard
-//silent grove
 //panzerian construct
