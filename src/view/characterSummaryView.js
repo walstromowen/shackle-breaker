@@ -113,7 +113,7 @@ export default class CharacterSummaryView{
         this.evasion.innerText = entity.currentEvasion.toFixed(2);
         this.critical.innerText = entity.currentCritical;
 
-        this.characterImage.src = entity.apperance; 
+        this.characterImage.style.backgroundImage = `url(${entity.apperance})`; 
 
         this.currentGold.innerText = gold;
         this.currentSkillPoints.innerText = entity.skillPoints;

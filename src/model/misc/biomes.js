@@ -1,6 +1,6 @@
 import { getRandomArrayElementWeighted } from "../../utility.js";
 import { Skeleton, SkeletonCultist, Wolf, Spider, GroveGuardian, Madman, MadMage, SandStalker, DryShark, Dog, ArmoredSkeleton, MadBandit, FloatingSkull, DryEel, PanzerianKnight, MadEngineer, IcePheonix} from "./entities.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, GreatSword, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, BearTrap, Flintlock, SmokeBomb, ScrollOfInferno, ScrollOfHailStorm} from "./items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, GreatSword, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, BearTrap, Flintlock, SmokeBomb, ScrollOfInferno, ScrollOfHailStorm, ScrollOfCastShadow, IronSheild} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Pelt, IronOre, Diamond} from "./items.js";
 import Encounter from "./encounters/encounter.js";
 import Battle from "./battle.js";
@@ -60,6 +60,7 @@ export default class Biome{
             {item: ()=>{return new ShortSword({level: 1})}, weight: 1},
             {item: ()=>{return new Handaxe({level: 1})}, weight: 1},
             {item: ()=>{return new Buckler({level: 1})}, weight: 1},
+            {item: ()=>{return new IronSheild({level: 1})}, weight: 1},
             {item: ()=>{return new Dagger({level: 1})}, weight: 1},
             {item: ()=>{return new BlacksmithHammer({level: 1})}, weight: 1},
 
@@ -69,6 +70,7 @@ export default class Biome{
             {item: ()=>{return new SmokeBomb()}, weight: 1},
             {item: ()=>{return new ScrollOfInferno()}, weight: 1},
             {item: ()=>{return new ScrollOfHailStorm()}, weight: 1},
+            {item: ()=>{return new ScrollOfCastShadow()}, weight: 1},
 
             {item: ()=>{return new HealthPotion()}, weight: 3},
             {item: ()=>{return new StaminaPotion()}, weight: 3},
@@ -127,7 +129,7 @@ export class Plains extends Biome{
                 {startingStage: ()=>{return new TreasureChest({})}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new MadmanAhead({})}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new Bonfire({})}, resetOnLeave: false, weight: 1},
-                {startingStage: ()=>{return new SilentGrove({})}, resetOnLeave: false, weight: 100},
+                {startingStage: ()=>{return new SilentGrove({})}, resetOnLeave: false, weight: 1},
             ],
         });
     }
@@ -171,9 +173,9 @@ export class Desert extends Biome{
             ],
             possibleEncounters: [
                 {startingStage: ()=>{return {name: 'Wandering Mercenary'}}, resetOnLeave: false, weight: 1},
-                {startingStage: ()=>{return new TreasureChest({})}, resetOnLeave: false, weight: 2},
-                {startingStage: ()=>{return new ShiftingSands({})}, resetOnLeave: false, weight: 3},
-                {startingStage: ()=>{return new Sinkhole({})}, resetOnLeave: false, weight: 2},
+                {startingStage: ()=>{return new TreasureChest({})}, resetOnLeave: false, weight: 1},
+                {startingStage: ()=>{return new ShiftingSands({})}, resetOnLeave: false, weight: 1},
+                {startingStage: ()=>{return new Sinkhole({})}, resetOnLeave: false, weight: 1},
             ],
         });
     }

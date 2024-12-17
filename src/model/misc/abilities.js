@@ -783,7 +783,7 @@ export class MagicMissile extends Ability{
             iconSrc: './assets/media/icons/frayed-arrow.png',
             background: `url(./assets/media/icons/frayed-arrow.png), linear-gradient(magenta, navy)`,
             speedModifier: config.speedModifier || 0.75,
-            damageModifier: config.damageModifier || 1.00,
+            damageModifier: config.damageModifier || 0.9,
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 12,
@@ -1202,13 +1202,40 @@ export class IceShard extends Ability{
        this.message = `${attacker.name} shoots an ice shard at ${target.name}.`;
     }
 }
+export class IceWall extends Ability{
+    constructor(config){
+        super({
+            name: 'ice wall',
+            description: "Create a wall of ice made with elemental magic. Raises one's physical defense.",
+            iconSrc: './assets/media/icons/icicles-fence.png',
+            background: `url(./assets/media/icons/icicles-fence.png), linear-gradient(cyan, silver)`,
+            speedModifier: config.speedModifier || 1.25,
+            damageModifier: config.damageModifier || 1.0,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 12,
+            damageTypes: config.damageTypes || ['ranged', 'ice'],
+            soundEffectSrc: "./assets/audio/soundEffects/cold-wind-fade.wav",
+
+            attackerAnimation: config.attackerAnimation || 'shake',
+            abilityAnimation: config.abilityAnimation || 'explode',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/icicles-fence.png',
+        })
+    }
+    activate(attacker, target){
+        this.inflictStatus(new Shielded({holder: target}), attacker, target);
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} raises a wall of ice.`;
+    }
+}
 export class HailStorm extends Ability{
     constructor(config){
         super({
             name: 'hailstorm',
             description: "Summon a hailstorm using elemental magic over an enemy party. Has a chance to low chance to freeze targets.",
-            iconSrc: './assets/media/icons/icicles-fence.png',
-            background: `url(./assets/media/icons/icicles-fence.png), linear-gradient(cyan, silver)`,
+            iconSrc: './assets/media/icons/snowing.png',
+            background: `url(./assets/media/icons/snowing.png), linear-gradient(cyan, silver)`,
             speedModifier: config.speedModifier || 0.5,
             damageModifier: config.damageModifier || 0.9,
             criticalDamageModifier: config.criticalDamageModifier || 1.1,
@@ -1788,13 +1815,14 @@ export class ChannelMagic extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 10,
-            damageTypes: config.damageTypes || ['arcane'],
+            damageTypes: config.damageTypes || [],
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-magic-astral-sweep-effect-2629.wav",
             attackerAnimation: config.attackerAnimation || 'none',
             targetAnimation: 'explode',
             abilityAnimation: config.abilityAnimation || 'none',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/mighty-force.png',
             defaultTarget: 'self',
+            targetLock: 'self',
         })
     }
     activate(attacker, target){
