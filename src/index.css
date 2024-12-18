@@ -16,7 +16,7 @@
     --title-screen-button-width: 300px;
     --lobby-input-width: calc(100% - 140px);
     --lobby-inputs-container-width: 40%;
-    --lobby-background-apperance-container-width: 60%;
+    --lobby-lore-apperance-container-width: 60%;
     --lobby-apperance-image-width: 200px;
     --lobby-currency-items-attrubitues-container-width: 50%;
     --lobby-currency-items-container-width: 50%;
@@ -76,7 +76,7 @@
         --title-screen-button-width: 250px;
         --lobby-input-width: calc(100% - 120px);
         --lobby-inputs-container-width: 100%;
-        --lobby-background-apperance-container-width: 100%;
+        --lobby-lore-apperance-container-width: 100%;
         --lobby-apperance-image-width: 120px;
         --lobby-currency-items-attrubitues-container-width: 50%;
         --lobby-currency-items-container-width: 100%;
@@ -188,7 +188,7 @@
         --title-screen-button-width: 200px;
         --lobby-input-width: calc(100% - 90px);
         --lobby-inputs-container-width: 100%;
-        --lobby-background-apperance-container-width: 100%;
+        --lobby-lore-apperance-container-width: 100%;
         --lobby-apperance-image-width: 80px;
         --lobby-currency-items-attrubitues-container-width: 50%;
         --lobby-currency-items-container-width: 100%;
@@ -389,14 +389,21 @@ img{
     flex-direction: column;
     justify-content: space-between;
 }
-.lobby-background-apperance-container{
+.lobby-lore-apperance-container{
     display: flex;
     justify-content: space-between;
-    width:var(--lobby-background-apperance-container-width);
+    width:var(--lobby-lore-apperance-container-width);
     background-color: var(--color-2);
     padding: var(--ui-pannel-padding);
+    overflow-y:hidden;
 }
-
+.lobby-lore-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y:auto;
+    max-height: var(--lobby-apperance-image-width)
+}
 .lobby-currency-items-attrubitues-container{
     display:flex;
     justify-content: space-between;

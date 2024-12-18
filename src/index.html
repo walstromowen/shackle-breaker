@@ -66,6 +66,14 @@
                         </select>
                     </div>
                     <div class='lobby-input-row'>
+                        <h5>Origin</h5>
+                        <select id='lobby-origin-selection' class='lobby-input'>
+                            <option value='alterian'>Alterian</option>
+                            <option value='panzerian'>Panzerian</option>
+                            <option value='namuh'>Namuh</option>
+                        </select>
+                    </div>
+                    <div class='lobby-input-row'>
                         <h5>Keepsake</h5>
                         <select id='lobby-keepsake-selection' class='lobby-input'>
                             <option value='none'>None</option>
@@ -99,9 +107,12 @@
                         </select>
                     </div>
                 </div>
-                <div class='lobby-background-apperance-container'>
-                    <p id='background-description'>Which is worse, rotting in the prison cell you just escaped from, or facing the journey ahead. Perhaps they would take you back? No, they would make an example of you. Not that anyone would notice anyway.
-                        Yet can you make the journey ahead? After all, what makes you so special?</p>
+                <div class='lobby-lore-apperance-container'>
+                    <div class='lobby-lore-container'> 
+                        <h3 class='ui-header'>Lore</h3>  
+                        <p id='lore-description-background'></p>
+                        <p id='lore-description-origin'></p>
+                    </div>
                     <div class='apperance-image-container'>
                         <img id='lobby-apperance-image' src='./assets/media/entities/knight-1.jpg' draggable="false">
                     </div>

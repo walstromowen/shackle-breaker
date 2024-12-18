@@ -84,6 +84,7 @@ export class Entity{
         this.nextAbility = config.nextAbility || '';
         this.abilityTargets = [];
         this.immunities = config.immunities || [];
+        this.factions = config.factions || [];
         this.lootTable = config.lootTable || [
             {item: new HealthPotion({level: 1}), weight: 1},
         ];

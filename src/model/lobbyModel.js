@@ -177,4 +177,8 @@ export default class LobbyModel{
         let difficulty = document.getElementById("lobby-difficulty-selection").value;
         this.props.setDifficulty(difficulty);
     }
+    updateOrigin(){
+        let origin = document.getElementById("lobby-origin-selection").value;
+        this.props.getParty()[0].factions = [origin];
+    }
 }

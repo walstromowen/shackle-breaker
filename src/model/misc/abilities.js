@@ -782,8 +782,8 @@ export class MagicMissile extends Ability{
             description: "Fire a magic missile made of powerful arcane energy at three targets.",
             iconSrc: './assets/media/icons/frayed-arrow.png',
             background: `url(./assets/media/icons/frayed-arrow.png), linear-gradient(magenta, navy)`,
-            speedModifier: config.speedModifier || 0.75,
-            damageModifier: config.damageModifier || 0.9,
+            speedModifier: config.speedModifier || 1.00,
+            damageModifier: config.damageModifier || 0.75,
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 12,
@@ -2073,7 +2073,7 @@ export class GuardBreak extends Ability{
     constructor(config){
         super({
             name: 'guard break',
-            description: "Break a target's defense with a powerful blunt attack.",
+            description: "Break a target's defense with a powerful blunt attack. Deals bonus damage against shielded targets",
             iconSrc: './assets/media/icons/broken-shield.png',
             background: `url(./assets/media/icons/broken-shield.png), linear-gradient(steelblue, darkslategrey)`,
             speedModifier: config.speedModifier || 0.75,
