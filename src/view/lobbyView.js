@@ -141,6 +141,9 @@ export default class LobbyView{
             case 'hermit':
                 this.backgroundDescription.innerText = 'Most of those who studied magic wished to stay as close to the artifact as possible. However, for better or for worse, a handful decided to study magic in solitude.';
                 break;
+            case 'bounty-hunter':
+                this.backgroundDescription.innerText = 'During the years leading up to the fall of Altus Kingdom, The demand for bounty hunters increased dramatically due to the need to deal with those who went mad. Particuarily skilled hunters often weilded rare weapons such as panzerian firearms or special Alterian swords. Ironically, this also made them particularly difficult to hunt when they too went mad.';
+                break;
                                    
         }
         switch(origin){

@@ -884,6 +884,9 @@ export class Flintlock extends Attachable{
             this.speed = this.speed + 0;
             this.evasion = this.evasion + 0;
             this.critical = this.critical + 0;
+            if(this.level == 2){
+                this.abilityArray.push(new ExposeWeakness({}));
+            }
             if(this.level == 3){
                 this.abilityArray.push(new Barrage({}));
             }
@@ -1864,7 +1867,7 @@ export class IronSheild extends Attachable{
             description: 'An iron shield. A heavy shield made of solid iron. Shield weilded by knights of the Royal Altus Guard.',
             imageSrc:  './assets/media/icons/shield.png',
             price: 100,
-            slot: 'feet',
+            slot: 'oneHand',
             level: 1,
             hp: 0,
             stamina: 0,

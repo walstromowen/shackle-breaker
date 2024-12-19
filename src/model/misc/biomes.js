@@ -72,13 +72,13 @@ export default class Biome{
             {item: ()=>{return new ScrollOfHailStorm()}, weight: 1},
             {item: ()=>{return new ScrollOfCastShadow()}, weight: 1},
 
-            {item: ()=>{return new HealthPotion()}, weight: 3},
-            {item: ()=>{return new StaminaPotion()}, weight: 3},
-            {item: ()=>{return new MagicPotion()}, weight: 3},
+            {item: ()=>{return new HealthPotion()}, weight: 2},
+            {item: ()=>{return new StaminaPotion()}, weight: 2},
+            {item: ()=>{return new MagicPotion()}, weight: 2},
 
-            {item: ()=>{return new Bandage()}, weight: 3},
-            {item: ()=>{return new Antidote()}, weight: 2},
-            {item: ()=>{return new ParalysisTonic()}, weight: 2},
+            {item: ()=>{return new Bandage()}, weight: 2},
+            {item: ()=>{return new Antidote()}, weight: 1},
+            {item: ()=>{return new ParalysisTonic()}, weight: 1},
             
             {item: ()=>{return new Diamond()}, weight: 1},
         ];

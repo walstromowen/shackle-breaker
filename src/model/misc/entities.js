@@ -563,7 +563,7 @@ export class Tiger extends Entity{
             },
             abilityArray: [new Bite({}), new Pounce({}), new Roar({})],
             lootTable: [
-                {item: new Pelt({level: 1}), weight: 1},
+                {item: new Pelt(), weight: 1},
             ],
         })
     }
@@ -741,7 +741,7 @@ export class Wolf extends Entity{
             },
             abilityArray: [new Bite({}), new Pounce({}), new Howl({})],
             lootTable: [
-                {item: new Pelt({level: 1}), weight: 1}
+                {item: new Pelt(), weight: 1}
             ],
         })
     }

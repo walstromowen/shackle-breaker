@@ -1908,8 +1908,8 @@ export class Barrage extends Ability{
         super({
             name: 'barrage',
             description: "Fire a barrage of explosives at enemy targets. ",
-            iconSrc: './assets/media/icons/gunshot.png',
-            background: `url(./assets/media/icons/gunshot.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
+            iconSrc: './assets/media/icons/chaingun.png',
+            background: `url(./assets/media/icons/chaingun.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
             sequenceType: 'chain',
             speedModifier: config.speedModifier || 1.25,
             damageModifier: config.damageModifier || 0.75,

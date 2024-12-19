@@ -1,6 +1,6 @@
 import { getRandomArrayElement } from "../utility.js";
 import {Entity, Dog, Hawk, Tiger} from "./misc/entities.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LightningStaff, DarkStaff, IceStaff, ForestStaff, Meteorite, ClothHood, LeatherBoots, BearTrap, ClothRobe, IronHelm, LeatherChestplate, Pelt, Net, SmokeBomb, IronOre, ScrollOfInferno, ScrollOfHailStorm, ScrollOfCastShadow} from "./misc/items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LightningStaff, DarkStaff, IceStaff, ForestStaff, Meteorite, ClothHood, LeatherBoots, BearTrap, ClothRobe, IronHelm, LeatherChestplate, Pelt, Net, SmokeBomb, IronOre, ScrollOfInferno, ScrollOfHailStorm, ScrollOfCastShadow, Flintlock, LeatherGloves} from "./misc/items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, AloeRemedy, ParalysisTonic, Bandage, PineWood} from "./misc/items.js";
 
 
@@ -58,7 +58,7 @@ export default class LobbyModel{
                     new LeatherBoots({level: 1}),
                 ];
                 this.props.getParty()[0].setAttributes({vigor: 9, strength: 4, dexterity: 4, intelligence: 4, attunement: 4});
-                this.props.setGold(250);
+                this.props.setGold(300);
                 break;
             case 'ranger':
                 equipment = [
@@ -115,7 +115,18 @@ export default class LobbyModel{
                 ];
                 this.props.getParty()[0].setAttributes({vigor: 5, strength: 5, dexterity: 5, intelligence: 3, attunement: 7});
                 this.props.setGold(300);
-            break;    
+                break; 
+            case 'bounty-hunter':
+                equipment = [
+                    new Flintlock({level: 1}),
+                    new LinenShirt({level: 1}),
+                    new LeatherGloves({level: 1}),
+                    new LinenPants({level: 1}),
+                    new LeatherBoots({level: 1}),
+                ];
+                this.props.getParty()[0].setAttributes({vigor: 5, strength: 6, dexterity: 4, intelligence: 6, attunement: 4});
+                this.props.setGold(350);
+                break;    
         }
         this.props.getParty()[0].unequipAttatchables(Object.keys(this.props.getParty()[0].equipment));
         this.props.getParty()[0].scaleAttributes();
