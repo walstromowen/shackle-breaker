@@ -24,14 +24,19 @@ export default class EncounterController{
             return this.createDecisionsHelpper();
         })
     }
-    retryStage(removableOptions){
-        if(removableOptions){
+    retryStage(outcome){
+        if(outcome.removableDecisions){
             for(let i = 0; i < this.model.currentStage.decisionArray.length; i++){
-                for(let j= 0; j < removableOptions.length; j++){
-                    if(this.model.currentStage.decisionArray[i].option == removableOptions[j]){//TOOOODOOO
+                for(let j= 0; j < outcome.removableDecisions.length; j++){
+                    if(this.model.currentStage.decisionArray[i].option == outcome.removableDecisions[j]){
                         this.model.currentStage.decisionArray.splice(i, 1);
                     }
                 }
+            }
+        }
+        if(outcome.newDecisions){
+            for(let i= 0; i < outcome.newDecisions.length; i++){
+                this.model.currentStage.decisionArray.unshift(outcome.newDecisions[i]);
             }
         }
         this.view.updateEventCard(this.model.currentStage);
@@ -232,13 +237,7 @@ export default class EncounterController{
             case 'retry':
                 if(outcome.xpReward)this.model.currentCharacter.currentXP += outcome.xpReward;
                 this.lootDelay(outcome).then(()=>{
-                    this.retryStage()
-                });
-                return;
-            case 'removeDecisions':
-                if(outcome.xpReward)this.model.currentCharacter.currentXP += outcome.xpReward;
-                this.lootDelay(outcome).then(()=>{
-                    this.retryStage(outcome.removableDecisions)
+                    this.retryStage(outcome)
                 });
                 return;
             case 'switchCharacter':

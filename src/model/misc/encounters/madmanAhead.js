@@ -16,6 +16,7 @@ export class MadmanAhead extends Stage{
                     successfulOutcomes: [
                         {
                             result: 'battle',
+                            imageSrc: './assets/media/entities/cursed-villager-1.jpg',
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
                             createBattle: (partyLevel, biome, difficulty)=>{
                                 let hostileArray = [new Madman({level: partyLevel, difficulty: difficulty})];
@@ -29,7 +30,7 @@ export class MadmanAhead extends Stage{
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
                             },
                             messageFunction: (currentCharacter)=>{
-                                return `The Madman rushes to meet ${currentCharacter.name}'s party!`
+                                return  `${currentCharacter.name} charges the Madman!`
                             }, 
                             weight: 1,
                         },
@@ -255,12 +256,12 @@ export class MadmanAhead extends Stage{
                 },
                 {//Decision
                     option: 'E',
-                    description: 'switch character',
+                    description: 'Switch character',
                     successfulOutcomes: [{result: 'switchCharacter', weight: 1}],
                 },
                 {//Decision
                     option: 'F',
-                    description: 'leave',
+                    description: 'Leave',
                     successfulOutcomes: [{result: 'overworld', weight: 1}],
                     messageFunction: (currentCharacter)=>{
                         return `${currentCharacter.name} backs away from the Madman.`

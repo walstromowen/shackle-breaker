@@ -6,5 +6,6 @@ export default class Tile{
         this.battle = '';
         this.encounter = '';
         this.imageCoordinates = [0, 0];
+        this.imageFrameSize = [1, 1];
     }
 }

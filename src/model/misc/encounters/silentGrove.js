@@ -141,7 +141,7 @@ export class SilentGrove extends Stage{
                     successfulOutcomes: [{result: 'switchCharacter', weight: 1}],
                 },
                 {//Decision
-                    description: 'leave',
+                    description: 'Leave',
                     successfulOutcomes: [{result: 'overworld', weight: 1}],
                     messageFunction: (currentCharacter)=>{
                         return `${currentCharacter.name} turns back.`
@@ -297,7 +297,7 @@ export class SilentGrove2 extends Stage{
                     roll: true,
                     successfulOutcomes: [
                         {
-                            result: 'removeDecisions',
+                            result: 'retry',
                             removableDecisions: ['C'],
                             messageFunction: (currentCharacter)=>{
                                 return `While looking around, ${currentCharacter.name} finds something.`
@@ -311,7 +311,7 @@ export class SilentGrove2 extends Stage{
                     ],
                     negativeOutcomes: [
                         {
-                            result: 'removeDecisions',
+                            result: 'retry',
                             removableDecisions: ['C'],
                             onActivate(target){
                                 target.currentHP -= Math.floor(target.maxHP*0.2)
@@ -334,7 +334,7 @@ export class SilentGrove2 extends Stage{
                 },
                 {//Decision
                     option: 'E',
-                    description: 'leave',
+                    description: 'Leave',
                     successfulOutcomes: [{result: 'overworld', weight: 1}],
                     messageFunction: (currentCharacter)=>{
                         return `${currentCharacter.name} turns back.`
@@ -376,7 +376,7 @@ export class SilentGrove3 extends Stage{
                     ],
                     negativeOutcomes: [
                         {
-                            result: 'removeDecisions',
+                            result: 'retry',
                             removableDecisions: ['A'],
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} sees nothing interesting about the tree.`
@@ -419,7 +419,7 @@ export class SilentGrove3 extends Stage{
                     ],
                     negativeOutcomes: [
                         {
-                            result: 'removeDecisions',
+                            result: 'retry',
                             removableDecisions: ['B'],
                             messageFunction: (currentCharacter)=>{
                                 return `The tree is too hard to cut.`
@@ -439,7 +439,7 @@ export class SilentGrove3 extends Stage{
                 },
                 {//Decision
                     option: 'D',
-                    description: 'leave',
+                    description: 'Leave',
                     successfulOutcomes: [{result: 'complete', weight: 1}],
                     messageFunction: (currentCharacter)=>{
                         return `${currentCharacter.name} turns back.`

@@ -170,6 +170,7 @@ export default class OverworldController{
         }
         if(this.model.props.getScreen() == 'encounter-screen'){
             this.isLooping = false;
+            playMusic(this.model.props.getEncounter().currentStage.musicSrc);
             this.view.hideOverWorldUi();
             this.view.playBattleTransition().then(()=>{
                 this.props.switchScreen('encounter-screen');

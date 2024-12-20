@@ -1,5 +1,5 @@
 import { deepCopyArray, getRandomArrayElement} from "../../utility.js";
-import { Dog, Entity, Hawk, Tiger } from "./entities.js";
+import { Dog, Entity, Hawk, Tiger, SterbensBeast} from "./entities.js";
 import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen, Blessed, Cursed, PhysicalAttackDebuff, PhysicalAttackBuff, BearTrapSet, MagicalAttackBuff, MagicalAttackDebuff, PhysicalDefenseBuff, EvasionBuff, Polymorphed, Flying, PhysicalDefenseDebuff} from "./statusEffects.js";
 
 export class Ability{
@@ -145,7 +145,7 @@ export class Ability{
             }
             for(let j = 0; j < attacker.nextAbility.damageTypes.length; j++){
                 for(let k = 0; k < targets[i].immunities.length; k++){
-                    if(attacker.nextAbility.damageTypes[k] == targets[i].immunities[k]){//as soon as one target who is not immune
+                    if(attacker.nextAbility.damageTypes[j] == targets[i].immunities[k]){//as soon as one target who is not immune
                         immuneScore++; 
                         break;
                     }
@@ -376,7 +376,7 @@ export class Slash extends Ability{
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 10,
             magicCost: config.magicCost || 0,
-            damageTypes: config.damageTypes || ['melee','blunt', 'pierce'],
+            damageTypes: config.damageTypes || ['melee', 'blunt', 'pierce'],
             soundEffectSrc: "./assets/audio/soundEffects/mixkit-metal-hit-woosh-1485.wav",
             attackerAnimation: config.attackerAnimation || 'ally-attack',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/quick-slash.png',
@@ -1220,6 +1220,8 @@ export class IceWall extends Ability{
             attackerAnimation: config.attackerAnimation || 'shake',
             abilityAnimation: config.abilityAnimation || 'explode',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/icicles-fence.png',
+
+            defaultTarget: 'ally',
         })
     }
     activate(attacker, target){
@@ -1647,7 +1649,54 @@ export class Shapeshift extends Ability{
          this.message = `${target.name} transforms into a ${this.newForm.name}.`;
     }
 }
-//TODO
+export class CallOfSterben extends Ability{
+    constructor(config){
+        super({
+            name: 'call of sterben',
+            description: "Use elemental magic to call Sterben's beast. Will return to normal form upon death or leaving battle.",
+            iconSrc: './assets/media/icons/werewolf.png',
+            background: `url(./assets/media/icons/werewolf.png), linear-gradient(cyan, silver)`,
+            speedModifier: config.speedModifier || 1,
+            damageModifier: config.damageModifier || 1,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 100,
+            damageTypes: config.damageTypes || [],
+            soundEffectSrc: "./assets/audio/soundEffects/cold-wind-fade.wav",
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimation: config.abilityAnimation || 'shake',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/werewolf.png',
+            targetAnimation: config.targetAnimation || 'tornado',
+            abilityAnimationDuration: 0,
+
+            defaultTarget: 'self',
+            targetLock: 'self',
+            
+        })
+        this.newForm;
+    }
+    activate(attacker, target){
+        this.newForm = new SterbensBeast({level: target.level});
+        
+        this.newForm.nextAbility = target.nextAbility;
+        let originalForm = {
+            animation: 'twister',
+            animationDuration: 2000,
+            animationSoundEffect: "./assets/audio/soundEffects/cold-wind-fade.wav",
+            entity: target,
+            createNextForm: ()=>{
+                return originalForm.entity;
+            },
+            messageFn: ()=>{
+                return `${target.name} returns to normal form.`;
+            }
+        }
+        this.inflictStatus(new Polymorphed({holder: this.newForm, originalForm: originalForm}), this.newFrom, this.newForm);
+    }
+    updateMessage(attacker, target){
+         this.message = `${target.name} transforms into an icy beast.`;
+    }
+}
 export class Bless extends Ability{
     constructor(config){
         super({

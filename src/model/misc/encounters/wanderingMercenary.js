@@ -89,12 +89,12 @@ export class TalkWithMercenary extends Stage{
                     ],
                     negativeOutcomes: [
                         {
-                            result: 'removeDecisions',
+                            result: 'retry',
                             removableDecisions: ['B'],
                             messageFunction: (currentCharacter)=>{
                                 return `The mercenary looks unimpressed.`
                             }, 
-                            weight: 9,
+                            weight: 1,
                         },
                         {
                             result: 'complete',
@@ -113,7 +113,7 @@ export class TalkWithMercenary extends Stage{
                     roll: true,
                     successfulOutcomes: [
                         {
-                            result: 'removeDecisions',
+                            result: 'retry',
                             removableDecisions: ['C'],
                             createLoot: (partyLevel, biome)=>{
                                 return  [getRandomArrayElementWeighted(biome.lootTable).item()];

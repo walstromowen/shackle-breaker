@@ -86,11 +86,11 @@ export class MineralVein extends Stage{
                     }, 
                 },
                 {//Decision
-                    description: 'switch character',
+                    description: 'Switch character',
                     successfulOutcomes: [{result: 'switchCharacter', weight: 1}],
                 },
                 {//Decision
-                    description: 'leave',
+                    description: 'Leave',
                     successfulOutcomes: [{result: 'overworld', weight: 1}],
                     messageFunction: (currentCharacter)=>{
                         return `${currentCharacter.name} leaves the mineral vein.`

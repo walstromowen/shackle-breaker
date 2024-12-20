@@ -24,7 +24,7 @@ export default class LobbyModel{
                 name = 'Shackle Breaker';
             break;
             case 'sterben':
-                this.props.getParty().push(new Tiger({apperance: './assets/media/entities/armored-tiger.jpg'}));
+                this.props.getParty().push(new Tiger({apperance: './assets/media/entities/snowy-tiger.jpg'}));
             break;
         }
         this.props.getParty()[0].name = name;

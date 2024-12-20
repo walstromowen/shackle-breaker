@@ -74,7 +74,7 @@ export class MysteriousAltar extends Stage{
                     successfulOutcomes: [{result: 'switchCharacter', weight: 1}],
                 },
                 {//Decision
-                    description: 'leave',
+                    description: 'Leave',
                     successfulOutcomes: [{result: 'overworld', weight: 1}],
                     messageFunction: (currentCharacter)=>{
                         return `${currentCharacter.name} continues along the path leaving the altar alone.`

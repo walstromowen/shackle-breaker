@@ -107,6 +107,11 @@ export default class BattleView{
         card.querySelector('.magic-icon').src = './assets/media/icons/crystalize.png';
         card.querySelector('.battle-current-magic').innerText = combatant.currentMagic;
         this.updateStatusIcons(card, combatant);
+        if(combatant.size == 'large'){
+           card.classList.add('large-combatant-card')
+        }else{
+            card.classList.remove('large-combatant-card')
+        }
     }
     updateStatusIcons(card, combatant){
         Array.from(card.getElementsByClassName('battle-status-icon')).forEach((icon)=>{

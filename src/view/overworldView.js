@@ -68,12 +68,12 @@ export default class OverworldView{
                         images[0], 
                         1 + (64 + 2)*map.tileLayout[y][x].imageCoordinates[0], 
                         1 + (64 + 2)*map.tileLayout[y][x].imageCoordinates[1], 
-                        64, 
-                        64, 
+                        64 * map.tileLayout[y][x].imageFrameSize[0] + (2 * map.tileLayout[y][x].imageFrameSize[0] - 1), 
+                        64 * map.tileLayout[y][x].imageFrameSize[1] + (2 * map.tileLayout[y][x].imageFrameSize[1] - 1), 
                         x*this.tileWidth + this.viewport.offset[0] + (this.viewport.movementOffset[0]), 
                         y*this.tileHeight + this.viewport.offset[1] + (this.viewport.movementOffset[1]), 
-                        this.tileWidth, 
-                        this.tileHeight
+                        this.tileWidth * map.tileLayout[y][x].imageFrameSize[0], 
+                        this.tileHeight * map.tileLayout[y][x].imageFrameSize[1],
                     );
                     if(map.tileLayout[y][x].status == 'visited' && (map.tileLayout[y][x].encounter != '' || map.tileLayout[y][x].battle != '')){
                         let icon;
@@ -93,8 +93,6 @@ export default class OverworldView{
                     
                 }
             }
-            //console.log("x: " + partyPosition[0] + " " + partyPosition[0]%(this.overworldCanvas.width/this.tileWidth)*this.tileWidth + " " + this.overworldCanvas.width);
-            //console.log("y: " + partyPosition[1] + " " +partyPosition[1]%(this.overworldCanvas.height/this.tileHeight)*this.tileHeight + " " + this.overworldCanvas.height)
             this.ctx.drawImage(
                 images[1], 
                 partyPosition[0]*this.tileWidth + this.viewport.offset[0], 

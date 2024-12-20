@@ -47,7 +47,7 @@ export class TreasureChest extends Stage{
                             weight: 2,
                         },
                         {
-                            result: 'removeDecisions',
+                            result: 'retry',
                             removableDecisions: ['A'],
                             messageFunction: (currentCharacter)=>{
                                 return `The chest wont budge.`
@@ -96,7 +96,7 @@ export class TreasureChest extends Stage{
                             weight: 2,
                         },
                         {
-                            result: 'removeDecisions',
+                            result: 'retry',
                             removableDecisions: ['B'],
                             messageFunction: (currentCharacter)=>{
                                 return `${currentCharacter.name} jams the lock.`
@@ -145,7 +145,7 @@ export class TreasureChest extends Stage{
                             weight: 2,
                         },
                         {
-                            result: 'removeDecisions',
+                            result: 'retry',
                             removableDecisions: ['C'],
                             messageFunction: (currentCharacter)=>{
                                 return `The key is nowhere to be found.`
@@ -156,12 +156,12 @@ export class TreasureChest extends Stage{
                 },
                 {//Decision
                     option: 'E',
-                    description: 'switch character',
+                    description: 'Switch character',
                     successfulOutcomes: [{result: 'switchCharacter', weight: 1}],
                 },
                 {//Decision
                     option: 'F',
-                    description: 'leave',
+                    description: 'Leave',
                     successfulOutcomes: [{result: 'overworld', weight: 1}],
                     messageFunction: (currentCharacter)=>{
                         return `${currentCharacter.name} leaves the chest.`

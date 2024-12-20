@@ -174,7 +174,7 @@ export default class GameView{
                 name = 'Dexterity';
                 break;
             case 'INT:':
-                description = "A measure of ones's knowledge. Affects arcane damage and defense as well as one's maximum magic. Also determines the effectiveness of decisions that require problem solving, academica, and logical reasoning.\n\nEffected Stats:\nMAX MAG\nARC ATK\nARC DEF";           
+                description = "A measure of ones's knowledge. Affects arcane damage and defense as well as one's maximum magic. Also determines the effectiveness of decisions that require perception, problem solving, academica, and logical reasoning.\n\nEffected Stats:\nMAX MAG\nARC ATK\nARC DEF";           
                 name = 'Intelligence';
                 break;
             case 'ATN:':

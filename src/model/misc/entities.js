@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl, Eviscerate, ChannelMagic, DarkOrb, Bless, Brace, Inferno, SetBearTrap, Uppercut, Flurry, IceShard, Fly, Barrage, Rage} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl, Eviscerate, ChannelMagic, DarkOrb, Bless, Brace, Inferno, SetBearTrap, Uppercut, Flurry, IceShard, Fly, Barrage, Rage, IceWall, HailStorm, CallOfSterben} from "./abilities.js";
 import { Poison, Burn, Bleed, Shielded, InstaDeath, Blessed, PhysicalAttackBuff, MagicalAttackBuff} from "./statusEffects.js";
 import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, LeatherGloves, GreatSword, Flintlock, SmokeBomb, PanzerkamferArmor, ScrollOfHailStorm, IronSheild} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Pelt} from "./items.js";
@@ -547,7 +547,7 @@ export class Tiger extends Entity{
             name: 'Tiger',
             level: config.level || 1,
             difficulty: config.difficulty || 'normal',
-            apperance: config.apperance ||'./assets/media/entities/tiger.jpg',
+            apperance: config.apperance ||'./assets/media/entities/snowy-tiger.jpg',
             vigor: config.vigor || 5,
             strength: config.strength || 8,
             dexterity: config.dexterity || 7,
@@ -717,6 +717,69 @@ export class MadMage extends Entity{
             ],
             
         });
+    }
+}
+export class AlterianWarrior extends Entity{
+    constructor(config){
+        super({
+            name: config.name || 'Alterian Warrior',
+            level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
+            apperance: config.apperance || './assets/media/entities/alterian-warrior.jpg',
+            vigor: config.vigor || 5,
+            strength: config.strength || 6,
+            dexterity: config.dexterity || 6,
+            intelligence: config.intelligence || 4,
+            attunement: config.attunement || 4,
+            equipment: config.equipment || {
+                mainHand: new ShortSword({level: 1}),
+                offhand: '',
+                head: '',
+                torso: new IronChainmail({level: 1}),
+                arms: '',
+                legs: new IronGreaves({level: 1}),
+                feet: '',
+            },
+            isHostile: config.isHostile || true,
+            abilityArray: [new Flurry({})],
+            lootTable: [
+                {item: new IronSheild({level: 1}), weight: 1},
+                {item: new IronHelm({level: 1}), weight: 1},
+                {item: new IronChainmail({level: 1}), weight: 1},
+                {item: new IronGauntlets({level: 1}), weight: 1},
+                {item: new IronGreaves({level: 1}), weight: 1},
+                {item: new IronBoots({level: 1}), weight: 1},
+                {item: new ShortSword({level: 1}), weight: 1},
+                {item: new Handaxe({level: 1}), weight: 1},
+                {item: new Buckler({level: 1}), weight: 1},
+                {item: new HealthPotion(), weight: 2},
+                {item: new StaminaPotion(), weight: 2},
+                {item: new Bandage(), weight: 1},
+                
+            ],
+        });
+    }
+    scaleAttributes(difficulty){
+        this.maxHP = (this.vigor * 10)  + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
+        this.maxStamina = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
+        this.maxMagic = (this.vigor * 2)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
+        this.baseHpRecovery = 0;
+        this.baseStaminaRecovery = 8;
+        this.baseMagicRecovery = 2;
+        this.baseBluntAttack = (this.vigor * 1) + (this.strength * 4) + (this.dexterity * 3) + (this.intelligence * 2) + (this.attunement * 2);
+        this.basePierceAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
+        this.baseArcaneAttack = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 2) + (this.intelligence * 3) + (this.attunement * 2);
+        this.baseElementalAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 3);
+        this.baseBluntDefense = (this.vigor * 1)  + (this.strength * 2) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 1);
+        this.basePierceDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 2) + (this.intelligence * 1) + (this.attunement * 1);
+        this.baseArcaneDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 2) + (this.attunement * 1);
+        this.baseElementalDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 2);
+        this.baseSpeed = 20;
+        this.baseEvasion = 0.05;
+        this.baseCritical = 0.10;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
     }
 }
 export class Wolf extends Entity{
@@ -1698,10 +1761,108 @@ export class Panzerkamfer extends Entity{
     }
     scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 20)  + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 5) + (this.attunement * 5);
-        this.maxStamina = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 1);
+        this.maxStamina = (this.vigor * 8) + (this.strength * 8) + (this.dexterity * 8) + (this.intelligence * 8) + (this.attunement * 8);
         this.maxMagic = (this.vigor * 2)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
         this.baseHpRecovery = 0;
         this.baseStaminaRecovery = 10;
+        this.baseMagicRecovery = 10;
+        this.baseBluntAttack = (this.vigor * 2) + (this.strength * 4) + (this.dexterity * 3) + (this.intelligence * 2) + (this.attunement * 2);
+        this.basePierceAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
+        this.baseArcaneAttack = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 3) + (this.intelligence * 4) + (this.attunement * 2);
+        this.baseElementalAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 3);
+        this.baseBluntDefense = (this.vigor * 1)  + (this.strength * 2) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 1);
+        this.basePierceDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 2) + (this.intelligence * 1) + (this.attunement * 1);
+        this.baseArcaneDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 2) + (this.attunement * 1);
+        this.baseElementalDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 2);
+        this.baseSpeed = 20;
+        this.baseEvasion = 0.1;
+        this.baseCritical = 0.10;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
+    }
+}
+export class Sterben extends Entity{
+    constructor(config){
+        super({
+            name: 'Sterben',
+            level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
+            apperance: config.apperance || './assets/media/entities/sterben.jpg',
+            vigor: config.vigor || 5,
+            strength: config.strength || 5,
+            dexterity: config.dexterity || 5,
+            intelligence: config.intelligence || 5,
+            attunement: config.attunement || 5,
+            baseBluntResistance: config.baseBluntResistance || 0.2,
+            basePierceResistance: config.basePierceResistance || 0.2,
+            baseArcaneResistance: config.baseArcaneResistance || 0.4,
+            baseElementalResistance: config.baseElementalResistance || 0.4,
+            equipment: config.equipment || {
+                mainHand: '',
+                offhand: '',
+                head: '',
+                torso: '',
+                arms: '',
+                legs: '',
+                feet: '',
+            },
+            isHostile: config.isHostile || true,
+            abilityArray: [new Flurry({}), new IceWall({}), new CallOfSterben({})],
+            lootTable: [new IceStaff({level: 1}), new ScrollOfHailStorm()],
+            immunities: ['blunt', 'pierce'],
+        });
+    }
+    scaleAttributes(difficulty){
+        this.maxHP = (this.vigor * 20)  + (this.strength * 8) + (this.dexterity * 8) + (this.intelligence * 8) + (this.attunement * 8);
+        this.maxStamina = (this.vigor * 5) + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 5) + (this.attunement * 5);
+        this.maxMagic = (this.vigor * 5)  + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 5) + (this.attunement * 5);
+        this.baseHpRecovery = 0;
+        this.baseStaminaRecovery = 15;
+        this.baseMagicRecovery = 35;
+        this.baseBluntAttack = (this.vigor * 2) + (this.strength * 4) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
+        this.basePierceAttack = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 4) + (this.intelligence * 3) + (this.attunement * 3);
+        this.baseArcaneAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 3);
+        this.baseElementalAttack = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 4);
+        this.baseBluntDefense = (this.vigor * 1)  + (this.strength * 2) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 1);
+        this.basePierceDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 2) + (this.intelligence * 0) + (this.attunement * 0);
+        this.baseArcaneDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 2) + (this.attunement * 1);
+        this.baseElementalDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 0) + (this.attunement * 1);
+        this.baseSpeed = 15;
+        this.baseEvasion = 0.10;
+        this.baseCritical = 0.20;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
+    }
+}
+export class SterbensBeast extends Entity{
+    constructor(config){
+        super({
+            name: config.name || "Sterben's Beast",
+            size: 'large',
+            level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
+            apperance: config.apperance || './assets/media/entities/sterbens-beast.jpg',
+            vigor: config.vigor || 5,
+            strength: config.strength || 5,
+            dexterity: config.dexterity || 5,
+            intelligence: config.intelligence || 5,
+            attunement: config.attunement || 5,
+            equipment: {
+                mediumAnimalArmor: '',
+            },
+            isHostile: config.isHostile || true,
+            abilityArray: [new Pounce({}), new Roar({}), new IceShard({}), new HailStorm({})],
+            lootTable: [],
+        });
+    }
+    scaleAttributes(difficulty){
+        this.maxHP = (this.vigor * 20)  + (this.strength * 12) + (this.dexterity * 12) + (this.intelligence * 12) + (this.attunement * 12);
+        this.maxStamina = (this.vigor * 8) + (this.strength * 8) + (this.dexterity * 8) + (this.intelligence * 8) + (this.attunement * 8);
+        this.maxMagic = (this.vigor * 8) + (this.strength * 8) + (this.dexterity * 8) + (this.intelligence * 8) + (this.attunement * 8);
+        this.baseHpRecovery = 0;
+        this.baseStaminaRecovery = 35;
         this.baseMagicRecovery = 10;
         this.baseBluntAttack = (this.vigor * 2) + (this.strength * 4) + (this.dexterity * 3) + (this.intelligence * 2) + (this.attunement * 2);
         this.basePierceAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);

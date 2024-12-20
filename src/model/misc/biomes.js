@@ -16,6 +16,8 @@ import { DesertHorror, Sinkhole } from "./encounters/sinkhole.js";
 import { TracksInTheSnow, WoundedTiger } from "./encounters/tracksInTheSnow.js";
 import { SilentGrove } from "./encounters/silentGrove.js";
 import { MineralVein } from "./encounters/mineralVein.js";
+import { Aftermath } from "./encounters/aftermath.js";
+import { SomethingWatching } from "./encounters/somethingWatching.js";
 
 export default class Biome{
     constructor(config){
@@ -101,6 +103,10 @@ export default class Biome{
             let entity = fn()
             return new Encounter(new WanderingMercenary({entity: entity}), encounter.resetOnLeave) 
         }
+        if(startingStage.name == 'Aftermath'){
+            let entity = fn()
+            return new Encounter(new Aftermath({entity: entity}), encounter.resetOnLeave) 
+        }
         return new Encounter(startingStage, encounter.resetOnLeave)   
     }
     generateStoryEncounter(){
@@ -126,6 +132,7 @@ export class Plains extends Biome{
             ],
             possibleEncounters: [
                 {startingStage: ()=>{return {name: 'Wandering Mercenary'}}, resetOnLeave: false, weight: 1},
+                {startingStage: ()=>{return {name: 'Aftermath'}}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new TreasureChest({})}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new MadmanAhead({})}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new Bonfire({})}, resetOnLeave: false, weight: 1},
@@ -196,9 +203,10 @@ export class SnowyMountains extends Biome{
                 
             ],
             possibleEncounters: [
-                {startingStage: ()=>{return {name: 'Wandering Mercenary'}}, resetOnLeave: false, weight: 1},
-                {startingStage: ()=>{return new TreasureChest({})}, resetOnLeave: false, weight: 1},
-                {startingStage: ()=>{return new TracksInTheSnow({})}, resetOnLeave: true, weight: 1},
+                {startingStage: ()=>{return {name: 'Wandering Mercenary'}}, resetOnLeave: false, weight: 2},
+                {startingStage: ()=>{return new TreasureChest({})}, resetOnLeave: false, weight: 2},
+                {startingStage: ()=>{return new TracksInTheSnow({})}, resetOnLeave: true, weight: 2},
+                {startingStage: ()=>{return new SomethingWatching({})}, resetOnLeave: true, weight: 1},
             ],
         });
     }
@@ -227,7 +235,7 @@ export function generateBiome(biome){
             return new AltusCapital({})
         }
     }
-    let chance = Math.floor(Math.random()*4);
+    let chance = 0//Math.floor(Math.random()*4);
     switch(chance){
         case 0:
             return new Plains({name: 'Altus Kingdom'});

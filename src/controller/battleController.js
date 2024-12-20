@@ -7,7 +7,7 @@ export default class BattleController{
         this.model = model;
         this.view = view;
         this.currentAttacker;
-        this.AbilityMiniMenuExitEventHandler;
+        this.abilityMiniMenuExitEventHandler;
         this.selectTargetEventHandler;
         this.removeTargetEventHandler;
         this.confirmTargetEventHandler;
@@ -951,7 +951,7 @@ export default class BattleController{
                     if(this.model.props.getMap().tileLayout[partyPosition[1]][partyPosition[0]].encounter != ''){
                         this.model.props.getMap().tileLayout[partyPosition[1]][partyPosition[0]].battle = ''
                         this.props.switchScreen('encounter-screen');
-                        playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
+                        playMusic(this.model.props.getEncounter().currentStage.musicSrc);
                     }else{
                         this.props.switchScreen('overworld-screen');
                         playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
