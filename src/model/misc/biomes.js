@@ -235,10 +235,10 @@ export function generateBiome(biome){
             return new AltusCapital({})
         }
     }
-    let chance = Math.floor(Math.random()*4);
+    let chance = Math.floor(Math.random()*4);//
     switch(chance){
         case 0:
-            return new Plains({name: 'Altus Kingdom'}); 
+            return new Plains({name: 'Altus Kingdom'});
         case 1:
             return new Cave({name: 'Infernus Valley'});
         case 2:
