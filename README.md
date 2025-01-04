@@ -38,3 +38,37 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 
 
 # MISC notes
+** Objects
+-tree 't'
+-water  'w'
+-rock   'r'
+-berries    'b'
+-locked door    'ld'
+-treasure chest     'tc'
+-darkness?
+
+
+** Tiles
+-wall
+-open 
+-blank
+-Entrance / Exit
+
+**biomes
+-forest
+    * tree      (small tree)
+    * berries   
+    * water
+    * rock      (cracked rock)
+    * treasure chest
+
+    * locked Door
+    * entrance / exit
+    * wall      (rock)
+    * high wall (tall tree)
+
+- Vace
+    * rock
+    * water
+    * wall
+    * highwall

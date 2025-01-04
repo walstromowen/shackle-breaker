@@ -62,18 +62,19 @@ export default class OverworldView{
         this.updateViewport(map, partyPosition);
         loadCanvasImages([map.biome.terrainSrc, './assets/media/icons/hero.png', './assets/media/icons/battle-present.png', './assets/media/icons/encounter-present.png']).then((images)=>{
             this.ctx.clearRect(0, 0, this.overworldCanvas.width, this.overworldCanvas.height); 
+            //loop for tile background
             for(let y = this.viewport.startTileCoordinates[1]; y <= this.viewport.endTileCoordinates[1]; y++){
                 for(let x = this.viewport.startTileCoordinates[0]; x <= this.viewport.endTileCoordinates[0]; x++){
                     this.ctx.drawImage(
                         images[0], 
-                        1 + (64 + 2)*map.tileLayout[y][x].imageCoordinates[0], 
-                        1 + (64 + 2)*map.tileLayout[y][x].imageCoordinates[1], 
-                        64 * map.tileLayout[y][x].imageFrameSize[0] + (2 * (map.tileLayout[y][x].imageFrameSize[0] - 1)), 
-                        64 * map.tileLayout[y][x].imageFrameSize[1] + (2 * (map.tileLayout[y][x].imageFrameSize[1] - 1)), 
+                        1 + (64 + 2)*map.tileLayout[y][x].tileImageCoordinates[0], 
+                        1 + (64 + 2)*map.tileLayout[y][x].tileImageCoordinates[1], 
+                        this.tileWidth, 
+                        this.tileHeight, 
                         x*this.tileWidth + this.viewport.offset[0] + (this.viewport.movementOffset[0]), 
-                        y*this.tileHeight + this.viewport.offset[1] + (this.viewport.movementOffset[1]), 
-                        this.tileWidth * map.tileLayout[y][x].imageFrameSize[0], 
-                        this.tileHeight * map.tileLayout[y][x].imageFrameSize[1],
+                        y*this.tileHeight + this.viewport.offset[1] + (this.viewport.movementOffset[1]),
+                        this.tileWidth, 
+                        this.tileHeight,
                     );
                     if(map.tileLayout[y][x].status == 'visited' && (map.tileLayout[y][x].encounter != '' || map.tileLayout[y][x].battle != '')){
                         let icon;
@@ -90,9 +91,9 @@ export default class OverworldView{
                             this.tileHeight
                         );
                     }
-                    
                 }
             }
+            //Then Draw Character
             this.ctx.drawImage(
                 images[1], 
                 partyPosition[0]*this.tileWidth + this.viewport.offset[0], 
@@ -100,6 +101,24 @@ export default class OverworldView{
                 this.tileWidth, 
                 this.tileHeight
             ); 
+            //loop for map objects
+            for(let y = this.viewport.startTileCoordinates[1]; y <= this.viewport.endTileCoordinates[1]; y++){
+                for(let x = this.viewport.startTileCoordinates[0]; x <= this.viewport.endTileCoordinates[0]; x++){
+                    if(map.tileLayout[y][x].mapObject != ''){
+                        this.ctx.drawImage(
+                            images[0], 
+                            1 + (64 + 2)*map.tileLayout[y][x].mapObject.imageCoordinates[0], 
+                            1 + (64 + 2)*map.tileLayout[y][x].mapObject.imageCoordinates[1], 
+                            64 * map.tileLayout[y][x].mapObject.imageFrameSize[0] + (2 * (map.tileLayout[y][x].mapObject.imageFrameSize[0] - 1)), 
+                            64 * map.tileLayout[y][x].mapObject.imageFrameSize[1] + (2 * (map.tileLayout[y][x].mapObject.imageFrameSize[1] - 1)), 
+                            x*this.tileWidth + this.viewport.offset[0] + (this.viewport.movementOffset[0]), 
+                            y*this.tileHeight + this.viewport.offset[1] + (this.viewport.movementOffset[1]) - (64 * (map.tileLayout[y][x].mapObject.imageFrameSize[1] - 1) ),
+                            this.tileWidth * map.tileLayout[y][x].mapObject.imageFrameSize[0], 
+                            this.tileHeight * map.tileLayout[y][x].mapObject.imageFrameSize[1],
+                        );
+                    }
+                }
+            }
         });
 
     }

@@ -1687,10 +1687,10 @@ export class MadEngineer extends Entity{
         });
     }
 }
-export class IcePheonix extends Entity{
+export class IcePhoenix extends Entity{
     constructor(config){
         super({
-            name: 'Ice Pheonix',
+            name: 'Ice Phoenix',
             level: config.level || 1,
             difficulty: config.difficulty || 'normal',
             apperance: config.apperance || './assets/media/entities/ice-phoenix.jpg',
