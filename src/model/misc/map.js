@@ -28,14 +28,6 @@ export default class Map{
         }
     }
     getEntrancePosition(){
-        for(let y = 0; y < this.tileLayout.length; y++){
-            for(let x = 0; x < this.tileLayout[y].length; x++){
-                if(this.tileLayout[y][x].mapObject){
-                    if(this.tileLayout[y][x].mapObject.name == 'entrance'){
-                        return [x, y];
-                    }
-                }
-            }
-        }
+        return this.biome.getTilePosition('entrance', this.tileLayout);
     }
 }

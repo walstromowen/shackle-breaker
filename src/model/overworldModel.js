@@ -78,28 +78,32 @@ export default class OverworldModel{
                 this.toggleMapChange()
                 return;
             }
-        }
-        if(tileEntered.mapObject){
             if(tileEntered.mapObject.name == 'boss'){
                 tileEntered.encounter = biome.generateStoryEncounter();
                 this.toggleEncounter(tileEntered.encounter);
                 return;
             }
+            if(tileEntered.mapObject.name == 'buffer'){
+                this.decideRandomEvent(tileEntered, biome)
+            }
         }
         if(tileEntered.mapObject == false){
             if(tileEntered.mapObject.name != 'blank'){
-                let chance = Math.floor(Math.random()*40);
-                if(chance == 0){
-                    tileEntered.battle = biome.generateBattle(this.props.calcHighestPartyLevel(), this.props.getDifficulty());
-                    this.toggleBattle(tileEntered.battle);
-                    return;
-                }
-                if(chance == 1){
-                    tileEntered.encounter = biome.generateEncounter(this.props.recruitWanderingCompanion);
-                    this.toggleEncounter(tileEntered.encounter);
-                    return;
-                }
+                this.decideRandomEvent(tileEntered, biome)
             }
+        }
+    }
+    decideRandomEvent(tileEntered, biome){
+        let chance = Math.floor(Math.random()*40);
+        if(chance == 0){
+            tileEntered.battle = biome.generateBattle(this.props.calcHighestPartyLevel(), this.props.getDifficulty());
+            this.toggleBattle(tileEntered.battle);
+            return;
+        }
+        if(chance == 1){
+            tileEntered.encounter = biome.generateEncounter(this.props.recruitWanderingCompanion);
+            this.toggleEncounter(tileEntered.encounter);
+            return;
         }
     }
     toggleBattle(battle){

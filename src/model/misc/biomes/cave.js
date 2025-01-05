@@ -39,12 +39,13 @@ export class Cave extends Biome{
         let tileSet = this.createEmptyTileSet();
 
         this.createTileSetBorder(tileSet)
-        this.createLootRoom2(tileSet, new Tile({mapObject: new Boulder({imageCoordinates: [0,8]})}))
+        this.createRoom1(tileSet, new Tile({priority: 3, mapObject: new Entrance({})}))
+        this.createRoom1(tileSet, new Tile({priority: 3, mapObject: new Exit({})}))
+        
         for(let i = 0; i < Math.floor(tileSet.length); i++){
             this.createBoulderGroup1(tileSet)
         }
-        this.createLootRoom1(tileSet, new Tile({mapObject: new Entrance({})}))
-        this.createLootRoom1(tileSet, new Tile({mapObject: new Exit({})}))
+        //
         this.connectWalls(tileSet)
         return tileSet;
     }
@@ -63,82 +64,55 @@ export class Cave extends Biome{
     
 
     //structureRules
-    createLootRoom1(tileSet, tile){
+    createRoom1(tileSet, tile = new Tile({priority: 1, mapObject: new Wall({})})){
         let structureMap = []
-        let width = 7 + Math.floor(Math.random()*2)
-        let height = 7 + Math.floor(Math.random()*2)
+        let width = 9 + Math.floor(Math.random()*3)
+        let height = 9 + Math.floor(Math.random()*3)
         for(let y = 0; y < height; y++){
             let row = []
             for(let x = 0; x < width; x++){
                 if(y < 2 || x < 2 || x >= width-2 || y >= height - 2){
-                    row.push(new Tile({mapObject: new Wall({})}))
+                    //if(y == 0 || x == 0 || x == width-1 || y == height-1) row.push(new Tile({priority: 2,}))
+                    //else 
+                    row.push(new Tile({priority: 1, mapObject: new Wall({})}))
                 }else{
-                    row.push(new Tile({}))
+                    row.push(new Tile({priority: 2,}))
                 }
             }
             structureMap.push(row);
         }
-        structureMap[height-1][Math.floor(width/2)] = new Tile({})
-        structureMap[height-2][Math.floor(width/2)] = new Tile({})
+        let chance = Math.floor(Math.random()*3)
+        if(chance == 0){
+            structureMap[height-1][Math.floor(width/2)] = new Tile({priority: 2,})
+            structureMap[height-2][Math.floor(width/2)] = new Tile({priority: 2,})
+        }
+        if(chance == 1){
+            structureMap[Math.floor(height/2)][0] = new Tile({priority: 2,})
+            structureMap[Math.floor(height/2)][1] = new Tile({priority: 2,})
+        }
+        if(chance == 2){
+            structureMap[Math.floor(height/2)][width-1] = new Tile({priority: 2,})
+            structureMap[Math.floor(height/2)][width-2] = new Tile({priority: 2,})
+        }
         structureMap[1][Math.floor(width/2)] =tile
-        this.placeStructure(tileSet, structureMap, ['entrance', 'exit'])            
-    }
-    createLootRoom2(tileSet, tile){
-        let structureMap = []
-        let width = 7 + Math.floor(Math.random()*2)
-        let height = 7 + Math.floor(Math.random()*2)
-        for(let y = 0; y < height; y++){
-            let row = []
-            for(let x = 0; x < width; x++){
-                if(y < 2 || x < 2 || x >= width-2 || y >= height - 2){
-                    row.push(new Tile({mapObject: new Wall({})}))
-                }else{
-                    row.push(new Tile({}))
-                }
-            }
-            structureMap.push(row);
-        }
-        let x = Math.floor(Math.random()*structureMap[0].length)
-        let y = Math.floor(Math.random()*structureMap.length)
-        while (x < 2 || x > width-3 || y < 2 || y > height-3 ){
-            x = Math.floor(Math.random()*structureMap[0].length)
-            y = Math.floor(Math.random()*structureMap.length)
-        }
-        structureMap[y][x] = tile
-        structureMap[height-1][Math.floor(width/2)] = new Tile({})
-        structureMap[height-2][Math.floor(width/2)] = new Tile({})
-        this.placeStructure(tileSet, structureMap, ['entrance', 'exit'])            
+        this.placeStructure(tileSet, structureMap, ['entrance', 'exit'], true)            
     }
     createBoulderGroup1(tileSet){
         let structureMap = []
-        for(let i = 0; i < 4; i++){
+        let height = 3;
+        let width = 3;
+        for(let y = 0; y < height; y++){
             let row = []
-            for(let j = 0; j < 4; j++){
-                let chance = Math.floor(Math.random()*5);
-                if(chance <=1) row.push(new Tile({mapObject: new Boulder({imageCoordinates: [0,8]})}))
-                if(chance > 1)row.push(new Tile({}))
+            for(let x = 0; x < width; x++){
+                //if(y == 0 || x == 0 || x == width-1 || y == height-1) row.push(new Tile({priority: 1,}))
+                    //else {
+                        let chance = Math.floor(Math.random()*5);
+                        if(chance <=1) row.push(new Tile({priority: 1, mapObject: new Boulder({imageCoordinates: [0,8]})}))
+                        if(chance > 1)row.push(new Tile({}))
+                    //}
             }
             structureMap.push(row);
         }
         this.placeStructure(tileSet, structureMap, ['entrance', 'exit'])
-    }
-    createMiddleWall(tileSet){
-        let structureMap = []
-        let width = 2 + Math.floor(Math.random()*2)
-        let height = 2 + Math.floor(Math.random()*2)
-        for(let y = 0; y < height; y++){
-            let row = []
-            for(let x = 0; x < width; x++){
-                if(y == 0 || x == 0 || x == width-1 || y == height - 1){
-                    row.push(new Tile({mapObject: new Wall({})}))
-                }
-            }
-            structureMap.push(row);
-        }
-        this.placeStructure(tileSet, structureMap, ['entrance', 'exit'])            
-    }
-
-
-
-              
+    }           
 }

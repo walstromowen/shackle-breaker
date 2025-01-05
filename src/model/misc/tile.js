@@ -7,9 +7,6 @@ export default class Tile{
         this.encounter = config.encounter || '';
         this.tileImageCoordinates = config.tileImageCoordinates || [0, 0];
         this.mapObject = config.mapObject || '';
-
-        //this.imageCoordinates = [0, 0];
-        //this.imageFrameSize = [1, 1];
-
+        this.priority = config.priority || 0;
     }
 }

@@ -14,12 +14,13 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 * fix battle text content
 * Music not restarting on encounter ending
 
+* sure path from entrance to exit
+* map objects with linked encounters
 * Map abilities
 * Wheather
 * Darkness
 * Prebattle traits / abilitites
 * Enemy factions
-* World Generation
 * Shop/crafting/town
 * trinket and waist slots
 
@@ -31,44 +32,11 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 * After switching characters in encounter stage message cannot be skipped by clicking
 
 
-# Balancing
-* Higher level enemies not dealing enough damage on normal difficulty
 
 # Planned Quality of Life Improvements
 
 
 # MISC notes
-** Objects
--tree 't'
--water  'w'
--rock   'r'
--berries    'b'
--locked door    'ld'
--treasure chest     'tc'
--darkness?
-
-
-** Tiles
--wall
--open 
--blank
--Entrance / Exit
-
-**biomes
--forest
-    * tree      (small tree)
-    * berries   
-    * water
-    * rock      (cracked rock)
-    * treasure chest
-
-    * locked Door
-    * entrance / exit
-    * wall      (rock)
-    * high wall (tall tree)
-
-- Vace
-    * rock
-    * water
-    * wall
-    * highwall
+player direction
+if next to certain map object and facing its direction interact button should occur that triggers an encounter (next room's encounter? or current rooms?)
+completing an encounter should remove map object from the world (or change it)

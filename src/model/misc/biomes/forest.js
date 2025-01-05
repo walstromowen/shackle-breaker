@@ -45,11 +45,12 @@ export class Forest extends Biome{
        
 
         this.createTileSetBorder(tileSet)
-        this.createLootRoom1(tileSet, new Tile({mapObject: new Entrance({})}))
-        this.createLootRoom1(tileSet, new Tile({mapObject: new Exit({})}))
-        for(let i = 0; i < Math.floor(tileSet.length); i++){
+        this.createRoom1(tileSet, new Tile({priority: 3, mapObject: new Entrance({imageCoordinates: [1, 2],})}))
+        this.createRoom1(tileSet, new Tile({priority: 3, mapObject: new Exit({imageCoordinates: [1, 2],})}))
+        for(let i = 0; i < Math.floor(tileSet.length/2); i++){
             this.createTreePatch1(tileSet)
         }
+       
         this.connectWalls(tileSet)
     return tileSet;
 }
@@ -69,7 +70,7 @@ export class Forest extends Biome{
 
 
     //structureRules
-    createLootRoom1(tileSet, tile){
+    createRoom1(tileSet, tile){
         let structureMap = []
         let width = 7 + Math.floor(Math.random()*2)
         let height = 7 + Math.floor(Math.random()*2)
@@ -77,18 +78,31 @@ export class Forest extends Biome{
             let row = []
             for(let x = 0; x < width; x++){
                 if(y < 2 || x < 2 || x >= width-2 || y >= height - 2){
-                    row.push(new Tile({mapObject: new PineTree({})}))
+                    row.push(new Tile({priority: 1,mapObject: new PineTree({})}))
                 }else{
-                    row.push(new Tile({}))
+                    row.push(new Tile({priority: 2, }))
                 }
             }
             structureMap.push(row);
         }
         
         structureMap[1][Math.floor(width/2)] =tile
-        structureMap[height-1][Math.floor(width/2)] = new Tile({})
-        structureMap[height-2][Math.floor(width/2)] = new Tile({})
-        this.placeStructure(tileSet, structureMap, ['entrance', 'exit'])            
+        let chance = Math.floor(Math.random()*3)
+        if(chance == 0){
+            structureMap[height-1][Math.floor(width/2)] = new Tile({priority: 2,})
+            structureMap[height-2][Math.floor(width/2)] = new Tile({priority: 2,})
+        }
+        if(chance == 1){
+            structureMap[Math.floor(height/2)][0] = new Tile({priority: 2,})
+            structureMap[Math.floor(height/2)][1] = new Tile({priority: 2,})
+        }
+        if(chance == 2){
+            structureMap[Math.floor(height/2)][width-1] = new Tile({priority: 2,})
+            structureMap[Math.floor(height/2)][width-2] = new Tile({priority: 2,})
+        }
+        structureMap[1][Math.floor(width/2)] =tile
+        this.placeStructure(tileSet, structureMap, ['entrance', 'exit'], true)       
+                  
     }
     createTreePatch1(tileSet){
         let structureMap = []
@@ -100,9 +114,9 @@ export class Forest extends Biome{
                 let chance = Math.floor(Math.random()*10);
                 if(chance > 5) row.push(new Tile({}))
                 if(chance == 5) row.push(new Tile({tileImageCoordinates: [1,0]}))
-                if(chance == 4) row.push(new Tile({mapObject: new BerryBush({imageCoordinates: [1, 1]})}))
-                if(chance == 3) row.push(new Tile({mapObject: new Boulder({imageCoordinates: [0, 1]})}))//imageCoordinates subject to change once tile map diesgn is finished
-                if(chance < 3)row.push(new Tile({mapObject: new PineTree({})}))
+                if(chance == 4) row.push(new Tile({priority: 1, mapObject: new BerryBush({imageCoordinates: [1, 1]})}))
+                if(chance == 3) row.push(new Tile({priority: 1, mapObject: new Boulder({imageCoordinates: [0, 1]})}))//imageCoordinates subject to change once tile map diesgn is finished
+                if(chance < 3)row.push(new Tile({priority: 1, mapObject: new PineTree({})}))
               
             }
             structureMap.push(row);

@@ -392,7 +392,6 @@ export default class Biome{
         for(let y = 0; y < tileSet.length; y++){
             for(let x = 0; x < tileSet[0].length; x++){
                 if(tileSet[y][x].mapObject){
-                    console.log(tileSet[y][x].mapObject.name)
                     if(tileSet[y][x].mapObject.name == 'wall'){
                         let imageCoordinates = this.wallMap[this.getNeighboringTiles(tileSet, x, y)]
                         tileSet[y][x].mapObject.imageCoordinates = imageCoordinates;
@@ -463,25 +462,100 @@ export default class Biome{
         return neighboringTiles.toString();
     }  
    
-    placeStructure(tileSet, structureMap, blockedTileTypes){
+    placeStructure(tileSet, structureMap, blockedMapObjectTypes, isrequired = false, steps = 0){
+        steps++
+        if(isrequired == false)
+            if(steps > 100)
+                return;
         let desiredX = Math.floor(Math.random()*(tileSet[0].length - structureMap[0].length - 1)) + 1; //+ 1 -1 for edge buffer
         let desiredY = Math.floor(Math.random()*(tileSet.length - structureMap.length - 1)) + 1;
+        
         for(let y = 0; y < structureMap.length; y++){
             for(let x = 0; x < structureMap[y].length; x++){
-                for(let i = 0; i < blockedTileTypes.length; i++){
+                for(let i = 0; i < blockedMapObjectTypes.length; i++){
                     if(tileSet[desiredY + y][desiredX + x].mapObject){
-                        if(tileSet[desiredY + y][desiredX + x].mapObject.name == blockedTileTypes[i]){
-                            return this.placeStructure(tileSet, structureMap, blockedTileTypes)
+                        if(tileSet[desiredY + y][desiredX + x].mapObject.name == blockedMapObjectTypes[i]){
+                            return this.placeStructure(tileSet, structureMap, blockedMapObjectTypes)
                         }
                     }
                 }
             }
         }
+        
         for(let y = 0; y < structureMap.length; y++){
             for(let x = 0; x < structureMap[y].length; x++){
-                structureMap[y][x].position = [desiredX + x, desiredY + y]
-                
-                tileSet[desiredY + y][desiredX + x] = structureMap[y][x]
+                if(tileSet[desiredY + y][desiredX + x].mapObject){
+                    if(tileSet[desiredY + y][desiredX + x].mapObject.name == 'entrance')
+                    console.log('uggg!')
+                }
+                if(tileSet[desiredY + y][desiredX + x].priority < structureMap[y][x].priority){
+                    
+                    structureMap[y][x].position = [desiredX + x, desiredY + y]
+                    tileSet[desiredY + y][desiredX + x] = structureMap[y][x]
+                }
+            }
+        }
+    }
+    /*
+    createPath(tileSet, startPosition, endPosition, currentPosition = [startPosition[0], startPosition[1]-1]){
+        console.log(currentPosition[0], currentPosition[1])
+        let updatedPosition = [currentPosition[0],currentPosition[1]];
+
+        let chance = Math.floor(Math.random()*4)
+        if(chance == 0) updatedPosition[0] += 1;
+        if(chance == 1) updatedPosition[0] -= 1;
+        if(chance == 2) updatedPosition[1] += 1;
+        if(chance == 3) updatedPosition[1] -= 1;
+
+        if(updatedPosition[0] == endPosition[0] && updatedPosition[1] == endPosition[1])return
+
+        if(this.checkInBounds(tileSet, updatedPosition)){
+            //if(this.checkIfMapObjectNearby(tileSet, updatedPosition, 'entrance')) 
+                //return this.createPath(tileSet, startPosition, endPosition, currentPosition)
+            tileSet[updatedPosition[1]][updatedPosition[0]] = new Tile({position: [updatedPosition[0], updatedPosition[1]]})
+            return this.createPath(tileSet, startPosition, endPosition, updatedPosition)
+        }
+        return this.createPath(tileSet, startPosition, endPosition, currentPosition) 
+    }
+
+   checkInBounds(tileSet, updatedPosition){
+        if(updatedPosition[0] > 0 && updatedPosition[1] > 0 && updatedPosition[0] < tileSet[0].length-1 && updatedPosition[1] < tileSet.length-1) return true
+        else return false
+    }
+
+    checkIfMapObjectNearby(tileSet, updatedPosition, mapObjectName, x = updatedPosition[0], y = updatedPosition[1]){
+        if(tileSet[y][x].mapObject)
+            if(tileSet[y][x].mapObject.name == mapObjectName) return true;
+        //if(tileSet[y-1][x].mapObject)
+            //if(tileSet[y-1][x].mapObject.name == mapObjectName) return true;
+        if(tileSet[y+1][x].mapObject)
+            if(tileSet[y+1][x].mapObject.name == mapObjectName) return true;
+        if(tileSet[y][x-1].mapObject) 
+            if(tileSet[y][x-1].mapObject.name == mapObjectName) return true;
+        if(tileSet[y][x+1].mapObject) 
+            if(tileSet[y][x+1].mapObject.name ==mapObjectName) return true;
+
+
+        if(tileSet[y-1][x+1].mapObject)
+            if(tileSet[y-1][x+1].mapObject.name == mapObjectName) return true;
+        if(tileSet[y+1][x-1].mapObject)
+            if(tileSet[y+1][x-1].mapObject.name == mapObjectName) return true;
+        if(tileSet[y-1][x-1].mapObject) 
+            if(tileSet[y-1][x-1].mapObject.name == mapObjectName) return true;
+        if(tileSet[y+1][x+1].mapObject) 
+            if(tileSet[y+1][x+1].mapObject.name ==mapObjectName) return true;
+            
+        return false;
+    }
+    */
+    getTilePosition(tileType, tileSet){
+        for(let y = 0; y < tileSet.length; y++){
+            for(let x = 0; x < tileSet[y].length; x++){
+                if(tileSet[y][x].mapObject){
+                    if(tileSet[y][x].mapObject.name == tileType){
+                        return [x, y];
+                    }
+                }
             }
         }
     }
