@@ -72,13 +72,14 @@ export class Forest extends Biome{
     //structureRules
     createRoom1(tileSet, tile){
         let structureMap = []
-        let width = 7 + Math.floor(Math.random()*2)
-        let height = 7 + Math.floor(Math.random()*2)
+        let width = 9 + Math.floor(Math.random()*3)
+        let height = 9 + Math.floor(Math.random()*3)
         for(let y = 0; y < height; y++){
             let row = []
             for(let x = 0; x < width; x++){
-                if(y < 2 || x < 2 || x >= width-2 || y >= height - 2){
-                    row.push(new Tile({priority: 1,mapObject: new PineTree({})}))
+                if(y < 3 || x < 3 || x >= width-3 || y >= height - 3){
+                    if(y == 0 || x == 0 || x == width-1 || y == height-1) row.push(new Tile({priority: 2,}))
+                    else row.push(new Tile({priority: 1,mapObject: new PineTree({})}))
                 }else{
                     row.push(new Tile({priority: 2, }))
                 }
@@ -86,21 +87,21 @@ export class Forest extends Biome{
             structureMap.push(row);
         }
         
-        structureMap[1][Math.floor(width/2)] =tile
+       
         let chance = Math.floor(Math.random()*3)
         if(chance == 0){
-            structureMap[height-1][Math.floor(width/2)] = new Tile({priority: 2,})
+            structureMap[height-3][Math.floor(width/2)] = new Tile({priority: 2,})
             structureMap[height-2][Math.floor(width/2)] = new Tile({priority: 2,})
         }
         if(chance == 1){
-            structureMap[Math.floor(height/2)][0] = new Tile({priority: 2,})
+            structureMap[Math.floor(height/2)][2] = new Tile({priority: 2,})
             structureMap[Math.floor(height/2)][1] = new Tile({priority: 2,})
         }
         if(chance == 2){
-            structureMap[Math.floor(height/2)][width-1] = new Tile({priority: 2,})
+            structureMap[Math.floor(height/2)][width-3] = new Tile({priority: 2,})
             structureMap[Math.floor(height/2)][width-2] = new Tile({priority: 2,})
         }
-        structureMap[1][Math.floor(width/2)] =tile
+        structureMap[2][Math.floor(width/2)] =tile
         this.placeStructure(tileSet, structureMap, ['entrance', 'exit'], true)       
                   
     }
