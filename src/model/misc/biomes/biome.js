@@ -9,6 +9,7 @@ import Battle from "../battle.js";
 
 import {WanderingMercenary} from "../encounters/wanderingMercenary.js";
 import { Aftermath } from "../encounters/aftermath.js";
+import { Exit, Wall } from "../mapObjects.js";
 
 
 export default class Biome{
@@ -376,6 +377,40 @@ export default class Biome{
         let startingStage = encounter.startingStage();
         return new Encounter(startingStage, encounter.resetOnLeave)   
     }
+
+    //TileSet
+    beginPath(tileSet, steps, tileType){
+        let structure;
+        if(tileType)structure = this.chooseStructure(tileType)
+        else structure = this.chooseStructure() 
+
+        let currentPosition = [
+            Math.floor(Math.random()*(tileSet[0].length - structure.structureMap[0].length - 1)) + 1,
+            Math.floor(Math.random()*(tileSet.length - structure.structureMap.length - 1)) + 1
+        ]
+        structure.placeStructure(tileSet, currentPosition[0], currentPosition[1])
+        this.advancePath(currentPosition, 0, tileSet, steps, structure)
+        
+    }
+    advancePath(origin, errorTicks, tileSet, steps, previousStructure, structure = this.chooseStructure()){
+        if(steps == 0) return 
+        if(steps == 1) structure = this.chooseStructure('exit');
+        previousStructure.generateNewConnectionPoint()//gives [0,0] sometimes because only tiles with correct priority are given a position
+      
+        let currentPosition = this.offsetNextStructure(structure, previousStructure.connectionPosition, previousStructure.connectionDirection)
+        if(this.isStrutureOutOfBounds(currentPosition, structure, tileSet)){
+            errorTicks++
+            if(errorTicks > 100) return this.beginPath(tileSet, steps)
+            return this.advancePath(origin, errorTicks, tileSet, steps, previousStructure)
+           
+        }
+        this.connectStructures(tileSet, previousStructure)
+        structure.placeStructure(tileSet, currentPosition[0], currentPosition[1])
+        steps--;
+        return this.advancePath(origin, 0, tileSet, steps, structure)
+        
+
+    }
     createEmptyTileSet(){
         let tileSet = [];
         for(let y = 0; y < this.layoutHeight; y++){
@@ -387,7 +422,17 @@ export default class Biome{
         }
         return tileSet;
     }
-
+    createFullTileSet(){
+        let tileSet = [];
+        for(let y = 0; y < this.layoutHeight; y++){
+            let row = [];
+            for(let x = 0; x < this.layoutWidth; x++){
+                row.push(new Tile({mapObject: new Wall({}), position: [x, y]}))
+            }
+            tileSet.push(row)
+        }
+        return tileSet;
+    }
     connectWalls(tileSet){
         for(let y = 0; y < tileSet.length; y++){
             for(let x = 0; x < tileSet[0].length; x++){
@@ -461,93 +506,6 @@ export default class Biome{
         }else neighboringTiles.push(1)
         return neighboringTiles.toString();
     }  
-   
-    placeStructure(tileSet, structureMap, blockedMapObjectTypes, isrequired = false, steps = 0){
-        steps++
-        if(isrequired == false)
-            if(steps > 100)
-                return;
-        let desiredX = Math.floor(Math.random()*(tileSet[0].length - structureMap[0].length - 1)) + 1; //+ 1 -1 for edge buffer
-        let desiredY = Math.floor(Math.random()*(tileSet.length - structureMap.length - 1)) + 1;
-        
-        for(let y = 0; y < structureMap.length; y++){
-            for(let x = 0; x < structureMap[y].length; x++){
-                for(let i = 0; i < blockedMapObjectTypes.length; i++){
-                    if(tileSet[desiredY + y][desiredX + x].mapObject){
-                        if(tileSet[desiredY + y][desiredX + x].mapObject.name == blockedMapObjectTypes[i]){
-                            return this.placeStructure(tileSet, structureMap, blockedMapObjectTypes)
-                        }
-                    }
-                }
-            }
-        }
-        
-        for(let y = 0; y < structureMap.length; y++){
-            for(let x = 0; x < structureMap[y].length; x++){
-                if(tileSet[desiredY + y][desiredX + x].mapObject){
-                    if(tileSet[desiredY + y][desiredX + x].mapObject.name == 'entrance')
-                    console.log('uggg!')
-                }
-                if(tileSet[desiredY + y][desiredX + x].priority < structureMap[y][x].priority){
-                    
-                    structureMap[y][x].position = [desiredX + x, desiredY + y]
-                    tileSet[desiredY + y][desiredX + x] = structureMap[y][x]
-                }
-            }
-        }
-    }
-    /*
-    createPath(tileSet, startPosition, endPosition, currentPosition = [startPosition[0], startPosition[1]-1]){
-        console.log(currentPosition[0], currentPosition[1])
-        let updatedPosition = [currentPosition[0],currentPosition[1]];
-
-        let chance = Math.floor(Math.random()*4)
-        if(chance == 0) updatedPosition[0] += 1;
-        if(chance == 1) updatedPosition[0] -= 1;
-        if(chance == 2) updatedPosition[1] += 1;
-        if(chance == 3) updatedPosition[1] -= 1;
-
-        if(updatedPosition[0] == endPosition[0] && updatedPosition[1] == endPosition[1])return
-
-        if(this.checkInBounds(tileSet, updatedPosition)){
-            //if(this.checkIfMapObjectNearby(tileSet, updatedPosition, 'entrance')) 
-                //return this.createPath(tileSet, startPosition, endPosition, currentPosition)
-            tileSet[updatedPosition[1]][updatedPosition[0]] = new Tile({position: [updatedPosition[0], updatedPosition[1]]})
-            return this.createPath(tileSet, startPosition, endPosition, updatedPosition)
-        }
-        return this.createPath(tileSet, startPosition, endPosition, currentPosition) 
-    }
-
-   checkInBounds(tileSet, updatedPosition){
-        if(updatedPosition[0] > 0 && updatedPosition[1] > 0 && updatedPosition[0] < tileSet[0].length-1 && updatedPosition[1] < tileSet.length-1) return true
-        else return false
-    }
-
-    checkIfMapObjectNearby(tileSet, updatedPosition, mapObjectName, x = updatedPosition[0], y = updatedPosition[1]){
-        if(tileSet[y][x].mapObject)
-            if(tileSet[y][x].mapObject.name == mapObjectName) return true;
-        //if(tileSet[y-1][x].mapObject)
-            //if(tileSet[y-1][x].mapObject.name == mapObjectName) return true;
-        if(tileSet[y+1][x].mapObject)
-            if(tileSet[y+1][x].mapObject.name == mapObjectName) return true;
-        if(tileSet[y][x-1].mapObject) 
-            if(tileSet[y][x-1].mapObject.name == mapObjectName) return true;
-        if(tileSet[y][x+1].mapObject) 
-            if(tileSet[y][x+1].mapObject.name ==mapObjectName) return true;
-
-
-        if(tileSet[y-1][x+1].mapObject)
-            if(tileSet[y-1][x+1].mapObject.name == mapObjectName) return true;
-        if(tileSet[y+1][x-1].mapObject)
-            if(tileSet[y+1][x-1].mapObject.name == mapObjectName) return true;
-        if(tileSet[y-1][x-1].mapObject) 
-            if(tileSet[y-1][x-1].mapObject.name == mapObjectName) return true;
-        if(tileSet[y+1][x+1].mapObject) 
-            if(tileSet[y+1][x+1].mapObject.name ==mapObjectName) return true;
-            
-        return false;
-    }
-    */
     getTilePosition(tileType, tileSet){
         for(let y = 0; y < tileSet.length; y++){
             for(let x = 0; x < tileSet[y].length; x++){
@@ -558,5 +516,39 @@ export default class Biome{
                 }
             }
         }
+    }
+    offsetNextStructure(structure, currentPosition, currentDirection){
+        if(currentDirection == 'north')return [currentPosition[0] - Math.floor(structure.structureMap[0].length/2), currentPosition[1] - structure.structureMap.length]
+        if(currentDirection == 'south')return [currentPosition[0] - Math.floor(structure.structureMap[0].length/2), currentPosition[1] + 1]
+        if(currentDirection == 'east') return [currentPosition[0] + 1, currentPosition[1] - Math.floor(structure.structureMap.length/2)]
+        if(currentDirection == 'west') return [currentPosition[0] - Math.floor(structure.structureMap[0].length), currentPosition[1] - Math.floor(structure.structureMap.length/2)]
+    }
+    clearEntranceToNextStructure(structure, currentDirection, steps){
+        let tile = new Tile({priority: 3,})
+        if(currentDirection == 'south') structure.structureMap[0][Math.floor(structure.structureMap[0].length/2)] = tile
+        if(currentDirection == 'north') structure.structureMap[structure.structureMap.length-1][Math.floor(structure.structureMap[0].length/2)] = tile
+        if(currentDirection == 'west') structure.structureMap[Math.floor(structure.structureMap.length/2)][structure.structureMap[0].length-1] = tile
+        if(currentDirection == 'east') structure.structureMap[Math.floor(structure.structureMap.length/2)][0] = tile
+        return structure
+    }
+    isStrutureOutOfBounds(currentPosition, structure, tileSet){
+        if(
+            currentPosition[0] + structure.structureMap[0].length > tileSet[0].length ||
+            currentPosition[0]  < 0 ||
+            currentPosition[1] + structure.structureMap.length > tileSet.length ||
+            currentPosition[1]  < 0
+        ){
+            return true
+        }
+        return false
+    }
+    connectStructures(tileSet, previousStructure){
+        tileSet[previousStructure.connectionPosition[1]][previousStructure.connectionPosition[0]] = new Tile({position:tileSet[previousStructure.connectionPosition[1]][previousStructure.connectionPosition[0]].position, priority: 3,})
+
+        if(previousStructure.connectionDirection == 'north')return tileSet[previousStructure.connectionPosition[1]-1][previousStructure.connectionPosition[0]] = new Tile({position: tileSet[previousStructure.connectionPosition[1]-1][previousStructure.connectionPosition[0]].position, priority: 3,})
+        if(previousStructure.connectionDirection == 'south')return tileSet[previousStructure.connectionPosition[1]+1][previousStructure.connectionPosition[0]] = new Tile({position: tileSet[previousStructure.connectionPosition[1]+1][previousStructure.connectionPosition[0]].position, priority: 3,})
+        if(previousStructure.connectionDirection == 'east') return tileSet[previousStructure.connectionPosition[1]][previousStructure.connectionPosition[0]+1] = new Tile({position: tileSet[previousStructure.connectionPosition[1]][previousStructure.connectionPosition[0]+1].position, priority: 3,})
+        if(previousStructure.connectionDirection == 'west') return tileSet[previousStructure.connectionPosition[1]][previousStructure.connectionPosition[0]-1] = new Tile({position: tileSet[previousStructure.connectionPosition[1]][previousStructure.connectionPosition[0]-1].position, priority: 3,})
+    
     }
 }

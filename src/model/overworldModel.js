@@ -10,7 +10,7 @@ export default class OverworldModel{
     }
     generateNewMap(){//want this to execute after lobby start happens
         if(this.props.calcHighestPartyLevel() > 9){
-            this.props.setMap(new Map('altus capital', 'throne room'));
+            this.props.setMap(new Map('altus capital'));
         }else{
             this.props.setMap(new Map());
         }

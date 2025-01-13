@@ -15,7 +15,7 @@ export default class Map{
                 return new AltusCapital({})
             }
         }
-        let chance = Math.floor(Math.random()*2);
+        let chance = Math.floor(Math.random()*4);
         switch(chance){
             case 0:
                 return new Forest({name: 'Altus Kingdom'});

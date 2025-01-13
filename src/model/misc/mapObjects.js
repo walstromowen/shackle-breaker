@@ -23,6 +23,7 @@ export class Entrance extends MapObject{
             {
                 name: config.name ||'entrance',
                 imageCoordinates: config.imageCoordinates || [0, 7],
+                imageFrameSize: config.imageFrameSize,
                 traversable: config.traversable || true,
             }
         );
@@ -34,6 +35,7 @@ export class Exit extends MapObject{
             {
                 name: config.name ||'exit',
                 imageCoordinates: config.imageCoordinates || [0, 7],
+                imageFrameSize: config.imageFrameSize,
                 traversable: config.traversable || true,
             }
         );

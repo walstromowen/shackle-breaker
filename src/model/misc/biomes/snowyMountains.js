@@ -9,15 +9,15 @@ import {WanderingMercenary} from "../encounters/wanderingMercenary.js";
 import { TreasureChest } from "../encounters/treasureChest.js";
 import { TracksInTheSnow, WoundedTiger } from "../encounters/tracksInTheSnow.js";
 import { SomethingWatching } from "../encounters/somethingWatching.js";
-import { Boulder, Entrance, Exit } from "../mapObjects.js";
-
+import { SnowyMountainRoom1, SnowyMountainEntranceRoom, SnowyMountainExitRoom } from "../structures.js";
+import { PineTree } from "../mapObjects.js";
 
 export class SnowyMountains extends Biome{
     constructor(config){
         super({
             name: config.name || 'snowy mountains',
-            layoutWidth: config.layoutWidth || 32,
-            layoutHeight: config.layoutHeight || 32,
+            layoutWidth: config.layoutWidth || 64,
+            layoutHeight: config.layoutHeight || 64,
             terrainSrc: './assets/media/terrain/snowy-mountains.png',
             backgroundMusicSrc: "./assets/audio/musicTracks/nocturne-roman-main-version-16841-01-45.mp3",
             battleMusicSrc: "./assets/audio/musicTracks/battle-sword-139313.mp3",
@@ -36,63 +36,36 @@ export class SnowyMountains extends Biome{
             ],
         });
     }
-     generateLayout(layout){ 
-                let tileSet = this.createEmptyTileSet();
-               
-        
-                this.createTileSetBorder(tileSet)
-                this.createLootRoom1(tileSet, new Tile({tileImageCoordinates: [0,2], mapObject: new Entrance({})}))
-                this.createLootRoom1(tileSet, new Tile({tileImageCoordinates: [0,2], mapObject: new Exit({})}))
-                for(let i = 0; i < Math.floor(tileSet.length/2); i++){
-                    this.createBoulderGroup1(tileSet)
+    generateLayout(){ 
+        let tileSet = this.createFullTileSet();
+        this.beginPath(tileSet, 50, 'entrance')
+        this.connectWalls(tileSet)
+        return tileSet;
+    }
+    createFullTileSet(){
+            let tileSet = [];
+            for(let y = 0; y < this.layoutHeight; y++){
+                let row = [];
+                for(let x = 0; x < this.layoutWidth; x++){
+                    row.push(new Tile({mapObject: new PineTree({imageCoordinates: [0, 3], imageFrameSize: [1,2]}), position: [x, y]}))
                 }
-                this.connectWalls(tileSet)
+                tileSet.push(row)
+            }
             return tileSet;
         }
-        createTileSetBorder(tileSet){
-            for(let y = 0; y < this.layoutHeight; y++){
-                for(let x = 0; x < this.layoutWidth; x++){
-                    if(y <= 2 || x <= 2 || x >= (this.layoutWidth-3) || y >= (this.layoutHeight - 3)){
-                        if(((y == 2 || y == this.layoutHeight - 3) && x > 1 && x < (this.layoutWidth-2)) || ((x == 2 || x == this.layoutWidth-3) && y > 1 && y < (this.layoutHeight - 2))){
-                            let chance = Math.floor(Math.random()*6);
-                            if(chance <= 2)  tileSet[y][x].mapObject = new Boulder({imageCoordinates: [0, 1]})
-                        }else tileSet[y][x].mapObject = new Boulder({imageCoordinates: [0, 1]})
-                    }
+    chooseStructure(type){
+        switch(type){
+            case 'entrance':
+                return new SnowyMountainEntranceRoom();
+            case 'exit':
+                return new SnowyMountainExitRoom();
+            default:
+                switch(Math.floor(Math.random()*2)){
+                    case 0:
+                        return new SnowyMountainRoom1();
+                    case 1:
+                        return new SnowyMountainRoom1()
                 }
-            }
         }
-        createLootRoom1(tileSet, tile){
-                let structureMap = []
-                let width = 7 + Math.floor(Math.random()*2)
-                let height = 7 + Math.floor(Math.random()*2)
-                for(let y = 0; y < height; y++){
-                    let row = []
-                    for(let x = 0; x < width; x++){
-                        if(y < 1 || x < 1 || x >= width-1 || y >= height - 1){
-                            row.push(new Tile({mapObject:new Boulder({imageCoordinates: [0, 1]})}))
-                        }else{
-                            row.push(new Tile({}))
-                        }
-                    }
-                    structureMap.push(row);
-                }
-                
-                structureMap[1][Math.floor(width/2)] =tile
-                structureMap[height-1][Math.floor(width/2)] = new Tile({})
-                structureMap[height-2][Math.floor(width/2)] = new Tile({})
-                this.placeStructure(tileSet, structureMap, ['entrance', 'exit'])            
-            }
-             createBoulderGroup1(tileSet){
-                let structureMap = []
-                for(let i = 0; i < 5; i++){
-                    let row = []
-                    for(let j = 0; j < 5; j++){
-                        let chance = Math.floor(Math.random()*5);
-                        if(chance <=1) row.push(new Tile({mapObject: new Boulder({imageCoordinates: [0,1]})}))
-                        if(chance > 1)row.push(new Tile({}))
-                    }
-                    structureMap.push(row);
-                }
-                this.placeStructure(tileSet, structureMap, ['entrance', 'exit'])
-            }
+    }
 }
