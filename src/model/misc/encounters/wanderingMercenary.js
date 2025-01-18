@@ -63,7 +63,10 @@ export class TalkWithMercenary extends Stage{
                                 return config.entity;
                             },
                             messageFunction: (currentCharacter)=>{
-                                return `"Pleasure doing business with you boss! Oh and don't worry about me. I can handle myself."`
+                                let chance = Math.floor(Math.random()*3)
+                                if(chance == 0) return `"Pleasure doing business with you boss! Oh and don't worry about me. I can handle myself."`
+                                if(chance == 1) return `"I'll put this to good use. Lead the way!"`
+                                if(chance == 2) return `"Thanks, allies are hard to come by..."`
                             }, 
                             weight: 1,
                         },
@@ -82,7 +85,11 @@ export class TalkWithMercenary extends Stage{
                                 return config.entity;
                             },
                             messageFunction: (currentCharacter)=>{
-                                return `"You seem like the type I could follow. Lead the way boss!"`
+                                let chance = Math.floor(Math.random()*3)
+                                if(chance == 0) return `"You seem like the type I could follow. Lead the way boss!"`
+                                if(chance == 1) return `"Not like I have much of a choice ... Let me gather my things"`
+                                if(chance == 2) return `"I'll come for now, but the second you turn ... uh ... never mind."`
+                               
                             }, 
                             weight: 1,
                         },
@@ -130,7 +137,11 @@ export class TalkWithMercenary extends Stage{
                                 return new Battle({hostiles: [config.entity], battleMusicSrc: biome.battleMusicSrc});
                             },
                             messageFunction: (currentCharacter)=>{
-                                return `"Oh now you have done it!"`
+                                let chance = Math.floor(Math.random()*3)
+                                if(chance == 0) return `"Oh now you have done it!"`
+                                if(chance == 1) return `"Just what... do you think... your doing?!"`
+                                if(chance == 2) return `"A theif eh! I should have known!"`
+                                
                             }, 
                             weight: 1,
                         },
@@ -151,6 +162,9 @@ export class TalkWithMercenary extends Stage{
         })
     }
     messageFunction(currentCharacter){
-        return `"You look like the type that could use some muscule, but can you spare the coin?"`;
+        let chance = Math.floor(Math.random()*3)
+        if(chance == 0) return `"You look like the type that could use some muscle, but can you spare the coin?"`
+        if(chance == 1) return `"Keep your hands were I can see em, that is unless you are reaching for coin?"`
+        if(chance == 2) return `"Hail friend! Sane folk like us ought to stick together eh?"`
     }
 }

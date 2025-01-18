@@ -1,6 +1,6 @@
 import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl, Eviscerate, ChannelMagic, DarkOrb, Bless, Brace, Inferno, SetBearTrap, Uppercut, Flurry, IceShard, Fly, Barrage, Rage, IceWall, HailStorm, CallOfSterben} from "./abilities.js";
 import { Poison, Burn, Bleed, Shielded, InstaDeath, Blessed, PhysicalAttackBuff, MagicalAttackBuff} from "./statusEffects.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, LeatherGloves, GreatSword, Flintlock, SmokeBomb, PanzerkamferArmor, ScrollOfHailStorm, IronSheild} from "./items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, LeatherGloves, GreatSword, Flintlock, SmokeBomb, PanzerkamferArmor, ScrollOfHailStorm, IronSheild, IceSickle} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Pelt} from "./items.js";
 
 
@@ -1809,7 +1809,7 @@ export class Sterben extends Entity{
             },
             isHostile: config.isHostile || true,
             abilityArray: [new Flurry({}), new IceWall({}), new CallOfSterben({})],
-            lootTable: [new IceStaff({level: 1}), new ScrollOfHailStorm()],
+            lootTable: [new IceSickle({level: 1}), new IceStaff({level: 1}), new ScrollOfHailStorm()],
             immunities: ['blunt', 'pierce'],
         });
     }

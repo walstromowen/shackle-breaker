@@ -48,8 +48,8 @@ export default class Biome{
             {item: ()=>{return new ClothHood({level: 1})}, weight: 1},
             {item: ()=>{return new ClothRobe({level: 1})}, weight: 1},
 
-            {item: ()=>{return new LinenShirt({level: 1})}, weight: 2},
-            {item: ()=>{return new LinenPants({level: 1})}, weight: 2},
+            {item: ()=>{return new LinenShirt({level: 1})}, weight: 1},
+            {item: ()=>{return new LinenPants({level: 1})}, weight: 1},
 
 
             {item: ()=>{return new Flintlock({level: 1})}, weight: 1},
@@ -69,11 +69,11 @@ export default class Biome{
             {item: ()=>{return new ScrollOfHailStorm()}, weight: 1},
             {item: ()=>{return new ScrollOfCastShadow()}, weight: 1},
 
-            {item: ()=>{return new HealthPotion()}, weight: 2},
-            {item: ()=>{return new StaminaPotion()}, weight: 2},
-            {item: ()=>{return new MagicPotion()}, weight: 2},
+            {item: ()=>{return new HealthPotion()}, weight: 1},
+            {item: ()=>{return new StaminaPotion()}, weight: 1},
+            {item: ()=>{return new MagicPotion()}, weight: 1},
 
-            {item: ()=>{return new Bandage()}, weight: 2},
+            {item: ()=>{return new Bandage()}, weight: 1},
             {item: ()=>{return new Antidote()}, weight: 1},
             {item: ()=>{return new ParalysisTonic()}, weight: 1},
             
@@ -524,11 +524,10 @@ export default class Biome{
         if(currentDirection == 'west') return [currentPosition[0] - Math.floor(structure.structureMap[0].length), currentPosition[1] - Math.floor(structure.structureMap.length/2)]
     }
     clearEntranceToNextStructure(structure, currentDirection, steps){
-        let tile = new Tile({priority: 3,})
-        if(currentDirection == 'south') structure.structureMap[0][Math.floor(structure.structureMap[0].length/2)] = tile
-        if(currentDirection == 'north') structure.structureMap[structure.structureMap.length-1][Math.floor(structure.structureMap[0].length/2)] = tile
-        if(currentDirection == 'west') structure.structureMap[Math.floor(structure.structureMap.length/2)][structure.structureMap[0].length-1] = tile
-        if(currentDirection == 'east') structure.structureMap[Math.floor(structure.structureMap.length/2)][0] = tile
+        if(currentDirection == 'south') structure.structureMap[0][Math.floor(structure.structureMap[0].length/2)] = new Tile({position: structure.structureMap[0][Math.floor(structure.structureMap[0].length/2)].position, priority: 3,})
+        if(currentDirection == 'north') structure.structureMap[structure.structureMap.length-1][Math.floor(structure.structureMap[0].length/2)] = new Tile({position: structure.structureMap[structure.structureMap.length-1][Math.floor(structure.structureMap[0].length/2)].position, priority: 3,})
+        if(currentDirection == 'west') structure.structureMap[Math.floor(structure.structureMap.length/2)][structure.structureMap[0].length-1] = new Tile({position: structure.structureMap[Math.floor(structure.structureMap.length/2)][structure.structureMap[0].length-1].position, priority: 3,})
+        if(currentDirection == 'east') structure.structureMap[Math.floor(structure.structureMap.length/2)][0] = new Tile({position: structure.structureMap[Math.floor(structure.structureMap.length/2)][0].position, priority: 3,})
         return structure
     }
     isStrutureOutOfBounds(currentPosition, structure, tileSet){

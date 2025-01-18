@@ -2241,6 +2241,47 @@ export class CycloneStrike extends Ability{
 export class Impale extends Ability{
     
 }
+export class FlashFreeze extends Ability{//Needs Work targeting same targets twice?
+    constructor(config){
+        super({
+            name: 'flash freeze',
+            description: "Cover the ground in an unatural pool of ice freezing all opponents.",
+            iconSrc: './assets/media/icons/frozen-ring.png',
+            background: `url(./assets/media/icons/frozen-ring.png), linear-gradient(cyan, silver)`,
+            speedModifier: config.speedModifier || 0.75,
+            damageModifier: config.damageModifier || 0.25,
+            criticalDamageModifier: config.criticalDamageModifier || 1.1,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 10,
+            magicCost: config.magicCost || 10,
+            damageTypes: config.damageTypes || ['ranged', 'ice'],
+            soundEffectSrc: "./assets/audio/soundEffects/windy-blizzard.mp3",
+            sequenceType: 'splash',
+            targetAnimation: config.targetAnimation || 'shake',
+            abilityAnimation: config.abilityAnimation || 'swipe-right',
+            attackerAnimation: config.attackerAnimation || 'ally-evade',
+            defaultTarget: 'opponent',
+            targetLock: 'all opponents',
+            targetCount: 3,
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            if(Math.random()*2 < 1){
+                this.inflictStatus(new Frozen({holder: target}), attacker, target);
+            }
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
+        }
+    }
+    updateMessage(attacker){
+        this.message = (`${attacker.name} summons an unnatural pool of ice!`);
+    }
+}
 export class ThrowPosionedKnife extends Ability{
     constructor(config){
         super({

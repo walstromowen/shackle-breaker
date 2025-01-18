@@ -63,8 +63,10 @@ export default class OverworldModel{
         this.props.getMap().tileLayout[this.currentPartyPosition[1]][this.currentPartyPosition[0]].status = 'visited';
     }
     determineRoomEvent(){
+      
         let biome = this.props.getMap().biome;
         let tileEntered = this.props.getMap().tileLayout[this.currentPartyPosition[1]][this.currentPartyPosition[0]]
+        
         if(tileEntered.battle != ''){
             this.toggleBattle(tileEntered.battle);
             return; 
@@ -94,7 +96,7 @@ export default class OverworldModel{
         }
     }
     decideRandomEvent(tileEntered, biome){
-        let chance = Math.floor(Math.random()*40);
+        let chance = Math.floor(Math.random()*50);
         if(chance == 0){
             tileEntered.battle = biome.generateBattle(this.props.calcHighestPartyLevel(), this.props.getDifficulty());
             this.toggleBattle(tileEntered.battle);

@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower, Thrust, ChannelMagic, Siphon, Eviscerate, DarkOrb, Brace, Inferno, Flurry, Uppercut, ShootBullet, ThrowNet, Shapeshift, Barrage, ShootFlamingArrow, Rage, HailStorm, Hide, CastShadow, AbsorbSoul, ExposeWeakness, GuardBreak, ArcaneBlast, Cleanse, IceWall} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower, Thrust, ChannelMagic, Siphon, Eviscerate, DarkOrb, Brace, Inferno, Flurry, Uppercut, ShootBullet, ThrowNet, Shapeshift, Barrage, ShootFlamingArrow, Rage, HailStorm, Hide, CastShadow, AbsorbSoul, ExposeWeakness, GuardBreak, ArcaneBlast, Cleanse, IceWall, FlashFreeze} from "./abilities.js";
 import { DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, UseAntidote, UseAloeRemedy, UseParalysisTonic, UseBandage, DrinkKurtussBrewOfMadness, SetBearTrap, ThrowSmokeBomb} from "./abilities.js";
 
 let counter = 0;
@@ -2046,6 +2046,70 @@ export class GreatSword extends Attachable{
         }
     }
 }
+//Legendary Items
+export class IceSickle extends Attachable{
+    constructor(config){
+        super({
+            name: 'iceSicle',
+            description: "Legends speak of an ancient wanderer from a distant land guided by the stars. As the story goes, the wander's travels left him broken and alone. At his very lowest, the wanderer cried out for help. Just then, a beast equally as broken and alone, is said to have offered him refugee. Many believe this man to be the founder of Panzeria, although his body was never found." ,
+            imageSrc:  './assets/media/icons/sickle.png',
+            price: 300,
+            slot: 'oneHand',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 2,
+            magicRecovery: 2,
+            bluntAttack: 1,
+            pierceAttack: 5,
+            arcaneAttack: 1,
+            elementalAttack: 5,
+            bluntDefense: 0,
+            pierceDefense: 0,
+            arcaneDefense: 0,
+            elementalDefense: 0,
+            bluntResistance: 0,
+            pierceResistance: 0,
+            arcaneResistance: 0,
+            elementalResistance: 0,
+            speed: 2,
+            evasion: 0.01,
+            critical: 0.02,
+            abilityArray: [new Slash({}), new FlashFreeze({})],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 0;
+            this.magicRecovery = this.magicRecovery + 1;
+            this.bluntAttack = this.bluntAttack + 1;
+            this.pierceAttack = this.pierceAttack + 3;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 3;
+            this.bluntDefense = this.bluntDefense + 0;
+            this.pierceDefense = this.pierceDefense + 1;
+            this.arcaneDefense = this.arcaneDefense + 0;
+            this.elementalDefense = this.elementalDefense + 0;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+            this.critical = this.critical + 0;
+            if(this.level == 2){
+                this.abilityArray.push(new HailStorm({}));
+            }
+        }
+    }
+}
+
+//End Legnedary Items
 export class PineWood extends Material{
     constructor(){
         super({

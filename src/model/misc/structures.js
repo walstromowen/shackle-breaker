@@ -107,7 +107,7 @@ export class ForestRoom1 extends Structure{
                 if((y == 0 || x == 0 || x == width-1 || y == height-1) && chance < 1) {
                     let chance = Math.floor(Math.random*3)
                     if(chance == 0)row.push(new Tile({priority: 1, mapObject: new Boulder({imageCoordinates: [0,1]})}))
-                    else row.push(new Tile({mapObject: new PineTree({imageCoordinates: [0, 2], imageFrameSize: [1,2]}),}))
+                    else row.push(new Tile({priority: 1 ,mapObject: new PineTree({imageCoordinates: [0, 2], imageFrameSize: [1,2]}),}))
                 }else {
                     if(y > 1 && x > 1 && y < height - 2 && x < width - 2){
                         if(Math.random()*4 < 1){

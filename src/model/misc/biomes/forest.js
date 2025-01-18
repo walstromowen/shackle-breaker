@@ -51,7 +51,7 @@ export class Forest extends Biome{
         for(let y = 0; y < this.layoutHeight; y++){
             let row = [];
             for(let x = 0; x < this.layoutWidth; x++){
-                if(Math.random()*5 < 1)row.push(new Tile({tileImageCoordinates: [1,0], mapObject: new PineTree({}), priority: 1,}))
+                if(Math.random()*5 < 1)row.push(new Tile({tileImageCoordinates: [1,0], mapObject: new PineTree({}), priority: 1, position: [x, y]}))
                 else row.push(new Tile({mapObject: new PineTree({}), position: [x, y]}))
             }
             tileSet.push(row)
