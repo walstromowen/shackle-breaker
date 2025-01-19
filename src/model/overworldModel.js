@@ -80,14 +80,6 @@ export default class OverworldModel{
                 this.toggleMapChange()
                 return;
             }
-            if(tileEntered.mapObject.name == 'boss'){
-                tileEntered.encounter = biome.generateStoryEncounter();
-                this.toggleEncounter(tileEntered.encounter);
-                return;
-            }
-            if(tileEntered.mapObject.name == 'buffer'){
-                this.decideRandomEvent(tileEntered, biome)
-            }
         }
         if(tileEntered.mapObject == false){
             if(tileEntered.mapObject.name != 'blank'){

@@ -21,9 +21,6 @@ export class AltusCapital extends Biome{
             possibleEncounters: [
                 {startingStage: ()=>{return new TheArtifact({})}, resetOnLeave: false, weight: 1},
             ],
-            storyEncounters: [
-                {startingStage: ()=>{return new TheArtifact({})}, resetOnLeave: false},
-            ]
         });
     }
     generateLayout(){ 
