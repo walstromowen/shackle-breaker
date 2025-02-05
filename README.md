@@ -1,7 +1,5 @@
-# ShackleBreaker
+# [ShackleBreaker](https://walstromowen.github.io/shackle-breaker/src/index.html)
 Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Walstrom
-Link
-(https://walstromowen.github.io/shackle-breaker/src/index.html)
 
 # Planned Features
 * Mobile event listener support
