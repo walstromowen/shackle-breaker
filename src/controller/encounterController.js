@@ -1,3 +1,4 @@
+import Map from '../model/misc/map.js';
 import {playSoundEffect, playMusic, capiltalizeAllFirstLetters, getRandomArrayElement} from '../utility.js';
 
 export default class EncounterController{
@@ -17,8 +18,11 @@ export default class EncounterController{
         this.view.updateEventCard(this.model.currentStage);
         this.view.updateCurrentCharacterAttributes(this.model.currentCharacter);
         this.view.updateCurrentCharacterCardStats(this.model.currentCharacter);
-        if(this.model.currentStage.musicSrc != ''){
+        if(this.model.currentStage.musicSrc){
             playMusic(this.model.currentStage.musicSrc);
+        }
+        else{
+            playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
         }
         this.printToEncounterConsoleHelpper(this.model.currentStage.messageFunction(this.model.currentCharacter)).then(()=>{
             return this.createDecisionsHelpper();
@@ -188,6 +192,9 @@ export default class EncounterController{
             outcome.onActivate(this.model.currentCharacter);
             this.view.updateCurrentCharacterCardStats(this.model.currentCharacter)
         }
+        if(outcome.milestone){
+            this.model.props.getMilestones().push(outcome.milestone)
+        }
         switch(outcome.result){
             case 'battle':
                 this.model.toggleBattle(outcome.createBattle(this.model.props.calcHighestPartyLevel(), this.model.props.getMap().biome, this.model.props.getDifficulty()))
@@ -260,7 +267,10 @@ export default class EncounterController{
                         this.model.props.setEncounter('');
                         this.model.updateTileEncounter(this.props.getOverworldController().model.currentPartyPosition);
                         this.model.updateTileBattle(this.props.getOverworldController().model.currentPartyPosition);
-                        
+                        if(outcome.nextMap){
+                            this.model.props.setMap(new Map(outcome.nextMap));
+                            this.props.getOverworldController().model.currentPartyPosition = this.model.props.getMap().getEntrancePosition();
+                        }
                         this.model.props.setSituation('overworld')
                         this.props.switchScreen('overworld-screen');
                         playMusic(this.model.props.getMap().biome.backgroundMusicSrc);

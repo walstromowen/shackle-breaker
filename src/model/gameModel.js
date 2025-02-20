@@ -27,6 +27,7 @@ export default class GameModel{
             setGold: this.setGold.bind(this),
             setScreen: this.setScreen.bind(this),
             setSituation: this.setSituation.bind(this),
+            setMilestones: this.setMilestones.bind(this),
             getDifficulty: this.getDifficulty.bind(this),
             getBattle: this.getBattle.bind(this),
             getEncounter: this.getEncounter.bind(this),
@@ -36,6 +37,7 @@ export default class GameModel{
             getGold: this.getGold.bind(this),
             getScreen: this.getScreen.bind(this),
             getSituation: this.getSituation.bind(this),
+            getMilestones: this.getMilestones.bind(this),
             recruitWanderingCompanion: this.recruitWanderingCompanion.bind(this),
             calcHighestPartyLevel: this.calcHighestPartyLevel.bind(this),
         }
@@ -46,13 +48,8 @@ export default class GameModel{
         this.party = [];
         this.inventory = [];
         this.gold = 0;
+        this.milestones = [];
         this.screen = 'title-screen';
-        this.lobbyModel = new LobbyModel(this.props);
-        this.overworldModel = new OverworldModel(this.props);
-        this.battleModel = new BattleModel(this.props);
-        this.partyModel = new PartyModel(this.props);
-        this.characterSummaryModel = new CharacterSummaryModel(this.props);
-        this.encounterModel = new EncounterModel(this.props);
         this.situation = '';
         this.wanderingCompanions = [
             new Entity({
@@ -164,6 +161,12 @@ export default class GameModel{
                 },
             }),
         ];
+        this.lobbyModel = new LobbyModel(this.props);
+        this.overworldModel = new OverworldModel(this.props);
+        this.battleModel = new BattleModel(this.props);
+        this.partyModel = new PartyModel(this.props);
+        this.characterSummaryModel = new CharacterSummaryModel(this.props);
+        this.encounterModel = new EncounterModel(this.props);
     }
     setDifficulty(difficulty){
         this.difficulty = difficulty;
@@ -191,6 +194,9 @@ export default class GameModel{
     }
     setSituation(situation){
         this.situation = situation;
+    }
+    setMilestones(milestones){
+        this.milestones = milestones;
     }
     switchScreen(screenID){
         this.screen = screenID;
@@ -221,6 +227,9 @@ export default class GameModel{
     }
     getSituation(){
         return this.situation;
+    }
+    getMilestones(){
+        return this.milestones;
     }
     recruitWanderingCompanion(){
         let index = Math.floor(Math.random()* this.wanderingCompanions.length)

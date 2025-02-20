@@ -133,7 +133,7 @@ export default class OverworldController{
             this.processMovement();
             this.then = this.now - (this.elapsed % this.fpsInterval);
             this.view.draw(this.model.props.getMap(), this.model.currentPartyPosition);
-            console.log((Math.floor((this.now - this.startTime)/1000)))
+            //console.log((Math.floor((this.now - this.startTime)/1000)))
         } 
         if(this.isLooping){
             requestAnimationFrame(this.loopOverworld.bind(this));

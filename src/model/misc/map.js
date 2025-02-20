@@ -9,24 +9,33 @@ export default class Map{
         this.biome = this.generateBiome(biome);
         this.tileLayout = this.biome.generateLayout(layout);
     }
-   generateBiome(biome){
-        if(biome){
-            if(biome == 'altus capital'){
-                return new AltusCapital({})
-            }
-        }
-        let chance = Math.floor(Math.random()*4);
-        switch(chance){
-            case 0:
+    generateBiome(biome){
+        switch(biome){
+            case 'Altus Kingdom':
                 return new Forest({name: 'Altus Kingdom'});
-            case 1:
+            case 'Infernus Valley':
                 return new Cave({name: 'Infernus Valley'});
-            case 2:
+            case 'The Dry Sea':
                 return new Desert({name: 'The Dry Sea'});
-            case 3:
+            case 'Panzeria':
                 return new SnowyMountains({name: 'Panzeria'});
+            case 'Altus Capital':
+                return new AltusCapital({});
+            default:
+                let chance = Math.floor(Math.random()*4);
+                switch(chance){
+                    case 0:
+                        return new Forest({name: 'Altus Kingdom'});
+                    case 1:
+                        return new Cave({name: 'Infernus Valley'});
+                    case 2:
+                        return new Desert({name: 'The Dry Sea'});
+                    case 3:
+                        return new SnowyMountains({name: 'Panzeria'});
+                }
         }
     }
+
     getEntrancePosition(){
         return this.biome.getTilePosition('entrance', this.tileLayout);
     }

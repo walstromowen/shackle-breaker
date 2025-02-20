@@ -1,6 +1,6 @@
 # ShackleBreaker
 Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Walstrom
-[Play](https://walstromowen.github.io/shackle-breaker/src/index.html)
+[Play](https://walstrom-owen.github.io/shackle-breaker/src/index.html)
 # Planned Features
 * Mobile event listener support
 * XP and gold calculation refinements
@@ -29,7 +29,7 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 * Multi Target splash attack such as cleave will only allow for targeting of one enemy (not enemy and ally) although this maybe isnt a bug //bypassed by selected non default target first
 * ocassional rewriting of entrances during map generations 
 * missed splash attacks do not update attacker's stats
-* music not returning to defalt enounter music upd returning to an encounter after a battle
+* music not returning to defalt enounter music upd returning to an encounter after a battle (Has to do with online src path different than local path!!!!)
 * After switching characters in encounter stage message cannot be skipped by clicking
 
 

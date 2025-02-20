@@ -1930,7 +1930,7 @@ export class EmperorDolos extends Entity{
         }
     }
     scaleAttributes(difficulty){
-        this.maxHP = (this.vigor * 30)  + (this.strength * 30) + (this.dexterity * 30) + (this.intelligence * 30) + (this.attunement * 30);
+        this.maxHP = (this.vigor * 1)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 1);
         this.maxStamina = (this.vigor * 10) + (this.strength * 10) + (this.dexterity * 10) + (this.intelligence * 10) + (this.attunement * 10);
         this.maxMagic = (this.vigor * 10)  + (this.strength * 10) + (this.dexterity * 10) + (this.intelligence * 10) + (this.attunement * 10);
         this.baseHpRecovery = 0;

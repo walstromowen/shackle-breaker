@@ -20,8 +20,8 @@ export default class OverworldView{
         this.resize();
     }
     processMovement(currentPosition, nextPosition, fpsInterval, playerMovementDelay){
-        let diff = this.tileWidth/(playerMovementDelay/fpsInterval);
-        //let diff = Math.floor(this.tileWidth/(playerMovementDelay/fpsInterval));
+        //let diff = this.tileWidth/(playerMovementDelay/fpsInterval);
+        let diff = Math.floor(this.tileWidth/(playerMovementDelay/fpsInterval));
         if(currentPosition[1] > nextPosition[1]) this.viewport.movementOffset[1] += diff //up
         if(currentPosition[1] < nextPosition[1]) this.viewport.movementOffset[1] -= diff //down
         if(currentPosition[0] > nextPosition[0]) this.viewport.movementOffset[0] += diff///left

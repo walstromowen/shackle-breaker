@@ -9,8 +9,8 @@ export default class OverworldModel{
         this.generateNewMap();
     }
     generateNewMap(){//want this to execute after lobby start happens
-        if(this.props.calcHighestPartyLevel() > 9){
-            this.props.setMap(new Map('altus capital'));
+        if(this.props.calcHighestPartyLevel() > 9 && !this.props.getMilestones().includes('dolosDefeated')){
+            this.props.setMap(new Map('Altus Capital'));
         }else{
             this.props.setMap(new Map());
         }

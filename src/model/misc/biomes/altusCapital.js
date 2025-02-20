@@ -2,7 +2,7 @@ import Biome from "./biome.js";
 
 import { AlterianWarrior } from "../entities.js";
 
-import { TheArtifact } from "../encounters/theArtifact.js";
+import { TheArtifact, TheKingdomsFate } from "../encounters/theArtifact.js";
 
 import { AltusCapitalRoom1, CaveEntranceRoom, CaveExitRoom } from "../structures.js";
 import { TreasureChest } from "../encounters/treasureChest.js";
@@ -20,6 +20,7 @@ export class AltusCapital extends Biome{
             ],
             possibleEncounters: [
                 {startingStage: ()=>{return new TheArtifact({})}, resetOnLeave: false, weight: 1},
+                
             ],
         });
     }

@@ -11,7 +11,7 @@ export class TreasureChest extends Stage{
                     option: 'A',
                     description: 'Pry the chest open. [STR]',
                     attributes: ['strength'],
-                    successThreshold: 15,
+                    successThreshold: 12,
                     roll: true,
                     messageFunction: (currentCharacter)=>{
                         return `${currentCharacter.name} attempts to pry the chest open.`
@@ -60,7 +60,7 @@ export class TreasureChest extends Stage{
                     option: 'B',
                     description: 'Pick the lock. [DEX]',
                     attributes: ['dexterity'],
-                    successThreshold: 15,
+                    successThreshold: 12,
                     roll: true,
                     messageFunction: (currentCharacter)=>{
                         return `${currentCharacter.name} attempts to pick the lock.`
@@ -109,7 +109,7 @@ export class TreasureChest extends Stage{
                     option: 'C',
                     description: 'Search for the key. [INT / ATN]',
                     attributes: ['intelligence', 'attunement'],
-                    successThreshold: 15,
+                    successThreshold: 12,
                     roll: true,
                     messageFunction: (currentCharacter)=>{
                         return `${currentCharacter.name} searches for the key.`

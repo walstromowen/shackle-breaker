@@ -51,10 +51,10 @@ export default class Biome{
             {item: ()=>{return new LinenShirt({level: 1})}, weight: 1},
             {item: ()=>{return new LinenPants({level: 1})}, weight: 1},
 
-
             {item: ()=>{return new Flintlock({level: 1})}, weight: 1},
             {item: ()=>{return new GreatSword({level: 1})}, weight: 1},
             {item: ()=>{return new ShortSword({level: 1})}, weight: 1},
+            {item: ()=>{return new Shortbow({level: 1})}, weight: 1},
             {item: ()=>{return new Handaxe({level: 1})}, weight: 1},
             {item: ()=>{return new Buckler({level: 1})}, weight: 1},
             {item: ()=>{return new IronSheild({level: 1})}, weight: 1},
