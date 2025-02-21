@@ -1961,7 +1961,7 @@ export class Barrage extends Ability{
             background: `url(./assets/media/icons/chaingun.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
             sequenceType: 'chain',
             speedModifier: config.speedModifier || 0.5,
-            damageModifier: config.damageModifier || 0.75,
+            damageModifier: config.damageModifier || 0.60,
             criticalDamageModifier: config.criticalDamageModifier || 1.5,
             criticalChanceModifier: config.criticalChance|| 0.25,
             accuracy: config.accuracy || 0.50,
@@ -2391,6 +2391,8 @@ export class ThrowSmokeBomb extends Ability{
             soundEffectSrc: "./assets/audio/soundEffects/supernatural-explosion-104295.wav",
             abilityAnimation: config.abilityAnimation || 'explode',
             abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/smoke-bomb.png',
+            defaultTarget: 'self',
+            targetLock: 'self',
 
         })
     }

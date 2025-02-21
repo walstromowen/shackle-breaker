@@ -1,5 +1,5 @@
 import Tile from "./tile.js";
-import { BerryBush, Boulder, Entrance, Exit, PineTree, Wall } from "./mapObjects.js";
+import { BerryBush, Boulder, Entrance, Exit, PineTree, DeadTree, Wall } from "./mapObjects.js";
  
  export default class Structure{
     constructor(){
@@ -382,6 +382,129 @@ export class SnowyMountainRoom1 extends Structure{
                     if(y > 1 && x > 1 && y < height - 2 && x < width - 2){
                         if(Math.random()*4 < 1){
                             row.push(new Tile({priority: 1, mapObject: new Boulder({imageCoordinates: [0,1]})}))
+                        }else{
+                            row.push(new Tile({priority: 2,}))
+                        }
+                    }else{
+                        row.push(new Tile({priority: 2,}))
+                    }
+                }
+            }
+            structureMap.push(row);
+        }
+        return structureMap;
+    }
+}
+export class WastelandEntranceRoom extends Structure{
+    generateStructureMap(){
+        let structureMap = []
+        let width = 9 + Math.floor(Math.random()*1)
+        let height = 9 + Math.floor(Math.random()*1)
+        for(let y = 0; y < height; y++){
+            let row = []
+            for(let x = 0; x < width; x++){
+                let chance = Math.random()*2
+                if((y == 0 || x == 0 || x == width-1 || y == height-1) && chance < 1) {
+                    let chance = Math.floor(Math.random*3)
+                    if(chance == 0)row.push(new Tile({priority: 1, mapObject: new Boulder({imageCoordinates: [0,8]})}))
+                    else row.push(new Tile({mapObject: new DeadTree({imageCoordinates: [7, 0], imageFrameSize: [1,2]}),}))
+                }else {
+                    if(y > 1 && x > 1 && y < height - 2 && x < width - 2){
+                        if(Math.random()*4 < 1){
+                            row.push(new Tile({priority: 1, mapObject: new Boulder({imageCoordinates: [0,8]})}))
+                        }else{
+                            row.push(new Tile({priority: 2,}))
+                        }
+                    }else{
+                        row.push(new Tile({priority: 2,}))
+                    }
+                }
+            }
+            structureMap.push(row);
+        }
+        structureMap[Math.floor(height/2)][Math.floor(width/2)] = new Tile({mapObject: new Entrance({}), priority: 3,})
+        return structureMap;
+    }
+ }
+ export class WastelandExitRoom extends Structure{
+    generateStructureMap(){
+        let structureMap = []
+        let width = 9 + Math.floor(Math.random()*1)
+        let height = 9 + Math.floor(Math.random()*1)
+        for(let y = 0; y < height; y++){
+            let row = []
+            for(let x = 0; x < width; x++){
+                let chance = Math.random()*2
+                if((y == 0 || x == 0 || x == width-1 || y == height-1) && chance < 1) {
+                    let chance = Math.floor(Math.random*3)
+                    if(chance == 0)row.push(new Tile({priority: 1, mapObject: new Boulder({imageCoordinates: [0,8]})}))
+                    else row.push(new Tile({mapObject: new DeadTree({imageCoordinates: [7, 0], imageFrameSize: [1,2]}),}))
+                }else {
+                    if(y > 1 && x > 1 && y < height - 2 && x < width - 2){
+                        if(Math.random()*4 < 1){
+                            row.push(new Tile({priority: 1, mapObject: new Boulder({imageCoordinates: [0,8]})}))
+                        }else{
+                            row.push(new Tile({priority: 2,}))
+                        }
+                    }else{
+                        row.push(new Tile({priority: 2,}))
+                    }
+                }
+            }
+            structureMap.push(row);
+        }
+        structureMap[Math.floor(height/2)][Math.floor(width/2)] = new Tile({mapObject: new Exit({imageCoordinates: [1,7], imageFrameSize:[1,1]}), priority: 3,})
+  
+        return structureMap;
+    }
+}
+export class WastelandRoom1 extends Structure{
+    generateStructureMap(){
+        let structureMap = []
+        let width = 5 + Math.floor(Math.random()*9)
+        let height = 5 + Math.floor(Math.random()*9)
+        for(let y = 0; y < height; y++){
+            let row = []
+            for(let x = 0; x < width; x++){
+                let chance = Math.random()*2
+                if((y == 0 || x == 0 || x == width-1 || y == height-1) && chance < 1) {
+                    let chance = Math.floor(Math.random*3)
+                    if(chance == 0)row.push(new Tile({priority: 1, mapObject: new Boulder({imageCoordinates: [0,8]})}))
+                    else row.push(new Tile({mapObject: new DeadTree({imageCoordinates: [7, 0], imageFrameSize: [1,2]})}))
+                }else {
+                    if(y > 1 && x > 1 && y < height - 2 && x < width - 2){
+                        if(Math.random()*4 < 1){
+                            row.push(new Tile({priority: 1, mapObject: new Boulder({imageCoordinates: [0,8]})}))
+                        }else{
+                            row.push(new Tile({priority: 2,}))
+                        }
+                    }else{
+                        row.push(new Tile({priority: 2,}))
+                    }
+                }
+            }
+            structureMap.push(row);
+        }
+        return structureMap;
+    }
+}
+export class WastelandRoom2 extends Structure{
+    generateStructureMap(){
+        let structureMap = []
+        let width = 5 + Math.floor(Math.random()*9)
+        let height = 5 + Math.floor(Math.random()*9)
+        for(let y = 0; y < height; y++){
+            let row = []
+            for(let x = 0; x < width; x++){
+                let chance = Math.random()*2
+                if((y == 0 || x == 0 || x == width-1 || y == height-1) && chance < 1) {
+                    let chance = Math.floor(Math.random*3)
+                    if(chance == 0)row.push(new Tile({mapObject: new DeadTree({imageCoordinates: [7, 0], imageFrameSize: [1,2]}), priority: 2}))
+                    else row.push(new Tile({mapObject: new DeadTree({imageCoordinates: [7, 0], imageFrameSize: [1,2]}), priority: 2}))
+                }else {
+                    if(y > 1 && x > 1 && y < height - 2 && x < width - 2){
+                        if(Math.random()*1 < 1){
+                            row.push(new Tile({mapObject: new DeadTree({imageCoordinates: [7, 0], imageFrameSize: [1,2]}), priority: 2}))
                         }else{
                             row.push(new Tile({priority: 2,}))
                         }

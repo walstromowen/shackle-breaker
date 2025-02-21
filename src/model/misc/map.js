@@ -3,6 +3,7 @@ import { Cave } from './biomes/cave.js';
 import { Desert } from './biomes/desert.js';
 import { SnowyMountains } from './biomes/snowyMountains.js';
 import { AltusCapital } from './biomes/altusCapital.js';
+import { Wasteland } from './biomes/wasteland.js';
 
 export default class Map{
     constructor(biome, layout){
@@ -19,10 +20,12 @@ export default class Map{
                 return new Desert({name: 'The Dry Sea'});
             case 'Panzeria':
                 return new SnowyMountains({name: 'Panzeria'});
+            case 'Namuh':
+                return new Wasteland({name: 'Namuh Wastes'});
             case 'Altus Capital':
                 return new AltusCapital({});
             default:
-                let chance = Math.floor(Math.random()*4);
+                let chance = Math.floor(Math.random()*5);
                 switch(chance){
                     case 0:
                         return new Forest({name: 'Altus Kingdom'});
@@ -32,6 +35,8 @@ export default class Map{
                         return new Desert({name: 'The Dry Sea'});
                     case 3:
                         return new SnowyMountains({name: 'Panzeria'});
+                    case 4:
+                        return new Wasteland({name: 'Namuh Wastes'});
                 }
         }
     }

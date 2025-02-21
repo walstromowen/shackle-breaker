@@ -76,6 +76,19 @@ export class BerryBush extends MapObject{
         );
     }
 }
+export class DeadTree extends MapObject{
+    constructor(config){
+        super(
+            {
+                name: config.name || 'dead tree',
+                imageCoordinates: config.imageCoordinates || [7, 0],
+                traversable: config.traversable || false,
+                imageFrameSize: [1, 2],
+                
+            }
+        );
+    }
+}
 export class CastleTower extends MapObject{
     constructor(){
         super(
