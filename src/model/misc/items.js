@@ -1990,7 +1990,7 @@ export class PanzerkamferArmor extends Attachable{
         super({
             name: 'Panzerkamfer armor',
             description: `A carefully engineered armor with an array of weapons. The Panzerkamfers were one of the Panzerian army's greatest weapons and held back the cursed Altus Kingdom following its descent into madness. However, as Panzeria began incorporating magic into the Panzerkamfer armor, the beasts themselves went mad, and Panzeria succumbed to the same madness shortly after.`,
-            imageSrc:  './assets/media/icons/leg-armor.png',
+            imageSrc:  './assets/media/icons/saddle.png',
             price: 300,
             slot: 'mediumAnimalArmor',
             level: 1,

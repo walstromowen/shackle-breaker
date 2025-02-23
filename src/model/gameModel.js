@@ -60,6 +60,8 @@ export default class GameModel{
                 dexterity: 5,
                 intelligence: 5,
                 attunement: 3,
+                factions: ['panzerian'],
+                currentCorruption: 0.0,
                 equipment: {
                     mainHand: new ShortSword({level: 1}),
                     offhand: new Buckler({level: 1}),
@@ -78,6 +80,8 @@ export default class GameModel{
                 dexterity: 5,
                 intelligence: 3,
                 attunement: 5,
+                factions: ['panzerian'],
+                currentCorruption: 0.0,
                 equipment: {
                     mainHand: new Handaxe({level: 1}),
                     offhand: '',
@@ -96,6 +100,8 @@ export default class GameModel{
                 dexterity: 5,
                 intelligence: 5,
                 attunement: 7,
+                factions: ['alterian'],
+                currentCorruption: 0.0,
                 equipment: {
                     mainHand: new ForestStaff({level: 1}),
                     offhand: '',
@@ -132,6 +138,8 @@ export default class GameModel{
                 dexterity: 7,
                 intelligence: 5,
                 attunement: 5,
+                factions: ['alterian'],
+                currentCorruption: 0.0,
                 equipment: {
                     mainHand: new Shortbow({level: 1}),
                     offhand: new Shortbow({level: 1}),
@@ -150,6 +158,8 @@ export default class GameModel{
                 dexterity: 7,
                 intelligence: 7,
                 attunement: 3,
+                factions: ['alterian'],
+                currentCorruption: 0.5,
                 equipment: {
                     mainHand: new ArcaneStaff({level: 1}),
                     offhand: new Dagger({level: 1}),
