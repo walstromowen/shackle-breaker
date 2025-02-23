@@ -42,6 +42,8 @@ export default class LobbyView{
         this.evasion = document.getElementById('lobby-evasion');
         this.critical = document.getElementById('lobby-critical');
 
+        this.corruption = document.getElementById('lobby-corruption');
+
         this.lobbyInventory = document.getElementById('lobby-inventory');
 
         
@@ -90,7 +92,7 @@ export default class LobbyView{
     updateStats([currentHP, currentStamina, currentMagic, currentHpRecovery, currentStaminaRecovery, currentMagicRecovery, currentBluntAttack, currentPierceAttack,
                  currentArcaneAttack, currentElementalAttack, currentBluntDefense, currentPierceDefense, currentArcaneDefense, currentElementalDefense, 
                  currentBluntResistance, currentPierceResistance, currentArcaneResistance, currentElementalResistance,
-                 currentSpeed, currentEvasion,currentCritical]){
+                 currentSpeed, currentEvasion, currentCritical, currentCorruption]){
         this.maxHP.innerText = currentHP;
         this.hitPointsRecovery.innerText = currentHpRecovery;
         this.maxStamina.innerText = currentStamina
@@ -112,6 +114,7 @@ export default class LobbyView{
         this.speed.innerText = currentSpeed;
         this.evasion.innerText = currentEvasion;
         this.critical.innerText = currentCritical;
+        this.corruption.innerText = currentCorruption;
     }
     updateGold(gold){
         this.gold.innerText = gold;
@@ -141,8 +144,14 @@ export default class LobbyView{
             case 'hermit':
                 this.backgroundDescription.innerText = 'Most of those who studied magic wished to stay as close to the artifact as possible. However, for better or for worse, a handful decided to study magic in solitude.';
                 break;
+            case 'farmer':
+                this.backgroundDescription.innerText = 'While the discovery of magic dramatically changed the populations of big cities, those tending to their fields expereienced little change. As a result, these men and women were most prepared when the Altus kingdom fell.';
+                break;
             case 'bounty-hunter':
                 this.backgroundDescription.innerText = 'During the years leading up to the fall of Altus Kingdom, The demand for bounty hunters increased dramatically due to the need to deal with those who went mad. Particuarily skilled hunters often weilded rare weapons such as panzerian firearms or special Alterian swords. Ironically, this also made them particularly difficult to hunt when they too went mad.';
+                break;
+            case 'diseased':
+                this.backgroundDescription.innerText = `During the years of the Alterian-Panzerian War, and prior to the fall of Altus Kingdom, those exhibiting signs of madness were often taken from their homes for treatment. It was believed that magic held the key to curing the the buildup of madness and thus, patients were exposed to even more of the artifact's influence. Still, perhaps being aflicted has its advantages?`;
                 break;
                                    
         }

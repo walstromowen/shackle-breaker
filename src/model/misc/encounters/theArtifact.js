@@ -103,6 +103,9 @@ export class AHeroPrevails extends Stage{
                             xpReward: 1000,
                             nextMap: 'random',
                             milestone: 'dolosDefeated',
+                            onActivate(target){
+                                target.currentCorruption -= 0.5;
+                            },
                             weight: 1,
                         },
                     ],
@@ -177,6 +180,9 @@ export class TheCycleContinues extends Stage{
                             xpReward: 10,
                             nextMap: 'random',
                             milestone: 'dolosDefeated',
+                            onActivate(target){
+                                target.currentCorruption += 1.00;
+                            },
                             weight: 1,
                         },
                     ],

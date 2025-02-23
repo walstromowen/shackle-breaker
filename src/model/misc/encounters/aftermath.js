@@ -183,6 +183,9 @@ export class WoundedWarrior extends Stage{
                             createNextStage: (partyLevel, biome)=>{
                                 return new Survivor({entity: config.entity});
                             },
+                            onActivate(target){
+                                target.currentCorruption -= 0.5;
+                            },
                             xpReward: 5,
                             weight: 1,
                         },
@@ -226,6 +229,9 @@ export class WoundedWarrior extends Stage{
                             createLoot: (partyLevel, biome)=>{
                                 return  [getRandomArrayElementWeighted(biome.lootTable).item()];
                             },
+                            onActivate(target){
+                                target.currentCorruption += 0.5;
+                            },
                             weight: 1,
                     
                         },
@@ -242,6 +248,9 @@ export class WoundedWarrior extends Stage{
                                     hostileArray.push(new AlterianWarrior({level: partyLevel, difficulty: difficulty}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
+                            },
+                            onActivate(target){
+                                target.currentCorruption += 0.5;
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `As ${currentCharacter.name} approaches the warrior, the warrior grabs ${currentCharacter.name} and draws his weapon! Soon other fallen warriors do the same.`
@@ -329,8 +338,8 @@ export class Survivor extends Stage{
                 },
                 {//Decision
                     option: 'C',
-                    description: '"You should come with me, we are safer together."',
-                    attributes: ['strength', 'intelligence'],
+                    description: '"You should come with me, we are safer together." [Alterian]',
+                    attributes: ['alterian'],
                     successThreshold: 10,
                     roll: true,
                     successfulOutcomes: [

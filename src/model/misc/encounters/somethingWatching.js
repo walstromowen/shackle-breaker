@@ -3,6 +3,7 @@ import Battle from "../battle.js";
 import { Wolf, Sterben} from "../entities.js";
 import { getRandomArrayElementWeighted } from "../../../utility.js";
 import { Frozen } from "../statusEffects.js";
+import { IceSickle } from "../items.js";
 
 export class SomethingWatching extends Stage{
     constructor(config){
@@ -93,17 +94,15 @@ export class ChillingGhost extends Stage{
                     ],
                 },
                 {//Decision
-                    description: 'Attempt to Communicate. [ATN]',
-                    attributes: ['attunement'],
-                    successThreshold: 18,
+                    description: 'Attempt to Communicate. [Panzerian]',
+                    attributes: ['panzerian'],
+                    successThreshold: 16,
                     roll: true,
                     successfulOutcomes: [
                         {
                             result: 'complete',
                             createLoot: (partyLevel, biome)=>{
-                                let chance = Math.floor(Math.random()*2)
-                                if(chance == 0) return  [getRandomArrayElementWeighted(biome.lootTable).item()];
-                                if(chance == 1) return  [getRandomArrayElementWeighted(biome.lootTable).item()];
+                                return  [new IceSickle({level: 1})];
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `The ghostly figures nods at ${currentCharacter.name} and then fades away. It appears to have left something.`

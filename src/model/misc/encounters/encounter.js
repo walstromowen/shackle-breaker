@@ -11,4 +11,7 @@ export default class Encounter{
 //panzerian construct
 //The Pursuer
 
+//wandering merchant
+//
+
 

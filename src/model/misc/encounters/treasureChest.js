@@ -41,6 +41,9 @@ export class TreasureChest extends Stage{
                             createBattle: (partyLevel, biome, difficulty)=>{
                                 return biome.generateBattle(partyLevel);
                             },
+                            createNextStage: (partyLevel, biome)=>{
+                                return this; 
+                            },
                             messageFunction: (currentCharacter)=>{
                                 return `Something approaches ${currentCharacter.name}'s position!`
                             }, 
@@ -90,6 +93,9 @@ export class TreasureChest extends Stage{
                             createBattle: (partyLevel, biome, difficulty)=>{
                                 return biome.generateBattle(partyLevel);
                             },
+                            createNextStage: (partyLevel, biome)=>{
+                                return this; 
+                            },
                             messageFunction: (currentCharacter)=>{
                                 return `Something approaches ${currentCharacter.name}'s position!`
                             }, 
@@ -138,6 +144,9 @@ export class TreasureChest extends Stage{
                             musicSrc: "./assets/audio/musicTracks/battle-of-the-dragons-8037.mp3",
                             createBattle: (partyLevel, biome, difficulty)=>{
                                 return biome.generateBattle(partyLevel);
+                            },
+                            createNextStage: (partyLevel, biome)=>{
+                                return this; 
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `Something approaches ${currentCharacter.name}'s position!`

@@ -1205,6 +1205,11 @@ img{
 
     100% {translate:0%}
 }
+@keyframes stick-up {
+    0% {transform: translateY(-100%)}
+    20% {transform: translateY(0%)}
+    100% {transform: translateY(0%)}
+}
 @keyframes explode {
     0% {scale: 0.6}
     

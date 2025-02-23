@@ -8,7 +8,6 @@ import { HealthPotion, KurtussBrewOfMadness, ParalysisTonic } from "../items.js"
 export class MysteriousFigure extends Stage{
     constructor(config){
         super({
-            entity: config.entity,
             name: 'Mysterious figure',
             imageSrc: './assets/media/encounters/mysterious-figure.jpg',
             decisionArray: [
@@ -52,7 +51,6 @@ export class MysteriousFigure extends Stage{
 export class SuspiciousMan extends Stage{
     constructor(config){
         super({
-            entity: config.entity,
             name: 'Suspicious Man',
             imageSrc: './assets/media/encounters/suspicious-man.jpg',
             decisionArray: [
@@ -131,6 +129,9 @@ export class SuspiciousMan extends Stage{
                                 if(chance == 1) return [new KurtussBrewOfMadness()];
                                 if(chance == 2) return [new ParalysisTonic()];
                             },
+                            onActivate(target){
+                                target.currentCorruption += 0.2;
+                            },
                             xpReward: 10, 
                             weight: 1,
                         },
@@ -143,6 +144,9 @@ export class SuspiciousMan extends Stage{
                                 if(chance == 0) return `"Thief? Haha! Bye Bye!"`
                                 if(chance == 1) return `"Eeeek!" The Suspicious Man squeals as he runs away.`
                                 if(chance == 2) return `"Stay back!" The Suspicious Man screams as he runs away.`
+                            },
+                            onActivate(target){
+                                target.currentCorruption += 0.2;
                             },
                             weight: 1,
                         },
@@ -277,6 +281,9 @@ export class DefeatedNightblade extends Stage{
                             createLoot: (partyLevel, biome)=>{
                                 return  [getRandomArrayElementWeighted(biome.lootTable).item()];
                             },
+                            onActivate(target){
+                                target.currentCorruption += 0.10;
+                            },
                             xpReward: 10, 
                             weight: 1,
                         },
@@ -297,6 +304,9 @@ export class DefeatedNightblade extends Stage{
                                 let recruit = new Nightblade({level: partyLevel, difficulty: difficulty})
                                 recruit.isHostile = false;
                                 return recruit;
+                            },
+                            onActivate(target){
+                                target.currentCorruption -= 0.10;
                             },
                             messageFunction: (currentCharacter)=>{
                                  return `${currentCharacter.name} The Shadowy Warrior nods at ${currentCharacter.name} in respect.`

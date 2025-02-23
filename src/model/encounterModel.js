@@ -58,6 +58,9 @@ export default class EncounterModel{
                 case 'namuh':
                     if(this.currentCharacter.factions.includes('namuh')) attributeScore += 9;
                     break;
+                case 'corruption':
+                    attributeScore += Math.round(this.currentCharacter.currentCorruption*30);
+                    break;
                 default:
                     attributeScore = 0;
                     break;

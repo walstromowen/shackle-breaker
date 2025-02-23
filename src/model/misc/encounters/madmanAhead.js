@@ -199,9 +199,9 @@ export class MadmanAhead extends Stage{
                 },
                 {//Decision
                     option: 'D',
-                    description: 'Attempt to communicate with the Madman. [ATN]',
-                    attributes: ['attunement'],
-                    successThreshold: 15,
+                    description: 'Attempt to communicate with the Madman. [Alterian]',
+                    attributes: ['alterian'],
+                    successThreshold: 12,
                     roll: true,
                     messageFunction: (currentCharacter)=>{
                         return `${currentCharacter.name} attempts to communicate with the Madman.`
@@ -323,8 +323,8 @@ export class ConversationWithMadman extends Stage{
                 },
                 {//Decision
                     option: 'B',
-                    description: '"Magic tells you to give me things!"',
-                    attributes: ['none'],
+                    description: '"Magic tells you to give me things! [ATN]"',
+                    attributes: ['attunement'],
                     successThreshold: 10,
                     roll: true,
                     successfulOutcomes: [
@@ -364,8 +364,8 @@ export class ConversationWithMadman extends Stage{
                 },
                 {//Decision
                     option: 'C',
-                    description: '"Magic tells you to bow to me!" [STR]',
-                    attributes: ['strength'],
+                    description: '"Magic tells you to bow to me!" [STR / CRPT]',
+                    attributes: ['strength', 'corruption'],
                     successThreshold: 15,
                     roll: true,
                     successfulOutcomes: [
@@ -375,6 +375,9 @@ export class ConversationWithMadman extends Stage{
                                 let recruit = new Madman({level: partyLevel, difficulty: difficulty})
                                 recruit.isHostile = false;
                                 return recruit;
+                            },
+                            onActivate(target){
+                                target.currentCorruption += 0.5;
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `"No no! No hurt me! Me help magic! Me help you!"`
@@ -396,6 +399,9 @@ export class ConversationWithMadman extends Stage{
                                     if(chance == 3) hostileArray.push(new MadBandit({level: partyLevel, difficulty: difficulty}))
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
+                            },
+                            onActivate(target){
+                                target.currentCorruption += 0.5;
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `"You no hear magic! Me hurt you now!"`

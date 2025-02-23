@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower, Thrust, ChannelMagic, Siphon, Eviscerate, DarkOrb, Brace, Inferno, Flurry, Uppercut, ShootBullet, ThrowNet, Shapeshift, Barrage, ShootFlamingArrow, Rage, HailStorm, Hide, CastShadow, AbsorbSoul, ExposeWeakness, GuardBreak, ArcaneBlast, Cleanse, IceWall, FlashFreeze} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower, Thrust, ChannelMagic, Siphon, Eviscerate, DarkOrb, Brace, Inferno, Flurry, Uppercut, ShootBullet, ThrowNet, Shapeshift, Barrage, ShootFlamingArrow, Rage, HailStorm, Hide, CastShadow, AbsorbSoul, ExposeWeakness, GuardBreak, ArcaneBlast, Cleanse, IceWall, FlashFreeze, Impale} from "./abilities.js";
 import { DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, UseAntidote, UseAloeRemedy, UseParalysisTonic, UseBandage, DrinkKurtussBrewOfMadness, SetBearTrap, ThrowSmokeBomb} from "./abilities.js";
 
 let counter = 0;
@@ -131,7 +131,7 @@ export class ShortSword extends Attachable{
     constructor(config){
         super({
             name: 'shortsword',
-            description: 'A standard shortsword. Standard issue shortsword of the Altus guard. "A shorter longsword is a faster longsword" - Commander Mentoras.',
+            description: 'A standard shortsword. Standard issue shortsword of the Altus legion. "A shorter longsword is a faster longsword" - Commander Mentoras.',
             imageSrc:  './assets/media/icons/stiletto.png',
             price: 100,
             slot: 'oneHand',
@@ -187,6 +187,70 @@ export class ShortSword extends Attachable{
             }
             if(this.level == 3){
                 this.abilityArray.push(new Flurry({}));
+            }
+        }
+    }
+}
+export class Spear extends Attachable{
+    constructor(config){
+        super({
+            name: 'spear',
+            description: `A standard spear. Standard issue spear of the Altus legion. "Keep your enemies close and your friends at spear's length." - Commander Mentoras.`,
+            imageSrc:  './assets/media/icons/spear-feather.png',
+            price: 100,
+            slot: 'oneHand',
+            level: 1,
+            hp: 0,
+            stamina: 0,
+            magic: 0,
+            hpRecovery: 0,
+            staminaRecovery: 3,
+            magicRecovery: 0,
+            bluntAttack: 1,
+            pierceAttack: 3,
+            arcaneAttack: 0,
+            elementalAttack: 0,
+            bluntDefense: 0,
+            pierceDefense: 0,
+            arcaneDefense: 0,
+            elementalDefense: 0,
+            bluntResistance: 0,
+            pierceResistance: 0,
+            arcaneResistance: 0,
+            elementalResistance: 0,
+            speed: -1,
+            evasion: 0,
+            critical: 0,
+            abilityArray: [new Thrust({})],
+        })
+        this.upgrade(config.level-this.level);
+    }
+    upgrade(levels){
+        for(let i = 0; i < levels; i++){
+            this.level = this.level + 1;
+            this.price = Math.floor(this.price * 1.5);
+            this.hp = this.hp + 0;
+            this.stamina = this.stamina + 0;
+            this.magic = this.magic + 0;
+            this.hpRecovery = this.hpRecovery + 0;
+            this.staminaRecovery = this.staminaRecovery + 1;
+            this.magicRecovery = this.magicRecovery + 0;
+            this.bluntAttack = this.bluntAttack + 1;
+            this.pierceAttack = this.pierceAttack + 3;
+            this.arcaneAttack = this.arcaneAttack + 0;
+            this.elementalAttack = this.elementalAttack + 0;
+            this.bluntDefense = this.bluntDefense + 0;
+            this.pierceDefense = this.pierceDefense + 1;
+            this.arcaneDefense = this.arcaneDefense + 0;
+            this.elementalDefense = this.elementalDefense + 0;
+            this.speed = this.speed + 0;
+            this.evasion = this.evasion + 0;
+            this.critical = this.critical + 0.01;
+            if(this.level == 2){
+                this.abilityArray.push(new GuardBreak({}));
+            }
+            if(this.level == 3){
+                this.abilityArray.push(new Impale({}));
             }
         }
     }

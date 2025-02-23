@@ -277,6 +277,11 @@ export default class GameView{
                 description = 'Multiplicative value impacting if an ability will land a critical hit dealing bonus damage.';
                 name = 'Critical';
                 break;
+
+            case 'CRPT:':
+                description = "A measure of one's progress towards becoming shackled. Impacts and is affected by moral decisions.";
+                name = 'Corruption';
+                break;
          
 
             default:

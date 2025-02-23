@@ -2239,7 +2239,43 @@ export class CycloneStrike extends Ability{
     
 }
 export class Impale extends Ability{
-    
+    constructor(config){
+        super({
+            name: 'impale',
+            description: 'Impale a target with a charging piercing attack. Has a very high critical chance and high critical damage. Also has a chance to cause bleeding.',
+            iconSrc: './assets/media/icons/pierced-body.png',
+            background: `url(./assets/media/icons/pierced-body.png), linear-gradient(crimson, darkslategrey)`,
+            speedModifier: config.speedModifier || 0.75,
+            damageModifier: config.damageModifier || 1.5,
+            criticalDamageModifier: config.criticalDamageModifier || 3.0,
+            criticalChanceModifier: config.criticalChance|| 0.35,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 25,
+            magicCost: config.magicCost || 0,
+            accuracy: config.accuracy || 0.70,
+            damageTypes: config.damageTypes || ['melee', 'pierce'],
+            soundEffectSrc: "./assets/audio/soundEffects/mixkit-metal-hit-woosh-1485.wav",
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/impale.png',
+            abilityAnimation: config.abilityAnimation || 'stick-up',
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
+            if(Math.random()*15 < 1){
+                this.inflictStatus(new Bleed({holder: target}), attacker, target);
+            } 
+        }
+    }
+    updateMessage(attacker, target){
+        this.message = `${attacker.name} stabs ${target.name} with a thrust attack.`;
+    }
 }
 export class FlashFreeze extends Ability{//Needs Work targeting same targets twice?
     constructor(config){

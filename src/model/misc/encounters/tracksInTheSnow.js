@@ -154,8 +154,8 @@ export class CrimsonSnow extends Stage{
             imageSrc: './assets/media/encounters/crimson-snow.jpg',
             decisionArray: config.decisionArray || [
                 {
-                    description: 'Investigate [INT]',
-                    attributes: ['attunement'],
+                    description: 'Investigate [INT / Panzerian]',
+                    attributes: ['attunement', 'panzerian'],
                     successThreshold: 12,
                     roll: true,
                     successfulOutcomes: [
@@ -242,6 +242,9 @@ export class WoundedTiger extends Stage{
                                 recruit.isHostile = false;
                                 return recruit;
                             },
+                            onActivate(target){
+                                target.currentCorruption -= 0.2;
+                            },
                             messageFunction: (currentCharacter)=>{
                                 return `The Tiger nuzzles ${currentCharacter.name}.`
                             }, 
@@ -257,6 +260,9 @@ export class WoundedTiger extends Stage{
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new WoundedTiger({});
+                            },
+                            onActivate(target){
+                                target.currentCorruption -= 0.2;
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `Something approaches ${currentCharacter.name}'s position!`
@@ -275,6 +281,9 @@ export class WoundedTiger extends Stage{
                                 }
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
+                            onActivate(target){
+                                target.currentCorruption -= 0.2;
+                            },
                             messageFunction: (currentCharacter)=>{
                                 return `As ${currentCharacter.name} bandages the Tiger, an arrow flies out of nowhere and hits the Tiger. The Tiger breathes its last breath leaving ${currentCharacter.name}'s party alone with a pack of bandits!`
                             }, 
@@ -290,6 +299,9 @@ export class WoundedTiger extends Stage{
                                 hostileArray[0].currentHP = Math.floor(hostileArray[0].currentHP * 0.5)
                                 hostileArray[0].statusArray.push(new Bleed({holder: hostileArray[0]}))
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
+                            },
+                            onActivate(target){
+                                target.currentCorruption -= 0.2;
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `As ${currentCharacter.name} bandages the Tiger, the tiger stands to its feet and growls at ${currentCharacter.name}!`

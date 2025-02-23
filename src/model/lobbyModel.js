@@ -1,6 +1,6 @@
 import { getRandomArrayElement } from "../utility.js";
 import {Entity, Dog, Hawk, Tiger} from "./misc/entities.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LightningStaff, DarkStaff, IceStaff, ForestStaff, Meteorite, ClothHood, LeatherBoots, BearTrap, ClothRobe, IronHelm, LeatherChestplate, Pelt, Net, SmokeBomb, IronOre, ScrollOfInferno, ScrollOfHailStorm, ScrollOfCastShadow, Flintlock, LeatherGloves} from "./misc/items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LightningStaff, DarkStaff, IceStaff, ForestStaff, Meteorite, ClothHood, LeatherBoots, BearTrap, ClothRobe, IronHelm, LeatherChestplate, Pelt, Net, SmokeBomb, IronOre, ScrollOfInferno, ScrollOfHailStorm, ScrollOfCastShadow, Flintlock, LeatherGloves, Spear} from "./misc/items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, AloeRemedy, ParalysisTonic, Bandage, PineWood} from "./misc/items.js";
 
 
@@ -35,6 +35,7 @@ export default class LobbyModel{
     }
     updateBackground(){
         let background = document.getElementById('lobby-background-selection').value;
+        this.props.getParty()[0].currentCorruption = 0;
         let equipment = '';
         switch(background){
             case 'traveler':
@@ -80,6 +81,7 @@ export default class LobbyModel{
                     new LeatherBoots({level: 1}),
                 ];
                 this.props.getParty()[0].setAttributes({vigor: 5, strength: 5, dexterity: 5, intelligence: 7, attunement: 3});
+                this.props.getParty()[0].currentCorruption = 0.1;
                 this.props.setGold(300);
                 break;
             case 'warrior':
@@ -97,13 +99,13 @@ export default class LobbyModel{
                 equipment = [
                     new LeatherHood({level: 1}),
                     new Dagger({level: 1}),
-                    new Dagger({level: 1}),
                     new LinenShirt({level: 1}),
                     new LinenPants({level: 1}),
                     new LeatherBoots({level: 1}),
                 ];
-                this.props.getParty()[0].setAttributes({vigor: 5, strength: 3, dexterity: 7, intelligence: 5, attunement: 5});
-                this.props.setGold(350);
+                this.props.getParty()[0].setAttributes({vigor: 5, strength: 5, dexterity: 7, intelligence: 5, attunement: 3});
+                this.props.setGold(400);
+                this.props.getParty()[0].currentCorruption = 0.05;
                 break;
             case 'hermit':
                 equipment = [
@@ -114,6 +116,18 @@ export default class LobbyModel{
                     new LeatherBoots({level: 1}),
                 ];
                 this.props.getParty()[0].setAttributes({vigor: 5, strength: 5, dexterity: 5, intelligence: 3, attunement: 7});
+                this.props.setGold(300);
+                this.props.getParty()[0].currentCorruption = 0.5;
+                break; 
+            case 'farmer':
+                equipment = [
+                    new LeatherHelmet({level: 1}),
+                    new Spear({level: 1}),
+                    new LeatherChestplate({level: 1}),
+                    new LinenPants({level: 1}),
+                    new LeatherBoots({level: 1}),
+                ];
+                this.props.getParty()[0].setAttributes({vigor: 6, strength: 5, dexterity: 5, intelligence: 3, attunement: 6});
                 this.props.setGold(300);
                 break; 
             case 'bounty-hunter':
@@ -127,7 +141,17 @@ export default class LobbyModel{
                 this.props.getParty()[0].setAttributes({vigor: 5, strength: 6, dexterity: 4, intelligence: 6, attunement: 4});
                 this.props.setGold(350);
                 break;    
-        }
+            case 'diseased':
+                equipment = [
+                    new Dagger({level: 1}),
+                    new LinenShirt({level: 1}),
+                    new LinenPants({level: 1}),
+                ];
+                this.props.getParty()[0].setAttributes({vigor: 5, strength: 5, dexterity: 5, intelligence: 5, attunement: 5});
+                this.props.setGold(0);
+                this.props.getParty()[0].currentCorruption = 0.5;
+                break;    
+    }
         this.props.getParty()[0].unequipAttatchables(Object.keys(this.props.getParty()[0].equipment));
         this.props.getParty()[0].scaleAttributes();
         this.props.getParty()[0].resetStats();

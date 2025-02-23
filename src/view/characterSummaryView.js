@@ -51,6 +51,8 @@ export default class CharacterSummaryView{
         this.evasion = document.getElementById('character-summary-evasion');
         this.critical = document.getElementById('character-summary-critical');
 
+        this.corruption = document.getElementById('character-summary-corruption');
+
         this.characterImage = document.getElementById('character-summary-character-image');
 
         this.inventoryPannel = document.getElementById('character-summary-inventory-container');
@@ -101,17 +103,19 @@ export default class CharacterSummaryView{
         this.arcaneAttack.innerText = entity.currentArcaneAttack;
         this.elementalAttack.innerText = entity.currentElementalAttack;
         this.bluntDefense.innerText = entity.currentBluntDefense;
-        this.bluntResistance.innerText = entity.currentBluntResistance;
+        this.bluntResistance.innerText = entity.currentBluntResistance.toFixed(2);
         this.pierceDefense.innerText = entity.currentPierceDefense;
-        this.pierceResistance.innerText = entity.currentPierceResistance;
+        this.pierceResistance.innerText = entity.currentPierceResistance.toFixed(2);
         this.arcaneDefense.innerText = entity.currentArcaneDefense;
-        this.arcaneResistance.innerText = entity.currentArcaneResistance;
+        this.arcaneResistance.innerText = entity.currentArcaneResistance.toFixed(2);
         this.elementalDefense.innerText = entity.currentElementalDefense;
-        this.elementalResistance.innerText = entity.currentElementalResistance;
+        this.elementalResistance.innerText = entity.currentElementalResistance.toFixed(2);
 
         this.speed.innerText = entity.currentSpeed;
         this.evasion.innerText = entity.currentEvasion.toFixed(2);
-        this.critical.innerText = entity.currentCritical;
+        this.critical.innerText = entity.currentCritical.toFixed(2);
+
+        this.corruption.innerText = entity.currentCorruption.toFixed(2);
 
         this.characterImage.style.backgroundImage = `url(${entity.apperance})`; 
 

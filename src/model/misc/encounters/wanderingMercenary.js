@@ -125,6 +125,9 @@ export class TalkWithMercenary extends Stage{
                             createLoot: (partyLevel, biome)=>{
                                 return  [getRandomArrayElementWeighted(biome.lootTable).item()];
                             },
+                            onActivate(target){
+                                target.currentCorruption += 0.2;
+                            },
                             weight: 1,
                         }
                     ],
@@ -135,6 +138,9 @@ export class TalkWithMercenary extends Stage{
                             createBattle: (partyLevel, biome, difficulty)=>{
                                 config.entity.isHostile = true;
                                 return new Battle({hostiles: [config.entity], battleMusicSrc: biome.battleMusicSrc});
+                            },
+                            onActivate(target){
+                                target.currentCorruption += 0.2;
                             },
                             messageFunction: (currentCharacter)=>{
                                 let chance = Math.floor(Math.random()*3)

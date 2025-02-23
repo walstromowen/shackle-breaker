@@ -60,6 +60,7 @@ export class Entity{
         this.currentSpeed = this.baseSpeed;
         this.currentEvasion = this.baseEvasion;
         this.currentCritical = this.baseCritical;
+        this.currentCorruption = config.currentCorruption || 0.0;
 
         this.currentXP = 0;
         this.skillPoints = 0;
@@ -220,6 +221,7 @@ export class Entity{
             this.currentSpeed,
             this.currentEvasion,
             this.currentCritical,
+            this.currentCorruption,//maybe remove?
         ];
     }
     recoverHP(){

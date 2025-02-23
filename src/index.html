@@ -33,23 +33,26 @@
                     <div class='lobby-input-row'>
                         <h5>Apperance</h5>
                         <select id='lobby-apperance-selection' class='lobby-input'>
-                            <option id='knight-1' value='./assets/media/entities/knight-1.jpg'>Knight 1</option>
-                            <option id='knight-2' value='./assets/media/entities/knight-2.jpg'>Knight 2</option>
-                            <option id='knight-3' value='./assets/media/entities/knight-3.jpg'>Knight 3</option>
-                            <option id='knight-4' value='./assets/media/entities/knight-4.jpg'>Knight 4</option>
-                            <option id='knight-5' value='./assets/media/entities/knight-5.jpg'>Knight 5</option>
+                            <option id='knight-1' value='./assets/media/entities/playerOptions/knight-1.jpg'>Knight 1</option>
+                            <option id='knight-2' value='./assets/media/entities/playerOptions/knight-2.jpg'>Knight 2</option>
+                            <option id='knight-3' value='./assets/media/entities/playerOptions/knight-3.jpg'>Knight 3</option>
+                            <option id='knight-4' value='./assets/media/entities/playerOptions/knight-4.jpg'>Knight 4</option>
+                            <option id='knight-5' value='./assets/media/entities/playerOptions/knight-5.jpg'>Knight 5</option>
+                            <option id='knight-6' value='./assets/media/entities/playerOptions/knight-6.jpg'>Knight 6</option>
 
-                            <option id='rogue-1' value='./assets/media/entities/rogue-1.jpg'>Rogue 1</option>
-                            <option id='rogue-2' value='./assets/media/entities/rogue-2.jpg'>Rogue 2</option>
-                            <option id='rogue-3' value='./assets/media/entities/rogue-3.jpg'>Rogue 3</option>
-                            <option id='rogue-4' value='./assets/media/entities/rogue-4.jpg'>Rogue 4</option>
-                            <option id='rogue-5' value='./assets/media/entities/rogue-5.jpg'>Rogue 5</option>
+                            <option id='fighter-1' value='./assets/media/entities/playerOptions/fighter-1.jpg'>Fighter 1</option>
+                            <option id='fighter-2' value='./assets/media/entities/playerOptions/fighter-2.jpg'>Fighter 2</option>
+                            <option id='fighter-3' value='./assets/media/entities/playerOptions/fighter-3.jpg'>Fighter 3</option>
+                            <option id='fighter-4' value='./assets/media/entities/playerOptions/fighter-4.jpg'>Fighter 4</option>
+                            <option id='fighter-5' value='./assets/media/entities/playerOptions/fighter-5.jpg'>Fighter 5</option>
+                            <option id='fighter-5' value='./assets/media/entities/playerOptions/fighter-6.jpg'>Fighter 6</option>
 
-                            <option id='mage-1' value='./assets/media/entities/mage-1.jpg'>Mage 1</option>
-                            <option id='mage-2' value='./assets/media/entities/mage-2.jpg'>Mage 2</option>
-                            <option id='mage-3' value='./assets/media/entities/mage-3.jpg'>Mage 3</option>
-                            <option id='mage-4' value='./assets/media/entities/mage-4.jpg'>Mage 4</option>
-                            <option id='mage-5' value='./assets/media/entities/mage-5.jpg'>Mage 5</option>
+                            <option id='mage-1' value='./assets/media/entities/playerOptions/mage-1.jpg'>Mage 1</option>
+                            <option id='mage-2' value='./assets/media/entities/playerOptions/mage-2.jpg'>Mage 2</option>
+                            <option id='mage-3' value='./assets/media/entities/playerOptions/mage-3.jpg'>Mage 3</option>
+                            <option id='mage-4' value='./assets/media/entities/playerOptions/mage-4.jpg'>Mage 4</option>
+                            <option id='mage-5' value='./assets/media/entities/playerOptions/mage-5.jpg'>Mage 5</option>
+                            <option id='mage-6' value='./assets/media/entities/playerOptions/mage-6.jpg'>Mage 6</option>
                             
                         </select>
                     </div>
@@ -63,7 +66,9 @@
                             <option value='warrior'>Warrior</option>
                             <option value='thief'>Thief</option>
                             <option value='hermit'>Hermit</option>
+                            <option value='farmer'>Farmer</option>
                             <option value='bounty-hunter'>Bounty Hunter</option>
+                            <option value='diseased'>Diseased</option>
                         </select>
                     </div>
                     <div class='lobby-input-row'>
@@ -115,7 +120,7 @@
                         <p id='lore-description-origin'></p>
                     </div>
                     <div class='apperance-image-container'>
-                        <img id='lobby-apperance-image' src='./assets/media/entities/knight-1.jpg' draggable="false">
+                        <img id='lobby-apperance-image' src='./assets/media/entities/playerOptions/knight-1.jpg' draggable="false">
                     </div>
                 </div>
             </div>
@@ -361,6 +366,13 @@
                                     <p class='stat-label'>CRIT:</p>
                                 </div>
                                 <p class='stat-value'><span id='lobby-critical'>999</span></p>
+                            </div>
+                            <div class='stat-cell attribute-stat-pop-up'>
+                                <div class='flex'>
+                                    <img class='icon' src='./assets/media/icons/crossed-chains.png' draggable="false">
+                                    <p class='stat-label'>CRPT:</p>
+                                </div>
+                                <p class='stat-value'><span id='lobby-corruption'>999</span></p>
                             </div>
                         </div>
                     </div>
@@ -710,6 +722,15 @@
                                     <p class='stat-label'>ELM RES:</p>
                                 </div>
                                 <p class='stat-value'><span id='character-summary-elemental-resistance'>999</span></p>
+                            </div>
+                        </div>
+                        <div class='flex-wrap'>
+                            <div class='stat-cell attribute-stat-pop-up'>
+                                <div class='flex'>
+                                    <img class='icon' src='./assets/media/icons/crossed-chains.png' draggable="false">
+                                    <p class='stat-label'>CRPT:</p>
+                                </div>
+                                <p class='stat-value'><span id='character-summary-corruption'>999</span></p>
                             </div>
                         </div>
                     </div> 

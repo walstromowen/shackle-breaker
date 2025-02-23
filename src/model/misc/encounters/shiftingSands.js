@@ -14,7 +14,7 @@ export class ShiftingSands extends Stage{
                 {
                     description: 'Walk towards the anomaly.[VIG]',
                     attributes: ['vigor'],
-                    successThreshold: 8,
+                    successThreshold: 6,
                     roll: true,
                     successfulOutcomes: [
                         {
@@ -224,7 +224,7 @@ export class ShiftingSands2 extends Stage{
                 {
                     description: 'Press on [VIG].',
                     attributes: ['vigor'],
-                    successThreshold: 10,
+                    successThreshold: 8,
                     roll: true,
                     successfulOutcomes: [
                         {
@@ -359,7 +359,7 @@ export class ShiftingSands4 extends Stage{
                 {
                     description: 'Keep going! [VIG]',
                     attributes: ['vigor'],
-                    successThreshold: 12,
+                    successThreshold: 10,
                     roll: true,
                     successfulOutcomes: [
                         {
