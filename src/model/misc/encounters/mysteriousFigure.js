@@ -213,7 +213,7 @@ export class ShadowyWarrior extends Stage{
                             result: 'battle',
                             musicSrc: "./assets/audio/musicTracks/battle-sword-139313.mp3",
                             createBattle: (partyLevel, biome, difficulty)=>{
-                                return new Battle({hostiles: [new Nightblade({level: partyLevel, difficulty: difficulty})], battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: [new Nightblade({level: partyLevel, difficulty: difficulty})], battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `The Shadowy Warrior raises his sword and approaches ${currentCharacter.name}!`
@@ -234,7 +234,7 @@ export class ShadowyWarrior extends Stage{
                             result: 'battle',
                             musicSrc: "./assets/audio/musicTracks/battle-sword-139313.mp3",
                             createBattle: (partyLevel, biome, difficulty)=>{
-                                return new Battle({hostiles: [new Nightblade({level: partyLevel, difficulty: difficulty})], battleMusicSrc: biome.battleMusicSrc, maxAllyCount: 1, maxHostileCount: 1});
+                                return new Battle({hostiles: [new Nightblade({level: partyLevel, difficulty: difficulty})], battleMusicSrc: biome.battleMusicSrc, maxAllyCount: 1, maxHostileCount: 1, canRetreat: true});
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new DefeatedNightblade({});

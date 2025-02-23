@@ -58,7 +58,7 @@ export class Aftermath extends Stage{
                                     if(chance == 2) hostileArray.push(new MadMage({level: partyLevel, difficulty: difficulty}))
                                     if(chance == 3) hostileArray.push(new MadBandit({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `As ${currentCharacter.name} searches the battlefield, a group of madmen appear on the horizon!`
@@ -75,7 +75,7 @@ export class Aftermath extends Stage{
                                 for(let i = 0; i < count; i++){
                                     hostileArray.push(new AlterianWarrior({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `While examining the bodies for loot, one of them stirs and glares at ${currentCharacter.name}! As if on command others do the same!`
@@ -132,7 +132,7 @@ export class Aftermath extends Stage{
                                     if(chance == 2) hostileArray.push(new MadMage({level: partyLevel, difficulty: difficulty}))
                                     if(chance == 3) hostileArray.push(new MadBandit({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `As ${currentCharacter.name} searches the battlefield, a group of madmen appear on the horizon!`
@@ -198,7 +198,7 @@ export class WoundedWarrior extends Stage{
                                 for(let i = 0; i < count; i++){
                                     hostileArray.push(new AlterianWarrior({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `As ${currentCharacter.name} bandages the warrior, the warrior grabs ${currentCharacter.name} and draws his weapon! Soon other fallen warriors do the same!`
@@ -241,7 +241,7 @@ export class WoundedWarrior extends Stage{
                                 for(let i = 0; i < count; i++){
                                     hostileArray.push(new AlterianWarrior({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `As ${currentCharacter.name} approaches the warrior, the warrior grabs ${currentCharacter.name} and draws his weapon! Soon other fallen warriors do the same.`

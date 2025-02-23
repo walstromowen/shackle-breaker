@@ -356,7 +356,7 @@ export default class Biome{
         return hostileArray;
     }
     generateBattle(partyLevel, difficulty){
-        return new Battle({hostiles: this.generateEnemies(partyLevel, Math.ceil(Math.random()*3), difficulty), battleMusicSrc: this.battleMusicSrc,}); 
+        return new Battle({hostiles: this.generateEnemies(partyLevel, Math.ceil(Math.random()*3), difficulty), battleMusicSrc: this.battleMusicSrc, canRetreat: true}); 
     }
     generateEncounter(fn){
         let encounter = getRandomArrayElementWeighted(this.possibleEncounters)

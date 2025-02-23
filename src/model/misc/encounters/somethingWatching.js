@@ -49,7 +49,7 @@ export class SomethingWatching extends Stage{
                                 for(let i = 0; i < count; i++){
                                     hostileArray.push(new Wolf({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: false});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `A pack of wolves races towards ${currentCharacter.name}!`

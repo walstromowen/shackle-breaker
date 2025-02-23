@@ -273,7 +273,7 @@ export class WoundedTiger extends Stage{
                                 for(let i = 0; i < count; i++){
                                     hostileArray.push(new MadBandit({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `As ${currentCharacter.name} bandages the Tiger, an arrow flies out of nowhere and hits the Tiger. The Tiger breathes its last breath leaving ${currentCharacter.name}'s party alone with a pack of bandits!`
@@ -289,7 +289,7 @@ export class WoundedTiger extends Stage{
                                 hostileArray.push(new Tiger({level: partyLevel, difficulty: difficulty, isHostile: true}))
                                 hostileArray[0].currentHP = Math.floor(hostileArray[0].currentHP * 0.5)
                                 hostileArray[0].statusArray.push(new Bleed({holder: hostileArray[0]}))
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `As ${currentCharacter.name} bandages the Tiger, the tiger stands to its feet and growls at ${currentCharacter.name}!`
@@ -309,7 +309,7 @@ export class WoundedTiger extends Stage{
                                 for(let i = 0; i < count; i++){
                                     hostileArray.push(new Tiger({level: partyLevel, difficulty: difficulty, isHostile: true}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `As ${currentCharacter.name} approaches the Tiger, an ambush of Tigers surrounds ${currentCharacter.name}!`
@@ -347,7 +347,7 @@ export class WoundedTiger extends Stage{
                                 for(let i = 0; i < count; i++){
                                     hostileArray.push(new MadBandit({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `As ${currentCharacter.name} approaches the Tiger, an arrow flies out of nowhere and hits the Tiger. The Tiger breathes its last breath leaving ${currentCharacter.name}'s party alone with a pack of bandits!`
@@ -383,7 +383,7 @@ export class WoundedTiger extends Stage{
                                 for(let i = 0; i < count; i++){
                                     hostileArray.push(new Tiger({level: partyLevel, difficulty: difficulty, isHostile: true}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `As ${currentCharacter.name} approaches the Tiger, an ambush of Tigers surrounds ${currentCharacter.name}!`

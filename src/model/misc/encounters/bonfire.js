@@ -65,7 +65,7 @@ export class Bonfire extends Stage{
                                     if(chance == 1) hostileArray.push(new MadMage({level: partyLevel, difficulty: difficulty}))
                                     if(chance == 2) hostileArray.push(new MadBandit({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new Bonfire({});
@@ -109,7 +109,7 @@ export class Bonfire extends Stage{
                                 for(let i = 0; i < count; i++){
                                    hostileArray.push(new Wolf({level: partyLevel, difficulty: difficulty}));
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new Bonfire({});

@@ -43,7 +43,7 @@ export class Sinkhole extends Stage{
                                 for(let i = 0; i < count; i++){
                                     hostileArray.push(new DryShark({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `Suddenly the ground stops sinking and a beast emerges from the sand!`
@@ -88,7 +88,7 @@ export class Sinkhole extends Stage{
                                 for(let i = 0; i < count; i++){
                                     hostileArray.push(new DryShark({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `Suddenly the ground stops sinking and a beast emerges from the sand!`

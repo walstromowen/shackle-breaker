@@ -101,7 +101,7 @@ export class StatuesInTheSand extends Stage{
                                 for(let i = 0; i < count; i++){
                                     hostileArray.push(new SandStalker({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new ShiftingSands3({});
@@ -145,7 +145,7 @@ export class StatuesInTheSand extends Stage{
                                 for(let i = 0; i < count; i++){
                                     hostileArray.push(new SandStalker({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new ShiftingSands3({});
@@ -189,7 +189,7 @@ export class StatuesInTheSand extends Stage{
                                 for(let i = 0; i < count; i++){
                                     hostileArray.push(new SandStalker({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new ShiftingSands3({});
@@ -424,7 +424,7 @@ export class SandCastleEntrance extends Stage{
                             imageSrc: './assets/media/entities/the-sand-shade.jpg',
                             musicSrc: "./assets/audio/musicTracks/adrenaline-roger-gabalda-main-version-02-23-11021.mp3",
                             createBattle: (partyLevel, biome, difficulty)=>{
-                                return new Battle({hostiles: [ new TheSandShade({level: partyLevel, difficulty: difficulty})], battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: [ new TheSandShade({level: partyLevel, difficulty: difficulty})], battleMusicSrc: biome.battleMusicSrc, canRetreat: false});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `Tho shea-ath katan.... (Murmoring in an unknown language)`

@@ -40,7 +40,7 @@ export class MysteriousAltar extends Stage{
                                     if(chance == 3) hostileArray.push(new FloatingSkull({level: partyLevel, difficulty: difficulty}))
                                     if(chance == 4) hostileArray.push(new ArmoredSkeleton({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new AtTheAltar({});
@@ -154,7 +154,7 @@ export class AtTheAltar extends Stage{
                                     if(chance == 3) hostileArray.push(new FloatingSkull({level: partyLevel, difficulty: difficulty}))
                                     if(chance == 4) hostileArray.push(new ArmoredSkeleton({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new AtTheAltar({});

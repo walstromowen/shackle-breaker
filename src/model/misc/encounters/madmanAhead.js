@@ -27,7 +27,7 @@ export class MadmanAhead extends Stage{
                                     if(chance == 2) hostileArray.push(new MadMage({level: partyLevel, difficulty: difficulty}))
                                     if(chance == 3) hostileArray.push(new MadBandit({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return  `${currentCharacter.name} charges the Madman!`
@@ -73,7 +73,7 @@ export class MadmanAhead extends Stage{
                                     if(chance == 2) hostileArray.push(new MadMage({level: partyLevel, difficulty: difficulty}))
                                     if(chance == 3) hostileArray.push(new MadBandit({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `The Madman is startled by ${currentCharacter.name}'s approach and draws his weapon!`
@@ -96,7 +96,7 @@ export class MadmanAhead extends Stage{
 
                                 hostileArray[0].currentHP = hostileArray[0].currentHP*0.5;
                                 hostileArray[0].statusArray.push(new Bleed({holder: hostileArray[0]}))
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             messageFunction: (currentCharacter)=>{
                                  return `${currentCharacter.name} plunges a dagger into the side of the Madman side leaving him bleeding profusely! The Madman then sends a howl into the air alerting the nearby villagers!`
@@ -142,7 +142,7 @@ export class MadmanAhead extends Stage{
                                 }
 
                                 hostileArray[0].currentHP = hostileArray[0].currentHP*0.6;
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `The rock hits the Madman's body injuring him. After wincing from his wound, the Madman looks up and runs at ${currentCharacter.name}!`
@@ -164,7 +164,7 @@ export class MadmanAhead extends Stage{
                                     if(chance == 2) hostileArray.push(new MadMage({level: partyLevel, difficulty: difficulty}))
                                     if(chance == 3) hostileArray.push(new MadBandit({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `The rock goes far over the Madman's head and startles the Madman. The Madman then draws his weapon and rushes at ${currentCharacter.name}!`
@@ -188,7 +188,7 @@ export class MadmanAhead extends Stage{
                                 for(let i = 0; i < count; i++){
                                     hostileArray.push(new Wolf({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `The rock goes nowhere near the Madman and instead lands right in the middle of a pack of wolves! The wolves turn and glare at ${currentCharacter.name}!`
@@ -245,7 +245,7 @@ export class MadmanAhead extends Stage{
                                     if(chance == 2) hostileArray.push(new MadMage({level: partyLevel, difficulty: difficulty}))
                                     if(chance == 3) hostileArray.push(new MadBandit({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `The Madman laughs at ${currentCharacter.name} and draws his weapon!`
@@ -312,7 +312,7 @@ export class ConversationWithMadman extends Stage{
                                     if(chance == 2) hostileArray.push(new MadMage({level: partyLevel, difficulty: difficulty}))
                                     if(chance == 3) hostileArray.push(new MadBandit({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `"Freak? .. Friend! Magic know many freak friend! You be freak friend too!"`
@@ -353,7 +353,7 @@ export class ConversationWithMadman extends Stage{
                                     if(chance == 2) hostileArray.push(new MadMage({level: partyLevel, difficulty: difficulty}))
                                     if(chance == 3) hostileArray.push(new MadBandit({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `"Hahaha! Magic no like you! So me no like you neither!"`
@@ -395,7 +395,7 @@ export class ConversationWithMadman extends Stage{
                                     if(chance == 2) hostileArray.push(new MadMage({level: partyLevel, difficulty: difficulty}))
                                     if(chance == 3) hostileArray.push(new MadBandit({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `"You no hear magic! Me hurt you now!"`

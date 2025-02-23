@@ -9,8 +9,6 @@ export default class Encounter{
 //portal
 //graveyard
 //panzerian construct
-//Mysterious Man / nightblade
-//Shadow of a man
 //The Pursuer
 
 

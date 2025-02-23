@@ -37,7 +37,7 @@ export class SilentGrove extends Stage{
                                 for(let i = 0; i < count; i++){
                                     hostileArray.push(new WoodWhisperer({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new SilentGrove2({});
@@ -99,7 +99,7 @@ export class SilentGrove extends Stage{
                                 for(let i = 0; i < count; i++){
                                     hostileArray.push(new WoodWhisperer({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new SilentGrove2({});
@@ -189,7 +189,7 @@ export class SilentGrove2 extends Stage{
                                 for(let i = 0; i < count; i++){
                                     hostileArray.push(new WoodWhisperer({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new SilentGrove3({});
@@ -252,7 +252,7 @@ export class SilentGrove2 extends Stage{
                                 for(let i = 0; i < count; i++){
                                     hostileArray.push(new WoodWhisperer({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new SilentGrove3({});

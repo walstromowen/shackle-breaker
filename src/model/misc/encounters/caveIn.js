@@ -70,7 +70,7 @@ export class CaveIn extends Stage{
                                 for(let i = -2; i < count; i++){
                                     hostileArray.push(new Spider({level: partyLevel, difficulty: difficulty}))
                                 }
-                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc});
+                                return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: false});
                             },
                             createNextStage: (partyLevel, biome)=>{
                                 return new CaveIn({});
