@@ -1946,7 +1946,7 @@ export class ShackledSpirit extends Entity{
                 feet: '',
             },
             isHostile: config.isHostile || true,
-            abilityArray: [new CastShadow({}), new DrainLife({}), new Siphon({})],
+            abilityArray: [new DrainLife({}), new Siphon({})],
             lootTable: [
 
                 {item: new ClothHood({level: 1}), weight: 1},
@@ -2010,6 +2010,36 @@ export class TerrorBear extends Entity{
         if(this.isHostile){
             this.applyDifficultyMultiplier(difficulty)
         }
+    }
+}
+export class Nightblade extends Entity{
+    constructor(config){
+        super({
+            name: 'Nightblade',
+            level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
+            apperance: './assets/media/entities/nightblade.jpg',
+            vigor: config.vigor || 5,
+            strength: config.strength || 5,
+            dexterity: config.dexterity || 7,
+            intelligence: config.intelligence || 7,
+            attunement: config.attunement || 1,
+            baseBluntResistance: config.baseBluntResistance || 0.1,
+            basePierceResistance: config.basePierceResistance || 0.1,
+            baseArcaneResistance: config.baseArcaneResistance || 0.1,
+            baseElementalResistance: config.baseElementalResistance || 0.1,
+            equipment: config.equipment || {
+                mainHand: new ShortSword({level: 3}),
+                offhand: '',
+                head: new LeatherHood({level: 1}),
+                torso: new LeatherChestplate({level: 1}),
+                arms: new LeatherGloves({level: 1}),
+                legs: new LeatherGreaves({level: 1}),
+                feet:  new LeatherBoots({level: 1}),
+            },
+            isHostile: config.isHostile || true,
+            abilityArray: [new CastShadow({})],
+        });
     }
 }
 export class EmperorDolos extends Entity{

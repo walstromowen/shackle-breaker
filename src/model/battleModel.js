@@ -216,7 +216,7 @@ getAvailableTargets(attacker){
             return (b.nextAbility.speedModifier*b.currentSpeed) - (a.nextAbility.speedModifier*a.currentSpeed);
         });
     }
-    getCombinedAbilities(attacker){
+    getCombinedAbilities(attacker, canRetreat){
         let combinedAbilities = [];
         let equipment = attacker.getEquipment(Object.keys(attacker.equipment));
         for(let i = 0; i < attacker.abilityArray.length; i++){
@@ -244,11 +244,13 @@ getAvailableTargets(attacker){
             }
         }
         if(attacker.isHostile == false){
-            combinedAbilities.push(new Retreat({
-                onActivate: ()=>{
-                    this.onRetreat(attacker);
-                }
-            }));
+            if(canRetreat){
+                combinedAbilities.push(new Retreat({
+                    onActivate: ()=>{
+                        this.onRetreat(attacker);
+                    }
+                }));
+            }
             combinedAbilities.push(new Rest({}));
             if(attacker.equipment.mainHand == '' && attacker.equipment.offhand == ''){
                 combinedAbilities.push(new Punch({}));

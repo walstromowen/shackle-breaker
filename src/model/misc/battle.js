@@ -11,7 +11,9 @@ export default class Battle{
         this.currentAllyLimit = this.maxAllyCount;
         this.currentHostileLimit = this.maxHostileCount;
         this.battleMusicSrc = config.battleMusicSrc;
-        this.canRetreat = config.canRetreat || true;
+        this.canRetreat;
+        if(config.canRetreat) this.canRetreat = true;
+        else this.canRetreat = false;
     }
     resetCurrentCombatantLimit(){
         this.currentAllyLimit = this.maxAllyCount;

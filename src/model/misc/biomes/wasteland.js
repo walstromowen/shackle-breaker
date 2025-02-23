@@ -8,6 +8,7 @@ import { ShackledHunter, ShackledSpirit, TerrorBear } from "../entities.js";
 import { TreasureChest } from "../encounters/treasureChest.js";
 import { WastelandEntranceRoom, WastelandExitRoom, WastelandRoom1, WastelandRoom2 } from "../structures.js";
 import { DeadTree } from "../mapObjects.js";
+import { MysteriousFigure } from "../encounters/mysteriousFigure.js";
 
 export class Wasteland extends Biome{
     constructor(config){
@@ -19,20 +20,20 @@ export class Wasteland extends Biome{
             backgroundMusicSrc: "./assets/audio/musicTracks/mysterious-music-box-atmosphere-273837.mp3",
             battleMusicSrc: "./assets/audio/musicTracks/battle-sword-139313.mp3",
             possibleHostiles: [
-                {entity: (partyLevel, difficulty)=>{return new ShackledHunter({level: partyLevel, difficulty: difficulty})}, weight: 2},
-                {entity: (partyLevel, difficulty)=>{return new ShackledSpirit({level: partyLevel, difficulty: difficulty})}, weight: 1},
+                {entity: (partyLevel, difficulty)=>{return new ShackledHunter({level: partyLevel, difficulty: difficulty})}, weight: 1},
+                {entity: (partyLevel, difficulty)=>{return new ShackledSpirit({level: partyLevel, difficulty: difficulty})}, weight: 2},
                 {entity: (partyLevel, difficulty)=>{return new TerrorBear({level: partyLevel, difficulty: difficulty})}, weight: 1},
                
             ],
             possibleEncounters: [
-                {startingStage: ()=>{return {name: 'Wandering Mercenary'}}, resetOnLeave: false, weight: 2},
+                {startingStage: ()=>{return new MysteriousFigure({})}, resetOnLeave: false, weight: 2},
                 {startingStage: ()=>{return new TreasureChest({})}, resetOnLeave: false, weight: 2},
             ],
         });
     }
     generateLayout(){ 
         let tileSet = this.createFullTileSet();
-        this.beginPath(tileSet, 60, 'entrance')
+        this.beginPath(tileSet, 50, 'entrance')
         this.connectWalls(tileSet)
         return tileSet;
     }

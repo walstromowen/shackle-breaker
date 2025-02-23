@@ -70,7 +70,7 @@ import { BerryBush, Boulder, Entrance, Exit, PineTree, DeadTree, Wall } from "./
             }
             structureMap.push(row);
         }
-        structureMap[Math.floor(height/2)][Math.floor(width/2)] = new Tile({mapObject: new Entrance({}), priority: 3,})
+        structureMap[Math.floor(height/2)][Math.floor(width/2)] = new Tile({mapObject: new Entrance({}), priority: 4,})
         return structureMap;
     }
  }
@@ -167,7 +167,7 @@ export class CaveEntranceRoom extends Structure{
             }
             structureMap.push(row);
         }
-        structureMap[Math.floor(height/2)][Math.floor(width/2)] = new Tile({mapObject: new Entrance({}), priority: 3,})
+        structureMap[Math.floor(height/2)][Math.floor(width/2)] = new Tile({mapObject: new Entrance({}), priority: 4,})
         return structureMap;
     }
  }
@@ -251,7 +251,7 @@ export class DesertEntranceRoom extends Structure{
             }
             structureMap.push(row);
         }
-        structureMap[Math.floor(height/2)][Math.floor(width/2)] = new Tile({mapObject: new Entrance({}), priority: 3,})
+        structureMap[Math.floor(height/2)][Math.floor(width/2)] = new Tile({mapObject: new Entrance({}), priority: 4,})
         return structureMap;
     }
  }
@@ -329,7 +329,7 @@ export class SnowyMountainEntranceRoom extends Structure{
             }
             structureMap.push(row);
         }
-        structureMap[Math.floor(height/2)][Math.floor(width/2)] = new Tile({mapObject: new Entrance({}), priority: 3,})
+        structureMap[Math.floor(height/2)][Math.floor(width/2)] = new Tile({mapObject: new Entrance({}), priority: 4,})
         return structureMap;
     }
  }
@@ -422,7 +422,7 @@ export class WastelandEntranceRoom extends Structure{
             }
             structureMap.push(row);
         }
-        structureMap[Math.floor(height/2)][Math.floor(width/2)] = new Tile({mapObject: new Entrance({}), priority: 3,})
+        structureMap[Math.floor(height/2)][Math.floor(width/2)] = new Tile({mapObject: new Entrance({}), priority: 4,})
         return structureMap;
     }
  }

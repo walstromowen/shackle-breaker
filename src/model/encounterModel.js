@@ -49,6 +49,15 @@ export default class EncounterModel{
                 case 'attunement':
                     attributeScore += this.currentCharacter.attunement;
                     break;
+                case 'alterian':
+                    if(this.currentCharacter.factions.includes('alterian')) attributeScore += 9;
+                    break;
+                case 'panzerian':
+                    if(this.currentCharacter.factions.includes('panzerian')) attributeScore += 9;
+                    break;
+                case 'namuh':
+                    if(this.currentCharacter.factions.includes('namuh')) attributeScore += 9;
+                    break;
                 default:
                     attributeScore = 0;
                     break;
