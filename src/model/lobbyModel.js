@@ -2,6 +2,7 @@ import { getRandomArrayElement } from "../utility.js";
 import {Entity, Dog, Hawk, Tiger} from "./misc/entities.js";
 import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LightningStaff, DarkStaff, IceStaff, ForestStaff, Meteorite, ClothHood, LeatherBoots, BearTrap, ClothRobe, IronHelm, LeatherChestplate, Pelt, Net, SmokeBomb, IronOre, ScrollOfInferno, ScrollOfHailStorm, ScrollOfCastShadow, Flintlock, LeatherGloves, Spear} from "./misc/items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, AloeRemedy, ParalysisTonic, Bandage, PineWood} from "./misc/items.js";
+import { PhysicalAttackBuff } from "./misc/statusEffects.js";
 
 
 export default class LobbyModel{
@@ -36,6 +37,7 @@ export default class LobbyModel{
     updateBackground(){
         let background = document.getElementById('lobby-background-selection').value;
         this.props.getParty()[0].currentCorruption = 0;
+        
         let equipment = '';
         switch(background){
             case 'traveler':
@@ -143,13 +145,16 @@ export default class LobbyModel{
                 break;    
             case 'diseased':
                 equipment = [
-                    new Dagger({level: 1}),
+                    
                     new LinenShirt({level: 1}),
                     new LinenPants({level: 1}),
                 ];
-                this.props.getParty()[0].setAttributes({vigor: 5, strength: 5, dexterity: 5, intelligence: 5, attunement: 5});
+                this.props.getParty()[0].setAttributes({vigor: 5, strength: 10, dexterity: 2, intelligence: 5, attunement: 3});
                 this.props.setGold(0);
                 this.props.getParty()[0].currentCorruption = 0.5;
+               
+                
+               
                 break;    
     }
         this.props.getParty()[0].unequipAttatchables(Object.keys(this.props.getParty()[0].equipment));

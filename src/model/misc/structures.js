@@ -50,8 +50,6 @@ import { BerryBush, Boulder, Entrance, Exit, PineTree, DeadTree, Wall } from "./
             this.connectionPosition = this.structureMap[Math.floor(this.structureMap.length/2)][this.structureMap[0].length-1].position
             this.connectionDirection = 'east';
         }
-        //console.log(this.connectionDirection)
-        //console.log(this.connectionPosition)
     }
  } 
  export class ForestEntranceRoom extends Structure{
@@ -470,7 +468,7 @@ export class WastelandRoom1 extends Structure{
                 if((y == 0 || x == 0 || x == width-1 || y == height-1) && chance < 1) {
                     let chance = Math.floor(Math.random*3)
                     if(chance == 0)row.push(new Tile({priority: 1, mapObject: new Boulder({imageCoordinates: [0,8]})}))
-                    else row.push(new Tile({mapObject: new DeadTree({imageCoordinates: [7, 0], imageFrameSize: [1,2]})}))
+                    else row.push(new Tile({mapObject: new DeadTree({imageCoordinates: [7, 0], imageFrameSize: [1,2]}), priority: 1}))
                 }else {
                     if(y > 1 && x > 1 && y < height - 2 && x < width - 2){
                         if(Math.random()*4 < 1){

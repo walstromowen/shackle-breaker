@@ -377,7 +377,7 @@ export class ConversationWithMadman extends Stage{
                                 return recruit;
                             },
                             onActivate(target){
-                                target.currentCorruption += 0.5;
+                                target.currentCorruption += 0.05;
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `"No no! No hurt me! Me help magic! Me help you!"`
@@ -401,7 +401,7 @@ export class ConversationWithMadman extends Stage{
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             onActivate(target){
-                                target.currentCorruption += 0.5;
+                                target.currentCorruption += 0.05;
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `"You no hear magic! Me hurt you now!"`

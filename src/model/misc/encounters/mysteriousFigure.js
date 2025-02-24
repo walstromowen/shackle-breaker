@@ -130,7 +130,7 @@ export class SuspiciousMan extends Stage{
                                 if(chance == 2) return [new ParalysisTonic()];
                             },
                             onActivate(target){
-                                target.currentCorruption += 0.2;
+                                target.currentCorruption += 0.02;
                             },
                             xpReward: 10, 
                             weight: 1,
@@ -146,7 +146,7 @@ export class SuspiciousMan extends Stage{
                                 if(chance == 2) return `"Stay back!" The Suspicious Man screams as he runs away.`
                             },
                             onActivate(target){
-                                target.currentCorruption += 0.2;
+                                target.currentCorruption += 0.02;
                             },
                             weight: 1,
                         },

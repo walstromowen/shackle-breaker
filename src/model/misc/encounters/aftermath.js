@@ -184,7 +184,7 @@ export class WoundedWarrior extends Stage{
                                 return new Survivor({entity: config.entity});
                             },
                             onActivate(target){
-                                target.currentCorruption -= 0.5;
+                                target.currentCorruption -= 0.05;
                             },
                             xpReward: 5,
                             weight: 1,
@@ -230,7 +230,7 @@ export class WoundedWarrior extends Stage{
                                 return  [getRandomArrayElementWeighted(biome.lootTable).item()];
                             },
                             onActivate(target){
-                                target.currentCorruption += 0.5;
+                                target.currentCorruption += 0.05;
                             },
                             weight: 1,
                     
@@ -250,7 +250,7 @@ export class WoundedWarrior extends Stage{
                                 return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
                             },
                             onActivate(target){
-                                target.currentCorruption += 0.5;
+                                target.currentCorruption += 0.05;
                             },
                             messageFunction: (currentCharacter)=>{
                                 return `As ${currentCharacter.name} approaches the warrior, the warrior grabs ${currentCharacter.name} and draws his weapon! Soon other fallen warriors do the same.`
