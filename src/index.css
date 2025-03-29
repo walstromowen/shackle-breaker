@@ -337,7 +337,12 @@ img{
     text-align: center;
     color: var(--color-5);
     font-size: var( --font-size-0);
-    text-shadow: 10px 10px 10px black;
+    text-shadow: 
+    10px 10px 10px black,
+      20px 10px 20px black,
+      30px 10px 30px white,
+      50px 10px 50px whitesmoke,
+      100px 10px 100px whitesmoke;
 }
 .title-screen-button{
     padding: 4px;
@@ -350,6 +355,7 @@ img{
     justify-content: center;
     background: radial-gradient( var(--color-4), var(--color-1));
     box-shadow: 8px 8px 8px black;
+    z-index: 3;
 }
 .title-screen-button:hover, .hover-brightness{
     box-shadow: 0px 0px 0px black;
@@ -1650,4 +1656,42 @@ img{
     gap: 10px;
     align-items: center;
    
+}
+.fog-container{
+   position: absolute;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    z-index: 1;
+    top: 0px;
+    left: 0px;
+
+}
+.fog{
+    position: absolute;
+    height: 100%;
+    width: 300vw;
+    z-index: 2;
+    
+}
+.fog-img-1{
+    background: url('./assets/media/screens/fog-1.png');
+    background-repeat: repeat-x;
+    background-size: contain;
+    background-position: center;
+    animation: drift 200s linear infinite;
+    
+}
+
+.fog-img-2{
+    background: url('./assets/media/screens/fog-2.png');
+    background-repeat: repeat-x;
+    background-size: contain;
+    background-position: center;
+    animation: drift 100s linear infinite;
+}
+
+@keyframes drift{
+    0%{transform: translate3d(0,0,0)}
+    0%{transform: translate3d(-200vw, 0, 0)}
 }
