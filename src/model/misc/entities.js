@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl, Eviscerate, ChannelMagic, DarkOrb, Bless, Brace, Inferno, SetBearTrap, Uppercut, Flurry, IceShard, Fly, Barrage, Rage, IceWall, HailStorm, CallOfSterben, ThrowSmokeBomb, ThrowNet, Hide, CastShadow, Shockwave} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl, Eviscerate, ChannelMagic, DarkOrb, Bless, Brace, Inferno, SetBearTrap, Uppercut, Flurry, IceShard, Fly, Barrage, Rage, IceWall, HailStorm, CallOfSterben, ThrowSmokeBomb, ThrowNet, Hide, CastShadow, Shockwave, AbsorbSoul} from "./abilities.js";
 import { Poison, Burn, Bleed, Shielded, InstaDeath, Blessed, PhysicalAttackBuff, MagicalAttackBuff} from "./statusEffects.js";
 import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, LeatherGloves, GreatSword, Flintlock, SmokeBomb, PanzerkamferArmor, ScrollOfHailStorm, IronSheild, IceSickle, Net, ScrollOfCastShadow} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Pelt} from "./items.js";
@@ -2081,7 +2081,7 @@ export class EmperorDolos extends Entity{
             animationSoundEffect: './assets/audio/soundEffects/tornado.wav',
             entity: '',
             createNextForm: ()=>{
-                this.entity = new EmperorDolos({level: this.level, difficulty: config.difficulty, nextForm: false, abilityArray: [new Flurry({}), new DrainLife({}), new Inferno({}), new MagicMissile({}), new ChannelMagic({}), new LightningBolt({}), new Siphon({}), new Bless({})]});
+                this.entity = new EmperorDolos({level: this.level, difficulty: config.difficulty, nextForm: false, abilityArray: [new Flurry({}), new AbsorbSoul({}), new DrainLife({}), new Inferno({}), new MagicMissile({}), new ChannelMagic({}), new LightningBolt({}), new Siphon({}), new Bless({})]});
                 this.entity.statusArray = [new Blessed({holder:this.entity}), new PhysicalAttackBuff({holder:this.entity}), new MagicalAttackBuff({holder:this.entity})];
                 this.entity.nextForm = false;
                 return this.entity
@@ -2094,7 +2094,7 @@ export class EmperorDolos extends Entity{
         }
     }
     scaleAttributes(difficulty){
-        this.maxHP = (this.vigor * 1)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 1);
+        this.maxHP = (this.vigor * 20)  + (this.strength * 20) + (this.dexterity * 20) + (this.intelligence * 20) + (this.attunement * 20);
         this.maxStamina = (this.vigor * 10) + (this.strength * 10) + (this.dexterity * 10) + (this.intelligence * 10) + (this.attunement * 10);
         this.maxMagic = (this.vigor * 10)  + (this.strength * 10) + (this.dexterity * 10) + (this.intelligence * 10) + (this.attunement * 10);
         this.baseHpRecovery = 0;

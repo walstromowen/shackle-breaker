@@ -1317,7 +1317,7 @@ export class Siphon extends Ability{
             name: 'siphon',
             description: "Absorb a target's magic points using dark arcane magic.",
             iconSrc: './assets/media/icons/body-swapping.png',
-            background: `url(./assets/media/icons/rolling-energy.png), linear-gradient(indigo, navy)`,
+            background: `url(./assets/media/icons/body-swapping.png), linear-gradient(indigo, navy)`,
             speedModifier: config.speedModifier || 1.0,
             damageModifier: config.damageModifier || 4,
             healthCost: config.healthCost || 0,
@@ -2203,10 +2203,10 @@ export class AbsorbSoul extends Ability{// soul steal, thought steal, mind trick
                     flag = false;
                 }
             }
-            status.onRemove()
             status.currentCharges = status.maxCharges; 
             status.holder = attacker;
             this.inflictStatus(status, attacker, attacker)
+            status.onRemove()
         }else{
             let rawDamage = this.calculateDamage(attacker, target);
             rawDamage = this.checkCritical(attacker, rawDamage);
