@@ -20,7 +20,6 @@ mongoose.connect(process.env.ATLAS_URI).then(()=>{
 const PORT = process.env.PORT || 8000;
 app.use(express.json({ limit: '10mb' }));
 app.use(cookieParser());//allows controllers to read req.cookies
-app.use(express.json())//helps with req.body not being undefined
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/gamesaves", gameSaveRouter);
@@ -32,7 +31,6 @@ app.listen(PORT, ()=>{
 app.get("/", (req, res)=>{
     res.send('sucessful connection to server')
 })
-
 
 
 

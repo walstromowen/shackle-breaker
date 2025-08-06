@@ -148,7 +148,6 @@ export default class SaveListController{
                 method: 'GET',
                 credentials: 'include',
                 headers: {
-                    "Access-Control-Allow-Origin": "*",
                     'Content-Type': 'application/json'
                 }
             });
@@ -173,7 +172,6 @@ export default class SaveListController{
                 method: 'DELETE',
                 credentials: 'include',
                 headers: {
-                    "Access-Control-Allow-Origin": "*",
                     'Content-Type': 'application/json'
                 }
             });
@@ -198,7 +196,6 @@ export default class SaveListController{
                 method: 'PATCH',
                 credentials: 'include',
                 headers: {
-                    "Access-Control-Allow-Origin": "*",
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
