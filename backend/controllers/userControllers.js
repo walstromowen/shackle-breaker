@@ -1,6 +1,7 @@
 import { UserModel } from "../models/userModel.js";
 
 export async function getUser(req, res){
+     console.log('test')
      try{
           const user = await UserModel.findById(req.userId).populate('courses');
           if (!user) return res.status(404).json({ message: 'User not found' });
