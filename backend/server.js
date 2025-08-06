@@ -25,6 +25,7 @@ app.use(
         origin: "https://shackle-breaker-frontend.onrender.com",
     })
 )
+app.use(express.urlencoded({extended: false}))
 app.use(express.json({ limit: '10mb' }));
 app.use(cookieParser());//allows controllers to read req.cookies
 app.use("/auth", authRouter);
