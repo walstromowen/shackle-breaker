@@ -32,9 +32,13 @@ export default class TitleController{
         });
 
         document.getElementById('register-submit-button').addEventListener('click', (e)=>{
+            this.props.switchScreen('loading-screen');
+            playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
             this.registerUser(e);
         });
         document.getElementById('login-submit-button').addEventListener('click', (e)=>{
+            this.props.switchScreen('loading-screen');
+            playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
             this.loginUser(e);
            
         });
@@ -65,7 +69,6 @@ export default class TitleController{
             if(data.error){
                 alert(data.error)
             }else{
-                playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
                 alert('success!')
                 this.props.switchScreen('login-screen');
             }
@@ -78,7 +81,6 @@ export default class TitleController{
     async loginUser(e){
         e.preventDefault();
         const url = `${this.props.baseURL}/auth/login`;
-
         try{
             const response = await fetch(url, 
                 {
@@ -93,8 +95,6 @@ export default class TitleController{
                     })
                 }
             )
-            this.props.switchScreen('loading-screen');
-            playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
             const data = await response.json();
             if(data.error){
                 this.props.switchScreen('login-screen');
