@@ -8,7 +8,7 @@ const gameSaveRouter = express.Router();
 gameSaveRouter.use(
     cors({
         credentials: true,
-        origin: "http://127.0.0.1:5500",
+        origin: "https://shackle-breaker-frontend.onrender.com/",
 
     })
 )

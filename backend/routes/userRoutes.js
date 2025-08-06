@@ -8,7 +8,7 @@ const userRouter = express.Router();
 userRouter.use(
     cors({
         credentials: true,
-        origin: "http://127.0.0.1:5500",
+        origin: "https://shackle-breaker-frontend.onrender.com/",
 
     })
 )

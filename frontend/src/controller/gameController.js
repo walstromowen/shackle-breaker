@@ -13,7 +13,7 @@ import SaveListController from "./saveListController.js";
 export default class GameController{
     constructor(model, view){
         this.props = {
-            baseURL: 'http://localhost:8000',
+            baseURL: 'https://shackle-breaker-backend.onrender.com/',
             switchScreen: this.switchScreen.bind(this),
             getTitleController: this.getTitleController.bind(this),
             getLobbyController: this.getLobbyController.bind(this),
