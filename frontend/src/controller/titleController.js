@@ -53,7 +53,6 @@ export default class TitleController{
                     method: 'POST',
                     headers: {
                         "Content-Type": "application/json",
-                        "Access-Control-Allow-Origin": "http://127.0.0.1:5500/javascript/shackle-breaker/frontend/src/",
                     },
                     body: JSON.stringify({
                         username: document.getElementById('register-username-input').value,
@@ -87,7 +86,6 @@ export default class TitleController{
                     credentials: 'include',
                     headers: {
                         "Content-Type": "application/json",
-                        "Access-Control-Allow-Origin": "http://127.0.0.1:5500/javascript/shackle-breaker/frontend/src/",
                     },
                     body: JSON.stringify({
                         username: document.getElementById('login-username-input').value,
