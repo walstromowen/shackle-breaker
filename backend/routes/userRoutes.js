@@ -1,17 +1,8 @@
 import express from "express";
-import cors from "cors";
 import { verifyToken } from '../middleware/auth.js';
 import { getUser, updateUser, deleteUser} from "../controllers/userControllers.js";
 
 const userRouter = express.Router();
-
-userRouter.use(
-    cors({
-        credentials: true,
-        origin: "https://shackle-breaker-frontend.onrender.com/",
-
-    })
-)
 
 userRouter.get('/profile', verifyToken, getUser);
 userRouter.patch('/:id', verifyToken, updateUser);

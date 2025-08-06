@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import authRouter from "./routes/authRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 import gameSaveRouter from "./routes/gameSaveRoutes.js";
+import cors from "cors";
 
 
 const app = express();
@@ -18,6 +19,12 @@ mongoose.connect(process.env.ATLAS_URI).then(()=>{
 });
 
 const PORT = process.env.PORT || 8000;
+app.use(
+    cors({
+        credentials: true,
+        origin: "https://shackle-breaker-frontend.onrender.com",
+    })
+)
 app.use(express.json({ limit: '10mb' }));
 app.use(cookieParser());//allows controllers to read req.cookies
 app.use("/auth", authRouter);
