@@ -64,6 +64,7 @@ export default class SaveListController{
             }else{
                 this.props.switchScreen('loading-screen');
                 await this.newSaveToServer();
+                this.props.switchScreen('save-list-screen');
             }
             
             
