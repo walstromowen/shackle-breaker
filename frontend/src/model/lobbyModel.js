@@ -10,6 +10,8 @@ export default class LobbyModel{
         this.props = props;
     }
     resetParty(){
+        this.props.setGold(0)
+        this.props.setInventory([])
         this.props.setParty([new Entity({})]);
         this.updateName();
         this.updateApperance();
