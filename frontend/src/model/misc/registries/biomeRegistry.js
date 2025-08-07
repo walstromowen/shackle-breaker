@@ -13,3 +13,9 @@ export const biomeRegistry = {
     'snowy mountains': (config)=>{return new SnowyMountains(config)},
     'wasteland': (config)=>{return new Wasteland(config)},
 }
+
+//Silent Grove
+//Sand Caslte
+//Old Aluts
+//Panzerian Ouskirts
+//Twilight Cidadel

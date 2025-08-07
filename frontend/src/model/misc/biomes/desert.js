@@ -8,7 +8,7 @@ import {WanderingMercenary} from "../stages/wanderingMercenary.js";
 import { ShiftingSands, SandCastleEntrance} from "../stages/shiftingSands.js";
 import { TreasureChest } from "../stages/treasureChest.js";
 import { Sinkhole } from "../stages/sinkhole.js";
-import { DesertRoom1, DesertEntranceRoom, DesertExitRoom } from "../structures.js";
+import { DesertRoom1, DesertEntranceRoom, DesertExitRoom, DesertRoom2 } from "../structures.js";
 
 
 export class Desert extends Biome{
@@ -51,7 +51,7 @@ export class Desert extends Biome{
                     case 0:
                         return new DesertRoom1();
                     case 1:
-                        return new DesertRoom1()
+                        return new DesertRoom2()
                 }
         }
     }

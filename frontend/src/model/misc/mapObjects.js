@@ -100,6 +100,17 @@ export class DeadTree extends MapObject{
         );
     }
 }
+export class DeadBush extends MapObject{
+    constructor(config){
+        super(
+            {
+                name: config.name || 'dead bush',
+                imageCoordinates: config.imageCoordinates || [0, 2],
+                traversable: config.traversable || false,
+            }
+        );
+    }
+}
 export class CastleTower extends MapObject{
     constructor(){
         super(

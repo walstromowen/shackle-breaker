@@ -44,3 +44,9 @@ export const entityRegistry = {
   "Nightblade": (config, isReydrate) => { return new Nightblade(config, isReydrate) },
   "Emperor Dolos": (config, isReydrate) => { return new EmperorDolos(config, isReydrate) },
 };
+
+//Dolos
+//The Pursuer
+//Twilight Dragon
+//The Puppet Master
+//Ancient Altus King

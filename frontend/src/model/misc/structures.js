@@ -1,5 +1,5 @@
 import Tile from "./tile.js";
-import { BerryBush, Boulder, Entrance, Exit, PineTree, DeadTree, Wall } from "./mapObjects.js";
+import { BerryBush, Boulder, Entrance, Exit, PineTree, DeadTree, Wall, DeadBush } from "./mapObjects.js";
  
  export default class Structure{
     constructor(){
@@ -32,6 +32,14 @@ import { BerryBush, Boulder, Entrance, Exit, PineTree, DeadTree, Wall } from "./
             }
         }
     }
+       /*
+        if(tileSet[desiredY + y][desiredX + x].mapObject){
+            if(tileSet[desiredY + y][desiredX + x].mapObject.name == 'entrance'){
+                console.log('error! replacing entrance')
+            }
+        }
+
+    */
     generateNewConnectionPoint(){
         let chance = Math.floor(Math.random()*4)
         if(chance == 0){
@@ -287,6 +295,34 @@ export class DesertRoom1 extends Structure{
                     if(y > 1 && x > 1 && y < height - 2 && x < width - 2){
                         if(Math.random()*4 < 1){
                             row.push(new Tile({priority: 1, mapObject: new Boulder({imageCoordinates: [0,1]})}))
+                        }else{
+                            row.push(new Tile({priority: 2,}))
+                        }
+                    }else{
+                        row.push(new Tile({priority: 2,}))
+                    }
+                }
+            }
+            structureMap.push(row);
+        }
+        return structureMap;
+    }
+}
+export class DesertRoom2 extends Structure{
+    generateStructureMap(){
+        let structureMap = []
+        let width = 5 + Math.floor(Math.random()*5)
+        let height = 5 + Math.floor(Math.random()*5)
+        for(let y = 0; y < height; y++){
+            let row = []
+            for(let x = 0; x < width; x++){
+                let chance = Math.random()*2
+                if((y == 0 || x == 0 || x == width-1 || y == height-1) && chance < 1) {
+                    row.push(new Tile({priority: 1, mapObject: new DeadBush({imageCoordinates: [0,1]})}))
+                }else {
+                    if(y > 1 && x > 1 && y < height - 2 && x < width - 2){
+                        if(Math.random()*4 < 1){
+                            row.push(new Tile({priority: 1, mapObject: new DeadBush({imageCoordinates: [0,1]})}))
                         }else{
                             row.push(new Tile({priority: 2,}))
                         }
