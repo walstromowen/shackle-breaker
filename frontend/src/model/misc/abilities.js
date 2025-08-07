@@ -325,7 +325,7 @@ export class SwitchCombatant extends Ability{
     constructor(config){
         super({
             name: 'switch combatant',
-            type: 'switch combatant',
+            type: congifg.type || 'switch combatant',
             iconSrc: 'none',
             speedModifier: config.speedModifier || 1,
             soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
@@ -346,7 +346,7 @@ export class Retreat extends Ability{
     constructor(config){
         super({
             name: 'retreat',
-            type: 'retreat',
+            type: congifg.type || 'retreat',
             description: 'Allows current character to escape battle. Sometimes, living to fight another day is more nobel than facing a foolish end.',
             iconSrc: './assets/media/icons/run.png',
             speedModifier: config.speedModifier || 1,
@@ -369,7 +369,7 @@ export class Rest extends Ability{
     constructor(config){
         super({
             name: 'rest',
-            type: 'rest',
+            type: congifg.type || 'rest',
             description: 'Allows current character to recover health, stamina, and magic based on recovery values.',
             iconSrc: './assets/media/icons/despair.png',
             speedModifier: config.speedModifier || 1,
@@ -395,7 +395,7 @@ export class Struggle extends Ability{
     constructor(config){
         super({
             name: 'struggle',
-            type: 'struggle',
+            type: congifg.type || 'struggle',
             description: 'Help!',
             iconSrc: './assets/media/icons/despair.png',
             speedModifier: config.speedModifier || 1,
@@ -454,7 +454,7 @@ export class Thrust extends Ability{
     constructor(config){
         super({
             name: config.name || 'thrust',
-            type: 'thrust',
+            type: congifg.type || 'thrust',
             description: 'Thurst a target with a piercing attack. Has a high critical chance and a chance to cause bleeding.',
             iconSrc: './assets/media/icons/thrust.png',
             background: `url(./assets/media/icons/thrust.png), linear-gradient(crimson, darkslategrey)`,
@@ -494,7 +494,7 @@ export class Eviscerate extends Ability{
     constructor(config){
         super({
             name: config.name || 'eviscerate',
-            type: 'eviscerate',
+            type: congifg.type || 'eviscerate',
             description: 'Eviscerate a target with a powerful piercing attack. Has a high chance to cause bleeding and deal bonus damage to enemies at full health.',
             iconSrc: './assets/media/icons/ragged-wound.png',
             background: `url(./assets/media/icons/ragged-wound.png), linear-gradient(crimson, darkslategrey)`,
@@ -533,7 +533,7 @@ export class Punch extends Ability{
     constructor(config){
         super({
             name: config.name || 'punch',
-            type: 'punch',
+            type: congifg.type || 'punch',
             description: "Strike a target with one's fist.",
             iconSrc: './assets/media/icons/punch.png',
             background: `url(./assets/media/icons/punch.png), linear-gradient(steelblue, darkslategrey)`,
@@ -568,7 +568,7 @@ export class Strike extends Ability{
     constructor(config){
         super({
             name: config.name || 'strike',
-            type: 'strike',
+            type: congifg.type || 'strike',
             description: "Strike a target with the blunt edge of one's weapon.",
             iconSrc: './assets/media/icons/hammer-drop.png',
             background: `url(./assets/media/icons/hammer-drop.png), linear-gradient(steelblue, darkslategrey)`,
@@ -603,7 +603,7 @@ export class ShootArrow extends Ability{
     constructor(config){
         super({
             name: config.name || 'shoot arrow',
-            type: 'shoot arrow',
+            type: congifg.type || 'shoot arrow',
             description: "Shoot a target with an arrow. Has a chance to cause bleeding",
             iconSrc: './assets/media/icons/broadhead-arrow.png',
             background: `url(./assets/media/icons/broadhead-arrow.png), linear-gradient(crimson, darkslategrey)`,
@@ -642,7 +642,7 @@ export class Tripleshot extends Ability{
     constructor(config){
         super({
             name: config.name || 'triple shot',
-            type: 'triple shot',
+            type: congifg.type || 'triple shot',
             description: "Shoot up to three arrows simultaneously at opponents.",
             iconSrc: './assets/media/icons/striking-arrows.png',
             background: `url(./assets/media/icons/striking-arrows.png), linear-gradient(crimson, darkslategrey)`,
@@ -682,7 +682,7 @@ export class ShootFlamingArrow extends Ability{
     constructor(config){
         super({
             name: config.name || 'shoot flaming arrow',
-            type: 'shoot flaming arrow',
+            type: congifg.type || 'shoot flaming arrow',
             description: "Shoot a target with a firey arrow. Has a high chance to cause burn",
             iconSrc: './assets/media/icons/flaming-arrow.png',
             background: `url(./assets/media/icons/flaming-arrow.png), conic-gradient(crimson, darkslategrey, orangered, silver)`,
@@ -721,7 +721,7 @@ export class Cleave extends Ability{
     constructor(config){
         super({
             name: config.name || 'cleave',
-            type: 'cleave',
+            type: congifg.type || 'cleave',
             description: "Cleave up to two different targets.",
             iconSrc: './assets/media/icons/serrated-slash.png',
             background: `url(./assets/media/icons/serrated-slash.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
@@ -758,7 +758,7 @@ export class Flurry extends Ability{
     constructor(config){
         super({
             name: config.name || 'flurry',
-            type: 'flurry',
+            type: congifg.type || 'flurry',
             description: "Slash a target with a series of quick slashes.",
             iconSrc: './assets/media/icons/crossed-slashes.png',
             background: `url(./assets/media/icons/crossed-slashes.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
@@ -798,7 +798,7 @@ export class Uppercut extends Ability{
     constructor(config){
         super({
             name: config.name || 'uppercut',
-            type: 'uppercut',
+            type: congifg.type || 'uppercut',
             description: "Strike a target with an upwards motion. Has a chance to knock over a target.",
             iconSrc: './assets/media/icons/uppercut.png',
             background: `url(./assets/media/icons/uppercut.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
@@ -837,7 +837,7 @@ export class MagicMissile extends Ability{
     constructor(config){
         super({
             name: config.name || 'magic missile',
-            type: 'magic missile',
+            type: congifg.type || 'magic missile',
             description: "Fire a magic missile made of powerful arcane energy at three targets.",
             iconSrc: './assets/media/icons/frayed-arrow.png',
             background: `url(./assets/media/icons/frayed-arrow.png), linear-gradient(magenta, navy)`,
@@ -874,7 +874,7 @@ export class ArcaneBlast extends Ability{
     constructor(config){
         super({
             name: config.name || 'arcane blast',
-            type: 'arcane blast',
+            type: congifg.type || 'arcane blast',
             description: "Blast a target with pure arcane magic dealing high damage.",
             iconSrc: './assets/media/icons/ringed-beam.png',
             background: `url(./assets/media/icons/ringed-beam.png), linear-gradient(magenta, navy)`,
@@ -910,7 +910,7 @@ export class LesserHeal extends Ability{
     constructor(config){
         super({
             name: config.name || 'lesser heal',
-            type: 'lesser heal',
+            type: congifg.type || 'lesser heal',
             description: "Restore a target's hitpoints using arcane magic.",
             iconSrc: './assets/media/icons/heart-plus.png',
             background: `url(./assets/media/icons/heart-plus.png), linear-gradient(gold, navy)`,
@@ -945,7 +945,7 @@ export class Cleanse extends Ability{
     constructor(config){
         super({
             name: config.name || 'cleanse',
-            type: 'cleanse',
+            type: congifg.type || 'cleanse',
             description: "Remove a negative status effect from a target using light magic.",
             iconSrc: './assets/media/icons/shiny-omega.png',
             background: `url(./assets/media/icons/shiny-omega.png), linear-gradient(gold, navy)`,
@@ -999,7 +999,7 @@ export class DrainLife extends Ability{
     constructor(config){
         super({
             name: config.name || 'drain life',
-            type: 'drain life',
+            type: congifg.type || 'drain life',
             description: "Absorb the hitpoints of another target using dark arcane magic.",
             iconSrc: './assets/media/icons/tentacle-heart.png',
             background: `url(./assets/media/icons/tentacle-heart.png), linear-gradient(indigo, navy)`,
@@ -1036,7 +1036,7 @@ export class DarkOrb extends Ability{
     constructor(config){
         super({
             name: config.name || 'dark orb',
-            type: 'dark orb',
+            type: congifg.type || 'dark orb',
             description: "Blast a target with an orb of dark arcane energy. Has a chance to hex a target, lowering magical attack",
             iconSrc: './assets/media/icons/rolling-energy.png',
             background: `url(./assets/media/icons/rolling-energy.png), linear-gradient(indigo, navy)`,
@@ -1076,7 +1076,7 @@ export class Bite extends Ability{
     constructor(config){
         super({
             name: config.name || 'bite',
-            type: 'bite',
+            type: congifg.type || 'bite',
             description: "Bite a target with a powerful jaw. More effective with larger creatures. Has a chance to cause bleeding.",
             iconSrc: './assets/media/icons/sharp-lips.png',
             background: `url(./assets/media/icons/sharp-lips.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
@@ -1115,7 +1115,7 @@ export class Fireball extends Ability{
     constructor(config){
         super({
             name: config.name || 'fireball',
-            type: 'fireball',
+            type: congifg.type || 'fireball',
             description: "Shoot a target with a ball of fire made with elemental magic. Has a chance to burn the target.",
             iconSrc: './assets/media/icons/fireball.png',
             background: `url(./assets/media/icons/fireball.png), linear-gradient(orangered, silver)`,
@@ -1154,7 +1154,7 @@ export class Inferno extends Ability{
     constructor(config){
         super({
             name: config.name || 'inferno',
-            type: 'inferno',
+            type: congifg.type || 'inferno',
             description: "Blast enemies with a firery inferno made with elemental magic. Has a chance to burn targets.",
             iconSrc: './assets/media/icons/wildfires.png',
             background: `url(./assets/media/icons/wildfires.png), linear-gradient(orangered, silver)`,
@@ -1196,7 +1196,7 @@ export class LightningBolt extends Ability{
     constructor(config){
         super({
             name: config.name || 'lightning bolt',
-            type: 'lightning bolt',
+            type: congifg.type || 'lightning bolt',
             description: "Blast a target with a lightning bolt made with elemental magic. Has a chance to paralyze the target.",
             iconSrc: './assets/media/icons/lightning-tree.png',
             background: `url(./assets/media/icons/lightning-tree.png), linear-gradient(blue, silver)`,
@@ -1236,7 +1236,7 @@ export class IceShard extends Ability{
     constructor(config){
         super({
             name: config.name || 'ice shard',
-            type: 'ice shard',
+            type: congifg.type || 'ice shard',
             description: "Blast a target with a shard of ice made with elemental magic. Has a chance to freeze the target causing a variety of negative effects.",
             iconSrc: './assets/media/icons/ice-spear.png',
             background: `url(./assets/media/icons/ice-spear.png), linear-gradient(cyan, silver)`,
@@ -1275,7 +1275,7 @@ export class IceWall extends Ability{
     constructor(config){
         super({
             name: config.name || 'ice wall',
-            type: 'ice wall',
+            type: congifg.type || 'ice wall',
             description: "Create a wall of ice made with elemental magic. Raises one's physical defense.",
             iconSrc: './assets/media/icons/icicles-fence.png',
             background: `url(./assets/media/icons/icicles-fence.png), linear-gradient(cyan, silver)`,
@@ -1305,7 +1305,7 @@ export class HailStorm extends Ability{
     constructor(config){
         super({
             name: config.name || 'hail storm',
-            type: 'hail storm',
+            type: congifg.type || 'hail storm',
             description: "Summon a hailstorm using elemental magic over an enemy party. Has a chance to low chance to freeze targets.",
             iconSrc: './assets/media/icons/snowing.png',
             background: `url(./assets/media/icons/snowing.png), linear-gradient(cyan, silver)`,
@@ -1348,7 +1348,7 @@ export class Shockwave extends Ability{
     constructor(config){
         super({
             name: config.name || 'shockwave',
-            type: 'shockwave',
+            type: congifg.type || 'shockwave',
             description: "Blast a target with a wave of elemental magic. Has a chance to knock over the target.",
             iconSrc: './assets/media/icons/wind-slap.png',
             background: `url(./assets/media/icons/wind-slap.png), linear-gradient(grey, silver)`,
@@ -1387,7 +1387,7 @@ export class Siphon extends Ability{
     constructor(config){
         super({
             name: config.name || 'siphon',
-            type: 'siphon',
+            type: congifg.type || 'siphon',
             description: "Absorb a target's magic points using dark arcane magic.",
             iconSrc: './assets/media/icons/body-swapping.png',
             background: `url(./assets/media/icons/body-swapping.png), linear-gradient(indigo, navy)`,
@@ -1424,7 +1424,7 @@ export class Earthquake extends Ability{//Needs Work targeting same targets twic
     constructor(config){
         super({
             name: config.name || 'earthquake',
-            type: 'earthquake',
+            type: congifg.type || 'earthquake',
             description: "Shake the ground using elemental magic and strength to summon an earthquake over an enemy party. Has a chance to knock over targets.",
             iconSrc: './assets/media/icons/earth-split.png',
             background: `url(./assets/media/icons/earth-split.png), conic-gradient(steelblue, darkslategrey, brown, silver)`,
@@ -1468,7 +1468,7 @@ export class ShootWeb extends Ability{
     constructor(config){
         super({
             name: config.name || 'shoot web',
-            type: 'shoot web',
+            type: congifg.type || 'shoot web',
             description: "Summon a web from elemental magic to surround a target. Has a chance of binding a target",
             iconSrc: './assets/media/icons/wep-spit.png',
             background: `url(./assets/media/icons/wep-spit.png), linear-gradient(olive, silver)`,
@@ -1506,7 +1506,7 @@ export class Pounce extends Ability{
     constructor(config){
         super({
             name: config.name || 'pounce',
-            type: 'pounce',
+            type: congifg.type || 'pounce',
             description: "Leap onto a target. Has a chance of knocking over smaller targets.",
             iconSrc: './assets/media/icons/paw-print.png',
             background: `url(./assets/media/icons/paw-print.png), linear-gradient(steelblue, darkslategrey)`,
@@ -1545,7 +1545,7 @@ export class Block extends Ability{
     constructor(config){
         super({
             name: config.name || 'block',
-            type: 'block',
+            type: congifg.type || 'block',
             description: "Raise a sheild in defence. Protects oneself until their next attack or blocking a attack.",
             iconSrc: './assets/media/icons/shield.png',
             background: `url(./assets/media/icons/shield.png), linear-gradient(steelblue, darkslategrey)`,
@@ -1575,7 +1575,7 @@ export class Brace extends Ability{
     constructor(config){
         super({
             name: config.name || 'brace',
-            type: 'brace',
+            type: congifg.type || 'brace',
             description: "Prepare for physical attack. Raises one's physical defense.",
             iconSrc: './assets/media/icons/shield.png',
             background: `url(./assets/media/icons/shield.png), linear-gradient(steelblue, darkslategrey)`,
@@ -1605,7 +1605,7 @@ export class Hide extends Ability{
     constructor(config){
         super({
             name: config.name || 'hide',
-            type: 'hide',
+            type: congifg.type || 'hide',
             description: "Attempt to hide. Raises one's evasion.",
             iconSrc: './assets/media/icons/double-face-mask.png',
             background: `url(./assets/media/icons/double-face-mask.png), linear-gradient(crimson, darkslategrey)`,
@@ -1635,7 +1635,7 @@ export class VineLash extends Ability{
     constructor(config){
         super({
             name: config.name || 'vine lash',
-            type: 'vine lash',
+            type: congifg.type || 'vine lash',
             description: "Summon a magical vine to constrict a target. Has a chance of binding the target.",
             iconSrc: './assets/media/icons/vine-whip.png',
             background: `url(./assets/media/icons/vine-whip.png), conic-gradient(steelblue, darkslategrey, forestgreen, silver)`,
@@ -1675,7 +1675,7 @@ export class Shapeshift extends Ability{
     constructor(config){
         super({
             name: config.name || 'shapeshift',
-            type: 'shapeshift',
+            type: congifg.type || 'shapeshift',
             description: "Use elemental magic to take the form of wild animal. Will return to normal form upon death or leaving battle.",
             iconSrc: './assets/media/icons/werewolf.png',
             background: `url(./assets/media/icons/werewolf.png), linear-gradient(forestgreen, silver)`,
@@ -1731,7 +1731,7 @@ export class CallOfSterben extends Ability{
     constructor(config){
         super({
             name: config.name || 'call of sterben',
-            type: 'call of sterben',
+            type: congifg.type || 'call of sterben',
             description: "Use elemental magic to call Sterben's beast. Will return to normal form upon death or leaving battle.",
             iconSrc: './assets/media/icons/werewolf.png',
             background: `url(./assets/media/icons/werewolf.png), linear-gradient(cyan, silver)`,
@@ -1777,7 +1777,7 @@ export class Bless extends Ability{
     constructor(config){
         super({
             name: config.name || 'bless',
-            type: 'bless',
+            type: congifg.type || 'bless',
             description: "Grant a blessing upon a target restoring the target's health every turn using light arcane magic.",
             iconSrc: './assets/media/icons/cherish.png',
             background: `url(./assets/media/icons/cherish.png), linear-gradient(gold, navy)`,
@@ -1806,7 +1806,7 @@ export class Curse extends Ability{
     constructor(config){
         super({
             name: config.name || 'curse',
-            type: 'curse',
+            type: congifg.type || 'curse',
             description: "Curse a target to absorb the target's health every turn using dark arcane magic.",
             iconSrc: './assets/media/icons/cursed-star.png',
             background: `url(./assets/media/icons/cursed-star.png), linear-gradient(indigo, navy)`,
@@ -1834,7 +1834,7 @@ export class Roar extends Ability{
     constructor(config){
         super({
             name: config.name || 'roar',
-            type: 'roar',
+            type: congifg.type || 'roar',
             description: `Let out an intimidating roar lowering enemy physical attack or raising an ally's physical attack.`,
             iconSrc: './assets/media/icons/sonic-shout.png',
             background: `url(./assets/media/icons/sonic-shout.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
@@ -1871,7 +1871,7 @@ export class Rage extends Ability{
     constructor(config){
         super({
             name: config.name || 'rage',
-            type: 'rage',
+            type: congifg.type || 'rage',
             description: `channels one's inner rage raising one's physical attack.`,
             iconSrc: './assets/media/icons/enrage.png',
             background: `url(./assets/media/icons/enrage.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
@@ -1903,7 +1903,7 @@ export class Howl extends Ability{
     constructor(config){
         super({
             name: config.name || 'howl',
-            type: 'howl',
+            type: congifg.type || 'howl',
             description: `Howl at the sky, raising a target's physical attack.`,
             iconSrc: './assets/media/icons/sonic-shout.png',
             background: `url(./assets/media/icons/sonic-shout.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
@@ -1937,7 +1937,7 @@ export class ChannelMagic extends Ability{
     constructor(config){
         super({
             name: config.name || 'channel magic',
-            type: 'channel magic',
+            type: congifg.type || 'channel magic',
             description: `Channel nearby arcane and elemental magic into a more pure and dangerous form. Increases one's magical attack.`,
             iconSrc: './assets/media/icons/mighty-force.png',
             background: `url(./assets/media/icons/mighty-force.png), linear-gradient(magenta, navy)`,
@@ -1967,7 +1967,7 @@ export class Hex extends Ability{
     constructor(config){
         super({
             name: config.name || 'hex',
-            type: 'hex',
+            type: congifg.type || 'hex',
             description: `Hex a target with arcane magic. Lower's a target's magical attack.`,
             iconSrc: './assets/media/icons/dripping-star.png',
             background: `url(./assets/media/icons/dripping-star.png), linear-gradient(indigo, navy)`,
@@ -2001,7 +2001,7 @@ export class ShootBullet extends Ability{
     constructor(config){
         super({
             name: config.name || 'shoot bullet',
-            type: 'shoot bullet',
+            type: congifg.type || 'shoot bullet',
             description: "Shoot a target with a round bullet. Has a high critical chance.",
             iconSrc: './assets/media/icons/gunshot.png',
             background: `url(./assets/media/icons/gunshot.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
@@ -2040,7 +2040,7 @@ export class Barrage extends Ability{
     constructor(config){
         super({
             name: config.name || 'barrage',
-            type: 'barrage',
+            type: congifg.type || 'barrage',
             description: "Fire a barrage of explosives at enemy targets. ",
             iconSrc: './assets/media/icons/chaingun.png',
             background: `url(./assets/media/icons/chaingun.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
@@ -2082,7 +2082,7 @@ export class Fly extends Ability{
     constructor(config){
         super({
             name: config.name || 'fly',
-            type: 'fly',
+            type: congifg.type || 'fly',
             description: "Fly into the air making one immune to melee and earth attacks.",
             iconSrc: './assets/media/icons/wing-cloak.png',
             background: `url(./assets/media/icons/wing-cloak.png), linear-gradient(grey, silver)`,
@@ -2111,7 +2111,7 @@ export class CastShadow extends Ability{
     constructor(config){
         super({
             name: config.name || 'cast shadow',
-            type: 'cast shadow',
+            type: congifg.type || 'cast shadow',
             description: "Use dark magic to cast one's shadow to fight for them. Will return to normal form upon death or leaving battle.",
             iconSrc: './assets/media/icons/shadow-follower.png',
             background: `url(./assets/media/icons/shadow-follower.png), linear-gradient(indigo, navy)`,
@@ -2179,7 +2179,7 @@ export class ExposeWeakness extends Ability{
     constructor(config){
         super({
             name: config.name || 'expose weakness',
-            type: 'expose weakness',
+            type: congifg.type || 'expose weakness',
             description: "Expose a target's weakness. Lowers a target's physical defense.",
             iconSrc: './assets/media/icons/eye-target.png',
             background: `url(./assets/media/icons/eye-target.png), linear-gradient(crimson, darkslategrey)`,
@@ -2207,7 +2207,7 @@ export class GuardBreak extends Ability{
     constructor(config){
         super({
             name: config.name || 'guard break',
-            type: 'guard break',
+            type: congifg.type || 'guard break',
             description: "Break a target's defense with a powerful blunt attack. Deals bonus damage against shielded targets",
             iconSrc: './assets/media/icons/broken-shield.png',
             background: `url(./assets/media/icons/broken-shield.png), linear-gradient(steelblue, darkslategrey)`,
@@ -2252,7 +2252,7 @@ export class AbsorbSoul extends Ability{// soul steal, thought steal, mind trick
     constructor(config){
         super({
             name: config.name || 'absorb soul',
-            type: 'absorb soul',
+            type: congifg.type || 'absorb soul',
             description: "Use dark magic to absorb part of one's soul. Steals a positive status effect from a target.",
             iconSrc: './assets/media/icons/body-swapping.png',
             background: `url(./assets/media/icons/body-swapping.png), linear-gradient(indigo, navy)`,
@@ -2329,7 +2329,7 @@ export class Impale extends Ability{
     constructor(config){
         super({
             name: config.name || 'impale',
-            type: 'impale',
+            type: congifg.type || 'impale',
             description: 'Impale a target with a charging piercing attack. Has a very high critical chance and high critical damage. Also has a chance to cause bleeding.',
             iconSrc: './assets/media/icons/pierced-body.png',
             background: `url(./assets/media/icons/pierced-body.png), linear-gradient(crimson, darkslategrey)`,
@@ -2369,7 +2369,7 @@ export class FlashFreeze extends Ability{//Needs Work targeting same targets twi
     constructor(config){
         super({
             name: config.name || 'flash freeze',
-            type: 'flash freeze',
+            type: congifg.type || 'flash freeze',
             description: "Cover the ground in an unatural pool of ice freezing all opponents.",
             iconSrc: './assets/media/icons/frozen-ring.png',
             background: `url(./assets/media/icons/frozen-ring.png), linear-gradient(cyan, silver)`,
@@ -2411,7 +2411,7 @@ export class ThrowPosionedKnife extends Ability{
     constructor(config){
         super({
             name: config.name || 'throw posioned knife',
-            type: 'throw posioned knife',
+            type: congifg.type || 'throw posioned knife',
             description: "Throw a posioned knife at a target. Poions the target.",
             iconSrc: './assets/media/icons/flying-dagger.png',
             background: `url(./assets/media/icons/flying-dagger.png), linear-gradient(crimson, darkslategrey, olive, silver)`,
@@ -2446,7 +2446,7 @@ export class SetBearTrap extends Ability{
     constructor(config){
         super({
             name: config.name || 'set bear trap',
-            type: 'set bear trap',
+            type: congifg.type || 'set bear trap',
             description: "Set a bear trap that has a chance to spring upon an enemy attack.",
             iconSrc: './assets/media/icons/man-trap.png',
             background: `url(./assets/media/icons/man-trap.png), linear-gradient(steelblue, darkslategrey)`,
@@ -2478,7 +2478,7 @@ export class ThrowNet extends Ability{
     constructor(config){
         super({
             name: config.name || 'throw net',
-            type: 'throw net',
+            type: congifg.type || 'throw net',
             description: "Throw a net at a target. Binds the target.",
             iconSrc: './assets/media/icons/fishing-net.png',
             background: `url(./assets/media/icons/fishing-net.png), linear-gradient(crimson, darkslategrey)`,
@@ -2507,7 +2507,7 @@ export class ThrowSmokeBomb extends Ability{
     constructor(config){
         super({
              name: config.name || 'throw smoke bomb',
-            type: 'throw smoke bomb',
+            type: congifg.type || 'throw smoke bomb',
             description: "Throw a smokebomb at a target. Raises target target evasion.",
             iconSrc: './assets/media/icons/smoke-bomb.png',
             speedModifier: config.speedModifier || 1.25,
@@ -2541,7 +2541,7 @@ export class DrinkHealthPotion extends Ability{
     constructor(config){
         super({
             name: config.name || 'drink health potion',
-            type: 'drink health potion',
+            type: congifg.type || 'drink health potion',
             description: "Drink a potion of health restoring half of one's hitpoints. Can be thrown at another target.",
             iconSrc: './assets/media/icons/standing-potion.png',
             speedModifier: config.speedModifier || 1,
@@ -2569,7 +2569,7 @@ export class DrinkStaminaPotion extends Ability{
     constructor(config){
         super({
             name: config.name || 'drink stamina potion',
-            type: 'drink stamina potion',
+            type: congifg.type || 'drink stamina potion',
             description: "Drink a potion of stamina restoring half of one's stamina points. Can be thrown at another target.",
             iconSrc: './assets/media/icons/square-bottle.png',
             speedModifier: config.speedModifier || 1,
@@ -2597,7 +2597,7 @@ export class DrinkMagicPotion extends Ability{
     constructor(config){
         super({
             name: config.name || 'drink magic potion',
-            type: 'drink magic potion',
+            type: congifg.type || 'drink magic potion',
             description: "Drink a potion of magic restoring half of one's magic points. Can be thrown at another target.",
             iconSrc: './assets/media/icons/potion-ball.png',
             speedModifier: config.speedModifier || 1,
@@ -2625,7 +2625,7 @@ export class UseAntidote extends Ability{
     constructor(config){
         super({
             name: config.name || 'use antidote',
-            type: 'use antidote',
+            type: congifg.type || 'use antidote',
             description: "Ingest an antidote removing the poison effect. Can be thrown at another target.",
             iconSrc: './assets/media/icons/corked-tube.png',
             speedModifier: config.speedModifier || 1,
@@ -2651,7 +2651,7 @@ export class UseAloeRemedy extends Ability{
     constructor(config){
         super({
             name: config.name || 'use aloe remedy',
-            type: 'use aloe remedy',
+            type: congifg.type || 'use aloe remedy',
             description: "Apply an aloe remedy removing the burn effect. Can be thrown at another target.",
             iconSrc: './assets/media/icons/curled-leaf.png',
             speedModifier: config.speedModifier || 1,
@@ -2677,7 +2677,7 @@ export class UseBandage extends Ability{
     constructor(config){
         super({
             name: config.name || 'use bandage',
-            type: 'use bandage',
+            type: congifg.type || 'use bandage',
             description: "Apply a bandage healting a small amount of hitpoints and removing the bleeding effect. Can be thrown at another target.",
             iconSrc: './assets/media/icons/bandage-roll.png',
             speedModifier: config.speedModifier || 1,
@@ -2705,7 +2705,7 @@ export class UseParalysisTonic extends Ability{
     constructor(config){
         super({
             name: config.name || 'use paralysis tonic',
-            type: 'use paralysis tonic',
+            type: congifg.type || 'use paralysis tonic',
             description: "Apply a bandage healting a moderate amount of stamina points and removing the paralysis effect. Can be thrown at another target.",
             iconSrc: './assets/media/icons/round-bottom-flask.png',
             speedModifier: config.speedModifier || 1,
@@ -2734,7 +2734,7 @@ export class DrinkKurtussBrewOfMadness extends Ability{
     constructor(config){
         super({
             name: config.name || 'drink kurtuss brew of madness',
-            type: 'drink kurtuss brew of madness',
+            type: congifg.type || 'drink kurtuss brew of madness',
             description: "Bottoms up...",
             iconSrc: './assets/media/icons/standing-potion.png',
             background: config.background || 'red',

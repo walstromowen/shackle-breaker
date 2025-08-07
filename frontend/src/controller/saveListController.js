@@ -101,13 +101,7 @@ export default class SaveListController{
                 this.view.enableDeleteButton();
                 
             });
-        });
-
-
-
-
-
-        
+        });     
     }
     
     async newSaveToServer() {
