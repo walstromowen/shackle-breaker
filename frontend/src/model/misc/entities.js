@@ -487,7 +487,7 @@ export class Entity{
             partyId: this.partyId,
             battleId: this.battleId,
             isSelectable: this.isSelectable,
-            nextAbility: this.nextAbility ? this.nextAbility.toSaveObject() : '',
+            nextAbility: '', //this.nextAbility ? this.nextAbility.toSaveObject() : '',
             abilityTargets: [], //this.abilityTargets.map(abilityTarget => abilityTarget.toSaveObject()), //Don't need to be saved live.
             immunities: this.immunities,
             factions: this.factions, 
