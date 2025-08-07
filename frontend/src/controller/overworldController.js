@@ -23,7 +23,7 @@ export default class OverworldController{
         this.then;
         this.elapsed;
 
-        this.playerMoveDelay = 400;
+        this.playerMoveDelay = 200;
         this.playerTimeMoved = 0;
         this.isMoving = false;
         this.count = 0;

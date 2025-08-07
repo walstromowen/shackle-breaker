@@ -153,9 +153,6 @@ export default class LobbyModel{
                 this.props.getParty()[0].setAttributes({vigor: 5, strength: 10, dexterity: 2, intelligence: 5, attunement: 3});
                 this.props.setGold(0);
                 this.props.getParty()[0].currentCorruption = 0.5;
-               
-                
-               
                 break;    
     }
         this.props.getParty()[0].unequipAttatchables(Object.keys(this.props.getParty()[0].equipment));
