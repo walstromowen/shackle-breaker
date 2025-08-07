@@ -105,7 +105,7 @@ export class DeadBush extends MapObject{
         super(
             {
                 name: config.name || 'dead bush',
-                imageCoordinates: config.imageCoordinates || [0, 2],
+                imageCoordinates: config.imageCoordinates || [1, 0],
                 traversable: config.traversable || false,
             }
         );
