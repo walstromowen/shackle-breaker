@@ -2028,6 +2028,7 @@ export class SterbensBeast extends Entity{
 export class ShackledHunter extends Entity{
     constructor(config, isRehydrate = false){
         super({
+            ...config,
             name: 'Shackled Hunter',
             type: 'Shackled Hunter',
             level: config.level || 1,
