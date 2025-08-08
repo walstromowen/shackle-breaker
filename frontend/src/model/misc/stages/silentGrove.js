@@ -122,7 +122,7 @@ export class SilentGrove2 extends Stage {
                         }),
                         new Result({
                             result: "nextStage",
-                            onActivateKey: "physicalDefenseDebuffApply",
+                            onActivateKey: "physicalAttackDebuffApply",
                             createNextStageKey: "silentGrove3",
                             messageKey: "silentGrove2Weakened",
                             weight: 2,

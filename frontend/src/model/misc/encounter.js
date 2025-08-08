@@ -1,7 +1,7 @@
 import { capiltalizeAllFirstLetters } from "../../utility.js";
 import Battle from "./battle.js";
 import {Wolf, Madman, MadMage, MadBandit, WoodWhisperer, GroveGuardian, AlterianWarrior, Spider, Skeleton, SkeletonCultist, FloatingSkull, ArmoredSkeleton, SkeletonColossus, TheSandShade, SandStalker, DryShark, DryKrakenTentacle, DryKraken, Sterben, Tiger, Panzerkamfer, Nightblade, EmperorDolos} from "./entities.js";
-import {Bleed, Frozen, Poison, SoulLinked} from "./statusEffects.js";
+import {Bleed, Frozen, MagicalAttackDebuff, PhysicalAttackDebuff, PhysicalDefenseDebuff, Poison, SoulLinked} from "./statusEffects.js";
 import {SilentGrove2, SilentGrove3, Interloper} from "./stages/silentGrove.js";
 import { Diamond, ForestStaff, HealthPotion, IceSickle, IronOre, KurtussBrewOfMadness, ParalysisTonic, Pelt, PineWood } from "./items.js";
 import { ConversationWithMadman } from "./stages/madmanAhead.js";
@@ -765,6 +765,26 @@ export const onActivateRegistery = {
         }
         }
         let status = new Poison({ holder: target });
+        status.onApplied(target, target, status);
+    },
+    physicalAttackDebuffApply: (target) => {
+        for (let i = 0; i < target.statusArray.length; i++) {
+        if (target.statusArray[i].name === "physical attack debuff") {
+            target.statusArray[i].severityModifier += 0.2;
+            return;
+        }
+        }
+        let status = new PhysicalAttackDebuff({ holder: target });
+        status.onApplied(target, target, status);
+    },
+    magicalAttackDebuffApply: (target) => {
+        for (let i = 0; i < target.statusArray.length; i++) {
+        if (target.statusArray[i].name === "magical attack debuff") {
+            target.statusArray[i].severityModifier += 0.2;
+            return;
+        }
+        }
+        let status = new MagicalAttackDebuff({ holder: target });
         status.onApplied(target, target, status);
     },
     staminaMagicDamage75Percent: (target) => {
