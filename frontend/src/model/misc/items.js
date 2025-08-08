@@ -140,7 +140,8 @@ class Material extends Item{
 
 export class Dagger extends Attachable {
     constructor(config, isRehydrate = false) {
-        super({
+         super({
+            ...config,
             name: config.name || 'dagger',
             type: config.type || 'dagger',
             description: config.description || 'A simple dagger. "Often times, a duel is another way of saying who can draw their weapon fastest" - Commander Mentoras.',
@@ -170,7 +171,7 @@ export class Dagger extends Attachable {
             evasion: config.evasion || 0,
             critical: config.critical || 0,
             abilityArray: config.abilityArray || [new Slash({}), new Thrust({})],
-        });
+        }, isRehydrate);
 
         if (!isRehydrate) this.upgrade(config.level - this.level);
     }
@@ -194,7 +195,8 @@ export class Dagger extends Attachable {
 }
 export class ShortSword extends Attachable {
     constructor(config, isRehydrate = false) {
-        super({
+         super({
+            ...config,
             name: config.name || 'shortsword',
             type: config.type || 'shortsword',
             description: config.description || 'A standard shortsword. Standard issue shortsword of the Altus legion. "A shorter longsword is a faster longsword" - Commander Mentoras.',
@@ -224,7 +226,7 @@ export class ShortSword extends Attachable {
             evasion: config.evasion || 0,
             critical: config.critical || 0,
             abilityArray: config.abilityArray || [new Slash({}), new Thrust({})],
-        });
+        }, isRehydrate);
 
         if (!isRehydrate) this.upgrade(config.level - this.level);
     }
@@ -249,7 +251,8 @@ export class ShortSword extends Attachable {
 }
 export class Spear extends Attachable {
     constructor(config, isRehydrate = false) {
-        super({
+         super({
+            ...config,
             name: config.name || 'spear',
             type: config.type || 'spear',
             description: config.description || `A standard spear. Standard issue spear of the Altus legion. "Keep your enemies close and your friends at spear's length." - Commander Mentoras.`,
@@ -279,7 +282,7 @@ export class Spear extends Attachable {
             evasion: config.evasion || 0,
             critical: config.critical || 0,
             abilityArray: config.abilityArray || [new Thrust({})],
-        });
+        }, isRehydrate);
 
         if (!isRehydrate) this.upgrade(config.level - this.level);
     }
@@ -305,7 +308,8 @@ export class Spear extends Attachable {
 }
 export class BlacksmithHammer extends Attachable {
     constructor(config, isRehydrate = false) {
-        super({
+         super({
+            ...config,
             name: config.name || 'blacksmith hammer',
             type: config.type || 'blacksmith hammer',
             description: config.description || "A blacksmith's hammer. Since what many consider to be the fall of Altus kingdom, quality weapons are hard to come by. Perhaps this explains the blood stains on this ordinary hammer",
@@ -335,7 +339,7 @@ export class BlacksmithHammer extends Attachable {
             evasion: config.evasion || 0,
             critical: config.critical || 0,
             abilityArray: config.abilityArray || [new Strike({})],
-        });
+        }, isRehydrate);
 
         if (!isRehydrate) this.upgrade(config.level - this.level);
     }
@@ -363,7 +367,8 @@ export class BlacksmithHammer extends Attachable {
 }
 export class Handaxe extends Attachable {
     constructor(config, isRehydrate = false) {
-        super({
+         super({
+            ...config,
             name: config.name || 'handaxe',
             type: config.type || 'handaxe',
             description: config.description || `A battered handaxe. After the fall of Altus kingdom, many common tools were repurposed as weapons much like this well worn axe. "An axe is a simple lever. The harder you pull the lever, the quicker your work becomes." - Commander Mentoras.`,
@@ -393,7 +398,7 @@ export class Handaxe extends Attachable {
             evasion: config.evasion || 0,
             critical: config.critical || 0,
             abilityArray: config.abilityArray || [new Slash({}), new Cleave({})],
-        });
+        }, isRehydrate);
 
         if (!isRehydrate) this.upgrade(config.level - this.level);
     }
@@ -418,7 +423,8 @@ export class Handaxe extends Attachable {
 }
 export class Shortbow extends Attachable {
     constructor(config, isRehydrate = false) {
-        super({
+         super({
+            ...config,
             name: config.name || 'shortbow',
             type: config.type || 'shortbow',
             description: config.description || `A wooden shortbow. A standard issue shortbow among scouts and archers of the Altus kingdom. "Shortbows are good at evening the odds in unfair fights. They are also particuarlily popular among those bad at playing the violin." - Commander Mentoras.`,
@@ -448,7 +454,7 @@ export class Shortbow extends Attachable {
             evasion: config.evasion || 0,
             critical: config.critical || 0,
             abilityArray: config.abilityArray || [new ShootArrow({}), new Tripleshot({})],
-        });
+        }, isRehydrate);
 
         if (!isRehydrate) this.upgrade(config.level - this.level);
     }
@@ -474,8 +480,9 @@ export class Shortbow extends Attachable {
 }
 export class ArcaneStaff extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'arcane staff',
+     super({
+            ...config,
+            name: config.name || 'arcane staff',
       type: config.type || 'arcane staff',
       description: config.description || "A wooden staff imbued with arcane. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time",
       imageSrc: config.imageSrc || './assets/media/icons/wizard-staff.png',
@@ -505,7 +512,7 @@ export class ArcaneStaff extends Attachable {
       critical: config.critical || 0,
       abilityArray:
         config.abilityArray || [new Strike({}), new MagicMissile({})],
-    });
+    }, isRehydrate);
 
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
@@ -532,8 +539,9 @@ export class ArcaneStaff extends Attachable {
 }
 export class LightStaff extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'light staff',
+     super({
+            ...config,
+            name: config.name || 'light staff',
       type: config.type || 'light staff',
       description: config.description || "A wooden staff imbued with light. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time",
       imageSrc: config.imageSrc || './assets/media/icons/wizard-staff.png',
@@ -563,7 +571,7 @@ export class LightStaff extends Attachable {
       critical: config.critical || 0,
       abilityArray:
         config.abilityArray || [new Strike({}), new LesserHeal({})],
-    });
+    }, isRehydrate);
 
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
@@ -590,11 +598,12 @@ export class LightStaff extends Attachable {
 }
 export class DarkStaff extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'dark staff',
-      type: config.type || 'dark staff',
-      description:
-        config.description || "A wooden staff imbued with darkness. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time",
+     super({
+    ...config,
+    name: config.name || 'dark staff',
+    type: config.type || 'dark staff',
+    description:
+    config.description || "A wooden staff imbued with darkness. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time",
       imageSrc: config.imageSrc || './assets/media/icons/wizard-staff.png',
       price: config.price || 200,
       slot: config.slot || 'oneHand',
@@ -621,7 +630,7 @@ export class DarkStaff extends Attachable {
       evasion: config.evasion || 0,
       critical: config.critical || 0,
       abilityArray: config.abilityArray || [new Strike({}), new DarkOrb({})],
-    });
+    }, isRehydrate);
 
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
@@ -651,38 +660,39 @@ export class DarkStaff extends Attachable {
 }
 export class FireStaff extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'fire staff',
-      type: config.type || 'fire staff',
-      description:
+     super({
+        ...config,
+        name: config.name || 'fire staff',
+        type: config.type || 'fire staff',
+        description:
         config.description || "A wooden staff imbued with fire. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time",
-      imageSrc: config.imageSrc || './assets/media/icons/wizard-staff.png',
-      price: config.price || 200,
-      slot: config.slot || 'oneHand',
-      level: config.level || 1,
-      hp: config.hp || 0,
-      stamina: config.stamina || 0,
-      magic: config.magic || 0,
-      hpRecovery: config.hpRecovery || 0,
-      staminaRecovery: config.staminaRecovery || 0,
-      magicRecovery: config.magicRecovery || 2,
-      bluntAttack: config.bluntAttack || 1,
-      pierceAttack: config.pierceAttack || 1,
-      arcaneAttack: config.arcaneAttack || 0,
-      elementalAttack: config.elementalAttack || 3,
-      bluntDefense: config.bluntDefense || 0,
-      pierceDefense: config.pierceDefense || 0,
-      arcaneDefense: config.arcaneDefense || 0,
-      elementalDefense: config.elementalDefense || 0,
-      bluntResistance: config.bluntResistance || 0,
-      pierceResistance: config.pierceResistance || 0,
-      arcaneResistance: config.arcaneResistance || 0,
-      elementalResistance: config.elementalResistance || 0,
-      speed: config.speed || 0,
-      evasion: config.evasion || 0,
-      critical: config.critical || 0,
-      abilityArray: config.abilityArray || [new Strike({}), new Fireball({})],
-    });
+        imageSrc: config.imageSrc || './assets/media/icons/wizard-staff.png',
+        price: config.price || 200,
+        slot: config.slot || 'oneHand',
+        level: config.level || 1,
+        hp: config.hp || 0,
+        stamina: config.stamina || 0,
+        magic: config.magic || 0,
+        hpRecovery: config.hpRecovery || 0,
+        staminaRecovery: config.staminaRecovery || 0,
+        magicRecovery: config.magicRecovery || 2,
+        bluntAttack: config.bluntAttack || 1,
+        pierceAttack: config.pierceAttack || 1,
+        arcaneAttack: config.arcaneAttack || 0,
+        elementalAttack: config.elementalAttack || 3,
+        bluntDefense: config.bluntDefense || 0,
+        pierceDefense: config.pierceDefense || 0,
+        arcaneDefense: config.arcaneDefense || 0,
+        elementalDefense: config.elementalDefense || 0,
+        bluntResistance: config.bluntResistance || 0,
+        pierceResistance: config.pierceResistance || 0,
+        arcaneResistance: config.arcaneResistance || 0,
+        elementalResistance: config.elementalResistance || 0,
+        speed: config.speed || 0,
+        evasion: config.evasion || 0,
+        critical: config.critical || 0,
+        abilityArray: config.abilityArray || [new Strike({}), new Fireball({})],
+    }, isRehydrate);
 
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
@@ -706,8 +716,9 @@ export class FireStaff extends Attachable {
 }
 export class LightningStaff extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'lightning staff',
+     super({
+            ...config,
+            name: config.name || 'lightning staff',
       type: config.type || 'lightning staff',
       description:
         config.description || "A wooden staff imbued with lightning. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time",
@@ -737,7 +748,7 @@ export class LightningStaff extends Attachable {
       evasion: config.evasion || 0,
       critical: config.critical || 0,
       abilityArray: config.abilityArray || [new Strike({}), new LightningBolt({})],
-    });
+    }, isRehydrate);
 
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
@@ -761,8 +772,9 @@ export class LightningStaff extends Attachable {
 }
 export class IceStaff extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'ice staff',
+     super({
+            ...config,
+            name: config.name || 'ice staff',
       type: config.type || 'ice staff',
       description:
         config.description || "A wooden staff imbued with ice. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time",
@@ -792,7 +804,7 @@ export class IceStaff extends Attachable {
       evasion: config.evasion || 0,
       critical: config.critical || 0,
       abilityArray: config.abilityArray || [new Strike({}), new IceShard({})],
-    });
+    }, isRehydrate);
 
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
@@ -819,8 +831,9 @@ export class IceStaff extends Attachable {
 }
 export class ForestStaff extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'forest staff',
+     super({
+            ...config,
+            name: config.name || 'forest staff',
       type: config.type || 'forest staff',
       description:
         config.description || "A carved walking staff made from the branch of a tree. The discovery of the artifact released the potential of many ordinary things like this former tree branch.",
@@ -850,7 +863,7 @@ export class ForestStaff extends Attachable {
       evasion: config.evasion || 0,
       critical: config.critical || 0,
       abilityArray: config.abilityArray || [new Strike({}), new VineLash({})],
-    });
+    }, isRehydrate);
 
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
@@ -877,8 +890,9 @@ export class ForestStaff extends Attachable {
 }
 export class Flintlock extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'flintlock',
+     super({
+            ...config,
+            name: config.name || 'flintlock',
       type: config.type || 'flintlock',
       description:
         config.description || 'A flintlock pistol commonly held by Panzerian engineers. Firearms were first invented by Panzerians and although often considered more intimidating than bows, they are often less acurate. That being said, a well placed bullet can reach places that no arrow can.',
@@ -908,7 +922,7 @@ export class Flintlock extends Attachable {
       evasion: config.evasion || 0.01,
       critical: config.critical || 0.05,
       abilityArray: config.abilityArray || [new ShootBullet({})],
-    });
+    }, isRehydrate);
 
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
@@ -932,8 +946,9 @@ export class Flintlock extends Attachable {
 }
 export class LinenShirt extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'linen shirt',
+     super({
+            ...config,
+            name: config.name || 'linen shirt',
       type: config.type || 'linen shirt',
       description:
         config.description || 'A heavily worn linen shirt. Standard article of clothing for citizens of the Altus kingdom, or rather, what is left of them.',
@@ -963,7 +978,7 @@ export class LinenShirt extends Attachable {
       evasion: config.evasion || 0,
       critical: config.critical || 0,
       abilityArray: config.abilityArray || [],
-    });
+    }, isRehydrate);
 
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
@@ -983,8 +998,9 @@ export class LinenShirt extends Attachable {
 }
 export class LinenPants extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'linen pants',
+     super({
+            ...config,
+            name: config.name || 'linen pants',
       type: config.type || 'linen pants',
       description:
         config.description || 'A heavily worn pair of linen trousers. Standard article of clothing for citizens of the Altus kingdom, or rather, what is left of them.',
@@ -1014,7 +1030,7 @@ export class LinenPants extends Attachable {
       evasion: config.evasion || 0,
       critical: config.critical || 0,
       abilityArray: config.abilityArray || [],
-    });
+    }, isRehydrate);
 
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
@@ -1034,8 +1050,9 @@ export class LinenPants extends Attachable {
 }
 export class LeatherHelmet extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'leather helmet',
+     super({
+            ...config,
+            name: config.name || 'leather helmet',
       type: config.type || 'leather helmet',
       description:
         config.description || 'A leather helmet. A standard issue helmet among scouts and archers of the Altus kingdom.',
@@ -1065,7 +1082,7 @@ export class LeatherHelmet extends Attachable {
       evasion: config.evasion || 0.02,
       critical: config.critical || 0.02,
       abilityArray: config.abilityArray || [],
-    });
+    }, isRehydrate);
 
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
@@ -1092,8 +1109,9 @@ export class LeatherHelmet extends Attachable {
 }
 export class LeatherHood extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'leather hood',
+     super({
+            ...config,
+            name: config.name || 'leather hood',
       type: config.type || 'leather hood',
       description:
         config.description || 'A hood that obscures the face made of dark leather. Although most indulged in the discovery of magic, there were a few that found it ominous.',
@@ -1123,7 +1141,7 @@ export class LeatherHood extends Attachable {
       evasion: config.evasion || 0.03,
       critical: config.critical || 0.03,
       abilityArray: config.abilityArray || [],
-    });
+    }, isRehydrate);
 
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
@@ -1150,8 +1168,9 @@ export class LeatherHood extends Attachable {
 }
 export class LeatherChestplate extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'leather chestplate',
+     super({
+            ...config,
+            name: config.name || 'leather chestplate',
       type: config.type || 'leather chestplate',
       description:
         config.description || 'A leather chestplate. A standard issue chestplate among scouts and archers of the Altus kingdom.',
@@ -1181,7 +1200,7 @@ export class LeatherChestplate extends Attachable {
       evasion: config.evasion || 0.02,
       critical: config.critical || 0.02,
       abilityArray: config.abilityArray || [],
-    });
+    }, isRehydrate);
 
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
@@ -1208,7 +1227,8 @@ export class LeatherChestplate extends Attachable {
 }
 export class LeatherGloves extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'leather gloves',
             type: 'leather gloves',
             description: 'Leather gloves. A common article of clothing among worker of the Altus kingdom. With the discovery of magic, many in the altus kingdom lost appreciation for common safety practices like hand protection.',
@@ -1270,8 +1290,9 @@ export class LeatherGloves extends Attachable{
 }
 export class LeatherGreaves extends Attachable {
   constructor(config = {}, isRehydrate = false) {
-    super({
-      name: config.name || 'leather greaves',
+     super({
+            ...config,
+            name: config.name || 'leather greaves',
       type: config.type || 'leather greaves',
       description: config.description || 'Leather greaves. Standard issue greaves among scouts and archers of the Altus kingdom.',
       imageSrc: config.imageSrc || './assets/media/icons/armor-cuisses.png',
@@ -1300,7 +1321,7 @@ export class LeatherGreaves extends Attachable {
       evasion: config.evasion || 0.02,
       critical: config.critical || 0.02,
       abilityArray: config.abilityArray || [],
-    });
+    }, isRehydrate);
 
     if (!isRehydrate) this.upgrade(this.level - 1);
   }
@@ -1327,8 +1348,9 @@ export class LeatherGreaves extends Attachable {
 }
 export class LeatherBoots extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'leather boots',
+     super({
+            ...config,
+            name: config.name || 'leather boots',
       type: config.type || 'leather boots',
       description:
         config.description ||
@@ -1359,7 +1381,7 @@ export class LeatherBoots extends Attachable {
       evasion: config.evasion || 0.02,
       critical: config.critical || 0.01,
       abilityArray: config.abilityArray || [],
-    });
+    }, isRehydrate);
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
 
@@ -1384,8 +1406,9 @@ export class LeatherBoots extends Attachable {
 }
 export class IronHelm extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'iron helm',
+     super({
+            ...config,
+            name: config.name || 'iron helm',
       type: config.type || 'iron helm',
       description:
         config.description ||
@@ -1416,7 +1439,7 @@ export class IronHelm extends Attachable {
       evasion: config.evasion || -0.01,
       critical: config.critical || 0.0,
       abilityArray: config.abilityArray || [],
-    });
+    }, isRehydrate);
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
 
@@ -1438,8 +1461,9 @@ export class IronHelm extends Attachable {
 }
 export class IronChainmail extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'iron chainmail',
+     super({
+            ...config,
+            name: config.name || 'iron chainmail',
       type: config.type || 'iron chainmail',
       description:
         config.description ||
@@ -1470,7 +1494,7 @@ export class IronChainmail extends Attachable {
       evasion: config.evasion || -0.01,
       critical: config.critical || 0,
       abilityArray: config.abilityArray || [],
-    });
+    }, isRehydrate);
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
 
@@ -1492,8 +1516,9 @@ export class IronChainmail extends Attachable {
 }
 export class IronGauntlets extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'iron gauntlets',
+     super({
+            ...config,
+            name: config.name || 'iron gauntlets',
       type: config.type || 'iron gauntlets',
       description: config.description || 'Heavy iron gauntlets. Standard issue gauntlets among soldiers and guards of the Altus kingdom.',
       imageSrc: config.imageSrc || './assets/media/icons/gauntlet.png',
@@ -1522,7 +1547,7 @@ export class IronGauntlets extends Attachable {
       evasion: config.evasion || -0.01,
       critical: config.critical || 0.0,
       abilityArray: config.abilityArray || [],
-    });
+    }, isRehydrate);
 
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
@@ -1546,8 +1571,9 @@ export class IronGauntlets extends Attachable {
 }
 export class IronGreaves extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'iron greaves',
+     super({
+            ...config,
+            name: config.name || 'iron greaves',
       type: config.type || 'iron greaves',
       description:
         config.description ||
@@ -1578,7 +1604,7 @@ export class IronGreaves extends Attachable {
       evasion: config.evasion || -0.01,
       critical: config.critical || 0,
       abilityArray: config.abilityArray || [],
-    });
+    }, isRehydrate);
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
 
@@ -1600,8 +1626,9 @@ export class IronGreaves extends Attachable {
 }
 export class IronBoots extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'iron boots',
+     super({
+            ...config,
+            name: config.name || 'iron boots',
       type: config.type || 'iron boots',
       description:
         config.description ||
@@ -1632,7 +1659,7 @@ export class IronBoots extends Attachable {
       evasion: config.evasion || -0.01,
       critical: config.critical || 0,
       abilityArray: config.abilityArray || [],
-    });
+    }, isRehydrate);
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
 
@@ -1654,8 +1681,9 @@ export class IronBoots extends Attachable {
 }
 export class ClothHood extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'cloth hood',
+     super({
+            ...config,
+            name: config.name || 'cloth hood',
       type: config.type || 'cloth hood',
       description:
         config.description ||
@@ -1686,7 +1714,7 @@ export class ClothHood extends Attachable {
       evasion: config.evasion || 0.01,
       critical: config.critical || 0,
       abilityArray: config.abilityArray || [],
-    });
+    }, isRehydrate);
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
 
@@ -1709,8 +1737,9 @@ export class ClothHood extends Attachable {
 }
 export class ClothRobe extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'cloth robe',
+     super({
+            ...config,
+            name: config.name || 'cloth robe',
       type: config.type || 'cloth robe',
       description:
         config.description ||
@@ -1741,7 +1770,7 @@ export class ClothRobe extends Attachable {
       evasion: config.evasion || 0.01,
       critical: config.critical || 0,
       abilityArray: config.abilityArray || [],
-    });
+    }, isRehydrate);
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
 
@@ -1764,7 +1793,8 @@ export class ClothRobe extends Attachable {
 }
 export class Buckler extends Attachable {
     constructor(config, isRehydrate = false) {
-        super({
+         super({
+            ...config,
             name: config.name || 'buckler',
             type: config.type || 'buckler',
             description: config.description || 'A wooden buckler. A buckler fashioned from hard wood. A blue and green symbol of unknown origin is painted on its front.',
@@ -1794,7 +1824,7 @@ export class Buckler extends Attachable {
             evasion: config.evasion || 0,
             critical: config.critical || 0,
             abilityArray: config.abilityArray || [new Block({})],
-        });
+        }, isRehydrate);
 
         if (!isRehydrate) this.upgrade(config.level - this.level);
     }
@@ -1814,8 +1844,9 @@ export class Buckler extends Attachable {
 }
 export class IronShield extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'iron shield',
+     super({
+            ...config,
+            name: config.name || 'iron shield',
       type: config.type || 'iron shield',
       description:
         config.description ||
@@ -1846,7 +1877,7 @@ export class IronShield extends Attachable {
       evasion: config.evasion || -0.01,
       critical: config.critical || 0,
       abilityArray: config.abilityArray || [new Block({})],
-    });
+    }, isRehydrate);
 
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
@@ -1872,8 +1903,9 @@ export class IronShield extends Attachable {
 }
 export class PanzerkamferArmor extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'panzerkamfer armor',
+     super({
+            ...config,
+            name: config.name || 'panzerkamfer armor',
       type: config.type || 'panzerkamfer armor',
       description:
         config.description ||
@@ -1904,7 +1936,7 @@ export class PanzerkamferArmor extends Attachable {
       evasion: config.evasion || 0.02,
       critical: config.critical || 0.05,
       abilityArray: config.abilityArray || [new Barrage({})],
-    });
+    }, isRehydrate);
 
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
@@ -1930,8 +1962,9 @@ export class PanzerkamferArmor extends Attachable {
 }
 export class GreatSword extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'greatsword',
+     super({
+            ...config,
+            name: config.name || 'greatsword',
       type: config.type || 'greatsword',
       description:
         config.description ||
@@ -1962,7 +1995,7 @@ export class GreatSword extends Attachable {
       evasion: config.evasion || -1,
       critical: config.critical || 0,
       abilityArray: config.abilityArray || [new Slash({}), new Cleave({}), new Thrust({})],
-    });
+    }, isRehydrate);
 
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
@@ -1990,8 +2023,9 @@ export class GreatSword extends Attachable {
 //Legendary Items
 export class IceSickle extends Attachable {
   constructor(config, isRehydrate = false) {
-    super({
-      name: config.name || 'ice sickle',
+     super({
+            ...config,
+            name: config.name || 'ice sickle',
       type: config.type || 'ice sickle',
       description: config.description || "Legends speak of an ancient wanderer from a distant land guided by the stars. As the story goes, the wander's travels left him broken and alone. At his very lowest, the wanderer cried out for help. Just then, a beast equally as broken and alone, is said to have offered him refugee. Many believe this man to be the founder of Panzeria, although his body was never found.",
       imageSrc: config.imageSrc || './assets/media/icons/sickle.png',
@@ -2020,7 +2054,7 @@ export class IceSickle extends Attachable {
       evasion: config.evasion || 0.01,
       critical: config.critical || 0.02,
       abilityArray: config.abilityArray || [new Slash({}), new FlashFreeze({})],
-    });
+    }, isRehydrate);
 
     if (!isRehydrate) this.upgrade(config.level - this.level);
   }
@@ -2045,143 +2079,155 @@ export class IceSickle extends Attachable {
 
 //End Legnedary Items
 export class PineWood extends Material{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'pine wood',
             type: 'pine wood',
             description: 'A pine wood board. Boards such are these are considered softwood, and although plentiful, are less sturdy than hardwoods',
             imageSrc: './assets/media/icons/wood-beam.png',
             price: 100,
-        });
+        }, isRehydrate);
     }
 }
 export class Pelt extends Material{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'pelt',
             type: 'pelt',
             description: 'A valuable animal hide. Pelt of a common animal.',
             imageSrc: './assets/media/icons/animal-hide.png',
             price: 100,
-        });
+        }, isRehydrate);
     }
 }
 export class IronOre extends Material{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'iron ore',
             type: 'iron ore',
             description: 'Raw iron ore.',
             imageSrc: './assets/media/icons/ore.png',
             price: 150,
-        });
+        }, isRehydrate);
     }
 }
 export class Diamond extends Material{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'diamond',
             type: 'diamond',
             description: 'A valuable diamond. Rare gems have always captured the hearts of greedy men, perhaps even more so the hearts of madmen.',
             imageSrc: './assets/media/icons/cut-diamond.png',
             price: 1000,
-        });
+        }, isRehydrate);
     }
 }
 export class HealthPotion extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'health potion',
             type: 'health potion',
             description: 'A magical brew designed to restore health',
             imageSrc: './assets/media/icons/standing-potion.png',
             price: 20,
             abilityArray: [new DrinkHealthPotion({})],
-            charges: 1,
-        });
+            charges: config.charges || 1,
+        }, isRehydrate);
     }
 }
 export class StaminaPotion extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'stamina potion',
             type: 'stamina potion',
             description: 'A magical brew designed to restore stamina',
             imageSrc: './assets/media/icons/square-bottle.png',
             price: 20,
             abilityArray: [new DrinkStaminaPotion({})],
-            charges: 1,
-        });
+            charges: config.charges ||  1,
+        }, isRehydrate);
     }
 }
 export class MagicPotion extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'magic potion',
             type: 'magic potion',
             description: 'A magical brew designed to restore magic',
             imageSrc: './assets/media/icons/potion-ball.png',
             price: 20,
             abilityArray: [new DrinkMagicPotion({})],
-            charges: 1,
-        });
+            charges: config.charges ||  1,
+        }, isRehydrate);
     }
 }
 export class Antidote extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name:'antidote',
             type: 'antidote',
             description: 'An antidote used to treat most poisons.',
             imageSrc: './assets/media/icons/corked-tube.png',
             price: 30,
             abilityArray: [new UseAntidote({})],
-            charges: 1,
-        });
+            charges: config.charges ||  1,
+        }, isRehydrate);
     }
 }
 export class AloeRemedy extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'aloe remedy',
             type: 'aloe remedy',
             description: 'A remedy used to treat burns.',
             imageSrc: './assets/media/icons/curled-leaf.png',
             price: 30,
             abilityArray: [new UseAloeRemedy({})],
-            charges: 1,
-        });
+            charges: config.charges ||  1,
+        }, isRehydrate);
     }
 }
 export class Bandage extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'bandage',
             type: 'bandage',
             description: 'A bandage used to stop bleeding.',
             imageSrc: './assets/media/icons/bandage-roll.png',
             price: 30,
             abilityArray: [new UseBandage({})],
-            charges: 1,
-        });
+            charges: config.charges ||  1,
+        }, isRehydrate);
     }
 }
 export class ParalysisTonic extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'paralysis tonic',
             type: 'paralysis tonic',
             description: `A tonic used to treat paralysis. Although the power of the artifact drove many mad, a select few used its power for good resulting in major breakthroughs in medicine.`,
             imageSrc: './assets/media/icons/round-bottom-flask.png',
             price: 30,
             abilityArray: [new UseParalysisTonic({})],
-            charges: 1,
-        });
+            charges: config.charges ||  1,
+        }, isRehydrate);
     }
 }
 export class PoisonedKnife extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'poisoned knife',
             type: 'poisoned knife',
             description: 'A small knife, dipped in poison, that can be thrown during combat',
@@ -2189,12 +2235,13 @@ export class PoisonedKnife extends Consumable{
             price: 20,
             abilityArray: [new ThrowPosionedKnife({})],
             useSituations: ['battle'],
-        });
+        }, isRehydrate);
     }
 }
 export class BearTrap extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'bear trap',
             type: 'bear trap',
             description: 'A trap used for catching small game and keeping away bears or other large beasts',
@@ -2202,12 +2249,13 @@ export class BearTrap extends Consumable{
             price: 50,
             abilityArray: [new SetBearTrap({})],
             useSituations: ['battle', 'overworld'],
-        });
+        }, isRehydrate);
     }
 }
 export class Net extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'net',
             type: 'net',
             description: 'A net used for trapping small creatures',
@@ -2215,12 +2263,13 @@ export class Net extends Consumable{
             price: 50,
             abilityArray: [new ThrowNet({})],
             useSituations: ['battle'],
-        });
+        }, isRehydrate);
     }
 }
 export class SmokeBomb extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'smoke bomb',
             type: 'smoke bomb',
             description: 'A smoke bomb for hasty escapes or dramatic entrances.',
@@ -2228,12 +2277,13 @@ export class SmokeBomb extends Consumable{
             price: 50,
             abilityArray: [new ThrowSmokeBomb({})],
             useSituations: ['battle'],
-        });
+        }, isRehydrate);
     }
 }
 export class ScrollOfInferno extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'scroll of inferno',
             type: 'scroll of inferno',
             description: 'A magical scroll, that when read, summons an inferno to engulf enemies.',
@@ -2241,13 +2291,14 @@ export class ScrollOfInferno extends Consumable{
             price: 200,
             abilityArray: [new Inferno({damageModifier:2.3, magicCost: 0.1})],
             useSituations: ['battle'],
-            charges: 1,
-        });
+            charges: config.charges ||  2,
+        }, isRehydrate);
     }
 }
 export class ScrollOfHailStorm extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'scroll of hailstorm',
             type: 'scroll of hailstrom',
             description: 'A magical scroll, that when read, summons a hailstrom to blow against enemies.',
@@ -2255,13 +2306,14 @@ export class ScrollOfHailStorm extends Consumable{
             price: 200,
             abilityArray: [new HailStorm({damageModifier:1.8, magicCost: 0.1})],
             useSituations: ['battle'],
-            charges: 1,
-        });
+            charges: config.charges ||  2,
+        }, isRehydrate);
     }
 }
 export class ScrollOfCastShadow extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'scroll of cast shadow',
             type: 'scroll of cast shadow',
             description: 'A magical scroll, that when read, allows one to cast their shadow to fight for them. Will return to normal form upon death or leaving battle.',
@@ -2269,13 +2321,14 @@ export class ScrollOfCastShadow extends Consumable{
             price: 200,
             abilityArray: [new CastShadow({magicCost: 0.1})],
             useSituations: ['battle'],
-            charges: 1,
-        });
+            charges: config.charges ||  2,
+        }, isRehydrate);
     }
 }
 export class KurtussBrewOfMadness extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: "kurtus's brew of madness",
             type: "kurtus's brew of madness",
             description: 'Fabled brew of Kurtus the Greatucus. It is said that the legendary warrior duo of Kurtus the Greatucus and Shmindolyn were unmatched in combat, but ultimatley succumbed to madness. It is rumored that consumption of a special concoction contributed to said madness.',
@@ -2283,12 +2336,13 @@ export class KurtussBrewOfMadness extends Consumable{
             price: 200,
             abilityArray: [new DrinkKurtussBrewOfMadness({})],
             useSituations: ['overworld'],
-        });
+        }, isRehydrate);
     }
 }
 export class Meteorite extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: "meteorite",
             type: "meteorite",
             description: 'A framgment of a meteor. The artifact is rumored to have come from another world. Much like this meteorite. Use to summon a meteor shower.',
@@ -2296,7 +2350,7 @@ export class Meteorite extends Consumable{
             price: 300,
             abilityArray: [],
             useSituations: ['overworld'],
-        });
+        }, isRehydrate);
     }
 }
 
@@ -2304,7 +2358,8 @@ export class Meteorite extends Consumable{
 
 export class Dagger extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'dagger',
             type: 'dagger',
             description: 'A simple dagger. "Often times, a duel is another way of saying who can draw their weapon fastest" - Commander Mentoras.',
@@ -2369,7 +2424,8 @@ export class Dagger extends Attachable{
 }
 export class ShortSword extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'shortsword',
             type: 'shortswor',
             description: 'A standard shortsword. Standard issue shortsword of the Altus legion. "A shorter longsword is a faster longsword" - Commander Mentoras.',
@@ -2434,7 +2490,8 @@ export class ShortSword extends Attachable{
 }
 export class Spear extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'spear',
             type: 'spear',
             description: `A standard spear. Standard issue spear of the Altus legion. "Keep your enemies close and your friends at spear's length." - Commander Mentoras.`,
@@ -2499,7 +2556,8 @@ export class Spear extends Attachable{
 }
 export class BlacksmithHammer extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'blacksmith hammer',
             type: 'blacksmith hammer',
             description: "A blacksmith's hammer. Since what many consider to be the fall of Altus kingdom, quality weapons are hard to come by. Perhaps this explains the blood stains on this ordinary hammer",
@@ -2564,7 +2622,8 @@ export class BlacksmithHammer extends Attachable{
 }
 export class Handaxe extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'handaxe',
             type: 'handaxe',
             description: `A battered handaxe. After the fall of Altus kingdom, many common tools were repurposed as weapons much like this well worn axe. "An axe is a simple lever. The harder you pull the lever, the quicker your work becomes." - Commander Mentoras.`,
@@ -2629,7 +2688,8 @@ export class Handaxe extends Attachable{
 }
 export class Shortbow extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'shortbow',
             type: 'shortbow',
             description: `A wooden shortbow. A standard issue shortbow among scouts and archers of the Altus kingdom. "Shortbows are good at evening the odds in unfair fights. They are also particuarlily popular among those bad at playing the violin." - Commander Mentoras.`,
@@ -2694,7 +2754,8 @@ export class Shortbow extends Attachable{
 }
 export class ArcaneStaff extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'arcane staff',
             type: 'arcane staff',
             description: "A wooden staff imbued with arcane. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time",
@@ -2760,7 +2821,8 @@ export class ArcaneStaff extends Attachable{
 }
 export class LightStaff extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'light staff',
             type: 'light staff',
             description: "A wooden staff imbued with light. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time",
@@ -2825,7 +2887,8 @@ export class LightStaff extends Attachable{
 }
 export class DarkStaff extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'dark staff',
             type: 'dark staff',
             description: "A wooden staff imbued with darkness. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time",
@@ -2893,7 +2956,8 @@ export class DarkStaff extends Attachable{
 }
 export class FireStaff extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'fire staff',
             type: 'fire staff',
             description: "A wooden staff imbued with fire. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time",
@@ -2955,7 +3019,8 @@ export class FireStaff extends Attachable{
 }
 export class LightningStaff extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'lightning staff',
             type: 'lightning staff',
             description: "A wooden staff imbued with lightning. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time",
@@ -3017,7 +3082,8 @@ export class LightningStaff extends Attachable{
 }
 export class IceStaff extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'ice staff',
             type: 'ice staff',
             description: "A wooden staff imbued with ice. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time",
@@ -3082,7 +3148,8 @@ export class IceStaff extends Attachable{
 }
 export class ForestStaff extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'forest staff',
             type: 'forest staff',
             description: "A carved walking staff made from the branch of a tree. The discovery of the artifact released the potential of many ordinary things like this former tree branch.",
@@ -3147,7 +3214,8 @@ export class ForestStaff extends Attachable{
 }
 export class Flintlock extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'flintlock',
             type: 'flintlock',
             description: 'A flintlock pistol commonly held by Panzerian engineers. Firearms were first invented by Panzerians and although often considered more intimidating than bows, they are often less acurate. That being said, a well placed bullet can reach places that no arrow can.',
@@ -3212,7 +3280,8 @@ export class Flintlock extends Attachable{
 }
 export class LinenShirt extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'linen shirt',
             type: 'linen shirt',
             description: 'A heavily worn linen shirt. Standard article of clothing for citizens of the Altus kingdom, or rather, what is left of them.',
@@ -3271,7 +3340,8 @@ export class LinenShirt extends Attachable{
 }
 export class LinenPants extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'linen pants',
             type: 'linen pants',
             description: 'A heavily worn pair of linen trousers. Standard article of clothing for citizens of the Altus kingdom, or rather, what is left of them.',
@@ -3330,7 +3400,8 @@ export class LinenPants extends Attachable{
 }
 export class LeatherHelmet extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'leather helmet',
             type: 'leather helmet',
             description: 'A leather helmet. A standard issue helmet among scouts and archers of the Altus kingdom.',
@@ -3392,7 +3463,8 @@ export class LeatherHelmet extends Attachable{
 }
 export class LeatherHood extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'leather hood',
             type: 'leather hood',
             description: 'A hood that obscures the face made of dark leather. Although most indulged in the discovery of magic, there were a few that found it ominous.',
@@ -3454,7 +3526,8 @@ export class LeatherHood extends Attachable{
 }
 export class LeatherChestplate extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'leather chesplate',
             type: 'leather chestplate',
             description: 'A leather chestplate. A standard issue chestplate among scouts and archers of the Altus kingdom.',
@@ -3516,7 +3589,8 @@ export class LeatherChestplate extends Attachable{
 }
 export class LeatherGloves extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'leather gloves',
             type: 'leather gloves',
             description: 'Leather gloves. A common article of clothing among worker of the Altus kingdom. With the discovery of magic, many in the altus kingdom lost appreciation for common safety practices like hand protection.',
@@ -3578,7 +3652,8 @@ export class LeatherGloves extends Attachable{
 }
 export class LeatherGreaves extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'leather greaves',
             type: 'leather greaves',
             description: 'Leather greaves. Standard issue greaves among scouts and archers of the Altus kingdom.',
@@ -3640,7 +3715,8 @@ export class LeatherGreaves extends Attachable{
 }
 export class LeatherBoots extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'leather boots',
             type: 'leather boots',
             description: 'Reliable leather boots. After discovery of magic, travelers from all over came to Altus kingdom. Few ever left.',
@@ -3702,7 +3778,8 @@ export class LeatherBoots extends Attachable{
 }
 export class IronHelm extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'iron helm',
             type: 'iron helm',
             description: `A heavy iron helm. A standard issue helm among soldiers and guards of the Altus kingdom.`,
@@ -3764,7 +3841,8 @@ export class IronHelm extends Attachable{
 }
 export class IronChainmail extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'iron chainmail',
             type: 'iron chainmail',
             description: `Heavy iron chainmail. Standard issue chainmail among soldiers and guards of the Altus kingdom.`,
@@ -3826,7 +3904,8 @@ export class IronChainmail extends Attachable{
 }
 export class IronGauntlets extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'iron gauntlets',
             type: 'iron gauntlets',
             description: `Heavy iron gauntlets. Standard issue gauntlets among soldiers and guards of the Altus kingdom.`,
@@ -3888,7 +3967,8 @@ export class IronGauntlets extends Attachable{
 }
 export class IronGreaves extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'iron greaves',
             type: 'iron greaves',
             description: `Heavy iron greaves. Standard issue greaves among soldiers and guards of the Altus kingdom.`,
@@ -3950,7 +4030,8 @@ export class IronGreaves extends Attachable{
 }
 export class IronBoots extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'iron boots',
             type: 'iron boots',
             description: `Heavy iron boots. Standard issue boots among soldiers and guards of the Altus kingdom.`,
@@ -4012,7 +4093,8 @@ export class IronBoots extends Attachable{
 }
 export class ClothHood extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'cloth hood',
             type: 'cloth hood',
             description: `A thick cloth hood. Garmets like this were common among the many seeking to gain quick riches from the discovery of magic in the Altus kingdom.`,
@@ -4074,7 +4156,8 @@ export class ClothHood extends Attachable{
 }
 export class ClothRobe extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'cloth robe',
             type: 'cloth robe',
             description: `A thick cloth robe. Garmets like this were common among the many seeking to gain quick riches from the discovery of magic in the Altus kingdom.`,
@@ -4136,7 +4219,8 @@ export class ClothRobe extends Attachable{
 }
 export class Buckler extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'buckler',
             type: 'buckler',
             description: 'A wooden buckler. A buckler fashioned from hard wood. A blue and green symbol of unknown origin is painted on its front.',
@@ -4195,7 +4279,8 @@ export class Buckler extends Attachable{
 }
 export class IronShield extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'iron sheild',
             type: 'iron sheild',
             description: 'An iron shield. A heavy shield made of solid iron. Shield weilded by knights of the Royal Altus Guard.',
@@ -4257,7 +4342,8 @@ export class IronShield extends Attachable{
 }
 export class PanzerkamferArmor extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'panzerkamfer armor',
             type: 'panzerkamfer armor',
             description: `A carefully engineered armor with an array of weapons. The Panzerkamfers were one of the Panzerian army's greatest weapons and held back the cursed Altus Kingdom following its descent into madness. However, as Panzeria began incorporating magic into the Panzerkamfer armor, the beasts themselves went mad, and Panzeria succumbed to the same madness shortly after.`,
@@ -4319,7 +4405,8 @@ export class PanzerkamferArmor extends Attachable{
 }
 export class GreatSword extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'greatsword armor',
             type: 'greatsword armor',
             description: 'A standard greatsword. Greatsword weilded by captains of the Royal Altus Guard. "A personal favorite of mine. It is like a regular sword just greater." - Commander Mentoras.',
@@ -4385,7 +4472,8 @@ export class GreatSword extends Attachable{
 //Legendary Items
 export class IceSickle extends Attachable{
     constructor(config){
-        super({
+         super({
+            ...config,
             name: config.name || 'ice sickle',
             type: 'ice sickle',
             description: "Legends speak of an ancient wanderer from a distant land guided by the stars. As the story goes, the wander's travels left him broken and alone. At his very lowest, the wanderer cried out for help. Just then, a beast equally as broken and alone, is said to have offered him refugee. Many believe this man to be the founder of Panzeria, although his body was never found." ,
@@ -4448,8 +4536,9 @@ export class IceSickle extends Attachable{
 
 //End Legnedary Items
 export class PineWood extends Material{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'pine wood',
             type: 'pine wood',
             description: 'A pine wood board. Boards such are these are considered softwood, and although plentiful, are less sturdy than hardwoods',
@@ -4459,8 +4548,9 @@ export class PineWood extends Material{
     }
 }
 export class Pelt extends Material{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'pelt',
             type: 'pelt',
             description: 'A valuable animal hide. Pelt of a common animal.',
@@ -4470,8 +4560,9 @@ export class Pelt extends Material{
     }
 }
 export class IronOre extends Material{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'iron ore',
             type: 'iron ore',
             description: 'Raw iron ore.',
@@ -4481,8 +4572,9 @@ export class IronOre extends Material{
     }
 }
 export class Diamond extends Material{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'diamond',
             type: 'diamond',
             description: 'A valuable diamond. Rare gems have always captured the hearts of greedy men, perhaps even more so the hearts of madmen.',
@@ -4492,8 +4584,9 @@ export class Diamond extends Material{
     }
 }
 export class HealthPotion extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'health potion',
             type: 'health potion',
             description: 'A magical brew designed to restore health',
@@ -4505,8 +4598,9 @@ export class HealthPotion extends Consumable{
     }
 }
 export class StaminaPotion extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'stamina potion',
             type: 'stamina potion',
             description: 'A magical brew designed to restore stamina',
@@ -4518,8 +4612,9 @@ export class StaminaPotion extends Consumable{
     }
 }
 export class MagicPotion extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'magic potion',
             type: 'magic potion',
             description: 'A magical brew designed to restore magic',
@@ -4531,8 +4626,9 @@ export class MagicPotion extends Consumable{
     }
 }
 export class Antidote extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name:'antidote',
             type: 'antidote',
             description: 'An antidote used to treat most poisons.',
@@ -4544,8 +4640,9 @@ export class Antidote extends Consumable{
     }
 }
 export class AloeRemedy extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'aloe remedy',
             type: 'aloe remedy',
             description: 'A remedy used to treat burns.',
@@ -4557,8 +4654,9 @@ export class AloeRemedy extends Consumable{
     }
 }
 export class Bandage extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'bandage',
             type: 'bandage',
             description: 'A bandage used to stop bleeding.',
@@ -4570,8 +4668,9 @@ export class Bandage extends Consumable{
     }
 }
 export class ParalysisTonic extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'paralysis tonic',
             type: 'paralysis tonic',
             description: `A tonic used to treat paralysis. Although the power of the artifact drove many mad, a select few used its power for good resulting in major breakthroughs in medicine.`,
@@ -4583,8 +4682,9 @@ export class ParalysisTonic extends Consumable{
     }
 }
 export class PoisonedKnife extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'poisoned knife',
             type: 'poisoned knife',
             description: 'A small knife, dipped in poison, that can be thrown during combat',
@@ -4596,8 +4696,9 @@ export class PoisonedKnife extends Consumable{
     }
 }
 export class BearTrap extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'bear trap',
             type: 'bear trap',
             description: 'A trap used for catching small game and keeping away bears or other large beasts',
@@ -4609,8 +4710,9 @@ export class BearTrap extends Consumable{
     }
 }
 export class Net extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'net',
             type: 'net',
             description: 'A net used for trapping small creatures',
@@ -4622,8 +4724,9 @@ export class Net extends Consumable{
     }
 }
 export class SmokeBomb extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'smokebomb',
             type: 'smokebomb',
             description: 'A smokebomb for hasty escapes or dramatic entrances.',
@@ -4635,8 +4738,9 @@ export class SmokeBomb extends Consumable{
     }
 }
 export class ScrollOfInferno extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'scroll of inferno',
             type: 'scroll of inferno',
             description: 'A magical scroll, that when read, summons an inferno to engulf enemies.',
@@ -4649,8 +4753,9 @@ export class ScrollOfInferno extends Consumable{
     }
 }
 export class ScrollOfHailStorm extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'scroll of hailstorm',
             type: 'scroll of hailstrom',
             description: 'A magical scroll, that when read, summons a hailstrom to blow against enemies.',
@@ -4663,8 +4768,9 @@ export class ScrollOfHailStorm extends Consumable{
     }
 }
 export class ScrollOfCastShadow extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: 'scroll of cast shadow',
             type: 'scroll of cast shadow',
             description: 'A magical scroll, that when read, allows one to cast their shadow to fight for them. Will return to normal form upon death or leaving battle.',
@@ -4677,8 +4783,9 @@ export class ScrollOfCastShadow extends Consumable{
     }
 }
 export class KurtussBrewOfMadness extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: "kurtus's brew of madness",
             type: "kurtus's brew of madness",
             description: 'Fabled brew of Kurtus the Greatucus. It is said that the legendary warrior duo of Kurtus the Greatucus and Shmindolyn were unmatched in combat, but ultimatley succumbed to madness. It is rumored that consumption of a special concoction contributed to said madness.',
@@ -4690,8 +4797,9 @@ export class KurtussBrewOfMadness extends Consumable{
     }
 }
 export class Meteorite extends Consumable{
-    constructor(){
-        super({
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
             name: "meteorite",
             type: "meteorite",
             description: 'A framgment of a meteor. The artifact is rumored to have come from another world. Much like this meteorite. Use to summon a meteor shower.',
