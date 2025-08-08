@@ -539,7 +539,7 @@ export class Entity{
 }
 
 export class Traveler extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Traveler',
             type: 'Traveler',
@@ -566,12 +566,12 @@ export class Traveler extends Entity{
             },
             isHostile: config.isHostile || false,
             abilityArray: [],
-        });
+        }, isRehydrate);
     }
 }
 
 export class Dog extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Dog',
             type: 'Dog',
@@ -592,7 +592,7 @@ export class Dog extends Entity{
                 mediumAnimalArmor: '',
             },
             abilityArray: [new Bite({}), new Pounce({}), new Howl({})],
-        })
+        }, isRehydrate)
     }
     scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 6)  + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
@@ -619,8 +619,9 @@ export class Dog extends Entity{
 }
 
 export class Hawk extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
+            ...config,
             name: 'Hawk',
             type: 'Hawk',
             level: config.level || 1,
@@ -638,7 +639,7 @@ export class Hawk extends Entity{
             equipment: {},
             isHostile: config.isHostile || false,
             abilityArray: [new Slash({}), new Fly({})],
-        });
+        }, isRehydrate);
     }
     scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 5)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 1);
@@ -665,7 +666,7 @@ export class Hawk extends Entity{
 }
 
 export class Tiger extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Tiger',
             type: 'Tiger',
@@ -689,7 +690,7 @@ export class Tiger extends Entity{
             lootTable: [
                 {item: new Pelt(), weight: 1},
             ],
-        })
+        }, isRehydrate)
     }
     scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 7)  + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
@@ -715,7 +716,7 @@ export class Tiger extends Entity{
     }
 }
 export class Madman extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Madman',
             type: 'Madman',
@@ -755,11 +756,11 @@ export class Madman extends Entity{
                 
             ],
             
-        });
+        }, isRehydrate);
     }
 }
 export class MadBandit extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Mad Bandit',
             type: 'Mad Bandit',
@@ -802,7 +803,7 @@ export class MadBandit extends Entity{
     }
 }
 export class MadMage extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Mad Mage',
             type: 'Mad Mage',
@@ -843,11 +844,11 @@ export class MadMage extends Entity{
                 
             ],
             
-        });
+        }, isRehydrate);
     }
 }
 export class AlterianWarrior extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: config.name || 'Alterian Warrior',
             type: 'Alterian Warrior',
@@ -885,7 +886,7 @@ export class AlterianWarrior extends Entity{
                 {item: new Bandage(), weight: 1},
                 
             ],
-        });
+        }, isRehydrate);
     }
     scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 10)  + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
@@ -911,7 +912,7 @@ export class AlterianWarrior extends Entity{
     }
 }
 export class Wolf extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Wolf',
             type: 'Wolf',
@@ -935,7 +936,7 @@ export class Wolf extends Entity{
             lootTable: [
                 {item: new Pelt(), weight: 1}
             ],
-        })
+        }, isRehydrate)
     }
     scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 5)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
@@ -961,7 +962,7 @@ export class Wolf extends Entity{
     }
 }
 export class WoodWhisperer extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Wood Whisperer',
             type: 'Wood Whisperer',
@@ -986,7 +987,7 @@ export class WoodWhisperer extends Entity{
                 {item: new PineWood(), weight: 5}
             ],
             
-        });
+        }, isRehydrate);
     }
     scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 4)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
@@ -1012,7 +1013,7 @@ export class WoodWhisperer extends Entity{
     }
 }
 export class GroveGuardian extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Grove Guardian',
             type: 'Grove Guardian',
@@ -1037,7 +1038,7 @@ export class GroveGuardian extends Entity{
                 {item: new HealthPotion({level: 1}), weight: 1},
                 {item: new PineWood(), weight: 1}
             ],
-        })
+        }, isRehydrate)
     }
     scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 10)  + (this.strength * 8) + (this.dexterity * 8) + (this.intelligence * 8) + (this.attunement * 8);
@@ -1063,7 +1064,7 @@ export class GroveGuardian extends Entity{
     }
 }
 export class Skeleton extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: config.name || 'Skeleton',
             type: 'Skeleton',
@@ -1107,7 +1108,7 @@ export class Skeleton extends Entity{
                 
             ],
             
-        });
+        }, isRehydrate);
     }
     scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 8)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
@@ -1133,7 +1134,7 @@ export class Skeleton extends Entity{
     }
 }
 export class ArmoredSkeleton extends Skeleton{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: config.name || 'Armored Skeleton',
             type: 'Amored Skeleton',
@@ -1166,11 +1167,11 @@ export class ArmoredSkeleton extends Skeleton{
                 {item: new Bandage(), weight: 1},
                 
             ],
-        });
+        }, isRehydrate);
     }
 }
 export class FloatingSkull extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Floating Skull',
             type: 'Floating Skull',
@@ -1219,7 +1220,7 @@ export class FloatingSkull extends Entity{
     }
 }
 export class SkeletonCultist extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Skeleton Cultist',
             type: 'Skeleton Cultist',
@@ -1257,7 +1258,7 @@ export class SkeletonCultist extends Entity{
                 {item: new MagicPotion(), weight: 2},
                 {item: new Bandage(), weight: 1},
             ],
-        });
+        }, isRehydrate);
     }
     scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 8)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
@@ -1283,7 +1284,7 @@ export class SkeletonCultist extends Entity{
     }
 }
 export class SkeletonColossus extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Skeleton Colossus',
             type: 'Skeleton Colossus',
@@ -1308,7 +1309,7 @@ export class SkeletonColossus extends Entity{
                 {item: new HealthPotion({level: 1}), weight: 1},
                 
             ],
-        });
+        }, isRehydrate);
     }
     scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 12)  + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 5) + (this.attunement * 5);
@@ -1334,7 +1335,7 @@ export class SkeletonColossus extends Entity{
     }
 }
 export class Spider extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Spider',
             type: 'Spider',
@@ -1357,7 +1358,7 @@ export class Spider extends Entity{
                 {item: new ParalysisTonic({level: 1}), weight: 1},
                 {item: new PoisonedKnife({level: 1}), weight: 1}
             ],
-        })
+        }, isRehydrate)
     }
     scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 3)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
@@ -1383,7 +1384,7 @@ export class Spider extends Entity{
     }
 }
 export class SandStalker extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Sand Stalker',
             type: 'Sand Stalker',
@@ -1428,7 +1429,7 @@ export class SandStalker extends Entity{
                 animationSoundEffect: './assets/audio/soundEffects/tornado.wav',
                 entity: null,
             }
-        });
+        }, isRehydrate);
         this.statusArray = config.statusArray || [new InstaDeath({holder:this})];
     }
     scaleAttributes(difficulty){
@@ -1464,7 +1465,7 @@ export class SandStalker extends Entity{
     }
 }
 export class DryShark extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Dry Shark',
             type: 'Dry Shark',
@@ -1487,7 +1488,7 @@ export class DryShark extends Entity{
                 {item: new HealthPotion({level: 1}), weight: 1},
                 {item: new Pelt(), weight: 1}
             ],
-        })
+        }, isRehydrate)
     }
     scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 8)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 2) + (this.attunement * 2);
@@ -1513,7 +1514,7 @@ export class DryShark extends Entity{
     }
 }
 export class DryEel extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Dry Eel',
             type: 'Dry Eel',
@@ -1536,7 +1537,7 @@ export class DryEel extends Entity{
                 {item: new ParalysisTonic({level: 1}), weight: 1},
                 {item: new Pelt(), weight: 1}
             ],
-        })
+        }, isRehydrate)
     }
     scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 2)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
@@ -1562,7 +1563,7 @@ export class DryEel extends Entity{
     }
 }
 export class DryKraken extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Dry Kraken',
             type: 'Dry Kraken',
@@ -1586,7 +1587,7 @@ export class DryKraken extends Entity{
                 {item: new HealthPotion({level: 1}), weight: 1},
                 {item: new Pelt(), weight: 1}
             ],
-        })
+        }, isRehydrate)
     }
     scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 20)  + (this.strength * 20) + (this.dexterity * 20) + (this.intelligence * 20) + (this.attunement * 20);
@@ -1612,7 +1613,7 @@ export class DryKraken extends Entity{
     }
 }
 export class DryKrakenTentacle extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Tentacle',
             type: 'Tentacle',
@@ -1632,7 +1633,7 @@ export class DryKrakenTentacle extends Entity{
             equipment: {},
             abilityArray: [new Strike({})],
             lootTable: [],
-        })
+        }, isRehydrate)
     }
     scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 2)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
@@ -1658,7 +1659,7 @@ export class DryKrakenTentacle extends Entity{
     }
 }
 export class TheSandShade extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'The Sand Shade',
             type: 'The Sand Shade',
@@ -1687,7 +1688,7 @@ export class TheSandShade extends Entity{
             isHostile: config.isHostile || true,
             abilityArray: config.abilityArray || [new Slash({}), new DrainLife({}), new DarkOrb({}), new ChannelMagic({})],
             lootTable: [new DarkStaff({level: 1})],
-        });
+        }, isRehydrate);
         this.nextForm = config.nextForm || {
             animation: 'twister',
             animationDuration: 6000,
@@ -1728,7 +1729,7 @@ export class TheSandShade extends Entity{
     }
 }
 export class PanzerianKnight extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: config.name || 'Panzerian Knight',
             type: 'Panzerian Knight',
@@ -1766,7 +1767,7 @@ export class PanzerianKnight extends Entity{
                 {item: new Bandage(), weight: 1},
                 
             ],
-        });
+        }, isRehydrate);
     }
     scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 10)  + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 2);
@@ -1792,7 +1793,7 @@ export class PanzerianKnight extends Entity{
     }
 }
 export class MadEngineer extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Mad Engineer',
             type: 'Mad Engineer',
@@ -1824,11 +1825,11 @@ export class MadEngineer extends Entity{
                 {item: new Bandage(), weight: 1},
                 
             ],
-        });
+        }, isRehydrate);
     }
 }
 export class IcePhoenix extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Ice Phoenix',
             type: 'Ice Phoenix',
@@ -1852,7 +1853,7 @@ export class IcePhoenix extends Entity{
                 {item: new HealthPotion(), weight: 1},
                 {item: new ScrollOfHailStorm(), weight: 1}
             ],
-        })
+        }, isRehydrate)
     }
     scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 8)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
@@ -1878,7 +1879,7 @@ export class IcePhoenix extends Entity{
     }
 }
 export class Panzerkamfer extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: config.name || 'Panzerkamfer',
             type: 'Panzerkamfer',
@@ -1899,7 +1900,7 @@ export class Panzerkamfer extends Entity{
             lootTable: [
                 {item: new PanzerkamferArmor({level: 1}), weight: 1},
             ],
-        });
+        }, isRehydrate);
     }
     scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 20)  + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 5) + (this.attunement * 5);
@@ -1925,7 +1926,7 @@ export class Panzerkamfer extends Entity{
     }
 }
 export class Sterben extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Sterben',
             type: 'Sterben',
@@ -1954,7 +1955,7 @@ export class Sterben extends Entity{
             abilityArray: [new Flurry({}), new IceWall({}), new CallOfSterben({})],
             lootTable: [new IceSickle({level: 1}), new IceStaff({level: 1}), new ScrollOfHailStorm()],
             immunities: ['blunt', 'pierce'],
-        });
+        }, isRehydrate);
     }
     scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 20)  + (this.strength * 8) + (this.dexterity * 8) + (this.intelligence * 8) + (this.attunement * 8);
@@ -1980,7 +1981,7 @@ export class Sterben extends Entity{
     }
 }
 export class SterbensBeast extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: config.name || "Sterben's Beast",
             type: "Sterben's Beast",
@@ -1999,7 +2000,7 @@ export class SterbensBeast extends Entity{
             isHostile: config.isHostile || true,
             abilityArray: [new Pounce({}), new Roar({}), new IceShard({}), new HailStorm({})],
             lootTable: [],
-        });
+        }, isRehydrate);
     }
     scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 20)  + (this.strength * 12) + (this.dexterity * 12) + (this.intelligence * 12) + (this.attunement * 12);
@@ -2025,7 +2026,7 @@ export class SterbensBeast extends Entity{
     }
 }
 export class ShackledHunter extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Shackled Hunter',
             type: 'Shackled Hunter',
@@ -2066,11 +2067,11 @@ export class ShackledHunter extends Entity{
                 
             ],
             
-        });
+        }, isRehydrate);
     }
 }
 export class ShackledSpirit extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Shackled Spirit',
             type: 'Shackled Spirit',
@@ -2107,11 +2108,11 @@ export class ShackledSpirit extends Entity{
             ],
             immunities: ['blunt', 'pierce'],
             
-        });
+        }, isRehydrate);
     }
 }
 export class TerrorBear extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Terror Bear',
             type: 'Terror Bear',
@@ -2134,7 +2135,7 @@ export class TerrorBear extends Entity{
                 {item: new HealthPotion({level: 1}), weight: 1},
                 {item: new Pelt(), weight: 1}
             ],
-        })
+        }, isRehydrate)
     }
     scaleAttributes(difficulty){
         this.maxHP = (this.vigor * 8)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
@@ -2160,7 +2161,7 @@ export class TerrorBear extends Entity{
     }
 }
 export class Nightblade extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Nightblade',
             type: 'Nightblade',
@@ -2187,11 +2188,11 @@ export class Nightblade extends Entity{
             },
             isHostile: config.isHostile || true,
             abilityArray: [new CastShadow({})],
-        });
+        }, isRehydrate);
     }
 }
 export class EmperorDolos extends Entity{
-    constructor(config){
+    constructor(config, isRehydrate = false){
         super({
             name: 'Emperor Dolos',
             type: 'Emperor Dolos',
@@ -2220,7 +2221,7 @@ export class EmperorDolos extends Entity{
             isHostile: config.isHostile || true,
             abilityArray: [new Flurry({}), new DrainLife({}), new DarkOrb({}), new Inferno({}), new ChannelMagic({}), new LightningBolt({}), new Siphon({}), new Bless({})],
             lootTable: [],
-        });
+        }, isRehydrate);
         this.statusArray = config.statusArray || [];
         this.nextForm = config.nextForm || {
             animation: 'twister',
