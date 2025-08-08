@@ -703,9 +703,9 @@ export const createLootRegistry = {
     mineIronOre: (partyLevel, biome) => [new IronOre()],
     mineDiamond: (partyLevel, biome) => [new Diamond()],
     iceSickle: (partyLevel, biome) => {return [new IceSickle({ level: 1 })]},
-    woundedTigerPelts: (partyLevel, biome) => {return [new Pelt(), new Pelt(), new Pelt()]},
+    woundedTigerPelts: (partyLevel, biome) => {return [new Pelt({}), new Pelt({}), new Pelt({})]},
     suspiciousManPotionLoot: (partyLevel, biome) => {
-        const potions = [new HealthPotion(), new KurtussBrewOfMadness(), new ParalysisTonic()];
+        const potions = [new HealthPotion({}), new KurtussBrewOfMadness({}), new ParalysisTonic({})];
         const choice = Math.floor(Math.random() * 3);
         return [potions[choice]];
     },

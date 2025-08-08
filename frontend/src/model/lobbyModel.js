@@ -165,31 +165,31 @@ export default class LobbyModel{
         let keepsake = document.getElementById('lobby-keepsake-selection').value;
         switch(keepsake){
             case 'hunters-tools':
-                this.props.setInventory([new HealthPotion(), new BearTrap(), new Net()]);
+                this.props.setInventory([new HealthPotion({}), new BearTrap({}), new Net({})]);
                 break;
             case 'bag-of-potions':
-                this.props.setInventory([new HealthPotion(), new StaminaPotion(), new MagicPotion()]);
+                this.props.setInventory([new HealthPotion({}), new StaminaPotion({}), new MagicPotion({})]);
                 break;
             case 'herbal-medicine':
-                this.props.setInventory([new HealthPotion(), new Antidote(), new AloeRemedy()]);
+                this.props.setInventory([new HealthPotion({}), new Antidote({}), new AloeRemedy({})]);
                 break;
             case 'assassins-belt':
-                this.props.setInventory([new HealthPotion(), new PoisonedKnife(), new SmokeBomb()]);
+                this.props.setInventory([new HealthPotion({}), new PoisonedKnife({}), new SmokeBomb({})]);
                 break;
             case 'artisans-tools':
-                this.props.setInventory([new HealthPotion(), new Pelt(), new PineWood(), new IronOre()]);
+                this.props.setInventory([new HealthPotion({}), new Pelt({}), new PineWood({}), new IronOre({})]);
                 break;
             case 'alchemists-vials':
-                this.props.setInventory([new HealthPotion(), new ParalysisTonic(), new SmokeBomb()]);
+                this.props.setInventory([new HealthPotion({}), new ParalysisTonic({}), new SmokeBomb({})]);
                 break;
             case 'first-aid-kit':
-                this.props.setInventory([new HealthPotion(), new Bandage(), new Bandage()]);
+                this.props.setInventory([new HealthPotion({}), new Bandage({}), new Bandage({})]);
                 break;
             case 'magic-scroll':
                 let chance = Math.floor(Math.random()*3);
-                if(chance == 0)this.props.setInventory([new HealthPotion(), new ScrollOfInferno()]);
-                if(chance == 1)this.props.setInventory([new HealthPotion(), new ScrollOfHailStorm()]);
-                if(chance == 2)this.props.setInventory([new HealthPotion(), new ScrollOfCastShadow()]);
+                if(chance == 0)this.props.setInventory([new HealthPotion({}), new ScrollOfInferno({})]);
+                if(chance == 1)this.props.setInventory([new HealthPotion({}), new ScrollOfHailStorm({})]);
+                if(chance == 2)this.props.setInventory([new HealthPotion({}), new ScrollOfCastShadow({})]);
             break;
         }
     }

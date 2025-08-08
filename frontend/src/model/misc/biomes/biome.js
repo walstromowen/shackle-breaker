@@ -61,23 +61,23 @@ export default class Biome{
             {item: ()=>{return new Dagger({level: 1})}, weight: 1},
             {item: ()=>{return new BlacksmithHammer({level: 1})}, weight: 1},
 
-            {item: ()=>{return new KurtussBrewOfMadness()}, weight: 1},
-            {item: ()=>{return new PoisonedKnife()}, weight: 1},
-            {item: ()=>{return new BearTrap()}, weight: 1},
-            {item: ()=>{return new SmokeBomb()}, weight: 1},
-            {item: ()=>{return new ScrollOfInferno()}, weight: 1},
-            {item: ()=>{return new ScrollOfHailStorm()}, weight: 1},
-            {item: ()=>{return new ScrollOfCastShadow()}, weight: 1},
+            {item: ()=>{return new KurtussBrewOfMadness({})}, weight: 1},
+            {item: ()=>{return new PoisonedKnife({})}, weight: 1},
+            {item: ()=>{return new BearTrap({})}, weight: 1},
+            {item: ()=>{return new SmokeBomb({})}, weight: 1},
+            {item: ()=>{return new ScrollOfInferno({})}, weight: 1},
+            {item: ()=>{return new ScrollOfHailStorm({})}, weight: 1},
+            {item: ()=>{return new ScrollOfCastShadow({})}, weight: 1},
 
-            {item: ()=>{return new HealthPotion()}, weight: 1},
-            {item: ()=>{return new StaminaPotion()}, weight: 1},
-            {item: ()=>{return new MagicPotion()}, weight: 1},
+            {item: ()=>{return new HealthPotion({})}, weight: 1},
+            {item: ()=>{return new StaminaPotion({})}, weight: 1},
+            {item: ()=>{return new MagicPotion({})}, weight: 1},
 
-            {item: ()=>{return new Bandage()}, weight: 1},
-            {item: ()=>{return new Antidote()}, weight: 1},
-            {item: ()=>{return new ParalysisTonic()}, weight: 1},
+            {item: ()=>{return new Bandage({})}, weight: 1},
+            {item: ()=>{return new Antidote({})}, weight: 1},
+            {item: ()=>{return new ParalysisTonic({})}, weight: 1},
             
-            {item: ()=>{return new Diamond()}, weight: 1},
+            {item: ()=>{return new Diamond({})}, weight: 1},
         ];
         this.wallMap = {
             //1 neigboring tile
