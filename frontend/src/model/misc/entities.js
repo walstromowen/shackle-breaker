@@ -540,7 +540,8 @@ export class Entity{
 
 export class Traveler extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Traveler',
             type: 'Traveler',
             level: config.level || 1,
@@ -572,7 +573,8 @@ export class Traveler extends Entity{
 
 export class Dog extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Dog',
             type: 'Dog',
             level: config.level || 1,
@@ -667,7 +669,8 @@ export class Hawk extends Entity{
 
 export class Tiger extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Tiger',
             type: 'Tiger',
             level: config.level || 1,
@@ -717,7 +720,8 @@ export class Tiger extends Entity{
 }
 export class Madman extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Madman',
             type: 'Madman',
             level: config.level || 1,
@@ -761,7 +765,8 @@ export class Madman extends Entity{
 }
 export class MadBandit extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Mad Bandit',
             type: 'Mad Bandit',
             level: config.level || 1,
@@ -804,7 +809,8 @@ export class MadBandit extends Entity{
 }
 export class MadMage extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Mad Mage',
             type: 'Mad Mage',
             level: config.level || 1,
@@ -849,7 +855,8 @@ export class MadMage extends Entity{
 }
 export class AlterianWarrior extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: config.name || 'Alterian Warrior',
             type: 'Alterian Warrior',
             level: config.level || 1,
@@ -913,7 +920,8 @@ export class AlterianWarrior extends Entity{
 }
 export class Wolf extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Wolf',
             type: 'Wolf',
             level: config.level || 1,
@@ -963,7 +971,8 @@ export class Wolf extends Entity{
 }
 export class WoodWhisperer extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Wood Whisperer',
             type: 'Wood Whisperer',
             level: config.level || 1,
@@ -1014,7 +1023,8 @@ export class WoodWhisperer extends Entity{
 }
 export class GroveGuardian extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Grove Guardian',
             type: 'Grove Guardian',
             size: 'large',
@@ -1065,7 +1075,8 @@ export class GroveGuardian extends Entity{
 }
 export class Skeleton extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: config.name || 'Skeleton',
             type: 'Skeleton',
             level: config.level || 1,
@@ -1135,7 +1146,8 @@ export class Skeleton extends Entity{
 }
 export class ArmoredSkeleton extends Skeleton{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: config.name || 'Armored Skeleton',
             type: 'Amored Skeleton',
             level: config.level || 1,
@@ -1172,7 +1184,8 @@ export class ArmoredSkeleton extends Skeleton{
 }
 export class FloatingSkull extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Floating Skull',
             type: 'Floating Skull',
             level: config.level || 1,
@@ -1221,7 +1234,8 @@ export class FloatingSkull extends Entity{
 }
 export class SkeletonCultist extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Skeleton Cultist',
             type: 'Skeleton Cultist',
             level: config.level || 1,
@@ -1285,7 +1299,8 @@ export class SkeletonCultist extends Entity{
 }
 export class SkeletonColossus extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Skeleton Colossus',
             type: 'Skeleton Colossus',
             size: 'large',
@@ -1336,7 +1351,8 @@ export class SkeletonColossus extends Entity{
 }
 export class Spider extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Spider',
             type: 'Spider',
             level: config.level || 1,
@@ -1385,7 +1401,8 @@ export class Spider extends Entity{
 }
 export class SandStalker extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Sand Stalker',
             type: 'Sand Stalker',
             level: config.level || 1,
@@ -1466,7 +1483,8 @@ export class SandStalker extends Entity{
 }
 export class DryShark extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Dry Shark',
             type: 'Dry Shark',
             level: config.level || 1,
@@ -1515,7 +1533,8 @@ export class DryShark extends Entity{
 }
 export class DryEel extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Dry Eel',
             type: 'Dry Eel',
             level: config.level || 1,
@@ -1564,7 +1583,8 @@ export class DryEel extends Entity{
 }
 export class DryKraken extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Dry Kraken',
             type: 'Dry Kraken',
             size: 'large',
@@ -1614,7 +1634,8 @@ export class DryKraken extends Entity{
 }
 export class DryKrakenTentacle extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Tentacle',
             type: 'Tentacle',
             level: config.level || 1,
@@ -1660,7 +1681,8 @@ export class DryKrakenTentacle extends Entity{
 }
 export class TheSandShade extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'The Sand Shade',
             type: 'The Sand Shade',
             size: 'large',
@@ -1730,7 +1752,8 @@ export class TheSandShade extends Entity{
 }
 export class PanzerianKnight extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: config.name || 'Panzerian Knight',
             type: 'Panzerian Knight',
             level: config.level || 1,
@@ -1794,7 +1817,8 @@ export class PanzerianKnight extends Entity{
 }
 export class MadEngineer extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Mad Engineer',
             type: 'Mad Engineer',
             level: config.level || 1,
@@ -1830,7 +1854,8 @@ export class MadEngineer extends Entity{
 }
 export class IcePhoenix extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Ice Phoenix',
             type: 'Ice Phoenix',
             level: config.level || 1,
@@ -1880,7 +1905,8 @@ export class IcePhoenix extends Entity{
 }
 export class Panzerkamfer extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: config.name || 'Panzerkamfer',
             type: 'Panzerkamfer',
             size: 'large',
@@ -1927,7 +1953,8 @@ export class Panzerkamfer extends Entity{
 }
 export class Sterben extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Sterben',
             type: 'Sterben',
             level: config.level || 1,
@@ -1982,7 +2009,8 @@ export class Sterben extends Entity{
 }
 export class SterbensBeast extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: config.name || "Sterben's Beast",
             type: "Sterben's Beast",
             size: 'large',
@@ -2073,7 +2101,8 @@ export class ShackledHunter extends Entity{
 }
 export class ShackledSpirit extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Shackled Spirit',
             type: 'Shackled Spirit',
             level: config.level || 1,
@@ -2114,7 +2143,8 @@ export class ShackledSpirit extends Entity{
 }
 export class TerrorBear extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Terror Bear',
             type: 'Terror Bear',
             level: config.level || 1,
@@ -2163,7 +2193,8 @@ export class TerrorBear extends Entity{
 }
 export class Nightblade extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Nightblade',
             type: 'Nightblade',
             level: config.level || 1,
@@ -2194,7 +2225,8 @@ export class Nightblade extends Entity{
 }
 export class EmperorDolos extends Entity{
     constructor(config, isRehydrate = false){
-        super({
+         super({
+            ...config,
             name: 'Emperor Dolos',
             type: 'Emperor Dolos',
             size: 'large',
