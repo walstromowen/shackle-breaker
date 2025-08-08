@@ -90,7 +90,7 @@ export class Entity{
         this.immunities = config.immunities || [];
         this.factions = config.factions || [];
         this.lootTable = config.lootTable || [
-            {item: new HealthPotion({level: 1}), weight: 1},
+            {item: new HealthPotion({}), weight: 1},
         ];
         if(!isRehydrate) this.addAttachableStats(Object.keys(this.equipment));
         this.nextForm = config.nextForm || null;
@@ -691,7 +691,7 @@ export class Tiger extends Entity{
             },
             abilityArray: [new Bite({}), new Pounce({}), new Roar({})],
             lootTable: [
-                {item: new Pelt(), weight: 1},
+                {item: new Pelt({}), weight: 1},
             ],
         }, isRehydrate)
     }
@@ -753,10 +753,10 @@ export class Madman extends Entity{
                 {item: new LinenShirt({level: 1}), weight: 1},
                 {item: new LinenPants({level: 1}), weight: 1},
 
-                {item: new HealthPotion(), weight: 2},
-                {item: new StaminaPotion(), weight: 1},
-                {item: new MagicPotion(), weight: 1},
-                {item: new Bandage(), weight: 1},
+                {item: new HealthPotion({}), weight: 2},
+                {item: new StaminaPotion({}), weight: 1},
+                {item: new MagicPotion({}), weight: 1},
+                {item: new Bandage({}), weight: 1},
                 
             ],
             
@@ -798,9 +798,9 @@ export class MadBandit extends Entity{
                 {item: new Dagger({level: 1}), weight: 2},
                 {item: new PoisonedKnife({level: 1}), weight: 2},
                 {item: new SmokeBomb({level: 1}), weight: 2},
-                {item: new HealthPotion(), weight: 2},
-                {item: new StaminaPotion(), weight: 1},
-                {item: new Bandage(), weight: 1},
+                {item: new HealthPotion({}), weight: 2},
+                {item: new StaminaPotion({}), weight: 1},
+                {item: new Bandage({}), weight: 1},
                 
             ],
             
@@ -843,10 +843,10 @@ export class MadMage extends Entity{
                 {item: new ClothHood({level: 1}), weight: 1},
                 {item: new ClothRobe({level: 1}), weight: 1},
 
-                {item: new HealthPotion(), weight: 2},
-                {item: new StaminaPotion(), weight: 1},
-                {item: new MagicPotion(), weight: 1},
-                {item: new Bandage(), weight: 1},
+                {item: new HealthPotion({}), weight: 2},
+                {item: new StaminaPotion({}), weight: 1},
+                {item: new MagicPotion({}), weight: 1},
+                {item: new Bandage({}), weight: 1},
                 
             ],
             
@@ -888,9 +888,9 @@ export class AlterianWarrior extends Entity{
                 {item: new ShortSword({level: 1}), weight: 1},
                 {item: new Handaxe({level: 1}), weight: 1},
                 {item: new Buckler({level: 1}), weight: 1},
-                {item: new HealthPotion(), weight: 2},
-                {item: new StaminaPotion(), weight: 2},
-                {item: new Bandage(), weight: 1},
+                {item: new HealthPotion({}), weight: 2},
+                {item: new StaminaPotion({}), weight: 2},
+                {item: new Bandage({}), weight: 1},
                 
             ],
         }, isRehydrate);
@@ -942,7 +942,7 @@ export class Wolf extends Entity{
             },
             abilityArray: [new Bite({}), new Pounce({}), new Howl({})],
             lootTable: [
-                {item: new Pelt(), weight: 1}
+                {item: new Pelt({}), weight: 1}
             ],
         }, isRehydrate)
     }
@@ -993,7 +993,7 @@ export class WoodWhisperer extends Entity{
             lootTable: [
                 {item: new ForestStaff({level: 1}), weight: 1},
                 {item: new HealthPotion({level: 1}), weight: 3},
-                {item: new PineWood(), weight: 5}
+                {item: new PineWood({}), weight: 5}
             ],
             
         }, isRehydrate);
@@ -1046,7 +1046,7 @@ export class GroveGuardian extends Entity{
             lootTable: [
                 {item: new ForestStaff({level: 1}), weight: 1},
                 {item: new HealthPotion({level: 1}), weight: 1},
-                {item: new PineWood(), weight: 1}
+                {item: new PineWood({}), weight: 1}
             ],
         }, isRehydrate)
     }
@@ -1113,9 +1113,9 @@ export class Skeleton extends Entity{
                 {item: new ShortSword({level: 1}), weight: 1},
                 {item: new Handaxe({level: 1}), weight: 1},
                 {item: new Buckler({level: 1}), weight: 1},
-                {item: new HealthPotion(), weight: 2},
-                {item: new StaminaPotion(), weight: 2},
-                {item: new Bandage(), weight: 1},
+                {item: new HealthPotion({}), weight: 2},
+                {item: new StaminaPotion({}), weight: 2},
+                {item: new Bandage({}), weight: 1},
                 
             ],
             
@@ -1173,10 +1173,10 @@ export class ArmoredSkeleton extends Skeleton{
                 {item: new GreatSword({level: 1}), weight: 1},
                 {item: new Handaxe({level: 1}), weight: 1},
                 {item: new Buckler({level: 1}), weight: 1},
-                {item: new HealthPotion(), weight: 2},
-                {item: new StaminaPotion(), weight: 2},
-                {item: new MagicPotion(), weight: 2},
-                {item: new Bandage(), weight: 1},
+                {item: new HealthPotion({}), weight: 2},
+                {item: new StaminaPotion({}), weight: 2},
+                {item: new MagicPotion({}), weight: 2},
+                {item: new Bandage({}), weight: 1},
                 
             ],
         }, isRehydrate);
@@ -1268,9 +1268,9 @@ export class SkeletonCultist extends Entity{
                 {item: new ClothHood({level: 1}), weight: 1},
                 {item: new ClothRobe({level: 1}), weight: 1},
 
-                {item: new HealthPotion(), weight: 2},
-                {item: new MagicPotion(), weight: 2},
-                {item: new Bandage(), weight: 1},
+                {item: new HealthPotion({}), weight: 2},
+                {item: new MagicPotion({}), weight: 2},
+                {item: new Bandage({}), weight: 1},
             ],
         }, isRehydrate);
     }
@@ -1437,7 +1437,7 @@ export class SandStalker extends Entity{
                 {item: new LeatherGreaves({level: 1}), weight: 1},
                 {item: new LeatherBoots({level: 1}), weight: 1},
                 {item: new HealthPotion({level: 1}), weight: 2},
-                {item: new Bandage(), weight: 1},
+                {item: new Bandage({}), weight: 1},
                 
             ],
             nextForm: config.nextForm || {
@@ -1503,8 +1503,8 @@ export class DryShark extends Entity{
             equipment: {},
             abilityArray: [new Bite({damageModifier: 1.5}), new Roar({})],
             lootTable: [
-                {item: new HealthPotion({level: 1}), weight: 1},
-                {item: new Pelt(), weight: 1}
+                {item: new HealthPotion({}), weight: 1},
+                {item: new Pelt({}), weight: 1}
             ],
         }, isRehydrate)
     }
@@ -1554,7 +1554,7 @@ export class DryEel extends Entity{
             abilityArray: [new Bite({}), new LightningBolt({})],
             lootTable: [
                 {item: new ParalysisTonic({level: 1}), weight: 1},
-                {item: new Pelt(), weight: 1}
+                {item: new Pelt({}), weight: 1}
             ],
         }, isRehydrate)
     }
@@ -1605,7 +1605,7 @@ export class DryKraken extends Entity{
             abilityArray: [new Bite({damageModifier: 1.5}), new Roar({}), new Earthquake({})],
             lootTable: [
                 {item: new HealthPotion({level: 1}), weight: 1},
-                {item: new Pelt(), weight: 1}
+                {item: new Pelt({}), weight: 1}
             ],
         }, isRehydrate)
     }
@@ -1787,7 +1787,7 @@ export class PanzerianKnight extends Entity{
                 {item: new Buckler({level: 1}), weight: 1},
                 {item: new HealthPotion(), weight: 2},
                 {item: new StaminaPotion(), weight: 2},
-                {item: new Bandage(), weight: 1},
+                {item: new Bandage({}), weight: 1},
                 
             ],
         }, isRehydrate);
@@ -1845,8 +1845,8 @@ export class MadEngineer extends Entity{
                 {item: new LinenShirt({level: 1}), weight: 1},
                 {item: new LinenPants({level: 1}), weight: 1},
 
-                {item: new HealthPotion(), weight: 2},
-                {item: new Bandage(), weight: 1},
+                {item: new HealthPotion({}), weight: 2},
+                {item: new Bandage({}), weight: 1},
                 
             ],
         }, isRehydrate);
@@ -1875,8 +1875,8 @@ export class IcePhoenix extends Entity{
             abilityArray: [new Fly({}), new IceShard({}), new ChannelMagic({})],
             lootTable: [
                 {item: new IceStaff({level: 1}), weight: 1},
-                {item: new HealthPotion(), weight: 1},
-                {item: new ScrollOfHailStorm(), weight: 1}
+                {item: new HealthPotion({}), weight: 1},
+                {item: new ScrollOfHailStorm({}), weight: 1}
             ],
         }, isRehydrate)
     }
@@ -2088,11 +2088,11 @@ export class ShackledHunter extends Entity{
                 {item: new Dagger({level: 1}), weight: 2},
                 {item: new Flintlock({level: 1}), weight: 2},
                 {item: new PoisonedKnife({level: 1}), weight: 2},
-                {item: new SmokeBomb(), weight: 2},
-                {item: new Net(), weight: 2},
-                {item: new HealthPotion(), weight: 2},
-                {item: new StaminaPotion(), weight: 1},
-                {item: new Bandage(), weight: 1},
+                {item: new SmokeBomb({}), weight: 2},
+                {item: new Net({}), weight: 2},
+                {item: new HealthPotion({}), weight: 2},
+                {item: new StaminaPotion({}), weight: 1},
+                {item: new Bandage({}), weight: 1},
                 
             ],
             
@@ -2130,10 +2130,10 @@ export class ShackledSpirit extends Entity{
                 {item: new ClothRobe({level: 1}), weight: 1},
 
                 {item: new ScrollOfCastShadow({level: 1}), weight: 2},
-                {item: new HealthPotion(), weight: 2},
-                {item: new StaminaPotion(), weight: 1},
-                {item: new MagicPotion(), weight: 1},
-                {item: new Bandage(), weight: 1},
+                {item: new HealthPotion({}), weight: 2},
+                {item: new StaminaPotion({}), weight: 1},
+                {item: new MagicPotion({}), weight: 1},
+                {item: new Bandage({}), weight: 1},
                 
             ],
             immunities: ['blunt', 'pierce'],
@@ -2164,7 +2164,7 @@ export class TerrorBear extends Entity{
             abilityArray: [new Bite({damageModifier: 1.5}), new Roar({}), new Shockwave({})],
             lootTable: [
                 {item: new HealthPotion({level: 1}), weight: 1},
-                {item: new Pelt(), weight: 1}
+                {item: new Pelt({}), weight: 1}
             ],
         }, isRehydrate)
     }
