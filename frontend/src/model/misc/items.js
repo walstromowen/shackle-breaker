@@ -1289,10 +1289,10 @@ export class LeatherGloves extends Attachable{
     }
 }
 export class LeatherGreaves extends Attachable {
-  constructor(config = {}, isRehydrate = false) {
+  constructor(config, isRehydrate = false) {
      super({
-            ...config,
-            name: config.name || 'leather greaves',
+    ...config,
+    name: config.name || 'leather greaves',
       type: config.type || 'leather greaves',
       description: config.description || 'Leather greaves. Standard issue greaves among scouts and archers of the Altus kingdom.',
       imageSrc: config.imageSrc || './assets/media/icons/armor-cuisses.png',
@@ -1407,41 +1407,40 @@ export class LeatherBoots extends Attachable {
 export class IronHelm extends Attachable {
   constructor(config, isRehydrate = false) {
      super({
-            ...config,
-            name: config.name || 'iron helm',
-      type: config.type || 'iron helm',
-      description:
-        config.description ||
-        'A heavy iron helm. A standard issue helm among soldiers and guards of the Altus kingdom.',
-      imageSrc: config.imageSrc || './assets/media/icons/barbute.png',
-      price: config.price || 100,
-      slot: config.slot || 'head',
-      level: config.level || 1,
-      hp: config.hp || 0,
-      stamina: config.stamina || 0,
-      magic: config.magic || 0,
-      hpRecovery: config.hpRecovery || 0,
-      staminaRecovery: config.staminaRecovery || 1,
-      magicRecovery: config.magicRecovery || 1,
-      bluntAttack: config.bluntAttack || 0,
-      pierceAttack: config.pierceAttack || 0,
-      arcaneAttack: config.arcaneAttack || 0,
-      elementalAttack: config.elementalAttack || 0,
-      bluntDefense: config.bluntDefense || 4,
-      pierceDefense: config.pierceDefense || 4,
-      arcaneDefense: config.arcaneDefense || 1,
-      elementalDefense: config.elementalDefense || 1,
-      bluntResistance: config.bluntResistance || 0.04,
-      pierceResistance: config.pierceResistance || 0.03,
-      arcaneResistance: config.arcaneResistance || 0.03,
-      elementalResistance: config.elementalResistance || 0.02,
-      speed: config.speed || -1,
-      evasion: config.evasion || -0.01,
-      critical: config.critical || 0.0,
-      abilityArray: config.abilityArray || [],
-    }, isRehydrate);
-    if (!isRehydrate) this.upgrade(config.level - this.level);
-  }
+        ...config,
+        name: config.name || 'iron helm',
+        type: config.type || 'iron helm',
+        description:
+        config.description ||'A heavy iron helm. A standard issue helm among soldiers and guards of the Altus kingdom.',
+        imageSrc: config.imageSrc || './assets/media/icons/barbute.png',
+        price: config.price || 100,
+        slot: config.slot || 'head',
+        level: config.level || 1,
+        hp: config.hp || 0,
+        stamina: config.stamina || 0,
+        magic: config.magic || 0,
+        hpRecovery: config.hpRecovery || 0,
+        staminaRecovery: config.staminaRecovery || 1,
+        magicRecovery: config.magicRecovery || 1,
+        bluntAttack: config.bluntAttack || 0,
+        pierceAttack: config.pierceAttack || 0,
+        arcaneAttack: config.arcaneAttack || 0,
+        elementalAttack: config.elementalAttack || 0,
+        bluntDefense: config.bluntDefense || 4,
+        pierceDefense: config.pierceDefense || 4,
+        arcaneDefense: config.arcaneDefense || 1,
+        elementalDefense: config.elementalDefense || 1,
+        bluntResistance: config.bluntResistance || 0.04,
+        pierceResistance: config.pierceResistance || 0.03,
+        arcaneResistance: config.arcaneResistance || 0.03,
+        elementalResistance: config.elementalResistance || 0.02,
+        speed: config.speed || -1,
+        evasion: config.evasion || -0.01,
+        critical: config.critical || 0.0,
+        abilityArray: config.abilityArray || [],
+        }, isRehydrate);
+        if (!isRehydrate) this.upgrade(config.level - this.level);
+    }
 
   upgrade(levels) {
     for (let i = 0; i < levels; i++) {

@@ -424,7 +424,7 @@ export class Entity{
         //this.addAttachableStats(Object.keys(this.equipment));
     }
     toSaveObject(){
-        return{
+        let saveObject = {
             name: this.name,
             type: this.type,
             apperance : this.apperance,
@@ -497,6 +497,12 @@ export class Entity{
             })),
             nextForm: this.nextForm,
         }
+        if(saveObject.nextForm){
+            if(saveObject.nextForm.entity){
+                saveObject.nextForm.entity = saveObject.nextForm.entity.toSaveObject();
+            }
+        }
+        return saveObject
     }
     static fromSaveObject(entityData, entityRegistry) {
         let statusArray = entityData.statusArray.map((statusData)=>{
@@ -522,6 +528,15 @@ export class Entity{
         let lootTable = entityData.lootTable.map((itemProbability)=>{
             return {item: itemRegistry[itemProbability.item.type](itemProbability.item), weight: itemProbability.weight}
         })
+        let nextForm = null;
+        if(entityData.nextForm){
+            if(entityData.nextForm.entity){
+                nextForm = {
+                    ...entityData.nextForm,
+                    entity: entityRegistry[entityData.nextForm.entity.type](entityData.nextForm.entity, true)
+                }
+            }
+        }
         let entityConfig = {
             ...entityData,
             equipment: equipment,
