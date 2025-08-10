@@ -497,11 +497,13 @@ export class Entity{
             })),
             nextForm: this.nextForm,
         }
+        /*
         if(saveObject.nextForm){
             if(saveObject.nextForm.entity){
                 saveObject.nextForm.entity = saveObject.nextForm.entity.toSaveObject();
             }
         }
+        */
         return saveObject
     }
     static fromSaveObject(entityData, entityRegistry) {
@@ -1489,8 +1491,7 @@ export class SandStalker extends Entity{
     createNextForm(difficulty){
         let newEntity = new SandStalker({level: this.level, statusArray: [], nextForm: null, difficulty: difficulty});
         newEntity.nextForm = null; //have to do don't know why might be able to get rid of this?
-        this.nextForm.entity = newEntity;
-        return this.nextForm.entity;
+        return newEntity
     }
     playNextFormMessage(){
         return `The ${this.name} disentegrates and quickly rematerializes!`;
@@ -1758,8 +1759,7 @@ export class TheSandShade extends Entity{
     createNextForm(difficulty){
         let newEntity = new TheSandShade({level: this.level, difficulty: difficulty, nextForm: null, abilityArray: [new Slash({}), new DrainLife({}), new Earthquake({}), new DarkOrb({})],});
         newEntity.nextForm = null; //have to do don't know why might be able to get rid of this?
-        this.nextForm.entity = newEntity;
-        return this.nextForm.entity;
+        return newEntity
     }
     playNextFormMessage(){
         return `The ${this.name} disentegrates and quickly rematerializes!`;
@@ -2304,8 +2304,7 @@ export class EmperorDolos extends Entity{
         let newEntity = new EmperorDolos({level: this.level, difficulty: difficulty, nextForm: null, abilityArray: [new Flurry({}), new AbsorbSoul({}), new DrainLife({}), new Inferno({}), new MagicMissile({}), new ChannelMagic({}), new LightningBolt({}), new Siphon({}), new Bless({})]});
         newEntity.statusArray = [new Blessed({holder:newEntity}), new PhysicalAttackBuff({holder:newEntity}), new MagicalAttackBuff({holder:newEntity})];
         newEntity.nextForm = null; //have to do don't know why might be able to get rid of this?
-        this.nextForm.entity = newEntity;
-        return this.nextForm.entity;
+        return newEntity
     }
     playNextFormMessage(){
         return `"Hope.... is an illusion....."`;
