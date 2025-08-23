@@ -9,6 +9,7 @@ import { TreasureChest } from "../stages/treasureChest.js";
 import { CaveIn } from "../stages/caveIn.js";
 import { MineralVein } from "../stages/mineralVein.js";
 import { CaveEntranceRoom, CaveExitRoom, CaveRoom1, CaveRoom2 } from "../structures.js";
+import { DeepDarkness } from "../stages/deepDarkness.js";
 
 export class Cave extends Biome{
     constructor(config){
@@ -32,6 +33,7 @@ export class Cave extends Biome{
                 {startingStage: ()=>{return new MineralVein({})}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new TreasureChest({})}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new MysteriousAltar({})}, resetOnLeave: false, weight: 1},
+                {startingStage: ()=>{return new DeepDarkness({})}, resetOnLeave: false, weight: 1},
             ],
         });
     }

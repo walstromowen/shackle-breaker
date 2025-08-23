@@ -1,6 +1,6 @@
 import { capiltalizeAllFirstLetters } from "../../utility.js";
 import Battle from "./battle.js";
-import {Wolf, Madman, MadMage, MadBandit, WoodWhisperer, GroveGuardian, AlterianWarrior, Spider, Skeleton, SkeletonCultist, FloatingSkull, ArmoredSkeleton, SkeletonColossus, TheSandShade, SandStalker, DryShark, DryKrakenTentacle, DryKraken, Sterben, Tiger, Panzerkamfer, Nightblade, EmperorDolos} from "./entities.js";
+import {Wolf, Madman, MadMage, MadBandit, WoodWhisperer, GroveGuardian, AlterianWarrior, Spider, Skeleton, SkeletonCultist, FloatingSkull, ArmoredSkeleton, SkeletonColossus, TheSandShade, SandStalker, DryShark, DryKrakenTentacle, DryKraken, Sterben, Tiger, Panzerkamfer, Nightblade, EmperorDolos, ShackledSpirit, MurderMutt, Dog, InferiorLord} from "./entities.js";
 import {Bleed, Frozen, MagicalAttackDebuff, PhysicalAttackDebuff, PhysicalDefenseDebuff, Poison, SoulLinked} from "./statusEffects.js";
 import {SilentGrove2, SilentGrove3, Interloper} from "./stages/silentGrove.js";
 import { Diamond, ForestStaff, HealthPotion, IceSickle, IronOre, KurtussBrewOfMadness, ParalysisTonic, Pelt, PineWood } from "./items.js";
@@ -19,6 +19,7 @@ import { AHeroPrevails, APowerfulChoice, TheCycleContinues, TheKingdomsFate } fr
 import { AbsorbSoul } from "./abilities.js";
 import Stage from "./stage.js";
 import { stageRegistry } from "./registries/stageRegistry.js";
+import { AncientRuinsEntrance, DeepDarkness2, DeepDarkness3 } from "./stages/deepDarkness.js";
 
 
 
@@ -95,10 +96,17 @@ export const messageRegistry = {
     treasureChestPickAttempt: (currentCharacter, currentStageEntity) => { return `${currentCharacter.name} attempts to pick the lock.`; },
     treasureChestPickSuccess: (currentCharacter, currentStageEntity) => { return `${currentCharacter.name} successfully picks the lock!`; },
     treasureChestPickFail: (currentCharacter, currentStageEntity) => { return `${currentCharacter.name} jams the lock.`; },
+    treasureChestCastSpellAttempt: (currentCharacter, currentStageEntity) => { return `${currentCharacter.name} attempts to open the chest with magic.`; },
+    treasureChestCastSpellSuccess: (currentCharacter, currentStageEntity) => { return `With a wave of the hand, the chest lid flies open!`; },
+    treasureChestCastSpellFail: (currentCharacter, currentStageEntity) => { return `${currentCharacter.name} babbles loudly at the chest in vain.`; },
+    treasureChestCastSpellSummonEvil: (currentCharacter, currentStageEntity) => { return `A dark shadow emerges from the chest, taking form as a menacing creature!`; },
     treasureChestSearchAttempt: (currentCharacter, currentStageEntity) => { return `${currentCharacter.name} searches for the key.`; },
     treasureChestSearchSuccess: (currentCharacter, currentStageEntity) => { return `${currentCharacter.name} finds the key!`; },
     treasureChestSearchFail: (currentCharacter, currentStageEntity) => { return `The key is nowhere to be found.`; },
     treasureChestLeave: (currentCharacter, currentStageEntity) => { return `${currentCharacter.name} leaves the chest.`; },
+    
+    
+    
     //Silent Grove
     silentGroveStage: (currentCharacter, currentStageEntity) => { return `The air around ${currentCharacter.name}'s party suddenly grows cold and all noise ceases...` },
     silentGrovePathMessage: (currentCharacter, currentStageEntity) => { return `${currentCharacter.name}'s party continues along the path.` },
@@ -214,6 +222,11 @@ export const messageRegistry = {
     battleSurvivorJoinFail2: (currentCharacter, currentStageEntity) => `"Hmm I am not convinced..."`,
     battleSurvivorJoinIncentive: (currentCharacter, currentStageEntity) => `"Well ... what are you waiting for? Let's get out of here!"`,
     battleSurvivorLeave: (currentCharacter, currentStageEntity) => `${currentCharacter.name} and the warrior part ways.`,
+    //Wounded Mut
+    woundedMutIntro: (currentCharacter, currentStageEntity) => `${currentCharacter.name} spots a small, injured Mut curled up against a rock.`,
+    woundedMutBandageAttempt: (currentCharacter, currentStageEntity) => `${currentCharacter.name} attempts to bandage the Wounded Mut.`,
+    woundedMutNuzzle: (currentCharacter, currentStageEntity) => `The Wounded Mut nuzzles against ${currentCharacter.name}'s hand, seeking comfort.`,
+    woundedMutTransformation: (currentCharacter, currentStageEntity) => `As ${currentCharacter.name} approaches, the Wounded Mut twists and contorts, violently...`,
     //CaveIn
     caveInEncounter: (currentCharacter) => `${currentCharacter.name}'s party encounters a pile of rubble blocking the path.`,
     caveInAttemptDig: (currentCharacter) => `${currentCharacter.name} attemps to dig a path through the rubble.`,
@@ -249,6 +262,19 @@ export const messageRegistry = {
     skeletalAbominationAttemptEscape: (currentCharacter) => { return `${currentCharacter.name} attempts to flee!` },
     skeletalAbominationEscapeSuccess: (currentCharacter) => { return `${currentCharacter.name} escapes the skeletal monster!` },
     skeletalAbominationEscapeFail: (currentCharacter) => { return `As ${currentCharacter.name} attempts to escape, the Skeleton Colossus blocks the exit!` },
+    //Deep Darkness
+    deepDarknessStage: (currentCharacter) => `${currentCharacter.name} steps into a choking darkness. The air is heavy, and unseen eyes seem to follow every move.`,
+    deepDarknessProceedPathMessage: (currentCharacter) => `${currentCharacter.name} tries to navigate through the thick shadows, step by step...`,
+    deepDarknessEnemyApproach: (currentCharacter) => `From within the black void, shapes stir. ${currentCharacter.name} realizes too late — something hostile is approaching!`,
+    deepDarknessFear: (currentCharacter) => `${currentCharacter.name}'s resolve falters. A cold fear clutches at their chest, weakening their defenses...`,
+    deepDarknessGaze: (currentCharacter) => `${currentCharacter.name} stares into the abyss, hoping to understand the darkness...`,
+    deepDarknessTorchMessage: (currentCharacter) => `The torch flares to life, its warm light forcing the shadows back for ${currentCharacter.name}.`,
+    deepDarkness2Stage: (currentCharacter) => `The oppressive gloom deepens as ${currentCharacter.name} ventures further. The silence is suffocating.`,
+    deepDarkness3Stage: (currentCharacter) => `A faint outline of a doorway emerges ahead of ${currentCharacter.name}, though the darkness clings stubbornly to their steps.`,
+    ancientRuinsEntrance: (currentCharacter) => `${currentCharacter.name} stands before crumbling stone ruins. Faint whispers echo from within...`,
+    ancientRuinsEntranceEnterRuins: (currentCharacter) => `${currentCharacter.name} steps into the ruins, shadows stretching unnaturally along the walls...`,
+    ancientRuinsEntranceInferiorLordPlea: (currentCharacter) => `"Leave.... please...before it is too late... AHHHH!"`,
+
     //ShiftingSands
     shiftingSandsIntro: (currentCharacter) => { return `While walking through the sands, ${currentCharacter.name} sees something in the distance. ` },
     shiftingSandsPressOnward: (currentCharacter) => { return `${currentCharacter.name}'s party presses onward.` },
@@ -409,6 +435,16 @@ export const messageRegistry = {
 
 export const createBattleRegistry = {
     biomeGeneratedBattle: (partyLevel, biome, difficulty, currentStageEntity) => {return biome.generateBattle(partyLevel)},
+    treasureChestCastSpellSummonEvil: (partyLevel, biome, difficulty, currentStageEntity) => {
+        let hostileArray = [];
+        let count = Math.ceil(Math.random()*4);
+        for(let i = 0; i < count; i++){
+            let chance = Math.floor(Math.random()*2);
+            if(chance == 0) hostileArray.push(new ShackledSpirit({level: partyLevel, difficulty: difficulty}))
+            if(chance == 1) hostileArray.push(new FloatingSkull({level: partyLevel, difficulty: difficulty}))     
+        }
+        return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
+    },
     madmanAmbush:(partyLevel, biome, difficulty, currentStageEntity) => {
         let hostileArray = [];
         let count = Math.ceil(Math.random()*4);
@@ -482,6 +518,9 @@ export const createBattleRegistry = {
         }
         return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
     },
+    woundedMuttTransformation: (currentCharacter, currentStageEntity) => {
+        return new Battle({hostiles: [new MurderMutt({level: partyLevel, difficulty: difficulty})] , battleMusicSrc: "./assets/audio/musicTracks/pred-and-prey.mp3", canRetreat: true});
+    },
     spiderNest:(partyLevel, biome, difficulty) => {
         let hostileArray = [];
         let count = Math.ceil(Math.random() * 3);
@@ -495,10 +534,10 @@ export const createBattleRegistry = {
         let count = Math.ceil(Math.random() * 5);
         for (let i = 0; i < count; i++) {
             let chance = Math.floor(Math.random() * 5);
-            if (chance < 2) hostileArray.push(new Skeleton({ level: partyLevel, difficulty }));
-            if (chance === 2) hostileArray.push(new SkeletonCultist({ level: partyLevel, difficulty }));
-            if (chance === 3) hostileArray.push(new FloatingSkull({ level: partyLevel, difficulty }));
-            if (chance === 4) hostileArray.push(new ArmoredSkeleton({ level: partyLevel, difficulty }));
+            if (chance < 2) hostileArray.push(new Skeleton({ level: partyLevel, difficulty: difficulty }));
+            if (chance === 2) hostileArray.push(new SkeletonCultist({ level: partyLevel, difficulty: difficulty }));
+            if (chance === 3) hostileArray.push(new FloatingSkull({ level: partyLevel, difficulty: difficulty }));
+            if (chance === 4) hostileArray.push(new ArmoredSkeleton({ level: partyLevel, difficulty: difficulty }));
         }
         return new Battle({ hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true });
     },
@@ -506,10 +545,10 @@ export const createBattleRegistry = {
         const hostileArray = [new SkeletonColossus({ level: partyLevel, difficulty })];
         for (let i = 0; i < 2; i++) {
             const chance = Math.floor(Math.random() * 5);
-            if (chance < 2) hostileArray.push(new Skeleton({ level: partyLevel, difficulty }));
-            if (chance === 2) hostileArray.push(new SkeletonCultist({ level: partyLevel, difficulty }));
-            if (chance === 3) hostileArray.push(new FloatingSkull({ level: partyLevel, difficulty }));
-            if (chance === 4) hostileArray.push(new ArmoredSkeleton({ level: partyLevel, difficulty }));
+            if (chance < 2) hostileArray.push(new Skeleton({ level: partyLevel, difficulty: difficulty }));
+            if (chance === 2) hostileArray.push(new SkeletonCultist({ level: partyLevel, difficulty: difficulty }));
+            if (chance === 3) hostileArray.push(new FloatingSkull({ level: partyLevel, difficulty: difficulty }));
+            if (chance === 4) hostileArray.push(new ArmoredSkeleton({ level: partyLevel, difficulty: difficulty }));
         }
         return new Battle({
             hostiles: hostileArray,
@@ -517,6 +556,29 @@ export const createBattleRegistry = {
             gold: 10 * partyLevel,
             canRetreat: false,
         });
+    },
+    deepDarknessBattle: (partyLevel, biome, difficulty) => {
+        let hostileArray = [];
+        let count = Math.ceil(Math.random() * 5);
+        for (let i = 0; i < count; i++) {
+            let chance = Math.floor(Math.random() * 3);
+            if (chance === 0) hostileArray.push(new SkeletonCultist({ level: partyLevel, difficulty: difficulty }));
+            if (chance === 1) hostileArray.push(new FloatingSkull({ level: partyLevel, difficulty: difficulty }));
+            if (chance === 2) hostileArray.push(new ShackledSpirit({ level: partyLevel, difficulty: difficulty }));
+        }
+        return new Battle({ hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true });
+    },
+    inferiorLordsBattle: (partyLevel, biome, difficulty) => {
+        let hostileArray = [];
+        hostileArray.push(new InferiorLord({ level: partyLevel, apperance: "assets/media/entities/inferior-lord-1.png", difficulty: difficulty }));
+        hostileArray.push(new InferiorLord({ level: partyLevel, apperance: "assets/media/entities/inferior-lord-2.png", difficulty: difficulty }));
+        hostileArray.push(new InferiorLord({ level: partyLevel, apperance: "assets/media/entities/inferior-lord-3.png", difficulty: difficulty }));
+        return new Battle(
+            { hostiles: hostileArray,
+                battleMusicSrc: "./assets/audio/musicTracks/suspense-mysterious-trailor-music-foggy-forest-et11lx-157726.mp3",
+                gold: (20 * partyLevel),
+                canRetreat: false 
+            });
     },
     sandStalkerBattle: (partyLevel, biome, difficulty) => {
         let hostileArray = [];
@@ -577,7 +639,7 @@ export const createBattleRegistry = {
         let hostileArray = [new Sterben({ level: partyLevel, difficulty })];
         return new Battle({
             hostiles: hostileArray,
-            battleMusicSrc: "./assets/audio/musicTracks/adrenaline-roger-gabalda-main-version-02-23-11021.mp3",
+            battleMusicSrc: "./assets/audio/musicTracks/suspense-mysterious-trailor-music-foggy-forest-et11lx-157726.mp3",
             gold: (20 * partyLevel),
             canRetreat: false,
         });
@@ -657,20 +719,23 @@ export const createNextStageRegistry = {
     battleSurvivor: (currentStage) => {return new BattleSurvivor({ entity: currentStage.entity })},
     caveIn: (currentStage) => {return new CaveIn({})},
     atTheMysteriousAltar: () => { return new AtTheMysteriousAltar({}); },
-    aSkeletalAbomination: () => new ASkeletalAbomination({}),
-    aMysteriousAltar: () => new MysteriousAltar({}),
-    shiftingSands2: () => { return new ShiftingSands2({}) },
-    statuesInTheSand: () => { return new StatuesInTheSand({}) },
-    shiftingSands3: () => { return new ShiftingSands3({}) },
-    shiftingSands4: () => {return new ShiftingSands4({})},
-    sandCastleEntrance: () => {return new SandCastleEntrance({})},
-    gaintTentacle: () => {return new GaintTentacle({})},
-    desertHorror: () => { return new DesertHorror({})},
-    chillingGhost: () => { return new ChillingGhost({})},
+    aSkeletalAbomination: () => { return new ASkeletalAbomination({}); },
+    aMysteriousAltar: () => { return new MysteriousAltar({}); },
+    deepDarkness2: () => { return new DeepDarkness2({}); },
+    deepDarkness3: () => { return new DeepDarkness3({}); },
+    ancientRuinsEntrance: () => { return new AncientRuinsEntrance({}); },
+    shiftingSands2: () => { return new ShiftingSands2({}); },
+    statuesInTheSand: () => { return new StatuesInTheSand({}); },
+    shiftingSands3: () => { return new ShiftingSands3({}); },
+    shiftingSands4: () => { return new ShiftingSands4({}); },
+    sandCastleEntrance: () => { return new SandCastleEntrance({}); },
+    gaintTentacle: () => { return new GaintTentacle({}); },
+    desertHorror: () => { return new DesertHorror({}); },
+    chillingGhost: () => { return new ChillingGhost({}); },
     tracksInTheSnow2: () => { return new TracksInTheSnow2({}); },
     crimsonSnow: () => { return new CrimsonSnow({}); },
-    woundedTiger: () => { return new WoundedTiger({}) },
-    apexPredator: () => { return new ApexPredator({}) },
+    woundedTiger: () => { return new WoundedTiger({}); },
+    apexPredator: () => { return new ApexPredator({}); },
     mysteriousFigureApproach: () => {
         let chance = Math.floor(Math.random() * 2);
         if (chance === 0) return new SuspiciousMan({});
@@ -787,6 +852,16 @@ export const onActivateRegistery = {
         let status = new MagicalAttackDebuff({ holder: target });
         status.onApplied(target, target, status);
     },
+    physicalDefenseDebuffApply: (target) => {
+        for (let i = 0; i < target.statusArray.length; i++) {
+        if (target.statusArray[i].name === "physical defense debuff") {
+            target.statusArray[i].severityModifier += 0.2;
+            return;
+        }
+        }
+        let status = new PhysicalDefenseDebuff({ holder: target });
+        status.onApplied(target, target, status);
+    },
     staminaMagicDamage75Percent: (target) => {
     target.currentStamina -= Math.floor(target.currentStamina * 0.25);
     target.currentMagic -= Math.floor(target.currentMagic * 0.25);
@@ -823,6 +898,7 @@ export const createRecruitRegistry = {
     currentEntity: (partyLevel, biome, difficulty, entity) => {return entity;},
     madManRecruit: (partyLevel, biome, difficulty, entity) => {return new Madman({level: partyLevel, difficulty: difficulty, isHostile: false })},
     tiger: (partyLevel, biome, difficulty) => {return new Tiger({ level: partyLevel, difficulty: difficulty, isHostile: false })},
+    dog: (partyLevel, biome, difficulty) => {return new Dog({ level: partyLevel, difficulty: difficulty, isHostile: false })},
     nightblade: (partyLevel, biome, difficulty) => {return new Nightblade({ level: partyLevel, difficulty, isHostile: false })},
 }
 

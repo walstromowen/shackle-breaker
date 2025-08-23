@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl, Eviscerate, ChannelMagic, DarkOrb, Bless, Brace, Inferno, SetBearTrap, Uppercut, Flurry, IceShard, Fly, Barrage, Rage, IceWall, HailStorm, CallOfSterben, ThrowSmokeBomb, ThrowNet, Hide, CastShadow, Shockwave, AbsorbSoul, Shapeshift, Ability} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl, Eviscerate, ChannelMagic, DarkOrb, Bless, Brace, Inferno, SetBearTrap, Uppercut, Flurry, IceShard, Fly, Barrage, Rage, IceWall, HailStorm, CallOfSterben, ThrowSmokeBomb, ThrowNet, Hide, CastShadow, Shockwave, AbsorbSoul, Shapeshift, Ability, Impale, Cleanse, LesserHeal, Fireball} from "./abilities.js";
 import { Poison, Burn, Bleed, Shielded, InstaDeath, Blessed, PhysicalAttackBuff, MagicalAttackBuff, StatusEffect} from "./statusEffects.js";
 import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, LeatherGloves, GreatSword, Flintlock, SmokeBomb, PanzerkamferArmor, ScrollOfHailStorm,  IronShield, IceSickle, Net, ScrollOfCastShadow, Item} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Pelt} from "./items.js";
@@ -1038,6 +1038,56 @@ export class WoodWhisperer extends Entity{
         }
     }
 }
+export class MurderMutt extends Entity{
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
+            name: 'Murder Mutt',
+            type: 'Murder Mutt',
+            level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
+            apperance: config.apperance || './assets/media/entities/murder-mutt.jpg',
+            vigor: config.vigor || 8,
+            strength: config.strength || 8,
+            dexterity: config.dexterity || 6,
+            intelligence: config.intelligence || 1,
+            attunement: config.attunement || 5,
+            baseBluntResistance: config.baseBluntResistance || 0.1,
+            basePierceResistance: config.basePierceResistance || 0.1,
+            baseArcaneResistance: config.baseArcaneResistance || 0.1,
+            baseElementalResistance: config.baseElementalResistance || 0.1,
+            isHostile: config.isHostile || true,
+            equipment: {},
+            abilityArray: [new Eviscerate({damageModifier: 1.5}), new Howl({}), new Impale({})],
+            lootTable: [
+                {item: new HealthPotion({level: 1}), weight: 1},
+                {item: new Pelt({}), weight: 1}
+            ],
+        }, isRehydrate)
+    }
+    scaleAttributes(difficulty){
+        this.maxHP = (this.vigor * 8)  + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
+        this.maxStamina = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 2) + (this.attunement * 2);
+        this.maxMagic = (this.vigor * 2)  + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 3) + (this.attunement * 3);
+        this.baseHpRecovery = 0;
+        this.baseStaminaRecovery = 20;
+        this.baseMagicRecovery = 5;
+        this.baseBluntAttack = (this.vigor * 1) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 1) + (this.attunement * 2);
+        this.basePierceAttack = (this.vigor * 1) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 2) + (this.attunement * 1);
+        this.baseArcaneAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 3) + (this.attunement * 2);
+        this.baseElementalAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 3);
+        this.baseBluntDefense = (this.vigor * 1)  + (this.strength * 2) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 1);
+        this.basePierceDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 2) + (this.intelligence * 0) + (this.attunement * 0);
+        this.baseArcaneDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 2) + (this.attunement * 1);
+        this.baseElementalDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 0) + (this.attunement * 1);
+        this.baseSpeed = 30;
+        this.baseEvasion = 0.05;
+        this.baseCritical = 0.40;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
+    }
+}
 export class GroveGuardian extends Entity{
     constructor(config, isRehydrate = false){
          super({
@@ -1411,6 +1461,61 @@ export class Spider extends Entity{
         this.baseSpeed = 15;
         this.baseEvasion = 0.05;
         this.baseCritical = 0.10;
+        if(this.isHostile){
+            this.applyDifficultyMultiplier(difficulty)
+        }
+    }
+}
+export class InferiorLord extends Entity{
+    constructor(config, isRehydrate = false){
+         super({
+            ...config,
+            name: 'InferiorLord',
+            type: 'InferiorLord',
+            level: config.level || 1,
+            difficulty: config.difficulty || 'normal',
+            apperance: config.apperance || './assets/media/entities/inferiorLord-2.jpg',
+            vigor: config.vigor || 5,
+            strength: config.strength || 5,
+            dexterity: config.dexterity || 5,
+            intelligence: config.intelligence || 5,
+            attunement: config.attunement || 5,
+            baseBluntResistance: config.baseBluntResistance || 0.2,
+            basePierceResistance: config.basePierceResistance || 0.2,
+            baseArcaneResistance: config.baseArcaneResistance || 0.4,
+            baseElementalResistance: config.baseElementalResistance || 0.4,
+            equipment: config.equipment || {
+                mainHand: '',
+                offhand: '',
+                head: '',
+                torso: '',
+                arms: '',
+                legs: '',
+                feet: '',
+            },
+            isHostile: config.isHostile || true,
+            abilityArray: [new DarkOrb({}), new Cleanse({}), new LesserHeal({}), new Fireball({}), new MagicMissile({})],
+            lootTable: [new DarkStaff({level: 1}), new IceStaff({level: 1}), new FireStaff({level: 1})],
+        }, isRehydrate);
+    }
+    scaleAttributes(difficulty){
+        this.maxHP = (this.vigor * 15)  + (this.strength * 8) + (this.dexterity * 8) + (this.intelligence * 8) + (this.attunement * 8);
+        this.maxStamina = (this.vigor * 5) + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 5) + (this.attunement * 5);
+        this.maxMagic = (this.vigor * 5)  + (this.strength * 5) + (this.dexterity * 5) + (this.intelligence * 5) + (this.attunement * 5);
+        this.baseHpRecovery = 0;
+        this.baseStaminaRecovery = 15;
+        this.baseMagicRecovery = 35;
+        this.baseBluntAttack = (this.vigor * 2) + (this.strength * 4) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 3);
+        this.basePierceAttack = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 4) + (this.intelligence * 3) + (this.attunement * 3);
+        this.baseArcaneAttack = (this.vigor * 1) + (this.strength * 2) + (this.dexterity * 2) + (this.intelligence * 2) + (this.attunement * 3);
+        this.baseElementalAttack = (this.vigor * 2) + (this.strength * 3) + (this.dexterity * 3) + (this.intelligence * 3) + (this.attunement * 4);
+        this.baseBluntDefense = (this.vigor * 1)  + (this.strength * 2) + (this.dexterity * 1) + (this.intelligence * 1) + (this.attunement * 1);
+        this.basePierceDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 2) + (this.intelligence * 0) + (this.attunement * 0);
+        this.baseArcaneDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 2) + (this.attunement * 1);
+        this.baseElementalDefense = (this.vigor * 1) + (this.strength * 1) + (this.dexterity * 1) + (this.intelligence * 0) + (this.attunement * 1);
+        this.baseSpeed = 15;
+        this.baseEvasion = 0.10;
+        this.baseCritical = 0.20;
         if(this.isHostile){
             this.applyDifficultyMultiplier(difficulty)
         }

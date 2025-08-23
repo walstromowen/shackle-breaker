@@ -1,6 +1,7 @@
 import { Aftermath, BattleSurvivor, WoundedWarrior } from "../stages/aftermath.js"
 import { Bonfire } from "../stages/bonfire.js"
 import { CaveIn } from "../stages/caveIn.js"
+import { AncientRuinsEntrance, DeepDarkness, DeepDarkness2, DeepDarkness3 } from "../stages/deepDarkness.js"
 import { ConversationWithMadman, MadmanAhead } from "../stages/madmanAhead.js"
 import { MineralVein } from "../stages/mineralVein.js"
 import { ASkeletalAbomination, AtTheMysteriousAltar, MysteriousAltar } from "../stages/mysteriousAltar.js"
@@ -13,6 +14,7 @@ import { AHeroPrevails, APowerfulChoice, TheArtifact, TheCycleContinues, TheKing
 import { ApexPredator, CrimsonSnow, TracksInTheSnow, TracksInTheSnow2, WoundedTiger } from "../stages/tracksInTheSnow.js"
 import { TreasureChest } from "../stages/treasureChest.js"
 import { TalkWithMercenary, WanderingMercenary } from "../stages/wanderingMercenary.js"
+import { WoundedMutt } from "../stages/woundedMut.js"
 
 export const stageRegistry = {
     "Treasure Chest": (config)=>{ return new TreasureChest(config)},
@@ -31,10 +33,15 @@ export const stageRegistry = {
     "Talk With Mercenary": (config) => {return new TalkWithMercenary(config)},
     "Wounded Warrior": (config) => {return new WoundedWarrior(config)},
     "Battle Survivor": (config) => {return new BattleSurvivor(config)},
+    "Wounded Mutt": (config) => {return new WoundedMutt(config)},
     "Cave In": (config) => {return new CaveIn(config)},
     "At The Mysterious Altar": (config) => { return new AtTheMysteriousAltar(config)},
-    "A Skeletal Abomination": (config) => {new ASkeletalAbomination(config)},
-    "Mysterious Altar": (config) => {new MysteriousAltar(config)},
+    "A Skeletal Abomination": (config) => {return new ASkeletalAbomination(config)},
+    "Mysterious Altar": (config) => {return new MysteriousAltar(config)},
+    "Deep Darkness": (config) => { return new DeepDarkness(config)},
+    "Deep Darkness 2": (config) => { return new DeepDarkness2(config)},
+    "Deep Darkness 3": (config) => { return new DeepDarkness3(config)},
+    "Ancient Ruins Entrance": (config) => { return new AncientRuinsEntrance(config)},
     "Shifting Sands 2": (config) => { return new ShiftingSands2(config)},
     "Statues In The Sand": (config) => { return new StatuesInTheSand(config)},
     "Shifting Sands 3": (config) => { return new ShiftingSands3(config)},

@@ -12,6 +12,7 @@ import { Aftermath } from "../stages/aftermath.js";
 import { SilentGrove } from "../stages/silentGrove.js";
 import { BerryBush, Boulder, CastleTower, Entrance, Exit, PineTree, Wall } from "../mapObjects.js";
 import { ForestRoom1, ForestRoom2, ForestEntranceRoom, ForestExitRoom } from "../structures.js";
+import { WoundedMut, WoundedMutt } from "../stages/woundedMut.js";
 
 
 export class Forest extends Biome{
@@ -38,6 +39,7 @@ export class Forest extends Biome{
                 {startingStage: ()=>{return new MadmanAhead({})}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new Bonfire({})}, resetOnLeave: false, weight: 1},
                 {startingStage: ()=>{return new SilentGrove({})}, resetOnLeave: false, weight: 1},
+                {startingStage: ()=>{return new WoundedMutt({})}, resetOnLeave: false, weight: 10},
             ],
         });
     }
