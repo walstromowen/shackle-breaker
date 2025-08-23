@@ -14,7 +14,7 @@ import { AHeroPrevails, APowerfulChoice, TheArtifact, TheCycleContinues, TheKing
 import { ApexPredator, CrimsonSnow, TracksInTheSnow, TracksInTheSnow2, WoundedTiger } from "../stages/tracksInTheSnow.js"
 import { TreasureChest } from "../stages/treasureChest.js"
 import { TalkWithMercenary, WanderingMercenary } from "../stages/wanderingMercenary.js"
-import { WoundedMutt } from "../stages/woundedMut.js"
+import { WoundedMutt } from "../stages/woundedMutt.js"
 
 export const stageRegistry = {
     "Treasure Chest": (config)=>{ return new TreasureChest(config)},

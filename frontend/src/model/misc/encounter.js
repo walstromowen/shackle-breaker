@@ -223,10 +223,10 @@ export const messageRegistry = {
     battleSurvivorJoinIncentive: (currentCharacter, currentStageEntity) => `"Well ... what are you waiting for? Let's get out of here!"`,
     battleSurvivorLeave: (currentCharacter, currentStageEntity) => `${currentCharacter.name} and the warrior part ways.`,
     //Wounded Mut
-    woundedMutIntro: (currentCharacter, currentStageEntity) => `${currentCharacter.name} spots a small, injured Mut curled up against a rock.`,
-    woundedMutBandageAttempt: (currentCharacter, currentStageEntity) => `${currentCharacter.name} attempts to bandage the Wounded Mut.`,
-    woundedMutNuzzle: (currentCharacter, currentStageEntity) => `The Wounded Mut nuzzles against ${currentCharacter.name}'s hand, seeking comfort.`,
-    woundedMutTransformation: (currentCharacter, currentStageEntity) => `As ${currentCharacter.name} approaches, the Wounded Mut twists and contorts, violently...`,
+    woundedMuttIntro: (currentCharacter, currentStageEntity) => `${currentCharacter.name} spots a small, injured Mutt curled up against a rock.`,
+    woundedMuttBandageAttempt: (currentCharacter, currentStageEntity) => `${currentCharacter.name} attempts to bandage the Wounded Mutt.`,
+    woundedMuttNuzzle: (currentCharacter, currentStageEntity) => `The Wounded Mutt nuzzles against ${currentCharacter.name}'s hand, seeking comfort.`,
+    woundedMuttTransformation: (currentCharacter, currentStageEntity) => `As ${currentCharacter.name} approaches, the Wounded Mut twists and contorts, violently...`,
     //CaveIn
     caveInEncounter: (currentCharacter) => `${currentCharacter.name}'s party encounters a pile of rubble blocking the path.`,
     caveInAttemptDig: (currentCharacter) => `${currentCharacter.name} attemps to dig a path through the rubble.`,

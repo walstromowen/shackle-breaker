@@ -221,7 +221,7 @@ export default class EncounterController{
             case 'overworld':
                 this.lootDelay(outcome).then(()=>{
                     setTimeout(()=>{
-                        this.model.props.setCurrentPartyPosition(this.props.model.getPreviousPartyPosition());
+                        this.model.props.setCurrentPartyPosition(this.model.props.getPreviousPartyPosition());
                         this.model.checkResetEncounter();
                         this.model.props.setBattle('');
                         this.model.updateTileBattle(this.props.model.getCurrentPartyPosition());
