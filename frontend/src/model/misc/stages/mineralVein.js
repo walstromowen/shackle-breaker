@@ -68,7 +68,7 @@ export class MineralVein extends Stage {
           description: 'Leave',
           messageKey: 'mineralVeinLeave',
           successfulOutcomes: [
-            new Result({ result: 'overworld', weight: 1 }),
+            new Result({ result: 'complete', weight: 1 }),
           ],
         }),
       ],

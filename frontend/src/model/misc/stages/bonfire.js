@@ -91,7 +91,7 @@ export class Bonfire extends Stage{
                 }),
                 new Decision({
                     description: 'Leave',
-                    successfulOutcomes: [new Result({result: 'overworld', weight: 1})],
+                    successfulOutcomes: [new Result({result: 'complete', weight: 1})],
                     messageKey: 'moveAlong'
                 }),  
             ]

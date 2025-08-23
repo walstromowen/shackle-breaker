@@ -52,7 +52,7 @@ export class MysteriousAltar extends Stage {
           description: 'Leave',
           messageKey: 'altarLeaveAlone',
           successfulOutcomes: [
-            new Result({ result: 'overworld', weight: 1 })
+            new Result({ result: 'complete', weight: 1 })
           ],
         }),
       ],
@@ -149,7 +149,7 @@ export class ASkeletalAbomination extends Stage {
           messageKey: 'skeletalAbominationAttemptEscape',
           successfulOutcomes: [
             new Result({
-              result: 'overworld',
+              result: 'complete',
               messageKey: 'skeletalAbominationEscapeSuccess',
               weight: 1,
             }),

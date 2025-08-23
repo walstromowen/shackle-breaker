@@ -93,7 +93,7 @@ export class DeepDarkness extends Stage {
                 }),
                 new Decision({
                     description: "Leave",
-                    successfulOutcomes: [{ result: "overworld", weight: 1 }],
+                    successfulOutcomes: [{ result: "complete", weight: 1 }],
                     messageKey: "turnBack",
                 }),
             ],
@@ -192,7 +192,7 @@ export class DeepDarkness2 extends Stage {
                 }),
                 new Decision({
                     description: "Leave",
-                    successfulOutcomes: [{ result: "overworld", weight: 1 }],
+                    successfulOutcomes: [{ result: "complete", weight: 1 }],
                     messageKey: "turnBack",
                 }),
             ],
@@ -291,7 +291,7 @@ export class DeepDarkness3 extends Stage {
                 }),
                 new Decision({
                     description: "Leave",
-                    successfulOutcomes: [{ result: "overworld", weight: 1 }],
+                    successfulOutcomes: [{ result: "complete", weight: 1 }],
                     messageKey: "turnBack",
                 }),
             ],

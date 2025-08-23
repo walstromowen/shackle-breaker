@@ -80,7 +80,7 @@ export class SilentGrove extends Stage {
                 }),
                 new Decision({
                     description: "Leave",
-                    successfulOutcomes: [{ result: "overworld", weight: 1 }],
+                    successfulOutcomes: [{ result: "complete", weight: 1 }],
                     messageKey: "turnBack",
                 }),
             ],
@@ -196,7 +196,7 @@ export class SilentGrove2 extends Stage {
                     new Decision({
                         option: "E",
                         description: "Leave",
-                        successfulOutcomes: [{ result: "overworld", weight: 1 }],
+                        successfulOutcomes: [{ result: "complete", weight: 1 }],
                         messageKey: "turnBack",
                 }),
             ],
@@ -309,7 +309,7 @@ export class Interloper extends Stage {
                     messageKey: "interloperFleeAttempt",
                     successfulOutcomes: [
                         new Result({
-                            result: 'overworld',
+                            result: 'complete',
                             messageKey: "interloperFleeSuccess",
                             weight: 1,
                         }),

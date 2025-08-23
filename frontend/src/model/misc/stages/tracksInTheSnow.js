@@ -335,7 +335,7 @@ export class ApexPredator extends Stage {
           messageKey: 'apexPredatorAttemptFlee',
           successfulOutcomes: [
             new Result({
-              result: 'overworld',
+              result: 'complete',
               messageKey: 'apexPredatorEscape',
               weight: 1,
             }),

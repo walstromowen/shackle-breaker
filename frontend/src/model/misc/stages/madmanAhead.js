@@ -152,7 +152,7 @@ export class MadmanAhead extends Stage {
                 new Decision({
                     option: 'F',
                     description: 'Leave',
-                    successfulOutcomes: [new Result({result: 'overworld', weight: 1})],
+                    successfulOutcomes: [new Result({result: 'complete', weight: 1})],
                     messageKey: 'leaveMadman',
                 }),
             ],
