@@ -12,7 +12,7 @@ import { Aftermath } from "../stages/aftermath.js";
 import { SilentGrove } from "../stages/silentGrove.js";
 import { BerryBush, Boulder, CastleTower, Entrance, Exit, PineTree, Wall } from "../mapObjects.js";
 import { ForestRoom1, ForestRoom2, ForestEntranceRoom, ForestExitRoom } from "../structures.js";
-import { WoundedMut, WoundedMutt } from "../stages/woundedMutt.js";
+import { WoundedMutt } from "../stages/woundedMutt.js";
 
 
 export class Forest extends Biome{
