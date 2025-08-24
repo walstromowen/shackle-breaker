@@ -570,9 +570,9 @@ export const createBattleRegistry = {
     },
     inferiorLordsBattle: (partyLevel, biome, difficulty) => {
         let hostileArray = [];
-        hostileArray.push(new InferiorLord({ level: partyLevel, apperance: "./assets/media/entities/inferior-lord-1.png", difficulty: difficulty }));
-        hostileArray.push(new InferiorLord({ level: partyLevel, apperance: "./assets/media/entities/inferior-lord-2.png", difficulty: difficulty }));
-        hostileArray.push(new InferiorLord({ level: partyLevel, apperance: "./assets/media/entities/inferior-lord-3.png", difficulty: difficulty }));
+        hostileArray.push(new InferiorLord({ level: partyLevel, apperance: "./assets/media/entities/inferior-lord-1.jpg", difficulty: difficulty }));
+        hostileArray.push(new InferiorLord({ level: partyLevel, apperance: "./assets/media/entities/inferior-lord-2.jpg", difficulty: difficulty }));
+        hostileArray.push(new InferiorLord({ level: partyLevel, apperance: "./assets/media/entities/inferior-lord-3.jpg", difficulty: difficulty }));
         return new Battle(
             { hostiles: hostileArray,
                 battleMusicSrc: "./assets/audio/musicTracks/suspense-mysterious-trailor-music-foggy-forest-et11lx-157726.mp3",
@@ -855,7 +855,7 @@ export const onActivateRegistery = {
     physicalDefenseDebuffApply: (target) => {
         for (let i = 0; i < target.statusArray.length; i++) {
         if (target.statusArray[i].name === "physical defense debuff") {
-            target.statusArray[i].severityModifier += 0.2;
+            target.statusArray[i].onActivate()
             return;
         }
         }
