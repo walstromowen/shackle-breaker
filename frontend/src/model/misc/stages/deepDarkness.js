@@ -7,7 +7,7 @@ export class DeepDarkness extends Stage {
         super({
             name: "Deep Darkness",
             musicSrc: "./assets/audio/musicTracks/dark-suspense-anxious-eerie-dramatic-music-207620.mp3",
-            imageSrc: "./assets/media/encounters/deep-darkness.jpg",
+            imageSrc: "./assets/media/encounters/deep-darkness-1.jpg",
             messageKey: "deepDarknessStage",
             decisionArray: config.decisionArray || [
                 new Decision({

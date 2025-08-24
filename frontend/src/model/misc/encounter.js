@@ -273,7 +273,7 @@ export const messageRegistry = {
     deepDarkness3Stage: (currentCharacter) => `A faint outline of a doorway emerges ahead of ${currentCharacter.name}, though the darkness clings stubbornly to their steps.`,
     ancientRuinsEntrance: (currentCharacter) => `${currentCharacter.name} stands before crumbling stone ruins. Faint whispers echo from within...`,
     ancientRuinsEntranceEnterRuins: (currentCharacter) => `${currentCharacter.name} steps into the ruins, shadows stretching unnaturally along the walls...`,
-    ancientRuinsEntranceInferiorLordPlea: (currentCharacter) => `"Leave.... please...before it is too late... AHHHH!"`,
+    ancientRuinsEntranceInferiorLordPlea: (currentCharacter) => `"Leave... please ...before it is too late...!"`,
 
     //ShiftingSands
     shiftingSandsIntro: (currentCharacter) => { return `While walking through the sands, ${currentCharacter.name} sees something in the distance. ` },
@@ -570,9 +570,9 @@ export const createBattleRegistry = {
     },
     inferiorLordsBattle: (partyLevel, biome, difficulty) => {
         let hostileArray = [];
-        hostileArray.push(new InferiorLord({ level: partyLevel, apperance: "assets/media/entities/inferior-lord-1.png", difficulty: difficulty }));
-        hostileArray.push(new InferiorLord({ level: partyLevel, apperance: "assets/media/entities/inferior-lord-2.png", difficulty: difficulty }));
-        hostileArray.push(new InferiorLord({ level: partyLevel, apperance: "assets/media/entities/inferior-lord-3.png", difficulty: difficulty }));
+        hostileArray.push(new InferiorLord({ level: partyLevel, apperance: "./assets/media/entities/inferior-lord-1.png", difficulty: difficulty }));
+        hostileArray.push(new InferiorLord({ level: partyLevel, apperance: "./assets/media/entities/inferior-lord-2.png", difficulty: difficulty }));
+        hostileArray.push(new InferiorLord({ level: partyLevel, apperance: "./assets/media/entities/inferior-lord-3.png", difficulty: difficulty }));
         return new Battle(
             { hostiles: hostileArray,
                 battleMusicSrc: "./assets/audio/musicTracks/suspense-mysterious-trailor-music-foggy-forest-et11lx-157726.mp3",
