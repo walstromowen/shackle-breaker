@@ -31,7 +31,17 @@ export class WoundedMutt extends Stage {
                             musicSrc: "./assets/audio/musicTracks/pred-and-prey.mp3",
                             createBattleKey: 'woundedMuttTransformation',
                             messageKey: 'woundedMuttTransformation',
-                            weight: 2,
+                            weight: 1,
+                        }),
+                        new Result({
+                            result: "retry",
+                            messageKey: "woundedMuttBandageRetry",
+                            weight: 1,
+                        }),
+                        new Result({
+                            result: "complete",
+                            messageKey: "woundedMuttBandageDeath",
+                            weight: 1,
                         }),
                     ],
                 }),

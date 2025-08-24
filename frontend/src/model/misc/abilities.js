@@ -2362,7 +2362,7 @@ export class Impale extends Ability{
         }
     }
     updateMessage(attacker, target){
-        this.message = `${attacker.name} stabs ${target.name} with a thrust attack.`;
+        this.message = `${attacker.name} impales ${target.name}.`;
     }
 }
 export class FlashFreeze extends Ability{//Needs Work targeting same targets twice?
@@ -2404,7 +2404,7 @@ export class FlashFreeze extends Ability{//Needs Work targeting same targets twi
         }
     }
     updateMessage(attacker){
-        this.message = (`${attacker.name} summons an unnatural pool of ice!`);
+        this.message = (`${attacker.name} summons an unnatural pool of ice.`);
     }
 }
 export class ThrowPosionedKnife extends Ability{

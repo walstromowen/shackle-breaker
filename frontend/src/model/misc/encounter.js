@@ -227,6 +227,8 @@ export const messageRegistry = {
     woundedMuttBandageAttempt: (currentCharacter, currentStageEntity) => `${currentCharacter.name} attempts to bandage the Wounded Mutt.`,
     woundedMuttNuzzle: (currentCharacter, currentStageEntity) => `The Wounded Mutt nuzzles against ${currentCharacter.name}'s hand, seeking comfort.`,
     woundedMuttTransformation: (currentCharacter, currentStageEntity) => `As ${currentCharacter.name} approaches, the Wounded Mut twists and contorts, violently...`,
+    woundedMuttBandageRetry: (currentCharacter, currentStageEntity) => `The bandage slips from ${currentCharacter.name}'s hands, and the Wounded Mutt whimpers in pain soiling the bandage.`,
+    woundedMuttBandageDeath: (currentCharacter, currentStageEntity) => `Despite ${currentCharacter.name}'s efforts, there is just too much blood, the mutt whimpers and closes its eyes.`,
     //CaveIn
     caveInEncounter: (currentCharacter) => `${currentCharacter.name}'s party encounters a pile of rubble blocking the path.`,
     caveInAttemptDig: (currentCharacter) => `${currentCharacter.name} attemps to dig a path through the rubble.`,
