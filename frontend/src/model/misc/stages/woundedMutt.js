@@ -20,7 +20,7 @@ export class WoundedMutt extends Stage {
                         new Result({
                             result: 'recruit',
                             createRecruitKey: 'dog',
-                            onActivateKey: 'decreaseCorruption5Percent',
+                            onActivateKey: 'reduceCorruption5Percent',
                             messageKey: 'woundedMuttNuzzle',
                             weight: 1,
                         }),
