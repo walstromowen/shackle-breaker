@@ -33,7 +33,7 @@ export default class Map{
             case 'Altus Capital':
                 return new AltusCapital({});
             default:
-                let chance = 1 //Math.floor(Math.random()*5);
+                let chance = 0 //Math.floor(Math.random()*5);
                 switch(chance){
                     case 0:
                         return new Forest({name: 'Altus Kingdom'});
