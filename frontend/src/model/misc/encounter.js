@@ -518,7 +518,7 @@ export const createBattleRegistry = {
         }
         return new Battle({hostiles: hostileArray, battleMusicSrc: biome.battleMusicSrc, canRetreat: true});
     },
-    woundedMuttTransformation: (currentCharacter, currentStageEntity) => {
+    woundedMuttTransformation: (partyLevel,  biome, difficulty) => {
         return new Battle({hostiles: [new MurderMutt({level: partyLevel, difficulty: difficulty})] , battleMusicSrc: "./assets/audio/musicTracks/pred-and-prey.mp3", canRetreat: true});
     },
     spiderNest:(partyLevel, biome, difficulty) => {
