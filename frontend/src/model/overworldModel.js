@@ -85,7 +85,7 @@ export default class OverworldModel{
         }
     }
     decideRandomEvent(tileEntered, biome){
-        let chance = 1//Math.floor(Math.random()*50);
+        let chance = Math.floor(Math.random()*50);
         if(chance == 0){
             tileEntered.battle = biome.generateBattle(this.props.calcHighestPartyLevel(), this.props.getDifficulty());
             this.toggleBattle(tileEntered.battle);
