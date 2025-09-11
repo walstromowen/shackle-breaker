@@ -1,5 +1,132 @@
 import { loadCanvasImages } from '../utility.js';
 
+export default class OverworldView {
+  constructor() {
+    this.screen = document.getElementById('overworld-screen');
+    this.overworldCanvas = document.getElementById('overworld-canvas');
+    this.mapTileContainer = document.getElementById('overworld-map-title-container');
+    this.mapTile = document.getElementById('overworld-map-title');
+    this.tileWidth = 64;
+    this.tileHeight = 64;
+    this.ctx = this.overworldCanvas.getContext('2d');
+    this.viewport = {
+      viewportWidth: 0,
+      viewportHeight: 0,
+      startTileCoordinates: [0,0],
+      endTileCoordinates: [0,0],
+      offset: [0,0],
+      movementOffset: [0,0],
+    };
+    this.images = []; // will store preloaded images
+    this.resize();
+  }
+
+  async preloadImages(map) {
+    this.images = await loadCanvasImages([
+      map.biome.terrainSrc,
+      './assets/media/icons/hero.png',
+      './assets/media/icons/battle-present.png',
+      './assets/media/icons/encounter-present.png'
+    ]);
+  }
+
+  processMovement(currentPosition, nextPosition, fpsInterval, playerMovementDelay) {
+    let diff = Math.floor(this.tileWidth / (playerMovementDelay / fpsInterval));
+
+    if (currentPosition[1] > nextPosition[1]) this.viewport.movementOffset[1] += diff; // up
+    if (currentPosition[1] < nextPosition[1]) this.viewport.movementOffset[1] -= diff; // down
+    if (currentPosition[0] > nextPosition[0]) this.viewport.movementOffset[0] += diff; // left
+    if (currentPosition[0] < nextPosition[0]) this.viewport.movementOffset[0] -= diff; // right
+
+    // Reset once a full tile has been crossed
+    if (Math.abs(this.viewport.movementOffset[0]) >= this.tileWidth ||
+        Math.abs(this.viewport.movementOffset[1]) >= this.tileHeight) {
+      this.viewport.movementOffset = [0,0];
+    }
+  }
+
+  updateViewport(map, partyPosition) {
+    this.viewport.offset[0] = Math.floor((this.overworldCanvas.width / 2) - (partyPosition[0] * this.tileWidth) - (this.tileWidth / 2));
+    this.viewport.offset[1] = Math.floor((this.overworldCanvas.height / 2) - (partyPosition[1] * this.tileHeight) - (this.tileHeight / 2));
+
+    this.viewport.viewportWidth = Math.floor(this.overworldCanvas.width / this.tileWidth);
+    this.viewport.viewportHeight = Math.floor(this.overworldCanvas.height / this.tileHeight);
+
+    this.viewport.startTileCoordinates[0] = Math.max(0, partyPosition[0] - this.viewport.viewportWidth);
+    this.viewport.startTileCoordinates[1] = Math.max(0, partyPosition[1] - this.viewport.viewportHeight);
+
+    this.viewport.endTileCoordinates[0] = Math.min(map.tileLayout[0].length - 1, partyPosition[0] + this.viewport.viewportWidth);
+    this.viewport.endTileCoordinates[1] = Math.min(map.tileLayout.length - 1, partyPosition[1] + this.viewport.viewportHeight);
+  }
+
+  resize() {
+    this.overworldCanvas.width = window.innerWidth;
+    this.overworldCanvas.height = window.innerHeight;
+  }
+
+  draw(map, partyPosition) {
+    if (!this.images.length) return; // wait until images are preloaded
+
+    this.updateViewport(map, partyPosition);
+    this.ctx.clearRect(0, 0, this.overworldCanvas.width, this.overworldCanvas.height);
+
+    const terrain = this.images[0];
+    const hero = this.images[1];
+    const battleIcon = this.images[2];
+    const encounterIcon = this.images[3];
+
+    // Loop tiles
+    for (let y = this.viewport.startTileCoordinates[1]; y <= this.viewport.endTileCoordinates[1]; y++) {
+      for (let x = this.viewport.startTileCoordinates[0]; x <= this.viewport.endTileCoordinates[0]; x++) {
+
+        let drawX = Math.floor(x * this.tileWidth + this.viewport.offset[0] + this.viewport.movementOffset[0]);
+        let drawY = Math.floor(y * this.tileHeight + this.viewport.offset[1] + this.viewport.movementOffset[1]);
+
+        this.ctx.drawImage(
+          terrain,
+          1 + (64 + 2) * map.tileLayout[y][x].tileImageCoordinates[0],
+          1 + (64 + 2) * map.tileLayout[y][x].tileImageCoordinates[1],
+          this.tileWidth,
+          this.tileHeight,
+          drawX,
+          drawY,
+          this.tileWidth,
+          this.tileHeight
+        );
+
+        // Draw map objects (before hero so hero appears on top unless tall object)
+        if (map.tileLayout[y][x].mapObject !== '') {
+          this.ctx.drawImage(
+            terrain,
+            1 + (64 + 2) * map.tileLayout[y][x].mapObject.imageCoordinates[0],
+            1 + (64 + 2) * map.tileLayout[y][x].mapObject.imageCoordinates[1],
+            64 * map.tileLayout[y][x].mapObject.imageFrameSize[0] + (2 * (map.tileLayout[y][x].mapObject.imageFrameSize[0] - 1)),
+            64 * map.tileLayout[y][x].mapObject.imageFrameSize[1] + (2 * (map.tileLayout[y][x].mapObject.imageFrameSize[1] - 1)),
+            drawX,
+            drawY - (64 * (map.tileLayout[y][x].mapObject.imageFrameSize[1] - 1)),
+            this.tileWidth * map.tileLayout[y][x].mapObject.imageFrameSize[0],
+            this.tileHeight * map.tileLayout[y][x].mapObject.imageFrameSize[1]
+          );
+        }
+
+        // Draw encounter/battle icons (on top)
+        if (map.tileLayout[y][x].status === 'visited' && (map.tileLayout[y][x].encounter !== '' || map.tileLayout[y][x].battle !== '')) {
+          let icon = map.tileLayout[y][x].battle !== '' ? battleIcon : encounterIcon;
+          this.ctx.drawImage(icon, drawX, drawY, this.tileWidth, this.tileHeight);
+        }
+      }
+    }
+
+    // Finally draw the hero
+    let heroX = Math.floor(partyPosition[0] * this.tileWidth + this.viewport.offset[0]);
+    let heroY = Math.floor(partyPosition[1] * this.tileHeight + this.viewport.offset[1]);
+    this.ctx.drawImage(hero, heroX, heroY, this.tileWidth, this.tileHeight);
+  }
+}
+
+/*
+import { loadCanvasImages } from '../utility.js';
+
 export default class OverworldView{
     constructor(){
         this.screen = document.getElementById('overworld-screen');
@@ -152,8 +279,8 @@ export default class OverworldView{
     }
 }
 
-/*
-	context.drawImage(image, frameX, frameY, frameWidth, frameHeight, canvasX, canvasY, canvasWidth, canvasHeight);
+
+	//context.drawImage(image, frameX, frameY, frameWidth, frameHeight, canvasX, canvasY, canvasWidth, canvasHeight);
 
 */
 
