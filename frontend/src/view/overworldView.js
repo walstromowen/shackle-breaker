@@ -122,6 +122,34 @@ export default class OverworldView {
     let heroY = Math.floor(partyPosition[1] * this.tileHeight + this.viewport.offset[1]);
     this.ctx.drawImage(hero, heroX, heroY, this.tileWidth, this.tileHeight);
   }
+    playBattleTransition(){
+        document.querySelector('body').classList.add('battle-wipe');
+        this.screen.classList.add('greyscale')
+        return new Promise((resolve)=>{
+            setTimeout(()=>{
+                this.screen.classList.remove('greyscale')
+                resolve();
+                
+            }, 3000)
+        })
+    }
+    hideOverWorldUi(){
+        document.getElementById('overworld-ui-container').style.display = 'none';
+    }
+    revealOverworldUi(){
+        document.getElementById('overworld-ui-container').style.display = 'flex';
+    }
+    revealMapTitle(){
+        this.mapTileContainer.style.display = 'flex';
+        this.mapTileContainer.classList.add('animate-map-title');
+    }
+    hideMapTitle(){
+        this.mapTileContainer.style.display = 'none';
+        this.screen.classList.remove('animate-map-title')
+    }
+    updateMapTitle(biomeName){
+        this.mapTile.innerText = biomeName.toUpperCase();
+    }
 }
 
 /*
