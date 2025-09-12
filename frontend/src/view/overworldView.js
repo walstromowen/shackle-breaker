@@ -17,7 +17,7 @@ export default class OverworldView {
       offset: [0, 0],
       movementOffset: [0, 0],
     };
-    this.images = {}; // store preloaded images as named keys
+    this.images = {}; // stores images by name
     this.resize();
   }
 
@@ -38,49 +38,32 @@ export default class OverworldView {
   }
 
   processMovement(currentPosition, nextPosition, fpsInterval, playerMovementDelay) {
-    // Calculate how far to move this frame
-    const diff = (this.tileWidth * fpsInterval) / playerMovementDelay; // smooth per-frame movement
+    // Smooth movement: move map per frame
+    const diff = (this.tileWidth * fpsInterval) / playerMovementDelay;
     let moveX = 0, moveY = 0;
 
-    // Determine direction
     if (currentPosition[0] < nextPosition[0]) moveX = -diff;
     else if (currentPosition[0] > nextPosition[0]) moveX = diff;
 
     if (currentPosition[1] < nextPosition[1]) moveY = -diff;
     else if (currentPosition[1] > nextPosition[1]) moveY = diff;
 
-    // Increment viewport offset smoothly
     this.viewport.movementOffset[0] += moveX;
     this.viewport.movementOffset[1] += moveY;
 
-    // Clamp offset to tile size to prevent overshoot
-    if (Math.abs(this.viewport.movementOffset[0]) > this.tileWidth)
-        this.viewport.movementOffset[0] = Math.sign(this.viewport.movementOffset[0]) * this.tileWidth;
-
-    if (Math.abs(this.viewport.movementOffset[1]) > this.tileHeight)
-        this.viewport.movementOffset[1] = Math.sign(this.viewport.movementOffset[1]) * this.tileHeight;
-}
+    // Clamp offsets so they never overshoot a single tile
+    this.viewport.movementOffset[0] = Math.max(Math.min(this.viewport.movementOffset[0], this.tileWidth), -this.tileWidth);
+    this.viewport.movementOffset[1] = Math.max(Math.min(this.viewport.movementOffset[1], this.tileHeight), -this.tileHeight);
+  }
 
   updateViewport(map, partyPosition) {
-    // Center camera on hero plus in-progress movement
-    this.viewport.offset[0] = Math.floor(
-      (this.overworldCanvas.width / 2) - 
-      ((partyPosition[0] + (-this.viewport.movementOffset[0] / this.tileWidth)) * this.tileWidth) - 
-      (this.tileWidth / 2)
-    );
-
-    this.viewport.offset[1] = Math.floor(
-      (this.overworldCanvas.height / 2) - 
-      ((partyPosition[1] + (-this.viewport.movementOffset[1] / this.tileHeight)) * this.tileHeight) - 
-      (this.tileHeight / 2)
-    );
-
+    // Viewport width/height in tiles
     this.viewport.viewportWidth = Math.floor(this.overworldCanvas.width / this.tileWidth);
     this.viewport.viewportHeight = Math.floor(this.overworldCanvas.height / this.tileHeight);
 
+    // Determine start/end tile coordinates
     this.viewport.startTileCoordinates[0] = Math.max(0, partyPosition[0] - this.viewport.viewportWidth);
     this.viewport.startTileCoordinates[1] = Math.max(0, partyPosition[1] - this.viewport.viewportHeight);
-
     this.viewport.endTileCoordinates[0] = Math.min(map.tileLayout[0].length - 1, partyPosition[0] + this.viewport.viewportWidth);
     this.viewport.endTileCoordinates[1] = Math.min(map.tileLayout.length - 1, partyPosition[1] + this.viewport.viewportHeight);
   }
@@ -91,7 +74,7 @@ export default class OverworldView {
   }
 
   draw(map, partyPosition) {
-    if (!this.images.terrain) return; // wait until images are loaded
+    if (!this.images.terrain) return; // wait until images are preloaded
 
     this.updateViewport(map, partyPosition);
     this.ctx.clearRect(0, 0, this.overworldCanvas.width, this.overworldCanvas.height);
@@ -100,10 +83,10 @@ export default class OverworldView {
 
     for (let y = this.viewport.startTileCoordinates[1]; y <= this.viewport.endTileCoordinates[1]; y++) {
       for (let x = this.viewport.startTileCoordinates[0]; x <= this.viewport.endTileCoordinates[0]; x++) {
-        const drawX = x * this.tileWidth + this.viewport.offset[0] + this.viewport.movementOffset[0];
-        const drawY = y * this.tileHeight + this.viewport.offset[1] + this.viewport.movementOffset[1];
+        const drawX = x * this.tileWidth - partyPosition[0] * this.tileWidth + Math.floor(this.overworldCanvas.width / 2 - this.tileWidth / 2) + this.viewport.movementOffset[0];
+        const drawY = y * this.tileHeight - partyPosition[1] * this.tileHeight + Math.floor(this.overworldCanvas.height / 2 - this.tileHeight / 2) + this.viewport.movementOffset[1];
 
-        // Draw terrain
+        // Draw terrain tile
         this.ctx.drawImage(
           terrain,
           1 + (64 + 2) * map.tileLayout[y][x].tileImageCoordinates[0],
@@ -116,7 +99,7 @@ export default class OverworldView {
           this.tileHeight
         );
 
-        // Draw map objects
+        // Draw map object if present
         const obj = map.tileLayout[y][x].mapObject;
         if (obj !== '') {
           this.ctx.drawImage(
@@ -141,17 +124,17 @@ export default class OverworldView {
       }
     }
 
-    // Draw hero at center of tile plus movement offset
-    const heroX = partyPosition[0] * this.tileWidth + this.viewport.offset[0] + this.viewport.movementOffset[0];
-    const heroY = partyPosition[1] * this.tileHeight + this.viewport.offset[1] + this.viewport.movementOffset[1];
+    // Draw hero fixed in center
+    const heroX = Math.floor(this.overworldCanvas.width / 2 - this.tileWidth / 2);
+    const heroY = Math.floor(this.overworldCanvas.height / 2 - this.tileHeight / 2);
     this.ctx.drawImage(hero, heroX, heroY, this.tileWidth, this.tileHeight);
   }
 
-  // Other utility functions
+  // Battle transition effect
   playBattleTransition() {
     document.querySelector('body').classList.add('battle-wipe');
     this.screen.classList.add('greyscale');
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       setTimeout(() => {
         this.screen.classList.remove('greyscale');
         resolve();
@@ -159,24 +142,21 @@ export default class OverworldView {
     });
   }
 
+  // UI control helpers
   hideOverWorldUi() {
     document.getElementById('overworld-ui-container').style.display = 'none';
   }
-
   revealOverworldUi() {
     document.getElementById('overworld-ui-container').style.display = 'flex';
   }
-
   revealMapTitle() {
     this.mapTileContainer.style.display = 'flex';
     this.mapTileContainer.classList.add('animate-map-title');
   }
-
   hideMapTitle() {
     this.mapTileContainer.style.display = 'none';
     this.screen.classList.remove('animate-map-title');
   }
-
   updateMapTitle(biomeName) {
     this.mapTile.innerText = biomeName.toUpperCase();
   }
