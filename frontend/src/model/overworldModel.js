@@ -11,6 +11,7 @@ export default class OverworldModel{
         }else{
             this.props.setMap(new Map());
         }
+        this.view.preloadImages(this.props.getMap())
         this.props.setCurrentPartyPosition(this.props.getMap().getEntrancePosition());
         this.props.setNextPartyPosition(this.props.getCurrentPartyPosition());
     }
