@@ -38,26 +38,27 @@ export default class OverworldView {
   }
 
   processMovement(currentPosition, nextPosition, fpsInterval, playerMovementDelay) {
-    const diff = this.tileWidth / (playerMovementDelay / fpsInterval);
-    let diffX = 0, diffY = 0;
+    // Calculate how far to move this frame
+    const diff = (this.tileWidth * fpsInterval) / playerMovementDelay; // smooth per-frame movement
+    let moveX = 0, moveY = 0;
 
-    if (currentPosition[0] < nextPosition[0]) diffX = -diff; // right
-    else if (currentPosition[0] > nextPosition[0]) diffX = diff; // left
+    // Determine direction
+    if (currentPosition[0] < nextPosition[0]) moveX = -diff;
+    else if (currentPosition[0] > nextPosition[0]) moveX = diff;
 
-    if (currentPosition[1] < nextPosition[1]) diffY = -diff; // down
-    else if (currentPosition[1] > nextPosition[1]) diffY = diff; // up
+    if (currentPosition[1] < nextPosition[1]) moveY = -diff;
+    else if (currentPosition[1] > nextPosition[1]) moveY = diff;
 
-    // Apply smooth offset
-    this.viewport.movementOffset[0] += diffX;
-    this.viewport.movementOffset[1] += diffY;
+    // Increment viewport offset smoothly
+    this.viewport.movementOffset[0] += moveX;
+    this.viewport.movementOffset[1] += moveY;
 
-    // Clamp movementOffset so it never exceeds tile size
-    if (Math.abs(this.viewport.movementOffset[0]) >= this.tileWidth) {
+    // Clamp offset to tile size to prevent overshoot
+    if (Math.abs(this.viewport.movementOffset[0]) > this.tileWidth)
         this.viewport.movementOffset[0] = Math.sign(this.viewport.movementOffset[0]) * this.tileWidth;
-    }
-    if (Math.abs(this.viewport.movementOffset[1]) >= this.tileHeight) {
+
+    if (Math.abs(this.viewport.movementOffset[1]) > this.tileHeight)
         this.viewport.movementOffset[1] = Math.sign(this.viewport.movementOffset[1]) * this.tileHeight;
-    }
 }
 
   updateViewport(map, partyPosition) {
