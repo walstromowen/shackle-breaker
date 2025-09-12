@@ -101,16 +101,17 @@ export default class OverworldController{
             }
         });
     }
-    onSwitchScreen(){
-        if(this.model.props.getSituation() == ''){//only if coming from a new map
+    onSwitchScreen() {
+        if (this.model.props.getSituation() == '') {
             this.triggerMapTitleSequence(this.model.props.getMap().biome.name);
         }
-        this.view.preloadImages(this.model.props.getMap());
-        this.model.props.setSituation('overworld');
-        this.isLooping = true;
-        this.model.props.setNextPartyPosition(this.model.props.getCurrentPartyPosition());
-        this.view.revealOverworldUi()
-        this.startOverworldLoop(60);
+        this.view.preloadImages(this.model.props.getMap()).then(() => {
+            this.model.props.setSituation('overworld');
+            this.isLooping = true;
+            this.model.props.setNextPartyPosition(this.model.props.getCurrentPartyPosition());
+            this.view.revealOverworldUi();
+            this.startOverworldLoop(60);
+        });
     }
     startOverworldLoop(desiredFPS){
         this.fpsInterval = 1000 / desiredFPS;
