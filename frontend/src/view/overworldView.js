@@ -12,12 +12,12 @@ export default class OverworldView {
     this.viewport = {
       viewportWidth: 0,
       viewportHeight: 0,
-      startTileCoordinates: [0,0],
-      endTileCoordinates: [0,0],
-      offset: [0,0],
-      movementOffset: [0,0],
+      startTileCoordinates: [0, 0],
+      endTileCoordinates: [0, 0],
+      offset: [0, 0],
+      movementOffset: [0, 0],
     };
-    this.images = {}; // named keys
+    this.images = {}; // store preloaded images as named keys
     this.resize();
   }
 
@@ -38,17 +38,15 @@ export default class OverworldView {
   }
 
   processMovement(currentPosition, nextPosition, fpsInterval, playerMovementDelay) {
-    // Amount to move per frame (float for smooth motion)
-    const diff = this.tileWidth / (playerMovementDelay / fpsInterval);
-
+    const diff = this.tileWidth / (playerMovementDelay / fpsInterval); // float for smooth motion
     let diffX = 0, diffY = 0;
 
     // Determine movement direction
-    if (currentPosition[0] < nextPosition[0]) diffX = -diff; // moving right
-    else if (currentPosition[0] > nextPosition[0]) diffX = diff; // moving left
+    if (currentPosition[0] < nextPosition[0]) diffX = -diff; // right
+    else if (currentPosition[0] > nextPosition[0]) diffX = diff; // left
 
-    if (currentPosition[1] < nextPosition[1]) diffY = -diff; // moving down
-    else if (currentPosition[1] > nextPosition[1]) diffY = diff; // moving up
+    if (currentPosition[1] < nextPosition[1]) diffY = -diff; // down
+    else if (currentPosition[1] > nextPosition[1]) diffY = diff; // up
 
     // Apply movement offset
     this.viewport.movementOffset[0] += diffX;
@@ -56,18 +54,28 @@ export default class OverworldView {
 
     // When offset reaches a full tile, update logical position and subtract tile size
     if (Math.abs(this.viewport.movementOffset[0]) >= this.tileWidth) {
-        this.viewport.movementOffset[0] -= Math.sign(this.viewport.movementOffset[0]) * this.tileWidth;
-        currentPosition[0] += Math.sign(diffX) * -1; // Update logical X
+      this.viewport.movementOffset[0] -= Math.sign(this.viewport.movementOffset[0]) * this.tileWidth;
+      currentPosition[0] += Math.sign(diffX) * -1;
     }
     if (Math.abs(this.viewport.movementOffset[1]) >= this.tileHeight) {
-        this.viewport.movementOffset[1] -= Math.sign(this.viewport.movementOffset[1]) * this.tileHeight;
-        currentPosition[1] += Math.sign(diffY) * -1; // Update logical Y
+      this.viewport.movementOffset[1] -= Math.sign(this.viewport.movementOffset[1]) * this.tileHeight;
+      currentPosition[1] += Math.sign(diffY) * -1;
     }
-}
+  }
 
-   updateViewport(map, partyPosition) {
-    this.viewport.offset[0] = Math.floor((this.overworldCanvas.width / 2) - (partyPosition[0] * this.tileWidth) - (this.tileWidth / 2));
-    this.viewport.offset[1] = Math.floor((this.overworldCanvas.height / 2) - (partyPosition[1] * this.tileHeight) - (this.tileHeight / 2));
+  updateViewport(map, partyPosition) {
+    // Center camera on hero plus in-progress movement
+    this.viewport.offset[0] = Math.floor(
+      (this.overworldCanvas.width / 2) - 
+      ((partyPosition[0] + (-this.viewport.movementOffset[0] / this.tileWidth)) * this.tileWidth) - 
+      (this.tileWidth / 2)
+    );
+
+    this.viewport.offset[1] = Math.floor(
+      (this.overworldCanvas.height / 2) - 
+      ((partyPosition[1] + (-this.viewport.movementOffset[1] / this.tileHeight)) * this.tileHeight) - 
+      (this.tileHeight / 2)
+    );
 
     this.viewport.viewportWidth = Math.floor(this.overworldCanvas.width / this.tileWidth);
     this.viewport.viewportHeight = Math.floor(this.overworldCanvas.height / this.tileHeight);
@@ -92,85 +100,88 @@ export default class OverworldView {
 
     const { terrain, hero, battle, encounter } = this.images;
 
-    // Loop visible tiles
     for (let y = this.viewport.startTileCoordinates[1]; y <= this.viewport.endTileCoordinates[1]; y++) {
-        for (let x = this.viewport.startTileCoordinates[0]; x <= this.viewport.endTileCoordinates[0]; x++) {
+      for (let x = this.viewport.startTileCoordinates[0]; x <= this.viewport.endTileCoordinates[0]; x++) {
+        const drawX = x * this.tileWidth + this.viewport.offset[0] + this.viewport.movementOffset[0];
+        const drawY = y * this.tileHeight + this.viewport.offset[1] + this.viewport.movementOffset[1];
 
-            const drawX = x * this.tileWidth + this.viewport.offset[0] + this.viewport.movementOffset[0];
-            const drawY = y * this.tileHeight + this.viewport.offset[1] + this.viewport.movementOffset[1];
+        // Draw terrain
+        this.ctx.drawImage(
+          terrain,
+          1 + (64 + 2) * map.tileLayout[y][x].tileImageCoordinates[0],
+          1 + (64 + 2) * map.tileLayout[y][x].tileImageCoordinates[1],
+          this.tileWidth,
+          this.tileHeight,
+          drawX,
+          drawY,
+          this.tileWidth,
+          this.tileHeight
+        );
 
-            // Draw terrain
-            this.ctx.drawImage(
-                terrain,
-                1 + (64 + 2) * map.tileLayout[y][x].tileImageCoordinates[0],
-                1 + (64 + 2) * map.tileLayout[y][x].tileImageCoordinates[1],
-                this.tileWidth,
-                this.tileHeight,
-                drawX,
-                drawY,
-                this.tileWidth,
-                this.tileHeight
-            );
-
-            // Draw map objects
-            const obj = map.tileLayout[y][x].mapObject;
-            if (obj !== '') {
-                this.ctx.drawImage(
-                    terrain,
-                    1 + (64 + 2) * obj.imageCoordinates[0],
-                    1 + (64 + 2) * obj.imageCoordinates[1],
-                    64 * obj.imageFrameSize[0] + (2 * (obj.imageFrameSize[0] - 1)),
-                    64 * obj.imageFrameSize[1] + (2 * (obj.imageFrameSize[1] - 1)),
-                    drawX,
-                    drawY - (64 * (obj.imageFrameSize[1] - 1)),
-                    this.tileWidth * obj.imageFrameSize[0],
-                    this.tileHeight * obj.imageFrameSize[1]
-                );
-            }
-
-            // Draw encounter/battle icons
-            const tile = map.tileLayout[y][x];
-            if (tile.status === 'visited' && (tile.encounter !== '' || tile.battle !== '')) {
-                const icon = tile.battle !== '' ? battle : encounter;
-                this.ctx.drawImage(icon, drawX, drawY, this.tileWidth, this.tileHeight);
-            }
+        // Draw map objects
+        const obj = map.tileLayout[y][x].mapObject;
+        if (obj !== '') {
+          this.ctx.drawImage(
+            terrain,
+            1 + (64 + 2) * obj.imageCoordinates[0],
+            1 + (64 + 2) * obj.imageCoordinates[1],
+            64 * obj.imageFrameSize[0] + (2 * (obj.imageFrameSize[0] - 1)),
+            64 * obj.imageFrameSize[1] + (2 * (obj.imageFrameSize[1] - 1)),
+            drawX,
+            drawY - (64 * (obj.imageFrameSize[1] - 1)),
+            this.tileWidth * obj.imageFrameSize[0],
+            this.tileHeight * obj.imageFrameSize[1]
+          );
         }
+
+        // Draw encounter/battle icons
+        const tile = map.tileLayout[y][x];
+        if (tile.status === 'visited' && (tile.encounter !== '' || tile.battle !== '')) {
+          const icon = tile.battle !== '' ? battle : encounter;
+          this.ctx.drawImage(icon, drawX, drawY, this.tileWidth, this.tileHeight);
+        }
+      }
     }
 
     // Draw hero at center of tile plus movement offset
     const heroX = partyPosition[0] * this.tileWidth + this.viewport.offset[0] + this.viewport.movementOffset[0];
     const heroY = partyPosition[1] * this.tileHeight + this.viewport.offset[1] + this.viewport.movementOffset[1];
     this.ctx.drawImage(hero, heroX, heroY, this.tileWidth, this.tileHeight);
-}
+  }
 
-    playBattleTransition(){
-        document.querySelector('body').classList.add('battle-wipe');
-        this.screen.classList.add('greyscale')
-        return new Promise((resolve)=>{
-            setTimeout(()=>{
-                this.screen.classList.remove('greyscale')
-                resolve();
-                
-            }, 3000)
-        })
-    }
-    hideOverWorldUi(){
-        document.getElementById('overworld-ui-container').style.display = 'none';
-    }
-    revealOverworldUi(){
-        document.getElementById('overworld-ui-container').style.display = 'flex';
-    }
-    revealMapTitle(){
-        this.mapTileContainer.style.display = 'flex';
-        this.mapTileContainer.classList.add('animate-map-title');
-    }
-    hideMapTitle(){
-        this.mapTileContainer.style.display = 'none';
-        this.screen.classList.remove('animate-map-title')
-    }
-    updateMapTitle(biomeName){
-        this.mapTile.innerText = biomeName.toUpperCase();
-    }
+  // Other utility functions
+  playBattleTransition() {
+    document.querySelector('body').classList.add('battle-wipe');
+    this.screen.classList.add('greyscale');
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.screen.classList.remove('greyscale');
+        resolve();
+      }, 3000);
+    });
+  }
+
+  hideOverWorldUi() {
+    document.getElementById('overworld-ui-container').style.display = 'none';
+  }
+
+  revealOverworldUi() {
+    document.getElementById('overworld-ui-container').style.display = 'flex';
+  }
+
+  revealMapTitle() {
+    this.mapTileContainer.style.display = 'flex';
+    this.mapTileContainer.classList.add('animate-map-title');
+  }
+
+  hideMapTitle() {
+    this.mapTileContainer.style.display = 'none';
+    this.screen.classList.remove('animate-map-title');
+  }
+
+  updateMapTitle(biomeName) {
+    this.mapTile.innerText = biomeName.toUpperCase();
+  }
 }
 
 /*
