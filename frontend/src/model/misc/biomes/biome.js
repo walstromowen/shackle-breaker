@@ -374,6 +374,58 @@ export default class Biome{
 
 
     //TileSet
+    beginPath(tileSet, steps, tileType) {
+        // Always pick entrance first if specified
+        let structure = tileType ? this.chooseStructure(tileType) : this.chooseStructure();
+
+        // Define a margin to prevent out-of-bounds placement
+        let marginX = Math.max(1, Math.floor(structure.structureMap[0].length / 2));
+        let marginY = Math.max(1, Math.floor(structure.structureMap.length / 2));
+
+        let currentPosition = [
+            marginX + Math.floor(Math.random() * (tileSet[0].length - structure.structureMap[0].length - 2 * marginX)),
+            marginY + Math.floor(Math.random() * (tileSet.length - structure.structureMap.length - 2 * marginY))
+        ];
+
+        // Place entrance with very high priority
+        structure.placeStructure(tileSet, currentPosition[0], currentPosition[1]);
+
+        // Save reference to entrance tile (optional, for later)
+        this.entrancePosition = currentPosition;
+
+        // Begin recursive path generation
+        this.advancePath(currentPosition, 0, tileSet, steps, structure);
+    }
+    advancePath(origin, errorTicks, tileSet, steps, previousStructure) {
+        if (steps <= 0) return;
+
+        // Determine next structure
+        let structure = steps === 1 ? this.chooseStructure('exit') : this.chooseStructure();
+
+        // Generate a connection point on the previous structure
+        previousStructure.generateNewConnectionPoint();
+
+        // Calculate offset for new structure
+        let currentPosition = this.offsetNextStructure(structure, previousStructure.connectionPosition, previousStructure.connectionDirection);
+
+        // Check bounds
+        if (this.isStrutureOutOfBounds(currentPosition, structure, tileSet)) {
+            errorTicks++;
+            // Skip this placement instead of restarting entire path
+            if (errorTicks > 100) return; // give up on this branch
+            return this.advancePath(origin, errorTicks, tileSet, steps, previousStructure);
+        }
+
+        // Connect structures
+        this.connectStructures(tileSet, previousStructure);
+
+        // Place new structure
+        structure.placeStructure(tileSet, currentPosition[0], currentPosition[1]);
+
+        // Continue path
+        this.advancePath(origin, 0, tileSet, steps - 1, structure);
+    }
+    /*
     beginPath(tileSet, steps, tileType){
         let structure;
         if(tileType)structure = this.chooseStructure(tileType)
@@ -406,6 +458,7 @@ export default class Biome{
         
 
     }
+        */
     createEmptyTileSet(){
         let tileSet = [];
         for(let y = 0; y < this.layoutHeight; y++){
