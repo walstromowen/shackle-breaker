@@ -74,119 +74,103 @@ export default class OverworldView {
   }
 
 draw(map, partyPosition) {
-  if (!this.images.terrain) return; // wait until images are preloaded
+    if (!this.images.terrain) return;
 
-  this.updateViewport(map, partyPosition);
-  this.ctx.clearRect(0, 0, this.overworldCanvas.width, this.overworldCanvas.height);
+    this.updateViewport(map, partyPosition);
+    this.ctx.clearRect(0, 0, this.overworldCanvas.width, this.overworldCanvas.height);
+    this.ctx.imageSmoothingEnabled = false;
 
-  const terrain = this.images.terrain;
-  const hero = this.images.hero;
-  const battleIcon = this.images.battle;
-  const encounterIcon = this.images.encounter;
+    const { terrain, hero, battle, encounter } = this.images;
 
-  const behindHero = [];
-  const overHero = [];
+    const behindObjects = [];
+    const overHeroObjects = [];
 
-  // Loop tiles
-  for (let y = this.viewport.startTileCoordinates[1]; y <= this.viewport.endTileCoordinates[1]; y++) {
-    for (let x = this.viewport.startTileCoordinates[0]; x <= this.viewport.endTileCoordinates[0]; x++) {
-      let drawX = Math.floor(x * this.tileWidth + this.viewport.offset[0] + this.viewport.movementOffset[0]);
-      let drawY = Math.floor(y * this.tileHeight + this.viewport.offset[1] + this.viewport.movementOffset[1]);
+    for (let y = this.viewport.startTileCoordinates[1]; y <= this.viewport.endTileCoordinates[1]; y++) {
+        for (let x = this.viewport.startTileCoordinates[0]; x <= this.viewport.endTileCoordinates[0]; x++) {
+            const drawX = Math.round(
+                x * this.tileWidth - partyPosition[0] * this.tileWidth +
+                this.overworldCanvas.width / 2 - this.tileWidth / 2 +
+                this.viewport.movementOffset[0]
+            );
+            const drawY = Math.round(
+                y * this.tileHeight - partyPosition[1] * this.tileHeight +
+                this.overworldCanvas.height / 2 - this.tileHeight / 2 +
+                this.viewport.movementOffset[1]
+            );
 
-      // Base terrain tile
-      this.ctx.drawImage(
-        terrain,
-        1 + (64 + 2) * map.tileLayout[y][x].tileImageCoordinates[0],
-        1 + (64 + 2) * map.tileLayout[y][x].tileImageCoordinates[1],
-        this.tileWidth,
-        this.tileHeight,
-        drawX,
-        drawY,
-        this.tileWidth,
-        this.tileHeight
-      );
+            const tile = map.tileLayout[y][x];
 
-      // Map objects
-      let obj = map.tileLayout[y][x].mapObject;
-      if (obj !== '') {
-        if (obj.imageFrameSize[1] > 1) {
-          // Tall object → split into bottom and top
-          behindHero.push({ obj, drawX, drawY, part: "bottom" });
-          overHero.push({ obj, drawX, drawY, part: "top" });
-        } else {
-          // Normal object
-          behindHero.push({ obj, drawX, drawY, part: "full" });
+            // Draw terrain
+            this.ctx.drawImage(
+                terrain,
+                1 + (64 + 2) * tile.tileImageCoordinates[0],
+                1 + (64 + 2) * tile.tileImageCoordinates[1],
+                this.tileWidth,
+                this.tileHeight,
+                drawX,
+                drawY,
+                this.tileWidth + 1,
+                this.tileHeight + 1
+            );
+
+            // Handle map objects
+            const obj = tile.mapObject;
+            if (obj !== '') {
+                if (obj.drawOverHero) {
+                    overHeroObjects.push({ obj, drawX, drawY });
+                } else {
+                    behindObjects.push({ obj, drawX, drawY });
+                }
+            }
+
+            // Draw encounter/battle icons behind hero
+            if (tile.status === 'visited' && (tile.encounter !== '' || tile.battle !== '')) {
+                const icon = tile.battle !== '' ? battle : encounter;
+                behindObjects.push({ obj: { icon }, drawX, drawY, isIcon: true });
+            }
         }
-      }
-
-      // Encounter/battle icons
-      if (map.tileLayout[y][x].status === 'visited' && (map.tileLayout[y][x].encounter !== '' || map.tileLayout[y][x].battle !== '')) {
-        let icon = map.tileLayout[y][x].battle !== '' ? battleIcon : encounterIcon;
-        this.ctx.drawImage(icon, drawX, drawY, this.tileWidth, this.tileHeight);
-      }
     }
-  }
 
-  // --- Draw Pass 1: objects behind hero ---
-  for (const item of behindHero) {
-    this.drawObjectPart(item, terrain);
-  }
+    // Draw objects behind hero
+    for (const item of behindObjects) {
+        if (item.isIcon) {
+            this.ctx.drawImage(item.obj.icon, item.drawX, item.drawY, this.tileWidth + 1, this.tileHeight + 1);
+        } else {
+            const o = item.obj;
+            this.ctx.drawImage(
+                terrain,
+                1 + (64 + 2) * o.imageCoordinates[0],
+                1 + (64 + 2) * o.imageCoordinates[1],
+                64 * o.imageFrameSize[0] + (2 * (o.imageFrameSize[0] - 1)),
+                64 * o.imageFrameSize[1] + (2 * (o.imageFrameSize[1] - 1)),
+                item.drawX,
+                item.drawY - (64 * (o.imageFrameSize[1] - 1)),
+                this.tileWidth * o.imageFrameSize[0],
+                this.tileHeight * o.imageFrameSize[1]
+            );
+        }
+    }
 
-  // --- Draw hero ---
-  let heroX = Math.floor(partyPosition[0] * this.tileWidth + this.viewport.offset[0]);
-  let heroY = Math.floor(partyPosition[1] * this.tileHeight + this.viewport.offset[1]);
-  this.ctx.drawImage(hero, heroX, heroY, this.tileWidth, this.tileHeight);
+    // Draw hero in center
+    const heroX = Math.round(this.overworldCanvas.width / 2 - this.tileWidth / 2);
+    const heroY = Math.round(this.overworldCanvas.height / 2 - this.tileHeight / 2);
+    this.ctx.drawImage(hero, heroX, heroY, this.tileWidth, this.tileHeight);
 
-  // --- Draw Pass 2: objects over hero ---
-  for (const item of overHero) {
-    this.drawObjectPart(item, terrain);
-  }
-}
-
-// helper to draw objects by part
-drawObjectPart(item, terrain) {
-  const o = item.obj;
-
-  if (item.part === "bottom") {
-    // Only bottom row of the sprite
-    this.ctx.drawImage(
-      terrain,
-      1 + (64 + 2) * o.imageCoordinates[0],
-      1 + (64 + 2) * (o.imageCoordinates[1] + (o.imageFrameSize[1] - 1)), // bottom slice
-      64 * o.imageFrameSize[0],
-      64,
-      item.drawX,
-      item.drawY,
-      this.tileWidth * o.imageFrameSize[0],
-      this.tileHeight
-    );
-  } else if (item.part === "top") {
-    // Everything above the bottom row
-    this.ctx.drawImage(
-      terrain,
-      1 + (64 + 2) * o.imageCoordinates[0],
-      1 + (64 + 2) * o.imageCoordinates[1],
-      64 * o.imageFrameSize[0],
-      64 * (o.imageFrameSize[1] - 1),
-      item.drawX,
-      item.drawY - (64 * (o.imageFrameSize[1] - 1)),
-      this.tileWidth * o.imageFrameSize[0],
-      this.tileHeight * (o.imageFrameSize[1] - 1)
-    );
-  } else {
-    // Normal full object
-    this.ctx.drawImage(
-      terrain,
-      1 + (64 + 2) * o.imageCoordinates[0],
-      1 + (64 + 2) * o.imageCoordinates[1],
-      64 * o.imageFrameSize[0],
-      64 * o.imageFrameSize[1],
-      item.drawX,
-      item.drawY - (64 * (o.imageFrameSize[1] - 1)),
-      this.tileWidth * o.imageFrameSize[0],
-      this.tileHeight * o.imageFrameSize[1]
-    );
-  }
+    // Draw objects over hero
+    for (const item of overHeroObjects) {
+        const o = item.obj;
+        this.ctx.drawImage(
+            terrain,
+            1 + (64 + 2) * o.imageCoordinates[0],
+            1 + (64 + 2) * o.imageCoordinates[1],
+            64 * o.imageFrameSize[0] + (2 * (o.imageFrameSize[0] - 1)),
+            64 * o.imageFrameSize[1] + (2 * (o.imageFrameSize[1] - 1)),
+            item.drawX,
+            item.drawY - (64 * (o.imageFrameSize[1] - 1)),
+            this.tileWidth * o.imageFrameSize[0],
+            this.tileHeight * o.imageFrameSize[1]
+        );
+    }
 }
 
   // Battle transition effect
