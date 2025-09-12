@@ -73,62 +73,72 @@ export default class OverworldView {
     this.overworldCanvas.height = window.innerHeight;
   }
 
-  draw(map, partyPosition) {
-    if (!this.images.terrain) return; // wait until images are preloaded
+    draw(map, partyPosition) {
+        if (!this.images.terrain) return; // wait until images are loaded
 
-    this.updateViewport(map, partyPosition);
-    this.ctx.clearRect(0, 0, this.overworldCanvas.width, this.overworldCanvas.height);
+        this.updateViewport(map, partyPosition);
+        this.ctx.clearRect(0, 0, this.overworldCanvas.width, this.overworldCanvas.height);
+        this.ctx.imageSmoothingEnabled = false; // prevent anti-aliasing gaps
 
-    const { terrain, hero, battle, encounter } = this.images;
+        const { terrain, hero, battle, encounter } = this.images;
 
-    for (let y = this.viewport.startTileCoordinates[1]; y <= this.viewport.endTileCoordinates[1]; y++) {
-      for (let x = this.viewport.startTileCoordinates[0]; x <= this.viewport.endTileCoordinates[0]; x++) {
-        const drawX = x * this.tileWidth - partyPosition[0] * this.tileWidth + Math.floor(this.overworldCanvas.width / 2 - this.tileWidth / 2) + this.viewport.movementOffset[0];
-        const drawY = y * this.tileHeight - partyPosition[1] * this.tileHeight + Math.floor(this.overworldCanvas.height / 2 - this.tileHeight / 2) + this.viewport.movementOffset[1];
+        for (let y = this.viewport.startTileCoordinates[1]; y <= this.viewport.endTileCoordinates[1]; y++) {
+            for (let x = this.viewport.startTileCoordinates[0]; x <= this.viewport.endTileCoordinates[0]; x++) {
+                const drawX = Math.round(
+                    x * this.tileWidth - partyPosition[0] * this.tileWidth +
+                    this.overworldCanvas.width / 2 - this.tileWidth / 2 +
+                    this.viewport.movementOffset[0]
+                );
+                const drawY = Math.round(
+                    y * this.tileHeight - partyPosition[1] * this.tileHeight +
+                    this.overworldCanvas.height / 2 - this.tileHeight / 2 +
+                    this.viewport.movementOffset[1]
+                );
 
-        // Draw terrain tile
-        this.ctx.drawImage(
-          terrain,
-          1 + (64 + 2) * map.tileLayout[y][x].tileImageCoordinates[0],
-          1 + (64 + 2) * map.tileLayout[y][x].tileImageCoordinates[1],
-          this.tileWidth,
-          this.tileHeight,
-          drawX,
-          drawY,
-          this.tileWidth,
-          this.tileHeight
-        );
+                const tile = map.tileLayout[y][x];
 
-        // Draw map object if present
-        const obj = map.tileLayout[y][x].mapObject;
-        if (obj !== '') {
-          this.ctx.drawImage(
-            terrain,
-            1 + (64 + 2) * obj.imageCoordinates[0],
-            1 + (64 + 2) * obj.imageCoordinates[1],
-            64 * obj.imageFrameSize[0] + (2 * (obj.imageFrameSize[0] - 1)),
-            64 * obj.imageFrameSize[1] + (2 * (obj.imageFrameSize[1] - 1)),
-            drawX,
-            drawY - (64 * (obj.imageFrameSize[1] - 1)),
-            this.tileWidth * obj.imageFrameSize[0],
-            this.tileHeight * obj.imageFrameSize[1]
-          );
+                // Draw terrain tile
+                this.ctx.drawImage(
+                    terrain,
+                    1 + (64 + 2) * tile.tileImageCoordinates[0],
+                    1 + (64 + 2) * tile.tileImageCoordinates[1],
+                    this.tileWidth,
+                    this.tileHeight,
+                    drawX,
+                    drawY,
+                    this.tileWidth + 1,
+                    this.tileHeight + 1
+                );
+
+                // Draw map object if present
+                const obj = tile.mapObject;
+                if (obj !== '') {
+                    this.ctx.drawImage(
+                        terrain,
+                        1 + (64 + 2) * obj.imageCoordinates[0],
+                        1 + (64 + 2) * obj.imageCoordinates[1],
+                        64 * obj.imageFrameSize[0] + (2 * (obj.imageFrameSize[0] - 1)),
+                        64 * obj.imageFrameSize[1] + (2 * (obj.imageFrameSize[1] - 1)),
+                        drawX,
+                        drawY - (64 * (obj.imageFrameSize[1] - 1)),
+                        this.tileWidth * obj.imageFrameSize[0],
+                        this.tileHeight * obj.imageFrameSize[1]
+                    );
+                }
+
+                // Draw encounter/battle icons
+                if (tile.status === 'visited' && (tile.encounter !== '' || tile.battle !== '')) {
+                    const icon = tile.battle !== '' ? battle : encounter;
+                    this.ctx.drawImage(icon, drawX, drawY, this.tileWidth + 1, this.tileHeight + 1);
+                }
+            }
         }
 
-        // Draw encounter/battle icons
-        const tile = map.tileLayout[y][x];
-        if (tile.status === 'visited' && (tile.encounter !== '' || tile.battle !== '')) {
-          const icon = tile.battle !== '' ? battle : encounter;
-          this.ctx.drawImage(icon, drawX, drawY, this.tileWidth, this.tileHeight);
-        }
-      }
+        // Draw hero fixed in center
+        const heroX = Math.round(this.overworldCanvas.width / 2 - this.tileWidth / 2);
+        const heroY = Math.round(this.overworldCanvas.height / 2 - this.tileHeight / 2);
+        this.ctx.drawImage(hero, heroX, heroY, this.tileWidth, this.tileHeight);
     }
-
-    // Draw hero fixed in center
-    const heroX = Math.floor(this.overworldCanvas.width / 2 - this.tileWidth / 2);
-    const heroY = Math.floor(this.overworldCanvas.height / 2 - this.tileHeight / 2);
-    this.ctx.drawImage(hero, heroX, heroY, this.tileWidth, this.tileHeight);
-  }
 
   // Battle transition effect
   playBattleTransition() {
