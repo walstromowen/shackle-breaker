@@ -105,6 +105,7 @@ export default class OverworldController{
         if(this.model.props.getSituation() == ''){//only if coming from a new map
             this.triggerMapTitleSequence(this.model.props.getMap().biome.name);
         }
+        this.view.preloadImages(this.model.props.getMap());
         this.model.props.setSituation('overworld');
         this.isLooping = true;
         this.model.props.setNextPartyPosition(this.model.props.getCurrentPartyPosition());
