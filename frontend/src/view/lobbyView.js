@@ -53,7 +53,7 @@ export default class LobbyView{
         this.difficultySelection = document.getElementById('lobby-difficulty-selection');
 
     }
-    updateApperance(src){
+    updateAppearance(src){
         this.appearanceImage.src = src;
     }
     updateInventory(equipment, partyInventory){
