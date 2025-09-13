@@ -44,9 +44,14 @@ export default class LobbyView{
 
         this.corruption = document.getElementById('lobby-corruption');
 
+        this.lobbyNameSelection = document.getElementById('lobby-name-selection');
         this.lobbyInventory = document.getElementById('lobby-inventory');
+        this.appearanceSelection = document.getElementById('lobby-appearance-selection');
+        this.backgroundSelection = document.getElementById('lobby-background-selection');
+        this.originSelection = document.getElementById('lobby-origin-selection');
+        this.keepsakeSelection = document.getElementById('lobby-keepsake-selection');
+        this.difficultySelection = document.getElementById('lobby-difficulty-selection');
 
-        
     }
     updateApperance(src){
         this.apperanceImage.src = src;
@@ -166,6 +171,14 @@ export default class LobbyView{
                 this.originDescription.innerText = 'The Namuh are a silent and mysterious people who communicate only through a form sign language. Not much is known about the Namuh people except for rumors, many of which speaking of a great tragedy befalling the Namuh people and the becoming of a shadow of their former selves.';
                 break;                                 
         }
+    }
+    resetInputs(){
+        this.lobbyNameSelection.value = '';
+        this.appearanceSelection.selectedIndex = 0;
+        this.backgroundSelection.selectedIndex = 0;
+        this.originSelection.selectedIndex = 0;
+        this.keepsakeSelection.selectedIndex = 0;
+        this.difficultySelection.selectedIndex = 0;
     }
 }
 

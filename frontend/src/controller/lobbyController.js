@@ -55,6 +55,7 @@ export default class LobbyController{
         });
     }
     onSwitchScreen(){
+        this.view.resetInputs();
         this.model.resetParty()
         this.view.updateInventory(this.model.props.getParty()[0].getEquipment(Object.keys(this.model.props.getParty()[0].equipment)), this.model.props.getInventory());
         this.view.updateAttributes(this.model.props.getParty()[0].getAttributes());
