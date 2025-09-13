@@ -899,13 +899,9 @@ export default class BattleController{
             return (combatant.isHostile == false && combatant.currentHP > 0);
         })
         if(remainingAllies.length == 0){
-            this.view.printToBattleConsole('Party has been slain... Please Refresh Page');
-
-            
-            //Error 
+            this.model.props.resetGame();
             this.props.switchScreen('title-screen')
             this.model.props.setSituation('title-screen')
-            this.model.props.setBattle(null)
             
             endBattleFlag = true;
             return;
