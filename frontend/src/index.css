@@ -1049,6 +1049,7 @@ input{
     justify-content: center;
     align-items: center;
     pointer-events: none;
+    z-index: 1000; 
 }
 
 #overworld-map-title {
@@ -1057,7 +1058,6 @@ input{
     color: var(--color-5);
     text-shadow: 10px 10px 10px black;
     opacity: 0;
-    animation: none;
 }
 #overworld-ui-container{
     display: flex;
