@@ -1049,7 +1049,7 @@ input{
     justify-content: center;
     align-items: center;
     pointer-events: none;   
-    background: green; 
+    background: transparent; 
     z-index: 1000;
 }
 
@@ -1057,7 +1057,14 @@ input{
     font-family: papyrus, fantasy;
     font-size: var(--font-size-0);
     color: var(--color-5);
-    text-shadow: 0 0 20px var(--color-1), 2px 2px 5px black;
+    text-shadow:
+        0 0 30px rgba(0,0,0,0.9),
+        0 0 50px rgba(0,0,0,0.8),
+        0 0 80px rgba(0,0,0,0.7),
+        0 0 120px rgba(255,255,255,0.1),
+        0 0 200px rgba(255,255,255,0.05),
+
+    2px 2px 5px rgba(0,0,0,0.5);
     opacity: 0;
 }
 #overworld-ui-container{
