@@ -2100,7 +2100,7 @@ export class Sterben extends Entity{
             },
             isHostile: config.isHostile || true,
             abilityArray: [new Flurry({}), new IceWall({}), new CallOfSterben({})],
-            lootTable: [new IceSickle({level: 1}), new IceStaff({level: 1}), new ScrollOfHailStorm()],
+            lootTable: [new IceSickle({level: 1}), new IceStaff({level: 1}), new ScrollOfHailStorm({})],
             immunities: ['blunt', 'pierce'],
         }, isRehydrate);
     }
