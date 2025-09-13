@@ -78,7 +78,7 @@ export default class GameController{
     }
     switchScreen(screenId){
         this.switchScreenHelpper(screenId).then(()=>{
-            this.model.switchScreen(screenId);
+            this.model.switchScreen(screenId); 
             this.view.switchScreen(screenId);
         })
     }
