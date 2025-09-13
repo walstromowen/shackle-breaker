@@ -50,6 +50,7 @@ export default class LobbyView{
         this.backgroundSelection = document.getElementById('lobby-background-selection');
         this.originSelection = document.getElementById('lobby-origin-selection');
         this.keepsakeSelection = document.getElementById('lobby-keepsake-selection');
+        this.companionSelection = document.getElementById('lobby-companion-selection');
         this.difficultySelection = document.getElementById('lobby-difficulty-selection');
 
     }
@@ -178,8 +179,9 @@ export default class LobbyView{
         this.backgroundSelection.selectedIndex = 0;
         this.originSelection.selectedIndex = 0;
         this.keepsakeSelection.selectedIndex = 0;
-        this.difficultySelection.selectedIndex = 0;
-        console.log(this.appearanceSelection.value)
+        this.companionSelection.selectedIndex = 0;
+        this.difficultySelection.selectedIndex = 1;
+        this.appearanceImage.src = appearanceSelection.options[0].value;
     }
 }
 
