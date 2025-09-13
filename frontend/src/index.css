@@ -1055,8 +1055,8 @@ input{
 
 #overworld-map-title {
     font-family: papyrus, fantasy;
-    font-size: 3rem;
-    color: white;
+    font-size: var(--font-size-0);
+    color: var(--color-5);
     text-shadow: 0 0 20px rgba(255,255,255,0.6), 2px 2px 5px black;
     opacity: 0;
 }
