@@ -425,40 +425,6 @@ export default class Biome{
         // Continue path
         this.advancePath(origin, 0, tileSet, steps - 1, structure);
     }
-    /*
-    beginPath(tileSet, steps, tileType){
-        let structure;
-        if(tileType)structure = this.chooseStructure(tileType)
-        else structure = this.chooseStructure() 
-
-        let currentPosition = [
-            Math.floor(Math.random()*(tileSet[0].length - structure.structureMap[0].length - 1)) + 1,
-            Math.floor(Math.random()*(tileSet.length - structure.structureMap.length - 1)) + 1
-        ]
-        structure.placeStructure(tileSet, currentPosition[0], currentPosition[1])
-        this.advancePath(currentPosition, 0, tileSet, steps, structure)
-        
-    }
-    advancePath(origin, errorTicks, tileSet, steps, previousStructure, structure = this.chooseStructure()){
-        if(steps == 0) return 
-        if(steps == 1) structure = this.chooseStructure('exit');
-        previousStructure.generateNewConnectionPoint()//gives [0,0] sometimes because only tiles with correct priority are given a position
-      
-        let currentPosition = this.offsetNextStructure(structure, previousStructure.connectionPosition, previousStructure.connectionDirection)
-        if(this.isStrutureOutOfBounds(currentPosition, structure, tileSet)){
-            errorTicks++
-            if(errorTicks > 100) return this.beginPath(tileSet, steps)
-            return this.advancePath(origin, errorTicks, tileSet, steps, previousStructure)
-           
-        }
-        this.connectStructures(tileSet, previousStructure)
-        structure.placeStructure(tileSet, currentPosition[0], currentPosition[1])
-        steps--;
-        return this.advancePath(origin, 0, tileSet, steps, structure)
-        
-
-    }
-        */
     createEmptyTileSet(){
         let tileSet = [];
         for(let y = 0; y < this.layoutHeight; y++){
@@ -619,3 +585,39 @@ export default class Biome{
         
     }
 }
+
+
+    /* OLD
+    beginPath(tileSet, steps, tileType){
+        let structure;
+        if(tileType)structure = this.chooseStructure(tileType)
+        else structure = this.chooseStructure() 
+
+        let currentPosition = [
+            Math.floor(Math.random()*(tileSet[0].length - structure.structureMap[0].length - 1)) + 1,
+            Math.floor(Math.random()*(tileSet.length - structure.structureMap.length - 1)) + 1
+        ]
+        structure.placeStructure(tileSet, currentPosition[0], currentPosition[1])
+        this.advancePath(currentPosition, 0, tileSet, steps, structure)
+        
+    }
+    advancePath(origin, errorTicks, tileSet, steps, previousStructure, structure = this.chooseStructure()){
+        if(steps == 0) return 
+        if(steps == 1) structure = this.chooseStructure('exit');
+        previousStructure.generateNewConnectionPoint()//gives [0,0] sometimes because only tiles with correct priority are given a position
+      
+        let currentPosition = this.offsetNextStructure(structure, previousStructure.connectionPosition, previousStructure.connectionDirection)
+        if(this.isStrutureOutOfBounds(currentPosition, structure, tileSet)){
+            errorTicks++
+            if(errorTicks > 100) return this.beginPath(tileSet, steps)
+            return this.advancePath(origin, errorTicks, tileSet, steps, previousStructure)
+           
+        }
+        this.connectStructures(tileSet, previousStructure)
+        structure.placeStructure(tileSet, currentPosition[0], currentPosition[1])
+        steps--;
+        return this.advancePath(origin, 0, tileSet, steps, structure)
+        
+
+    }
+        */
