@@ -51,7 +51,8 @@ export default class GameModel{
             recruitWanderingCompanion: this.recruitWanderingCompanion.bind(this),
             calcHighestPartyLevel: this.calcHighestPartyLevel.bind(this),
             toSaveObject: this.toSaveObject.bind(this),
-            fromSaveObject: this.fromSaveObject.bind(this)
+            fromSaveObject: this.fromSaveObject.bind(this),
+            resetGame: this.resetGame.bind(this)
         }
         this.difficulty = '';
         this.battle = null;
@@ -372,10 +373,185 @@ export default class GameModel{
         this.previousPartyPosition = rawSave.data.previousPartyPosition;
         this.nextPartyPosition = rawSave.data.nextPartyPosition;
     }
-    
+    resetGame(){
+        this.difficulty = '';
+        this.battle = null;
+        this.encounter = null;
+        this.map = '';
+        this.party = [];
+        this.inventory = [];
+        this.gold = 0;
+        this.milestones = [];
+        this.screen = 'title-screen';
+        this.situation = '';
+        this.currentPartyPosition = [0,0];//in Tiles
+        this.previousPartyPosition = [0,0];//in Tiles
+        this.nextPartyPosition = [0,0];
+        this.wanderingCompanions = [
+            new Entity({
+                name: 'Commander Mentoras',
+                apperance: './assets/media/entities/companions/commander-mentoras.jpg',
+                vigor: 5,
+                strength: 7,
+                dexterity: 5,
+                intelligence: 3,
+                attunement: 5,
+                factions: ['alterian'],
+                currentCorruption: 0.0,
+                equipment: {
+                    mainHand: new GreatSword({level: 1}),
+                    offhand: new GreatSword({level: 1}),
+                    head: '',
+                    torso: new LinenShirt({level: 1}),
+                    arms: '',
+                    legs: new LinenPants({level: 1}),
+                    feet: new LeatherBoots({level: 1}),
+                },
+                abilityArray: [new ExposeWeakness({})],
+            }),
+            new Entity({
+                name: 'Beni Hezikiah',
+                apperance: './assets/media/entities/companions/beni-hezikiah.jpg',
+                vigor: 5,
+                strength: 5,
+                dexterity: 7,
+                intelligence: 5,
+                attunement: 3,
+                factions: ['namuh'],
+                currentCorruption: 0.0,
+                equipment: {
+                    mainHand: new ShortSword({level: 1}),
+                    offhand: '',
+                    head: new LeatherHood({level: 1}),
+                    torso: new LeatherChestplate({level: 1}),
+                    arms: '',
+                    legs: new LinenPants({level: 1}),
+                    feet: new LeatherBoots({level: 1}),
+                },
+                abilityArray: [new CastShadow({})],
+            }),
+            new Entity({
+                name: 'Jagar Ironson',
+                apperance: './assets/media/entities/companions/companion-warrior-1.jpg',
+                vigor: 7,
+                strength: 5,
+                dexterity: 5,
+                intelligence: 5,
+                attunement: 3,
+                factions: ['panzerian'],
+                currentCorruption: 0.0,
+                equipment: {
+                    mainHand: new ShortSword({level: 1}),
+                    offhand: new Buckler({level: 1}),
+                    head: '',
+                    torso: new LinenShirt({level: 1}),
+                    arms: '',
+                    legs: new LinenPants({level: 1}),
+                    feet: new LeatherBoots({level: 1}),
+                },
+            }),
+            new Entity({
+                name: 'Gwen Mentoras',
+                apperance: './assets/media/entities/companions/gwen-mentoras.jpg',
+                vigor: 5,
+                strength: 3,
+                dexterity: 7,
+                intelligence: 5,
+                attunement: 5,
+                factions: ['alterian'],
+                currentCorruption: 0.0,
+                equipment: {
+                    mainHand: new Shortbow({level: 1}),
+                    offhand: new Shortbow({level: 1}),
+                    head: new LeatherHood({level: 1}),
+                    torso: new LinenShirt({level: 1}),
+                    arms: '',
+                    legs: new LinenPants({level: 1}),
+                    feet: new LeatherBoots({level: 1}),
+                },
+            }),
+            new Entity({
+                name: 'Nicholi Ironson',
+                apperance: './assets/media/entities/companions/companion-warrior-4.jpg',
+                vigor: 5,
+                strength: 7,
+                dexterity: 5,
+                intelligence: 3,
+                attunement: 5,
+                factions: ['panzerian'],
+                currentCorruption: 0.0,
+                equipment: {
+                    mainHand: new Handaxe({level: 1}),
+                    offhand: '',
+                    head: new IronHelm({level: 1}),
+                    torso: new LeatherChestplate({level: 1}),
+                    arms: '',
+                    legs: new LinenPants({level: 1}),
+                    feet: new LeatherBoots({level: 1}),
+                },
+            }),
+            new Entity({
+                name: 'Dr. Darius Micolash',
+                apperance: './assets/media/entities/companions/companion-mage-3.jpg',
+                vigor: 5,
+                strength: 3,
+                dexterity: 7,
+                intelligence: 7,
+                attunement: 3,
+                factions: ['alterian'],
+                currentCorruption: 0.5,
+                equipment: {
+                    mainHand: new ArcaneStaff({level: 1}),
+                    offhand: new Dagger({level: 1}),
+                    head: '',
+                    torso: new LinenShirt({level: 1}),
+                    arms: '',
+                    legs: new LinenPants({level: 1}),
+                    feet: new LeatherBoots({level: 1}),
+                },
+            }),
+            new Entity({
+                name: 'Julian Memira',
+                apperance: './assets/media/entities/companions/companion-mage-2.jpg',
+                vigor: 5,
+                strength: 3,
+                dexterity: 5,
+                intelligence: 5,
+                attunement: 7,
+                factions: ['alterian'],
+                currentCorruption: 0.0,
+                equipment: {
+                    mainHand: new ForestStaff({level: 1}),
+                    offhand: '',
+                    head: new ClothHood({level: 1}),
+                    torso: new LinenShirt({level: 1}),
+                    arms: '',
+                    legs: new LinenPants({level: 1}),
+                    feet: new LeatherBoots({level: 1}),
+                },
+            }),
+            new Entity({
+                name: 'Revan Sekrav',
+                apperance: './assets/media/entities/companions/companion-warrior-2.jpg',
+                vigor: 5,
+                strength: 5,
+                dexterity: 7,
+                intelligence: 5,
+                attunement: 3,
+                equipment: {
+                    mainHand: new Dagger({level: 1}),
+                    offhand: '',
+                    head: '',
+                    torso: new LeatherChestplate({level: 1}),
+                    arms: new LeatherGloves({level: 1}),
+                    legs: new LinenPants({level: 1}),
+                    feet: new LeatherBoots({level: 1}),
+                },
+            }),
+        ];
+    }
 }
-       
-  
+
   
         
    

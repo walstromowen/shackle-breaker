@@ -59,6 +59,7 @@ export default class OverworldController{
             document.getElementById('overworld-escape-menu').style.display='none';
             this.props.switchScreen('title-screen');
             this.model.props.setSituation('title-screen')
+            this.model.props.resetGame();
             playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
         });
         document.getElementById('overworld-escape-menu-save-button').addEventListener('click', ()=>{
