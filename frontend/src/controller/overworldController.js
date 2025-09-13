@@ -112,13 +112,14 @@ export default class OverworldController{
             this.view.mapTile.addEventListener('animationend', onAnimationEnd);
             this.model.props.setSituation('overworld');
         }
-
-        this.view.preloadImages(this.model.props.getMap()).then(() => {
-            this.isLooping = true;
-            this.model.props.setNextPartyPosition(this.model.props.getCurrentPartyPosition());
-            this.view.revealOverworldUi();
-            this.startOverworldLoop(60);
-            return Promise.resolve();
+        return new Promise((resolve) => {
+            this.view.preloadImages(this.model.props.getMap()).then(() => {
+                this.isLooping = true;
+                this.model.props.setNextPartyPosition(this.model.props.getCurrentPartyPosition());
+                this.view.revealOverworldUi();
+                this.startOverworldLoop(60);
+                resolve();
+            });
         });
     }
     /*
