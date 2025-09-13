@@ -107,13 +107,12 @@ export default class OverworldController{
 
         // Only trigger map title if first time entering this map
         if (this.model.props.getSituation() === '') {
+            this.model.props.setSituation('overworld'); // mark immediately
             this.triggerMapTitleSequence(biomeName);
         }
 
         // Preload map images first
         this.view.preloadImages(map).then(() => {
-            // Update game state
-            this.model.props.setSituation('overworld');
             this.isLooping = true;
             this.model.props.setNextPartyPosition(this.model.props.getCurrentPartyPosition());
 
