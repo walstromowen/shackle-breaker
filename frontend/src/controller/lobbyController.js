@@ -33,8 +33,8 @@ export default class LobbyController{
             });
         });
         document.getElementById('lobby-appearance-selection').addEventListener('change', ()=>{
-            this.model.updateApperance();
-            this.view.updateApperance(this.model.props.getParty()[0].apperance);
+            this.model.updateAppearance();
+            this.view.updateAppearance(this.model.props.getParty()[0].appearance);
         });
         document.getElementById('lobby-background-selection').addEventListener('change', ()=>{
             this.model.updateBackground();
