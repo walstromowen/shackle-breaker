@@ -102,6 +102,30 @@ export default class OverworldController{
         });
     }
     onSwitchScreen() {
+        const map = this.model.props.getMap();
+        const biomeName = map.biome.name;
+
+        // Only trigger map title if first time entering this map
+        if (this.model.props.getSituation() === '') {
+            this.triggerMapTitleSequence(biomeName);
+        }
+
+        // Preload map images first
+        this.view.preloadImages(map).then(() => {
+            // Update game state
+            this.model.props.setSituation('overworld');
+            this.isLooping = true;
+            this.model.props.setNextPartyPosition(this.model.props.getCurrentPartyPosition());
+
+            // Reveal UI
+            this.view.revealOverworldUi();
+
+            // Start the main overworld loop
+            this.startOverworldLoop(60);
+        });
+    }
+    /*
+    onSwitchScreen() {
         if (this.model.props.getSituation() == '') {
             this.triggerMapTitleSequence(this.model.props.getMap().biome.name);
         }
@@ -113,6 +137,7 @@ export default class OverworldController{
             this.startOverworldLoop(60);
         });
     }
+        */
     startOverworldLoop(desiredFPS){
         this.fpsInterval = 1000 / desiredFPS;
         this.then = Date.now();
@@ -197,12 +222,24 @@ export default class OverworldController{
             return;
         }
     }
-    triggerMapTitleSequence(biomeName){
-        this.view.updateMapTitle(biomeName)
-        this.view.revealMapTitle();
-        setTimeout(()=>{
+    triggerMapTitleSequence(biomeName, displayDuration = 3000) {
+        this.view.updateMapTitle(biomeName);
+        this.view.showMapTitle();
+
+        const mapTileEl = this.view.mapTileContainer;
+
+        const style = window.getComputedStyle(mapTileEl);
+        const animationDuration = parseFloat(style.animationDuration) * 1000 || 1000;
+
+        const handleAnimationEnd = () => {
+            mapTileEl.classList.remove('animate-map-title');
+            mapTileEl.removeEventListener('animationend', handleAnimationEnd);
+        };
+        mapTileEl.addEventListener('animationend', handleAnimationEnd);
+
+        setTimeout(() => {
             this.view.hideMapTitle();
-        }, 4000);
+        }, displayDuration + animationDuration);
     }
 }
 
