@@ -101,7 +101,8 @@ export default class SaveListController{
                 this.view.enableDeleteButton();
                 
             });
-        });     
+        });
+        return Promise.resolve();     
     }
     
     async newSaveToServer() {

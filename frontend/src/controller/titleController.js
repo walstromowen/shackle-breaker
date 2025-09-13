@@ -45,7 +45,7 @@ export default class TitleController{
     }
     onSwitchScreen(){
         playMusic('./assets/audio/musicTracks/AlexProductionsMainTheme.mp3');
-       
+        return Promise.resolve();
     }
      //Server Calls
     async registerUser(e){

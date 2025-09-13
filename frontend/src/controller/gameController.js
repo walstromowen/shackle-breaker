@@ -77,46 +77,41 @@ export default class GameController{
         });
     }
     switchScreen(screenId){
+        this.switchScreenHelpper(screenId).then(()=>{
+            this.model.switchScreen(screenId);
+            this.view.switchScreen(screenId);
+        })
+    }
+    switchScreenHelpper(screenId){
         switch(screenId){
             case 'loading-screen':
-                //no model
-                break;
+                return Promise.resolve();
             case 'title-screen':
-                this.titleController.onSwitchScreen();
-                break;
+                return this.titleController.onSwitchScreen();
             case 'save-list-screen':
-                this.saveListController.onSwitchScreen();
-                break;
+                return  this.saveListController.onSwitchScreen();
             case 'lobby-screen':
-                this.lobbyController.onSwitchScreen();
-                break;
+                return this.lobbyController.onSwitchScreen();
             case 'overworld-screen':
-                this.overworldController.onSwitchScreen();
-                break;
+                return  this.overworldController.onSwitchScreen();
             case 'battle-screen':
-                this.battleController.onSwitchScreen();
-                break;
+                return  this.battleController.onSwitchScreen();
             case 'party-screen':
                 if(this.model.getScreen() == 'character-summary-screen' && (this.model.getSituation() == 'battle' || this.model.getSituation() == 'encounter')){
-                    //Do nothing if coming from summary in a battle or encounter
+                    return Promise.resolve();
                 }else{
-                    this.partyController.onSwitchScreen();
+                    return this.partyController.onSwitchScreen();
                 }
-                break;
             case 'character-summary-screen':
-                this.characterSummaryController.onSwitchScreen();
-                break;
+                return this.characterSummaryController.onSwitchScreen();
             case 'encounter-screen':
                 if(this.model.getScreen() != 'party-screen'){
-                    this.encounterController.onSwitchScreen();
+                    return this.encounterController.onSwitchScreen();
                 }
-                break;
+                return Promise.resolve();
             case 'map-change-screen':
-                //no model
-                break;
-        }
-        this.model.switchScreen(screenId);
-        this.view.switchScreen(screenId);
+                return Promise.resolve();
+            }
     }
     getTitleController(){
         return this.titleController;

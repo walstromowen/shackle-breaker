@@ -279,7 +279,7 @@ export default class CharacterSummaryController{
             
             });
         });
-
+        return Promise.resolve();
     }
     addSlotDragListeners(nodeList, dropLocation){
         nodeList.forEach((node)=>{

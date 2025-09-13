@@ -61,5 +61,6 @@ export default class LobbyController{
         this.view.updateStats(this.model.props.getParty()[0].getCurrentStats());
         this.view.updateGold(this.model.props.getGold());
         this.view.updateLore();
+        return Promise.resolve();
     }
 }

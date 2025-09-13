@@ -32,6 +32,7 @@ export default class BattleController{
                 this.activateRound();
             })
         }
+        return Promise.resolve();
     }
     activatePreround(){
         this.props.getPartyController().view.revealPartyToggleBackButton();

@@ -14,6 +14,7 @@ export default class EncounterController{
     onSwitchScreen(){
         this.model.initialize();
         this.triggerStage();
+        return Promise.resolve();
     }
     triggerStage(){
         this.view.updateEventCard(this.model.currentStage);

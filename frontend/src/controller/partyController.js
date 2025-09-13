@@ -127,6 +127,7 @@ export default class PartyController{
                 node.querySelector('.party-character-slot-button-container').style.display='none';
             });
         });
+        return Promise.resolve();
     }
     createSelectButtons(resolveFn, allyReinforcements, screen){
         document.querySelectorAll('.party-character-slot-data').forEach((node)=>{

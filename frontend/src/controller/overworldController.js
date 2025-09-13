@@ -118,6 +118,7 @@ export default class OverworldController{
             this.model.props.setNextPartyPosition(this.model.props.getCurrentPartyPosition());
             this.view.revealOverworldUi();
             this.startOverworldLoop(60);
+            return Promise.resolve();
         });
     }
     /*
