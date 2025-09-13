@@ -20,6 +20,7 @@ export default class LobbyController{
             this.props.switchScreen('overworld-screen');
             playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
             playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
+            this.view.resetInputs();
         });
         document.getElementById('lobby-screen').querySelectorAll('.stat-cell-hoverable').forEach((node)=>{
             node.addEventListener('mouseenter', ()=>{
@@ -55,7 +56,6 @@ export default class LobbyController{
         });
     }
     onSwitchScreen(){
-        this.view.resetInputs();
         this.model.resetParty()
         this.view.updateInventory(this.model.props.getParty()[0].getEquipment(Object.keys(this.model.props.getParty()[0].equipment)), this.model.props.getInventory());
         this.view.updateAttributes(this.model.props.getParty()[0].getAttributes());

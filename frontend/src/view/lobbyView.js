@@ -179,6 +179,7 @@ export default class LobbyView{
         this.originSelection.selectedIndex = 0;
         this.keepsakeSelection.selectedIndex = 0;
         this.difficultySelection.selectedIndex = 0;
+        console.log(this.appearanceSelection.value)
     }
 }
 
