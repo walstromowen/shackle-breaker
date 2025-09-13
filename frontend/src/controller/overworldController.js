@@ -102,13 +102,18 @@ export default class OverworldController{
         });
     }
     onSwitchScreen() {
-        if (this.model.props.getSituation() === '') {
+        if (this.model.props.getSituation() == '') {
             this.view.updateMapTitle(this.model.props.getMap().biome.name);
             this.view.revealMapTitle(); // animation plays once
+            const onAnimationEnd = () => {
+                this.view.hideMapTitle();
+                this.view.mapTile.removeEventListener('animationend', onAnimationEnd);
+            };
+            this.view.mapTile.addEventListener('animationend', onAnimationEnd);
+            this.model.props.setSituation('overworld');
         }
 
         this.view.preloadImages(this.model.props.getMap()).then(() => {
-            this.model.props.setSituation('overworld');
             this.isLooping = true;
             this.model.props.setNextPartyPosition(this.model.props.getCurrentPartyPosition());
             this.view.revealOverworldUi();
