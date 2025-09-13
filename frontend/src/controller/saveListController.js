@@ -88,6 +88,7 @@ export default class SaveListController{
         this.view.disableLoadButton();
         this.view.disableDeleteButton();
         this.view.savesList.innerHTML = '';
+        document.body.classList.add('loading-cursor');
         this.model.saves = await this.getGameSaves();
         this.model.saves.forEach(save => {
             let saveContainer = this.view.createSave(save);
@@ -101,8 +102,8 @@ export default class SaveListController{
                 this.view.enableDeleteButton();
                 
             });
-        });
-        return Promise.resolve();     
+        }); 
+        document.body.classList.remove('loading-cursor');
     }
     
     async newSaveToServer() {

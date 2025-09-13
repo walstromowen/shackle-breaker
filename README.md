@@ -34,6 +34,7 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 * XP and gold calculation refinements
 * Animations dpendent on hostile vs ally
 * Enemy level up stats refinement
+* fix delay when accessing save screen (currently waiting for saves to load maybe play loading animation while waiting)
 
 # MISC notes
 

@@ -89,7 +89,8 @@ export default class GameController{
             case 'title-screen':
                 return this.titleController.onSwitchScreen();
             case 'save-list-screen':
-                return  this.saveListController.onSwitchScreen();
+                this.saveListController.onSwitchScreen();
+                return Promise.resolve();
             case 'lobby-screen':
                 return this.lobbyController.onSwitchScreen();
             case 'overworld-screen':

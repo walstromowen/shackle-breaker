@@ -244,6 +244,9 @@
 body{
     cursor: url('./assets/media/icons/sword.png'),default;
 }
+.loading-cursor{
+    cursor: url('./assets/media/icons/loading.png'), default;   
+}
 p{
     font-size: var(--font-size-3);
     
