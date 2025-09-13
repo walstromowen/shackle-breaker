@@ -181,7 +181,7 @@ export default class LobbyView{
         this.keepsakeSelection.selectedIndex = 0;
         this.companionSelection.selectedIndex = 0;
         this.difficultySelection.selectedIndex = 1;
-        this.appearanceImage.src = appearanceSelection.options[0].value; 
+        this.appearanceImage.src = this.appearanceSelection.options[0].value; 
     }
 }
 
