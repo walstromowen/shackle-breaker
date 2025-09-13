@@ -185,6 +185,9 @@ export default class OverworldView {
     }
 
     showMapTitle() {
+        // Ensure the class is reset so the animation runs cleanly
+        this.mapTileContainer.classList.remove('animate-map-title');
+        void this.mapTileContainer.offsetWidth; // force reflow
         this.mapTileContainer.style.display = 'flex';
         this.mapTileContainer.classList.add('animate-map-title');
     }
