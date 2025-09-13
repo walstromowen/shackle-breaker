@@ -102,7 +102,7 @@ export default class OverworldController{
         });
     }
     onSwitchScreen() {
-        if (this.model.props.getSituation() != 'overworld') {
+        if (this.model.props.getSituation() == '') {
             this.view.updateMapTitle(this.model.props.getMap().biome.name);
             this.view.revealMapTitle(); 
         }
