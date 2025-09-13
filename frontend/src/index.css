@@ -1049,7 +1049,7 @@ input{
     justify-content: center;
     align-items: center;
     pointer-events: none;   
-    background: transparent; 
+    background: green; 
     z-index: 1000;
 }
 
@@ -1057,7 +1057,7 @@ input{
     font-family: papyrus, fantasy;
     font-size: var(--font-size-0);
     color: var(--color-5);
-    text-shadow: 0 0 20px rgba(255,255,255,0.6), 2px 2px 5px black;
+    text-shadow: 0 0 20px var(--color-1), 2px 2px 5px black;
     opacity: 0;
 }
 #overworld-ui-container{
@@ -1486,10 +1486,10 @@ input{
     100% { scale: 1.0}  
 }
 @keyframes fade-in-and-out {
-    0%   { opacity: 0; transform: scale(0.9); }
-    20%  { opacity: 1; transform: scale(1); }
-    80%  { opacity: 1; transform: scale(1); }
-    100% { opacity: 0; transform: scale(0.9); }
+    0%   { opacity: 0; }
+    20%  { opacity: 1;  }
+    80%  { opacity: 1;  }
+    100% { opacity: 0;  }
 }
 .inventory-mini-menu-tab-button{
     flex:1;
