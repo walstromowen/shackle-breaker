@@ -180,17 +180,19 @@ export default class OverworldView {
   revealOverworldUi() {
     document.getElementById('overworld-ui-container').style.display = 'flex';
   }
-  revealMapTitle() {
-    this.mapTileContainer.style.display = 'flex';
-    this.mapTileContainer.classList.add('animate-map-title');
-  }
-  hideMapTitle() {
-    this.mapTileContainer.style.display = 'none';
-    this.screen.classList.remove('animate-map-title');
-  }
   updateMapTitle(biomeName) {
-    this.mapTile.innerText = biomeName.toUpperCase();
-  }
+        this.mapTile.innerText = biomeName.toUpperCase();
+    }
+
+    showMapTitle() {
+        this.mapTileContainer.style.display = 'flex';
+        this.mapTileContainer.classList.add('animate-map-title');
+    }
+
+    hideMapTitle() {
+        this.mapTileContainer.style.display = 'none';
+        this.mapTileContainer.classList.remove('animate-map-title');
+    }
 }
 
 /*
