@@ -32,7 +32,7 @@ export default class LobbyModel{
         this.props.getParty()[0].name = name;
     }
     updateApperance(){
-        let apperance = document.getElementById('lobby-apperance-selection').value;
+        let apperance = document.getElementById('lobby-appearance-selection').value;
         this.props.getParty()[0].apperance = apperance;
     }
     updateBackground(){

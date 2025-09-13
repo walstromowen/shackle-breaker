@@ -32,7 +32,7 @@ export default class LobbyController{
                 miniMenu.style.display = 'none';
             });
         });
-        document.getElementById('lobby-apperance-selection').addEventListener('change', ()=>{
+        document.getElementById('lobby-appearance-selection').addEventListener('change', ()=>{
             this.model.updateApperance();
             this.view.updateApperance(this.model.props.getParty()[0].apperance);
         });
