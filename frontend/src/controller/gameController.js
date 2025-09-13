@@ -111,7 +111,10 @@ export default class GameController{
                 return Promise.resolve();
             case 'map-change-screen':
                 return Promise.resolve();
+            default:
+                return Promise.resolve();
             }
+            
     }
     getTitleController(){
         return this.titleController;
