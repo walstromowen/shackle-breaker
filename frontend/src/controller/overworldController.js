@@ -104,11 +104,11 @@ export default class OverworldController{
     onSwitchScreen() {
         const map = this.model.props.getMap();
 
-        // Show biome title
+        // Update and show the map title whenever a new map is loaded
         this.view.updateMapTitle(map.biome.name);
         this.view.showMapTitle();
 
-        // Preload images & start overworld loop
+        // Preload images and start overworld
         this.view.preloadImages(map).then(() => {
             this.model.props.setSituation('overworld');
             this.isLooping = true;
