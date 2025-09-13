@@ -117,7 +117,7 @@ export default class CharacterSummaryView{
 
         this.corruption.innerText = entity.currentCorruption.toFixed(2);
 
-        this.characterImage.style.backgroundImage = `url(${entity.apperance})`; 
+        this.characterImage.style.backgroundImage = `url(${entity.appearance})`; 
 
         this.currentGold.innerText = gold;
         this.currentSkillPoints.innerText = entity.skillPoints;

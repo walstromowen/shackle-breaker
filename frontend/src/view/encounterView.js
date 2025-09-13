@@ -46,7 +46,7 @@ export default class EncounterView{
         this.rollButton = document.getElementById('encounter-roller-menu-roll-button');
     }
     updateCurrentCharacterCardStats(currentCharacter){
-        this.characterCard.style.backgroundImage = `url(${currentCharacter.apperance})`;
+        this.characterCard.style.backgroundImage = `url(${currentCharacter.appearance})`;
         this.characterCardName.innerText = currentCharacter.name;
         //this.characterCardStatusContainer 
         this.characterCardCurrentHealth.innerText = currentCharacter.currentHP;

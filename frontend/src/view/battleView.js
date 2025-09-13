@@ -95,7 +95,7 @@ export default class BattleView{
     }
     updateCombatantStats(combatant){
         const card = document.getElementById(combatant.battleId);
-        card.style.backgroundImage = `url(${combatant.apperance})`;
+        card.style.backgroundImage = `url(${combatant.appearance})`;
         card.querySelector('.battle-character-slot-name-header').innerText = capiltalizeAllFirstLetters(combatant.name);
         card.querySelector('.battle-health-progress').style.width = Math.floor(combatant.currentHP/combatant.maxHP*100) + "%";
         card.querySelector('.health-icon').src = './assets/media/icons/hearts.png';
@@ -383,7 +383,7 @@ export default class BattleView{
     }
     replaceCombatantCard(combatant, newCombatant, addDefaultAnimaiton){
         const card = document.getElementById(combatant.battleId);
-        card.style.backgroundImage = `url(${newCombatant.apperance})`;
+        card.style.backgroundImage = `url(${newCombatant.appearance})`;
         card.querySelector('.battle-character-slot-name-header').innerText = capiltalizeAllFirstLetters(newCombatant.name);
         card.querySelector('.battle-health-progress').style.width = Math.floor(newCombatant.currentHP/newCombatant.maxHP*100) + "%";
         card.querySelector('.health-icon').src = './assets/media/icons/hearts.png';

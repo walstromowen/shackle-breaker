@@ -70,7 +70,7 @@ export default class GameModel{
         this.wanderingCompanions = [
             new Entity({
                 name: 'Commander Mentoras',
-                apperance: './assets/media/entities/companions/commander-mentoras.jpg',
+                appearance: './assets/media/entities/companions/commander-mentoras.jpg',
                 vigor: 5,
                 strength: 7,
                 dexterity: 5,
@@ -91,7 +91,7 @@ export default class GameModel{
             }),
             new Entity({
                 name: 'Beni Hezikiah',
-                apperance: './assets/media/entities/companions/beni-hezikiah.jpg',
+                appearance: './assets/media/entities/companions/beni-hezikiah.jpg',
                 vigor: 5,
                 strength: 5,
                 dexterity: 7,
@@ -112,7 +112,7 @@ export default class GameModel{
             }),
             new Entity({
                 name: 'Jagar Ironson',
-                apperance: './assets/media/entities/companions/companion-warrior-1.jpg',
+                appearance: './assets/media/entities/companions/companion-warrior-1.jpg',
                 vigor: 7,
                 strength: 5,
                 dexterity: 5,
@@ -132,7 +132,7 @@ export default class GameModel{
             }),
             new Entity({
                 name: 'Gwen Mentoras',
-                apperance: './assets/media/entities/companions/gwen-mentoras.jpg',
+                appearance: './assets/media/entities/companions/gwen-mentoras.jpg',
                 vigor: 5,
                 strength: 3,
                 dexterity: 7,
@@ -152,7 +152,7 @@ export default class GameModel{
             }),
             new Entity({
                 name: 'Nicholi Ironson',
-                apperance: './assets/media/entities/companions/companion-warrior-4.jpg',
+                appearance: './assets/media/entities/companions/companion-warrior-4.jpg',
                 vigor: 5,
                 strength: 7,
                 dexterity: 5,
@@ -172,7 +172,7 @@ export default class GameModel{
             }),
             new Entity({
                 name: 'Dr. Darius Micolash',
-                apperance: './assets/media/entities/companions/companion-mage-3.jpg',
+                appearance: './assets/media/entities/companions/companion-mage-3.jpg',
                 vigor: 5,
                 strength: 3,
                 dexterity: 7,
@@ -192,7 +192,7 @@ export default class GameModel{
             }),
             new Entity({
                 name: 'Julian Memira',
-                apperance: './assets/media/entities/companions/companion-mage-2.jpg',
+                appearance: './assets/media/entities/companions/companion-mage-2.jpg',
                 vigor: 5,
                 strength: 3,
                 dexterity: 5,
@@ -212,7 +212,7 @@ export default class GameModel{
             }),
             new Entity({
                 name: 'Revan Sekrav',
-                apperance: './assets/media/entities/companions/companion-warrior-2.jpg',
+                appearance: './assets/media/entities/companions/companion-warrior-2.jpg',
                 vigor: 5,
                 strength: 5,
                 dexterity: 7,
@@ -390,7 +390,7 @@ export default class GameModel{
         this.wanderingCompanions = [
             new Entity({
                 name: 'Commander Mentoras',
-                apperance: './assets/media/entities/companions/commander-mentoras.jpg',
+                appearance: './assets/media/entities/companions/commander-mentoras.jpg',
                 vigor: 5,
                 strength: 7,
                 dexterity: 5,
@@ -411,7 +411,7 @@ export default class GameModel{
             }),
             new Entity({
                 name: 'Beni Hezikiah',
-                apperance: './assets/media/entities/companions/beni-hezikiah.jpg',
+                appearance: './assets/media/entities/companions/beni-hezikiah.jpg',
                 vigor: 5,
                 strength: 5,
                 dexterity: 7,
@@ -432,7 +432,7 @@ export default class GameModel{
             }),
             new Entity({
                 name: 'Jagar Ironson',
-                apperance: './assets/media/entities/companions/companion-warrior-1.jpg',
+                appearance: './assets/media/entities/companions/companion-warrior-1.jpg',
                 vigor: 7,
                 strength: 5,
                 dexterity: 5,
@@ -452,7 +452,7 @@ export default class GameModel{
             }),
             new Entity({
                 name: 'Gwen Mentoras',
-                apperance: './assets/media/entities/companions/gwen-mentoras.jpg',
+                appearance: './assets/media/entities/companions/gwen-mentoras.jpg',
                 vigor: 5,
                 strength: 3,
                 dexterity: 7,
@@ -472,7 +472,7 @@ export default class GameModel{
             }),
             new Entity({
                 name: 'Nicholi Ironson',
-                apperance: './assets/media/entities/companions/companion-warrior-4.jpg',
+                appearance: './assets/media/entities/companions/companion-warrior-4.jpg',
                 vigor: 5,
                 strength: 7,
                 dexterity: 5,
@@ -492,7 +492,7 @@ export default class GameModel{
             }),
             new Entity({
                 name: 'Dr. Darius Micolash',
-                apperance: './assets/media/entities/companions/companion-mage-3.jpg',
+                appearance: './assets/media/entities/companions/companion-mage-3.jpg',
                 vigor: 5,
                 strength: 3,
                 dexterity: 7,
@@ -512,7 +512,7 @@ export default class GameModel{
             }),
             new Entity({
                 name: 'Julian Memira',
-                apperance: './assets/media/entities/companions/companion-mage-2.jpg',
+                appearance: './assets/media/entities/companions/companion-mage-2.jpg',
                 vigor: 5,
                 strength: 3,
                 dexterity: 5,
@@ -532,7 +532,7 @@ export default class GameModel{
             }),
             new Entity({
                 name: 'Revan Sekrav',
-                apperance: './assets/media/entities/companions/companion-warrior-2.jpg',
+                appearance: './assets/media/entities/companions/companion-warrior-2.jpg',
                 vigor: 5,
                 strength: 5,
                 dexterity: 7,

@@ -99,7 +99,7 @@ export default class PartyView{
     }
     updateEntityStats(entity){
         const slot = document.getElementById(entity.partyId);
-        slot.style.backgroundImage = `url(${entity.apperance})`;
+        slot.style.backgroundImage = `url(${entity.appearance})`;
 
         slot.querySelector('.party-character-slot-name-header').innerText = capiltalizeAllFirstLetters(entity.name);
 

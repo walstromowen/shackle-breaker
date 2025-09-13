@@ -14,7 +14,7 @@ export default class LobbyModel{
         this.props.setInventory([])
         this.props.setParty([new Entity({})]);
         this.updateName();
-        this.updateApperance();
+        this.updateAppearance();
         this.updateBackground();
         this.updateDifficulty();
     }
@@ -26,14 +26,14 @@ export default class LobbyModel{
                 name = 'Shackle Breaker';
             break;
             case 'sterben':
-                this.props.getParty().push(new Tiger({apperance: './assets/media/entities/snowy-tiger.jpg'}));
+                this.props.getParty().push(new Tiger({appearance: './assets/media/entities/snowy-tiger.jpg'}));
             break;
         }
         this.props.getParty()[0].name = name;
     }
-    updateApperance(){
-        let apperance = document.getElementById('lobby-appearance-selection').value;
-        this.props.getParty()[0].apperance = apperance;
+    updateAppearance(){
+        let appearance = document.getElementById('lobby-appearance-selection').value;
+        this.props.getParty()[0].appearance = appearance;
     }
     updateBackground(){
         let background = document.getElementById('lobby-background-selection').value;

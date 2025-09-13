@@ -6,7 +6,7 @@ export default class LobbyView{
         this.backgroundDescription = document.getElementById('lore-description-background');
         this.originDescription = document.getElementById('lore-description-origin');
     
-        this.apperanceImage = document.getElementById('lobby-apperance-image');
+        this.appearanceImage = document.getElementById('lobby-appearance-image');
         
         this.gold = document.getElementById('lobby-gold');
 
@@ -54,7 +54,7 @@ export default class LobbyView{
 
     }
     updateApperance(src){
-        this.apperanceImage.src = src;
+        this.appearanceImage.src = src;
     }
     updateInventory(equipment, partyInventory){
         this.lobbyInventory.querySelectorAll('.inventory-slot').forEach((node)=>{
