@@ -1905,8 +1905,8 @@ export class PanzerianKnight extends Entity{
                 {item: new GreatSword({level: 1}), weight: 1},
                 {item: new Handaxe({level: 1}), weight: 1},
                 {item: new Buckler({level: 1}), weight: 1},
-                {item: new HealthPotion(), weight: 2},
-                {item: new StaminaPotion(), weight: 2},
+                {item: new HealthPotion({}), weight: 2},
+                {item: new StaminaPotion({}), weight: 2},
                 {item: new Bandage({}), weight: 1},
                 
             ],

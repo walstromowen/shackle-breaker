@@ -103,23 +103,17 @@ export default class OverworldController{
     }
     onSwitchScreen() {
         const map = this.model.props.getMap();
-        const biomeName = map.biome.name;
 
-        // Only trigger map title if first time entering this map
-        if (this.model.props.getSituation() === '') {
-            this.model.props.setSituation('overworld'); // mark immediately
-            this.triggerMapTitleSequence(biomeName);
-        }
+        // Update and show the map title whenever a new map is loaded
+        this.view.updateMapTitle(map.biome.name);
+        this.view.showMapTitle();
 
-        // Preload map images first
+        // Preload images and start overworld
         this.view.preloadImages(map).then(() => {
+            this.model.props.setSituation('overworld');
             this.isLooping = true;
             this.model.props.setNextPartyPosition(this.model.props.getCurrentPartyPosition());
-
-            // Reveal UI
             this.view.revealOverworldUi();
-
-            // Start the main overworld loop
             this.startOverworldLoop(60);
         });
     }

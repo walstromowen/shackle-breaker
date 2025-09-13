@@ -1039,26 +1039,25 @@ input{
     background-color: transparent;
     
 }
-#overworld-map-title-container{
-    top: 0px;
-    left: 0px;
+#overworld-map-title-container {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    display:flex;
     height: 100%;
-    background:radial-gradient(var(--color-2-transparent), var(--color-2));
-    display:none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
 }
-#overworld-map-title{
-    width: 100%;
-    margin: auto;
+
+#overworld-map-title {
     font-family: papyrus, fantasy;
-    text-align: center;
+    font-size: var(--font-size-0);
     color: var(--color-5);
-    font-size: var( --font-size-0);
     text-shadow: 10px 10px 10px black;
-    word-spacing: 10%;
-  
+    opacity: 0;
+    animation: none;
 }
 #overworld-ui-container{
     display: flex;
@@ -1485,11 +1484,11 @@ input{
     }  
     100% { scale: 1.0}  
 }
-@keyframes fade-in-and-out{
-    0%  { opacity: 0}
-    20% { opacity: 1} 
-    80% { opacity: 1} 
-    100%{ opacity: 0}  
+@keyframes fade-in-and-out {
+    0%   { opacity: 0; transform: scale(0.9); }
+    20%  { opacity: 1; transform: scale(1); }
+    80%  { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.9); }
 }
 .inventory-mini-menu-tab-button{
     flex:1;
@@ -1576,8 +1575,9 @@ input{
 .animate-attribute-bonus{
     animation:var(--animate-attribute-bonus) 2s;
 }
-.animate-map-title{
-    animation:fade-in-and-out 4s;
+/* Fade in + fade out animation */
+.animate-map-title {
+    animation: fade-in-and-out 4s forwards;
 }
 .save-list-confirmation-menu-container{
     padding: 20px;
