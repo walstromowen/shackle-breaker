@@ -180,15 +180,18 @@ export default class OverworldView {
   revealOverworldUi() {
     document.getElementById('overworld-ui-container').style.display = 'flex';
   }
-  updateMapTitle(biomeName) {
-    this.mapTile.innerText = biomeName.toUpperCase();
+    updateMapTitle(biomeName) {
+        this.mapTile.innerText = biomeName.toUpperCase();
     }
 
-    showMapTitle() {
+    revealMapTitle() {
         const el = this.mapTile;
-        el.classList.remove('animate-map-title'); // reset animation
-        void el.offsetWidth; // force reflow
-        el.classList.add('animate-map-title'); // play animation
+        el.classList.add('animate-map-title');  // just add class once
+    }
+
+    hideMapTitle() {
+        const el = this.mapTile;
+        el.classList.remove('animate-map-title'); // optional if you want to reset for next map
     }
 }
 

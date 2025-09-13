@@ -1048,15 +1048,16 @@ input{
     display: flex;
     justify-content: center;
     align-items: center;
-    pointer-events: none;
-    z-index: 1000; 
+    pointer-events: none;   
+    background: transparent; 
+    z-index: 1000;
 }
 
 #overworld-map-title {
     font-family: papyrus, fantasy;
-    font-size: var(--font-size-0);
-    color: var(--color-5);
-    text-shadow: 10px 10px 10px black;
+    font-size: 3rem;
+    color: white;
+    text-shadow: 0 0 20px rgba(255,255,255,0.6), 2px 2px 5px black;
     opacity: 0;
 }
 #overworld-ui-container{

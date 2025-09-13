@@ -102,14 +102,12 @@ export default class OverworldController{
         });
     }
     onSwitchScreen() {
-        const map = this.model.props.getMap();
+        if (this.model.props.getSituation() === '') {
+            this.view.updateMapTitle(this.model.props.getMap().biome.name);
+            this.view.revealMapTitle(); // animation plays once
+        }
 
-        // Update and show the map title whenever a new map is loaded
-        this.view.updateMapTitle(map.biome.name);
-        this.view.showMapTitle();
-
-        // Preload images and start overworld
-        this.view.preloadImages(map).then(() => {
+        this.view.preloadImages(this.model.props.getMap()).then(() => {
             this.model.props.setSituation('overworld');
             this.isLooping = true;
             this.model.props.setNextPartyPosition(this.model.props.getCurrentPartyPosition());
