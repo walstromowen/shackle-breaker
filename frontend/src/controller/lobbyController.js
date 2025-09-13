@@ -20,12 +20,12 @@ export default class LobbyController{
             this.props.switchScreen('overworld-screen');
             playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
             playSoundEffect('./assets/audio/soundEffects/cinematic-boom-6872.mp3');
-            this.view.resetInputs();
+            this.view.resetInputs()
         });
         document.getElementById('lobby-screen').querySelectorAll('.stat-cell-hoverable').forEach((node)=>{
             node.addEventListener('mouseenter', ()=>{
                 const miniMenu = node.querySelector('.stat-cell-hover-menu');
-                miniMenu.style.display='flex';
+                miniMenu.style.display='flex'; 
             });
             node.addEventListener('mouseleave', ()=>{
                 const miniMenu = node.querySelector('.stat-cell-hover-menu');
