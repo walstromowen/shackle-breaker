@@ -241,11 +241,9 @@
 [draggable="true"] {
   cursor: grab; /* Changes the cursor to indicate draggability */
 }
-body{
-    cursor: url('./assets/media/icons/sword1.png'),default;
-}
+
 .loading-cursor{
-    animation: animatedCursor 1s infinite steps(1);
+    animation: animatedCursor 10s infinite steps(1);
       
 }
 @keyframes animatedCursor {
