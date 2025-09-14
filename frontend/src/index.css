@@ -245,7 +245,7 @@ body{
     cursor: url('./assets/media/icons/sword1.png'),default;
 }
 .loading-cursor{
-    animation: animatedCursor 8s infinite;
+    animation: animatedCursor 2s infinite steps(5);
       
 }
 @keyframes animatedCursor {
