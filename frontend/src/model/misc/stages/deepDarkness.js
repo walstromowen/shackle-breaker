@@ -45,7 +45,7 @@ export class DeepDarkness extends Stage {
                 new Decision({
                     description: "Gaze into the darkness. [ATN]",
                     attributes: ["attunement"],
-                    successThreshold: 16,
+                    successThreshold: 14,
                     roll: true,
                     messageKey: "deepDarknessGaze",
                     successfulOutcomes: [
@@ -81,7 +81,7 @@ export class DeepDarkness extends Stage {
                     successfulOutcomes: [
                         new Result({
                             result: "nextStage",
-                            createNextStageKey: "deepDarkness3",
+                            createNextStageKey: "deepDarkness2",
                             xpReward: 5,
                             weight: 1,
                         }),
@@ -118,7 +118,7 @@ export class DeepDarkness2 extends Stage {
                     successfulOutcomes: [
                         new Result({
                             result: "nextStage",
-                            createNextStageKey: "deepDarkness2",
+                            createNextStageKey: "deepDarkness3",
                             xpReward: 5,
                             weight: 1,
                         }),
@@ -144,13 +144,13 @@ export class DeepDarkness2 extends Stage {
                 new Decision({
                     description: "Gaze into the darkness. [ATN]",
                     attributes: ["attunement"],
-                    successThreshold: 12,
+                    successThreshold: 14,
                     roll: true,
                     messageKey: "deepDarknessGaze",
                     successfulOutcomes: [
                         new Result({
                             result: "nextStage",
-                            createNextStageKey: "deepDarkness2",
+                            createNextStageKey: "deepDarkness3",
                             xpReward: 5,
                             weight: 1,
                         }),
@@ -227,7 +227,7 @@ export class DeepDarkness3 extends Stage {
                             result: "battle",
                             musicSrc: "./assets/audio/musicTracks/pred-and-prey.mp3",
                             createBattleKey: "deepDarknessBattle",
-                            createNextStageKey: "deepDarkness3",
+                            createNextStageKey: "ancientRuinsEntrance",
                             messageKey: "deepDarknessEnemyApproach",
                             weight: 1,
                         }),
@@ -249,7 +249,7 @@ export class DeepDarkness3 extends Stage {
                     successfulOutcomes: [
                         new Result({
                             result: "nextStage",
-                            createNextStageKey: "deepDarkness2",
+                            createNextStageKey: "ancientRuinsEntrance",
                             xpReward: 5,
                             weight: 1,
                         }),

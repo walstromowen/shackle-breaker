@@ -242,10 +242,18 @@
   cursor: grab; /* Changes the cursor to indicate draggability */
 }
 body{
-    cursor: url('./assets/media/icons/sword.png'),default;
+    cursor: url('./assets/media/icons/sword1.png'),default;
 }
 .loading-cursor{
-    cursor: url('./assets/media/icons/loading-cursor.png'), auto;   
+    animation: animatedCursor 1s infinite steps(1);
+      
+}
+@keyframes animatedCursor {
+  0% { cursor: url('sword1.png'), auto; }
+  25% { cursor: url('sword2.png'), auto; }
+  50% { cursor: url('sword3.png'), auto; }
+  75% { cursor: url('sword4.png'), auto; }
+  100% { cursor: url('sword1.png'), auto; }
 }
 p{
     font-size: var(--font-size-3);
