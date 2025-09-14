@@ -249,11 +249,11 @@ body{
       
 }
 @keyframes animatedCursor {
-  0% { cursor: url('sword1.png'), auto; }
-  25% { cursor: url('sword2.png'), auto; }
-  50% { cursor: url('sword3.png'), auto; }
-  75% { cursor: url('sword4.png'), auto; }
-  100% { cursor: url('sword1.png'), auto; }
+  0% { cursor: url('./assets/media/icons/sword1.png'), auto; }
+  25% { cursor: url('./assets/media/icons/sword2.png'), auto; }
+  50% { cursor: url('./assets/media/icons/sword3.png'), auto; }
+  75% { cursor: url('./assets/media/icons/sword4.png'), auto; }
+  100% { cursor: url('./assets/media/icons/sword1.png'), auto; }
 }
 p{
     font-size: var(--font-size-3);
@@ -1061,7 +1061,7 @@ input{
     align-items: center;
     pointer-events: none;   
     background: transparent; 
-    z-index: 1000;
+    z-index: 2;
 }
 
 #overworld-map-title {
@@ -1087,7 +1087,7 @@ input{
 }
 #overworld-escape-menu, #encounter-roller-menu, #save-list-confirmation-menu{
     position: absolute;
-    z-index:1;
+    z-index:3;
     height: 100%;
     width: 100%;
     background-color: var(--color-2-transparent);
