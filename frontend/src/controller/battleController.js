@@ -956,6 +956,7 @@ export default class BattleController{
                         this.props.switchScreen('encounter-screen');
                         playMusic(this.model.props.getEncounter().currentStage.musicSrc);
                     }else{
+                        this.model.props.setSituation('overworld');
                         this.props.switchScreen('overworld-screen');
                         playMusic(this.model.props.getMap().biome.backgroundMusicSrc);
                         this.props.getOverworldController().view.revealOverworldUi();
