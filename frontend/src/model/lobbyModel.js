@@ -43,7 +43,7 @@ export default class LobbyModel{
         switch(background){
             case 'traveler':
                 equipment = [
-                    new NightbladeMask({level: 1}),
+                    new LeatherHelmet({level: 1}),
                     new ShortSword({level: 1}),
                     new LinenShirt({level: 1}),
                     new LinenPants({level: 1}),
