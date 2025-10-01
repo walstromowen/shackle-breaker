@@ -1678,6 +1678,276 @@ export class IronBoots extends Attachable {
     }
   }
 }
+export class PanzerianHelm extends Attachable {
+  constructor(config, isRehydrate = false) {
+     super({
+        ...config,
+        name: config.name || 'panzerian helm',
+        type: config.type || 'panzerian helm',
+        description:
+        config.description ||'A sturdy steel helm. This helmet has been tailored to fit its original owner perfectly providing exceptional protection while still maintaining mobility. It also provides protection from difficult climates.',
+        imageSrc: config.imageSrc || './assets/media/icons/warlord-helmet.png',
+        price: config.price || 150,
+        slot: config.slot || 'head',
+        level: config.level || 1,
+        hp: config.hp || 0,
+        stamina: config.stamina || 0,
+        magic: config.magic || 0,
+        hpRecovery: config.hpRecovery || 0,
+        staminaRecovery: config.staminaRecovery || 2,
+        magicRecovery: config.magicRecovery || 2,
+        bluntAttack: config.bluntAttack || 0,
+        pierceAttack: config.pierceAttack || 0,
+        arcaneAttack: config.arcaneAttack || 0,
+        elementalAttack: config.elementalAttack || 0,
+        bluntDefense: config.bluntDefense || 5,
+        pierceDefense: config.pierceDefense || 5,
+        arcaneDefense: config.arcaneDefense || 3,
+        elementalDefense: config.elementalDefense || 4,
+        bluntResistance: config.bluntResistance || 0.05,
+        pierceResistance: config.pierceResistance || 0.05,
+        arcaneResistance: config.arcaneResistance || 0.03,
+        elementalResistance: config.elementalResistance || 0.04,
+        speed: config.speed || 0,
+        evasion: config.evasion || 0,
+        critical: config.critical || 0.0,
+        abilityArray: config.abilityArray || [],
+        }, isRehydrate);
+        if (!isRehydrate) this.upgrade(config.level - this.level);
+    }
+
+  upgrade(levels) {
+    for (let i = 0; i < levels; i++) {
+      this.level++;
+      this.price = Math.floor(this.price * 1.5);
+      this.staminaRecovery += 1;
+      this.magicRecovery += 1;
+      this.bluntDefense += 4;
+      this.pierceDefense += 4;
+      this.arcaneDefense += 2;
+      this.elementalDefense += 2;
+      if (this.level === 3) {
+        this.abilityArray.push(new Brace({}));
+      }
+    }
+  }
+}
+export class PanzerianChestplate extends Attachable {
+  constructor(config, isRehydrate = false) {
+     super({
+          ...config,
+          name: config.name || 'panzerian chestplate',
+      type: config.type || 'panzerian chestplate',
+      description:
+        config.description ||'Sturdy steel armor. This armor has been tailored to fit its original owner perfectly providing exceptional protection while still maintaining mobility. It also provides protection from difficult climates.',
+      imageSrc: config.imageSrc || './assets/media/icons/abdominal-armor.png',
+      price: config.price || 150,
+      slot: config.slot || 'torso',
+      level: config.level || 1,
+      level: config.level || 1,
+        hp: config.hp || 0,
+        stamina: config.stamina || 0,
+        magic: config.magic || 0,
+        hpRecovery: config.hpRecovery || 0,
+        staminaRecovery: config.staminaRecovery || 2,
+        magicRecovery: config.magicRecovery || 2,
+        bluntAttack: config.bluntAttack || 0,
+        pierceAttack: config.pierceAttack || 0,
+        arcaneAttack: config.arcaneAttack || 0,
+        elementalAttack: config.elementalAttack || 0,
+        bluntDefense: config.bluntDefense || 5,
+        pierceDefense: config.pierceDefense || 5,
+        arcaneDefense: config.arcaneDefense || 3,
+        elementalDefense: config.elementalDefense || 4,
+        bluntResistance: config.bluntResistance || 0.05,
+        pierceResistance: config.pierceResistance || 0.05,
+        arcaneResistance: config.arcaneResistance || 0.03,
+        elementalResistance: config.elementalResistance || 0.04,
+        speed: config.speed || 0,
+        evasion: config.evasion || 0,
+        critical: config.critical || 0.0,
+        abilityArray: config.abilityArray || [],
+        }, isRehydrate);
+        if (!isRehydrate) this.upgrade(config.level - this.level);
+    }
+
+  upgrade(levels) {
+    for (let i = 0; i < levels; i++) {
+      this.level++;
+      this.price = Math.floor(this.price * 1.5);
+      this.staminaRecovery += 1;
+      this.magicRecovery += 1;
+      this.bluntDefense += 4;
+      this.pierceDefense += 4;
+      this.arcaneDefense += 2;
+      this.elementalDefense += 2;
+      if (this.level === 3) {
+        this.abilityArray.push(new Brace({}));
+      }
+    }
+  }
+}
+export class PanzerianGauntlets extends Attachable {
+  constructor(config, isRehydrate = false) {
+     super({
+            ...config,
+            name: config.name || 'panzerian gauntlets',
+      type: config.type || 'panzerian gauntlets',
+      description: config.description ||'Sturdy steel gauntlets. These gauntlets have been tailored to fit its original owner perfectly providing exceptional protection while still maintaining mobility. They also provides protection from difficult climates.',
+      imageSrc: config.imageSrc || './assets/media/icons/mailed-fist.png',
+      price: config.price || 150,
+      slot: config.slot || 'arms',
+      level: config.level || 1,
+        hp: config.hp || 0,
+        stamina: config.stamina || 0,
+        magic: config.magic || 0,
+        hpRecovery: config.hpRecovery || 0,
+        staminaRecovery: config.staminaRecovery || 2,
+        magicRecovery: config.magicRecovery || 2,
+        bluntAttack: config.bluntAttack || 0,
+        pierceAttack: config.pierceAttack || 0,
+        arcaneAttack: config.arcaneAttack || 0,
+        elementalAttack: config.elementalAttack || 0,
+        bluntDefense: config.bluntDefense || 5,
+        pierceDefense: config.pierceDefense || 5,
+        arcaneDefense: config.arcaneDefense || 3,
+        elementalDefense: config.elementalDefense || 4,
+        bluntResistance: config.bluntResistance || 0.05,
+        pierceResistance: config.pierceResistance || 0.05,
+        arcaneResistance: config.arcaneResistance || 0.03,
+        elementalResistance: config.elementalResistance || 0.04,
+        speed: config.speed || 0,
+        evasion: config.evasion || 0,
+        critical: config.critical || 0.0,
+        abilityArray: config.abilityArray || [],
+        }, isRehydrate);
+        if (!isRehydrate) this.upgrade(config.level - this.level);
+    }
+
+  upgrade(levels) {
+    for (let i = 0; i < levels; i++) {
+      this.level++;
+      this.price = Math.floor(this.price * 1.5);
+      this.staminaRecovery += 1;
+      this.magicRecovery += 1;
+      this.bluntDefense += 4;
+      this.pierceDefense += 4;
+      this.arcaneDefense += 2;
+      this.elementalDefense += 2;
+      if (this.level === 3) {
+        this.abilityArray.push(new Brace({}));
+      }
+    }
+  }
+}
+export class PanzerianGreaves extends Attachable {
+  constructor(config, isRehydrate = false) {
+     super({
+            ...config,
+            name: config.name || 'panzerian greaves',
+      type: config.type || 'panzerian greaves',
+      description:
+        config.description ||'Sturdy steel greaves. These greaves have been tailored to fit its original owner perfectly providing exceptional protection while still maintaining mobility. They also provide protection from difficult climates.',
+      imageSrc: config.imageSrc || './assets/media/icons/armored-pants.png',
+      price: config.price || 150,
+      slot: config.slot || 'legs',
+      level: config.level || 1,
+        hp: config.hp || 0,
+        stamina: config.stamina || 0,
+        magic: config.magic || 0,
+        hpRecovery: config.hpRecovery || 0,
+        staminaRecovery: config.staminaRecovery || 2,
+        magicRecovery: config.magicRecovery || 2,
+        bluntAttack: config.bluntAttack || 0,
+        pierceAttack: config.pierceAttack || 0,
+        arcaneAttack: config.arcaneAttack || 0,
+        elementalAttack: config.elementalAttack || 0,
+        bluntDefense: config.bluntDefense || 5,
+        pierceDefense: config.pierceDefense || 5,
+        arcaneDefense: config.arcaneDefense || 3,
+        elementalDefense: config.elementalDefense || 4,
+        bluntResistance: config.bluntResistance || 0.05,
+        pierceResistance: config.pierceResistance || 0.05,
+        arcaneResistance: config.arcaneResistance || 0.03,
+        elementalResistance: config.elementalResistance || 0.04,
+        speed: config.speed || 0,
+        evasion: config.evasion || 0,
+        critical: config.critical || 0.0,
+        abilityArray: config.abilityArray || [],
+        }, isRehydrate);
+        if (!isRehydrate) this.upgrade(config.level - this.level);
+    }
+
+  upgrade(levels) {
+    for (let i = 0; i < levels; i++) {
+      this.level++;
+      this.price = Math.floor(this.price * 1.5);
+      this.staminaRecovery += 1;
+      this.magicRecovery += 1;
+      this.bluntDefense += 4;
+      this.pierceDefense += 4;
+      this.arcaneDefense += 2;
+      this.elementalDefense += 2;
+      if (this.level === 3) {
+        this.abilityArray.push(new Brace({}));
+      }
+    }
+  }
+}
+export class PanzerianBoots extends Attachable {
+  constructor(config, isRehydrate = false) {
+     super({
+            ...config,
+            name: config.name || 'panzerian boots',
+      type: config.type || 'panzerian boots',
+      description:
+        config.description ||'Sturdy steel boots. These boots have been tailored to fit its original owner perfectly providing exceptional protection while still maintaining mobility. They also provide protection from difficult climates.',
+      imageSrc: config.imageSrc || './assets/media/icons/panzer-boots.png',
+      price: config.price || 150,
+      slot: config.slot || 'feet',
+      level: config.level || 1,
+        hp: config.hp || 0,
+        stamina: config.stamina || 0,
+        magic: config.magic || 0,
+        hpRecovery: config.hpRecovery || 0,
+        staminaRecovery: config.staminaRecovery || 2,
+        magicRecovery: config.magicRecovery || 2,
+        bluntAttack: config.bluntAttack || 0,
+        pierceAttack: config.pierceAttack || 0,
+        arcaneAttack: config.arcaneAttack || 0,
+        elementalAttack: config.elementalAttack || 0,
+        bluntDefense: config.bluntDefense || 5,
+        pierceDefense: config.pierceDefense || 5,
+        arcaneDefense: config.arcaneDefense || 3,
+        elementalDefense: config.elementalDefense || 4,
+        bluntResistance: config.bluntResistance || 0.05,
+        pierceResistance: config.pierceResistance || 0.05,
+        arcaneResistance: config.arcaneResistance || 0.03,
+        elementalResistance: config.elementalResistance || 0.04,
+        speed: config.speed || 0,
+        evasion: config.evasion || 0,
+        critical: config.critical || 0.0,
+        abilityArray: config.abilityArray || [],
+        }, isRehydrate);
+        if (!isRehydrate) this.upgrade(config.level - this.level);
+    }
+
+  upgrade(levels) {
+    for (let i = 0; i < levels; i++) {
+      this.level++;
+      this.price = Math.floor(this.price * 1.5);
+      this.staminaRecovery += 1;
+      this.magicRecovery += 1;
+      this.bluntDefense += 4;
+      this.pierceDefense += 4;
+      this.arcaneDefense += 2;
+      this.elementalDefense += 2;
+      if (this.level === 3) {
+        this.abilityArray.push(new Brace({}));
+      }
+    }
+  }
+}
 export class ClothHood extends Attachable {
   constructor(config, isRehydrate = false) {
      super({

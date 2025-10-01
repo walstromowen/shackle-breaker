@@ -5,9 +5,6 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 * critical and damage notifications
 * weakness
 * ability ranges
-* evasion on splash attacks
-* battle and console typing animation wait time and fix
-* fix battle text content
 * map objects with linked encounters
 * Map abilities
 * Wheather
@@ -19,7 +16,7 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 
 
 # Bugs
-* enemies with a new form even if they changed form are loaded with an extra form (does not crash anymore)
+* enemies with a new form, even if they changed form, are loaded with an extra form (does not crash anymore)
 * If an ally retreats then second ally dies, the retreated ally can be selected to fill in for the defeated ally even though he just escaped
 * Multi Target splash attack such as cleave will only allow for targeting of one enemy (not enemy and ally) although this maybe isnt a bug //bypassed by selected non default target first
 * missed splash attacks do not update attacker's stats (visually)
@@ -34,7 +31,10 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 * XP and gold calculation refinements
 * Animations dpendent on hostile vs ally
 * Enemy level up stats refinement
-* fix delay when accessing save screen (currently waiting for saves to load maybe play loading animation while waiting)
+* evasion on splash attacks
+* battle and console typing animation wait time and fix
+* fix battle text content
+* battle Controller rework 
 
 # MISC notes
 
