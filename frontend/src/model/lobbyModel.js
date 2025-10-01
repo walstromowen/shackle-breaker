@@ -1,6 +1,6 @@
 import { getRandomArrayElement } from "../utility.js";
 import {Entity, Dog, Hawk, Tiger} from "./misc/entities.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, GreatSword, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, BearTrap, Flintlock, SmokeBomb, ScrollOfInferno, ScrollOfHailStorm, ScrollOfCastShadow, IronShield, PanzerianHelm, PanzerianGauntlets, PanzerianGreaves, PanzerianBoots, PanzerianChestplate} from "./misc/items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, GreatSword, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, BearTrap, Flintlock, SmokeBomb, ScrollOfInferno, ScrollOfHailStorm, ScrollOfCastShadow, IronShield, PanzerianHelm, PanzerianGauntlets, PanzerianGreaves, PanzerianBoots, PanzerianChestplate, NightbladeMask} from "./misc/items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Pelt, IronOre, Diamond} from "./misc/items.js";
 
 
@@ -43,11 +43,11 @@ export default class LobbyModel{
         switch(background){
             case 'traveler':
                 equipment = [
-                    new PanzerianHelm({level: 1}),
-                    new PanzerianChestplate({level: 1}),
-                    new PanzerianGauntlets({level: 1}),
-                    new PanzerianGreaves({level: 1}),
-                    new PanzerianBoots({level: 1}),
+                    new NightbladeMask({level: 1}),
+                    new ShortSword({level: 1}),
+                    new LinenShirt({level: 1}),
+                    new LinenPants({level: 1}),
+                    new LeatherBoots({level: 1}),
                 ];
                 this.props.getParty()[0].setAttributes({vigor: 5, strength: 5, dexterity: 5, intelligence: 5, attunement: 5});
                 this.props.setGold(400);

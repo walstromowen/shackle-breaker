@@ -2,7 +2,7 @@ import { getRandomArrayElementWeighted } from "../../../utility.js";
 
 import Tile from "../tile.js";
 
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, GreatSword, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, BearTrap, Flintlock, SmokeBomb, ScrollOfInferno, ScrollOfHailStorm, ScrollOfCastShadow, IronShield, PanzerianHelm, PanzerianGauntlets, PanzerianGreaves, PanzerianBoots, PanzerianChestplate} from "../items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, GreatSword, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, BearTrap, Flintlock, SmokeBomb, ScrollOfInferno, ScrollOfHailStorm, ScrollOfCastShadow, IronShield, PanzerianHelm, PanzerianGauntlets, PanzerianGreaves, PanzerianBoots, PanzerianChestplate, NightbladeMask} from "../items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Pelt, IronOre, Diamond} from "../items.js";
 import Encounter from "../encounter.js";
 import Battle from "../battle.js";
@@ -50,6 +50,8 @@ export default class Biome{
             {item: ()=>{return new PanzerianGauntlets({level: 1})}, weight: 1},
             {item: ()=>{return new PanzerianGreaves({level: 1})}, weight: 1},
             {item: ()=>{return new PanzerianBoots({level: 1})}, weight: 1},
+
+            {item: ()=>{return new NightbladeMask({level: 1})}, weight: 1},
 
             {item: ()=>{return new ClothHood({level: 1})}, weight: 1},
             {item: ()=>{return new ClothRobe({level: 1})}, weight: 1},

@@ -1948,6 +1948,68 @@ export class PanzerianBoots extends Attachable {
     }
   }
 }
+export class NightbladeMask extends Attachable {
+  constructor(config, isRehydrate = false) {
+     super({
+            ...config,
+            name: config.name || 'nightblade mask',
+      type: config.type || 'nightblade mask',
+      description:
+        config.description || 'A shadowy mask that obscures the face with a dark fabric and magic. It was rumored that the fall of Altus Kingdom began after a surprise attack on the royal palace during which a small army of shadowy warriors infiltrated a meeting between leaders of the Altus Kingdom and Panzeria. The warriors were said to have materialized in and out of existence, striking down anyone who stood in their way before vanishing without a trace.',
+      imageSrc: config.imageSrc || './assets/media/icons/rounded-face-mask.png',
+      price: config.price || 150,
+      slot: config.slot || 'head',
+      level: config.level || 1,
+      hp: config.hp || 0,
+      stamina: config.stamina || 0,
+      magic: config.magic || 0,
+      hpRecovery: config.hpRecovery || 0,
+      staminaRecovery: config.staminaRecovery || 2,
+      magicRecovery: config.magicRecovery || 2,
+      bluntAttack: config.bluntAttack || 0,
+      pierceAttack: config.pierceAttack || 0,
+      arcaneAttack: config.arcaneAttack || 0,
+      elementalAttack: config.elementalAttack || 0,
+      bluntDefense: config.bluntDefense || 3,
+      pierceDefense: config.pierceDefense || 3,
+      arcaneDefense: config.arcaneDefense || 3,
+      elementalDefense: config.elementalDefense || 2,
+      bluntResistance: config.bluntResistance || 0.01,
+      pierceResistance: config.pierceResistance || 0.02,
+      arcaneResistance: config.arcaneResistance || 0.03,
+      elementalResistance: config.elementalResistance || 0.01,
+      speed: config.speed || 1,
+      evasion: config.evasion || 0.03,
+      critical: config.critical || 0.04,
+      abilityArray: config.abilityArray || [],
+    }, isRehydrate);
+
+    if (!isRehydrate) this.upgrade(config.level - this.level);
+  }
+
+  upgrade(levels) {
+    for (let i = 0; i < levels; i++) {
+      this.level++;
+      this.price = Math.floor(this.price * 1.5);
+      this.staminaRecovery += 2;
+      this.magicRecovery += 1;
+      this.bluntDefense += 2;
+      this.pierceDefense += 3;
+      this.arcaneDefense += 3;
+      this.elementalDefense += 2;
+      this.speed += 1;
+      this.evasion += 0.01;
+      this.critical += 0.02;
+
+      if (this.level === 2) {
+        this.abilityArray.push(new Hide({}));
+      }
+      if (this.level === 3) {
+        this.abilityArray.push(new CastShadow({}));
+      }
+    }
+  }
+}
 export class ClothHood extends Attachable {
   constructor(config, isRehydrate = false) {
      super({
