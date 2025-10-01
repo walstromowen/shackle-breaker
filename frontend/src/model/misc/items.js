@@ -1956,7 +1956,7 @@ export class NightbladeMask extends Attachable {
       type: config.type || 'nightblade mask',
       description:
         config.description || 'A shadowy mask that obscures the face with a dark fabric and magic. It was rumored that the fall of Altus Kingdom began after a surprise attack on the royal palace during which a small army of shadowy warriors infiltrated a meeting between leaders of the Altus Kingdom and Panzeria. The warriors were said to have materialized in and out of existence, striking down anyone who stood in their way before vanishing without a trace.',
-      imageSrc: config.imageSrc || './assets/media/icons/rounded-face-mask.png',
+      imageSrc: config.imageSrc || './assets/media/icons/double-face-mask.png',
       price: config.price || 150,
       slot: config.slot || 'head',
       level: config.level || 1,

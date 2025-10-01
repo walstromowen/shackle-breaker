@@ -1,6 +1,6 @@
 import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Bite, Earthquake, ShootWeb, ShootArrow, LightningBolt, Pounce, Punch, DrainLife, VineLash, Siphon, Roar, Howl, Eviscerate, ChannelMagic, DarkOrb, Bless, Brace, Inferno, SetBearTrap, Uppercut, Flurry, IceShard, Fly, Barrage, Rage, IceWall, HailStorm, CallOfSterben, ThrowSmokeBomb, ThrowNet, Hide, CastShadow, Shockwave, AbsorbSoul, Shapeshift, Ability, Impale, Cleanse, LesserHeal, Fireball} from "./abilities.js";
 import { Poison, Burn, Bleed, Shielded, InstaDeath, Blessed, PhysicalAttackBuff, MagicalAttackBuff, StatusEffect} from "./statusEffects.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, LeatherGloves, GreatSword, Flintlock, SmokeBomb, PanzerkamferArmor, ScrollOfHailStorm,  IronShield, IceSickle, Net, ScrollOfCastShadow, Item} from "./items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, LeatherGloves, GreatSword, Flintlock, SmokeBomb, PanzerkamferArmor, ScrollOfHailStorm,  IronShield, IceSickle, Net, ScrollOfCastShadow, Item, NightbladeMask} from "./items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Pelt} from "./items.js";
 import { statusEffectRegistry } from "./registries/statusEffectRegistry.js";
 import { itemRegistry } from "./registries/itemRegistry.js";
@@ -2340,6 +2340,11 @@ export class Nightblade extends Entity{
             },
             isHostile: config.isHostile || true,
             abilityArray: [new CastShadow({})],
+            lootTable: [
+                {item: new NightbladeMask({level: 1}), weight: 2},
+                {item: new ShortSword({level: 1}), weight: 1},
+                {item: new HealthPotion({}), weight: 1},
+            ],
         }, isRehydrate);
     }
 }
