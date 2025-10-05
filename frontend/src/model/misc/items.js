@@ -173,7 +173,7 @@ export class Dagger extends Attachable {
             abilityArray: config.abilityArray || [new Slash({}), new Thrust({})],
         }, isRehydrate);
 
-        if (!isRehydrate) this.upgrade(config.level - this.level);
+        if (!isRehydrate) this.upgrade(config.level - 1);
     }
 
     upgrade(levels) {
@@ -228,7 +228,7 @@ export class ShortSword extends Attachable {
             abilityArray: config.abilityArray || [new Slash({}), new Thrust({})],
         }, isRehydrate);
 
-        if (!isRehydrate) this.upgrade(config.level - this.level);
+        if (!isRehydrate) this.upgrade(config.level - 1);
     }
 
     upgrade(levels) {
@@ -284,7 +284,7 @@ export class Spear extends Attachable {
             abilityArray: config.abilityArray || [new Thrust({})],
         }, isRehydrate);
 
-        if (!isRehydrate) this.upgrade(config.level - this.level);
+        if (!isRehydrate) this.upgrade(config.level - 1);
     }
 
     upgrade(levels) {
@@ -341,7 +341,7 @@ export class BlacksmithHammer extends Attachable {
             abilityArray: config.abilityArray || [new Strike({})],
         }, isRehydrate);
 
-        if (!isRehydrate) this.upgrade(config.level - this.level);
+        if (!isRehydrate) this.upgrade(config.level - 1);
     }
 
     upgrade(levels) {
@@ -400,7 +400,7 @@ export class Handaxe extends Attachable {
             abilityArray: config.abilityArray || [new Slash({}), new Cleave({})],
         }, isRehydrate);
 
-        if (!isRehydrate) this.upgrade(config.level - this.level);
+        if (!isRehydrate) this.upgrade(config.level - 1);
     }
 
     upgrade(levels) {
@@ -456,7 +456,7 @@ export class Shortbow extends Attachable {
             abilityArray: config.abilityArray || [new ShootArrow({}), new Tripleshot({})],
         }, isRehydrate);
 
-        if (!isRehydrate) this.upgrade(config.level - this.level);
+        if (!isRehydrate) this.upgrade(config.level - 1);
     }
 
     upgrade(levels) {
@@ -514,7 +514,7 @@ export class ArcaneStaff extends Attachable {
         config.abilityArray || [new Strike({}), new MagicMissile({})],
     }, isRehydrate);
 
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -573,7 +573,7 @@ export class LightStaff extends Attachable {
         config.abilityArray || [new Strike({}), new LesserHeal({})],
     }, isRehydrate);
 
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -632,7 +632,7 @@ export class DarkStaff extends Attachable {
       abilityArray: config.abilityArray || [new Strike({}), new DarkOrb({})],
     }, isRehydrate);
 
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -694,7 +694,7 @@ export class FireStaff extends Attachable {
         abilityArray: config.abilityArray || [new Strike({}), new Fireball({})],
     }, isRehydrate);
 
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -750,7 +750,7 @@ export class LightningStaff extends Attachable {
       abilityArray: config.abilityArray || [new Strike({}), new LightningBolt({})],
     }, isRehydrate);
 
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -806,7 +806,7 @@ export class IceStaff extends Attachable {
       abilityArray: config.abilityArray || [new Strike({}), new IceShard({})],
     }, isRehydrate);
 
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -865,7 +865,7 @@ export class WaterStaff extends Attachable {
       abilityArray: config.abilityArray || [new Strike({}), new WaterBeam({})],
     }, isRehydrate);
 
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -924,7 +924,7 @@ export class ForestStaff extends Attachable {
       abilityArray: config.abilityArray || [new Strike({}), new VineLash({})],
     }, isRehydrate);
 
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -983,7 +983,7 @@ export class Flintlock extends Attachable {
       abilityArray: config.abilityArray || [new ShootBullet({})],
     }, isRehydrate);
 
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -1039,7 +1039,7 @@ export class LinenShirt extends Attachable {
       abilityArray: config.abilityArray || [],
     }, isRehydrate);
 
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -1091,7 +1091,7 @@ export class LinenPants extends Attachable {
       abilityArray: config.abilityArray || [],
     }, isRehydrate);
 
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -1143,7 +1143,7 @@ export class LeatherHelmet extends Attachable {
       abilityArray: config.abilityArray || [],
     }, isRehydrate);
 
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -1202,7 +1202,7 @@ export class LeatherHood extends Attachable {
       abilityArray: config.abilityArray || [],
     }, isRehydrate);
 
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -1228,11 +1228,11 @@ export class LeatherHood extends Attachable {
 export class LeatherChestplate extends Attachable {
   constructor(config, isRehydrate = false) {
      super({
-            ...config,
-            name: config.name || 'leather chestplate',
+      ...config,
+      name: config.name || 'leather chestplate',
       type: config.type || 'leather chestplate',
       description:
-        config.description || 'A leather chestplate. A standard issue chestplate among scouts and archers of the Altus kingdom.',
+      config.description || 'A leather chestplate. A standard issue chestplate among scouts and archers of the Altus kingdom.',
       imageSrc: config.imageSrc || './assets/media/icons/leather-armor.png',
       price: config.price || 100,
       slot: config.slot || 'torso',
@@ -1261,7 +1261,7 @@ export class LeatherChestplate extends Attachable {
       abilityArray: config.abilityArray || [],
     }, isRehydrate);
 
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -1289,36 +1289,36 @@ export class LeatherGloves extends Attachable{
          super({
             ...config,
             name: config.name || 'leather gloves',
-            type: 'leather gloves',
-            description: 'Leather gloves. A common article of clothing among worker of the Altus kingdom. With the discovery of magic, many in the altus kingdom lost appreciation for common safety practices like hand protection.',
-            imageSrc:  './assets/media/icons/gloves.png',
-            price: 100,
-            slot: 'arms',
-            level: 1,
-            hp: 0,
-            stamina: 0,
-            magic: 0,
-            hpRecovery: 0,
-            staminaRecovery: 2,
-            magicRecovery: 1,
-            bluntAttack: 0,
-            pierceAttack: 0,
-            arcaneAttack: 0,
-            elementalAttack: 0,
-            bluntDefense: 2,
-            pierceDefense: 2,
-            arcaneDefense: 2,
-            elementalDefense: 2,
-            bluntResistance: 0.02,
-            pierceResistance: 0.02,
-            arcaneResistance: 0.02,
-            elementalResistance: 0.02,
-            speed: 1,
-            evasion: 0.02,
-            critical: 0.02,
-            abilityArray: [],
+            type: config.type || 'leather gloves',
+            description: config.description || 'Leather gloves. A common article of clothing among worker of the Altus kingdom. With the discovery of magic, many in the altus kingdom lost appreciation for common safety practices like hand protection.',
+            imageSrc: config.imageSrc || './assets/media/icons/gloves.png',
+            price: config.price || 100,
+            slot: config.slot || 'arms',
+            level: config.level || 1,
+            hp: config.hp || 0,
+            stamina: config.stamina || 0,
+            magic: config.magic || 0,
+            hpRecovery: config.hpRecovery || 0,
+            staminaRecovery: config.staminaRecovery || 2,
+            magicRecovery: config.magicRecovery || 1,
+            bluntAttack: config.bluntAttack || 0,
+            pierceAttack: config.pierceAttack || 0,
+            arcaneAttack: config.arcaneAttack || 0,
+            elementalAttack: config.elementalAttack || 0,
+            bluntDefense: config.bluntDefense || 2,
+            pierceDefense: config.pierceDefense || 2,
+            arcaneDefense: config.arcaneDefense || 2,
+            elementalDefense: config.elementalDefense || 2,
+            bluntResistance: config.bluntResistance || 0.02,
+            pierceResistance: config.pierceResistance || 0.02,
+            arcaneResistance: config.arcaneResistance || 0.02,
+            elementalResistance: config.elementalResistance || 0.02,
+            speed: config.speed || 1,
+            evasion: config.evasion || 0.02,
+            critical: config.critical || 0.02,
+            abilityArray: config.abilityArray || [],
         })
-        this.upgrade(config.level-this.level);
+      if (!isRehydrate) this.upgrade(this.level - 1);
     }
     upgrade(levels){
         for(let i = 0; i < levels; i++){
@@ -1441,7 +1441,7 @@ export class LeatherBoots extends Attachable {
       critical: config.critical || 0.01,
       abilityArray: config.abilityArray || [],
     }, isRehydrate);
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -1498,7 +1498,7 @@ export class IronHelm extends Attachable {
         critical: config.critical || 0.0,
         abilityArray: config.abilityArray || [],
         }, isRehydrate);
-        if (!isRehydrate) this.upgrade(config.level - this.level);
+        if (!isRehydrate) this.upgrade(config.level - 1);
     }
 
   upgrade(levels) {
@@ -1553,7 +1553,7 @@ export class IronChainmail extends Attachable {
       critical: config.critical || 0,
       abilityArray: config.abilityArray || [],
     }, isRehydrate);
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -1607,7 +1607,7 @@ export class IronGauntlets extends Attachable {
       abilityArray: config.abilityArray || [],
     }, isRehydrate);
 
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -1663,7 +1663,7 @@ export class IronGreaves extends Attachable {
       critical: config.critical || 0,
       abilityArray: config.abilityArray || [],
     }, isRehydrate);
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -1718,7 +1718,7 @@ export class IronBoots extends Attachable {
       critical: config.critical || 0,
       abilityArray: config.abilityArray || [],
     }, isRehydrate);
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -1772,7 +1772,7 @@ export class PanzerianHelm extends Attachable {
         critical: config.critical || 0.0,
         abilityArray: config.abilityArray || [],
         }, isRehydrate);
-        if (!isRehydrate) this.upgrade(config.level - this.level);
+        if (!isRehydrate) this.upgrade(config.level - 1);
     }
 
   upgrade(levels) {
@@ -1827,7 +1827,7 @@ export class PanzerianChestplate extends Attachable {
         critical: config.critical || 0.0,
         abilityArray: config.abilityArray || [],
         }, isRehydrate);
-        if (!isRehydrate) this.upgrade(config.level - this.level);
+        if (!isRehydrate) this.upgrade(config.level - 1);
     }
 
   upgrade(levels) {
@@ -1880,7 +1880,7 @@ export class PanzerianGauntlets extends Attachable {
         critical: config.critical || 0.0,
         abilityArray: config.abilityArray || [],
         }, isRehydrate);
-        if (!isRehydrate) this.upgrade(config.level - this.level);
+        if (!isRehydrate) this.upgrade(config.level - 1);
     }
 
   upgrade(levels) {
@@ -1934,7 +1934,7 @@ export class PanzerianGreaves extends Attachable {
         critical: config.critical || 0.0,
         abilityArray: config.abilityArray || [],
         }, isRehydrate);
-        if (!isRehydrate) this.upgrade(config.level - this.level);
+        if (!isRehydrate) this.upgrade(config.level - 1);
     }
 
   upgrade(levels) {
@@ -1988,7 +1988,7 @@ export class PanzerianBoots extends Attachable {
         critical: config.critical || 0.0,
         abilityArray: config.abilityArray || [],
         }, isRehydrate);
-        if (!isRehydrate) this.upgrade(config.level - this.level);
+        if (!isRehydrate) this.upgrade(config.level - 1);
     }
 
   upgrade(levels) {
@@ -2043,7 +2043,7 @@ export class NightbladeMask extends Attachable {
       abilityArray: config.abilityArray || [new Hide({})],
     }, isRehydrate);
 
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -2102,7 +2102,7 @@ export class ClothHood extends Attachable {
       critical: config.critical || 0,
       abilityArray: config.abilityArray || [],
     }, isRehydrate);
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -2158,7 +2158,7 @@ export class ClothRobe extends Attachable {
       critical: config.critical || 0,
       abilityArray: config.abilityArray || [],
     }, isRehydrate);
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -2213,7 +2213,7 @@ export class Buckler extends Attachable {
             abilityArray: config.abilityArray || [new Block({})],
         }, isRehydrate);
 
-        if (!isRehydrate) this.upgrade(config.level - this.level);
+        if (!isRehydrate) this.upgrade(config.level - 1);
     }
 
     upgrade(levels) {
@@ -2266,7 +2266,7 @@ export class IronShield extends Attachable {
       abilityArray: config.abilityArray || [new Block({})],
     }, isRehydrate);
 
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -2325,7 +2325,7 @@ export class PanzerkamferArmor extends Attachable {
       abilityArray: config.abilityArray || [new Barrage({})],
     }, isRehydrate);
 
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -2384,7 +2384,7 @@ export class GreatSword extends Attachable {
       abilityArray: config.abilityArray || [new Slash({}), new Cleave({}), new Thrust({})],
     }, isRehydrate);
 
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
@@ -2443,7 +2443,7 @@ export class IceSickle extends Attachable {
       abilityArray: config.abilityArray || [new Slash({}), new FlashFreeze({})],
     }, isRehydrate);
 
-    if (!isRehydrate) this.upgrade(config.level - this.level);
+    if (!isRehydrate) this.upgrade(config.level - 1);
   }
 
   upgrade(levels) {
