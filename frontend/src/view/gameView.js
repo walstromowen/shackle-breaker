@@ -139,8 +139,9 @@ export default class GameView{
                 case 'fire':
                 case 'lightning':
                 case 'ice':
+                case 'water':
                 case 'earth':
-                case 'wind':
+                case 'air':
                 case 'chemical':
                     damage += entity.currentElementalAttack;
                     typeCount++
