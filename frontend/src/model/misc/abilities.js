@@ -60,6 +60,7 @@ export class Ability{
                     case 'fire':
                     case 'lightning':
                     case 'ice':
+                    case 'water':
                     case 'air':
                     case 'earth':
                     case 'chemical':
@@ -175,7 +176,6 @@ export class Ability{
                 return
             }
         }
-        //target.statusArray.push(status);
         status.onApplied(attacker, target, status);
     }
     removeStatus(statusName, target){
@@ -350,7 +350,7 @@ export class Retreat extends Ability{
             description: 'Allows current character to escape battle. Sometimes, living to fight another day is more nobel than facing a foolish end.',
             iconSrc: './assets/media/icons/run.png',
             speedModifier: config.speedModifier || 1,
-            damageModifier: config.speedModifier || 0,
+            damageModifier: config.damageModifier || 0,
             soundEffectSrc: "./assets/audio/soundEffects/energy-90321.mp3",
             targetAnimation: 'ally-retreat',
             defaultTarget: 'self',
@@ -373,7 +373,7 @@ export class Rest extends Ability{
             description: 'Allows current character to recover health, stamina, and magic based on recovery values.',
             iconSrc: './assets/media/icons/despair.png',
             speedModifier: config.speedModifier || 1,
-            damageModifier: config.speedModifier || 0,
+            damageModifier: config.damageModifier || 0,
             soundEffectSrc: "./assets/audio/soundEffects/power-down-45784.mp3",
             abilityAnimation: 'sink',
             abilityAnimationImage: './assets/media/icons/despair.png',
@@ -399,7 +399,7 @@ export class Struggle extends Ability{
             description: 'Help!',
             iconSrc: './assets/media/icons/despair.png',
             speedModifier: config.speedModifier || 1,
-            damageModifier: config.speedModifier || 0,
+            damageModifier: config.damageModifier || 0,
             soundEffectSrc: "./assets/audio/soundEffects/power-down-45784.mp3",
             targetAnimation: 'shake',
             defaultTarget: 'self',
@@ -1526,7 +1526,7 @@ export class Shockwave extends Ability{
             iconSrc: './assets/media/icons/wind-slap.png',
             background: `url(./assets/media/icons/wind-slap.png), linear-gradient(grey, silver)`,
             speedModifier: config.speedModifier || 1.25,
-            damageModifier: config.damageModifier || 0.25,
+            damageModifier: config.damageModifier || 0.50,
             healthCost: config.healthCost || 0,
             staminaCost: config.staminaCost || 0,
             magicCost: config.magicCost || 15,
