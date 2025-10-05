@@ -1,6 +1,6 @@
 import { getRandomArrayElement } from "../utility.js";
 import {Entity, Dog, Hawk, Tiger} from "./misc/entities.js";
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, GreatSword, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, BearTrap, Flintlock, SmokeBomb, ScrollOfInferno, ScrollOfHailStorm, ScrollOfCastShadow, IronShield, PanzerianHelm, PanzerianGauntlets, PanzerianGreaves, PanzerianBoots, PanzerianChestplate, NightbladeMask, WaterStaff} from "./misc/items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, GreatSword, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, BearTrap, Flintlock, SmokeBomb, ScrollOfInferno, ScrollOfHailStorm, ScrollOfCastShadow, IronShield, PanzerianHelm, PanzerianGauntlets, PanzerianGreaves, PanzerianBoots, PanzerianChestplate, NightbladeMask, WaterStaff, LeatherGloves, Spear} from "./misc/items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Pelt, IronOre, Diamond} from "./misc/items.js";
 
 
@@ -44,7 +44,7 @@ export default class LobbyModel{
             case 'traveler':
                 equipment = [
                     new LeatherHelmet({level: 1}),
-                    new WaterStaff({level: 1}),
+                    new WaterStaff({level: 3}),
                     new LinenShirt({level: 1}),
                     new LinenPants({level: 1}),
                     new LeatherBoots({level: 1}),
