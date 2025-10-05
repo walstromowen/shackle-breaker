@@ -2,7 +2,7 @@ import { getRandomArrayElementWeighted } from "../../../utility.js";
 
 import Tile from "../tile.js";
 
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, GreatSword, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, BearTrap, Flintlock, SmokeBomb, ScrollOfInferno, ScrollOfHailStorm, ScrollOfCastShadow, IronShield, PanzerianHelm, PanzerianGauntlets, PanzerianGreaves, PanzerianBoots, PanzerianChestplate, NightbladeMask, WaterStaff} from "../items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, GreatSword, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, BearTrap, Flintlock, SmokeBomb, ScrollOfInferno, ScrollOfHailStorm, ScrollOfCastShadow, IronShield, PanzerianHelm, PanzerianGauntlets, PanzerianGreaves, PanzerianBoots, PanzerianChestplate, NightbladeMask, WaterStaff, Spear} from "../items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Pelt, IronOre, Diamond} from "../items.js";
 import Encounter from "../encounter.js";
 import Battle from "../battle.js";
@@ -69,6 +69,7 @@ export default class Biome{
             {item: ()=>{return new IronShield({level: 1})}, weight: 1},
             {item: ()=>{return new Dagger({level: 1})}, weight: 1},
             {item: ()=>{return new BlacksmithHammer({level: 1})}, weight: 1},
+            {item: ()=>{return new Spear({level: 1})}, weight: 1},
 
             {item: ()=>{return new KurtussBrewOfMadness({})}, weight: 1},
             {item: ()=>{return new PoisonedKnife({})}, weight: 1},
