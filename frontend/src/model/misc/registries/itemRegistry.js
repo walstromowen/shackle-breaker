@@ -6,6 +6,7 @@ import {
   PineWood, Pelt, IronOre, Diamond, HealthPotion, StaminaPotion, MagicPotion,
   Antidote, AloeRemedy, Bandage, ParalysisTonic, PoisonedKnife, BearTrap,
   Net, SmokeBomb, ScrollOfInferno, ScrollOfHailStorm, ScrollOfCastShadow, KurtussBrewOfMadness, Meteorite,
+  WaterStaff,
 } from "../items.js";
 
 
@@ -22,6 +23,7 @@ export const itemRegistry = {
   "fire staff": (config, isRehydrate) => new FireStaff(config, isRehydrate),
   "lightning staff": (config, isRehydrate) => new LightningStaff(config, isRehydrate),
   "ice staff": (config, isRehydrate) => new IceStaff(config, isRehydrate),
+  "water staff": (config, isRehydrate) => new WaterStaff(config, isRehydrate),
   "forest staff": (config, isRehydrate) => new ForestStaff(config, isRehydrate),
   "flintlock": (config, isRehydrate) => new Flintlock(config, isRehydrate),
   "linen shirt": (config, isRehydrate) => new LinenShirt(config, isRehydrate),

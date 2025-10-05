@@ -6,7 +6,10 @@ import {
   CallOfSterben, Bless, Curse, Roar, Rage, Howl, ChannelMagic, Hex, ShootBullet, Barrage, Fly,
   CastShadow, ExposeWeakness, GuardBreak, AbsorbSoul, Impale, FlashFreeze, ThrowPosionedKnife,
   SetBearTrap, ThrowNet, ThrowSmokeBomb, DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion,
-  UseAntidote, UseAloeRemedy, UseBandage, UseParalysisTonic, DrinkKurtussBrewOfMadness
+  UseAntidote, UseAloeRemedy, UseBandage, UseParalysisTonic, DrinkKurtussBrewOfMadness,
+  WaterBeam,
+  SplitStream,
+  Riptide
 } from "../abilities.js";
 
 export const abilityRegistry = {
@@ -65,6 +68,10 @@ export const abilityRegistry = {
   "absorb soul": (config) => { return new AbsorbSoul(config); },
   "impale": (config) => { return new Impale(config); },
   "flash freeze": (config) => { return new FlashFreeze(config); },
+  "water beam": (config) => { return new WaterBeam(config); },
+  "split stream": (config) => { return new SplitStream(config, true); },
+  "riptide": (config) => { return new Riptide(config, false); },
+
   
   "throw posioned knife": (config) => { return new ThrowPosionedKnife(config); },
   "set bear trap": (config) => { return new SetBearTrap(config); },
