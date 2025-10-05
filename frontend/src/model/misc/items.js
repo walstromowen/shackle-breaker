@@ -1,4 +1,4 @@
-import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower, Thrust, ChannelMagic, Siphon, Eviscerate, DarkOrb, Brace, Inferno, Flurry, Uppercut, ShootBullet, ThrowNet, Shapeshift, Barrage, ShootFlamingArrow, Rage, HailStorm, Hide, CastShadow, AbsorbSoul, ExposeWeakness, GuardBreak, ArcaneBlast, Cleanse, IceWall, FlashFreeze, Impale} from "./abilities.js";
+import { MagicMissile, Slash, Strike, Cleave, ThrowPosionedKnife, Fireball, LesserHeal, ShootWeb, Block, ShootArrow, LightningBolt, Tripleshot, DrainLife, IceShard, VineLash, Earthquake, Shockwave, Bless, Curse, MeteorShower, Thrust, ChannelMagic, Siphon, Eviscerate, DarkOrb, Brace, Inferno, Flurry, Uppercut, ShootBullet, ThrowNet, Shapeshift, Barrage, ShootFlamingArrow, Rage, HailStorm, Hide, CastShadow, AbsorbSoul, ExposeWeakness, GuardBreak, ArcaneBlast, Cleanse, IceWall, FlashFreeze, Impale, WaterBeam, SplitStream, Riptide} from "./abilities.js";
 import { DrinkHealthPotion, DrinkStaminaPotion, DrinkMagicPotion, UseAntidote, UseAloeRemedy, UseParalysisTonic, UseBandage, DrinkKurtussBrewOfMadness, SetBearTrap, ThrowSmokeBomb} from "./abilities.js";
 import { abilityRegistry } from "./registries/abilityRegistry.js";
 
@@ -825,6 +825,65 @@ export class IceStaff extends Attachable {
       }
       if (this.level === 3) {
         this.abilityArray.push(new HailStorm({}));
+      }
+    }
+  }
+}
+export class WaterStaff extends Attachable {
+  constructor(config, isRehydrate = false) {
+     super({
+      ...config,
+      name: config.name || 'water staff',
+      type: config.type || 'water staff',
+      description:
+        config.description || "A wooden staff imbued with water. Magic is a relatively new concept to the citizens of the Altus kingdom since the discovery of the artifact, however some speculate it is as old as time",
+      imageSrc: config.imageSrc || './assets/media/icons/wizard-staff.png',
+      price: config.price || 200,
+      slot: config.slot || 'oneHand',
+      level: config.level || 1,
+      hp: config.hp || 0,
+      stamina: config.stamina || 0,
+      magic: config.magic || 0,
+      hpRecovery: config.hpRecovery || 0,
+      staminaRecovery: config.staminaRecovery || 0,
+      magicRecovery: config.magicRecovery || 2,
+      bluntAttack: config.bluntAttack || 1,
+      pierceAttack: config.pierceAttack || 1,
+      arcaneAttack: config.arcaneAttack || 0,
+      elementalAttack: config.elementalAttack || 3,
+      bluntDefense: config.bluntDefense || 0,
+      pierceDefense: config.pierceDefense || 0,
+      arcaneDefense: config.arcaneDefense || 0,
+      elementalDefense: config.elementalDefense || 0,
+      bluntResistance: config.bluntResistance || 0,
+      pierceResistance: config.pierceResistance || 0,
+      arcaneResistance: config.arcaneResistance || 0,
+      elementalResistance: config.elementalResistance || 0,
+      speed: config.speed || 0,
+      evasion: config.evasion || 0,
+      critical: config.critical || 0,
+      abilityArray: config.abilityArray || [new Strike({}), new WaterBeam({})],
+    }, isRehydrate);
+
+    if (!isRehydrate) this.upgrade(config.level - this.level);
+  }
+
+  upgrade(levels) {
+    for (let i = 0; i < levels; i++) {
+      this.level++;
+      this.price = Math.floor(this.price * 1.5);
+      this.magicRecovery++;
+      this.bluntAttack++;
+      this.arcaneAttack++;
+      this.elementalAttack += 3;
+      this.bluntDefense++;
+      this.arcaneDefense++;
+
+      if (this.level === 2) {
+        this.abilityArray.push(new SplitStream({}));
+      }
+      if (this.level === 3) {
+        this.abilityArray.push(new Riptide({}));
       }
     }
   }
@@ -1704,10 +1763,10 @@ export class PanzerianHelm extends Attachable {
         pierceDefense: config.pierceDefense || 5,
         arcaneDefense: config.arcaneDefense || 3,
         elementalDefense: config.elementalDefense || 4,
-        bluntResistance: config.bluntResistance || 0.05,
-        pierceResistance: config.pierceResistance || 0.05,
-        arcaneResistance: config.arcaneResistance || 0.03,
-        elementalResistance: config.elementalResistance || 0.04,
+        bluntResistance: config.bluntResistance || 0.04,
+        pierceResistance: config.pierceResistance || 0.04,
+        arcaneResistance: config.arcaneResistance || 0.02,
+        elementalResistance: config.elementalResistance || 0.03,
         speed: config.speed || 0,
         evasion: config.evasion || 0,
         critical: config.critical || 0.0,
@@ -1759,10 +1818,10 @@ export class PanzerianChestplate extends Attachable {
         pierceDefense: config.pierceDefense || 5,
         arcaneDefense: config.arcaneDefense || 3,
         elementalDefense: config.elementalDefense || 4,
-        bluntResistance: config.bluntResistance || 0.05,
-        pierceResistance: config.pierceResistance || 0.05,
-        arcaneResistance: config.arcaneResistance || 0.03,
-        elementalResistance: config.elementalResistance || 0.04,
+        bluntResistance: config.bluntResistance || 0.04,
+        pierceResistance: config.pierceResistance || 0.04,
+        arcaneResistance: config.arcaneResistance || 0.02,
+        elementalResistance: config.elementalResistance || 0.03,
         speed: config.speed || 0,
         evasion: config.evasion || 0,
         critical: config.critical || 0.0,
@@ -1812,10 +1871,10 @@ export class PanzerianGauntlets extends Attachable {
         pierceDefense: config.pierceDefense || 5,
         arcaneDefense: config.arcaneDefense || 3,
         elementalDefense: config.elementalDefense || 4,
-        bluntResistance: config.bluntResistance || 0.05,
-        pierceResistance: config.pierceResistance || 0.05,
-        arcaneResistance: config.arcaneResistance || 0.03,
-        elementalResistance: config.elementalResistance || 0.04,
+        bluntResistance: config.bluntResistance || 0.04,
+        pierceResistance: config.pierceResistance || 0.04,
+        arcaneResistance: config.arcaneResistance || 0.02,
+        elementalResistance: config.elementalResistance || 0.03,
         speed: config.speed || 0,
         evasion: config.evasion || 0,
         critical: config.critical || 0.0,
@@ -1866,10 +1925,10 @@ export class PanzerianGreaves extends Attachable {
         pierceDefense: config.pierceDefense || 5,
         arcaneDefense: config.arcaneDefense || 3,
         elementalDefense: config.elementalDefense || 4,
-        bluntResistance: config.bluntResistance || 0.05,
-        pierceResistance: config.pierceResistance || 0.05,
-        arcaneResistance: config.arcaneResistance || 0.03,
-        elementalResistance: config.elementalResistance || 0.04,
+        bluntResistance: config.bluntResistance || 0.04,
+        pierceResistance: config.pierceResistance || 0.04,
+        arcaneResistance: config.arcaneResistance || 0.02,
+        elementalResistance: config.elementalResistance || 0.03,
         speed: config.speed || 0,
         evasion: config.evasion || 0,
         critical: config.critical || 0.0,
@@ -1920,10 +1979,10 @@ export class PanzerianBoots extends Attachable {
         pierceDefense: config.pierceDefense || 5,
         arcaneDefense: config.arcaneDefense || 3,
         elementalDefense: config.elementalDefense || 4,
-        bluntResistance: config.bluntResistance || 0.05,
-        pierceResistance: config.pierceResistance || 0.05,
-        arcaneResistance: config.arcaneResistance || 0.03,
-        elementalResistance: config.elementalResistance || 0.04,
+        bluntResistance: config.bluntResistance || 0.04,
+        pierceResistance: config.pierceResistance || 0.04,
+        arcaneResistance: config.arcaneResistance || 0.02,
+        elementalResistance: config.elementalResistance || 0.03,
         speed: config.speed || 0,
         evasion: config.evasion || 0,
         critical: config.critical || 0.0,
@@ -1981,7 +2040,7 @@ export class NightbladeMask extends Attachable {
       speed: config.speed || 1,
       evasion: config.evasion || 0.03,
       critical: config.critical || 0.04,
-      abilityArray: config.abilityArray || [],
+      abilityArray: config.abilityArray || [new Hide({})],
     }, isRehydrate);
 
     if (!isRehydrate) this.upgrade(config.level - this.level);
@@ -2001,9 +2060,6 @@ export class NightbladeMask extends Attachable {
       this.evasion += 0.01;
       this.critical += 0.02;
 
-      if (this.level === 2) {
-        this.abilityArray.push(new Hide({}));
-      }
       if (this.level === 3) {
         this.abilityArray.push(new CastShadow({}));
       }

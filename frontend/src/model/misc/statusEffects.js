@@ -1335,3 +1335,162 @@ export class EvasionBuff extends StatusEffect{
         this.currentEvasionBuff = currentEvasionBuff.currentLevel;
     }
 }
+export class EvasionDebuff extends StatusEffect{
+    constructor(config){
+        super({
+            name:'evasion debuff',
+            iconSrc: "./assets/media/icons/evasion-debuff-1.png",
+            holder: config.holder,
+            maxCharges: 5,
+            stackable: true,
+            targetAnimation: 'none',
+            abilityAnimation: 'none',
+            removeOnBattleEnd: true,
+        });
+        this.currentLevel = config.level || 0;
+        this.currentEvasionDebuff = 0;
+    }
+    onApplied(attacker, target, status){
+        this.holder.currentEvasion += this.currentEvasionDebuff;
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == 'evasion buff'){
+                this.holder.statusArray[i].currentLevel = this.holder.statusArray[i].currentLevel - 2
+                if(this.holder.statusArray[i].currentLevel <= 0){
+                    this.holder.statusArray[i].onRemove();
+                }else{
+                    this.holder.statusArray[i].onApplied(attacker, target, status);
+                }
+                return;
+            }
+        }
+        switch(this.currentLevel){
+            case 0:
+                target.statusArray.push(status);
+                this.currentEvasionDebuff = Math.floor(0.2 * this.holder.baseEvasion);
+                this.iconSrc = "./assets/media/icons/evasion-debuff-1.png";
+                this.currentLevel++
+            break;
+            case 1:
+                this.currentEvasionDebuff = Math.floor(0.4 * this.holder.baseEvasion);
+                this.iconSrc = "./assets/media/icons/evasion-debuff-2.png";
+                this.currentLevel++
+            break;
+            case 2:
+                this.currentEvasionDebuff = Math.floor(0.6 * this.holder.baseEvasion);
+                this.iconSrc = "./assets/media/icons/evasion-debuff-3.png";
+                this.currentLevel++
+            break;
+            default:
+            break;
+        }
+        this.holder.currentEvasion -= this.currentEvasionDebuff;
+        this.currentCharges++;
+    }
+    onEndTurn(){
+        return this.activateHelpper(()=>{this.currentCharges--}, 
+        {
+            text: false,
+            animation: false,
+            vitalsUpdate: false,
+        }
+    )}
+    onRemove(){
+        for(let i = 0; i <= this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == this.name){
+                this.holder.statusArray.splice(i, 1);
+                break;
+            }
+        }
+        this.holder.currentEvasion += this.currentEvasionDebuff;
+    }
+    toSaveObject(){
+        let saveObject = super.toSaveObject();
+        saveObject.currentEvasionDebuff = this.currentEvasionDebuff;
+        return saveObject;
+    }
+    fromSaveObject(statusData){
+        super.fromSaveObject(statusData);
+        this.currentLevel = statusData.currentLevel;
+        this.currentEvasionDebuff = currentEvasionDebuff.currentLevel;
+    }
+}
+export class SpeedBuff extends StatusEffect{
+    constructor(config){
+        super({
+            name:'speed buff',
+            iconSrc: "./assets/media/icons/speed-buff-1.png",
+            holder: config.holder,
+            maxCharges: 5,
+            stackable: true,
+            targetAnimation: 'none',
+            abilityAnimation: 'none',
+            removeOnBattleEnd: true,
+            isHelpful: true,
+        });
+        this.currentLevel = config.level || 0;
+        this.currentSpeedBuff = config.level || 0;
+    }
+    onApplied(attacker, target, status){
+        this.holder.currentSpeed -= this.currentSpeedBuff;
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == 'speed debuff'){
+                this.holder.statusArray[i].currentLevel = this.holder.statusArray[i].currentLevel - 2
+                if(this.holder.statusArray[i].currentLevel <= 0){
+                    this.holder.statusArray[i].onRemove();
+                }else{
+                    this.holder.statusArray[i].onApplied(attacker, target, status);
+                }
+                return;
+            }
+        }
+        switch(this.currentLevel){
+            case 0:
+                target.statusArray.push(status);
+                this.currentSpeedBuff = Math.floor(0.2 * this.holder.currentSpeed);
+                this.iconSrc = "./assets/media/icons/speed-buff-1.png";
+                this.currentLevel++
+            break;
+            case 1:
+                this.currentSpeedBuff = Math.floor(0.4 * this.holder.currentSpeed);
+                this.iconSrc = "./assets/media/icons/speed-buff-2.png";
+                this.currentLevel++
+            break;
+            case 2:
+                this.currentSpeedBuff = Math.floor(0.6 * this.holder.currentSpeed);
+                this.iconSrc = "./assets/media/icons/speed-buff-3.png";
+                this.currentLevel++
+            break;
+            default:
+            break;
+        }
+        this.holder.currentSpeed += this.currentSpeedBuff;
+        this.currentCharges++;
+    }
+    onEndTurn(){
+        return this.activateHelpper(()=>{this.currentCharges--}, 
+        {
+            text: false,
+            animation: false,
+            vitalsUpdate: false,
+        }
+    )}
+    onRemove(){
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == this.name){
+                this.holder.statusArray.splice(i, 1);
+                break;
+            }
+        }
+        this.holder.currentSpeed -= this.currentSpeedBuff;
+    }
+    toSaveObject(){
+        let saveObject = super.toSaveObject();
+        saveObject.currentSpeedBuff = this.currentSpeedBuff;
+        return saveObject;
+    }
+    fromSaveObject(statusData){
+        super.fromSaveObject(statusData);
+        this.currentLevel = statusData.currentLevel;
+        this.currentSpeedBuff = currentSpeedBuff.currentLevel;
+    }
+}

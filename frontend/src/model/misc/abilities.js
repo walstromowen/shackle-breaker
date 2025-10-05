@@ -1,6 +1,6 @@
 import { deepCopyArray, getRandomArrayElement} from "../../utility.js";
 import { Dog, Entity, Hawk, Tiger, SterbensBeast} from "./entities.js";
-import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen, Blessed, Cursed, PhysicalAttackDebuff, PhysicalAttackBuff, BearTrapSet, MagicalAttackBuff, MagicalAttackDebuff, PhysicalDefenseBuff, EvasionBuff, Polymorphed, Flying, PhysicalDefenseDebuff} from "./statusEffects.js";
+import { Poison, Burn, Bleed, Bind, Paralyzed, Shielded, KnockedDown, Frozen, Blessed, Cursed, PhysicalAttackDebuff, PhysicalAttackBuff, BearTrapSet, MagicalAttackBuff, MagicalAttackDebuff, PhysicalDefenseBuff, EvasionBuff, Polymorphed, Flying, PhysicalDefenseDebuff, EvasionDebuff, SpeedBuff} from "./statusEffects.js";
 
 export class Ability{
     constructor(config){
@@ -726,9 +726,9 @@ export class Cleave extends Ability{
             iconSrc: './assets/media/icons/serrated-slash.png',
             background: `url(./assets/media/icons/serrated-slash.png), conic-gradient(steelblue, darkslategrey, crimson, darkslategrey)`,
             speedModifier: config.speedModifier || 1,
-            damageModifier: config.damageModifier || 0.75,
+            damageModifier: config.damageModifier || 0.85,
             healthCost: config.healthCost || 0,
-            staminaCost: config.staminaCost || 5,
+            staminaCost: config.staminaCost || 7,
             magicCost: config.magicCost || 0,
             damageTypes: config.damageTypes || ['melee', 'blunt', 'pierce'],
             targetCount: 2,
@@ -1344,6 +1344,179 @@ export class HailStorm extends Ability{
         this.message = (`${attacker.name} summons a hailstorm!`);
     }
 }
+export class WaterBeam extends Ability{
+    constructor(config){
+        super({
+            name: config.name || 'water beam',
+            type: config.type || 'water beam',
+            description: "Shoot a target with a beam of water made with elemental magic. Has a chance to lower the target's evasion.",
+            iconSrc: './assets/media/icons/water-splash.png',
+            background: `url(./assets/media/icons/water-splash.png), linear-gradient(blue, silver)`,
+            speedModifier: config.speedModifier || 1.0,
+            damageModifier: config.damageModifier || 1.00,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 12,
+            accuracy: config.accuracy || 0.90,
+            damageTypes: config.damageTypes || ['ranged', 'water'],
+            soundEffectSrc: "./assets/audio/soundEffects/water-splash-199583.mp3",
+
+            attackerAnimation: config.attackerAnimation || 'ally-evade',
+            abilityAnimation: config.abilityAnimation || 'swipe-right',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/water-splash.png',
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            if(Math.random()*6 < 1){
+                this.inflictStatus(new EvasionDebuff({holder: target}), attacker, target);
+            }
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
+        }
+    }
+    updateMessage(attacker, target){
+       this.message = `${attacker.name} shoots a beam of water at ${target.name}.`;
+    }
+}
+export class SplitStream extends Ability{
+    constructor(config){
+        super({
+            name: config.name || 'split stream',
+            type: config.type || 'split stream',
+            description: "Spray up to two different targets with a stream of water. Has a chance to increase the user's speed for each target.",
+            iconSrc: './assets/media/icons/splashy-stream.png',
+            background: `url(./assets/media/icons/splashy-stream.png), linear-gradient(blue, silver)`,
+            speedModifier: config.speedModifier || 1,
+            damageModifier: config.damageModifier || 0.85,
+            criticalDamageModifier: config.criticalDamageModifier || 1.25,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 12,
+            damageTypes: config.damageTypes || ['ranged', 'water'],
+            targetCount: 2,
+            soundEffectSrc: "./assets/audio/soundEffects/mixkit-metal-hit-woosh-1485.wav",
+            sequenceType: 'splash',
+            attackerAnimation: config.attackerAnimation || 'ally-attack',
+            abilityAnimation: config.abilityAnimation || 'stick-right',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/splashy-stream.png',
+
+        })
+    }
+    activate(attacker, target){
+        let rawDamage = this.calculateDamage(attacker, target);
+        rawDamage = this.checkCritical(attacker, rawDamage);
+        let damage = this.checkDamage(target, rawDamage, 'health');
+        target.currentHP = target.currentHP - damage;
+        if(damage > 0){
+            if(Math.random()*10 < 1){
+                this.inflictStatus(new SpeedBuff({holder: attacker}), attacker, attacker);
+            }
+            this.triggerOnDeliverDamage(attacker, target);
+            this.triggerOnRecieveDamage(attacker, target);
+        }
+    }
+    updateMessage(attacker){
+        this.message = (`${attacker.name} uses split stream.`);
+    }
+}
+/*
+export class CleansingFlow extends Ability{
+    constructor(config){
+        super({
+            name: config.name || 'cleansing stream',
+            type: config.type || 'cleansing stream',
+            description: "Remove a negative status effect from a target using light magic.",
+            iconSrc: './assets/media/icons/shiny-omega.png',
+            background: `url(./assets/media/icons/shiny-omega.png), linear-gradient(gold, navy)`,
+            speedModifier: config.speedModifier || 1,
+            damageModifier: config.damageModifier || 1,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 15,
+            damageTypes: config.damageTypes || ['water'],
+            soundEffectSrc: "./assets/audio/soundEffects/mixkit-light-spell-873.wav",
+            attackerAnimation: config.attackerAnimation || 'none',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/shiny-omega.png',
+            abilityAnimation: config.abilityAnimation || 'explode',
+            defaultTarget: 'ally',
+            
+        })
+    }
+    activate(attacker, target){
+        let isNegativePresent = false;
+        for(let i = 0; i < target.statusArray.length; i++){
+            if(target.statusArray[i].isHelpful == false){
+                isNegativePresent = true;
+                break;
+            }
+        }
+        if(isNegativePresent){
+            let flag = true;
+            let status;
+            while(flag){
+                status = getRandomArrayElement(target.statusArray)
+                if(status.isHelpful == false){
+                    flag = false;
+                }
+            }
+            status.onRemove()
+        }else{
+            let healthRestore = this.checkRestore(target, target.maxHP * 0.1, 'health');
+            target.currentHP += healthRestore;
+        }
+    }
+    updateMessage(attacker, target){
+        if(attacker == target){
+            this.message = `${attacker.name} uses cleanse.`;
+        }
+        else{
+            this.message = `${attacker.name} cleanses ${target.name}.`;
+        }
+    }
+}
+*/
+export class Riptide extends Ability{
+    constructor(config){
+        super({
+            name: config.name || 'riptide',
+            type: config.type || 'water',
+            description: "Summon a powerful wave to trap enemies, trapping them in a continuous surf.",
+            iconSrc: './assets/media/icons/wave-crest.png',
+            background: `url(./assets/media/icons/wave-crest.png), linear-gradient(blue, silver)`,
+            speedModifier: config.speedModifier || 0.25,
+            healthCost: config.healthCost || 0,
+            staminaCost: config.staminaCost || 0,
+            magicCost: config.magicCost || 20,
+            accuracy: config.accuracy || 0.8,
+            damageTypes: config.damageTypes || ['melee', 'water'],
+            targetCount: 3,
+            soundEffectSrc: "./assets/audio/soundEffects/waves-1-225305.mp3",
+            sequenceType: 'splash',
+            attackerAnimation: config.attackerAnimation || 'none',
+            abilityAnimation: config.abilityAnimation || 'sink',
+            abilityAnimationImage: config.abilityAnimationImage || './assets/media/icons/wave-crest.png',
+            targetAnimation: config.targetAnimation || 'shake',
+            defaultTarget: 'opponent',
+            targetLock: 'all opponents',
+            targetCount: 3,
+        })
+    }
+    activate(attacker, target){
+        this.inflictStatus(new Bind({holder: target}), attacker, target);
+        this.triggerOnDeliverDamage(attacker, target);
+        this.triggerOnRecieveDamage(attacker, target);
+        
+    }
+    updateMessage(attacker){
+        this.message = (`${attacker.name} creates a riptide!`);
+    }
+}
+
 export class Shockwave extends Ability{
     constructor(config){
         super({

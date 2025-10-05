@@ -2,7 +2,7 @@ import { getRandomArrayElementWeighted } from "../../../utility.js";
 
 import Tile from "../tile.js";
 
-import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, GreatSword, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, BearTrap, Flintlock, SmokeBomb, ScrollOfInferno, ScrollOfHailStorm, ScrollOfCastShadow, IronShield, PanzerianHelm, PanzerianGauntlets, PanzerianGreaves, PanzerianBoots, PanzerianChestplate, NightbladeMask} from "../items.js";
+import { Dagger, ShortSword, BlacksmithHammer, ArcaneStaff, FireStaff, LightningStaff, LightStaff, LinenShirt, LinenPants, Handaxe, LeatherHelmet, LeatherHood, Shortbow, Buckler, GreatSword, LeatherChestplate, LeatherGreaves, LeatherBoots, DarkStaff, IceStaff, ForestStaff, IronHelm, IronChainmail, IronGauntlets, IronGreaves, IronBoots, ClothHood, ClothRobe, BearTrap, Flintlock, SmokeBomb, ScrollOfInferno, ScrollOfHailStorm, ScrollOfCastShadow, IronShield, PanzerianHelm, PanzerianGauntlets, PanzerianGreaves, PanzerianBoots, PanzerianChestplate, NightbladeMask, WaterStaff} from "../items.js";
 import {HealthPotion, PoisonedKnife, KurtussBrewOfMadness, StaminaPotion, MagicPotion, Antidote, ParalysisTonic, AloeRemedy, Bandage, PineWood, Pelt, IronOre, Diamond} from "../items.js";
 import Encounter from "../encounter.js";
 import Battle from "../battle.js";
@@ -31,6 +31,7 @@ export default class Biome{
             {item: ()=>{return new FireStaff({level: 1})}, weight: 1},
             {item: ()=>{return new LightningStaff({level: 1})}, weight: 1},
             {item: ()=>{return new IceStaff({level: 1})}, weight: 1},
+            {item: ()=>{return new WaterStaff({level: 1})}, weight: 1},
             {item: ()=>{return new ForestStaff({level: 1})}, weight: 1},
 
             {item: ()=>{return new LeatherHood({level: 1})}, weight: 1},

@@ -10,9 +10,11 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 * Wheather
 * Darkness
 * Prebattle traits / abilitites
-* Enemy factions
+* Enemy factionsS
 * Shop/crafting/town
-* trinket and waist slots
+* trinket and waist slots4
+* Perma death
+* Waterstaff / posion / Force / Blood
 
 
 # Bugs
@@ -20,7 +22,7 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 * If an ally retreats then second ally dies, the retreated ally can be selected to fill in for the defeated ally even though he just escaped
 * Multi Target splash attack such as cleave will only allow for targeting of one enemy (not enemy and ally) although this maybe isnt a bug //bypassed by selected non default target first
 * missed splash attacks do not update attacker's stats (visually)
-* After switching characters in encounter stage message cannot be skipped by clicking
+* After switching characters in encounter stage message cannot bSe skipped by clicking
 * clicking confirm attack button rapidly in battle causes crash
 * can scrap items during battle.
 
@@ -34,7 +36,8 @@ Roguelike turnbased adventure game based on the Shackle Breaker story by Owen Wa
 * evasion on splash attacks
 * battle and console typing animation wait time and fix
 * fix battle text content
-* battle Controller rework 
+* battle Controller rework 4
+* Permadeath
 
 # MISC notes
 
