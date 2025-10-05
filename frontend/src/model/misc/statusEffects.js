@@ -1494,3 +1494,82 @@ export class SpeedBuff extends StatusEffect{
         this.currentSpeedBuff = currentSpeedBuff.currentLevel;
     }
 }
+export class SpeedDebuff extends StatusEffect{
+    constructor(config){
+        super({
+            name:'speed debuff',
+            iconSrc: "./assets/media/icons/speed-debuff-1.png",
+            holder: config.holder,
+            maxCharges: 5,
+            stackable: true,
+            targetAnimation: 'none',
+            abilityAnimation: 'none',
+            removeOnBattleEnd: true,
+        });
+        this.currentLevel = config.level || 0;
+        this.currentSpeedDebuff = 0;
+    }
+    onApplied(attacker, target, status){
+        this.holder.currentSpeed += this.currentSpeedDebuff;
+        for(let i = 0; i < this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == 'speed buff'){
+                this.holder.statusArray[i].currentLevel = this.holder.statusArray[i].currentLevel - 2
+                if(this.holder.statusArray[i].currentLevel <= 0){
+                    this.holder.statusArray[i].onRemove();
+                }else{
+                    this.holder.statusArray[i].onApplied(attacker, target, status);
+                }
+                return;
+            }
+        }
+        switch(this.currentLevel){
+            case 0:
+                target.statusArray.push(status);
+                this.currentSpeedDebuff = Math.floor(0.2 * this.holder.baseSpeed);
+                this.iconSrc = "./assets/media/icons/speed-debuff-1.png";
+                this.currentLevel++
+            break;
+            case 1:
+                this.currentSpeedDebuff = Math.floor(0.4 * this.holder.baseSpeed);
+                this.iconSrc = "./assets/media/icons/speed-debuff-2.png";
+                this.currentLevel++
+            break;
+            case 2:
+                this.currentSpeedDebuff = Math.floor(0.6 * this.holder.baseSpeed);
+                this.iconSrc = "./assets/media/icons/speed-debuff-3.png";
+                this.currentLevel++
+            break;
+            default:
+            break;
+        }
+        this.holder.currentSpeed -= this.currentSpeedDebuff;
+        this.currentCharges++;
+    }
+    onEndTurn(){
+        return this.activateHelpper(()=>{this.currentCharges--}, 
+        {
+            text: false,
+            animation: false,
+            vitalsUpdate: false,
+        }
+    )}
+    onRemove(){
+        for(let i = 0; i <= this.holder.statusArray.length; i++){
+            if(this.holder.statusArray[i].name == this.name){
+                this.holder.statusArray.splice(i, 1);
+                break;
+            }
+        }
+        this.holder.currentSpeed += this.currentSpeedDebuff;
+    }
+    toSaveObject(){
+        let saveObject = super.toSaveObject();
+        saveObject.currentSpeedDebuff = this.currentSpeedDebuff;
+        return saveObject;
+    }
+    fromSaveObject(statusData){
+        super.fromSaveObject(statusData);
+        this.currentLevel = statusData.currentLevel;
+        this.currentSpeedDebuff = statusData.currentSpeedDebuff;
+    }
+}
