@@ -1285,7 +1285,7 @@ export class LeatherChestplate extends Attachable {
   }
 }
 export class LeatherGloves extends Attachable{
-    constructor(config){
+    constructor(config, isRehydrate = false) {
          super({
             ...config,
             name: config.name || 'leather gloves',
