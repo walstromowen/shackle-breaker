@@ -6,7 +6,7 @@ import {
   PineWood, Pelt, IronOre, Diamond, HealthPotion, StaminaPotion, MagicPotion,
   Antidote, AloeRemedy, Bandage, ParalysisTonic, PoisonedKnife, BearTrap,
   Net, SmokeBomb, ScrollOfInferno, ScrollOfHailStorm, ScrollOfCastShadow, KurtussBrewOfMadness, Meteorite,
-  WaterStaff,
+  WaterStaff, PanzerianHelm, PanzerianGauntlets, PanzerianGreaves, PanzerianBoots, PanzerianChestplate, NightbladeMask,
 } from "../items.js";
 
 
@@ -41,6 +41,12 @@ export const itemRegistry = {
   "iron boots": (config, isRehydrate) => new IronBoots(config, isRehydrate),
   "cloth hood": (config, isRehydrate) => new ClothHood(config, isRehydrate),
   "cloth robe": (config, isRehydrate) => new ClothRobe(config, isRehydrate),
+  "panzerian helm": (config, isRehydrate) => new PanzerianHelm(config, isRehydrate),
+  "panzerian gauntlets": (config, isRehydrate) => new PanzerianGauntlets(config, isRehydrate),
+  "panzerian greaves": (config, isRehydrate) => new PanzerianGreaves(config, isRehydrate),
+  "panzerian boots": (config, isRehydrate) => new PanzerianBoots(config, isRehydrate),
+  "panzerian chestplate": (config, isRehydrate) => new PanzerianChestplate(config, isRehydrate),
+  "nightblade mask": (config, isRehydrate) => new NightbladeMask(config, isRehydrate),
   "buckler": (config, isRehydrate) => new Buckler(config, isRehydrate),
   "iron shield": (config, isRehydrate) => new IronShield(config, isRehydrate),
   "panzerkamfer armor": (config, isRehydrate) => new PanzerkamferArmor(config, isRehydrate),

@@ -44,7 +44,7 @@ export default class LobbyModel{
             case 'traveler':
                 equipment = [
                     new LeatherHelmet({level: 1}),
-                    new WaterStaff({level: 3}),
+                    new ShortSword({level: 1}),
                     new LinenShirt({level: 1}),
                     new LinenPants({level: 1}),
                     new LeatherBoots({level: 1}),
@@ -84,7 +84,7 @@ export default class LobbyModel{
                     new LeatherBoots({level: 1}),
                 ];
                 this.props.getParty()[0].setAttributes({vigor: 5, strength: 5, dexterity: 5, intelligence: 7, attunement: 3});
-                this.props.getParty()[0].currentCorruption = 0.1;
+                this.props.getParty()[0].currentCorruption = 0.15;
                 this.props.setGold(300);
                 break;
             case 'warrior':
@@ -120,7 +120,7 @@ export default class LobbyModel{
                 ];
                 this.props.getParty()[0].setAttributes({vigor: 5, strength: 5, dexterity: 5, intelligence: 3, attunement: 7});
                 this.props.setGold(300);
-                this.props.getParty()[0].currentCorruption = 0.5;
+                this.props.getParty()[0].currentCorruption = 0.1;
                 break; 
             case 'farmer':
                 equipment = [
