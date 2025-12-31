@@ -209,7 +209,7 @@ export class WoundedTiger extends Stage {
                         new Result({
                             result: 'recruit',
                             createRecruitKey: 'tiger',
-                            onActivateKey: 'decreaseCorruption5Percent',
+                            onActivateKey: 'reduceCorruption5Percent',
                             messageKey: 'woundedTigerNuzzle',
                             weight: 1,
                         }),
@@ -218,7 +218,7 @@ export class WoundedTiger extends Stage {
                         new Result({
                             result: 'battle',
                             createBattleKey: 'madBandits',
-                            onActivateKey: 'decreaseCorruption5Percent',
+                            onActivateKey: 'reduceCorruption5Percent',
                             messageKey: 'woundedTigerBanditsAttack',
                             imageSrc: './assets/media/entities/mad-bandit.jpg',
                             musicSrc: './assets/audio/musicTracks/battle-sword-139313.mp3',
@@ -227,7 +227,7 @@ export class WoundedTiger extends Stage {
                         new Result({
                             result: 'battle',
                             createBattleKey: 'woundedTigerWild',
-                            onActivateKey: 'decreaseCorruptionSlightly',
+                            onActivateKey: 'reduceCorruptionSlightly',
                             messageKey: 'woundedTigerWild',
                             imageSrc: './assets/media/entities/tiger.jpg',
                             musicSrc: './assets/audio/musicTracks/battle-sword-139313.mp3',
