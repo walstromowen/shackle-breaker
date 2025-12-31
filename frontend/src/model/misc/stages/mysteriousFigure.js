@@ -217,7 +217,7 @@ export class DefeatedNightblade extends Stage {
                         new Result({
                             result: 'recruit',
                             createRecruitKey: 'nightblade',
-                            onActivateKey: 'decreaseCorruption10Percent',
+                            onActivateKey: 'reduceCorruption10Percent',
                             xpReward: 20,
                             messageKey: 'defeatedNightbladeSpareWarriorSuccess',
                             weight: 1,
