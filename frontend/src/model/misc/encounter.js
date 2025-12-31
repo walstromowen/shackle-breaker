@@ -367,8 +367,8 @@ export const messageRegistry = {
     woundedTigerBandageAttempt: (currentCharacter) => { return `${currentCharacter.name} kneels beside the creature and gently applies a bandage.` },
     woundedTigerNuzzle: (currentCharacter) => { return `The tiger rises shakily, then nuzzles ${currentCharacter.name} with surprising gentleness.` },
     woundedTigerBanditsAttack: (currentCharacter) => { return `An arrow flies right at the tiger killing it instantly. Then a bandit emerges, drawn by the smell of blood.` },
-    woundedTigerWild: (currentCharacter) => { return `The tiger stands and growls as ${currentCharacter} approaches. Then, in a pain fueld rage, the tiger lunges!` },
-    woundedTigerPackAmbush: (currentCharacter) => { return `As ${currentCharacter} approaches, other tigers emerge from the shadows surrounding ${currentCharacter}!` },
+    woundedTigerWild: (currentCharacter) => { return `The tiger stands and growls as ${currentCharacter.name} approaches. Then, in a pain fueld rage, the tiger lunges!` },
+    woundedTigerPackAmbush: (currentCharacter) => { return `As ${currentCharacter.name} approaches, other tigers emerge from the shadows surrounding ${currentCharacter.name}!` },
     woundedTigerPutToRest: (currentCharacter) => { return `${currentCharacter.name} draws their weapon and ends the animal's suffering.` },
     woundedTigerLeave: (currentCharacter) => { return `${currentCharacter.name} leaves the wounded tiger behind and moves on.` },
     //Apex Predator
